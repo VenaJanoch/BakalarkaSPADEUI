@@ -72,7 +72,7 @@ public class DragAndDropCanvas extends FlowPane{
 				if (db.hasString()) {
 				addItem();
 				
-					success = true;
+				success = true;
 				}
 				/*
 				 * let the source know whether the string was successfully

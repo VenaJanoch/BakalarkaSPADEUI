@@ -2,6 +2,7 @@ package Grafika;
 
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.input.TransferMode;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
@@ -17,6 +18,7 @@ public class Ctverec extends Rectangle {
 	     this.setWidth(sirka);
 	     this.setHeight(vyska);
 	     this.setFill(Color.BLACK);
+	   
 	     
 	}
 	
@@ -29,6 +31,7 @@ public class Ctverec extends Rectangle {
 	            orgSceneY = t.getSceneY();
 	            orgTranslateX = ((Rectangle)(t.getSource())).getTranslateX();
 	            orgTranslateY = ((Rectangle)(t.getSource())).getTranslateY();
+	         
 	        }
 	    };
 	     

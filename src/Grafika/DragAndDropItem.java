@@ -1,7 +1,10 @@
 package Grafika;
 
+import Obsluha.Constans;
+import Obsluha.DragSegment;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.input.ClipboardContent;
@@ -18,43 +21,27 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 
-public class DragAndDropItem extends Group{
+public class DragAndDropItem extends HBox{
 	Group root = new Group();
-
+	DragSegment[] dragSegmnets;
+	
 	public DragAndDropItem() {
-		super();
-		final Text source = new Text(50, 100, "Phase");
-		
-		source.setOnDragDetected(new EventHandler<MouseEvent>() {
-			public void handle(MouseEvent event) {
-				/* drag was detected, start drag-and-drop gesture */
-				System.out.println("onDragDetected");
-
-				/* allow any transfer mode */
-				Dragboard db = source.startDragAndDrop(TransferMode.ANY);
-
-				/* put a string on dragboard */
-				ClipboardContent content = new ClipboardContent();
-				content.putString(source.getText());
-				db.setContent(content);
-
-				event.consume();
-			}
-		});
-
-		source.setOnDragDone(new EventHandler<DragEvent>() {
-			public void handle(DragEvent event) {
-				/* the drag-and-drop gesture ended */
-				System.out.println("onDragDone");
-				/* if the data was successfully moved, clear it */
-				if (event.getTransferMode() == TransferMode.MOVE) {
-					
-				}
-
-				event.consume();
-			}
-		});
-		this.getChildren().addAll(source);
+		super(5);
+		this.setAlignment(Pos.CENTER);
+		this.setMinWidth(Constans.width);
+		dragSegmnets = new DragSegment[Constans.countDragItems];
+		createDragItems();
 	}
+	
+	
+	public void createDragItems(){
+		
+		for (int i = 0; i < dragSegmnets.length; i++) {
+			dragSegmnets[i] = new DragSegment(Constans.dragItemsName[i]);
+		}
+		
+		this.getChildren().addAll(dragSegmnets);
+	}
+	
 
 }

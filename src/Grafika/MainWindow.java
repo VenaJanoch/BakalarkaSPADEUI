@@ -37,7 +37,7 @@ public class MainWindow extends Stage {
 		dragCanvas = new DragAndDropCanvas();
 		menu = new MenuPanel();
 		dragAndDrop = new DragAndDropItem();
-		Group topPanel = new Group();
+		VBox topPanel = new VBox();
 		
 		topPanel.getChildren().addAll(menu, dragAndDrop);
 		mainPanel.setTop(topPanel);
