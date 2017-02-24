@@ -1,6 +1,7 @@
 package Grafika;
 
 import Obsluha.Constans;
+import Obsluha.Control;
 import Obsluha.DragSegment;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -21,27 +22,44 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 
-public class DragAndDropItem extends HBox{
+public class DragAndDropItem extends VBox {
 	Group root = new Group();
+	HBox[] box;
 	DragSegment[] dragSegmnets;
-	
-	public DragAndDropItem() {
+	private Control control;
+
+	public DragAndDropItem(Control control) {
 		super(5);
+		this.control = control;
 		this.setAlignment(Pos.CENTER);
 		this.setMinWidth(Constans.width);
+		//this.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
+		this.setAlignment(Pos.CENTER);
 		dragSegmnets = new DragSegment[Constans.countDragItems];
 		createDragItems();
 	}
-	
-	
-	public void createDragItems(){
+
+	public void createDragItems() {
+
+		int countBox = dragSegmnets.length / Constans.countItemsBox;
 		
-		for (int i = 0; i < dragSegmnets.length; i++) {
-			dragSegmnets[i] = new DragSegment(Constans.dragItemsName[i]);
+		box = new HBox[countBox];
+		
+		int k = 0, j;
+		for (int i = 0; i < box.length; i++) {
+			box[i] = new HBox(5);
+			box[i].setAlignment(Pos.CENTER);
+			for ( j = k ; j < (k+(dragSegmnets.length/countBox)); j++) {
+				dragSegmnets[j] = new DragSegment(Constans.dragItemsName[j]);
+				box[i].getChildren().add(dragSegmnets[j]);
+			
+			}
+			
+			k= j;
+
 		}
-		
-		this.getChildren().addAll(dragSegmnets);
+
+		this.getChildren().addAll(box);
 	}
-	
 
 }

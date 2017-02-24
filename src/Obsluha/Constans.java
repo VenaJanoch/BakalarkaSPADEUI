@@ -8,9 +8,13 @@ public class Constans {
 	public static final int height = 600;
 
 	public static final String[] dragItemsName = {"Phase","Iteration","Activity","WorkUnit","Milestone", "Criterion",
-			 "Configuration","ConfigPersonRelation","Branch","Change", "Artifact", "Role"};
-	public static int countDragItems = 12;
+			 "Configuration","ConfigPersonRelation","Branch","Change", "Artifact", "Role","df"};
+	public static final int countDragItems = 13;
+	public static final int countItemsBox = 6;
 	
+	public static final float xRadius = 10f;
+	public static final float yRadius = 10f;
+	public static final float angleLength = 180f;
 	
 	
 }

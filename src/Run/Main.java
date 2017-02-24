@@ -1,6 +1,7 @@
 package Run;
 
 import Grafika.MainWindow;
+import Obsluha.Control;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -9,6 +10,7 @@ public class Main extends Application{
 
 	private Stage primaryStage;
 	MainWindow mainWindow;
+	Control control;
 	
 	
 	
@@ -20,9 +22,10 @@ public class Main extends Application{
 	public void start(Stage primaryStage) throws Exception {
 		this.primaryStage = primaryStage;
 		this.primaryStage.show();
-		mainWindow = new MainWindow(this);
+		control = new Control();
+		mainWindow = new MainWindow(this, control);
 		nastavObrazovku(mainWindow);
-	
+		
 	}
 	
 	

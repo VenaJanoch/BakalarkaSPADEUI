@@ -1,8 +1,11 @@
 package Grafika;
 
+
+
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
+import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.DragEvent;
@@ -18,9 +21,12 @@ import javafx.scene.text.Text;
 
 public class DragAndDropCanvas extends FlowPane{
 
+	private Scene mScene;
 	public DragAndDropCanvas() {
 		super();
-	  
+		CanvasItem segment = new CanvasItem(mScene,"Testovaci", "name");
+		
+		this.getChildren().add(segment);
 		this.setOnDragOver(new EventHandler<DragEvent>() {
 			public void handle(DragEvent event) {
 				/* data is dragged over the target */
@@ -70,7 +76,7 @@ public class DragAndDropCanvas extends FlowPane{
 				Dragboard db = event.getDragboard();
 				boolean success = false;
 				if (db.hasString()) {
-				addItem();
+				addItem(db.getString());
 				
 				success = true;
 				}
@@ -87,9 +93,20 @@ public class DragAndDropCanvas extends FlowPane{
 
 	}
 
-	private void addItem() {
-		this.getChildren().add(new Ctverec(20,20));
+	private void addItem(String segment) {
+		this.getChildren().add(new CanvasItem(mScene,"Testovaci", "name"));
+		//this.getChildren().add(new Ctverec(30,30));
+
 	}
+
+	public Scene getMScene() {
+		return mScene;
+	}
+
+	public void setMScene(Scene scene) {
+		this.mScene = scene;
+	}
+
 
 	
 }

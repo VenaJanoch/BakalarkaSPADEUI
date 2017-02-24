@@ -1,6 +1,7 @@
 package Grafika;
 
 import Obsluha.Constans;
+import Obsluha.Control;
 import Obsluha.PrepinacObrazovek;
 import Run.Main;
 import javafx.scene.Group;
@@ -15,14 +16,17 @@ import javafx.stage.Stage;
 public class MainWindow extends Stage {
 
 	private Scene scena;
+	private Control control;
 	private BorderPane mainPanel;
 	private DragAndDropCanvas dragCanvas;
 	private MenuPanel menu;
-	private DragAndDropItem dragAndDrop;
+	private DragAndDropPanel dragAndDrop;
 
-	public MainWindow(Main main) {
+	public MainWindow(Main main, Control control) {
 		super();
 		this.setTitle("SPADE XML editor");
+		this.control = control;
+		
 		mainPanel = new BorderPane();
 		this.setScene(creatScene());
 	}
@@ -30,13 +34,14 @@ public class MainWindow extends Stage {
 	private Scene creatScene() {
 
 		scena = new Scene(creatPanel(), Constans.width, Constans.height);
+		dragCanvas.setMScene(scena);
 		return scena;
 	}
 
 	private Parent creatPanel() {
 		dragCanvas = new DragAndDropCanvas();
 		menu = new MenuPanel();
-		dragAndDrop = new DragAndDropItem();
+		dragAndDrop = new DragAndDropPanel(control);
 		VBox topPanel = new VBox();
 		
 		topPanel.getChildren().addAll(menu, dragAndDrop);

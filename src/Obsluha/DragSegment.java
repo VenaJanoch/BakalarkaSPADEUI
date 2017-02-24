@@ -16,8 +16,8 @@ public class DragSegment extends Text {
 	public DragSegment(String name) {
 		super();
 		this.setText(name);
-		this.setFont(Font.font ("Verdana",11));
-		this.setFill(Color.AQUA);
+		this.setFont(Font.font ("Verdana",15));
+		this.setFill(Color.BURLYWOOD);
 		setDragDetected();
 		setDragDone();
 
