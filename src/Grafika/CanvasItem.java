@@ -1,5 +1,7 @@
 package Grafika;
 
+import Obsluha.Constans;
+import Obsluha.Control;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.shape.Rectangle;
@@ -10,13 +12,17 @@ public class CanvasItem extends Group{
 	private InfoBoxSegment segmentInfo;
 	private double orgSceneX, orgSceneY;
 	private double orgTranslateX, orgTranslateY;
+	private double length;
 	private Scene scene;
+	private Control control;
 	
-	public CanvasItem(Scene scene, String segmentName, String name) {
+	public CanvasItem(Scene scene, String segmentName, String name, Control control) {
 
 		this.scene = scene;
+		this.control = control;
 		this.dgPoints = new DragPoint[4];
-		this.segmentInfo = new InfoBoxSegment(segmentName, name, scene);
+		this.segmentInfo = new InfoBoxSegment(segmentName, name, scene,control);
+		this.length = segmentInfo.getLength();
 		this.getChildren().add(segmentInfo);
 		createDgPoints();
 	}
@@ -24,10 +30,10 @@ public class CanvasItem extends Group{
 				
 		private void createDgPoints() {
 
-			dgPoints[0] = new DragPoint(this, 28, 0, 0, scene);
+			dgPoints[0] = new DragPoint(this, (float)(length/2), 0, 0, scene);
 			dgPoints[1] = new DragPoint(this, 0, 20, 90, scene);
-			dgPoints[2] = new DragPoint(this, 28, 40, 180, scene);
-			dgPoints[3] = new DragPoint(this, 55, 20, 270, scene);
+			dgPoints[2] = new DragPoint(this, (float)(length/2), 40, 180, scene);
+			dgPoints[3] = new DragPoint(this, (float)length, 20, 270, scene);
 			
 			this.getChildren().addAll(dgPoints);
 

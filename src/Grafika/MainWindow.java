@@ -39,7 +39,7 @@ public class MainWindow extends Stage {
 	}
 
 	private Parent creatPanel() {
-		dragCanvas = new DragAndDropCanvas();
+		dragCanvas = new DragAndDropCanvas(control);
 		menu = new MenuPanel();
 		dragAndDrop = new DragAndDropPanel(control);
 		VBox topPanel = new VBox();

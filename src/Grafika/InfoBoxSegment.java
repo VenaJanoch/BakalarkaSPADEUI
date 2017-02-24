@@ -1,5 +1,9 @@
 package Grafika;
 
+import Forms.BasicForm;
+import Forms.PhaseForm;
+import Obsluha.Constans;
+import Obsluha.Control;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -18,18 +22,29 @@ public class InfoBoxSegment extends Group {
 	private Text segmentName;
 	private Text name;
 	private Scene scene;
-	private ZadejInfo zi;
+	private boolean firstClick;
+	private int idForm;
+	private Control control;
+	private double length;
 
-	public InfoBoxSegment(String segmentName, String name, Scene scene) {
+	public InfoBoxSegment(String segmentName, String name, Scene scene, Control control) {
 		super();
-		this.topRectangle = new Rectangle(55, 20);
-		this.botomRectangle = new Rectangle(55, 20);
-		this.segmentName = new Text(segmentName);
+		this.control = control;
 		this.name = new Text(name);
+		this.segmentName = new Text(segmentName);
+
+		this.length = this.segmentName.getLayoutBounds().getWidth() + Constans.offset * 2;
+
+		if (length < 40) {
+			length = 40.0;
+		}
+		this.topRectangle = new Rectangle(length, 20);
+		this.botomRectangle = new Rectangle(length, 20);
 		this.scene = scene;
 		this.getChildren().addAll(topRectangle, botomRectangle, this.segmentName, this.name);
 		this.setOnMousePressed(circleOnMousePressedEventHandler);
-		
+		this.firstClick = true;
+
 		createBlock();
 
 	}
@@ -48,27 +63,76 @@ public class InfoBoxSegment extends Group {
 		botomRectangle.setTranslateX(0);
 		botomRectangle.setTranslateY(20);
 
-		segmentName.setTranslateX(5);
+		segmentName.setTranslateX(Constans.offset);
 		segmentName.setTranslateY(13);
 
-		name.setTranslateX(13);
+		name.setTranslateX(Constans.offset);
 		name.setTranslateY(33);
-
 
 	}
 
+	public void setNameText(String nameStr) {
+		name.setText(nameStr);
+		if (name.getLayoutBounds().getWidth() > length) {
+			
+			 String halfText = nameStr.substring(0, (int)(length - 3));
+			 name.setText(nameStr + "...");
+				 
+		}
+
+	}
+
+	public void pressedHandleControl() {
+
+		if (firstClick) {
+			idForm = control.createForm(this);
+			firstClick = false;
+		} else {
+			control.getForms().get(idForm).show();
+		}
+
+	}
 
 	EventHandler<MouseEvent> circleOnMousePressedEventHandler = new EventHandler<MouseEvent>() {
 
 		@Override
 		public void handle(MouseEvent t) {
-			
-			System.out.println("Click " + t.getSceneX());
-			zi = new ZadejInfo();
-			
+			pressedHandleControl();
+
 		}
 	};
 
-	
+	/** Getrs and Setrs **/
+	public int getIdForm() {
+		return idForm;
+	}
+
+	public void setIdForm(int idForm) {
+		this.idForm = idForm;
+	}
+
+	public Text getSegmentName() {
+		return segmentName;
+	}
+
+	public void setSegmentName(Text segmentName) {
+		this.segmentName = segmentName;
+	}
+
+	public double getLength() {
+		return length;
+	}
+
+	public void setLength(double length) {
+		this.length = length;
+	}
+
+	public Text getName() {
+		return name;
+	}
+
+	public void setName(Text name) {
+		this.name = name;
+	}
 
 }

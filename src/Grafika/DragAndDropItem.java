@@ -2,7 +2,6 @@ package Grafika;
 
 import Obsluha.Constans;
 import Obsluha.Control;
-import Obsluha.DragSegment;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -25,7 +24,7 @@ import javafx.scene.text.Text;
 public class DragAndDropItem extends VBox {
 	Group root = new Group();
 	HBox[] box;
-	DragSegment[] dragSegmnets;
+	DragText[] dragSegmnets;
 	private Control control;
 
 	public DragAndDropItem(Control control) {
@@ -35,7 +34,7 @@ public class DragAndDropItem extends VBox {
 		this.setMinWidth(Constans.width);
 		//this.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
 		this.setAlignment(Pos.CENTER);
-		dragSegmnets = new DragSegment[Constans.countDragItems];
+		dragSegmnets = new DragText[Constans.countDragItems];
 		createDragItems();
 	}
 
@@ -50,7 +49,7 @@ public class DragAndDropItem extends VBox {
 			box[i] = new HBox(5);
 			box[i].setAlignment(Pos.CENTER);
 			for ( j = k ; j < (k+(dragSegmnets.length/countBox)); j++) {
-				dragSegmnets[j] = new DragSegment(Constans.dragItemsName[j]);
+				dragSegmnets[j] = new DragText(Constans.dragItemsName[j]);
 				box[i].getChildren().add(dragSegmnets[j]);
 			
 			}

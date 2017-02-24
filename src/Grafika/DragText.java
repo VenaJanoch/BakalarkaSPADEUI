@@ -1,4 +1,4 @@
-package Obsluha;
+package Grafika;
 
 import javafx.event.EventHandler;
 import javafx.scene.input.ClipboardContent;
@@ -10,10 +10,10 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
-public class DragSegment extends Text {
+public class DragText extends Text {
 
 	
-	public DragSegment(String name) {
+	public DragText(String name) {
 		super();
 		this.setText(name);
 		this.setFont(Font.font ("Verdana",15));
