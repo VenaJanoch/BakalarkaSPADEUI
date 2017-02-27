@@ -26,9 +26,11 @@ public class InfoBoxSegment extends Group {
 	private int idForm;
 	private Control control;
 	private double length;
+	private CanvasItem canItem;
 
-	public InfoBoxSegment(String segmentName, String name, Scene scene, Control control) {
+	public InfoBoxSegment(CanvasItem canItem, String segmentName, String name, Scene scene, Control control) {
 		super();
+		this.canItem = canItem;
 		this.control = control;
 		this.name = new Text(name);
 		this.segmentName = new Text(segmentName);
@@ -72,14 +74,28 @@ public class InfoBoxSegment extends Group {
 	}
 
 	public void setNameText(String nameStr) {
+		System.out.println(name.getLayoutBounds().getWidth() + " " + length + " " + segmentName.getLayoutBounds().getWidth());
+
 		name.setText(nameStr);
 		if (name.getLayoutBounds().getWidth() > length) {
-			
-			 String halfText = nameStr.substring(0, (int)(length - 3));
-			 name.setText(nameStr + "...");
-				 
+			System.out.println("nevim");
+			repaintBox(name.getLayoutBounds().getWidth());
+					 	 
 		}
 
+		
+	}
+	
+	public void repaintBox(double width){
+		
+		length = width + 2* Constans.offset;
+		
+		topRectangle.setWidth(length);
+		botomRectangle.setWidth(length);
+		canItem.repaintDgPoints((float)length);
+		
+		
+		
 	}
 
 	public void pressedHandleControl() {

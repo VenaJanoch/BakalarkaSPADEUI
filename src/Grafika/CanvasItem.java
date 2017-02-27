@@ -21,7 +21,7 @@ public class CanvasItem extends Group{
 		this.scene = scene;
 		this.control = control;
 		this.dgPoints = new DragPoint[4];
-		this.segmentInfo = new InfoBoxSegment(segmentName, name, scene,control);
+		this.segmentInfo = new InfoBoxSegment(this,segmentName, name, scene,control);
 		this.length = segmentInfo.getLength();
 		this.getChildren().add(segmentInfo);
 		createDgPoints();
@@ -37,6 +37,12 @@ public class CanvasItem extends Group{
 			
 			this.getChildren().addAll(dgPoints);
 
+		}
+		
+		public void repaintDgPoints(float length){
+			dgPoints[0].setTranslateX(length/2);
+			dgPoints[2].setTranslateX(length/2);
+			dgPoints[3].setTranslateX(length); 		
 		}
 		
 		
