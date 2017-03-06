@@ -1,5 +1,6 @@
 package Grafika;
 
+import Obsluha.SegmentType;
 import javafx.event.EventHandler;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.DragEvent;
@@ -12,10 +13,11 @@ import javafx.scene.text.Text;
 
 public class DragText extends Text {
 
-	
-	public DragText(String name) {
+	private SegmentType type;
+	public DragText( SegmentType type) {
 		super();
-		this.setText(name);
+		this.setType(type);
+		this.setText(type.name());
 		this.setFont(Font.font ("Verdana",15));
 		this.setFill(Color.BURLYWOOD);
 		setDragDetected();
@@ -59,5 +61,13 @@ public class DragText extends Text {
 	});
 	
 }
+
+	public SegmentType getType() {
+		return type;
+	}
+
+	public void setType(SegmentType type) {
+		this.type = type;
+	}
 
 }

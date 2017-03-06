@@ -4,6 +4,7 @@ import Forms.BasicForm;
 import Forms.PhaseForm;
 import Obsluha.Constans;
 import Obsluha.Control;
+import Obsluha.SegmentType;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -21,22 +22,21 @@ public class InfoBoxSegment extends Group {
 	private Rectangle botomRectangle;
 	private Text segmentName;
 	private Text name;
+	private SegmentType type;
 	private Scene scene;
-	private boolean firstClick;
-	private int idForm;
 	private Control control;
 	private double length;
 	private CanvasItem canItem;
 
-	public InfoBoxSegment(CanvasItem canItem, String segmentName, String name, Scene scene, Control control) {
+	public InfoBoxSegment(CanvasItem canItem, SegmentType type, String name, Scene scene, Control control) {
 		super();
+
 		this.canItem = canItem;
 		this.control = control;
 		this.name = new Text(name);
-		this.segmentName = new Text(segmentName);
-
+		this.type = type;
+		this.segmentName = new Text(type.name());
 		this.length = this.segmentName.getLayoutBounds().getWidth() + Constans.offset * 2;
-
 		if (length < 40) {
 			length = 40.0;
 		}
@@ -44,8 +44,7 @@ public class InfoBoxSegment extends Group {
 		this.botomRectangle = new Rectangle(length, 20);
 		this.scene = scene;
 		this.getChildren().addAll(topRectangle, botomRectangle, this.segmentName, this.name);
-		this.setOnMousePressed(circleOnMousePressedEventHandler);
-		this.firstClick = true;
+		
 
 		createBlock();
 
@@ -74,58 +73,26 @@ public class InfoBoxSegment extends Group {
 	}
 
 	public void setNameText(String nameStr) {
-		System.out.println(name.getLayoutBounds().getWidth() + " " + length + " " + segmentName.getLayoutBounds().getWidth());
-
 		name.setText(nameStr);
 		if (name.getLayoutBounds().getWidth() > length) {
-			System.out.println("nevim");
 			repaintBox(name.getLayoutBounds().getWidth());
-					 	 
+
 		}
 
-		
 	}
-	
-	public void repaintBox(double width){
-		
-		length = width + 2* Constans.offset;
-		
+
+	public void repaintBox(double width) {
+
+		length = width + 2 * Constans.offset;
+
 		topRectangle.setWidth(length);
 		botomRectangle.setWidth(length);
-		canItem.repaintDgPoints((float)length);
-		
-		
-		
-	}
-
-	public void pressedHandleControl() {
-
-		if (firstClick) {
-			idForm = control.createForm(this);
-			firstClick = false;
-		} else {
-			control.getForms().get(idForm).show();
-		}
 
 	}
 
-	EventHandler<MouseEvent> circleOnMousePressedEventHandler = new EventHandler<MouseEvent>() {
-
-		@Override
-		public void handle(MouseEvent t) {
-			pressedHandleControl();
-
-		}
-	};
-
+	
 	/** Getrs and Setrs **/
-	public int getIdForm() {
-		return idForm;
-	}
-
-	public void setIdForm(int idForm) {
-		this.idForm = idForm;
-	}
+	
 
 	public Text getSegmentName() {
 		return segmentName;
@@ -149,6 +116,14 @@ public class InfoBoxSegment extends Group {
 
 	public void setName(Text name) {
 		this.name = name;
+	}
+
+	public SegmentType getType() {
+		return type;
+	}
+
+	public void setType(SegmentType type) {
+		this.type = type;
 	}
 
 }

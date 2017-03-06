@@ -17,97 +17,143 @@ import Forms.MilestoneForm;
 import Forms.PhaseForm;
 import Forms.RoleForm;
 import Forms.WorkUnitForm;
+import Grafika.CanvasItem;
 import Grafika.InfoBoxSegment;
+import Grafika.NodeLink;
+import javafx.geometry.Point2D;
 
 public class Control {
 
 	private boolean arrow;
+	private boolean startArrow;
 	private ArrayList<BasicForm> forms;
+	private ArrayList<NodeLink> arrows;
 	private int index;
+	private NodeLink link;
+	private IdentificatorCreater idCreater;
 
 	public Control() {
+		idCreater = new IdentificatorCreater();
 		setArrow(false);
+		setStartArrow(false);
 		setForms(new ArrayList<>());
+		arrows = new ArrayList<>();
 		index = 0;
 	}
 
+	public boolean changeArrow() {
+
+		if (arrow) {
+			
+			arrow = false;
+			
+		} else {
+			arrow = true;
+		}
+		
+		return arrow;
+
+	}
+	
+	public void ArrowManipulation(CanvasItem item) {
+
+		int id = idCreater.createLineID();
+		if (!isStartArrow()) {
+		link = new NodeLink(id);
+			
+			item.getCanvas().getChildren().add(link);
+			getArrows().add(id,link);
+			link.setStart(new Point2D(item.getTranslateX() + (item.getWidth()), item.getTranslateY()+(item.getHeight() / 2)));
+			item.registerStartLink(id);			
+			setStartArrow(true);
+		
+		} else {
+			link.setEnd(new Point2D(item.getTranslateX(), item.getTranslateY()+(item.getHeight() / 2)));
+			item.registerEndLink(id);
+			setStartArrow(false);
+			
+		}
+
+	}
+
+	public SegmentType findSegmentType(String segmentName){
+		
+		for (int i = 0; i < SegmentType.values().length; i++) {
+			
+			if (SegmentType.values()[i].name().equals(segmentName)) {
+				
+				return SegmentType.values()[i];
+			}
+			
+		}
+		return null;
+		
+	}
+		
+	
 	public int createForm(InfoBoxSegment infoBox) {
+		SegmentType sType = infoBox.getType();
 
-		System.out.println(infoBox.getSegmentName().getText());
-
-		if (Constans.dragItemsName[0].equals(infoBox.getSegmentName().getText())) {
-
+		switch (sType) {
+		case Phase:
 			forms.add(index, new PhaseForm(infoBox));
 			index++;
 			return index - 1;
-		} else if (Constans.dragItemsName[1].equals(infoBox.getSegmentName().getText())) {
 
+		case Iteration:
 			forms.add(index, new IterationForm(infoBox));
 			index++;
 			return index - 1;
-
-		} else if (Constans.dragItemsName[2].equals(infoBox.getSegmentName().getText())) {
-
+		case Activity:
 			forms.add(index, new ActivityForm(infoBox));
 			index++;
 			return index - 1;
 
-		} else if (Constans.dragItemsName[3].equals(infoBox.getSegmentName().getText())) {
-
+		case WorkUnit:
 			forms.add(index, new WorkUnitForm(infoBox));
 			index++;
 			return index - 1;
+		
 
-		} else if (Constans.dragItemsName[4].equals(infoBox.getSegmentName().getText())) {
-
+		case Milestone:
 			forms.add(index, new MilestoneForm(infoBox));
 			index++;
 			return index - 1;
 
-		} else if (Constans.dragItemsName[5].equals(infoBox.getSegmentName().getText())) {
-
+		case Criterion:
 			forms.add(index, new CriterionForm(infoBox));
 			index++;
-			return index - 1 ;
+			return index - 1;
 
-		}else if (Constans.dragItemsName[6].equals(infoBox.getSegmentName().getText())) {
-
+		case Configuration:
 			forms.add(index, new ConfigurationForm(infoBox));
 			index++;
 			return index - 1;
 
-		} else if (Constans.dragItemsName[7].equals(infoBox.getSegmentName().getText())) {
-
+		case ConfigPersonRelation:
 			forms.add(index, new ConfigPersonRelationForm(infoBox));
 			index++;
 			return index - 1;
-
-		} else if (Constans.dragItemsName[8].equals(infoBox.getSegmentName().getText())) {
-
+		case Branch:
 			forms.add(index, new BranchForm(infoBox));
-		index++;
+			index++;
 			return index - 1;
 
-		} else if (Constans.dragItemsName[9].equals(infoBox.getSegmentName().getText())) {
-
+		case Change:
 			forms.add(index, new ChangeForm(infoBox));
 			index++;
 			return index - 1;
-
-		} else if (Constans.dragItemsName[10].equals(infoBox.getSegmentName().getText())) {
-
+		case Artifact:
 			forms.add(index, new ArtifactForm(infoBox));
 			index++;
 			return index - 1;
-
-		} else if (Constans.dragItemsName[11].equals(infoBox.getSegmentName().getText())) {
-
+		case Role:
 			forms.add(index, new RoleForm(infoBox));
 			index++;
 			return index - 1;
+		default:
+			return -1;
 		}
-
-		return -1;
 	}
 
 	/** Getrs and Setrs ***/
@@ -126,6 +172,22 @@ public class Control {
 
 	public void setForms(ArrayList<BasicForm> forms) {
 		this.forms = forms;
+	}
+
+	public boolean isStartArrow() {
+		return startArrow;
+	}
+
+	public void setStartArrow(boolean startArrow) {
+		this.startArrow = startArrow;
+	}
+
+	public ArrayList<NodeLink> getArrows() {
+		return arrows;
+	}
+
+	public void setArrows(ArrayList<NodeLink> arrows) {
+		this.arrows = arrows;
 	}
 
 }

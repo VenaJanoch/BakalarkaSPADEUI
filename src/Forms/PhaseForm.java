@@ -24,10 +24,10 @@ public class PhaseForm extends BasicForm implements ISegmentForm {
 	private TextField configurationTF;
 	private TextField workUnitsTF;
 	private TextField milestonesTF;
-
+	
 	public PhaseForm(InfoBoxSegment infoBox) {
 		super(infoBox);
-
+		
 		this.setOnCloseRequest(new EventHandler<WindowEvent>() {
 
 			@Override
@@ -75,7 +75,7 @@ public class PhaseForm extends BasicForm implements ISegmentForm {
 	}
 
 
-	private void fillInfoPart() {
+		private void fillInfoPart() {
 		
 		getInfoPart().add(descriptionLB,0,1); 
 		getInfoPart().setHalignment(descriptionLB, HPos.RIGHT);

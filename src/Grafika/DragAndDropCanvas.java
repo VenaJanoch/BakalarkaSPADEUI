@@ -3,6 +3,7 @@ package Grafika;
 
 
 import Obsluha.Control;
+import Obsluha.SegmentType;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
@@ -12,6 +13,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
@@ -20,7 +22,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 
-public class DragAndDropCanvas extends FlowPane{
+public class DragAndDropCanvas extends AnchorPane{
 
 	private Scene mScene;
 	private Control control; 
@@ -31,8 +33,7 @@ public class DragAndDropCanvas extends FlowPane{
 		this.setOnDragOver(new EventHandler<DragEvent>() {
 			public void handle(DragEvent event) {
 				/* data is dragged over the target */
-				System.out.println("onDragOver");
-
+				
 				/*
 				 * accept it only if it is not dragged from the same node and if
 				 * it has a string data
@@ -51,10 +52,9 @@ public class DragAndDropCanvas extends FlowPane{
 		this.setOnDragEntered(new EventHandler<DragEvent>() {
 			public void handle(DragEvent event) {
 				/* the drag-and-drop gesture entered the target */
-				System.out.println("onDragEntered");
 				/* show to the user that it is an actual gesture target */
 				if (event.getGestureSource() != this && event.getDragboard().hasString()) {
-					System.out.println("Nevimla;kdf");		}
+							}
 
 				event.consume();
 			}
@@ -72,7 +72,6 @@ public class DragAndDropCanvas extends FlowPane{
 		this.setOnDragDropped(new EventHandler<DragEvent>() {
 			public void handle(DragEvent event) {
 				/* data dropped */
-				System.out.println("onDragDropped");
 				/* if there is a string data on dragboard, read it and use it */
 				Dragboard db = event.getDragboard();
 				boolean success = false;
@@ -95,7 +94,10 @@ public class DragAndDropCanvas extends FlowPane{
 	}
 
 	private void addItem(String segment) {
-		this.getChildren().add(new CanvasItem(mScene,segment, "Name", control));
+		
+		SegmentType type = control.findSegmentType(segment);
+		
+		this.getChildren().add(new CanvasItem(mScene,type, "Name", control));
 		//this.getChildren().add(new Ctverec(30,30));
 
 	}

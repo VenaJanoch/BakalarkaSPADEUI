@@ -11,8 +11,6 @@ public class Constans {
 	public static final int formWidth = 300;
 	public static final int formHeight = 300;
 
-	public static final String[] dragItemsName = {"Phase","Iteration","Activity","WorkUnit","Milestone", "Criterion",
-			 "Configuration","ConfigPersonRelation","Branch","Change", "Artifact", "Role","df"};
 	public static final int countDragItems = 13;
 	public static final int countItemsBox = 6;
 	
