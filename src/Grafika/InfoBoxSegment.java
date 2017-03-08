@@ -22,19 +22,18 @@ public class InfoBoxSegment extends Group {
 	private Rectangle botomRectangle;
 	private Text segmentName;
 	private Text name;
-	private SegmentType type;
-	private Scene scene;
-	private Control control;
 	private double length;
 	private CanvasItem canItem;
 
-	public InfoBoxSegment(CanvasItem canItem, SegmentType type, String name, Scene scene, Control control) {
+	public InfoBoxSegment(CanvasItem canItem, SegmentType type, String name) {
 		super();
-
+		System.out.println(type.toString() + " nevim1");
 		this.canItem = canItem;
-		this.control = control;
 		this.name = new Text(name);
-		this.type = type;
+		
+		System.out.println(type.toString() + " nevim2");
+		System.out.println(type.toString() + " nevim3");
+		
 		this.segmentName = new Text(type.name());
 		this.length = this.segmentName.getLayoutBounds().getWidth() + Constans.offset * 2;
 		if (length < 40) {
@@ -42,7 +41,6 @@ public class InfoBoxSegment extends Group {
 		}
 		this.topRectangle = new Rectangle(length, 20);
 		this.botomRectangle = new Rectangle(length, 20);
-		this.scene = scene;
 		this.getChildren().addAll(topRectangle, botomRectangle, this.segmentName, this.name);
 		
 
@@ -118,12 +116,5 @@ public class InfoBoxSegment extends Group {
 		this.name = name;
 	}
 
-	public SegmentType getType() {
-		return type;
-	}
-
-	public void setType(SegmentType type) {
-		this.type = type;
-	}
-
+	
 }

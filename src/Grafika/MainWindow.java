@@ -2,7 +2,6 @@ package Grafika;
 
 import Obsluha.Constans;
 import Obsluha.Control;
-import Obsluha.PrepinacObrazovek;
 import Run.Main;
 import javafx.scene.Group;
 import javafx.scene.Node;

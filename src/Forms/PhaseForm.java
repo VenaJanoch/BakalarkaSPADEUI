@@ -1,5 +1,6 @@
 package Forms;
 
+import Grafika.CanvasItem;
 import Grafika.InfoBoxSegment;
 import Interfaces.ISegmentForm;
 import javafx.event.EventHandler;
@@ -25,8 +26,8 @@ public class PhaseForm extends BasicForm implements ISegmentForm {
 	private TextField workUnitsTF;
 	private TextField milestonesTF;
 	
-	public PhaseForm(InfoBoxSegment infoBox) {
-		super(infoBox);
+	public PhaseForm(CanvasItem item) {
+		super(item);
 		
 		this.setOnCloseRequest(new EventHandler<WindowEvent>() {
 
@@ -45,7 +46,7 @@ public class PhaseForm extends BasicForm implements ISegmentForm {
 	@Override
 	public void closeForm() {
 
-		getInfoBox().setNameText(getNameTF().getText());
+		getCanvasItem().setNameText(getNameTF().getText());
 
 	}
 
@@ -59,6 +60,7 @@ public class PhaseForm extends BasicForm implements ISegmentForm {
 	public void createForm() {
 		configurationLB = new Label("Configuration: ");
 		configurationTF = new TextField();
+		
 		workUnitsLB = new Label("Work Units: ");
 		workUnitsTF = new TextField();
 

@@ -96,7 +96,7 @@ public class DragAndDropCanvas extends AnchorPane{
 	private void addItem(String segment) {
 		
 		SegmentType type = control.findSegmentType(segment);
-		
+		System.out.println(type.name());
 		this.getChildren().add(new CanvasItem(mScene,type, "Name", control));
 		//this.getChildren().add(new Ctverec(30,30));
 

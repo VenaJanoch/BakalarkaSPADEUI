@@ -5,7 +5,6 @@ import java.util.List;
 
 import Obsluha.Constans;
 import Obsluha.Control;
-import Obsluha.DragContainer;
 import Obsluha.SegmentType;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -21,6 +20,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Text;
 
 public class CanvasItem extends AnchorPane {
 
@@ -38,22 +38,37 @@ public class CanvasItem extends AnchorPane {
 	private final List<Integer> mStartLinkIds = new ArrayList<Integer>();
 	private final List<Integer> mEndLinkIds = new ArrayList<Integer>();
 
-	private boolean firstClick;
+	int[] IDs;
 	private int idForm;
+	private String ID;
+	
+	private SegmentType type;
 
 	
 	
 	
 	public CanvasItem(Scene scene, SegmentType type, String name, Control control) {
 
+		
 		this.setOnMousePressed(circleOnMousePressedEventHandler);
 		this.setOnMouseDragged(circleOnMouseDraggedEventHandler);
 		this.setOnMouseReleased(onMouseReleaseEventHandler);
-
-		this.firstClick = true;
+		
+		System.out.println(type.name() + "Name");
+		this.setType(type);
+		System.out.println("pred ID");		
+		IDs = control.createForm(this);
+		System.out.println("ZA id1");
+		idForm = IDs[0];
+		System.out.println("ZA id2");
+		ID = type.name() + "_"+ String.format("%03d", IDs[1]);
+		System.out.println("ZA id2");
+		
 		this.scene = scene;
 		this.control = control;
-		this.segmentInfo = new InfoBoxSegment(this, type, name, scene, control);
+		System.out.println("pred segmentem");
+		this.segmentInfo = new InfoBoxSegment(this, type, name);
+		System.out.println("ZA segmentem");
 		this.length = segmentInfo.getLength();
 		this.getChildren().add(segmentInfo);
 
@@ -68,7 +83,7 @@ public class CanvasItem extends AnchorPane {
 
 			}
 
-		});
+});
 
 	}
 
@@ -90,7 +105,7 @@ public class CanvasItem extends AnchorPane {
 			} else {
 
 				if (t.getClickCount() == 2) {
-					pressedHandleControl();
+					control.getForms().get(idForm).show();
 
 				} else {
 
@@ -160,18 +175,11 @@ public class CanvasItem extends AnchorPane {
 		}
 	};
 
-	public void pressedHandleControl() {
 
-		if (firstClick) {
-			idForm = control.createForm(segmentInfo);
-			firstClick = false;
-		} else {
-			control.getForms().get(idForm).show();
-		}
-
+	public void setNameText(String name){
+		
+		segmentInfo.setNameText(name);
 	}
-
-	
 	
 	/*** Getrs and Setrs ***/
 	
@@ -190,5 +198,31 @@ public class CanvasItem extends AnchorPane {
 	public void setCanvas(DragAndDropCanvas canvas) {
 		this.canvas = canvas;
 	}
+
+	public String getID() {
+		return ID;
+	}
+
+	public void setID(String iD) {
+		ID = iD;
+	}
+
+	public int getIdForm() {
+		return idForm;
+	}
+
+	public void setIdForm(int idForm) {
+		this.idForm = idForm;
+	}
+
+	public SegmentType getType() {
+		return type;
+	}
+
+	public void setType(SegmentType type) {
+		this.type = type;
+	}
+	
+	
 
 }

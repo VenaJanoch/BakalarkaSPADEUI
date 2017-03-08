@@ -1,7 +1,6 @@
 package Grafika;
 
 import Obsluha.Constans;
-import Obsluha.PrepinacObrazovek;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;

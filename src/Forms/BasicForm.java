@@ -3,6 +3,7 @@ package Forms;
 
 import java.util.ArrayList;
 
+import Grafika.CanvasItem;
 import Grafika.InfoBoxSegment;
 import Grafika.MenuPanel;
 import Obsluha.Constans;
@@ -37,20 +38,20 @@ public class BasicForm extends Stage{
 	private HBox buttonBox;
 
 	
-	private InfoBoxSegment infoBox;
+	private CanvasItem item;
 	
-	public BasicForm(InfoBoxSegment infoBox) {
+	public BasicForm(CanvasItem item) {
 
 		super();
 		
-		this.infoBox = infoBox;
+		this.item = item;
 		
-		this.setTitle("Edit " + infoBox.getSegmentName().getText());
+		this.setTitle("Edit " + item.getType().name());
 		
 		mainPanel = new BorderPane();
 		
 		this.setScene(creatScene());
-		this.show();
+		
 	}
 
 	private Scene creatScene() {
@@ -106,12 +107,12 @@ public class BasicForm extends Stage{
 		this.name = name;
 	}
 
-	public InfoBoxSegment getInfoBox() {
-		return infoBox;
+	public CanvasItem getCanvasItem() {
+		return item;
 	}
 
-	public void setInfoBox(InfoBoxSegment infoBox) {
-		this.infoBox = infoBox;
+	public void setCanvasItem(CanvasItem item) {
+		this.item = item;
 	}
 
 	public TextField getNameTF() {
