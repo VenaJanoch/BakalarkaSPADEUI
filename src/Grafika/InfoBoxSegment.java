@@ -1,20 +1,11 @@
 package Grafika;
 
-import Forms.BasicForm;
-import Forms.PhaseForm;
 import Obsluha.Constans;
-import Obsluha.Control;
 import Obsluha.SegmentType;
-import javafx.event.EventHandler;
 import javafx.scene.Group;
-import javafx.scene.Scene;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Arc;
-import javafx.scene.shape.ArcType;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
-import javafx.stage.Stage;
 
 public class InfoBoxSegment extends Group {
 
@@ -24,25 +15,23 @@ public class InfoBoxSegment extends Group {
 	private Text name;
 	private double length;
 	private CanvasItem canItem;
+	private double height;
 
 	public InfoBoxSegment(CanvasItem canItem, SegmentType type, String name) {
 		super();
-		System.out.println(type.toString() + " nevim1");
 		this.canItem = canItem;
 		this.name = new Text(name);
-		
-		System.out.println(type.toString() + " nevim2");
-		System.out.println(type.toString() + " nevim3");
-		
+
 		this.segmentName = new Text(type.name());
 		this.length = this.segmentName.getLayoutBounds().getWidth() + Constans.offset * 2;
+
 		if (length < 40) {
-			length = 40.0;
+			length = 42.0;
 		}
+
 		this.topRectangle = new Rectangle(length, 20);
 		this.botomRectangle = new Rectangle(length, 20);
 		this.getChildren().addAll(topRectangle, botomRectangle, this.segmentName, this.name);
-		
 
 		createBlock();
 
@@ -68,29 +57,46 @@ public class InfoBoxSegment extends Group {
 		name.setTranslateX(Constans.offset);
 		name.setTranslateY(33);
 
+		height = botomRectangle.getHeight();
+
 	}
 
 	public void setNameText(String nameStr) {
-		name.setText(nameStr);
-		if (name.getLayoutBounds().getWidth() > length) {
-			repaintBox(name.getLayoutBounds().getWidth());
 
+		Text testname = new Text(nameStr);
+		double width = testname.getLayoutBounds().getWidth();
+
+		name.setText(nameStr);
+		name.setWrappingWidth(Constans.maxCanvasItemWidth);
+
+		if (width > length && width < Constans.maxCanvasItemWidth) {
+			repaintBox(width, height);
+
+		} else if (width > Constans.maxCanvasItemWidth) {
+			int count = countHeightBotomRectangle((int) width);
+			repaintBox(Constans.maxCanvasItemWidth, count * height);
 		}
 
 	}
 
-	public void repaintBox(double width) {
+	private int countHeightBotomRectangle(int width) {
+
+		int row = width / (int) Constans.maxCanvasItemWidth;
+
+		return row + 1;
+	}
+
+	public void repaintBox(double width, double height) {
 
 		length = width + 2 * Constans.offset;
 
 		topRectangle.setWidth(length);
 		botomRectangle.setWidth(length);
+		botomRectangle.setHeight(height);
 
 	}
 
-	
 	/** Getrs and Setrs **/
-	
 
 	public Text getSegmentName() {
 		return segmentName;
@@ -116,5 +122,4 @@ public class InfoBoxSegment extends Group {
 		this.name = name;
 	}
 
-	
 }

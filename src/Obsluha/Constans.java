@@ -14,9 +14,7 @@ public class Constans {
 	public static final int countDragItems = 13;
 	public static final int countItemsBox = 6;
 	
-	public static final float xRadius = 10f;
-	public static final float yRadius = 10f;
-	public static final float angleLength = 180f;
+	public static final double maxCanvasItemWidth = 100; 
 	
 	
 }

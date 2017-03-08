@@ -57,16 +57,27 @@ public class Control {
 	public void ArrowManipulation(CanvasItem item) {
 
 		if (!isStartArrow()) {
+		
 			id = idCreater.createLineID();
+			System.out.println(id + " start1");
+			
 			link = new NodeLink(id);
+			
 			item.getCanvas().getChildren().add(link);
+			
 			getArrows().add(id, link);
+			
 			link.setStart(new Point2D(item.getTranslateX() + (item.getWidth()),
 					item.getTranslateY() + (item.getHeight() / 2)));
+			
 			item.registerStartLink(id);
+			
 			setStartArrow(true);
 
 		} else {
+			
+			System.out.println(id + " konec1");
+			
 			link.setEnd(new Point2D(item.getTranslateX(), item.getTranslateY() + (item.getHeight() / 2)));
 			item.registerEndLink(id);
 			setStartArrow(false);
@@ -94,13 +105,11 @@ public class Control {
 		int[] IDs = new int[2];
 		switch (sType) {
 		case Phase:
-
 			forms.add(index, new PhaseForm(item));
 			index++;
 			IDs[0] = index - 1;
 			IDs[1] = idCreater.createPhaseID();
 			return IDs;
-
 		case Iteration:
 			forms.add(index, new IterationForm(item));
 			IDs[0] = index;
@@ -145,17 +154,9 @@ public class Control {
 			return IDs;
 		case Branch:
 			forms.add(index, new BranchForm(item));
-			System.out.println("Branch");
 			IDs[0] = index;
-			System.out.println("Branch1");
-
 			index++;
-			System.out.println("Branch2");
-
 			IDs[1] = idCreater.createBranchID();
-
-			System.out.println("Branch3");
-
 			return IDs;
 		case Change:
 			forms.add(index, new ChangeForm(item));

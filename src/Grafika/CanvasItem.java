@@ -13,6 +13,7 @@ import javafx.fxml.FXML;
 import javafx.geometry.Point2D;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.control.Tooltip;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.MouseButton;
@@ -27,10 +28,12 @@ public class CanvasItem extends AnchorPane {
 	private InfoBoxSegment segmentInfo;
 	private double orgSceneX, orgSceneY;
 	private double orgTranslateX, orgTranslateY;
-	
+
 	private double length;
 	private Scene scene;
 	private Control control;
+
+	private Tooltip tooltip;
 
 	private NodeLink mDragLink = null;
 	private DragAndDropCanvas canvas = null;
@@ -41,34 +44,26 @@ public class CanvasItem extends AnchorPane {
 	int[] IDs;
 	private int idForm;
 	private String ID;
-	
+
 	private SegmentType type;
 
-	
-	
-	
 	public CanvasItem(Scene scene, SegmentType type, String name, Control control) {
 
-		
 		this.setOnMousePressed(circleOnMousePressedEventHandler);
 		this.setOnMouseDragged(circleOnMouseDraggedEventHandler);
 		this.setOnMouseReleased(onMouseReleaseEventHandler);
-		
-		System.out.println(type.name() + "Name");
+
 		this.setType(type);
-		System.out.println("pred ID");		
 		IDs = control.createForm(this);
-		System.out.println("ZA id1");
 		idForm = IDs[0];
-		System.out.println("ZA id2");
-		ID = type.name() + "_"+ String.format("%03d", IDs[1]);
-		System.out.println("ZA id2");
-		
+		ID = type.name() + "_" + String.format("%03d", IDs[1]);
+
+		this.tooltip = new Tooltip(ID);
+		Tooltip.install(this, tooltip);
+
 		this.scene = scene;
 		this.control = control;
-		System.out.println("pred segmentem");
 		this.segmentInfo = new InfoBoxSegment(this, type, name);
-		System.out.println("ZA segmentem");
 		this.length = segmentInfo.getLength();
 		this.getChildren().add(segmentInfo);
 
@@ -83,15 +78,7 @@ public class CanvasItem extends AnchorPane {
 
 			}
 
-});
-
-	}
-
-	public void setNewCoordStartLine() {
-
-	}
-
-	public void setNewCoordendLine() {
+		});
 
 	}
 
@@ -135,7 +122,7 @@ public class CanvasItem extends AnchorPane {
 
 		@Override
 		public void handle(MouseEvent t) {
-			
+
 			repaintStartArrow();
 			repaintEndArrow();
 
@@ -146,6 +133,7 @@ public class CanvasItem extends AnchorPane {
 	private void repaintStartArrow() {
 
 		for (int i = 0; i < mStartLinkIds.size(); i++) {
+
 			control.getArrows().get(mStartLinkIds.get(i))
 					.setStart(new Point2D(getTranslateX() + (getWidth()), getTranslateY() + (getHeight() / 2)));
 		}
@@ -154,7 +142,8 @@ public class CanvasItem extends AnchorPane {
 	private void repaintEndArrow() {
 		for (int i = 0; i < mEndLinkIds.size(); i++) {
 
-			control.getArrows().get(i).setEnd(new Point2D(getTranslateX(), getTranslateY() + (getHeight() / 2)));
+			control.getArrows().get(mEndLinkIds.get(i))
+					.setEnd(new Point2D(getTranslateX(), getTranslateY() + (getHeight() / 2)));
 		}
 
 	}
@@ -175,14 +164,13 @@ public class CanvasItem extends AnchorPane {
 		}
 	};
 
+	public void setNameText(String name) {
 
-	public void setNameText(String name){
-		
 		segmentInfo.setNameText(name);
 	}
-	
+
 	/*** Getrs and Setrs ***/
-	
+
 	public void registerStartLink(int linkId) {
 		mStartLinkIds.add(linkId);
 	}
@@ -222,7 +210,5 @@ public class CanvasItem extends AnchorPane {
 	public void setType(SegmentType type) {
 		this.type = type;
 	}
-	
-	
 
 }
