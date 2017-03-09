@@ -113,8 +113,12 @@ public class CanvasItem extends AnchorPane {
 		double newTranslateX = orgTranslateX + offsetX;
 		double newTranslateY = orgTranslateY + offsetY;
 
-		((AnchorPane) (t.getSource())).setTranslateX(newTranslateX);
-		((AnchorPane) (t.getSource())).setTranslateY(newTranslateY);
+		if (t.getSceneX() > 0 && t.getSceneX() < canvas.getWidth() && t.getSceneY() > canvas.getTranslateY() + 90
+				&& t.getSceneY() < canvas.getHeight() + 50) {
+			((AnchorPane) (t.getSource())).setTranslateX(newTranslateX);
+			((AnchorPane) (t.getSource())).setTranslateY(newTranslateY);
+
+		}
 
 	}
 
@@ -136,14 +140,17 @@ public class CanvasItem extends AnchorPane {
 
 			control.getArrows().get(mStartLinkIds.get(i))
 					.setStart(new Point2D(getTranslateX() + (getWidth()), getTranslateY() + (getHeight() / 2)));
+			control.getArrows().get(mStartLinkIds.get(i)).setTFCoordinate();
 		}
 	}
 
 	private void repaintEndArrow() {
+
 		for (int i = 0; i < mEndLinkIds.size(); i++) {
 
 			control.getArrows().get(mEndLinkIds.get(i))
 					.setEnd(new Point2D(getTranslateX(), getTranslateY() + (getHeight() / 2)));
+			control.getArrows().get(mEndLinkIds.get(i)).setTFCoordinate();
 		}
 
 	}

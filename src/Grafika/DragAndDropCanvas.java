@@ -30,6 +30,7 @@ public class DragAndDropCanvas extends AnchorPane{
 		
 		super();
 		this.control = control;
+		this.setBackground(new Background(new BackgroundFill(Color.AQUA, CornerRadii.EMPTY, Insets.EMPTY)));
 		this.setOnDragOver(new EventHandler<DragEvent>() {
 			public void handle(DragEvent event) {
 				/* data is dragged over the target */
