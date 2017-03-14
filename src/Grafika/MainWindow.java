@@ -1,5 +1,6 @@
 package Grafika;
 
+import Forms.ProjectForm;
 import Obsluha.Constans;
 import Obsluha.Control;
 import Run.Main;
@@ -39,8 +40,8 @@ public class MainWindow extends Stage {
 
 	private Parent creatPanel() {
 		dragCanvas = new DragAndDropCanvas(control);
-		menu = new MenuPanel();
-		dragAndDrop = new DragAndDropPanel(control);
+		menu = new MenuPanel(control);
+		dragAndDrop = new DragAndDropPanel(control,(ProjectForm)control.getForms().get(0));
 		VBox topPanel = new VBox();
 		
 		topPanel.getChildren().addAll(menu, dragAndDrop);

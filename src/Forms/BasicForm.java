@@ -1,12 +1,12 @@
 package Forms;
 
-
 import java.util.ArrayList;
 
 import Grafika.CanvasItem;
 import Grafika.InfoBoxSegment;
 import Grafika.MenuPanel;
 import Obsluha.Constans;
+import Obsluha.Control;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -21,74 +21,81 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-public class BasicForm extends Stage{
-	
-	
+public class BasicForm extends Stage {
+
 	private BorderPane mainPanel;
 	private Scene scena;
-	
+
 	private String name;
 	private Label nameLB;
 	private TextField nameTF;
 	private Button submitButton;
-	
-	
+
 	private ArrayList<HBox> infoParts;
 	private GridPane infoPart;
 	private HBox buttonBox;
 
-	
 	private CanvasItem item;
+	private Control control;
 	
-	public BasicForm(CanvasItem item) {
+	public BasicForm(CanvasItem item, Control control) {
 
 		super();
-		
+		this.control = control;
 		this.item = item;
-		
+
 		this.setTitle("Edit " + item.getType().name());
-		
+
 		mainPanel = new BorderPane();
-		
+
 		this.setScene(creatScene());
-		
+
+	}
+
+	public BasicForm(Control control) {
+		super();
+		this.control = control;
+		this.setTitle("Edit Project");
+
+		mainPanel = new BorderPane();
+
+		this.setScene(creatScene());
+
 	}
 
 	private Scene creatScene() {
 
 		scena = new Scene(creatPanel(), Constans.formWidth, Constans.formHeight);
-		
+
 		return scena;
 	}
 
 	private Parent creatPanel() {
-		mainPanel.setPadding(new Insets(5)); 
+		mainPanel.setPadding(new Insets(5));
 		buttonBox = new HBox(5);
 		infoPart = new GridPane();
-		
+
 		nameLB = new Label("Name: ");
 		nameTF = new TextField();
 		submitButton = new Button("OK");
 		nameLB.setAlignment(Pos.CENTER_RIGHT);
 		HBox nameBox = new HBox(5);
-		nameBox.getChildren().addAll(nameLB,nameTF);
-		
+		nameBox.getChildren().addAll(nameLB, nameTF);
+
 		buttonBox.getChildren().add(submitButton);
 		buttonBox.setAlignment(Pos.CENTER_RIGHT);
-	
+
 		infoPart.setPadding(new Insets(5));
 		infoPart.add(nameLB, 0, 0);
 		infoPart.add(nameTF, 1, 0);
 		infoPart.setHalignment(nameLB, HPos.RIGHT);
-		
+
 		mainPanel.setCenter(infoPart);
 		mainPanel.setBottom(buttonBox);
-		
+
 		return mainPanel;
 	}
 
-	
-	
 	/** Getrs and Setrs **/
 
 	public BorderPane getMainPanel() {
@@ -131,8 +138,6 @@ public class BasicForm extends Stage{
 		this.submitButton = submitButton;
 	}
 
-	
-
 	public void setButtonBox(HBox buttonBox) {
 		this.buttonBox = buttonBox;
 	}
@@ -144,13 +149,14 @@ public class BasicForm extends Stage{
 	public void setInfoPart(GridPane infoParts) {
 		this.infoPart = infoPart;
 	}
-	
-	
-	
-	
-	
-	
-	
+
+	public Control getControl() {
+		return control;
+	}
+
+	public void setControl(Control control) {
+		this.control = control;
+	}
 	
 
 }

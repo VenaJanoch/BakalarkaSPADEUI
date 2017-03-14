@@ -16,5 +16,6 @@ public class Constans {
 	
 	public static final double maxCanvasItemWidth = 100; 
 	
+	public static final String XSDNAME = "SPADE2.xsd";
 	
 }

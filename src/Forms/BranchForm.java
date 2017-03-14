@@ -3,6 +3,7 @@ package Forms;
 import Grafika.CanvasItem;
 import Grafika.InfoBoxSegment;
 import Interfaces.ISegmentForm;
+import Obsluha.Control;
 import javafx.event.EventHandler;
 import javafx.geometry.HPos;
 import javafx.scene.control.Label;
@@ -20,8 +21,8 @@ public class BranchForm extends BasicForm implements ISegmentForm {
 	private RadioButton rbYes;
 	private RadioButton rbNo;
 
-	public BranchForm(CanvasItem item) {
-		super(item);
+	public BranchForm(CanvasItem item, Control control) {
+		super(item, control);
 		this.setOnCloseRequest(new EventHandler<WindowEvent>() {
 
 			@Override

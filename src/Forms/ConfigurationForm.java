@@ -3,6 +3,7 @@ package Forms;
 import Grafika.CanvasItem;
 import Grafika.InfoBoxSegment;
 import Interfaces.ISegmentForm;
+import Obsluha.Control;
 import javafx.event.EventHandler;
 import javafx.geometry.HPos;
 import javafx.scene.control.DatePicker;
@@ -35,8 +36,8 @@ public class ConfigurationForm extends BasicForm implements ISegmentForm {
 	private TextField branchesTF;
 	private TextField authorRoleTF;
 
-	public ConfigurationForm(CanvasItem item) {
-		super(item);
+	public ConfigurationForm(CanvasItem item, Control control) {
+		super(item, control);
 
 		this.setOnCloseRequest(new EventHandler<WindowEvent>() {
 

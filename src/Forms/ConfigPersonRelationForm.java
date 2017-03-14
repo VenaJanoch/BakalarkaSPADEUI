@@ -3,6 +3,7 @@ package Forms;
 import Grafika.CanvasItem;
 import Grafika.InfoBoxSegment;
 import Interfaces.ISegmentForm;
+import Obsluha.Control;
 import javafx.event.EventHandler;
 import javafx.geometry.HPos;
 import javafx.scene.control.Label;
@@ -17,8 +18,8 @@ public class ConfigPersonRelationForm extends BasicForm implements ISegmentForm{
 	private TextField configurationTF;
 	private TextField personTF;
 	
-	public ConfigPersonRelationForm(CanvasItem item) {
-		super(item);
+	public ConfigPersonRelationForm(CanvasItem item, Control control) {
+		super(item, control);
 		this.setOnCloseRequest(new EventHandler<WindowEvent>() {
 
 			@Override

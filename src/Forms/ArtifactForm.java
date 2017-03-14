@@ -5,6 +5,7 @@ import javax.swing.text.html.MinimalHTMLWriter;
 import Grafika.CanvasItem;
 import Grafika.InfoBoxSegment;
 import Interfaces.ISegmentForm;
+import Obsluha.Control;
 import javafx.event.EventHandler;
 import javafx.geometry.HPos;
 import javafx.scene.control.DatePicker;
@@ -24,8 +25,8 @@ public class ArtifactForm extends BasicForm implements ISegmentForm {
 	private TextField authorRoleTF;
 	private TextField mineTypeTF;
 
-	public ArtifactForm(CanvasItem item) {
-		super(item);
+	public ArtifactForm(CanvasItem item, Control control) {
+		super(item, control);
 		this.setOnCloseRequest(new EventHandler<WindowEvent>() {
 
 			@Override

@@ -3,20 +3,21 @@ package Forms;
 import Grafika.CanvasItem;
 import Grafika.InfoBoxSegment;
 import Interfaces.ISegmentForm;
+import Obsluha.Control;
 import javafx.event.EventHandler;
 import javafx.geometry.HPos;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.WindowEvent;
 
-public class CriterionForm extends BasicForm implements ISegmentForm{
+public class CriterionForm extends BasicForm implements ISegmentForm {
 
 	private Label descriptionLB;
 
 	private TextField descriptionTF;
-	
-	public CriterionForm(CanvasItem item) {
-		super(item);
+
+	public CriterionForm(CanvasItem item, Control control) {
+		super(item, control);
 		this.setOnCloseRequest(new EventHandler<WindowEvent>() {
 
 			@Override
@@ -57,7 +58,6 @@ public class CriterionForm extends BasicForm implements ISegmentForm{
 		getInfoPart().setHalignment(descriptionLB, HPos.RIGHT);
 		getInfoPart().add(descriptionTF, 1, 1);
 
-	
 	}
 
 }

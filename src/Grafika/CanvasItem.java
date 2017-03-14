@@ -218,4 +218,22 @@ public class CanvasItem extends AnchorPane {
 		this.type = type;
 	}
 
+	public Control getControl() {
+		return control;
+	}
+
+	public void setControl(Control control) {
+		this.control = control;
+	}
+
+	public int[] getIDs() {
+		return IDs;
+	}
+
+	public void setIDs(int[] iDs) {
+		IDs = iDs;
+	}
+	
+	
+
 }

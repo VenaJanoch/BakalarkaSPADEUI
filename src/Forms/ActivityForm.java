@@ -3,6 +3,7 @@ package Forms;
 import Grafika.CanvasItem;
 import Grafika.InfoBoxSegment;
 import Interfaces.ISegmentForm;
+import Obsluha.Control;
 import javafx.event.EventHandler;
 import javafx.geometry.HPos;
 import javafx.scene.control.DatePicker;
@@ -18,8 +19,9 @@ public class ActivityForm extends BasicForm implements ISegmentForm {
 	private TextField descriptionTF;
 	private TextField workUnitsTF;
 	
-	public ActivityForm(CanvasItem item) {
-		super(item);
+	public ActivityForm(CanvasItem item, Control control) {
+		
+		super(item, control);
 		this.setOnCloseRequest(new EventHandler<WindowEvent>() {
 
 			@Override
@@ -37,7 +39,7 @@ public class ActivityForm extends BasicForm implements ISegmentForm {
 	public void closeForm() {
 
 		getCanvasItem().setNameText(getNameTF().getText());
-
+		getControl().fillActivity(getCanvasItem().getIDs()[1], descriptionTF.getText(), getNameTF().getText());
 	}
 
 	@Override

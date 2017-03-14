@@ -1,6 +1,7 @@
 package Grafika;
 
 import Obsluha.Constans;
+import Obsluha.Control;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
@@ -18,17 +19,18 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 
-public class MenuPanel extends VBox{
-	
-	public MenuPanel() {
-	super();
-	this.setBackground(new Background(new BackgroundFill(Color.BLUE, CornerRadii.EMPTY, Insets.EMPTY)));
-	this.setMinWidth(Constans.width);
-	createMenu();
+public class MenuPanel extends VBox {
+	Control control;
+
+	public MenuPanel(Control control) {
+		super();
+		this.control = control;
+		this.setBackground(new Background(new BackgroundFill(Color.BLUE, CornerRadii.EMPTY, Insets.EMPTY)));
+		this.setMinWidth(Constans.width);
+		createMenu();
 
 	}
-	
-	
+
 	private void createMenu(){
 		
 MenuBar menuMB = new MenuBar();
@@ -36,16 +38,17 @@ MenuBar menuMB = new MenuBar();
 		Menu fileMenu = new Menu("File");
 		MenuItem newItem = new MenuItem("New");
 		MenuItem openItem = new MenuItem("Open");
-		MenuItem closeItem = new MenuItem("Close");
+		MenuItem saveItem = new MenuItem("Save");
 		MenuItem exitItem = new MenuItem("Exit");
-		fileMenu.getItems().addAll(newItem, openItem, new SeparatorMenuItem(),
-				closeItem, new SeparatorMenuItem(), exitItem);
+		fileMenu.getItems().addAll(newItem,new SeparatorMenuItem(), openItem, new SeparatorMenuItem(),
+				saveItem, new SeparatorMenuItem(), exitItem);
 		
 		exitItem.setOnAction(ActionEvent -> Platform.exit());
+		saveItem.setOnAction(event -> control.saveFile());
+		openItem.setOnAction(event -> control.openFile());
 		menuMB.getMenus().addAll(fileMenu);		
 		
 		this.getChildren().add(menuMB);
 	}
-	
-	
+
 }
