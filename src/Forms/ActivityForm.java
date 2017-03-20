@@ -4,6 +4,7 @@ import Grafika.CanvasItem;
 import Grafika.InfoBoxSegment;
 import Interfaces.ISegmentForm;
 import Obsluha.Control;
+import SPADEPAC.Activity;
 import javafx.event.EventHandler;
 import javafx.geometry.HPos;
 import javafx.scene.control.DatePicker;
@@ -13,15 +14,14 @@ import javafx.stage.WindowEvent;
 
 public class ActivityForm extends BasicForm implements ISegmentForm {
 
-	private Label workUnitsLB;
 	private Label descriptionLB;
 
 	private TextField descriptionTF;
-	private TextField workUnitsTF;
 	
-	public ActivityForm(CanvasItem item, Control control) {
+	public ActivityForm(CanvasItem item, Control control,int[] itemArray, Activity activity) {
 		
-		super(item, control);
+		super(item, control, itemArray);
+		setWorkUnitArray(activity.getWorkUnits());
 		this.setOnCloseRequest(new EventHandler<WindowEvent>() {
 
 			@Override
@@ -39,7 +39,7 @@ public class ActivityForm extends BasicForm implements ISegmentForm {
 	public void closeForm() {
 
 		getCanvasItem().setNameText(getNameTF().getText());
-		getControl().fillActivity(getCanvasItem().getIDs()[1], descriptionTF.getText(), getNameTF().getText());
+		getControl().fillActivity(getCanvasItem().getForm(),getCanvasItem().getIDs()[1], descriptionTF.getText(), getNameTF().getText());
 	}
 
 	@Override
@@ -50,8 +50,6 @@ public class ActivityForm extends BasicForm implements ISegmentForm {
 
 	@Override
 	public void createForm() {
-			workUnitsLB = new Label("Work Units: ");
-		workUnitsTF = new TextField();
 		descriptionLB = new Label("Description: ");
 		descriptionTF = new TextField();
 		
@@ -64,12 +62,7 @@ public class ActivityForm extends BasicForm implements ISegmentForm {
 		getInfoPart().add(descriptionLB,0,1); 
 		getInfoPart().setHalignment(descriptionLB, HPos.RIGHT);
 		getInfoPart().add(descriptionTF,1,1);
-		
-		
-		getInfoPart().add(workUnitsLB,0,4); 
-		getInfoPart().setHalignment(workUnitsLB, HPos.RIGHT);
-		getInfoPart().add(workUnitsTF,1,4);	
-		
+			
 	}
 	
 	

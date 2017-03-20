@@ -4,40 +4,51 @@ import Grafika.CanvasItem;
 import Grafika.InfoBoxSegment;
 import Interfaces.ISegmentForm;
 import Obsluha.Control;
+import Obsluha.SegmentType;
+import SPADEPAC.Configuration;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
 import javafx.geometry.HPos;
+import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleGroup;
 import javafx.stage.WindowEvent;
 
 public class ConfigurationForm extends BasicForm implements ISegmentForm {
+
+	private boolean isRelease;
 
 	private Label isMainLB;
 
 	final ToggleGroup group = new ToggleGroup();
 
 	private Label createdLB;
-	private Label artifactsLB;
-	private Label changesLB;
 	private Label isReleaseLB;
-	private Label tagsLB;
-	private Label branchesLB;
 	private Label authorRoleLB;
 
 	private RadioButton rbYes;
 	private RadioButton rbNo;
 	private DatePicker createdDP;
-	private TextField artifactsTF;
-	private TextField changesTF;
-	private TextField tagsTF;
-	private TextField branchesTF;
-	private TextField authorRoleTF;
+	private ComboBox<String> authorRoleCB;
 
-	public ConfigurationForm(CanvasItem item, Control control) {
-		super(item, control);
+	private int authorIndex;
+	private Button newRoleBT;
+
+	private Configuration configuration;
+
+	public ConfigurationForm(CanvasItem item, Control control, int[] itemArray, Configuration conf) {
+		super(item, control, itemArray);
+		this.configuration = conf;
+
+		setBranchArray(conf.getBranches());
+		setChangeArray(conf.getChanges());
+		setArtifactArray(conf.getArtifacts());
 
 		this.setOnCloseRequest(new EventHandler<WindowEvent>() {
 
@@ -54,8 +65,10 @@ public class ConfigurationForm extends BasicForm implements ISegmentForm {
 
 	@Override
 	public void closeForm() {
-
-		getCanvasItem().setNameText(getNameTF().getText());
+		setName(getNameTF().getText());
+		getCanvasItem().setNameText(getName());
+		getControl().fillConfiguration(configuration, getCanvasItem().getIDs()[2], isRelease, createdDP.getValue(),
+				getName(), authorIndex);
 
 	}
 
@@ -71,28 +84,28 @@ public class ConfigurationForm extends BasicForm implements ISegmentForm {
 		createdLB = new Label("Created: ");
 		createdDP = new DatePicker();
 
-		artifactsLB = new Label("Artifact: ");
-		artifactsTF = new TextField();
-
-		changesLB = new Label("Changes: ");
-		changesTF = new TextField();
-
 		isReleaseLB = new Label("Release: ");
 		rbNo = new RadioButton("No");
 		rbNo.setToggleGroup(group);
 		rbYes = new RadioButton("Yes");
 		rbYes.setToggleGroup(group);
 
-		tagsLB = new Label("Tags: ");
-		tagsTF = new TextField();
-
-		branchesLB = new Label("Branches: ");
-		branchesTF = new TextField();
-
 		authorRoleLB = new Label("Author-role: ");
-		authorRoleTF = new TextField();
+		authorRoleCB = new ComboBox<String>(getControl().getRoleObservable());
+		authorRoleCB.setVisibleRowCount(5);
+		authorRoleCB.getSelectionModel().selectedIndexProperty().addListener(roleListenerAut);
+		newRoleBT = new Button("New");
+		newRoleBT.setOnAction(event -> artifactBTAction());
 
 		fillInfoPart();
+	}
+
+	private void artifactBTAction() {
+		CanvasItem item = new CanvasItem(SegmentType.Role, "Name", getControl(), this);
+
+		getControl().createForm(item, this);
+		getControl().getForms().get(item.getIDs()[0]).show();
+
 	}
 
 	private void fillInfoPart() {
@@ -101,31 +114,45 @@ public class ConfigurationForm extends BasicForm implements ISegmentForm {
 		getInfoPart().setHalignment(createdLB, HPos.RIGHT);
 		getInfoPart().add(createdDP, 1, 1);
 
-		getInfoPart().add(artifactsLB, 0, 2);
-		getInfoPart().setHalignment(artifactsLB, HPos.RIGHT);
-		getInfoPart().add(artifactsTF, 1, 2);
-
-		getInfoPart().add(changesLB, 0, 3);
-		getInfoPart().setHalignment(changesLB, HPos.RIGHT);
-		getInfoPart().add(changesTF, 1, 3);
-
-		getInfoPart().add(isReleaseLB, 0, 4);
-		getInfoPart().setHalignment(isReleaseLB, HPos.RIGHT);
-		getInfoPart().add(rbYes, 1, 4);
-		getInfoPart().add(rbNo, 2, 4);
-
-		getInfoPart().add(tagsLB, 0, 5);
-		getInfoPart().setHalignment(tagsLB, HPos.RIGHT);
-		getInfoPart().add(tagsTF, 1, 5);
-
-		getInfoPart().add(branchesLB, 0, 6);
-		getInfoPart().setHalignment(branchesLB, HPos.RIGHT);
-		getInfoPart().add(branchesTF, 1, 6);
-
-		getInfoPart().add(authorRoleLB, 0, 7);
+		getInfoPart().add(authorRoleLB, 0, 2);
 		getInfoPart().setHalignment(authorRoleLB, HPos.RIGHT);
-		getInfoPart().add(authorRoleTF, 1, 7);
+		getInfoPart().add(authorRoleCB, 1, 2);
+		getInfoPart().add(newRoleBT, 2, 2);
 
+		group.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
+
+			@Override
+			public void changed(ObservableValue<? extends Toggle> observable, Toggle oldValue, Toggle newValue) {
+				RadioButton chk = (RadioButton) newValue.getToggleGroup().getSelectedToggle();
+
+				if (chk.getText().contains("Yes")) {
+					isRelease = true;
+				} else {
+					isRelease = false;
+				}
+
+			}
+		});
+
+	}
+
+	ChangeListener<Number> roleListenerAut = new ChangeListener<Number>() {
+
+		@Override
+		public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+			authorIndex = newValue.intValue();
+
+		}
+	};
+
+	/*** Getrs and Setrs ***/
+
+	public Configuration getConfiguration() {
+		return configuration;
+	}
+
+	public void setConfiguration(Configuration configuration) {
+		this.configuration = configuration;
 	}
 
 }

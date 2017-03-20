@@ -3,19 +3,19 @@ package Obsluha;
 
 public class IdentificatorCreater {
 
-	private static int linesID = -1;
-	private static int phaseID = -1 ;
-	private static int iterationID = -1;
-	private static int activityID = -1;
-	private static int workUnitID = -1;
-	private static int milestoneID = -1;
-	private static int criteriumID = -1;
-	private static int roleID = -1;
-	private static int branchID = -1;
-	private static int changeID = -1;
-	private static int artifactID = -1;
-	private static int configPRID = -1;
-	private static int configID = -1;
+	private int linesID = -1;
+	private int phaseID = -1 ;
+	private int iterationID = -1;
+	private int activityID = -1;
+	private int workUnitID = -1;
+	private int milestoneID = -1;
+	private int criteriumID = -1;
+	private int roleID = -1;
+	private int branchID = -1;
+	private int changeID = -1;
+	private int artifactID = -1;
+	private int configPRID = -1;
+	private int configID = -1;
 	
 	public IdentificatorCreater() {
 

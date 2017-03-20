@@ -6,8 +6,17 @@ import Grafika.CanvasItem;
 import Grafika.InfoBoxSegment;
 import Interfaces.ISegmentForm;
 import Obsluha.Control;
+import Obsluha.SegmentType;
+import SPADEPAC.Artifact;
+import SPADEPAC.ArtifactClass;
+import SPADEPAC.WorkUnitPriorityClass;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
 import javafx.event.EventHandler;
 import javafx.geometry.HPos;
+import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -22,11 +31,19 @@ public class ArtifactForm extends BasicForm implements ISegmentForm {
 
 	private TextField descriptionTF;
 	private DatePicker createdDP;
-	private TextField authorRoleTF;
-	private TextField mineTypeTF;
+	private ComboBox<String> authorRoleCB;
+	private ComboBox<ArtifactClass> mineTypeCB;
 
-	public ArtifactForm(CanvasItem item, Control control) {
+	private int typeIndex;
+	private int authorIndex;
+
+	private Artifact artifact;
+
+	private Button newRoleBT;
+
+	public ArtifactForm(CanvasItem item, Control control, Artifact artifact) {
 		super(item, control);
+		this.artifact = artifact;
 		this.setOnCloseRequest(new EventHandler<WindowEvent>() {
 
 			@Override
@@ -42,8 +59,10 @@ public class ArtifactForm extends BasicForm implements ISegmentForm {
 
 	@Override
 	public void closeForm() {
-
-		getCanvasItem().setNameText(getNameTF().getText());
+		setName(getNameTF().getText());
+		getCanvasItem().setNameText(getName());
+		getControl().fillArtifact(artifact, getCanvasItem().getIDs()[2], descriptionTF.getText(), getName(),
+				createdDP.getValue(), ArtifactClass.values()[typeIndex].name(), authorIndex);
 
 	}
 
@@ -53,23 +72,57 @@ public class ArtifactForm extends BasicForm implements ISegmentForm {
 		close();
 	}
 
-	
 	@Override
 	public void createForm() {
 		createdLB = new Label("Created: ");
 		createdDP = new DatePicker();
-		
+
 		authorRoleLB = new Label("Author: ");
-		authorRoleTF = new TextField();
+		authorRoleCB = new ComboBox<String>(getControl().getRoleObservable());
+		authorRoleCB.setVisibleRowCount(5);
+		authorRoleCB.getSelectionModel().selectedIndexProperty().addListener(roleListenerAut);
 
 		mineTypeLB = new Label("Mine Type: ");
-		mineTypeTF = new TextField();
+		mineTypeCB = new ComboBox<ArtifactClass>(FXCollections.observableArrayList(ArtifactClass.values()));
+		mineTypeCB.getSelectionModel().selectedIndexProperty().addListener(typeListener);
+		mineTypeCB.setVisibleRowCount(5);
 
 		descriptionLB = new Label("Description: ");
 		descriptionTF = new TextField();
 
+		newRoleBT = new Button("New");
+		newRoleBT.setOnAction(event -> artifactBTAction());
+
 		fillInfoPart();
 	}
+
+	private void artifactBTAction() {
+		CanvasItem item = new CanvasItem(SegmentType.Role, "Name", getControl(), this);
+
+		getControl().createForm(item, this);
+		getControl().getForms().get(item.getIDs()[0]).show();
+
+	}
+
+	ChangeListener<Number> roleListenerAut = new ChangeListener<Number>() {
+
+		@Override
+		public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+			authorIndex = newValue.intValue();
+
+		}
+	};
+
+	ChangeListener<Number> typeListener = new ChangeListener<Number>() {
+
+		@Override
+		public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+
+			System.out.println(newValue.intValue());
+			typeIndex = newValue.intValue();
+
+		}
+	};
 
 	private void fillInfoPart() {
 
@@ -83,13 +136,13 @@ public class ArtifactForm extends BasicForm implements ISegmentForm {
 
 		getInfoPart().add(authorRoleLB, 0, 3);
 		getInfoPart().setHalignment(authorRoleLB, HPos.RIGHT);
-		getInfoPart().add(authorRoleTF, 1, 3);
+		getInfoPart().add(authorRoleCB, 1, 3);
+		getInfoPart().add(newRoleBT, 2, 3);
 
 		getInfoPart().add(mineTypeLB, 0, 4);
 		getInfoPart().setHalignment(mineTypeLB, HPos.RIGHT);
-		getInfoPart().add(mineTypeTF, 1, 4);
+		getInfoPart().add(mineTypeCB, 1, 4);
 
-		
 	}
 
 }

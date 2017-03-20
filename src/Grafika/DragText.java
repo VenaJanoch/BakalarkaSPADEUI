@@ -29,7 +29,7 @@ public class DragText extends Text {
 
 		this.setOnDragDetected(new EventHandler<MouseEvent>() {
 			public void handle(MouseEvent event) {
-				System.out.println("onDragDetected");
+				//System.out.println("onDragDetected");
 				dragDetected();
 				event.consume();
 			}
@@ -50,7 +50,7 @@ public class DragText extends Text {
 	this.setOnDragDone(new EventHandler<DragEvent>() {
 		public void handle(DragEvent event) {
 			/* the drag-and-drop gesture ended */
-			System.out.println("onDragDone");
+			//System.out.println("onDragDone");
 			/* if the data was successfully moved, clear it */
 			if (event.getTransferMode() == TransferMode.MOVE) {
 				

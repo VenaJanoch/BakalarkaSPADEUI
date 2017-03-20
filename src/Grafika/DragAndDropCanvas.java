@@ -1,7 +1,6 @@
 package Grafika;
 
-
-
+import Forms.BasicForm;
 import Obsluha.Control;
 import Obsluha.SegmentType;
 import javafx.event.EventHandler;
@@ -22,19 +21,22 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 
-public class DragAndDropCanvas extends AnchorPane{
+public class DragAndDropCanvas extends AnchorPane {
 
 	private Scene mScene;
-	private Control control; 
-	public DragAndDropCanvas( Control control) {
-		
+	private Control control;
+	private BasicForm form;
+
+	public DragAndDropCanvas(Control control, BasicForm form) {
+
 		super();
 		this.control = control;
-		this.setBackground(new Background(new BackgroundFill(Color.AQUA, CornerRadii.EMPTY, Insets.EMPTY)));
+		this.form = form;
+		this.setBackground(new Background(new BackgroundFill(Color.ANTIQUEWHITE, CornerRadii.EMPTY, Insets.EMPTY)));
 		this.setOnDragOver(new EventHandler<DragEvent>() {
 			public void handle(DragEvent event) {
 				/* data is dragged over the target */
-				
+
 				/*
 				 * accept it only if it is not dragged from the same node and if
 				 * it has a string data
@@ -55,7 +57,7 @@ public class DragAndDropCanvas extends AnchorPane{
 				/* the drag-and-drop gesture entered the target */
 				/* show to the user that it is an actual gesture target */
 				if (event.getGestureSource() != this && event.getDragboard().hasString()) {
-							}
+				}
 
 				event.consume();
 			}
@@ -64,7 +66,9 @@ public class DragAndDropCanvas extends AnchorPane{
 		this.setOnDragExited(new EventHandler<DragEvent>() {
 			public void handle(DragEvent event) {
 				/* mouse moved away, remove the graphical cues */
-			//	this.setBackground(new Background(new BackgroundFill(Color.BLUE, CornerRadii.EMPTY, Insets.EMPTY)));
+				// this.setBackground(new Background(new
+				// BackgroundFill(Color.BLUE, CornerRadii.EMPTY,
+				// Insets.EMPTY)));
 
 				event.consume();
 			}
@@ -77,9 +81,9 @@ public class DragAndDropCanvas extends AnchorPane{
 				Dragboard db = event.getDragboard();
 				boolean success = false;
 				if (db.hasString()) {
-				addItem(db.getString());
-				
-				success = true;
+					addItem(db.getString());
+
+					success = true;
 				}
 				/*
 				 * let the source know whether the string was successfully
@@ -95,11 +99,10 @@ public class DragAndDropCanvas extends AnchorPane{
 	}
 
 	private void addItem(String segment) {
-		
+
 		SegmentType type = control.findSegmentType(segment);
 		System.out.println(type.name());
-		this.getChildren().add(new CanvasItem(mScene,type, "Name", control));
-		//this.getChildren().add(new Ctverec(30,30));
+		this.getChildren().add(new CanvasItem(type, "Name", control, form));
 
 	}
 
@@ -111,6 +114,4 @@ public class DragAndDropCanvas extends AnchorPane{
 		this.mScene = scene;
 	}
 
-
-	
 }

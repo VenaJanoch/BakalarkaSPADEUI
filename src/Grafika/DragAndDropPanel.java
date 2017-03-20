@@ -1,12 +1,18 @@
 package Grafika;
 
 import Forms.ProjectForm;
+import Obsluha.Constans;
 import Obsluha.Control;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.control.Button;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.HBox;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 
 public class DragAndDropPanel extends BorderPane {
@@ -21,9 +27,12 @@ public class DragAndDropPanel extends BorderPane {
 
 		super();
 		this.control = control;
-		this.buttonBox = new HBox();
+		this.buttonBox = new HBox(5);
+		this.setPadding(new Insets(10));
 		this.projectForm = projectForm;
-		items = new DragAndDropItem(control);
+		this.setBackground(new Background(new BackgroundFill(Color.BROWN, CornerRadii.EMPTY, Insets.EMPTY)));
+
+		items = new DragAndDropItem(control, Constans.projectDragTextIndexs);
 
 		formBT = new Button("Project");
 		arrowB = new Button("", new Line(0, 0, 10, 10));

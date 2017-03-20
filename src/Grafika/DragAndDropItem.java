@@ -23,39 +23,33 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 
 public class DragAndDropItem extends VBox {
-	HBox[] box;
-	DragText[] dragSegmnets;
+	private HBox box;
+	private DragText[] dragSegmnets;
+	private int[] itemArray; 
 	private Control control;
 
-	public DragAndDropItem(Control control) {
+	public DragAndDropItem(Control control, int[] itemArray) {
 		super(5);
+		this.itemArray = itemArray;
 		this.control = control;
 		this.setAlignment(Pos.CENTER);
-		this.setMinWidth(Constans.width);
-		//this.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
+		this.setMaxWidth(Constans.width);
+		//this.setBackground(new Background(new BackgroundFill(Color.BROWN, CornerRadii.EMPTY, Insets.EMPTY)));
 		this.setAlignment(Pos.CENTER);
-		dragSegmnets = new DragText[Constans.countDragItems];
+		dragSegmnets = new DragText[itemArray.length];
 		createDragItems();
 	}
 
 	public void createDragItems() {
 
-		int countBox = dragSegmnets.length / Constans.countItemsBox;
 		
-		box = new HBox[countBox];
+		box = new HBox(5);
+		box.setAlignment(Pos.CENTER);
 		
-		int k = 0, j;
-		for (int i = 0; i < box.length; i++) {
-			box[i] = new HBox(5);
-			box[i].setAlignment(Pos.CENTER);
-			for ( j = k ; j < (k+(dragSegmnets.length/countBox)); j++) {
-				dragSegmnets[j] = new DragText(SegmentType.values()[j]);
-				box[i].getChildren().add(dragSegmnets[j]);
-			
-			}
-			
-			k= j;
-
+		for (int i = 0; i < itemArray.length; i++) {
+				dragSegmnets[i] = new DragText(SegmentType.values()[itemArray[i]]);
+				box.getChildren().add(dragSegmnets[i]);
+		
 		}
 
 		this.getChildren().addAll(box);

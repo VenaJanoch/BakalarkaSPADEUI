@@ -34,7 +34,9 @@ public class CriterionForm extends BasicForm implements ISegmentForm {
 	@Override
 	public void closeForm() {
 
-		getCanvasItem().setNameText(getNameTF().getText());
+		setName(getNameTF().getText());
+		getCanvasItem().setNameText(getName());
+		getControl().fillCriterion(getCanvasItem().getForm(), getCanvasItem().getIDs()[2], descriptionTF.getText(), getName());
 
 	}
 

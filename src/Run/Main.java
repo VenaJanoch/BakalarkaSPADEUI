@@ -23,19 +23,13 @@ public class Main extends Application{
 		this.primaryStage = primaryStage;
 		this.primaryStage.show();
 		control = new Control();
+		
 		mainWindow = new MainWindow(this, control);
-		nastavObrazovku(mainWindow);
-		
+		this.primaryStage.setTitle(mainWindow.getTitle());
+		this.primaryStage.setScene(mainWindow.getScene());
+	
 	}
-	
-	
-
-	public void nastavObrazovku(Stage obrazovka){
-		this.primaryStage.setTitle(obrazovka.getTitle());
-		this.primaryStage.setScene(obrazovka.getScene());
 		
-	}
-	
 	/********* Getrs and Setrs *************/
 	public Stage getPrimaryStage() {
 		return primaryStage;

@@ -3,6 +3,7 @@ package Grafika;
 import java.util.ArrayList;
 import java.util.List;
 
+import Forms.BasicForm;
 import Obsluha.Constans;
 import Obsluha.Control;
 import Obsluha.SegmentType;
@@ -46,15 +47,16 @@ public class CanvasItem extends AnchorPane {
 	private String ID;
 
 	private SegmentType type;
+	private BasicForm form;
 
-	public CanvasItem(Scene scene, SegmentType type, String name, Control control) {
+	public CanvasItem(SegmentType type, String name, Control control, BasicForm rootForm) {
 
 		this.setOnMousePressed(circleOnMousePressedEventHandler);
 		this.setOnMouseDragged(circleOnMouseDraggedEventHandler);
 		this.setOnMouseReleased(onMouseReleaseEventHandler);
-
+		this.setForm(rootForm);
 		this.setType(type);
-		IDs = control.createForm(this);
+		IDs = control.createForm(this, rootForm);
 		idForm = IDs[0];
 		ID = type.name() + "_" + String.format("%03d", IDs[1]);
 
@@ -113,12 +115,12 @@ public class CanvasItem extends AnchorPane {
 		double newTranslateX = orgTranslateX + offsetX;
 		double newTranslateY = orgTranslateY + offsetY;
 
-		if (t.getSceneX() > 0 && t.getSceneX() < canvas.getWidth() && t.getSceneY() > canvas.getTranslateY() + 90
-				&& t.getSceneY() < canvas.getHeight() + 50) {
+	//	if (t.getSceneX() > 0 && t.getSceneX() < canvas.getWidth() && t.getSceneY() > canvas.getTranslateY() + 90
+		//		&& t.getSceneY() < canvas.getHeight() + 50) {
 			((AnchorPane) (t.getSource())).setTranslateX(newTranslateX);
 			((AnchorPane) (t.getSource())).setTranslateY(newTranslateY);
 
-		}
+		//}
 
 	}
 
@@ -232,6 +234,14 @@ public class CanvasItem extends AnchorPane {
 
 	public void setIDs(int[] iDs) {
 		IDs = iDs;
+	}
+
+	public BasicForm getForm() {
+		return form;
+	}
+
+	public void setForm(BasicForm form) {
+		this.form = form;
 	}
 	
 	

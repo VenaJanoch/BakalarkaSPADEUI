@@ -5,7 +5,13 @@ import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Locale;
@@ -13,6 +19,8 @@ import java.util.TimeZone;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.xml.datatype.DatatypeConfigurationException;
+import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.Duration;
 import javax.xml.datatype.XMLGregorianCalendar;
 import javax.xml.namespace.QName;
@@ -37,32 +45,33 @@ import Grafika.CanvasItem;
 import Grafika.InfoBoxSegment;
 import Grafika.NodeLink;
 import SPADEPAC.Activity;
+import SPADEPAC.Artifact;
+import SPADEPAC.Branch;
+import SPADEPAC.Change;
 import SPADEPAC.Configuration;
+import SPADEPAC.Criterion;
 import SPADEPAC.Iteration;
+import SPADEPAC.Milestone;
 import SPADEPAC.ObjectFactory;
 import SPADEPAC.Phase;
 import SPADEPAC.Project;
+import SPADEPAC.Role;
 import SPADEPAC.WorkUnit;
 import XML.ProcessGenerator;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.geometry.Point2D;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 public class Control {
 
-	private Desktop desktop = Desktop.getDesktop();
 	private FileChooser fileChooser;
 
 	private boolean arrow;
 	private boolean startArrow;
 
 	private ArrayList<BasicForm> forms;
-
-	private List<Phase> phaseArray;
-	private List<Iteration> iterationArray;
-	private List<Activity> activityArray;
-	private List<WorkUnit> workUnitArray;
-
 	private ArrayList<NodeLink> arrows;
 
 	private int index;
@@ -75,6 +84,26 @@ public class Control {
 	private ObjectFactory objF;
 	private Project project;
 
+	private ObservableList<String> configObservable;
+	private ArrayList<Configuration> configList;
+	private ArrayList<Integer> configFormIndex;
+
+	private ObservableList<String> branchObservable;
+	private ArrayList<Branch> branchList;
+	private ArrayList<Integer> branchFormIndex;
+
+	private ObservableList<String> roleObservable;
+	private ArrayList<Role> roleList;
+	private ArrayList<Integer> roleFormIndex;
+
+	private ObservableList<String> changeObservable;
+	private ArrayList<Change> changeList;
+	private ArrayList<Integer> changeFormIndex;
+
+	private ObservableList<String> artifactObservable;
+	private ArrayList<Artifact> artifactList;
+	private ArrayList<Integer> artifactFormIndex;
+
 	public Control() {
 
 		idCreater = new IdentificatorCreater();
@@ -82,16 +111,33 @@ public class Control {
 		objF = new ObjectFactory();
 		project = (Project) objF.createProject();
 
-		phaseArray = project.getPhases();
-		iterationArray = project.getIterations();
-		activityArray = project.getActivities();
-		workUnitArray = project.getWorkUnits();
+		configList = new ArrayList<>();
+		configFormIndex = new ArrayList<>();
+		configObservable = FXCollections.observableArrayList();
+
+		roleList = new ArrayList<>();
+		roleFormIndex = new ArrayList<>();
+		setRoleObservable(FXCollections.observableArrayList());
+
+		branchList = new ArrayList<>();
+		branchFormIndex = new ArrayList<>();
+		branchObservable = FXCollections.observableArrayList();
+		branchObservable.add("New");
+
+		setChangeList(new ArrayList<>());
+		changeFormIndex = new ArrayList<>();
+		changeObservable = FXCollections.observableArrayList();
+		changeObservable.add("New");
+
+		setArtifactList(new ArrayList<>());
+		setArtifactFormIndex(new ArrayList<>());
+		setArtifactObservable(FXCollections.observableArrayList());
 
 		configureFileChooser();
 		setArrow(false);
 		setStartArrow(false);
 		setForms(new ArrayList<>());
-		getForms().add(0, new ProjectForm(this));
+		getForms().add(0, new ProjectForm(this, project));
 		arrows = new ArrayList<>();
 		index = 1;
 	}
@@ -159,56 +205,77 @@ public class Control {
 
 	}
 
-	public int[] createForm(CanvasItem item) {
+	public int[] createForm(CanvasItem item, BasicForm form) {
 		SegmentType sType = item.getType();
-		int[] IDs = new int[2];
+		int[] IDs = new int[3];
+	
 		switch (sType) {
 		case Phase:
-			forms.add(index, new PhaseForm(item, this));
-			index++;
-			IDs[0] = index - 1;
-			IDs[1] = idCreater.createPhaseID();
-			phaseArray.add(IDs[1], objF.createPhase());
-			return IDs;
-		case Iteration:
-			forms.add(index, new IterationForm(item, this));
+
+			Phase phase = (Phase) objF.createPhase();
+			forms.add(index, new PhaseForm(item, this, Constans.phaseDragTextIndexs, phase));
 			IDs[0] = index;
+			IDs[1] = idCreater.createPhaseID();
+			form.getPhaseArray().add(IDs[1], phase);
 			index++;
-			IDs[1] = idCreater.createIterationID();
-			iterationArray.add(IDs[1], objF.createIteration());
 			return IDs;
+
+		case Iteration:
+			Iteration iteration = (Iteration) objF.createIteration();
+			forms.add(index, new IterationForm(item, this, Constans.iterationDragTextIndexs, iteration));
+			IDs[0] = index;
+			IDs[1] = idCreater.createIterationID();
+			form.getIterationArray().add(IDs[1], iteration);
+			index++;
+			return IDs;
+
 		case Activity:
-			forms.add(index, new ActivityForm(item, this));
+			Activity activity = (Activity) objF.createActivity();
+			forms.add(index, new ActivityForm(item, this, Constans.activityDragTextIndexs, activity));
 			IDs[0] = index;
 			index++;
 			IDs[1] = idCreater.createActivityID();
-			activityArray.add(IDs[1], objF.createActivity());
+			form.getActivityArray().add(IDs[1], activity);
 			return IDs;
+
 		case WorkUnit:
+			WorkUnit unit = (WorkUnit) objF.createWorkUnit();
 			forms.add(index, new WorkUnitForm(item, this));
 			IDs[0] = index;
-			index++;
 			IDs[1] = idCreater.createWorkUnitID();
-			workUnitArray.add(IDs[1], objF.createWorkUnit());
+			IDs[2] = form.getIdCreater().createWorkUnitID();
+			form.getWorkUnitArray().add(IDs[2], unit);
+			index++;
 			return IDs;
 		case Milestone:
-			forms.add(index, new MilestoneForm(item, this));
+			Milestone milestone = (Milestone) objF.createMilestone();
+			forms.add(index, new MilestoneForm(item, this, milestone));
 			IDs[0] = index;
-			index++;
 			IDs[1] = idCreater.createMilestoneID();
+			IDs[2] = form.getIdCreater().createMilestoneID();
+			index++;
 			return IDs;
 		case Criterion:
+
 			forms.add(index, new CriterionForm(item, this));
 			IDs[0] = index;
-			index++;
 			IDs[1] = idCreater.createCriterionID();
-			return IDs;
-		case Configuration:
-			forms.add(index, new ConfigurationForm(item, this));
-			IDs[0] = index;
+			IDs[2] = form.getIdCreater().createCriterionID();
+			form.getCriterionnArray().add(IDs[2], (Criterion) objF.createCriterion());
 			index++;
-			IDs[1] = idCreater.createConfigurationID();
 			return IDs;
+
+		case Configuration:
+			
+			Configuration conf = (Configuration)objF.createConfiguration();
+			forms.add(index, new ConfigurationForm(item, this, Constans.configurationDragTextIndexs, conf));
+			IDs[0] = index;
+			IDs[1] = idCreater.createConfigurationID();
+			configList.add(IDs[1],conf);			
+			configFormIndex.add(index);
+			index++;
+			return IDs;
+
 		case ConfigPersonRelation:
 			forms.add(index, new ConfigPersonRelationForm(item, this));
 			IDs[0] = index;
@@ -216,28 +283,46 @@ public class Control {
 			IDs[1] = idCreater.createCPRID();
 			return IDs;
 		case Branch:
+			
+			Branch branch = (Branch)objF.createBranch();
 			forms.add(index, new BranchForm(item, this));
 			IDs[0] = index;
-			index++;
 			IDs[1] = idCreater.createBranchID();
+			IDs[2] = form.getIdCreater().createBranchID();
+			form.getBranchArray().add(IDs[2], branch);
+			index++;
 			return IDs;
 		case Change:
+			
+			Change change = (Change) objF.createChange();
 			forms.add(index, new ChangeForm(item, this));
 			IDs[0] = index;
-			index++;
 			IDs[1] = idCreater.createChangeID();
-			return IDs;
-		case Artifact:
-			forms.add(index, new ArtifactForm(item, this));
-			IDs[0] = index;
+			IDs[2] = form.getIdCreater().createChangeID();
+			form.getChangeArray().add(IDs[2], change);
 			index++;
+			return IDs;
+			
+		case Artifact:
+		
+			Artifact artifact = (Artifact) objF.createArtifact();
+			forms.add(index, new ArtifactForm(item, this, artifact));
+			IDs[0] = index;
 			IDs[1] = idCreater.createArtifactID();
+			IDs[2] = form.getIdCreater().createArtifactID();
+			form.getArtifactArray().add(IDs[2], artifact);
+			artifactList.add(IDs[1],artifact);
+			artifactFormIndex.add(index);
+			index++;
 			return IDs;
 		case Role:
-			forms.add(index, new RoleForm(item, this));
+			Role role = (Role)objF.createRole();
+			forms.add(index, new RoleForm(item, this, role));
 			IDs[0] = index;
-			index++;
 			IDs[1] = idCreater.createRoleID();
+			roleList.add(IDs[1], role);
+			roleFormIndex.add(index);
+			index++;
 			return IDs;
 
 		default:
@@ -261,47 +346,161 @@ public class Control {
 
 		file = fileChooser.showOpenDialog(new Stage());
 		if (file != null) {
+			project = procesGener.readProcess(file);
 
 		}
 
 	}
 
-	public void fillProject(String description, String name) {
+	public XMLGregorianCalendar convertDate(LocalDate Ldate) {
+		// Instant instant =
+		// Instant.from(Ldate.atStartOfDay(ZoneId.systemDefault()));
+		// Date date = Date.from(instant);
+		// GregorianCalendar c = new GregorianCalendar();
+
+		XMLGregorianCalendar dateXML = null;
+		// try {
+		//
+		// c.setTime(date);
+		// dateXML = DatatypeFactory.newInstance().newXMLGregorianCalendar(c);
+		//
+		// } catch (DatatypeConfigurationException e) {
+		// // TODO Auto-generated catch block
+		// e.printStackTrace();
+		// }
+		return dateXML;
+	}
+
+	public void fillProject(String description, String name, LocalDate startDate, LocalDate endDate) {
 
 		project.setDescription(description);
 		project.setName(name);
+		project.setEndDate(convertDate(endDate));
+		project.setStartDate(convertDate(startDate));
+
 	}
 
-	public void fillPhase(int ID, String description, String name) {
+	public void fillPhase(BasicForm form, int ID, String description, String name, LocalDate endDate, int confIndex) {
 
-		Phase phase = phaseArray.get(ID);
+		Phase phase = form.getPhaseArray().get(ID);
 		phase.setDescription(description);
 		phase.setName(name);
-		System.out.println(phaseArray.get(ID).getName());
+		phase.setEndDate(convertDate(endDate));
+
+		System.out.println(confIndex + "fase" + ID + " fd" + configList.get(confIndex).getName());
+		System.out.println(configFormIndex.toArray());
+		phase.setConfiguration(configList.get(confIndex));
 	}
 
-	public void fillActivity(int ID, String description, String name) {
+	public void fillActivity(BasicForm form, int ID, String description, String name) {
 
-		Activity activity = activityArray.get(ID);
+		Activity activity = form.getActivityArray().get(ID);
 		activity.setDescription(description);
 		activity.setName(name);
 
 	}
 
-	public void fillIteration(int ID, String description, String name) {
+	public void fillIteration(BasicForm form, int ID, String description, String name, LocalDate startDate,
+			LocalDate endDate, int confIndex) {
 
-		Iteration iteration = iterationArray.get(ID);
+		Iteration iteration = form.getIterationArray().get(ID);
 		iteration.setDescription(description);
 		iteration.setName(name);
+		iteration.setStartDate(convertDate(startDate));
+		iteration.setEndDate(convertDate(endDate));
+		iteration.setConfiguration(configList.get(confIndex));
+	}
+
+	public void fillWorkUnit(BasicForm form, int ID, String description, String name, int authorID, int asigneID,
+			String priority, String severity, String type) {
+
+		WorkUnit workUnit = form.getWorkUnitArray().get(ID);
+		workUnit.setDescription(description);
+		workUnit.setName(name);
+		workUnit.setAssignee(roleList.get(asigneID));
+		workUnit.setAuthor(roleList.get(authorID));
+		workUnit.setPriority(priority);
+		workUnit.setSeverity(severity);
+		workUnit.setType(type);
 
 	}
 
-	public void fillWorkUnit(int ID, String description, String name) {
+	public void fillMilestone(BasicForm form, int ID, String description, String name) {
 
-		WorkUnit workUnit = workUnitArray.get(ID);
-		workUnit.setDescription(description);
-		workUnit.setName(name);
+		Milestone milestone = form.getMilestoneArray().get(ID);
+		milestone.setDescription(description);
+		milestone.setName(name);
 
+	}
+
+	public void fillCriterion(BasicForm form, int ID, String description, String name) {
+
+		Criterion criterion = form.getCriterionnArray().get(ID);
+		criterion.setDescription(description);
+		criterion.setName(name);
+
+	}
+
+	public void fillConfiguration(Configuration conf, int ID, boolean isRelase, LocalDate Ldate, String name,
+			int roleIndex) {
+
+		conf.setIsRelease(isRelase);
+		conf.setCreate(convertDate(Ldate));
+		conf.setName(name);
+		conf.setAuthor(roleList.get(roleIndex));
+		configObservable.add(name);
+
+	}
+
+	public void fillBranch(BasicForm form, int ID, boolean isMain, String name, boolean isNew) {
+
+		Branch branch = form.getBranchArray().get(ID);
+		branch.setIsMain(isMain);
+		branch.setName(name);
+
+		if (isNew) {
+			branchList.add(form.getCanvasItem().getIDs()[1], form.getBranchArray().get(ID));
+			branchFormIndex.add(form.getCanvasItem().getIDs()[0]);
+			branchObservable.add(name);
+		}
+	}
+
+	public void fillChange(BasicForm form, int ID, String description, String name, boolean isNew, int artifactIndex) {
+
+		Change change = form.getChangeArray().get(ID);
+		change.setName(name);
+		change.setDescriptoin(description);
+		change.setArtifact(artifactList.get(artifactIndex));
+		
+		if (isNew) {
+			changeList.add(form.getCanvasItem().getIDs()[1], form.getChangeArray().get(ID));
+			changeFormIndex.add(form.getCanvasItem().getIDs()[0]);
+			changeObservable.add(name);
+		}
+		
+	}
+
+	public void fillArtifact(Artifact artifact, int ID, String description, String name, LocalDate Ldate, String type,
+			int roleIndex) {
+
+	//	Artifact artifact = form.getArtifactArray().get(ID);
+		artifact.setName(name);
+		artifact.setDescriptoin(description);
+		artifact.setCreated(convertDate(Ldate));
+		artifact.setMimeType(type);
+		artifact.setAuthor(roleList.get(roleIndex));
+		artifactObservable.add(name);
+		
+		
+	}
+
+	public void fillRole(Role role, int ID, String description, String name, String type) {
+
+		role.setName(name);
+		role.setDescription(description);
+		role.setType(type);
+
+		roleObservable.add(name);
 	}
 
 	/** Getrs and Setrs ***/
@@ -336,6 +535,86 @@ public class Control {
 
 	public void setArrows(ArrayList<NodeLink> arrows) {
 		this.arrows = arrows;
+	}
+
+	public ObservableList<String> getConfigObservable() {
+		return configObservable;
+	}
+
+	public void setConfigObservable(ObservableList<String> configObservable) {
+		this.configObservable = configObservable;
+	}
+
+	public ArrayList<Configuration> getConfigList() {
+		return configList;
+	}
+
+	public void setConfigList(ArrayList<Configuration> configList) {
+		this.configList = configList;
+	}
+
+	public ObservableList<String> getRoleObservable() {
+		return roleObservable;
+	}
+
+	public void setRoleObservable(ObservableList<String> roleObservable) {
+		this.roleObservable = roleObservable;
+	}
+
+	public ObservableList<String> getBranchObservable() {
+		return branchObservable;
+	}
+
+	public void setBranchObservable(ObservableList<String> branchObservable) {
+		this.branchObservable = branchObservable;
+	}
+
+	public ArrayList<Branch> getBranchList() {
+		return branchList;
+	}
+
+	public void setBranchList(ArrayList<Branch> branchList) {
+		this.branchList = branchList;
+	}
+
+	public ObservableList<String> getChangeObservable() {
+		return changeObservable;
+	}
+
+	public void setChangeObservable(ObservableList<String> changeObservable) {
+		this.changeObservable = changeObservable;
+	}
+
+	public ArrayList<Change> getChangeList() {
+		return changeList;
+	}
+
+	public void setChangeList(ArrayList<Change> changeList) {
+		this.changeList = changeList;
+	}
+
+	public ObservableList<String> getArtifactObservable() {
+		return artifactObservable;
+	}
+
+	public void setArtifactObservable(ObservableList<String> artifactObservable) {
+		this.artifactObservable = artifactObservable;
+	}
+
+	public ArrayList<Integer> getArtifactFormIndex() {
+		return artifactFormIndex;
+	}
+
+	public void setArtifactFormIndex(ArrayList<Integer> artifactFormIndex) {
+		this.artifactFormIndex = artifactFormIndex;
+	}
+
+	public ArrayList<Artifact> getArtifactList() {
+		return artifactList;
+	}
+
+	public void setArtifactList(ArrayList<Artifact> artifactList) {
+		this.artifactList = artifactList;
 	}
 
 }

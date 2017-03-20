@@ -4,6 +4,7 @@ import Grafika.CanvasItem;
 import Grafika.InfoBoxSegment;
 import Interfaces.ISegmentForm;
 import Obsluha.Control;
+import SPADEPAC.Milestone;
 import javafx.event.EventHandler;
 import javafx.geometry.HPos;
 import javafx.scene.control.Label;
@@ -18,8 +19,9 @@ public class MilestoneForm extends BasicForm implements ISegmentForm {
 	private TextField descriptionTF;
 	private TextField criteriaTF;
 
-	public MilestoneForm(CanvasItem item, Control control) {
+	public MilestoneForm(CanvasItem item, Control control, Milestone milestone) {
 		super(item, control);
+		setCriterionnArray(milestone.getCriteria());
 		this.setOnCloseRequest(new EventHandler<WindowEvent>() {
 
 			@Override

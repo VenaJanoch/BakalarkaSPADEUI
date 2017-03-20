@@ -26,7 +26,7 @@ public class MainWindow extends Stage {
 		super();
 		this.setTitle("SPADE XML editor");
 		this.control = control;
-		
+
 		mainPanel = new BorderPane();
 		this.setScene(creatScene());
 	}
@@ -39,11 +39,12 @@ public class MainWindow extends Stage {
 	}
 
 	private Parent creatPanel() {
-		dragCanvas = new DragAndDropCanvas(control);
 		menu = new MenuPanel(control);
-		dragAndDrop = new DragAndDropPanel(control,(ProjectForm)control.getForms().get(0));
+
+		dragCanvas = new DragAndDropCanvas(control, (ProjectForm) control.getForms().get(0));
+		dragAndDrop = new DragAndDropPanel(control, (ProjectForm) control.getForms().get(0));
 		VBox topPanel = new VBox();
-		
+
 		topPanel.getChildren().addAll(menu, dragAndDrop);
 		mainPanel.setTop(topPanel);
 		// hlavniPanel.setCenter(dragAndDrop);
