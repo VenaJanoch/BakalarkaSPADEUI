@@ -44,8 +44,8 @@ public class ConfigurationForm extends BasicForm implements ISegmentForm {
 
 	private Configuration configuration;
 
-	public ConfigurationForm(CanvasItem item, Control control, int[] itemArray, Configuration conf) {
-		super(item, control, itemArray);
+	public ConfigurationForm(CanvasItem item, Control control, int[] itemArray, Configuration conf, int indexForm) {
+		super(item, control, itemArray, indexForm);
 		this.configuration = conf;
 
 		setBranchArray(conf.getBranches());
@@ -72,7 +72,7 @@ public class ConfigurationForm extends BasicForm implements ISegmentForm {
 	public void closeForm() {
 		setName(getNameTF().getText());
 		getCanvasItem().setNameText(getName());
-		getControl().getFillForms().fillConfiguration(configuration, getCanvasItem().getIDs()[2], isRelease, createdDP.getValue(),
+		getControl().getFillForms().fillConfiguration(configuration, getCanvasItem().getIDs()[1], isRelease, createdDP.getValue(),
 				getName(), authorIndex, (int) getCanvasItem().getTranslateX(), (int) getCanvasItem().getTranslateY());
 
 	}
@@ -108,8 +108,6 @@ public class ConfigurationForm extends BasicForm implements ISegmentForm {
 
 	private void roleBTAction() {
 		CanvasItem item = new CanvasItem(SegmentType.Role, "Name", getControl(), this, true);
-
-		getControl().createForm(item, this);
 		getControl().getForms().get(item.getIDs()[0]).show();
 
 	}

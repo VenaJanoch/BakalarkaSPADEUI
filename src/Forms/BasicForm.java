@@ -73,7 +73,7 @@ public class BasicForm extends Stage {
 	
 	private IdentificatorCreater idCreater;
 
-	public BasicForm(CanvasItem item, Control control, int[] itemArray) {
+	public BasicForm(CanvasItem item, Control control, int[] itemArray, int indexForm) {
 
 		super();
 		this.control = control;
@@ -82,7 +82,7 @@ public class BasicForm extends Stage {
 		this.setIdCreater(new IdentificatorCreater());
 		this.setTitle("Edit " + item.getType().name());
 		this.dgItem = new DragAndDropItem(control, itemArray);
-		this.canvas = new DragAndDropCanvas(control, this);
+		this.canvas = new DragAndDropCanvas(control, indexForm);
 		this.dragBox = new BorderPane();
 
 		mainPanel = new BorderPane();

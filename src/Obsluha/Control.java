@@ -8,6 +8,7 @@ import java.math.BigInteger;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -98,7 +99,7 @@ public class Control {
 	private ArrayList<Integer> branchFormIndex;
 
 	private ObservableList<String> roleObservable;
-	private ArrayList<Role> roleList;
+	private List<Role> roleList;
 	private ArrayList<Integer> roleFormIndex;
 
 	private ObservableList<String> changeObservable;
@@ -123,20 +124,27 @@ public class Control {
 		setStartArrow(false);
 		setForms(new ArrayList<>());
 		getForms().add(0, new ProjectForm(this, project, canvas));
-
+		
 		fillForms = new FillForms(this, project, forms, objF);
 		createLists();
 
 		arrows = new ArrayList<>();
 
 	}
+	
+	public void showProjectForm(){
+		
+		forms.get(0).show();
+	}
+	
+
 
 	public void createLists() {
 		configList = new ArrayList<>();
 		configFormIndex = new ArrayList<>();
 		configObservable = FXCollections.observableArrayList();
 
-		roleList = new ArrayList<>();
+		roleList = project.getRoles();
 		roleFormIndex = new ArrayList<>();
 		setRoleObservable(FXCollections.observableArrayList());
 
@@ -299,6 +307,8 @@ public class Control {
 
 		case Configuration:
 
+			System.out.println(" Configurace size" + getConfigList().size());
+
 			return fillForms.createConfigruration(item, form, IDs);
 
 		case ConfigPersonRelation:
@@ -308,6 +318,7 @@ public class Control {
 			// IDs[1] = idCreater.createCPRID();
 			// return IDs;
 		case Branch:
+			System.out.println(" branchSize size " + branchList.size());
 
 			return fillForms.createBranch(item, form, IDs);
 		case Change:
@@ -317,6 +328,7 @@ public class Control {
 		case Artifact:
 			return fillForms.createArtifact(item, form, IDs);
 		case Role:
+			System.out.println(" Role size " + roleList.size());
 			return fillForms.createRole(item, form, IDs);
 
 		default:
@@ -412,11 +424,14 @@ public class Control {
 			restartControl();
 			project = procesGener.readProcess(file);
 			forms.clear();
-			forms.add(0, new ProjectForm(this, project, canvas));
-			forms.get(0).setName(project.getName());
+			ProjectForm form = new ProjectForm(this, project, canvas);
+			roleList = project.getRoles();
 			fillFormsXML = new FillFormsXML(this, project, forms);
-			fillFormsXML = new FillFormsXML(this, project, forms);
+			fillFormsXML.fillProjectFromXML(form);
 
+			System.out.println(form.getName() + " name");
+			forms.add(0, form);
+		
 			parseProject();
 			break;
 		}
@@ -425,6 +440,7 @@ public class Control {
 
 	private void parseProject() {
 
+		fillFormsXML.fillRoleFromXML(forms.get(0), project.getRoles());
 		fillFormsXML.fillPhasesFromXML(forms.get(0));
 		fillFormsXML.fillIterationFromXML(forms.get(0));
 		fillFormsXML.fillActivityFromXML(forms.get(0));
@@ -432,22 +448,30 @@ public class Control {
 	}
 
 	public XMLGregorianCalendar convertDate(LocalDate Ldate) {
-		// Instant instant =
-		// Instant.from(Ldate.atStartOfDay(ZoneId.systemDefault()));
-		// Date date = Date.from(instant);
-		// GregorianCalendar c = new GregorianCalendar();
+		Instant instant = Instant.from(Ldate.atStartOfDay(ZoneId.systemDefault()));
+		Date date = Date.from(instant);
+		GregorianCalendar c = new GregorianCalendar();
 
 		XMLGregorianCalendar dateXML = null;
-		// try {
-		//
-		// c.setTime(date);
-		// dateXML = DatatypeFactory.newInstance().newXMLGregorianCalendar(c);
-		//
-		// } catch (DatatypeConfigurationException e) {
-		// // TODO Auto-generated catch block
-		// e.printStackTrace();
-		// }
+		try {
+
+			c.setTime(date);
+			dateXML = DatatypeFactory.newInstance().newXMLGregorianCalendar(c);
+
+		} catch (DatatypeConfigurationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return dateXML;
+	}
+
+	public LocalDate convertDateFromXML(XMLGregorianCalendar xmlDate) {
+
+		Date date = xmlDate.toGregorianCalendar().getTime();
+		Instant instant = date.toInstant();
+		ZonedDateTime zdt = instant.atZone(ZoneId.systemDefault());
+		LocalDate localDate = zdt.toLocalDate();
+		return localDate;
 	}
 
 	/** Getrs and Setrs ***/
@@ -588,11 +612,11 @@ public class Control {
 		this.branchFormIndex = branchFormIndex;
 	}
 
-	public ArrayList<Role> getRoleList() {
+	public List<Role> getRoleList() {
 		return roleList;
 	}
 
-	public void setRoleList(ArrayList<Role> roleList) {
+	public void setRoleList(List<Role> roleList) {
 		this.roleList = roleList;
 	}
 
@@ -627,5 +651,7 @@ public class Control {
 	public void setFillForms(FillForms fillForms) {
 		this.fillForms = fillForms;
 	}
+	
+	
 
 }

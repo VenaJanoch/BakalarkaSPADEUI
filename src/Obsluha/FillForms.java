@@ -49,7 +49,7 @@ public class FillForms {
 
 		idCreater = new IdentificatorCreater();
 		index = 1;
-
+		
 	}
 
 	public void fillProject(String description, String name, LocalDate startDate, LocalDate endDate) {
@@ -58,6 +58,8 @@ public class FillForms {
 		project.setName(name);
 		project.setEndDate(control.convertDate(endDate));
 		project.setStartDate(control.convertDate(startDate));
+		
+
 
 	}
 
@@ -78,7 +80,7 @@ public class FillForms {
 	public int[] createPhase(CanvasItem item, BasicForm form, int[] IDs) {
 
 		Phase phase = (Phase) objF.createPhase();
-		forms.add(index, new PhaseForm(item, control, Constans.phaseDragTextIndexs, phase));
+		forms.add(index, new PhaseForm(item, control, Constans.phaseDragTextIndexs, phase, index));
 		IDs[0] = index;
 		IDs[1] = idCreater.createPhaseID();
 
@@ -100,7 +102,7 @@ public class FillForms {
 
 	public int[] createActivity(CanvasItem item, BasicForm form, int[] IDs) {
 		Activity activity = (Activity) objF.createActivity();
-		forms.add(index, new ActivityForm(item, control, Constans.activityDragTextIndexs, activity));
+		forms.add(index, new ActivityForm(item, control, Constans.activityDragTextIndexs, activity, index));
 		IDs[0] = index;
 		index++;
 		IDs[1] = idCreater.createActivityID();
@@ -125,7 +127,7 @@ public class FillForms {
 
 	public int[] createIteration(CanvasItem item, BasicForm form, int[] IDs) {
 		Iteration iteration = (Iteration) objF.createIteration();
-		forms.add(index, new IterationForm(item, control, Constans.iterationDragTextIndexs, iteration));
+		forms.add(index, new IterationForm(item, control, Constans.iterationDragTextIndexs, iteration, index));
 		IDs[0] = index;
 		IDs[1] = idCreater.createIterationID();
 		form.getIterationArray().add(IDs[1], iteration);
@@ -133,21 +135,23 @@ public class FillForms {
 		return IDs;
 	}
 
-	public void fillWorkUnit(BasicForm form, int ID, String description, String name, int authorID, int asigneID,
+	public void fillWorkUnit(BasicForm form, int ID, String description, String name, int authorIndex, int assigneIndex,
 			String priority, String severity, String type, int x, int y, int priorityIndex, int severityIndex,
 			int typeIndex) {
 
 		WorkUnit workUnit = form.getWorkUnitArray().get(ID);
 		workUnit.setDescription(description);
 		workUnit.setName(name);
-		workUnit.setAssignee(control.getRoleList().get(asigneID));
-		workUnit.setAuthor(control.getRoleList().get(authorID));
+		workUnit.setAssignee(control.getRoleList().get(assigneIndex));
+		workUnit.setAuthor(control.getRoleList().get(authorIndex));
 		workUnit.setPriority(priority);
 		workUnit.setSeverity(severity);
 		workUnit.setType(type);
 		workUnit.setPriorityIndex(priorityIndex);
 		workUnit.setSeverityIndex(severityIndex);
 		workUnit.setTypeIndex(typeIndex);
+		workUnit.setAssigneIndex(assigneIndex);
+		workUnit.setAuthorIndex(authorIndex);
 
 		Coordinates coord = objF.createCoordinates();
 		coord.setXCoordinate(x);
@@ -187,33 +191,34 @@ public class FillForms {
 	public void fillConfiguration(Configuration conf, int ID, boolean isRelase, LocalDate Ldate, String name,
 			int roleIndex, int x, int y) {
 
-		conf.setIsRelease(isRelase);
-		conf.setCreate(control.convertDate(Ldate));
-		conf.setName(name);
-		conf.setAuthor(control.getRoleList().get(roleIndex));
+		Configuration config = control.getConfigList().get(ID);
+		config.setIsRelease(isRelase);
+		config.setCreate(control.convertDate(Ldate));
+		config.setName(name);
+		config.setAuthor(control.getRoleList().get(roleIndex));
+		config.setAuthorIndex(roleIndex);
 		control.getConfigObservable().add(name);
 
 		Coordinates coord = objF.createCoordinates();
 		coord.setXCoordinate(x);
 		coord.setYCoordinate(y);
-		conf.setCoordinates(coord);
+		config.setCoordinates(coord);
 
 	}
 
-	
 	public int[] createConfigruration(CanvasItem item, BasicForm form, int[] IDs) {
 		Configuration conf = (Configuration) objF.createConfiguration();
-		forms.add(index, new ConfigurationForm(item, control, Constans.configurationDragTextIndexs, conf));
+		forms.add(index, new ConfigurationForm(item, control, Constans.configurationDragTextIndexs, conf, index));
 		IDs[0] = index;
 		IDs[1] = idCreater.createConfigurationID();
+		System.out.println("Nevim " + IDs[1]);
 		control.getConfigList().add(IDs[1], conf);
 		control.getConfigFormIndex().add(index);
 		index++;
 		return IDs;
-		
-		
-		
+
 	}
+
 	public void fillBranch(BasicForm form, int ID, boolean isMain, String name, boolean isNew, int x, int y) {
 
 		Branch branch = form.getBranchArray().get(ID);
@@ -230,9 +235,9 @@ public class FillForms {
 			control.getBranchObservable().add(name);
 		}
 	}
-	
+
 	public int[] createBranch(CanvasItem item, BasicForm form, int[] IDs) {
-		
+
 		Branch branch = (Branch) objF.createBranch();
 		forms.add(index, new BranchForm(item, control));
 		IDs[0] = index;
@@ -243,7 +248,7 @@ public class FillForms {
 		form.getBranchArray().add(IDs[2], branch);
 		index++;
 		return IDs;
-		
+
 	}
 
 	public void fillChange(BasicForm form, int ID, String description, String name, boolean isNew, int artifactIndex,
@@ -265,9 +270,9 @@ public class FillForms {
 		}
 
 	}
-	
+
 	public int[] createChange(CanvasItem item, BasicForm form, int[] IDs) {
-		
+
 		Change change = (Change) objF.createChange();
 		forms.add(index, new ChangeForm(item, control, change));
 		IDs[0] = index;
@@ -276,7 +281,7 @@ public class FillForms {
 		form.getChangeArray().add(IDs[2], change);
 		index++;
 		return IDs;
-		
+
 	}
 
 	public void fillArtifact(Artifact artifact, int ID, String description, String name, LocalDate Ldate, String type,
@@ -288,7 +293,8 @@ public class FillForms {
 		artifact.setCreated(control.convertDate(Ldate));
 		artifact.setMimeType(type);
 		artifact.setAuthor(control.getRoleList().get(roleIndex));
-		control.getRoleObservable().add(name);
+		artifact.setAuthorIndex(roleIndex);
+		control.getArtifactObservable().add(name);
 		artifact.setArtifactIndex(typeIndex);
 		Coordinates coord = objF.createCoordinates();
 		coord.setXCoordinate(x);
@@ -296,9 +302,9 @@ public class FillForms {
 		artifact.setCoordinates(coord);
 
 	}
-	
+
 	public int[] createArtifact(CanvasItem item, BasicForm form, int[] IDs) {
-		
+
 		Artifact artifact = (Artifact) objF.createArtifact();
 		forms.add(index, new ArtifactForm(item, control, artifact));
 		IDs[0] = index;
@@ -336,5 +342,5 @@ public class FillForms {
 		index++;
 		return IDs;
 	}
-	
+
 }

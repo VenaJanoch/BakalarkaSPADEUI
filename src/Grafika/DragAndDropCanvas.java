@@ -26,12 +26,13 @@ public class DragAndDropCanvas extends AnchorPane {
 	private Scene mScene;
 	private Control control;
 	private BasicForm form;
-
-	public DragAndDropCanvas(Control control, BasicForm form) {
+	private int indexForm;
+	public DragAndDropCanvas(Control control, int indexForm) {
 
 		super();
 		this.control = control;
-		this.form = form;
+		this.indexForm = indexForm;
+		
 		this.setBackground(new Background(new BackgroundFill(Color.ANTIQUEWHITE, CornerRadii.EMPTY, Insets.EMPTY)));
 		this.setOnDragOver(new EventHandler<DragEvent>() {
 			public void handle(DragEvent event) {
@@ -102,7 +103,7 @@ public class DragAndDropCanvas extends AnchorPane {
 
 		SegmentType type = control.findSegmentType(segment);
 		System.out.println(type.name());
-		this.getChildren().add(new CanvasItem(type, "Name", control, form, true));
+		this.getChildren().add(new CanvasItem(type, "Name", control, control.getForms().get(indexForm) , true));
 
 	}
 	

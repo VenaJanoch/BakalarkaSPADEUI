@@ -41,8 +41,8 @@ public class PhaseForm extends BasicForm implements ISegmentForm {
 	private int configIndex;
 	private Phase phase;
 
-	public PhaseForm(CanvasItem item, Control control, int[] itemArray, Phase phase) {
-		super(item, control, itemArray);
+	public PhaseForm(CanvasItem item, Control control, int[] itemArray, Phase phase, int indexForm) {
+		super(item, control, itemArray, indexForm);
 		this.phase = phase;
 		setWorkUnitArray(phase.getWorkUnits());
 		setConfig(phase.getConfiguration());
@@ -105,13 +105,13 @@ public class PhaseForm extends BasicForm implements ISegmentForm {
 
 
 	private void editBTAction() {
+		System.out.println(getControl().getConfigFormIndex().get(chooseConfigID) + " nevim");
+		
 		getControl().getForms().get(getControl().getConfigFormIndex().get(chooseConfigID)).show();
 	}
 
 	private void configBTAction() {
 		CanvasItem item = new CanvasItem(SegmentType.Configuration, "Name", getControl(), this, true);
-
-		getControl().createForm(item, this);
 		getControl().getForms().get(item.getIDs()[0]).show();
 
 	}

@@ -41,6 +41,7 @@ public class ProjectForm extends BasicForm implements ISegmentForm {
 		setIterationArray(project.getIterations());
 		setActivityArray(project.getActivities());
 		setWorkUnitArray(project.getWorkUnits());
+		
 		setCanvas(canvas);
 		
 	
@@ -98,10 +99,37 @@ public class ProjectForm extends BasicForm implements ISegmentForm {
 		getInfoPart().add(endDateDP, 1, 3);
 
 	}
-
+	
 	
 
 	/*** Getrs and setrs ***/
+
+	public TextField getDescriptionTF() {
+		return descriptionTF;
+	}
+
+	public void setDescriptionTF(TextField descriptionTF) {
+		this.descriptionTF = descriptionTF;
+	}
+
+	public DatePicker getStartDateDP() {
+		return startDateDP;
+	}
+
+	public void setStartDateDP(DatePicker startDateDP) {
+		this.startDateDP = startDateDP;
+	}
+
+	public DatePicker getEndDateDP() {
+		return endDateDP;
+	}
+
+	public void setEndDateDP(DatePicker endDateDP) {
+		this.endDateDP = endDateDP;
+	}
+
+	
+
 	
 	
 

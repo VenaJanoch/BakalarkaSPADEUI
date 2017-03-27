@@ -22,14 +22,13 @@ public class DragAndDropPanel extends BorderPane {
 	private Button formBT;
 	private HBox buttonBox;
 	private Control control;
-	private ProjectForm projectForm;
-	public DragAndDropPanel(Control control, ProjectForm projectForm) {
+	
+	public DragAndDropPanel(Control control) {
 
 		super();
 		this.control = control;
 		this.buttonBox = new HBox(5);
 		this.setPadding(new Insets(10));
-		this.projectForm = projectForm;
 		this.setBackground(new Background(new BackgroundFill(Color.BROWN, CornerRadii.EMPTY, Insets.EMPTY)));
 
 		items = new DragAndDropItem(control, Constans.projectDragTextIndexs);
@@ -42,7 +41,7 @@ public class DragAndDropPanel extends BorderPane {
 		this.setLeft(buttonBox);
 
 		arrowB.setOnAction(event -> createArrowButtonEvent());
-		formBT.setOnAction(event -> projectForm.show());
+		formBT.setOnAction(event -> control.showProjectForm());
 
 	}
 

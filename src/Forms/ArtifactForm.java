@@ -97,8 +97,6 @@ public class ArtifactForm extends BasicForm implements ISegmentForm {
 
 	private void artifactBTAction() {
 		CanvasItem item = new CanvasItem(SegmentType.Role, "Name", getControl(), this, true);
-
-		getControl().createForm(item, this);
 		getControl().getForms().get(item.getIDs()[0]).show();
 
 	}

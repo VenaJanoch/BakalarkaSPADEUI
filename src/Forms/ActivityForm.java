@@ -18,9 +18,9 @@ public class ActivityForm extends BasicForm implements ISegmentForm {
 
 	private TextField descriptionTF;
 
-	public ActivityForm(CanvasItem item, Control control, int[] itemArray, Activity activity) {
+	public ActivityForm(CanvasItem item, Control control, int[] itemArray, Activity activity, int indexForm) {
 
-		super(item, control, itemArray);
+		super(item, control, itemArray, indexForm);
 		setWorkUnitArray(activity.getWorkUnits());
 		this.setOnCloseRequest(new EventHandler<WindowEvent>() {
 

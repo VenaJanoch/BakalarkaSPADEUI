@@ -34,8 +34,8 @@ public class IterationForm extends BasicForm implements ISegmentForm {
 	private Button newConfigBT;
 	private int chooseConfigID;
 
-	public IterationForm(CanvasItem item, Control control, int[] itemArray, Iteration iteration) {
-		super(item, control, itemArray);
+	public IterationForm(CanvasItem item, Control control, int[] itemArray, Iteration iteration, int indexForm) {
+		super(item, control, itemArray, indexForm);
 		setWorkUnitArray(iteration.getWorkUnits());
 		setConfig(iteration.getConfiguration());
 		
@@ -109,7 +109,6 @@ public class IterationForm extends BasicForm implements ISegmentForm {
 	private void configBTAction() {
 		CanvasItem item = new CanvasItem(SegmentType.Configuration, "Name", getControl(), this, true);
 
-		getControl().createForm(item, this);
 		getControl().getForms().get(item.getIDs()[0]).show();
 
 	}

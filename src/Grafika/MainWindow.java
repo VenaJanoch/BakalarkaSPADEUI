@@ -43,8 +43,8 @@ public class MainWindow extends Stage {
 	private Parent creatPanel() {
 		menu = new MenuPanel(control, this);
 
-		dragCanvas = new DragAndDropCanvas(control, (ProjectForm) control.getForms().get(0));
-		dragAndDrop = new DragAndDropPanel(control, (ProjectForm) control.getForms().get(0));
+		dragCanvas = new DragAndDropCanvas(control, 0);
+		dragAndDrop = new DragAndDropPanel(control);
 		VBox topPanel = new VBox();
 
 		topPanel.getChildren().addAll(menu, dragAndDrop);

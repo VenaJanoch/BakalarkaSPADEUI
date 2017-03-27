@@ -40,6 +40,7 @@ public class ChangeForm extends BasicForm implements ISegmentForm {
 		
 		setArtifactArray(new ArrayList());
 		getArtifactArray().add(change.getArtifact());
+		System.out.println("Change2");
 		this.setOnCloseRequest(new EventHandler<WindowEvent>() {
 
 			@Override
@@ -90,8 +91,6 @@ public class ChangeForm extends BasicForm implements ISegmentForm {
 	
 	private void artifactBTAction(){
 		CanvasItem item = new CanvasItem(SegmentType.Artifact, "Name", getControl(), this, true);
-		
-		getControl().createForm(item, this);
 		getControl().getForms().get(item.getIDs()[0]).show();
 		
 	}

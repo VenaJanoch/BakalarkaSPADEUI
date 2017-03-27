@@ -13,6 +13,7 @@ import Forms.ChangeForm;
 import Forms.ConfigurationForm;
 import Forms.IterationForm;
 import Forms.PhaseForm;
+import Forms.ProjectForm;
 import Forms.RoleForm;
 import Forms.WorkUnitForm;
 import Grafika.CanvasItem;
@@ -51,8 +52,18 @@ public class FillFormsXML {
 
 	}
 
+	public void fillProjectFromXML(ProjectForm form) {
+
+		form.setName(project.getName());
+		form.getNameTF().setText(project.getName());
+		form.getDescriptionTF().setText(project.getDescription());
+		form.getStartDateDP().setValue(control.convertDateFromXML(project.getStartDate()));
+		form.getEndDateDP().setValue(control.convertDateFromXML(project.getEndDate()));
+
+	}
+
 	public void fillPhasesFromXML(BasicForm form) {
-	
+
 		for (int i = 0; i < project.getPhases().size(); i++) {
 			Phase phase = project.getPhases().get(i);
 
@@ -64,7 +75,7 @@ public class FillFormsXML {
 			item.setTranslateX(phase.getCoordinates().getXCoordinate());
 			item.setTranslateY(phase.getCoordinates().getYCoordinate());
 		}
-		
+
 	}
 
 	public int[] createPhaseFormXML(CanvasItem item, BasicForm form, int[] IDs, int indexConfig) {
@@ -72,12 +83,13 @@ public class FillFormsXML {
 		IDs[0] = index;
 		IDs[1] = idCreater.createPhaseID();
 		Phase phase = form.getPhaseArray().get(IDs[1]);
-		PhaseForm phaseForm = new PhaseForm(item, control, Constans.phaseDragTextIndexs, phase);
+		PhaseForm phaseForm = new PhaseForm(item, control, Constans.phaseDragTextIndexs, phase, index);
 		phaseForm.getDescriptionTF().setText(phase.getDescription());
 		phaseForm.getNameTF().setText(phase.getName());
 		phaseForm.setName(phase.getName());
+		phaseForm.getEndDate().setValue(control.convertDateFromXML(phase.getEndDate()));
+		;
 
-		
 		index++;
 		forms.add(IDs[0], phaseForm);
 
@@ -87,26 +99,6 @@ public class FillFormsXML {
 		}
 
 		// form.getPhaseArray().add(IDs[1], phase);
-		return IDs;
-
-	}
-
-	public int[] createIterationFormXML(CanvasItem item, BasicForm form, int[] IDs, int indexConfig) {
-
-		IDs[0] = index;
-		IDs[1] = idCreater.createIterationID();
-		Iteration iteration = form.getIterationArray().get(IDs[1]);
-		IterationForm iterationForm = new IterationForm(item, control, Constans.iterationDragTextIndexs, iteration);
-
-		iterationForm.getNameTF().setText(iteration.getName());
-		iterationForm.getDescriptionTF().setText(iteration.getDescription());
-
-		index++;
-		indexConfig = fillConfigurationFromXML(iterationForm, iteration.getConfiguration());
-
-		iterationForm.getConfigCB().setValue(control.getConfigObservable().get(indexConfig));
-
-		forms.add(IDs[0], iterationForm);
 		return IDs;
 
 	}
@@ -124,6 +116,29 @@ public class FillFormsXML {
 			item.setTranslateX(iteration.getCoordinates().getXCoordinate());
 			item.setTranslateY(iteration.getCoordinates().getYCoordinate());
 		}
+
+	}
+
+	public int[] createIterationFormXML(CanvasItem item, BasicForm form, int[] IDs, int indexConfig) {
+
+		IDs[0] = index;
+		IDs[1] = idCreater.createIterationID();
+		Iteration iteration = form.getIterationArray().get(IDs[1]);
+		IterationForm iterationForm = new IterationForm(item, control, Constans.iterationDragTextIndexs, iteration,
+				index);
+
+		iterationForm.getNameTF().setText(iteration.getName());
+		iterationForm.getDescriptionTF().setText(iteration.getDescription());
+		iterationForm.getEndDateDP().setValue(control.convertDateFromXML(iteration.getEndDate()));
+		iterationForm.getStartDateDP().setValue(control.convertDateFromXML(iteration.getStartDate()));
+
+		index++;
+		indexConfig = fillConfigurationFromXML(iterationForm, iteration.getConfiguration());
+
+		iterationForm.getConfigCB().setValue(control.getConfigObservable().get(indexConfig));
+
+		forms.add(IDs[0], iterationForm);
+		return IDs;
 
 	}
 
@@ -148,7 +163,7 @@ public class FillFormsXML {
 		IDs[0] = index;
 		IDs[1] = idCreater.createActivityID();
 		Activity activity = form.getActivityArray().get(IDs[1]);
-		ActivityForm activityForm = new ActivityForm(item, control, Constans.activityDragTextIndexs, activity);
+		ActivityForm activityForm = new ActivityForm(item, control, Constans.activityDragTextIndexs, activity, index);
 
 		activityForm.getNameTF().setText(activity.getName());
 		activityForm.getDescriptionTF().setText(activity.getDescription());
@@ -192,10 +207,9 @@ public class FillFormsXML {
 
 		index++;
 		forms.add(IDs[0], workUnitForm);
-		fillRoleFromXML(workUnitForm, workUnitForm.getRoleArray());
 
 		workUnitForm.getAuthorRoleCB().setValue(unit.getAuthor().getName());
-		workUnitForm.getAuthorRoleCB().setValue(unit.getAssignee().getName());
+		workUnitForm.getAsigneeRoleCB().setValue(unit.getAssignee().getName());
 
 		return IDs;
 	}
@@ -217,11 +231,12 @@ public class FillFormsXML {
 		IDs[1] = idCreater.createConfigurationID();
 		System.out.println(index + " Config " + IDs[1]);
 		Configuration conf = form.getConfig();
-		ConfigurationForm configForm = new ConfigurationForm(item, control, Constans.configurationDragTextIndexs, conf);
+		ConfigurationForm configForm = new ConfigurationForm(item, control, Constans.configurationDragTextIndexs, conf,
+				index);
 
 		configForm.getNameTF().setText(conf.getName());
 		configForm.setName(conf.getName());
-
+		configForm.getCreatedDP().setValue(control.convertDateFromXML(conf.getCreate()));
 		if (conf.isIsRelease()) {
 			configForm.getRbYes().setSelected(true);
 		} else {
@@ -233,7 +248,6 @@ public class FillFormsXML {
 		System.out.println(forms.get(index).getTitle() + " " + index + " " + IDs[1]);
 		index++;
 
-		fillRoleFromXML(configForm, configForm.getRoleArray());
 		configForm.getAuthorRoleCB().setValue(conf.getAuthor().getName());
 
 		fillBranchFromXML(configForm, conf.getBranches());
@@ -245,14 +259,14 @@ public class FillFormsXML {
 	}
 
 	public void fillRoleFromXML(BasicForm form, List<Role> roles) {
-
+		System.out.println(roles.size() + " Role size");
 		for (int i = 0; i < roles.size(); i++) {
 
 			Role role = roles.get(i);
 			CanvasItem item = new CanvasItem(SegmentType.Role, role.getName(), control, form, false);
 
 			control.getRoleObservable().add(item.getIDs()[1], role.getName());
-			control.getRoleList().add(item.getIDs()[1], role);
+			// control.getRoleList().add(item.getIDs()[1], role);
 		}
 
 	}
@@ -264,7 +278,7 @@ public class FillFormsXML {
 		System.out.println(index + " role");
 		IDs[1] = idCreater.createRoleID();
 		IDs[2] = form.getIdCreater().createRoleID();
-		Role role = form.getRoleArray().get(IDs[2]);
+		Role role = project.getRoles().get(IDs[1]);
 		RoleForm roleForm = new RoleForm(item, control, role);
 
 		roleForm.setName(role.getName());
@@ -328,7 +342,7 @@ public class FillFormsXML {
 
 			CanvasItem item = new CanvasItem(SegmentType.Change, change.getName(), control, form, false);
 			form.getCanvas().getChildren().add(item);
-
+System.out.println("Change1");
 			item.setTranslateX(change.getCoordinates().getXCoordinate());
 			item.setTranslateY(change.getCoordinates().getYCoordinate());
 
@@ -380,8 +394,8 @@ public class FillFormsXML {
 		}
 
 	}
-	
-	public int[] createArtifactFormXML(CanvasItem item, BasicForm form, int[] IDs){
+
+	public int[] createArtifactFormXML(CanvasItem item, BasicForm form, int[] IDs) {
 		IDs[0] = index;
 		IDs[1] = idCreater.createArtifactID();
 		IDs[2] = form.getIdCreater().createArtifactID();
@@ -394,13 +408,15 @@ public class FillFormsXML {
 		artifactForm.getDescriptionTF().setText(artifact.getDescriptoin());
 		// artifactForm.getCreatedDP().se;
 		artifactForm.getMineTypeCB().setValue(ArtifactClass.values()[artifact.getArtifactIndex()]);
+		artifactForm.getCreatedDP().setValue(control.convertDateFromXML(artifact.getCreated()));
+		artifactForm.getAuthorRoleCB().setValue(artifact.getAuthor().getName());
 
 		forms.add(index, artifactForm);
 		control.getArtifactList().add(IDs[1], artifact);
 		control.getArtifactFormIndex().add(index);
 		index++;
 		return IDs;
-		
+
 	}
 
 }
