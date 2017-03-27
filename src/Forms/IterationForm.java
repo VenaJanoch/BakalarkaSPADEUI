@@ -30,12 +30,15 @@ public class IterationForm extends BasicForm implements ISegmentForm {
 	private DatePicker endDateDP;
 	private DatePicker startDateDP;
 
+	private Button editConfigBT;
 	private Button newConfigBT;
 	private int chooseConfigID;
 
 	public IterationForm(CanvasItem item, Control control, int[] itemArray, Iteration iteration) {
 		super(item, control, itemArray);
 		setWorkUnitArray(iteration.getWorkUnits());
+		setConfig(iteration.getConfiguration());
+		
 		this.setOnCloseRequest(new EventHandler<WindowEvent>() {
 
 			@Override
@@ -53,8 +56,9 @@ public class IterationForm extends BasicForm implements ISegmentForm {
 	public void closeForm() {
 		setName(getNameTF().getText());
 		getCanvasItem().setNameText(getName());
-		getControl().fillIteration(getCanvasItem().getForm(), getCanvasItem().getIDs()[1], descriptionTF.getText(),
-				getName(), startDateDP.getValue(), endDateDP.getValue(), chooseConfigID);
+		getControl().getFillForms().fillIteration(getCanvasItem().getForm(), getCanvasItem().getIDs()[1], descriptionTF.getText(),
+				getName(), startDateDP.getValue(), endDateDP.getValue(), chooseConfigID,
+				(int) getCanvasItem().getTranslateX(), (int) getCanvasItem().getTranslateY());
 	}
 
 	@Override
@@ -87,13 +91,29 @@ public class IterationForm extends BasicForm implements ISegmentForm {
 
 			}
 		});
-		newConfigBT = new Button("New Configuration");
-		newConfigBT.setOnAction(event -> getControl()
-				.createForm(new CanvasItem(SegmentType.Configuration, "Name", getControl(), this), this));
+		newConfigBT = new Button("New");
+		newConfigBT.setOnAction(event -> configBTAction());
+
+		editConfigBT = new Button("Edit");
+		editConfigBT.setOnAction(event -> editBTAction());
 
 		fillInfoPart();
 	}
 
+
+	private void editBTAction() {
+		getControl().getForms().get(getControl().getConfigFormIndex().get(chooseConfigID)).show();
+	}
+	
+	
+	private void configBTAction() {
+		CanvasItem item = new CanvasItem(SegmentType.Configuration, "Name", getControl(), this, true);
+
+		getControl().createForm(item, this);
+		getControl().getForms().get(item.getIDs()[0]).show();
+
+	}
+	
 	private void fillInfoPart() {
 
 		getInfoPart().add(descriptionLB, 0, 1);
@@ -111,8 +131,45 @@ public class IterationForm extends BasicForm implements ISegmentForm {
 		getInfoPart().add(configLB, 0, 4);
 		getInfoPart().setHalignment(configLB, HPos.RIGHT);
 		getInfoPart().add(configCB, 1, 4);
-		getInfoPart().add(newConfigBT, 2, 4);
+		getInfoPart().add(editConfigBT, 2, 4);
+		getInfoPart().add(newConfigBT, 3, 4);
 
 	}
 
+	/*** Getrs and Setrs ***/
+	
+	public ChoiceBox<String> getConfigCB() {
+		return configCB;
+	}
+
+	public void setConfigCB(ChoiceBox<String> configCB) {
+		this.configCB = configCB;
+	}
+
+	public TextField getDescriptionTF() {
+		return descriptionTF;
+	}
+
+	public void setDescriptionTF(TextField descriptionTF) {
+		this.descriptionTF = descriptionTF;
+	}
+
+	public DatePicker getEndDateDP() {
+		return endDateDP;
+	}
+
+	public void setEndDateDP(DatePicker endDateDP) {
+		this.endDateDP = endDateDP;
+	}
+
+	public DatePicker getStartDateDP() {
+		return startDateDP;
+	}
+
+	public void setStartDateDP(DatePicker startDateDP) {
+		this.startDateDP = startDateDP;
+	}
+
+	
+	
 }

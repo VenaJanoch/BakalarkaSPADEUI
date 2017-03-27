@@ -8,6 +8,7 @@ import Interfaces.ISegmentForm;
 import Obsluha.Control;
 import Obsluha.SegmentType;
 import SPADEPAC.Artifact;
+import SPADEPAC.Change;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
@@ -34,12 +35,11 @@ public class ChangeForm extends BasicForm implements ISegmentForm {
 	
 	private boolean newChange;
 
-	public ChangeForm(CanvasItem item, Control control) {
+	public ChangeForm(CanvasItem item, Control control, Change change) {
 		super(item, control);
-		System.out.println("Change1");
 		
 		setArtifactArray(new ArrayList());
-		System.out.println("Change3");
+		getArtifactArray().add(change.getArtifact());
 		this.setOnCloseRequest(new EventHandler<WindowEvent>() {
 
 			@Override
@@ -50,15 +50,15 @@ public class ChangeForm extends BasicForm implements ISegmentForm {
 
 		getSubmitButton().setOnAction(event -> setActionSubmitButton());
 		createForm();
-		System.out.println("Change2");
+		
 	}
 
 	@Override
 	public void closeForm() {
 		setName(getNameTF().getText());
 		getCanvasItem().setNameText(getName());
-		getControl().fillChange(getCanvasItem().getForm(), getCanvasItem().getIDs()[2], descriptionTF.getText(),
-				getName(), newChange, artifactIndex);
+		getControl().getFillForms().fillChange(getCanvasItem().getForm(), getCanvasItem().getIDs()[2], descriptionTF.getText(),
+				getName(), newChange, artifactIndex, (int) getCanvasItem().getTranslateX(), (int) getCanvasItem().getTranslateY());
 
 	}
 
@@ -89,7 +89,7 @@ public class ChangeForm extends BasicForm implements ISegmentForm {
 	}
 	
 	private void artifactBTAction(){
-		CanvasItem item = new CanvasItem(SegmentType.Artifact, "Name", getControl(), this);
+		CanvasItem item = new CanvasItem(SegmentType.Artifact, "Name", getControl(), this, true);
 		
 		getControl().createForm(item, this);
 		getControl().getForms().get(item.getIDs()[0]).show();
@@ -116,7 +116,7 @@ public class ChangeForm extends BasicForm implements ISegmentForm {
 
 	private void fillFormFromList(int index) {
 
-		if (index != 0) {
+		if ((index-1) > 0) {
 
 			getNameTF().setText(getControl().getChangeList().get(index - 1).getName());
 			getNameTF().setDisable(true);
@@ -144,5 +144,33 @@ public class ChangeForm extends BasicForm implements ISegmentForm {
 		getInfoPart().add(newArtifactBT, 2, 2);
 
 	}
+
+
+	/** Getrs and Setrs ***/
+	
+	public ComboBox<String> getArtifactCB() {
+		return artifactCB;
+	}
+
+	public void setArtifactCB(ComboBox<String> artifactCB) {
+		this.artifactCB = artifactCB;
+	}
+
+	public ComboBox<String> getChangeCB() {
+		return changeCB;
+	}
+
+	public void setChangeCB(ComboBox<String> changeCB) {
+		this.changeCB = changeCB;
+	}
+
+	public TextField getDescriptionTF() {
+		return descriptionTF;
+	}
+
+	public void setDescriptionTF(TextField descriptionTF) {
+		this.descriptionTF = descriptionTF;
+	}
+	
 
 }

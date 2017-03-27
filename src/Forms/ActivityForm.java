@@ -17,9 +17,9 @@ public class ActivityForm extends BasicForm implements ISegmentForm {
 	private Label descriptionLB;
 
 	private TextField descriptionTF;
-	
-	public ActivityForm(CanvasItem item, Control control,int[] itemArray, Activity activity) {
-		
+
+	public ActivityForm(CanvasItem item, Control control, int[] itemArray, Activity activity) {
+
 		super(item, control, itemArray);
 		setWorkUnitArray(activity.getWorkUnits());
 		this.setOnCloseRequest(new EventHandler<WindowEvent>() {
@@ -39,7 +39,8 @@ public class ActivityForm extends BasicForm implements ISegmentForm {
 	public void closeForm() {
 
 		getCanvasItem().setNameText(getNameTF().getText());
-		getControl().fillActivity(getCanvasItem().getForm(),getCanvasItem().getIDs()[1], descriptionTF.getText(), getNameTF().getText());
+		getControl().getFillForms().fillActivity(getCanvasItem().getForm(), getCanvasItem().getIDs()[1], descriptionTF.getText(),
+				getNameTF().getText(), (int) getCanvasItem().getTranslateX(), (int) getCanvasItem().getTranslateY());
 	}
 
 	@Override
@@ -52,19 +53,29 @@ public class ActivityForm extends BasicForm implements ISegmentForm {
 	public void createForm() {
 		descriptionLB = new Label("Description: ");
 		descriptionTF = new TextField();
-		
+
 		fillInfoPart();
 	}
 
+	private void fillInfoPart() {
 
-		private void fillInfoPart() {
-		
-		getInfoPart().add(descriptionLB,0,1); 
+		getInfoPart().add(descriptionLB, 0, 1);
 		getInfoPart().setHalignment(descriptionLB, HPos.RIGHT);
-		getInfoPart().add(descriptionTF,1,1);
-			
-	}
-	
-	
+		getInfoPart().add(descriptionTF, 1, 1);
 
+	}
+
+
+	/*** Getrs and Setrs ****/
+	
+	public TextField getDescriptionTF() {
+		return descriptionTF;
+	}
+
+	public void setDescriptionTF(TextField descriptionTF) {
+		this.descriptionTF = descriptionTF;
+	}
+
+	
+	
 }

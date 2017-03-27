@@ -51,8 +51,8 @@ public class RoleForm extends BasicForm implements ISegmentForm {
 	public void closeForm() {
 		setName(getNameTF().getText());
 		getCanvasItem().setNameText(getName());
-		getControl().fillRole(role, getCanvasItem().getIDs()[1], descriptionTF.getText(),
-				getName(), RoleClass.values()[roleIndex].name());
+		getControl().getFillForms().fillRole(role, getCanvasItem().getIDs()[1], descriptionTF.getText(),
+				getName(), RoleClass.values()[roleIndex].name(), (int) getCanvasItem().getTranslateX(), (int) getCanvasItem().getTranslateY());
 
 	}
 
@@ -96,5 +96,26 @@ public class RoleForm extends BasicForm implements ISegmentForm {
 		getInfoPart().add(roleTypeCB, 1, 2);
 
 	}
+
+	
+	/*** Getrs and Setrs ***/
+	
+	public TextField getDescriptionTF() {
+		return descriptionTF;
+	}
+
+	public void setDescriptionTF(TextField descriptionTF) {
+		this.descriptionTF = descriptionTF;
+	}
+
+	public ComboBox<RoleClass> getRoleTypeCB() {
+		return roleTypeCB;
+	}
+
+	public void setRoleTypeCB(ComboBox<RoleClass> roleTypeCB) {
+		this.roleTypeCB = roleTypeCB;
+	}
+	
+	
 
 }

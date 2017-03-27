@@ -6,6 +6,8 @@ import java.util.List;
 import Forms.BasicForm;
 import Obsluha.Constans;
 import Obsluha.Control;
+import Obsluha.FillForms;
+import Obsluha.FillFormsXML;
 import Obsluha.SegmentType;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -33,7 +35,8 @@ public class CanvasItem extends AnchorPane {
 	private double length;
 	private Scene scene;
 	private Control control;
-
+	private FillFormsXML fillFormsXML;
+	private FillForms fillForms;
 	private Tooltip tooltip;
 
 	private NodeLink mDragLink = null;
@@ -49,21 +52,27 @@ public class CanvasItem extends AnchorPane {
 	private SegmentType type;
 	private BasicForm form;
 
-	public CanvasItem(SegmentType type, String name, Control control, BasicForm rootForm) {
+	public CanvasItem(SegmentType type, String name, Control control, BasicForm rootForm, boolean isCreated) {
 
 		this.setOnMousePressed(circleOnMousePressedEventHandler);
 		this.setOnMouseDragged(circleOnMouseDraggedEventHandler);
 		this.setOnMouseReleased(onMouseReleaseEventHandler);
 		this.setForm(rootForm);
 		this.setType(type);
-		IDs = control.createForm(this, rootForm);
+		this.setFillForms(control.getFillForms());
+		this.setFillFormsXML(fillFormsXML);
+		if (isCreated) {
+			IDs = control.createForm(this, rootForm);
+		} else {
+			IDs = control.createFormFromXML(this, rootForm);
+		}
+
 		idForm = IDs[0];
 		ID = type.name() + "_" + String.format("%03d", IDs[1]);
 
 		this.tooltip = new Tooltip(ID);
 		Tooltip.install(this, tooltip);
 
-		this.scene = scene;
 		this.control = control;
 		this.segmentInfo = new InfoBoxSegment(this, type, name);
 		this.length = segmentInfo.getLength();
@@ -115,12 +124,13 @@ public class CanvasItem extends AnchorPane {
 		double newTranslateX = orgTranslateX + offsetX;
 		double newTranslateY = orgTranslateY + offsetY;
 
-	//	if (t.getSceneX() > 0 && t.getSceneX() < canvas.getWidth() && t.getSceneY() > canvas.getTranslateY() + 90
-		//		&& t.getSceneY() < canvas.getHeight() + 50) {
-			((AnchorPane) (t.getSource())).setTranslateX(newTranslateX);
-			((AnchorPane) (t.getSource())).setTranslateY(newTranslateY);
+		// if (t.getSceneX() > 0 && t.getSceneX() < canvas.getWidth() &&
+		// t.getSceneY() > canvas.getTranslateY() + 90
+		// && t.getSceneY() < canvas.getHeight() + 50) {
+		((AnchorPane) (t.getSource())).setTranslateX(newTranslateX);
+		((AnchorPane) (t.getSource())).setTranslateY(newTranslateY);
 
-		//}
+		// }
 
 	}
 
@@ -243,7 +253,21 @@ public class CanvasItem extends AnchorPane {
 	public void setForm(BasicForm form) {
 		this.form = form;
 	}
-	
-	
+
+	public FillFormsXML getFillFormsXML() {
+		return fillFormsXML;
+	}
+
+	public void setFillFormsXML(FillFormsXML fillFormsXML) {
+		this.fillFormsXML = fillFormsXML;
+	}
+
+	public FillForms getFillForms() {
+		return fillForms;
+	}
+
+	public void setFillForms(FillForms fillForms) {
+		this.fillForms = fillForms;
+	}
 
 }

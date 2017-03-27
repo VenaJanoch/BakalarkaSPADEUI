@@ -1,7 +1,5 @@
 package Forms;
 
-import javax.swing.text.html.MinimalHTMLWriter;
-
 import Grafika.CanvasItem;
 import Grafika.InfoBoxSegment;
 import Interfaces.ISegmentForm;
@@ -61,8 +59,9 @@ public class ArtifactForm extends BasicForm implements ISegmentForm {
 	public void closeForm() {
 		setName(getNameTF().getText());
 		getCanvasItem().setNameText(getName());
-		getControl().fillArtifact(artifact, getCanvasItem().getIDs()[2], descriptionTF.getText(), getName(),
-				createdDP.getValue(), ArtifactClass.values()[typeIndex].name(), authorIndex);
+		getControl().getFillForms().fillArtifact(artifact, getCanvasItem().getIDs()[2], descriptionTF.getText(), getName(),
+				createdDP.getValue(), ArtifactClass.values()[typeIndex].name(), authorIndex,
+				(int) getCanvasItem().getTranslateX(), (int) getCanvasItem().getTranslateY(), typeIndex);
 
 	}
 
@@ -97,7 +96,7 @@ public class ArtifactForm extends BasicForm implements ISegmentForm {
 	}
 
 	private void artifactBTAction() {
-		CanvasItem item = new CanvasItem(SegmentType.Role, "Name", getControl(), this);
+		CanvasItem item = new CanvasItem(SegmentType.Role, "Name", getControl(), this, true);
 
 		getControl().createForm(item, this);
 		getControl().getForms().get(item.getIDs()[0]).show();
@@ -143,6 +142,40 @@ public class ArtifactForm extends BasicForm implements ISegmentForm {
 		getInfoPart().setHalignment(mineTypeLB, HPos.RIGHT);
 		getInfoPart().add(mineTypeCB, 1, 4);
 
+	}
+
+	/** Getrs and Setrs ***/
+
+	public TextField getDescriptionTF() {
+		return descriptionTF;
+	}
+
+	public void setDescriptionTF(TextField descriptionTF) {
+		this.descriptionTF = descriptionTF;
+	}
+
+	public DatePicker getCreatedDP() {
+		return createdDP;
+	}
+
+	public void setCreatedDP(DatePicker createdDP) {
+		this.createdDP = createdDP;
+	}
+
+	public ComboBox<String> getAuthorRoleCB() {
+		return authorRoleCB;
+	}
+
+	public void setAuthorRoleCB(ComboBox<String> authorRoleCB) {
+		this.authorRoleCB = authorRoleCB;
+	}
+
+	public ComboBox<ArtifactClass> getMineTypeCB() {
+		return mineTypeCB;
+	}
+
+	public void setMineTypeCB(ComboBox<ArtifactClass> mineTypeCB) {
+		this.mineTypeCB = mineTypeCB;
 	}
 
 }

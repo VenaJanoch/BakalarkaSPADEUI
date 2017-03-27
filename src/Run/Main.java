@@ -10,8 +10,6 @@ public class Main extends Application{
 
 	private Stage primaryStage;
 	MainWindow mainWindow;
-	Control control;
-	
 	
 	
 	public static void main(String[] args) {
@@ -22,9 +20,9 @@ public class Main extends Application{
 	public void start(Stage primaryStage) throws Exception {
 		this.primaryStage = primaryStage;
 		this.primaryStage.show();
-		control = new Control();
 		
-		mainWindow = new MainWindow(this, control);
+		
+		mainWindow = new MainWindow(this);
 		this.primaryStage.setTitle(mainWindow.getTitle());
 		this.primaryStage.setScene(mainWindow.getScene());
 	

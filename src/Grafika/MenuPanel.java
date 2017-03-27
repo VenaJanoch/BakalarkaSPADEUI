@@ -21,34 +21,40 @@ import javafx.scene.paint.Color;
 
 public class MenuPanel extends VBox {
 	Control control;
+	MainWindow mainWindow;
 
-	public MenuPanel(Control control) {
+	public MenuPanel(Control control, MainWindow mainWindow) {
 		super();
 		this.control = control;
+		this.mainWindow = mainWindow;
 		this.setBackground(new Background(new BackgroundFill(Color.BLUE, CornerRadii.EMPTY, Insets.EMPTY)));
 		this.setMinWidth(Constans.width);
 		createMenu();
 
 	}
 
-	private void createMenu(){
-		
-MenuBar menuMB = new MenuBar();
-		
+	private void createMenu() {
+
+		MenuBar menuMB = new MenuBar();
+
 		Menu fileMenu = new Menu("File");
 		MenuItem newItem = new MenuItem("New");
 		MenuItem openItem = new MenuItem("Open");
 		MenuItem saveItem = new MenuItem("Save");
 		MenuItem exitItem = new MenuItem("Exit");
-		fileMenu.getItems().addAll(newItem,new SeparatorMenuItem(), openItem, new SeparatorMenuItem(),
-				saveItem, new SeparatorMenuItem(), exitItem);
-		
+		fileMenu.getItems().addAll(newItem, new SeparatorMenuItem(), openItem, new SeparatorMenuItem(), saveItem,
+				new SeparatorMenuItem(), exitItem);
+
 		exitItem.setOnAction(ActionEvent -> Platform.exit());
 		saveItem.setOnAction(event -> control.saveFile());
-		openItem.setOnAction(event -> control.openFile());
-		menuMB.getMenus().addAll(fileMenu);		
-		
+		openItem.setOnAction(event -> openFile());
+		newItem.setOnAction(event -> control.restartControl());
+		menuMB.getMenus().addAll(fileMenu);
+
 		this.getChildren().add(menuMB);
 	}
 
+	private void openFile() {
+		control.openFile();
+	}
 }

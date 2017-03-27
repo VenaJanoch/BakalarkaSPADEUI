@@ -8,6 +8,7 @@ import Grafika.InfoBoxSegment;
 import Interfaces.ISegmentForm;
 import Obsluha.Control;
 import Obsluha.SegmentType;
+import SPADEPAC.WorkUnit;
 import SPADEPAC.WorkUnitPriorityClass;
 import SPADEPAC.WorkUnitPrioritySuperClass;
 import SPADEPAC.WorkUnitSeverityClass;
@@ -54,10 +55,14 @@ public class WorkUnitForm extends BasicForm implements ISegmentForm {
 	private int assigneIndex;
 	private int typeIndex;
 	private int authorIndex;
+	private WorkUnit unit;
 
-	public WorkUnitForm(CanvasItem item, Control control) {
+	public WorkUnitForm(CanvasItem item, Control control, WorkUnit unit) {
 		super(item, control);
-
+		this.unit = unit;
+		setRoleArray(new ArrayList<>()) ;
+		getRoleArray().add(unit.getAssignee());
+		getRoleArray().add(unit.getAuthor());
 		this.setOnCloseRequest(new EventHandler<WindowEvent>() {
 
 			@Override
@@ -76,9 +81,10 @@ public class WorkUnitForm extends BasicForm implements ISegmentForm {
 
 		getCanvasItem().setNameText(getNameTF().getText());
 		setName(getNameTF().getText());
-		getControl().fillWorkUnit(getCanvasItem().getForm(), getCanvasItem().getIDs()[2], descriptionTF.getText(),
+		getControl().getFillForms().fillWorkUnit(getCanvasItem().getForm(), getCanvasItem().getIDs()[2], descriptionTF.getText(),
 				getName(), assigneIndex, authorIndex, WorkUnitPriorityClass.values()[priorityIndex].name(),
-				WorkUnitSeverityClass.values()[severityIndex].name(), WorkUnitTypeClass.values()[typeIndex].name());
+				WorkUnitSeverityClass.values()[severityIndex].name(), WorkUnitTypeClass.values()[typeIndex].name(),
+				(int) getCanvasItem().getTranslateX(), (int) getCanvasItem().getTranslateY(), priorityIndex, severityIndex, typeIndex);
 
 	}
 
@@ -99,7 +105,7 @@ public class WorkUnitForm extends BasicForm implements ISegmentForm {
 				FXCollections.observableArrayList(WorkUnitPriorityClass.values()));
 		priorityCB.getSelectionModel().selectedIndexProperty().addListener(priorityListener);
 		priorityCB.setVisibleRowCount(5);
-	
+
 		severityLB = new Label("Severity: ");
 		severityCB = new ComboBox<WorkUnitSeverityClass>(
 				FXCollections.observableArrayList(WorkUnitSeverityClass.values()));
@@ -113,24 +119,32 @@ public class WorkUnitForm extends BasicForm implements ISegmentForm {
 		typeCB = new ComboBox<WorkUnitTypeClass>(FXCollections.observableArrayList(WorkUnitTypeClass.values()));
 		typeCB.getSelectionModel().selectedIndexProperty().addListener(typeListener);
 		typeCB.setVisibleRowCount(5);
-		
+
 		asigneeRoleLB = new Label("Asignee-role: ");
 		asigneeRoleCB = new ComboBox<String>(getControl().getRoleObservable());
 		asigneeRoleCB.setVisibleRowCount(5);
 		asigneeRoleCB.getSelectionModel().selectedIndexProperty().addListener(roleListenerAsig);
-		
+
 		authorRoleLB = new Label("Author-role: ");
 		authorRoleCB = new ComboBox<String>(getControl().getRoleObservable());
 		authorRoleCB.setVisibleRowCount(5);
 		authorRoleCB.getSelectionModel().selectedIndexProperty().addListener(roleListenerAut);
-		
+
 		descriptionLB = new Label("Description: ");
 		descriptionTF = new TextField();
 
 		newRoleBT = new Button("New");
-		newRoleBT.setOnAction(
-				event -> getControl().createForm(new CanvasItem(SegmentType.Role, "Name", getControl(), this), this));
+		newRoleBT.setOnAction(event ->roleBTAction());
+		
 		fillInfoPart();
+	}
+	
+	private void roleBTAction() {
+		CanvasItem item = new CanvasItem(SegmentType.Role, "Name", getControl(), this, true);
+
+		getControl().createForm(item, this);
+		getControl().getForms().get(item.getIDs()[0]).show();
+
 	}
 
 	ChangeListener<Number> typeListener = new ChangeListener<Number>() {
@@ -143,7 +157,7 @@ public class WorkUnitForm extends BasicForm implements ISegmentForm {
 
 		}
 	};
-	
+
 	ChangeListener<Number> roleListenerAsig = new ChangeListener<Number>() {
 
 		@Override
@@ -153,7 +167,7 @@ public class WorkUnitForm extends BasicForm implements ISegmentForm {
 
 		}
 	};
-	
+
 	ChangeListener<Number> roleListenerAut = new ChangeListener<Number>() {
 
 		@Override
@@ -230,5 +244,73 @@ public class WorkUnitForm extends BasicForm implements ISegmentForm {
 		getInfoPart().add(authorRoleCB, 1, 8);
 
 	}
+	
+	/**** Gets and Setrs ***/
 
+	public TextField getDescriptionTF() {
+		return descriptionTF;
+	}
+
+	public void setDescriptionTF(TextField descriptionTF) {
+		this.descriptionTF = descriptionTF;
+	}
+
+	public TextField getEstimatedTimeTF() {
+		return estimatedTimeTF;
+	}
+
+	public void setEstimatedTimeTF(TextField estimatedTimeTF) {
+		this.estimatedTimeTF = estimatedTimeTF;
+	}
+
+	public ComboBox<WorkUnitPriorityClass> getPriorityCB() {
+		return priorityCB;
+	}
+
+	public void setPriorityCB(ComboBox<WorkUnitPriorityClass> priorityCB) {
+		this.priorityCB = priorityCB;
+	}
+
+	public ComboBox<WorkUnitSeverityClass> getSeverityCB() {
+		return severityCB;
+	}
+
+	public void setSeverityCB(ComboBox<WorkUnitSeverityClass> severityCB) {
+		this.severityCB = severityCB;
+	}
+
+	public ComboBox<String> getCategoryCB() {
+		return categoryCB;
+	}
+
+	public void setCategoryCB(ComboBox<String> categoryCB) {
+		this.categoryCB = categoryCB;
+	}
+
+	public ComboBox<WorkUnitTypeClass> getTypeCB() {
+		return typeCB;
+	}
+
+	public void setTypeCB(ComboBox<WorkUnitTypeClass> typeCB) {
+		this.typeCB = typeCB;
+	}
+
+	public ComboBox<String> getAsigneeRoleCB() {
+		return asigneeRoleCB;
+	}
+
+	public void setAsigneeRoleCB(ComboBox<String> asigneeRoleCB) {
+		this.asigneeRoleCB = asigneeRoleCB;
+	}
+
+	public ComboBox<String> getAuthorRoleCB() {
+		return authorRoleCB;
+	}
+
+	public void setAuthorRoleCB(ComboBox<String> authorRoleCB) {
+		this.authorRoleCB = authorRoleCB;
+	}
+
+	
+	
 }

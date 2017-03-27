@@ -115,6 +115,7 @@ public class BasicForm extends Stage {
 		this.setScene(creatSceneProject());
 
 	}
+	
 
 	private Scene creatSceneCanvas() {
 
@@ -166,6 +167,14 @@ public class BasicForm extends Stage {
 		return mainPanel;
 	}
 
+	
+	@Override
+	public String toString() {
+		
+		return getName();
+	}
+	
+	
 	/** Getrs and Setrs **/
 
 	public BorderPane getMainPanel() {
@@ -339,6 +348,14 @@ public class BasicForm extends Stage {
 
 	public void setConfig(Configuration configArray) {
 		this.configArray = configArray;
+	}
+
+	public DragAndDropCanvas getCanvas() {
+		return canvas;
+	}
+
+	public void setCanvas(DragAndDropCanvas canvas) {
+		this.canvas = canvas;
 	}
 	
 	

@@ -22,8 +22,9 @@ public class MainWindow extends Stage {
 	private MenuPanel menu;
 	private DragAndDropPanel dragAndDrop;
 
-	public MainWindow(Main main, Control control) {
+	public MainWindow(Main main) {
 		super();
+		control = new Control();
 		this.setTitle("SPADE XML editor");
 		this.control = control;
 
@@ -35,11 +36,12 @@ public class MainWindow extends Stage {
 
 		scena = new Scene(creatPanel(), Constans.width, Constans.height);
 		dragCanvas.setMScene(scena);
+		control.setCanvas(dragCanvas);
 		return scena;
 	}
 
 	private Parent creatPanel() {
-		menu = new MenuPanel(control);
+		menu = new MenuPanel(control, this);
 
 		dragCanvas = new DragAndDropCanvas(control, (ProjectForm) control.getForms().get(0));
 		dragAndDrop = new DragAndDropPanel(control, (ProjectForm) control.getForms().get(0));
@@ -52,5 +54,7 @@ public class MainWindow extends Stage {
 
 		return mainPanel;
 	}
+	
+
 
 }

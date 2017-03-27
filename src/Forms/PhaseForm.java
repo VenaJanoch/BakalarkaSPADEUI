@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Grafika.CanvasItem;
+import Grafika.DragAndDropCanvas;
+import Grafika.DragAndDropItem;
 import Grafika.InfoBoxSegment;
 import Interfaces.ISegmentForm;
 import Obsluha.Control;
@@ -34,12 +36,17 @@ public class PhaseForm extends BasicForm implements ISegmentForm {
 	private DatePicker endDate;
 	private ChoiceBox<String> configCB;
 	private Button newConfigBT;
+	private Button editConfigBT;
 	private int chooseConfigID;
+	private int configIndex;
+	private Phase phase;
 
 	public PhaseForm(CanvasItem item, Control control, int[] itemArray, Phase phase) {
 		super(item, control, itemArray);
-
+		this.phase = phase;
 		setWorkUnitArray(phase.getWorkUnits());
+		setConfig(phase.getConfiguration());
+
 		this.setOnCloseRequest(new EventHandler<WindowEvent>() {
 
 			@Override
@@ -55,8 +62,9 @@ public class PhaseForm extends BasicForm implements ISegmentForm {
 	public void closeForm() {
 		setName(getNameTF().getText());
 		getCanvasItem().setNameText(getName());
-		getCanvasItem().getControl().fillPhase(getCanvasItem().getForm(), getCanvasItem().getIDs()[1],
-				descriptionTF.getText(), getName(), endDate.getValue(), chooseConfigID);
+		getCanvasItem().getFillForms().fillPhase(getCanvasItem().getForm(), getCanvasItem().getIDs()[1],
+				descriptionTF.getText(), getName(), endDate.getValue(), chooseConfigID,
+				(int) getCanvasItem().getTranslateX(), (int) getCanvasItem().getTranslateY());
 	}
 
 	@Override
@@ -86,13 +94,22 @@ public class PhaseForm extends BasicForm implements ISegmentForm {
 
 			}
 		});
-		newConfigBT = new Button("New Configuration");
-		newConfigBT.setOnAction(event -> artifactBTAction());
+		newConfigBT = new Button("New");
+		newConfigBT.setOnAction(event -> configBTAction());
+
+		editConfigBT = new Button("Edit");
+		editConfigBT.setOnAction(event -> editBTAction());
+
 		fillInfoPart();
 	}
 
-	private void artifactBTAction() {
-		CanvasItem item = new CanvasItem(SegmentType.Configuration, "Name", getControl(), this);
+
+	private void editBTAction() {
+		getControl().getForms().get(getControl().getConfigFormIndex().get(chooseConfigID)).show();
+	}
+
+	private void configBTAction() {
+		CanvasItem item = new CanvasItem(SegmentType.Configuration, "Name", getControl(), this, true);
 
 		getControl().createForm(item, this);
 		getControl().getForms().get(item.getIDs()[0]).show();
@@ -112,8 +129,34 @@ public class PhaseForm extends BasicForm implements ISegmentForm {
 		getInfoPart().add(configLB, 0, 3);
 		getInfoPart().setHalignment(configLB, HPos.RIGHT);
 		getInfoPart().add(configCB, 1, 3);
-		getInfoPart().add(newConfigBT, 2, 3);
+		getInfoPart().add(editConfigBT, 2, 3);
+		getInfoPart().add(newConfigBT, 3, 3);
 
+	}
+
+	/** Getrs And Setrs **/
+	public TextField getDescriptionTF() {
+		return descriptionTF;
+	}
+
+	public void setDescriptionTF(TextField descriptionTF) {
+		this.descriptionTF = descriptionTF;
+	}
+
+	public DatePicker getEndDate() {
+		return endDate;
+	}
+
+	public void setEndDate(DatePicker endDate) {
+		this.endDate = endDate;
+	}
+
+	public ChoiceBox<String> getConfigCB() {
+		return configCB;
+	}
+
+	public void setConfigCB(ChoiceBox<String> configCB) {
+		this.configCB = configCB;
 	}
 
 }
