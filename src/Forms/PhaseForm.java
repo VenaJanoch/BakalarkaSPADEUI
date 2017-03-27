@@ -105,8 +105,6 @@ public class PhaseForm extends BasicForm implements ISegmentForm {
 
 
 	private void editBTAction() {
-		System.out.println(getControl().getConfigFormIndex().get(chooseConfigID) + " nevim");
-		
 		getControl().getForms().get(getControl().getConfigFormIndex().get(chooseConfigID)).show();
 	}
 

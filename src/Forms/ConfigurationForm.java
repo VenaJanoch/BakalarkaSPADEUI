@@ -28,6 +28,8 @@ public class ConfigurationForm extends BasicForm implements ISegmentForm {
 
 	private Label isMainLB;
 
+	private boolean isNew;
+	
 	final ToggleGroup group = new ToggleGroup();
 
 	private Label createdLB;
@@ -41,6 +43,7 @@ public class ConfigurationForm extends BasicForm implements ISegmentForm {
 
 	private int authorIndex;
 	private Button newRoleBT;
+	private Button editRoleBT;
 
 	private Configuration configuration;
 
@@ -48,6 +51,8 @@ public class ConfigurationForm extends BasicForm implements ISegmentForm {
 		super(item, control, itemArray, indexForm);
 		this.configuration = conf;
 
+		isNew = true;
+		
 		setBranchArray(conf.getBranches());
 		setChangeArray(conf.getChanges());
 		setArtifactArray(conf.getArtifacts());
@@ -73,8 +78,9 @@ public class ConfigurationForm extends BasicForm implements ISegmentForm {
 		setName(getNameTF().getText());
 		getCanvasItem().setNameText(getName());
 		getControl().getFillForms().fillConfiguration(configuration, getCanvasItem().getIDs()[1], isRelease, createdDP.getValue(),
-				getName(), authorIndex, (int) getCanvasItem().getTranslateX(), (int) getCanvasItem().getTranslateY());
+				getName(), authorIndex, (int) getCanvasItem().getTranslateX(), (int) getCanvasItem().getTranslateY(), isNew);
 
+		isNew = false;
 	}
 
 	@Override
@@ -102,8 +108,15 @@ public class ConfigurationForm extends BasicForm implements ISegmentForm {
 		authorRoleCB.getSelectionModel().selectedIndexProperty().addListener(roleListenerAut);
 		newRoleBT = new Button("New");
 		newRoleBT.setOnAction(event -> roleBTAction());
+		
+		editRoleBT = new Button("Edit");
+		editRoleBT.setOnAction(event -> editRoleBTAction());
 
 		fillInfoPart();
+	}
+
+	private void editRoleBTAction() {
+		getControl().getForms().get(getControl().getRoleFormIndex().get(authorIndex)).show();
 	}
 
 	private void roleBTAction() {
@@ -126,7 +139,8 @@ public class ConfigurationForm extends BasicForm implements ISegmentForm {
 		getInfoPart().add(authorRoleLB, 0, 3);
 		getInfoPart().setHalignment(authorRoleLB, HPos.RIGHT);
 		getInfoPart().add(authorRoleCB, 1, 3);
-		getInfoPart().add(newRoleBT, 2, 3);
+		getInfoPart().add(newRoleBT, 3, 3);
+		getInfoPart().add(editRoleBT, 2, 3);
 
 		group.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
 

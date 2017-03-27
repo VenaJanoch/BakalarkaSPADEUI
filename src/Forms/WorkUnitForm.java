@@ -48,6 +48,8 @@ public class WorkUnitForm extends BasicForm implements ISegmentForm {
 	private ComboBox<String> authorRoleCB;
 
 	private Button newRoleBT;
+	private Button editRoleBT1;
+	private Button editRoleBT2;
 
 	private int priorityIndex;
 	private int severityIndex;
@@ -60,7 +62,7 @@ public class WorkUnitForm extends BasicForm implements ISegmentForm {
 	public WorkUnitForm(CanvasItem item, Control control, WorkUnit unit) {
 		super(item, control);
 		this.unit = unit;
-		setRoleArray(new ArrayList<>()) ;
+		setRoleArray(new ArrayList<>());
 		getRoleArray().add(unit.getAssignee());
 		getRoleArray().add(unit.getAuthor());
 		this.setOnCloseRequest(new EventHandler<WindowEvent>() {
@@ -81,10 +83,12 @@ public class WorkUnitForm extends BasicForm implements ISegmentForm {
 
 		getCanvasItem().setNameText(getNameTF().getText());
 		setName(getNameTF().getText());
-		getControl().getFillForms().fillWorkUnit(getCanvasItem().getForm(), getCanvasItem().getIDs()[2], descriptionTF.getText(),
-				getName(), assigneIndex, authorIndex, WorkUnitPriorityClass.values()[priorityIndex].name(),
+		getControl().getFillForms().fillWorkUnit(getCanvasItem().getForm(), getCanvasItem().getIDs()[2],
+				descriptionTF.getText(), getName(), assigneIndex, authorIndex,
+				WorkUnitPriorityClass.values()[priorityIndex].name(),
 				WorkUnitSeverityClass.values()[severityIndex].name(), WorkUnitTypeClass.values()[typeIndex].name(),
-				(int) getCanvasItem().getTranslateX(), (int) getCanvasItem().getTranslateY(), priorityIndex, severityIndex, typeIndex);
+				(int) getCanvasItem().getTranslateX(), (int) getCanvasItem().getTranslateY(), priorityIndex,
+				severityIndex, typeIndex);
 
 	}
 
@@ -134,14 +138,28 @@ public class WorkUnitForm extends BasicForm implements ISegmentForm {
 		descriptionTF = new TextField();
 
 		newRoleBT = new Button("New");
-		newRoleBT.setOnAction(event ->roleBTAction());
-		
+		newRoleBT.setOnAction(event -> roleBTAction());
+
+		editRoleBT1 = new Button("Edit");
+		editRoleBT1.setOnAction(event -> editRoleBTAction1());
+
+		editRoleBT2 = new Button("Edit");
+		editRoleBT2.setOnAction(event -> editRoleBTAction2());
+
 		fillInfoPart();
 	}
-	
+
+	private void editRoleBTAction2() {
+		getControl().getForms().get(getControl().getRoleFormIndex().get(authorIndex)).show();
+	}
+
+	private void editRoleBTAction1() {
+		getControl().getForms().get(getControl().getRoleFormIndex().get(assigneIndex)).show();
+	}
+
 	private void roleBTAction() {
 		CanvasItem item = new CanvasItem(SegmentType.Role, "Name", getControl(), this, true);
-		
+
 		getControl().getForms().get(item.getIDs()[0]).show();
 
 	}
@@ -243,7 +261,7 @@ public class WorkUnitForm extends BasicForm implements ISegmentForm {
 		getInfoPart().add(authorRoleCB, 1, 8);
 
 	}
-	
+
 	/**** Gets and Setrs ***/
 
 	public TextField getDescriptionTF() {
@@ -310,6 +328,4 @@ public class WorkUnitForm extends BasicForm implements ISegmentForm {
 		this.authorRoleCB = authorRoleCB;
 	}
 
-	
-	
 }

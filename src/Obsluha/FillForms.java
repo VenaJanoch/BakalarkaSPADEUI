@@ -49,7 +49,7 @@ public class FillForms {
 
 		idCreater = new IdentificatorCreater();
 		index = 1;
-		
+
 	}
 
 	public void fillProject(String description, String name, LocalDate startDate, LocalDate endDate) {
@@ -58,9 +58,6 @@ public class FillForms {
 		project.setName(name);
 		project.setEndDate(control.convertDate(endDate));
 		project.setStartDate(control.convertDate(startDate));
-		
-
-
 	}
 
 	public void fillPhase(BasicForm form, int ID, String description, String name, LocalDate endDate, int confIndex,
@@ -189,7 +186,7 @@ public class FillForms {
 	}
 
 	public void fillConfiguration(Configuration conf, int ID, boolean isRelase, LocalDate Ldate, String name,
-			int roleIndex, int x, int y) {
+			int roleIndex, int x, int y, boolean isNew) {
 
 		Configuration config = control.getConfigList().get(ID);
 		config.setIsRelease(isRelase);
@@ -197,12 +194,15 @@ public class FillForms {
 		config.setName(name);
 		config.setAuthor(control.getRoleList().get(roleIndex));
 		config.setAuthorIndex(roleIndex);
-		control.getConfigObservable().add(name);
 
 		Coordinates coord = objF.createCoordinates();
 		coord.setXCoordinate(x);
 		coord.setYCoordinate(y);
 		config.setCoordinates(coord);
+
+		if (isNew) {
+			control.getConfigObservable().add(name);
+		}
 
 	}
 
@@ -285,7 +285,7 @@ public class FillForms {
 	}
 
 	public void fillArtifact(Artifact artifact, int ID, String description, String name, LocalDate Ldate, String type,
-			int roleIndex, int x, int y, int typeIndex) {
+			int roleIndex, int x, int y, int typeIndex, boolean isNew) {
 
 		// Artifact artifact = form.getArtifactArray().get(ID);
 		artifact.setName(name);
@@ -294,12 +294,14 @@ public class FillForms {
 		artifact.setMimeType(type);
 		artifact.setAuthor(control.getRoleList().get(roleIndex));
 		artifact.setAuthorIndex(roleIndex);
-		control.getArtifactObservable().add(name);
 		artifact.setArtifactIndex(typeIndex);
 		Coordinates coord = objF.createCoordinates();
 		coord.setXCoordinate(x);
 		coord.setYCoordinate(y);
 		artifact.setCoordinates(coord);
+		if (isNew) {
+			control.getArtifactObservable().add(name);
+		}
 
 	}
 
@@ -317,7 +319,7 @@ public class FillForms {
 		return IDs;
 	}
 
-	public void fillRole(Role role, int ID, String description, String name, String type, int x, int y) {
+	public void fillRole(Role role, int ID, String description, String name, String type, int x, int y, boolean isNew) {
 
 		role.setName(name);
 		role.setDescription(description);
@@ -327,8 +329,9 @@ public class FillForms {
 		coord.setXCoordinate(x);
 		coord.setYCoordinate(y);
 		role.setCoordinates(coord);
-
-		control.getRoleObservable().add(name);
+		if (isNew) {
+			control.getRoleObservable().add(name);
+		}
 
 	}
 

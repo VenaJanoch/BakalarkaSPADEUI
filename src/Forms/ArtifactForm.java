@@ -38,10 +38,15 @@ public class ArtifactForm extends BasicForm implements ISegmentForm {
 	private Artifact artifact;
 
 	private Button newRoleBT;
+	private Button editRoleBT;
+
+	boolean isNew;
 
 	public ArtifactForm(CanvasItem item, Control control, Artifact artifact) {
 		super(item, control);
 		this.artifact = artifact;
+		
+		isNew = true;
 		this.setOnCloseRequest(new EventHandler<WindowEvent>() {
 
 			@Override
@@ -59,9 +64,10 @@ public class ArtifactForm extends BasicForm implements ISegmentForm {
 	public void closeForm() {
 		setName(getNameTF().getText());
 		getCanvasItem().setNameText(getName());
-		getControl().getFillForms().fillArtifact(artifact, getCanvasItem().getIDs()[2], descriptionTF.getText(), getName(),
-				createdDP.getValue(), ArtifactClass.values()[typeIndex].name(), authorIndex,
-				(int) getCanvasItem().getTranslateX(), (int) getCanvasItem().getTranslateY(), typeIndex);
+		getControl().getFillForms().fillArtifact(artifact, getCanvasItem().getIDs()[2], descriptionTF.getText(),
+				getName(), createdDP.getValue(), ArtifactClass.values()[typeIndex].name(), authorIndex,
+				(int) getCanvasItem().getTranslateX(), (int) getCanvasItem().getTranslateY(), typeIndex, isNew);
+		isNew = false;
 
 	}
 
@@ -92,7 +98,14 @@ public class ArtifactForm extends BasicForm implements ISegmentForm {
 		newRoleBT = new Button("New");
 		newRoleBT.setOnAction(event -> artifactBTAction());
 
+		editRoleBT = new Button("Edit");
+		editRoleBT.setOnAction(event -> editRoleBTAction());
+
 		fillInfoPart();
+	}
+
+	private void editRoleBTAction() {
+		getControl().getForms().get(getControl().getRoleFormIndex().get(authorIndex)).show();
 	}
 
 	private void artifactBTAction() {
@@ -134,8 +147,8 @@ public class ArtifactForm extends BasicForm implements ISegmentForm {
 		getInfoPart().add(authorRoleLB, 0, 3);
 		getInfoPart().setHalignment(authorRoleLB, HPos.RIGHT);
 		getInfoPart().add(authorRoleCB, 1, 3);
-		getInfoPart().add(newRoleBT, 2, 3);
-
+		getInfoPart().add(editRoleBT, 2, 3);
+		getInfoPart().add(newRoleBT, 3, 3);
 		getInfoPart().add(mineTypeLB, 0, 4);
 		getInfoPart().setHalignment(mineTypeLB, HPos.RIGHT);
 		getInfoPart().add(mineTypeCB, 1, 4);

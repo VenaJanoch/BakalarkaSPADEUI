@@ -29,10 +29,12 @@ public class RoleForm extends BasicForm implements ISegmentForm {
 	private ComboBox<RoleClass> roleTypeCB;
 	private int roleIndex;
 
+	private boolean isNew;
 
 	public RoleForm(CanvasItem item, Control control, Role role) {
 		super(item, control);
 		this.role = role;
+		isNew = true;
 		this.setOnCloseRequest(new EventHandler<WindowEvent>() {
 
 			@Override
@@ -44,16 +46,17 @@ public class RoleForm extends BasicForm implements ISegmentForm {
 		getSubmitButton().setOnAction(event -> setActionSubmitButton());
 		createForm();
 
-		
 	}
 
 	@Override
 	public void closeForm() {
 		setName(getNameTF().getText());
 		getCanvasItem().setNameText(getName());
-		getControl().getFillForms().fillRole(role, getCanvasItem().getIDs()[1], descriptionTF.getText(),
-				getName(), RoleClass.values()[roleIndex].name(), (int) getCanvasItem().getTranslateX(), (int) getCanvasItem().getTranslateY());
+		getControl().getFillForms().fillRole(role, getCanvasItem().getIDs()[1], descriptionTF.getText(), getName(),
+				RoleClass.values()[roleIndex].name(), (int) getCanvasItem().getTranslateX(),
+				(int) getCanvasItem().getTranslateY(), isNew);
 
+		isNew = false;
 	}
 
 	@Override
@@ -73,7 +76,7 @@ public class RoleForm extends BasicForm implements ISegmentForm {
 
 		fillInfoPart();
 	}
-	
+
 	ChangeListener<Number> roleListener = new ChangeListener<Number>() {
 
 		@Override
@@ -90,16 +93,15 @@ public class RoleForm extends BasicForm implements ISegmentForm {
 		getInfoPart().add(descriptionLB, 0, 1);
 		getInfoPart().setHalignment(descriptionLB, HPos.RIGHT);
 		getInfoPart().add(descriptionTF, 1, 1);
-		
+
 		getInfoPart().add(roleTypeLB, 0, 2);
 		getInfoPart().setHalignment(roleTypeLB, HPos.RIGHT);
 		getInfoPart().add(roleTypeCB, 1, 2);
 
 	}
 
-	
 	/*** Getrs and Setrs ***/
-	
+
 	public TextField getDescriptionTF() {
 		return descriptionTF;
 	}
@@ -115,7 +117,5 @@ public class RoleForm extends BasicForm implements ISegmentForm {
 	public void setRoleTypeCB(ComboBox<RoleClass> roleTypeCB) {
 		this.roleTypeCB = roleTypeCB;
 	}
-	
-	
 
 }

@@ -286,6 +286,7 @@ public class Control {
 
 		case WorkUnit:
 			return fillForms.createWorkUnit(item, form, IDs);
+			
 		case Milestone:
 			// Milestone milestone = (Milestone) objF.createMilestone();
 			// forms.add(index, new MilestoneForm(item, this, milestone));
@@ -306,9 +307,6 @@ public class Control {
 			// return IDs;
 
 		case Configuration:
-
-			System.out.println(" Configurace size" + getConfigList().size());
-
 			return fillForms.createConfigruration(item, form, IDs);
 
 		case ConfigPersonRelation:
@@ -318,17 +316,13 @@ public class Control {
 			// IDs[1] = idCreater.createCPRID();
 			// return IDs;
 		case Branch:
-			System.out.println(" branchSize size " + branchList.size());
-
 			return fillForms.createBranch(item, form, IDs);
 		case Change:
-
 			return fillForms.createChange(item, form, IDs);
 
 		case Artifact:
 			return fillForms.createArtifact(item, form, IDs);
 		case Role:
-			System.out.println(" Role size " + roleList.size());
 			return fillForms.createRole(item, form, IDs);
 
 		default:
