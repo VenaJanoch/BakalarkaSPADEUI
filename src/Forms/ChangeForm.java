@@ -32,15 +32,16 @@ public class ChangeForm extends BasicForm implements ISegmentForm {
 	private int changeIndex;
 	private int artifactIndex;
 	private Button newArtifactBT;
-	
+	private Button editArtifactBT;
+
 	private boolean newChange;
 
 	public ChangeForm(CanvasItem item, Control control, Change change) {
 		super(item, control);
-		
+
 		setArtifactArray(new ArrayList());
 		getArtifactArray().add(change.getArtifact());
-		
+
 		this.setOnCloseRequest(new EventHandler<WindowEvent>() {
 
 			@Override
@@ -51,22 +52,27 @@ public class ChangeForm extends BasicForm implements ISegmentForm {
 
 		getSubmitButton().setOnAction(event -> setActionSubmitButton());
 		createForm();
-		
+
 	}
 
 	@Override
 	public void closeForm() {
 		setName(getNameTF().getText());
 		getCanvasItem().setNameText(getName());
-		getControl().getFillForms().fillChange(getCanvasItem().getForm(), getCanvasItem().getIDs()[2], descriptionTF.getText(),
-				getName(), newChange, artifactIndex, (int) getCanvasItem().getTranslateX(), (int) getCanvasItem().getTranslateY());
+		getControl().getFillForms().fillChange(getCanvasItem().getForm(), getCanvasItem().getIDs()[2],
+				descriptionTF.getText(), getName(), newChange, artifactIndex, (int) getCanvasItem().getTranslateX(),
+				(int) getCanvasItem().getTranslateY());
 
 	}
 
 	@Override
 	public void setActionSubmitButton() {
-		closeForm();
-		close();
+		if (getControl().getArtifactList().isEmpty()) {
+			getAlerts().showNoArtifactAlert();
+		} else {
+			closeForm();
+			close();
+		}
 	}
 
 	@Override
@@ -86,14 +92,27 @@ public class ChangeForm extends BasicForm implements ISegmentForm {
 
 		newArtifactBT = new Button("New");
 		newArtifactBT.setOnAction(event -> artifactBTAction());
+
+		editArtifactBT = new Button("Edit");
+		editArtifactBT.setOnAction(event -> editBTAction());
+
 		fillInfoPart();
 	}
-	
-	private void artifactBTAction(){
+
+	private void editBTAction() {
+		if (getControl().getArtifactObservable().isEmpty()) {
+			artifactBTAction();
+		} else {
+			getControl().getForms().get(getControl().getArtifactFormIndex().get(artifactIndex)).show();
+		}
+	}
+
+	private void artifactBTAction() {
 		CanvasItem item = new CanvasItem(SegmentType.Artifact, "Name", getControl(), this, true);
 		getControl().getForms().get(item.getIDs()[0]).show();
-		
+
 	}
+
 	ChangeListener<Number> changeListener = new ChangeListener<Number>() {
 
 		@Override
@@ -103,7 +122,7 @@ public class ChangeForm extends BasicForm implements ISegmentForm {
 			fillFormFromList(changeIndex);
 		}
 	};
-	
+
 	ChangeListener<Number> artifactListener = new ChangeListener<Number>() {
 
 		@Override
@@ -138,7 +157,7 @@ public class ChangeForm extends BasicForm implements ISegmentForm {
 
 		getInfoPart().add(changeLB, 3, 0);
 		getInfoPart().add(changeCB, 4, 0);
-		
+
 		getInfoPart().add(descriptionLB, 0, 1);
 		getInfoPart().setHalignment(descriptionLB, HPos.RIGHT);
 		getInfoPart().add(descriptionTF, 1, 1);
@@ -146,13 +165,13 @@ public class ChangeForm extends BasicForm implements ISegmentForm {
 		getInfoPart().add(artifactLB, 0, 2);
 		getInfoPart().setHalignment(artifactLB, HPos.RIGHT);
 		getInfoPart().add(artifactCB, 1, 2);
-		getInfoPart().add(newArtifactBT, 2, 2);
+		getInfoPart().add(newArtifactBT, 3, 2);
+		getInfoPart().add(editArtifactBT, 2, 2);
 
 	}
 
-
 	/** Getrs and Setrs ***/
-	
+
 	public ComboBox<String> getArtifactCB() {
 		return artifactCB;
 	}
@@ -176,6 +195,5 @@ public class ChangeForm extends BasicForm implements ISegmentForm {
 	public void setDescriptionTF(TextField descriptionTF) {
 		this.descriptionTF = descriptionTF;
 	}
-	
 
 }

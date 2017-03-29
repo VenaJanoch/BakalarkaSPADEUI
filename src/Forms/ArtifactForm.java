@@ -75,8 +75,12 @@ public class ArtifactForm extends BasicForm implements ISegmentForm {
 
 	@Override
 	public void setActionSubmitButton() {
-		closeForm();
-		close();
+		if (getControl().getRoleList().isEmpty()) {
+			getAlerts().showNoAuthorAlert();
+		} else {
+			closeForm();
+			close();
+		}
 	}
 
 	@Override
@@ -99,7 +103,7 @@ public class ArtifactForm extends BasicForm implements ISegmentForm {
 		descriptionTF = new TextField();
 
 		newRoleBT = new Button("New");
-		newRoleBT.setOnAction(event -> artifactBTAction());
+		newRoleBT.setOnAction(event -> roleBTAction());
 
 		editRoleBT = new Button("Edit");
 		editRoleBT.setOnAction(event -> editRoleBTAction());
@@ -108,10 +112,14 @@ public class ArtifactForm extends BasicForm implements ISegmentForm {
 	}
 
 	private void editRoleBTAction() {
-		getControl().getForms().get(getControl().getRoleFormIndex().get(authorIndex)).show();
+		if (getControl().getRoleObservable().isEmpty()) {
+			roleBTAction();
+		}else{
+			getControl().getForms().get(getControl().getRoleFormIndex().get(authorIndex)).show();			
+		}
 	}
 
-	private void artifactBTAction() {
+	private void roleBTAction() {
 		CanvasItem item = new CanvasItem(SegmentType.Role, "Name", getControl(), this, true);
 		getControl().getForms().get(item.getIDs()[0]).show();
 

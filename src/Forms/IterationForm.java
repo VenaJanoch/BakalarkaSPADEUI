@@ -40,7 +40,7 @@ public class IterationForm extends BasicForm implements ISegmentForm {
 		super(item, control, itemArray, indexForm);
 		setWorkUnitArray(iteration.getWorkUnits());
 		setConfig(iteration.getConfiguration());
-		
+
 		this.setOnCloseRequest(new EventHandler<WindowEvent>() {
 
 			@Override
@@ -58,15 +58,19 @@ public class IterationForm extends BasicForm implements ISegmentForm {
 	public void closeForm() {
 		setName(getNameTF().getText());
 		getCanvasItem().setNameText(getName());
-		getControl().getFillForms().fillIteration(getCanvasItem().getForm(), getCanvasItem().getIDs()[1], descriptionTF.getText(),
-				getName(), startDateDP.getValue(), endDateDP.getValue(), chooseConfigID,
+		getControl().getFillForms().fillIteration(getCanvasItem().getForm(), getCanvasItem().getIDs()[1],
+				descriptionTF.getText(), getName(), startDateDP.getValue(), endDateDP.getValue(), chooseConfigID,
 				(int) getCanvasItem().getTranslateX(), (int) getCanvasItem().getTranslateY());
 	}
 
 	@Override
 	public void setActionSubmitButton() {
-		closeForm();
-		close();
+		if (getControl().getConfigList().isEmpty()) {
+			getAlerts().showNoConfigAlert();
+		} else {
+			closeForm();
+			close();
+		}
 	}
 
 	@Override
@@ -104,19 +108,21 @@ public class IterationForm extends BasicForm implements ISegmentForm {
 		fillInfoPart();
 	}
 
-
 	private void editBTAction() {
-		getControl().getForms().get(getControl().getConfigFormIndex().get(chooseConfigID)).show();
+		if (getControl().getConfigObservable().isEmpty()) {
+			configBTAction();
+		}else{
+			getControl().getForms().get(getControl().getConfigFormIndex().get(chooseConfigID)).show();			
+		}
 	}
-	
-	
+
 	private void configBTAction() {
 		CanvasItem item = new CanvasItem(SegmentType.Configuration, "Name", getControl(), this, true);
 
 		getControl().getForms().get(item.getIDs()[0]).show();
 
 	}
-	
+
 	private void fillInfoPart() {
 
 		getInfoPart().add(descriptionLB, 0, 1);
@@ -140,7 +146,7 @@ public class IterationForm extends BasicForm implements ISegmentForm {
 	}
 
 	/*** Getrs and Setrs ***/
-	
+
 	public ChoiceBox<String> getConfigCB() {
 		return configCB;
 	}
@@ -173,6 +179,4 @@ public class IterationForm extends BasicForm implements ISegmentForm {
 		this.startDateDP = startDateDP;
 	}
 
-	
-	
 }

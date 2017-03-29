@@ -8,6 +8,7 @@ import Grafika.DragAndDropCanvas;
 import Grafika.DragAndDropItem;
 import Grafika.InfoBoxSegment;
 import Grafika.MenuPanel;
+import Obsluha.Alerts;
 import Obsluha.Constans;
 import Obsluha.Control;
 import Obsluha.IdentificatorCreater;
@@ -29,6 +30,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -42,7 +44,7 @@ public class BasicForm extends Stage {
 
 	private BorderPane mainPanel;
 	private Scene scena;
-
+	private Alerts alerts;
 	private String name;
 	private Label nameLB;
 	private TextField nameTF;
@@ -83,6 +85,7 @@ public class BasicForm extends Stage {
 		this.control = control;
 		this.item = item;
 		this.itemArray = itemArray;
+		this.alerts = new Alerts();
 		this.setIdCreater(new IdentificatorCreater());
 		this.setTitle("Edit " + item.getType().name());
 		this.dgItem = new DragAndDropItem(control, itemArray);
@@ -100,6 +103,7 @@ public class BasicForm extends Stage {
 		super();
 		this.control = control;
 		this.item = item;
+		this.alerts = new Alerts();
 		this.setIdCreater(new IdentificatorCreater());
 		this.setTitle("Edit " + item.getType().name());
 		mainPanel = new BorderPane();
@@ -111,6 +115,7 @@ public class BasicForm extends Stage {
 	public BasicForm(Control control) {
 		super();
 		this.control = control;
+		this.alerts = new Alerts();
 		this.setTitle("Edit Project");
 		this.setIdCreater(new IdentificatorCreater());
 
@@ -376,6 +381,14 @@ public class BasicForm extends Stage {
 
 	public void setNameLB(Label nameLB) {
 		this.nameLB = nameLB;
+	}
+
+	public Alerts getAlerts() {
+		return alerts;
+	}
+
+	public void setAlerts(Alerts alerts) {
+		this.alerts = alerts;
 	}
 	
 	

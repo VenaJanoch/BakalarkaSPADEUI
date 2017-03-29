@@ -494,6 +494,10 @@ public class Control {
 		return localDate;
 	}
 
+	
+	
+	
+	
 	/** Getrs and Setrs ***/
 
 	public boolean isArrow() {

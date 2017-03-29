@@ -94,8 +94,13 @@ public class WorkUnitForm extends BasicForm implements ISegmentForm {
 
 	@Override
 	public void setActionSubmitButton() {
-		closeForm();
-		close();
+		if (getControl().getRoleList().isEmpty()) {
+			getAlerts().showNoAuthorAlert();
+			getAlerts().showNoAssigneeAlert();
+		} else {
+			closeForm();
+			close();
+		}
 	}
 
 	@Override
@@ -150,11 +155,19 @@ public class WorkUnitForm extends BasicForm implements ISegmentForm {
 	}
 
 	private void editRoleBTAction2() {
-		getControl().getForms().get(getControl().getRoleFormIndex().get(authorIndex)).show();
+		if (getControl().getRoleObservable().isEmpty()) {
+			roleBTAction();
+		}else{
+			getControl().getForms().get(getControl().getRoleFormIndex().get(authorIndex)).show();						
+		}
 	}
 
 	private void editRoleBTAction1() {
+		if (getControl().getRoleObservable().isEmpty()) {
+			roleBTAction();
+		}else{
 		getControl().getForms().get(getControl().getRoleFormIndex().get(assigneIndex)).show();
+		}
 	}
 
 	private void roleBTAction() {
@@ -254,11 +267,13 @@ public class WorkUnitForm extends BasicForm implements ISegmentForm {
 		getInfoPart().add(asigneeRoleLB, 0, 7);
 		getInfoPart().setHalignment(asigneeRoleLB, HPos.RIGHT);
 		getInfoPart().add(asigneeRoleCB, 1, 7);
-		getInfoPart().add(newRoleBT, 2, 7);
-
+		getInfoPart().add(newRoleBT, 3, 7);
+		getInfoPart().add(editRoleBT1, 2, 7);
+		
 		getInfoPart().add(authorRoleLB, 0, 8);
 		getInfoPart().setHalignment(authorRoleLB, HPos.RIGHT);
 		getInfoPart().add(authorRoleCB, 1, 8);
+		getInfoPart().add(editRoleBT2, 2, 8);
 
 	}
 

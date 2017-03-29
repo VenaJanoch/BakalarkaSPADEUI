@@ -70,8 +70,12 @@ public class PhaseForm extends BasicForm implements ISegmentForm {
 
 	@Override
 	public void setActionSubmitButton() {
-		closeForm();
-		close();
+		if (getControl().getConfigList().isEmpty()) {
+			getAlerts().showNoConfigAlert();
+		} else {
+			closeForm();
+			close();
+		}
 	}
 
 	@Override
@@ -105,9 +109,12 @@ public class PhaseForm extends BasicForm implements ISegmentForm {
 		fillInfoPart();
 	}
 
-
 	private void editBTAction() {
-		getControl().getForms().get(getControl().getConfigFormIndex().get(chooseConfigID)).show();
+		if (getControl().getConfigObservable().isEmpty()) {
+			configBTAction();
+		}else{
+			getControl().getForms().get(getControl().getConfigFormIndex().get(chooseConfigID)).show();			
+		}
 	}
 
 	private void configBTAction() {

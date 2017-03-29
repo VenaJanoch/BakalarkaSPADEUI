@@ -74,6 +74,7 @@ public class FillForms {
 		coord.setYCoordinate(y);
 		phase.setCoordinates(coord);
 		phase.setConfiguration(control.getConfigList().get(confIndex));
+		
 	}
 
 	public int[] createPhase(CanvasItem item, BasicForm form, int[] IDs) {

@@ -30,7 +30,7 @@ public class ConfigurationForm extends BasicForm implements ISegmentForm {
 	private Label isMainLB;
 
 	private boolean isNew;
-	
+
 	final ToggleGroup group = new ToggleGroup();
 
 	private Label createdLB;
@@ -58,8 +58,8 @@ public class ConfigurationForm extends BasicForm implements ISegmentForm {
 		setChangeArray(conf.getChanges());
 		setArtifactArray(conf.getArtifacts());
 		setTagArray(conf.getTags());
-		
-		setRoleArray(new ArrayList<>()) ;
+
+		setRoleArray(new ArrayList<>());
 		getRoleArray().add(conf.getAuthor());
 
 		this.setOnCloseRequest(new EventHandler<WindowEvent>() {
@@ -79,16 +79,21 @@ public class ConfigurationForm extends BasicForm implements ISegmentForm {
 	public void closeForm() {
 		setName(getNameTF().getText());
 		getCanvasItem().setNameText(getName());
-		getControl().getFillForms().fillConfiguration(configuration, getCanvasItem().getIDs()[1], isRelease, createdDP.getValue(),
-				getName(), authorIndex, (int) getCanvasItem().getTranslateX(), (int) getCanvasItem().getTranslateY(), isNew);
+		getControl().getFillForms().fillConfiguration(configuration, getCanvasItem().getIDs()[1], isRelease,
+				createdDP.getValue(), getName(), authorIndex, (int) getCanvasItem().getTranslateX(),
+				(int) getCanvasItem().getTranslateY(), isNew);
 
 		isNew = false;
 	}
 
 	@Override
 	public void setActionSubmitButton() {
-		closeForm();
-		close();
+		if (getControl().getRoleList().isEmpty()) {
+			getAlerts().showNoAuthorAlert();
+		} else {
+			closeForm();
+			close();
+		}
 	}
 
 	@Override
@@ -111,7 +116,7 @@ public class ConfigurationForm extends BasicForm implements ISegmentForm {
 		authorRoleCB.getSelectionModel().selectedIndexProperty().addListener(roleListenerAut);
 		newRoleBT = new Button("New");
 		newRoleBT.setOnAction(event -> roleBTAction());
-		
+
 		editRoleBT = new Button("Edit");
 		editRoleBT.setOnAction(event -> editRoleBTAction());
 
@@ -119,7 +124,11 @@ public class ConfigurationForm extends BasicForm implements ISegmentForm {
 	}
 
 	private void editRoleBTAction() {
-		getControl().getForms().get(getControl().getRoleFormIndex().get(authorIndex)).show();
+		if (getControl().getRoleObservable().isEmpty()) {
+			roleBTAction();
+		}else{			
+			getControl().getForms().get(getControl().getRoleFormIndex().get(authorIndex)).show();
+		}
 	}
 
 	private void roleBTAction() {
@@ -133,12 +142,12 @@ public class ConfigurationForm extends BasicForm implements ISegmentForm {
 		getInfoPart().add(createdLB, 0, 1);
 		getInfoPart().setHalignment(createdLB, HPos.RIGHT);
 		getInfoPart().add(createdDP, 1, 1);
-		
+
 		getInfoPart().add(isReleaseLB, 0, 2);
 		getInfoPart().setHalignment(isReleaseLB, HPos.RIGHT);
 		getInfoPart().add(rbYes, 1, 2);
 		getInfoPart().add(rbNo, 2, 2);
-		
+
 		getInfoPart().add(authorRoleLB, 0, 3);
 		getInfoPart().setHalignment(authorRoleLB, HPos.RIGHT);
 		getInfoPart().add(authorRoleCB, 1, 3);
@@ -220,7 +229,5 @@ public class ConfigurationForm extends BasicForm implements ISegmentForm {
 	public void setAuthorRoleCB(ComboBox<String> authorRoleCB) {
 		this.authorRoleCB = authorRoleCB;
 	}
-	
-	
 
 }
