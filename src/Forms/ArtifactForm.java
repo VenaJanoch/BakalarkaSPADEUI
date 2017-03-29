@@ -1,5 +1,7 @@
 package Forms;
 
+import java.time.LocalDate;
+
 import Grafika.CanvasItem;
 import Grafika.InfoBoxSegment;
 import Interfaces.ISegmentForm;
@@ -81,6 +83,7 @@ public class ArtifactForm extends BasicForm implements ISegmentForm {
 	public void createForm() {
 		createdLB = new Label("Created: ");
 		createdDP = new DatePicker();
+		createdDP.setValue(LocalDate.now());
 
 		authorRoleLB = new Label("Author: ");
 		authorRoleCB = new ComboBox<String>(getControl().getRoleObservable());

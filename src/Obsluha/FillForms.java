@@ -12,6 +12,7 @@ import Forms.ConfigurationForm;
 import Forms.IterationForm;
 import Forms.PhaseForm;
 import Forms.RoleForm;
+import Forms.TagForm;
 import Forms.WorkUnitForm;
 import Grafika.CanvasItem;
 import SPADEPAC.Activity;
@@ -27,6 +28,7 @@ import SPADEPAC.ObjectFactory;
 import SPADEPAC.Phase;
 import SPADEPAC.Project;
 import SPADEPAC.Role;
+import SPADEPAC.Tag;
 import SPADEPAC.WorkUnit;
 
 public class FillForms {
@@ -55,7 +57,7 @@ public class FillForms {
 	public void fillProject(String description, String name, LocalDate startDate, LocalDate endDate) {
 
 		project.setDescription(description);
-		project.setName(name);
+		project.setName(name);		
 		project.setEndDate(control.convertDate(endDate));
 		project.setStartDate(control.convertDate(startDate));
 	}
@@ -149,6 +151,7 @@ public class FillForms {
 		workUnit.setTypeIndex(typeIndex);
 		workUnit.setAssigneIndex(assigneIndex);
 		workUnit.setAuthorIndex(authorIndex);
+		workUnit.setCategory("Nevim");
 
 		Coordinates coord = objF.createCoordinates();
 		coord.setXCoordinate(x);
@@ -346,4 +349,45 @@ public class FillForms {
 		return IDs;
 	}
 
+
+	public int[] createTag(CanvasItem item, BasicForm form, int[] IDs) {
+		Tag tag = objF.createTag();
+		forms.add(index, new TagForm(item, control, tag));
+		IDs[0] = index;
+		IDs[1] = idCreater.createTagID();
+		IDs[2] = form.getIdCreater().createTagID();
+		form.getTagArray().add(IDs[2],tag);
+		index++;
+		return IDs;
+	}
+
+	public void fillTag(Tag tag, int i,String text, int x, int y) {
+		
+		tag.setTag(text); 
+		Coordinates coord = objF.createCoordinates();
+		coord.setXCoordinate(x);
+		coord.setYCoordinate(y);
+		
+		tag.setCoordinates(coord);
+	}
+
+	public int getIndex() {
+		return index;
+	}
+
+	public void setIndex(int index) {
+		this.index = index;
+	}
+
+	public IdentificatorCreater getIdCreater() {
+		return idCreater;
+	}
+
+	public void setIdCreater(IdentificatorCreater idCreater) {
+		this.idCreater = idCreater;
+	}
+	
+	
+	
+	
 }

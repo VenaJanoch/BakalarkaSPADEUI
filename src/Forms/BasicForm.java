@@ -22,6 +22,7 @@ import SPADEPAC.Iteration;
 import SPADEPAC.Milestone;
 import SPADEPAC.Phase;
 import SPADEPAC.Role;
+import SPADEPAC.Tag;
 import SPADEPAC.WorkUnit;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
@@ -69,6 +70,7 @@ public class BasicForm extends Stage {
 	private List<Change> changeArray;
 	private List<Artifact> artifactArray;
 	private List<Role> roleArray;
+	private List<Tag> TagArray;
 	private List<ConfigPersonRelation> confPRArray;
 	
 	private IdentificatorCreater idCreater;
@@ -76,6 +78,8 @@ public class BasicForm extends Stage {
 	public BasicForm(CanvasItem item, Control control, int[] itemArray, int indexForm) {
 
 		super();
+		
+		
 		this.control = control;
 		this.item = item;
 		this.itemArray = itemArray;
@@ -356,6 +360,22 @@ public class BasicForm extends Stage {
 
 	public void setCanvas(DragAndDropCanvas canvas) {
 		this.canvas = canvas;
+	}
+
+	public List<Tag> getTagArray() {
+		return TagArray;
+	}
+
+	public void setTagArray(List<Tag> tagArray) {
+		TagArray = tagArray;
+	}
+
+	public Label getNameLB() {
+		return nameLB;
+	}
+
+	public void setNameLB(Label nameLB) {
+		this.nameLB = nameLB;
 	}
 	
 	

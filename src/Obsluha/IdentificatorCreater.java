@@ -16,7 +16,7 @@ public class IdentificatorCreater {
 	private int artifactID = -1;
 	private int configPRID = -1;
 	private int configID = -1;
-	
+	private int tagID = -1;
 	public IdentificatorCreater() {
 
 	}
@@ -96,6 +96,11 @@ public class IdentificatorCreater {
 	public int createConfigurationID() {
 		configID++;
 		return configID;
+	}
+
+	public int createTagID() {
+		tagID++;
+		return tagID;
 	}
 
 	

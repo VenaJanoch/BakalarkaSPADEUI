@@ -1,5 +1,6 @@
 package Forms;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -78,6 +79,7 @@ public class PhaseForm extends BasicForm implements ISegmentForm {
 		endDateLB = new Label("End Date: ");
 		endDate = new DatePicker();
 
+		endDate.setValue(LocalDate.now());
 		descriptionLB = new Label("Description: ");
 		descriptionTF = new TextField();
 

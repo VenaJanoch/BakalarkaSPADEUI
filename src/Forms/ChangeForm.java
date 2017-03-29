@@ -40,7 +40,7 @@ public class ChangeForm extends BasicForm implements ISegmentForm {
 		
 		setArtifactArray(new ArrayList());
 		getArtifactArray().add(change.getArtifact());
-		System.out.println("Change2");
+		
 		this.setOnCloseRequest(new EventHandler<WindowEvent>() {
 
 			@Override
@@ -115,16 +115,19 @@ public class ChangeForm extends BasicForm implements ISegmentForm {
 
 	private void fillFormFromList(int index) {
 
-		if ((index-1) > 0) {
+		if ((index) > 0) {
 
 			getNameTF().setText(getControl().getChangeList().get(index - 1).getName());
 			getNameTF().setDisable(true);
+			descriptionTF.setText(getControl().getChangeList().get(index - 1).getDescriptoin());
+			descriptionTF.setDisable(true);
 			artifactCB.setValue(getControl().getChangeList().get(index - 1).getArtifact().getName());
 			artifactCB.setDisable(true);
 			newChange = false;
 
 		} else {
 			getNameTF().setDisable(false);
+			descriptionTF.setDisable(false);
 			artifactCB.setDisable(false);
 			newChange = true;
 		}
@@ -133,6 +136,9 @@ public class ChangeForm extends BasicForm implements ISegmentForm {
 
 	private void fillInfoPart() {
 
+		getInfoPart().add(changeLB, 3, 0);
+		getInfoPart().add(changeCB, 4, 0);
+		
 		getInfoPart().add(descriptionLB, 0, 1);
 		getInfoPart().setHalignment(descriptionLB, HPos.RIGHT);
 		getInfoPart().add(descriptionTF, 1, 1);

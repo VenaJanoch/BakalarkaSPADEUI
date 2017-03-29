@@ -1,5 +1,7 @@
 package Forms;
 
+import java.time.LocalDate;
+
 import Grafika.CanvasItem;
 import Grafika.InfoBoxSegment;
 import Interfaces.ISegmentForm;
@@ -75,6 +77,8 @@ public class IterationForm extends BasicForm implements ISegmentForm {
 		endDateLB = new Label("End Date: ");
 		endDateDP = new DatePicker();
 
+		startDateDP.setValue(LocalDate.now());
+		endDateDP.setValue(LocalDate.now());
 		descriptionLB = new Label("Description: ");
 		descriptionTF = new TextField();
 

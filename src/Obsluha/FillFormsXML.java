@@ -15,6 +15,7 @@ import Forms.IterationForm;
 import Forms.PhaseForm;
 import Forms.ProjectForm;
 import Forms.RoleForm;
+import Forms.TagForm;
 import Forms.WorkUnitForm;
 import Grafika.CanvasItem;
 import SPADEPAC.Activity;
@@ -27,6 +28,7 @@ import SPADEPAC.Iteration;
 import SPADEPAC.Phase;
 import SPADEPAC.Project;
 import SPADEPAC.Role;
+import SPADEPAC.Tag;
 import SPADEPAC.WorkUnit;
 import SPADEPAC.WorkUnitPriorityClass;
 import SPADEPAC.WorkUnitSeverityClass;
@@ -60,6 +62,12 @@ public class FillFormsXML {
 		form.getStartDateDP().setValue(control.convertDateFromXML(project.getStartDate()));
 		form.getEndDateDP().setValue(control.convertDateFromXML(project.getEndDate()));
 
+		fillBranchObservabel(project.getBranches());
+		
+		fillChangeObservabel(project.getChanges());
+		
+		fillArtifactObservabel(project.getArtifacts());
+		
 	}
 
 	public void fillPhasesFromXML(BasicForm form) {
@@ -94,8 +102,8 @@ public class FillFormsXML {
 		forms.add(IDs[0], phaseForm);
 
 		if (phase.getConfiguration() != null) {
-			indexConfig = fillConfigurationFromXML(phaseForm, phase.getConfiguration());
-			phaseForm.getConfigCB().setValue(control.getConfigObservable().get(indexConfig));
+			fillConfigurationFromXML(phaseForm, phase.getConfiguration());
+			phaseForm.getConfigCB().setValue(phase.getConfiguration().getName());
 		}
 
 		// form.getPhaseArray().add(IDs[1], phase);
@@ -133,9 +141,9 @@ public class FillFormsXML {
 		iterationForm.getStartDateDP().setValue(control.convertDateFromXML(iteration.getStartDate()));
 
 		index++;
-		indexConfig = fillConfigurationFromXML(iterationForm, iteration.getConfiguration());
+		fillConfigurationFromXML(iterationForm, iteration.getConfiguration());
 
-		iterationForm.getConfigCB().setValue(control.getConfigObservable().get(indexConfig));
+		iterationForm.getConfigCB().setValue(iteration.getConfiguration().getName());
 
 		forms.add(IDs[0], iterationForm);
 		return IDs;
@@ -214,14 +222,14 @@ public class FillFormsXML {
 		return IDs;
 	}
 
-	public int fillConfigurationFromXML(BasicForm form, Configuration config) {
-
-		CanvasItem item = new CanvasItem(SegmentType.Configuration, config.getName(), control, form, false);
-
-		control.getConfigList().add(item.getIDs()[1], config);
-		control.getConfigObservable().add(item.getIDs()[1], config.getName());
-
-		return item.getIDs()[1];
+	public void fillConfigurationFromXML(BasicForm form, Configuration config) {
+		if (control.checkConfiguration(config.getName())) {
+			
+			CanvasItem item = new CanvasItem(SegmentType.Configuration, config.getName(), control, form, false);
+			
+			control.getConfigList().add(item.getIDs()[1], config);
+			control.getConfigObservable().add(item.getIDs()[1], config.getName());			
+		}
 
 	}
 
@@ -253,6 +261,7 @@ public class FillFormsXML {
 		fillBranchFromXML(configForm, conf.getBranches());
 		fillChangeFromXML(configForm, conf.getChanges());
 		fillArtifactFromXML(configForm, conf.getArtifacts());
+		fillTagFromXML(configForm, conf.getTags());
 
 		return IDs;
 
@@ -296,14 +305,15 @@ public class FillFormsXML {
 		for (int i = 0; i < branchs.size(); i++) {
 
 			Branch branch = branchs.get(i);
+			// control.getBranchObservable().add(branch.getName());
+
 			CanvasItem item = new CanvasItem(SegmentType.Branch, branch.getName(), control, form, false);
 			form.getCanvas().getChildren().add(item);
 
 			item.setTranslateX(branch.getCoordinates().getXCoordinate());
 			item.setTranslateY(branch.getCoordinates().getYCoordinate());
 
-			control.getBranchObservable().add(branch.getName());
-			control.getBranchList().add(item.getIDs()[1], branch);
+			// control.getBranchList().add(item.getIDs()[1], branch);
 
 		}
 	}
@@ -318,14 +328,7 @@ public class FillFormsXML {
 		Branch branch = form.getBranchArray().get(IDs[2]);
 		BranchForm branchForm = new BranchForm(item, control);
 
-		branchForm.getNameTF().setText(branch.getName());
 		branchForm.getBranchesCB().setValue(branch.getName());
-
-		if (branch.isIsMain()) {
-			branchForm.getRbYes().setSelected(true);
-		} else {
-			branchForm.getRbYes().setSelected(true);
-		}
 
 		control.getBranchFormIndex().add(IDs[1], index);
 		forms.add(IDs[0], branchForm);
@@ -335,19 +338,20 @@ public class FillFormsXML {
 
 	}
 
-	private void fillChangeFromXML(BasicForm form, List<Change> changes) {
+	public void fillChangeFromXML(BasicForm form, List<Change> changes) {
 
 		for (int i = 0; i < changes.size(); i++) {
 			Change change = changes.get(i);
 
+			// control.getChangeObservable().add(change.getName());
+
 			CanvasItem item = new CanvasItem(SegmentType.Change, change.getName(), control, form, false);
 			form.getCanvas().getChildren().add(item);
-System.out.println("Change1");
+			System.out.println("Change1");
 			item.setTranslateX(change.getCoordinates().getXCoordinate());
 			item.setTranslateY(change.getCoordinates().getYCoordinate());
 
-			control.getChangeObservable().add(change.getName());
-			control.getChangeList().add(item.getIDs()[1], change);
+			// control.getChangeList().add(item.getIDs()[1], change);
 
 		}
 
@@ -362,39 +366,57 @@ System.out.println("Change1");
 		ChangeForm changeForm = new ChangeForm(item, control, change);
 		System.out.println(changeForm.getTitle());
 
-		changeForm.setName(change.getName());
-		changeForm.getNameTF().setText(change.getName());
 		changeForm.getChangeCB().setValue(change.getName());
-		changeForm.getDescriptionTF().setText(change.getDescriptoin());
-		changeForm.getArtifactCB().setValue(change.getArtifact().getName());
 
 		forms.add(index, changeForm);
 		index++;
-
-		fillArtifactFromXML(changeForm, changeForm.getArtifactArray());
 
 		return IDs;
 
 	}
 
-	private void fillArtifactFromXML(BasicForm form, List<Artifact> artifacts) {
+	public void fillArtifactFromXML(BasicForm form, List<Artifact> artifacts) {
 		for (int i = 0; i < artifacts.size(); i++) {
 			Artifact artifact = artifacts.get(i);
+
+			// control.getArtifactObservable().add(artifact.getName());
 			CanvasItem item = new CanvasItem(SegmentType.Artifact, artifact.getName(), control, form, false);
 
 			if ((form.getCanvasItem().getType() == SegmentType.Configuration)) {
-				System.out.println("Canvas");
 				form.getCanvas().getChildren().add(item);
 			}
 
 			item.setTranslateX(artifact.getCoordinates().getXCoordinate());
 			item.setTranslateY(artifact.getCoordinates().getYCoordinate());
-			control.getArtifactList().add(item.getIDs()[1], artifact);
-			control.getArtifactObservable().add(item.getIDs()[1], artifact.getName());
+			// control.getArtifactList().add(item.getIDs()[1], artifact);
 		}
 
 	}
 
+	public void fillTagFromXML(BasicForm form, List<Tag> list) {
+		for (int i = 0; i < list.size(); i++) {
+			Tag tag = form.getTagArray().get(i);
+			CanvasItem item = new CanvasItem(SegmentType.Tag, "", control, form, false);
+			form.getCanvas().getChildren().add(item);
+			
+			item.setTranslateX(tag.getCoordinates().getXCoordinate());
+			item.setTranslateY(tag.getCoordinates().getYCoordinate());
+		}
+
+	}
+	public int[] createTag(CanvasItem item, BasicForm form, int[] IDs) {
+		IDs[0] = index;
+		IDs[1] = idCreater.createTagID();
+		IDs[2] = form.getIdCreater().createTagID();
+		Tag tag = form.getTagArray().get(IDs[2]);
+		TagForm tagForm = new TagForm(item, control, tag); 
+		forms.add(index, tagForm);
+		tagForm.getArea().setText(tag.getTag());
+		
+		index++;
+		return IDs;
+	}
+	
 	public int[] createArtifactFormXML(CanvasItem item, BasicForm form, int[] IDs) {
 		IDs[0] = index;
 		IDs[1] = idCreater.createArtifactID();
@@ -418,5 +440,44 @@ System.out.println("Change1");
 		return IDs;
 
 	}
+
+	private void fillBranchObservabel(List<Branch> branchs) {
+		for (int i = 0; i < branchs.size(); i++) {
+			control.getBranchObservable().add(branchs.get(i).getName());
+		}
+	}
+
+	private void fillChangeObservabel(List<Change> changes) {
+
+		for (int i = 0; i < changes.size(); i++) {
+			
+			control.getChangeObservable().add(changes.get(i).getName());
+		}
+	}
+
+	private void fillArtifactObservabel(List<Artifact> artifacts) {
+		for (int i = 0; i < artifacts.size(); i++) {
+			control.getArtifactObservable().add(artifacts.get(i).getName());
+		}
+	}
+
+	public int getIndex() {
+		return index;
+	}
+
+	public void setIndex(int index) {
+		this.index = index;
+	}
+
+	public IdentificatorCreater getIdCreater() {
+		return idCreater;
+	}
+
+	public void setIdCreater(IdentificatorCreater idCreater) {
+		this.idCreater = idCreater;
+	}
+	
+	
+	
 
 }

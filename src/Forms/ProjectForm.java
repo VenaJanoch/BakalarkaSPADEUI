@@ -78,7 +78,9 @@ public class ProjectForm extends BasicForm implements ISegmentForm {
 		descriptionTF = new TextField();
 		startDateLB = new Label("Start date: ");
 		startDateDP = new DatePicker();
+		startDateDP.setValue(LocalDate.now());
 		endDateDP = new DatePicker();
+		endDateDP.setValue(LocalDate.now());
 		endDateLB = new Label("End date: ");
 
 		fillInfoPart();

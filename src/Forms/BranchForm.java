@@ -110,8 +110,8 @@ public class BranchForm extends BasicForm implements ISegmentForm {
 	};
 
 	private void fillFormFromList(int index) {
-
-		if ((index-1) > 0) {
+System.out.println(index + "Index ");
+		if ((index) > 0) {
 
 			getNameTF().setText(getControl().getBranchList().get(index - 1).getName());
 			getNameTF().setDisable(true);

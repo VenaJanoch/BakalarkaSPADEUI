@@ -13,5 +13,5 @@ public enum SegmentType {
 	Change,
 	Artifact,
 	Role,
-	cubic_curve
+	Tag
 }

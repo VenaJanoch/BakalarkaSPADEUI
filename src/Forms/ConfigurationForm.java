@@ -1,5 +1,6 @@
 package Forms;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 import Grafika.CanvasItem;
@@ -52,10 +53,11 @@ public class ConfigurationForm extends BasicForm implements ISegmentForm {
 		this.configuration = conf;
 
 		isNew = true;
-		
+		setConfig(conf);
 		setBranchArray(conf.getBranches());
 		setChangeArray(conf.getChanges());
 		setArtifactArray(conf.getArtifacts());
+		setTagArray(conf.getTags());
 		
 		setRoleArray(new ArrayList<>()) ;
 		getRoleArray().add(conf.getAuthor());
@@ -94,6 +96,7 @@ public class ConfigurationForm extends BasicForm implements ISegmentForm {
 
 		createdLB = new Label("Created: ");
 		createdDP = new DatePicker();
+		createdDP.setValue(LocalDate.now());
 
 		isReleaseLB = new Label("Release: ");
 		rbNo = new RadioButton("No");
