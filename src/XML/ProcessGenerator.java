@@ -9,6 +9,7 @@ import javax.xml.bind.JAXBElement;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
+import javax.xml.validation.Validator;
 
 import Obsluha.Constans;
 import SPADEPAC.ObjectFactory;
@@ -21,12 +22,14 @@ public class ProcessGenerator {
 	private JAXBElement rootElement;
 	private Marshaller marshaller;
 	private Unmarshaller unMarshaller;
+	private ProcessValidator validator;
 
 	public ProcessGenerator() {
 
 		try {
 			
-			jc = JAXBContext.newInstance("SPADEPAC");
+			jc = JAXBContext.newInstance(Constans.LIBRARY);
+			validator = new ProcessValidator(jc);
 			of = new ObjectFactory();
 			
 			marshaller = jc.createMarshaller();
@@ -51,8 +54,9 @@ public class ProcessGenerator {
 		try {
 
 			rootElement = of.createPoject(project);
+			//marshaller.setSchema(validator.getSchemaXSD());
 			marshaller.marshal(rootElement, new FileOutputStream(file));
-
+			//validator.validatePrecess(rootElement);
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -69,6 +73,8 @@ public class ProcessGenerator {
 		
 		try {
 			element = (JAXBElement) unMarshaller.unmarshal(file);
+			//validator.validatePrecess(element);
+			
 		} catch (JAXBException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
