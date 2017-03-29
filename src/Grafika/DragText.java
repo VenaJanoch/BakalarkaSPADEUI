@@ -18,7 +18,7 @@ public class DragText extends Text {
 		super();
 		this.setType(type);
 		this.setText(type.name());
-		this.setFont(Font.font ("Verdana",15));
+		this.setFont(Font.font ("Verdana",25));
 		this.setFill(Color.BURLYWOOD);
 		setDragDetected();
 		setDragDone();

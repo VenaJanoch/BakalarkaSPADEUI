@@ -91,11 +91,11 @@ public class Control {
 	private Project project;
 
 	private ObservableList<String> configObservable;
-	private ArrayList<Configuration> configList;
+	private List<Configuration> configList;
 	private ArrayList<Integer> configFormIndex;
 
 	private ObservableList<String> branchObservable;
-	private ArrayList<Branch> branchList;
+	private List<Branch> branchList;
 	private ArrayList<Integer> branchFormIndex;
 
 	private ObservableList<String> roleObservable;
@@ -103,11 +103,11 @@ public class Control {
 	private ArrayList<Integer> roleFormIndex;
 
 	private ObservableList<String> changeObservable;
-	private ArrayList<Change> changeList;
+	private List<Change> changeList;
 	private ArrayList<Integer> changeFormIndex;
 
 	private ObservableList<String> artifactObservable;
-	private ArrayList<Artifact> artifactList;
+	private List<Artifact> artifactList;
 	private ArrayList<Integer> artifactFormIndex;
 
 	private FillFormsXML fillFormsXML;
@@ -138,6 +138,12 @@ public class Control {
 	}
 	
 
+	private void updateIndexAndID(){
+		
+		fillForms.setIndex(fillFormsXML.getIndex());
+		fillForms.setIdCreater(fillFormsXML.getIdCreater());
+		
+	}
 
 	public void createLists() {
 		configList = new ArrayList<>();
@@ -148,17 +154,17 @@ public class Control {
 		roleFormIndex = new ArrayList<>();
 		setRoleObservable(FXCollections.observableArrayList());
 
-		branchList = new ArrayList<>();
+		branchList = project.getBranches();
 		branchFormIndex = new ArrayList<>();
 		branchObservable = FXCollections.observableArrayList();
 		branchObservable.add("New");
 
-		setChangeList(new ArrayList<>());
+		changeList = project.getChanges();
 		changeFormIndex = new ArrayList<>();
 		changeObservable = FXCollections.observableArrayList();
 		changeObservable.add("New");
 
-		setArtifactList(new ArrayList<>());
+		setArtifactList(project.getArtifacts());
 		setArtifactFormIndex(new ArrayList<>());
 		setArtifactObservable(FXCollections.observableArrayList());
 
@@ -324,6 +330,8 @@ public class Control {
 			return fillForms.createArtifact(item, form, IDs);
 		case Role:
 			return fillForms.createRole(item, form, IDs);
+		case Tag:
+			return fillForms.createTag(item, form, IDs);
 
 		default:
 			return IDs;
@@ -398,12 +406,26 @@ public class Control {
 			return IDs;
 		}
 	}
+	
+	public boolean checkConfiguration(String newConfName){
+		
+		for (int i = 0; i < configObservable.size(); i++) {
+			
+			if (configObservable.get(i).equals(newConfName)) {
+				return false;
+			}
+			
+		}
+		
+		return true;
+	}
 
 	public void saveFile() {
 
 		fileChooser.setTitle("Save Process");
-
+		
 		file = fileChooser.showSaveDialog(new Stage());
+		System.out.println(project.getChanges().toString());
 		if (file != null) {
 			procesGener.saveProcess(file, project);
 		}
@@ -414,12 +436,16 @@ public class Control {
 		fileChooser.setTitle("Open Process");
 
 		file = fileChooser.showOpenDialog(new Stage());
-		while (file != null) {
+		if (file != null) {
 			restartControl();
 			project = procesGener.readProcess(file);
 			forms.clear();
 			ProjectForm form = new ProjectForm(this, project, canvas);
 			roleList = project.getRoles();
+			changeList = project.getChanges();
+			branchList = project.getBranches();
+			artifactList = project.getArtifacts();
+			
 			fillFormsXML = new FillFormsXML(this, project, forms);
 			fillFormsXML.fillProjectFromXML(form);
 
@@ -427,7 +453,7 @@ public class Control {
 			forms.add(0, form);
 		
 			parseProject();
-			break;
+			
 		}
 
 	}
@@ -510,7 +536,7 @@ public class Control {
 		this.configObservable = configObservable;
 	}
 
-	public ArrayList<Configuration> getConfigList() {
+	public List<Configuration> getConfigList() {
 		return configList;
 	}
 
@@ -534,7 +560,7 @@ public class Control {
 		this.branchObservable = branchObservable;
 	}
 
-	public ArrayList<Branch> getBranchList() {
+	public List<Branch> getBranchList() {
 		return branchList;
 	}
 
@@ -550,11 +576,11 @@ public class Control {
 		this.changeObservable = changeObservable;
 	}
 
-	public ArrayList<Change> getChangeList() {
+	public List<Change> getChangeList() {
 		return changeList;
 	}
 
-	public void setChangeList(ArrayList<Change> changeList) {
+	public void setChangeList(List<Change> changeList) {
 		this.changeList = changeList;
 	}
 
@@ -574,11 +600,11 @@ public class Control {
 		this.artifactFormIndex = artifactFormIndex;
 	}
 
-	public ArrayList<Artifact> getArtifactList() {
+	public List<Artifact> getArtifactList() {
 		return artifactList;
 	}
 
-	public void setArtifactList(ArrayList<Artifact> artifactList) {
+	public void setArtifactList(List<Artifact> artifactList) {
 		this.artifactList = artifactList;
 	}
 
