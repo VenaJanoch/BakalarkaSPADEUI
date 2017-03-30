@@ -70,6 +70,7 @@ public class PhaseForm extends BasicForm implements ISegmentForm {
 
 	@Override
 	public void setActionSubmitButton() {
+		
 		if (getControl().getConfigList().isEmpty()) {
 			getAlerts().showNoConfigAlert();
 		} else {

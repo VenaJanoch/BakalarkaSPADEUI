@@ -35,10 +35,13 @@ public class ChangeForm extends BasicForm implements ISegmentForm {
 	private Button editArtifactBT;
 
 	private boolean newChange;
+	private Change change;
 
 	public ChangeForm(CanvasItem item, Control control, Change change) {
 		super(item, control);
 
+		this.newChange = true;
+		this.change = change;
 		setArtifactArray(new ArrayList());
 		getArtifactArray().add(change.getArtifact());
 
@@ -59,10 +62,11 @@ public class ChangeForm extends BasicForm implements ISegmentForm {
 	public void closeForm() {
 		setName(getNameTF().getText());
 		getCanvasItem().setNameText(getName());
-		getControl().getFillForms().fillChange(getCanvasItem().getForm(), getCanvasItem().getIDs()[2],
+		getControl().getFillForms().fillChange(change, getCanvasItem().getIDs(),
 				descriptionTF.getText(), getName(), newChange, artifactIndex, (int) getCanvasItem().getTranslateX(),
 				(int) getCanvasItem().getTranslateY());
 
+		newChange = false;
 	}
 
 	@Override
@@ -195,5 +199,15 @@ public class ChangeForm extends BasicForm implements ISegmentForm {
 	public void setDescriptionTF(TextField descriptionTF) {
 		this.descriptionTF = descriptionTF;
 	}
+
+	public boolean isNewChange() {
+		return newChange;
+	}
+
+	public void setNewChange(boolean newChange) {
+		this.newChange = newChange;
+	}
+	
+	
 
 }

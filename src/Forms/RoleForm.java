@@ -118,4 +118,13 @@ public class RoleForm extends BasicForm implements ISegmentForm {
 		this.roleTypeCB = roleTypeCB;
 	}
 
+	public boolean isNew() {
+		return isNew;
+	}
+
+	public void setNew(boolean isNew) {
+		this.isNew = isNew;
+	}
+
+	
 }

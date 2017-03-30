@@ -63,11 +63,11 @@ public class FillFormsXML {
 		form.getEndDateDP().setValue(control.convertDateFromXML(project.getEndDate()));
 
 		fillBranchObservabel(project.getBranches());
-		
+
 		fillChangeObservabel(project.getChanges());
-		
+
 		fillArtifactObservabel(project.getArtifacts());
-		
+
 	}
 
 	public void fillPhasesFromXML(BasicForm form) {
@@ -224,11 +224,11 @@ public class FillFormsXML {
 
 	public void fillConfigurationFromXML(BasicForm form, Configuration config) {
 		if (control.checkConfiguration(config.getName())) {
-			
+
 			CanvasItem item = new CanvasItem(SegmentType.Configuration, config.getName(), control, form, false);
-			
+
 			control.getConfigList().add(item.getIDs()[1], config);
-			control.getConfigObservable().add(item.getIDs()[1], config.getName());			
+			control.getConfigObservable().add(item.getIDs()[1], config.getName());
 		}
 
 	}
@@ -245,6 +245,7 @@ public class FillFormsXML {
 		configForm.getNameTF().setText(conf.getName());
 		configForm.setName(conf.getName());
 		configForm.getCreatedDP().setValue(control.convertDateFromXML(conf.getCreate()));
+		configForm.setNew(false);
 		if (conf.isIsRelease()) {
 			configForm.getRbYes().setSelected(true);
 		} else {
@@ -293,7 +294,7 @@ public class FillFormsXML {
 		roleForm.setName(role.getName());
 		roleForm.getNameTF().setText(role.getName());
 		roleForm.getDescriptionTF().setText(role.getDescription());
-
+		roleForm.setNew(false);
 		forms.add(IDs[0], roleForm);
 		control.getRoleFormIndex().add(index);
 		index++;
@@ -326,8 +327,8 @@ public class FillFormsXML {
 		IDs[2] = form.getIdCreater().createBranchID();
 		// System.out.println(form.getTitle());
 		Branch branch = form.getBranchArray().get(IDs[2]);
-		BranchForm branchForm = new BranchForm(item, control);
-
+		BranchForm branchForm = new BranchForm(item, control, branch);
+		branchForm.setNewBranch(false);
 		branchForm.getBranchesCB().setValue(branch.getName());
 
 		control.getBranchFormIndex().add(IDs[1], index);
@@ -367,6 +368,7 @@ public class FillFormsXML {
 		System.out.println(changeForm.getTitle());
 
 		changeForm.getChangeCB().setValue(change.getName());
+		changeForm.setNewChange(false);
 
 		forms.add(index, changeForm);
 		index++;
@@ -398,25 +400,26 @@ public class FillFormsXML {
 			Tag tag = form.getTagArray().get(i);
 			CanvasItem item = new CanvasItem(SegmentType.Tag, "", control, form, false);
 			form.getCanvas().getChildren().add(item);
-			
+
 			item.setTranslateX(tag.getCoordinates().getXCoordinate());
 			item.setTranslateY(tag.getCoordinates().getYCoordinate());
 		}
 
 	}
+
 	public int[] createTag(CanvasItem item, BasicForm form, int[] IDs) {
 		IDs[0] = index;
 		IDs[1] = idCreater.createTagID();
 		IDs[2] = form.getIdCreater().createTagID();
 		Tag tag = form.getTagArray().get(IDs[2]);
-		TagForm tagForm = new TagForm(item, control, tag); 
+		TagForm tagForm = new TagForm(item, control, tag);
 		forms.add(index, tagForm);
 		tagForm.getArea().setText(tag.getTag());
-		
+
 		index++;
 		return IDs;
 	}
-	
+
 	public int[] createArtifactFormXML(CanvasItem item, BasicForm form, int[] IDs) {
 		IDs[0] = index;
 		IDs[1] = idCreater.createArtifactID();
@@ -432,6 +435,7 @@ public class FillFormsXML {
 		artifactForm.getMineTypeCB().setValue(ArtifactClass.values()[artifact.getArtifactIndex()]);
 		artifactForm.getCreatedDP().setValue(control.convertDateFromXML(artifact.getCreated()));
 		artifactForm.getAuthorRoleCB().setValue(artifact.getAuthor().getName());
+		artifactForm.setNew(false);
 
 		forms.add(index, artifactForm);
 		control.getArtifactList().add(IDs[1], artifact);
@@ -450,7 +454,7 @@ public class FillFormsXML {
 	private void fillChangeObservabel(List<Change> changes) {
 
 		for (int i = 0; i < changes.size(); i++) {
-			
+
 			control.getChangeObservable().add(changes.get(i).getName());
 		}
 	}
@@ -476,8 +480,5 @@ public class FillFormsXML {
 	public void setIdCreater(IdentificatorCreater idCreater) {
 		this.idCreater = idCreater;
 	}
-	
-	
-	
 
 }

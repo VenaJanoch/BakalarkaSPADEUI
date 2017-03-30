@@ -230,4 +230,14 @@ public class ConfigurationForm extends BasicForm implements ISegmentForm {
 		this.authorRoleCB = authorRoleCB;
 	}
 
+	public boolean isNew() {
+		return isNew;
+	}
+
+	public void setNew(boolean isNew) {
+		this.isNew = isNew;
+	}
+	
+	
+
 }

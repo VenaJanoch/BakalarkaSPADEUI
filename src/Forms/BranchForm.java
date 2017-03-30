@@ -33,9 +33,12 @@ public class BranchForm extends BasicForm implements ISegmentForm {
 	private int branchIndex;
 
 	private boolean newBranch;
-
-	public BranchForm(CanvasItem item, Control control) {
+	private Branch branch;
+	
+	public BranchForm(CanvasItem item, Control control, Branch branch) {
 		super(item, control);
+		this.branch = branch;
+		
 		this.setOnCloseRequest(new EventHandler<WindowEvent>() {
 
 			@Override
@@ -54,7 +57,7 @@ public class BranchForm extends BasicForm implements ISegmentForm {
 
 		setName(getNameTF().getText());
 		getCanvasItem().setNameText(getName());
-		getControl().getFillForms().fillBranch(getCanvasItem().getForm(), getCanvasItem().getIDs()[2], isMain, getName(), newBranch,
+		getControl().getFillForms().fillBranch(branch, getCanvasItem().getIDs(), isMain, getName(), newBranch,
 				(int) getCanvasItem().getTranslateX(), (int) getCanvasItem().getTranslateY());
 	}
 
@@ -189,6 +192,7 @@ System.out.println(index + "Index ");
 		this.branchesCB = branchesCB;
 	}
 		
+	
 	
 
 }

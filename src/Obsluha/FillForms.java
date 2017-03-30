@@ -223,9 +223,8 @@ public class FillForms {
 
 	}
 
-	public void fillBranch(BasicForm form, int ID, boolean isMain, String name, boolean isNew, int x, int y) {
+	public void fillBranch(Branch branch, int[] IDs, boolean isMain, String name, boolean isNew, int x, int y) {
 
-		Branch branch = form.getBranchArray().get(ID);
 		branch.setIsMain(isMain);
 		branch.setName(name);
 		Coordinates coord = objF.createCoordinates();
@@ -234,8 +233,8 @@ public class FillForms {
 		branch.setCoordinates(coord);
 
 		if (isNew) {
-			control.getBranchList().add(form.getCanvasItem().getIDs()[1], branch);
-			control.getBranchFormIndex().add(form.getCanvasItem().getIDs()[0]);
+			control.getBranchList().add(IDs[1], branch);
+			control.getBranchFormIndex().add(IDs[0]);
 			control.getBranchObservable().add(name);
 		}
 	}
@@ -243,22 +242,20 @@ public class FillForms {
 	public int[] createBranch(CanvasItem item, BasicForm form, int[] IDs) {
 
 		Branch branch = (Branch) objF.createBranch();
-		forms.add(index, new BranchForm(item, control));
+		forms.add(index, new BranchForm(item, control, branch));
 		IDs[0] = index;
 		IDs[1] = idCreater.createBranchID();
 		IDs[2] = form.getIdCreater().createBranchID();
-		System.out.println(IDs[1] + " Branch " + form.getTitle());
-
+		
 		form.getBranchArray().add(IDs[2], branch);
 		index++;
 		return IDs;
 
 	}
 
-	public void fillChange(BasicForm form, int ID, String description, String name, boolean isNew, int artifactIndex,
+	public void fillChange(Change change, int[] IDs, String description, String name, boolean isNew, int artifactIndex,
 			int x, int y) {
 
-		Change change = form.getChangeArray().get(ID);
 		change.setName(name);
 		change.setDescriptoin(description);
 		change.setArtifact(control.getArtifactList().get(artifactIndex));
@@ -267,9 +264,11 @@ public class FillForms {
 		coord.setXCoordinate(x);
 		coord.setYCoordinate(y);
 		change.setCoordinates(coord);
+		
 		if (isNew) {
-			control.getChangeList().add(form.getCanvasItem().getIDs()[1], form.getChangeArray().get(ID));
-			control.getChangeFormIndex().add(form.getCanvasItem().getIDs()[0]);
+			
+			control.getChangeList().add(IDs[1], change);
+			control.getChangeFormIndex().add(IDs[0]);
 			control.getChangeObservable().add(name);
 		}
 
@@ -288,7 +287,7 @@ public class FillForms {
 
 	}
 
-	public void fillArtifact(Artifact artifact, int ID, String description, String name, LocalDate Ldate, String type,
+	public void fillArtifact(Artifact artifact, int[] IDs, String description, String name, LocalDate Ldate, String type,
 			int roleIndex, int x, int y, int typeIndex, boolean isNew) {
 
 		// Artifact artifact = form.getArtifactArray().get(ID);
@@ -305,6 +304,8 @@ public class FillForms {
 		artifact.setCoordinates(coord);
 		if (isNew) {
 			control.getArtifactObservable().add(name);
+			control.getArtifactList().add(IDs[1], artifact);
+			control.getArtifactFormIndex().add(IDs[0]);
 		}
 
 	}
@@ -317,8 +318,7 @@ public class FillForms {
 		IDs[1] = idCreater.createArtifactID();
 		IDs[2] = form.getIdCreater().createArtifactID();
 		form.getArtifactArray().add(IDs[2], artifact);
-		control.getArtifactList().add(IDs[1], artifact);
-		control.getArtifactFormIndex().add(index);
+		
 		index++;
 		return IDs;
 	}

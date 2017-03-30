@@ -66,7 +66,7 @@ public class ArtifactForm extends BasicForm implements ISegmentForm {
 	public void closeForm() {
 		setName(getNameTF().getText());
 		getCanvasItem().setNameText(getName());
-		getControl().getFillForms().fillArtifact(artifact, getCanvasItem().getIDs()[2], descriptionTF.getText(),
+		getControl().getFillForms().fillArtifact(artifact, getCanvasItem().getIDs(), descriptionTF.getText(),
 				getName(), createdDP.getValue(), ArtifactClass.values()[typeIndex].name(), authorIndex,
 				(int) getCanvasItem().getTranslateX(), (int) getCanvasItem().getTranslateY(), typeIndex, isNew);
 		isNew = false;
@@ -199,5 +199,15 @@ public class ArtifactForm extends BasicForm implements ISegmentForm {
 	public void setMineTypeCB(ComboBox<ArtifactClass> mineTypeCB) {
 		this.mineTypeCB = mineTypeCB;
 	}
+
+	public boolean isNew() {
+		return isNew;
+	}
+
+	public void setNew(boolean isNew) {
+		this.isNew = isNew;
+	}
+	
+	
 
 }
