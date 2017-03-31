@@ -3,16 +3,19 @@ package Forms;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import Grafika.CanvasItem;
-import Grafika.InfoBoxSegment;
+import AbstractForm.BasicForm;
+import AbstractForm.DescriptionBasicForm;
+import Graphics.CanvasItem;
+import Graphics.InfoBoxSegment;
 import Interfaces.ISegmentForm;
-import Obsluha.Control;
-import Obsluha.SegmentType;
+import SPADEPAC.RoleClass;
 import SPADEPAC.WorkUnit;
 import SPADEPAC.WorkUnitPriorityClass;
 import SPADEPAC.WorkUnitPrioritySuperClass;
 import SPADEPAC.WorkUnitSeverityClass;
 import SPADEPAC.WorkUnitTypeClass;
+import Services.Control;
+import Services.SegmentType;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -27,9 +30,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.WindowEvent;
 
-public class WorkUnitForm extends BasicForm implements ISegmentForm {
+public class WorkUnitForm extends DescriptionBasicForm implements ISegmentForm {
 
-	private Label descriptionLB;
 	private Label estimatedTimeLB;
 	private Label priorityLB;
 	private Label severityLB;
@@ -38,22 +40,16 @@ public class WorkUnitForm extends BasicForm implements ISegmentForm {
 	private Label asigneeRoleLB;
 	private Label authorRoleLB;
 
-	private TextField descriptionTF;
 	private TextField estimatedTimeTF;
 	private ComboBox<WorkUnitPriorityClass> priorityCB;
 	private ComboBox<WorkUnitSeverityClass> severityCB;
-	private ComboBox<String> categoryCB;
+	private TextField categoryTF;
 	private ComboBox<WorkUnitTypeClass> typeCB;
 	private ComboBox<String> asigneeRoleCB;
 	private ComboBox<String> authorRoleCB;
 
-	private Button newRoleBT;
-	private Button editRoleBT1;
-	private Button editRoleBT2;
-
 	private int priorityIndex;
 	private int severityIndex;
-	private int categoryIndex;
 	private int assigneIndex;
 	private int typeIndex;
 	private int authorIndex;
@@ -62,6 +58,7 @@ public class WorkUnitForm extends BasicForm implements ISegmentForm {
 	public WorkUnitForm(CanvasItem item, Control control, WorkUnit unit) {
 		super(item, control);
 		this.unit = unit;
+		
 		setRoleArray(new ArrayList<>());
 		getRoleArray().add(unit.getAssignee());
 		getRoleArray().add(unit.getAuthor());
@@ -81,14 +78,20 @@ public class WorkUnitForm extends BasicForm implements ISegmentForm {
 	@Override
 	public void closeForm() {
 
-		getCanvasItem().setNameText(getNameTF().getText());
-		setName(getNameTF().getText());
-		getControl().getFillForms().fillWorkUnit(getCanvasItem().getForm(), getCanvasItem().getIDs()[2],
-				descriptionTF.getText(), getName(), assigneIndex, authorIndex,
-				WorkUnitPriorityClass.values()[priorityIndex].name(),
-				WorkUnitSeverityClass.values()[severityIndex].name(), WorkUnitTypeClass.values()[typeIndex].name(),
-				(int) getCanvasItem().getTranslateX(), (int) getCanvasItem().getTranslateY(), priorityIndex,
-				severityIndex, typeIndex);
+		String actName = getNameTF().getText();
+		BasicForm form = getCanvasItem().getForm();
+		int[] IDs = getCanvasItem().getIDs();
+		int x = (int) getCanvasItem().getTranslateX();
+		int y = (int) getCanvasItem().getTranslateY();
+		String priority = WorkUnitPriorityClass.values()[priorityIndex].name();
+		String severity = WorkUnitSeverityClass.values()[severityIndex].name();
+		String category = categoryTF.getText();
+		String type = WorkUnitTypeClass.values()[typeIndex].name();
+
+		getCanvasItem().setNameText(actName);
+		setName(actName);
+		getControl().getFillForms().fillWorkUnit(form, IDs[2], getDescriptionTF().getText(), actName, assigneIndex,
+				authorIndex, priority, severity, type, category, x, y, priorityIndex, severityIndex, typeIndex);
 
 	}
 
@@ -121,8 +124,7 @@ public class WorkUnitForm extends BasicForm implements ISegmentForm {
 		severityCB.getSelectionModel().selectedIndexProperty().addListener(severityListener);
 		severityCB.setVisibleRowCount(5);
 		categoryLB = new Label("CategoryLB: ");
-		// categoryCB = new ChoiceBox<>();
-		// categoryCB.getSelectionModel().selectedIndexProperty().addListener(categoryListener);
+		categoryTF = new TextField();
 
 		typeLB = new Label("Type: ");
 		typeCB = new ComboBox<WorkUnitTypeClass>(FXCollections.observableArrayList(WorkUnitTypeClass.values()));
@@ -139,42 +141,7 @@ public class WorkUnitForm extends BasicForm implements ISegmentForm {
 		authorRoleCB.setVisibleRowCount(5);
 		authorRoleCB.getSelectionModel().selectedIndexProperty().addListener(roleListenerAut);
 
-		descriptionLB = new Label("Description: ");
-		descriptionTF = new TextField();
-
-		newRoleBT = new Button("New");
-		newRoleBT.setOnAction(event -> roleBTAction());
-
-		editRoleBT1 = new Button("Edit");
-		editRoleBT1.setOnAction(event -> editRoleBTAction1());
-
-		editRoleBT2 = new Button("Edit");
-		editRoleBT2.setOnAction(event -> editRoleBTAction2());
-
 		fillInfoPart();
-	}
-
-	private void editRoleBTAction2() {
-		if (getControl().getRoleObservable().isEmpty()) {
-			roleBTAction();
-		}else{
-			getControl().getForms().get(getControl().getRoleFormIndex().get(authorIndex)).show();						
-		}
-	}
-
-	private void editRoleBTAction1() {
-		if (getControl().getRoleObservable().isEmpty()) {
-			roleBTAction();
-		}else{
-		getControl().getForms().get(getControl().getRoleFormIndex().get(assigneIndex)).show();
-		}
-	}
-
-	private void roleBTAction() {
-		CanvasItem item = new CanvasItem(SegmentType.Role, "Name", getControl(), this, true);
-
-		getControl().getForms().get(item.getIDs()[0]).show();
-
 	}
 
 	ChangeListener<Number> typeListener = new ChangeListener<Number>() {
@@ -207,17 +174,6 @@ public class WorkUnitForm extends BasicForm implements ISegmentForm {
 		}
 	};
 
-	ChangeListener<Number> categoryListener = new ChangeListener<Number>() {
-
-		@Override
-		public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-
-			System.out.println(newValue.intValue());
-			categoryIndex = newValue.intValue();
-
-		}
-	};
-
 	ChangeListener<Number> priorityListener = new ChangeListener<Number>() {
 
 		@Override
@@ -240,10 +196,6 @@ public class WorkUnitForm extends BasicForm implements ISegmentForm {
 
 	private void fillInfoPart() {
 
-		getInfoPart().add(descriptionLB, 0, 1);
-		getInfoPart().setHalignment(descriptionLB, HPos.RIGHT);
-		getInfoPart().add(descriptionTF, 1, 1);
-
 		getInfoPart().add(estimatedTimeLB, 0, 2);
 		getInfoPart().setHalignment(estimatedTimeLB, HPos.RIGHT);
 		getInfoPart().add(estimatedTimeTF, 1, 2);
@@ -255,10 +207,10 @@ public class WorkUnitForm extends BasicForm implements ISegmentForm {
 		getInfoPart().add(severityLB, 0, 4);
 		getInfoPart().setHalignment(severityLB, HPos.RIGHT);
 		getInfoPart().add(severityCB, 1, 4);
-		//
-		// getInfoPart().add(categoryLB, 0, 5);
-		// getInfoPart().setHalignment(categoryLB, HPos.RIGHT);
-		// getInfoPart().add(categoryCB, 1, 5);
+
+		getInfoPart().add(categoryLB, 0, 5);
+		getInfoPart().setHalignment(categoryLB, HPos.RIGHT);
+		getInfoPart().add(categoryTF, 1, 5);
 
 		getInfoPart().add(typeLB, 0, 6);
 		getInfoPart().setHalignment(typeLB, HPos.RIGHT);
@@ -267,25 +219,15 @@ public class WorkUnitForm extends BasicForm implements ISegmentForm {
 		getInfoPart().add(asigneeRoleLB, 0, 7);
 		getInfoPart().setHalignment(asigneeRoleLB, HPos.RIGHT);
 		getInfoPart().add(asigneeRoleCB, 1, 7);
-		getInfoPart().add(newRoleBT, 3, 7);
-		getInfoPart().add(editRoleBT1, 2, 7);
-		
+
 		getInfoPart().add(authorRoleLB, 0, 8);
 		getInfoPart().setHalignment(authorRoleLB, HPos.RIGHT);
 		getInfoPart().add(authorRoleCB, 1, 8);
-		getInfoPart().add(editRoleBT2, 2, 8);
 
 	}
 
 	/**** Gets and Setrs ***/
 
-	public TextField getDescriptionTF() {
-		return descriptionTF;
-	}
-
-	public void setDescriptionTF(TextField descriptionTF) {
-		this.descriptionTF = descriptionTF;
-	}
 
 	public TextField getEstimatedTimeTF() {
 		return estimatedTimeTF;
@@ -311,12 +253,12 @@ public class WorkUnitForm extends BasicForm implements ISegmentForm {
 		this.severityCB = severityCB;
 	}
 
-	public ComboBox<String> getCategoryCB() {
-		return categoryCB;
+	public TextField getCategoryTF() {
+		return categoryTF;
 	}
 
-	public void setCategoryCB(ComboBox<String> categoryCB) {
-		this.categoryCB = categoryCB;
+	public void setCategoryTF(TextField categoryTF) {
+		this.categoryTF = categoryTF;
 	}
 
 	public ComboBox<WorkUnitTypeClass> getTypeCB() {

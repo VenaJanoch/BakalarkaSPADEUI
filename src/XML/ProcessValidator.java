@@ -15,7 +15,7 @@ import javax.xml.validation.SchemaFactory;
 
 import org.xml.sax.SAXException;
 
-import Obsluha.Constans;
+import Services.Constans;
 
 public class ProcessValidator {
 

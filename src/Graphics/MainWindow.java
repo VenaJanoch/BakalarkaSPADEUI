@@ -1,9 +1,9 @@
-package Grafika;
+package Graphics;
 
 import Forms.ProjectForm;
-import Obsluha.Constans;
-import Obsluha.Control;
 import Run.Main;
+import Services.Constans;
+import Services.Control;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Parent;

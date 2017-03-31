@@ -1,7 +1,7 @@
 package Run;
 
-import Grafika.MainWindow;
-import Obsluha.Control;
+import Graphics.MainWindow;
+import Services.Control;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;

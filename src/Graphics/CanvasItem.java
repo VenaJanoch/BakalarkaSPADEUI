@@ -1,14 +1,14 @@
-package Grafika;
+package Graphics;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import Forms.BasicForm;
-import Obsluha.Constans;
-import Obsluha.Control;
-import Obsluha.FillForms;
-import Obsluha.FillFormsXML;
-import Obsluha.SegmentType;
+import AbstractForm.BasicForm;
+import Services.Constans;
+import Services.Control;
+import Services.FillForms;
+import Services.FillFormsXML;
+import Services.SegmentType;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;

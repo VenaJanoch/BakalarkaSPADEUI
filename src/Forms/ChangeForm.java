@@ -2,13 +2,15 @@ package Forms;
 
 import java.util.ArrayList;
 
-import Grafika.CanvasItem;
-import Grafika.InfoBoxSegment;
+import AbstractForm.BasicForm;
+import AbstractForm.DescriptionBasicForm;
+import Graphics.CanvasItem;
+import Graphics.InfoBoxSegment;
 import Interfaces.ISegmentForm;
-import Obsluha.Control;
-import Obsluha.SegmentType;
 import SPADEPAC.Artifact;
 import SPADEPAC.Change;
+import Services.Control;
+import Services.SegmentType;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
@@ -19,20 +21,14 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.WindowEvent;
 
-public class ChangeForm extends BasicForm implements ISegmentForm {
+public class ChangeForm extends DescriptionBasicForm implements ISegmentForm {
 
-	private Label descriptionLB;
 	private Label artifactLB;
-	private Label changeLB;
 
 	private ComboBox<String> artifactCB;
 	private ComboBox<String> changeCB;
-	private TextField descriptionTF;
 
-	private int changeIndex;
 	private int artifactIndex;
-	private Button newArtifactBT;
-	private Button editArtifactBT;
 
 	private boolean newChange;
 	private Change change;
@@ -60,11 +56,16 @@ public class ChangeForm extends BasicForm implements ISegmentForm {
 
 	@Override
 	public void closeForm() {
-		setName(getNameTF().getText());
-		getCanvasItem().setNameText(getName());
-		getControl().getFillForms().fillChange(change, getCanvasItem().getIDs(),
-				descriptionTF.getText(), getName(), newChange, artifactIndex, (int) getCanvasItem().getTranslateX(),
-				(int) getCanvasItem().getTranslateY());
+
+		String actName = getNameTF().getText();
+		int[] IDs = getCanvasItem().getIDs();
+		int x = (int) getCanvasItem().getTranslateX();
+		int y = (int) getCanvasItem().getTranslateY();
+
+		setName(actName);
+		getCanvasItem().setNameText(actName);
+		getControl().getFillForms().fillChange(change, IDs, getDescriptionTF().getText(), actName, newChange,
+				artifactIndex, x, y);
 
 		newChange = false;
 	}
@@ -81,51 +82,14 @@ public class ChangeForm extends BasicForm implements ISegmentForm {
 
 	@Override
 	public void createForm() {
-		descriptionLB = new Label("Description: ");
-		descriptionTF = new TextField();
 
 		artifactLB = new Label("Artifact: ");
 		artifactCB = new ComboBox<String>(getControl().getArtifactObservable());
 		artifactCB.setVisibleRowCount(5);
 		artifactCB.getSelectionModel().selectedIndexProperty().addListener(artifactListener);
 
-		changeLB = new Label("Change");
-		changeCB = new ComboBox<String>(getControl().getChangeObservable());
-		changeCB.setVisibleRowCount(5);
-		changeCB.getSelectionModel().selectedIndexProperty().addListener(changeListener);
-
-		newArtifactBT = new Button("New");
-		newArtifactBT.setOnAction(event -> artifactBTAction());
-
-		editArtifactBT = new Button("Edit");
-		editArtifactBT.setOnAction(event -> editBTAction());
-
 		fillInfoPart();
 	}
-
-	private void editBTAction() {
-		if (getControl().getArtifactObservable().isEmpty()) {
-			artifactBTAction();
-		} else {
-			getControl().getForms().get(getControl().getArtifactFormIndex().get(artifactIndex)).show();
-		}
-	}
-
-	private void artifactBTAction() {
-		CanvasItem item = new CanvasItem(SegmentType.Artifact, "Name", getControl(), this, true);
-		getControl().getForms().get(item.getIDs()[0]).show();
-
-	}
-
-	ChangeListener<Number> changeListener = new ChangeListener<Number>() {
-
-		@Override
-		public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-
-			changeIndex = newValue.intValue();
-			fillFormFromList(changeIndex);
-		}
-	};
 
 	ChangeListener<Number> artifactListener = new ChangeListener<Number>() {
 
@@ -136,41 +100,11 @@ public class ChangeForm extends BasicForm implements ISegmentForm {
 		}
 	};
 
-	private void fillFormFromList(int index) {
-
-		if ((index) > 0) {
-
-			getNameTF().setText(getControl().getChangeList().get(index - 1).getName());
-			getNameTF().setDisable(true);
-			descriptionTF.setText(getControl().getChangeList().get(index - 1).getDescriptoin());
-			descriptionTF.setDisable(true);
-			artifactCB.setValue(getControl().getChangeList().get(index - 1).getArtifact().getName());
-			artifactCB.setDisable(true);
-			newChange = false;
-
-		} else {
-			getNameTF().setDisable(false);
-			descriptionTF.setDisable(false);
-			artifactCB.setDisable(false);
-			newChange = true;
-		}
-
-	}
-
 	private void fillInfoPart() {
-
-		getInfoPart().add(changeLB, 3, 0);
-		getInfoPart().add(changeCB, 4, 0);
-
-		getInfoPart().add(descriptionLB, 0, 1);
-		getInfoPart().setHalignment(descriptionLB, HPos.RIGHT);
-		getInfoPart().add(descriptionTF, 1, 1);
 
 		getInfoPart().add(artifactLB, 0, 2);
 		getInfoPart().setHalignment(artifactLB, HPos.RIGHT);
 		getInfoPart().add(artifactCB, 1, 2);
-		getInfoPart().add(newArtifactBT, 3, 2);
-		getInfoPart().add(editArtifactBT, 2, 2);
 
 	}
 
@@ -192,14 +126,6 @@ public class ChangeForm extends BasicForm implements ISegmentForm {
 		this.changeCB = changeCB;
 	}
 
-	public TextField getDescriptionTF() {
-		return descriptionTF;
-	}
-
-	public void setDescriptionTF(TextField descriptionTF) {
-		this.descriptionTF = descriptionTF;
-	}
-
 	public boolean isNewChange() {
 		return newChange;
 	}
@@ -207,7 +133,5 @@ public class ChangeForm extends BasicForm implements ISegmentForm {
 	public void setNewChange(boolean newChange) {
 		this.newChange = newChange;
 	}
-	
-	
 
 }

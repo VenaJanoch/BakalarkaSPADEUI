@@ -1,4 +1,4 @@
-package Obsluha;
+package Services;
 
 import javafx.scene.text.Text;
 

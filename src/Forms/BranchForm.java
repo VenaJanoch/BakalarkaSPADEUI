@@ -1,10 +1,11 @@
 package Forms;
 
-import Grafika.CanvasItem;
-import Grafika.InfoBoxSegment;
+import AbstractForm.BasicForm;
+import Graphics.CanvasItem;
+import Graphics.InfoBoxSegment;
 import Interfaces.ISegmentForm;
-import Obsluha.Control;
 import SPADEPAC.Branch;
+import Services.Control;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
@@ -34,11 +35,11 @@ public class BranchForm extends BasicForm implements ISegmentForm {
 
 	private boolean newBranch;
 	private Branch branch;
-	
+
 	public BranchForm(CanvasItem item, Control control, Branch branch) {
 		super(item, control);
 		this.branch = branch;
-		
+
 		this.setOnCloseRequest(new EventHandler<WindowEvent>() {
 
 			@Override
@@ -55,10 +56,15 @@ public class BranchForm extends BasicForm implements ISegmentForm {
 	@Override
 	public void closeForm() {
 
-		setName(getNameTF().getText());
-		getCanvasItem().setNameText(getName());
-		getControl().getFillForms().fillBranch(branch, getCanvasItem().getIDs(), isMain, getName(), newBranch,
-				(int) getCanvasItem().getTranslateX(), (int) getCanvasItem().getTranslateY());
+		String actName = getNameTF().getText();
+		BasicForm form = getCanvasItem().getForm();
+		int[] IDs = getCanvasItem().getIDs();
+		int x = (int) getCanvasItem().getTranslateX();
+		int y = (int) getCanvasItem().getTranslateY();
+
+		setName(actName);
+		getCanvasItem().setNameText(actName);
+		getControl().getFillForms().fillBranch(branch, IDs, isMain, actName, newBranch, x, y);
 	}
 
 	@Override
@@ -113,7 +119,7 @@ public class BranchForm extends BasicForm implements ISegmentForm {
 	};
 
 	private void fillFormFromList(int index) {
-System.out.println(index + "Index ");
+		System.out.println(index + "Index ");
 		if ((index) > 0) {
 
 			getNameTF().setText(getControl().getBranchList().get(index - 1).getName());
@@ -148,8 +154,7 @@ System.out.println(index + "Index ");
 		getInfoPart().add(branchesCB, 4, 0);
 
 	}
-	
-	
+
 	/*** Getrs and Setrs ***/
 
 	public boolean isNewBranch() {
@@ -191,8 +196,5 @@ System.out.println(index + "Index ");
 	public void setBranchesCB(ComboBox<String> branchesCB) {
 		this.branchesCB = branchesCB;
 	}
-		
-	
-	
 
 }

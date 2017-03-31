@@ -1,4 +1,4 @@
-package Obsluha;
+package Services;
 
 public enum SegmentType {
 	Phase,

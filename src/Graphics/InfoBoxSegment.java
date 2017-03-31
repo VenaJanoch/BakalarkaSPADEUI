@@ -1,7 +1,7 @@
-package Grafika;
+package Graphics;
 
-import Obsluha.Constans;
-import Obsluha.SegmentType;
+import Services.Constans;
+import Services.SegmentType;
 import javafx.scene.Group;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;

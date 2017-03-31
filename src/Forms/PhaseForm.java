@@ -4,16 +4,18 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-import Grafika.CanvasItem;
-import Grafika.DragAndDropCanvas;
-import Grafika.DragAndDropItem;
-import Grafika.InfoBoxSegment;
+import AbstractForm.BasicForm;
+import AbstractForm.DateDescBasicForm;
+import Graphics.CanvasItem;
+import Graphics.DragAndDropCanvas;
+import Graphics.DragAndDropItem;
+import Graphics.InfoBoxSegment;
 import Interfaces.ISegmentForm;
-import Obsluha.Control;
-import Obsluha.SegmentType;
 import SPADEPAC.Configuration;
 import SPADEPAC.Phase;
 import SPADEPAC.WorkUnit;
+import Services.Control;
+import Services.SegmentType;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
@@ -27,14 +29,10 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.stage.WindowEvent;
 
-public class PhaseForm extends BasicForm implements ISegmentForm {
+public class PhaseForm extends DateDescBasicForm implements ISegmentForm {
 
-	private Label endDateLB;
-	private Label descriptionLB;
 	private Label configLB;
 
-	private TextField descriptionTF;
-	private DatePicker endDate;
 	private ChoiceBox<String> configCB;
 	private Button newConfigBT;
 	private Button editConfigBT;
@@ -61,16 +59,23 @@ public class PhaseForm extends BasicForm implements ISegmentForm {
 
 	@Override
 	public void closeForm() {
-		setName(getNameTF().getText());
-		getCanvasItem().setNameText(getName());
-		getCanvasItem().getFillForms().fillPhase(getCanvasItem().getForm(), getCanvasItem().getIDs()[1],
-				descriptionTF.getText(), getName(), endDate.getValue(), chooseConfigID,
-				(int) getCanvasItem().getTranslateX(), (int) getCanvasItem().getTranslateY());
+
+		String actName = getNameTF().getText();
+		BasicForm form = getCanvasItem().getForm();
+		int[] IDs = getCanvasItem().getIDs();
+		int x = (int) getCanvasItem().getTranslateX();
+		int y = (int) getCanvasItem().getTranslateY();
+		LocalDate endDateL = getDateDP().getValue();
+		String desc = getDescriptionTF().getText();
+
+		setName(actName);
+		getCanvasItem().setNameText(actName);
+		getCanvasItem().getFillForms().fillPhase(form, IDs[1], desc, actName, endDateL, chooseConfigID, x, y);
 	}
 
 	@Override
 	public void setActionSubmitButton() {
-		
+
 		if (getControl().getConfigList().isEmpty()) {
 			getAlerts().showNoConfigAlert();
 		} else {
@@ -81,12 +86,7 @@ public class PhaseForm extends BasicForm implements ISegmentForm {
 
 	@Override
 	public void createForm() {
-		endDateLB = new Label("End Date: ");
-		endDate = new DatePicker();
-
-		endDate.setValue(LocalDate.now());
-		descriptionLB = new Label("Description: ");
-		descriptionTF = new TextField();
+		getDateLB().setText("End Date: ");
 
 		configLB = new Label("Configuration: ");
 		configCB = new ChoiceBox<>(getControl().getConfigObservable());
@@ -101,38 +101,11 @@ public class PhaseForm extends BasicForm implements ISegmentForm {
 
 			}
 		});
-		newConfigBT = new Button("New");
-		newConfigBT.setOnAction(event -> configBTAction());
-
-		editConfigBT = new Button("Edit");
-		editConfigBT.setOnAction(event -> editBTAction());
 
 		fillInfoPart();
 	}
 
-	private void editBTAction() {
-		if (getControl().getConfigObservable().isEmpty()) {
-			configBTAction();
-		}else{
-			getControl().getForms().get(getControl().getConfigFormIndex().get(chooseConfigID)).show();			
-		}
-	}
-
-	private void configBTAction() {
-		CanvasItem item = new CanvasItem(SegmentType.Configuration, "Name", getControl(), this, true);
-		getControl().getForms().get(item.getIDs()[0]).show();
-
-	}
-
 	private void fillInfoPart() {
-
-		getInfoPart().add(descriptionLB, 0, 1);
-		getInfoPart().setHalignment(descriptionLB, HPos.RIGHT);
-		getInfoPart().add(descriptionTF, 1, 1);
-
-		getInfoPart().add(endDateLB, 0, 2);
-		getInfoPart().setHalignment(endDateLB, HPos.RIGHT);
-		getInfoPart().add(endDate, 1, 2);
 
 		getInfoPart().add(configLB, 0, 3);
 		getInfoPart().setHalignment(configLB, HPos.RIGHT);
@@ -140,23 +113,6 @@ public class PhaseForm extends BasicForm implements ISegmentForm {
 		getInfoPart().add(editConfigBT, 2, 3);
 		getInfoPart().add(newConfigBT, 3, 3);
 
-	}
-
-	/** Getrs And Setrs **/
-	public TextField getDescriptionTF() {
-		return descriptionTF;
-	}
-
-	public void setDescriptionTF(TextField descriptionTF) {
-		this.descriptionTF = descriptionTF;
-	}
-
-	public DatePicker getEndDate() {
-		return endDate;
-	}
-
-	public void setEndDate(DatePicker endDate) {
-		this.endDate = endDate;
 	}
 
 	public ChoiceBox<String> getConfigCB() {

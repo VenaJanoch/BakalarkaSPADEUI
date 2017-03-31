@@ -1,17 +1,13 @@
-package Forms;
+package AbstractForm;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import Grafika.CanvasItem;
-import Grafika.DragAndDropCanvas;
-import Grafika.DragAndDropItem;
-import Grafika.InfoBoxSegment;
-import Grafika.MenuPanel;
-import Obsluha.Alerts;
-import Obsluha.Constans;
-import Obsluha.Control;
-import Obsluha.IdentificatorCreater;
+import Graphics.CanvasItem;
+import Graphics.DragAndDropCanvas;
+import Graphics.DragAndDropItem;
+import Graphics.InfoBoxSegment;
+import Graphics.MenuPanel;
 import SPADEPAC.Activity;
 import SPADEPAC.Artifact;
 import SPADEPAC.Branch;
@@ -25,6 +21,10 @@ import SPADEPAC.Phase;
 import SPADEPAC.Role;
 import SPADEPAC.Tag;
 import SPADEPAC.WorkUnit;
+import Services.Alerts;
+import Services.Constans;
+import Services.Control;
+import Services.IdentificatorCreater;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;

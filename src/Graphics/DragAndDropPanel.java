@@ -1,8 +1,8 @@
-package Grafika;
+package Graphics;
 
 import Forms.ProjectForm;
-import Obsluha.Constans;
-import Obsluha.Control;
+import Services.Constans;
+import Services.Control;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;

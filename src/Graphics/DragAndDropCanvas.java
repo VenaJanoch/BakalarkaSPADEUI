@@ -1,8 +1,8 @@
-package Grafika;
+package Graphics;
 
-import Forms.BasicForm;
-import Obsluha.Control;
-import Obsluha.SegmentType;
+import AbstractForm.BasicForm;
+import Services.Control;
+import Services.SegmentType;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Group;

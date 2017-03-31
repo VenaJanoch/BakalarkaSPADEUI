@@ -3,11 +3,12 @@
  */
 package Forms;
 
-import Grafika.CanvasItem;
+import AbstractForm.BasicForm;
+import Graphics.CanvasItem;
 import Interfaces.ISegmentForm;
-import Obsluha.Control;
 import SPADEPAC.Configuration;
 import SPADEPAC.Tag;
+import Services.Control;
 import javafx.event.EventHandler;
 import javafx.geometry.HPos;
 import javafx.scene.control.Label;

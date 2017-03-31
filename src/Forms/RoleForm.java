@@ -1,13 +1,17 @@
 package Forms;
 
-import Grafika.CanvasItem;
-import Grafika.InfoBoxSegment;
+import java.time.LocalDate;
+
+import AbstractForm.BasicForm;
+import AbstractForm.DescriptionBasicForm;
+import Graphics.CanvasItem;
+import Graphics.InfoBoxSegment;
 import Interfaces.ISegmentForm;
-import Obsluha.Control;
 import SPADEPAC.Role;
 import SPADEPAC.RoleClass;
 import SPADEPAC.WorkUnitPriorityClass;
 import SPADEPAC.WorkUnitSeverityClass;
+import Services.Control;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -18,12 +22,10 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.WindowEvent;
 
-public class RoleForm extends BasicForm implements ISegmentForm {
+public class RoleForm extends DescriptionBasicForm implements ISegmentForm {
 
-	private Label descriptionLB;
 	private Label roleTypeLB;
 
-	private TextField descriptionTF;
 
 	private Role role;
 	private ComboBox<RoleClass> roleTypeCB;
@@ -50,11 +52,14 @@ public class RoleForm extends BasicForm implements ISegmentForm {
 
 	@Override
 	public void closeForm() {
-		setName(getNameTF().getText());
-		getCanvasItem().setNameText(getName());
-		getControl().getFillForms().fillRole(role, getCanvasItem().getIDs()[1], descriptionTF.getText(), getName(),
-				RoleClass.values()[roleIndex].name(), (int) getCanvasItem().getTranslateX(),
-				(int) getCanvasItem().getTranslateY(), isNew);
+
+		String actName = getNameTF().getText();
+		int[] IDs = getCanvasItem().getIDs();
+		String roleS = RoleClass.values()[roleIndex].name();
+
+		setName(actName);
+		getCanvasItem().setNameText(actName);
+		getControl().getFillForms().fillRole(role, IDs[1], getDescriptionTF().getText(), actName, roleS, isNew);
 
 		isNew = false;
 	}
@@ -67,9 +72,7 @@ public class RoleForm extends BasicForm implements ISegmentForm {
 
 	@Override
 	public void createForm() {
-		descriptionLB = new Label("Description: ");
-		descriptionTF = new TextField();
-
+	
 		roleTypeLB = new Label("Type: ");
 		roleTypeCB = new ComboBox<RoleClass>(FXCollections.observableArrayList(RoleClass.values()));
 		roleTypeCB.getSelectionModel().selectedIndexProperty().addListener(roleListener);
@@ -90,10 +93,6 @@ public class RoleForm extends BasicForm implements ISegmentForm {
 
 	private void fillInfoPart() {
 
-		getInfoPart().add(descriptionLB, 0, 1);
-		getInfoPart().setHalignment(descriptionLB, HPos.RIGHT);
-		getInfoPart().add(descriptionTF, 1, 1);
-
 		getInfoPart().add(roleTypeLB, 0, 2);
 		getInfoPart().setHalignment(roleTypeLB, HPos.RIGHT);
 		getInfoPart().add(roleTypeCB, 1, 2);
@@ -101,14 +100,6 @@ public class RoleForm extends BasicForm implements ISegmentForm {
 	}
 
 	/*** Getrs and Setrs ***/
-
-	public TextField getDescriptionTF() {
-		return descriptionTF;
-	}
-
-	public void setDescriptionTF(TextField descriptionTF) {
-		this.descriptionTF = descriptionTF;
-	}
 
 	public ComboBox<RoleClass> getRoleTypeCB() {
 		return roleTypeCB;
@@ -126,5 +117,4 @@ public class RoleForm extends BasicForm implements ISegmentForm {
 		this.isNew = isNew;
 	}
 
-	
 }

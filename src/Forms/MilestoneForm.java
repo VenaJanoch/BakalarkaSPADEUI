@@ -1,10 +1,11 @@
 package Forms;
 
-import Grafika.CanvasItem;
-import Grafika.InfoBoxSegment;
+import AbstractForm.BasicForm;
+import Graphics.CanvasItem;
+import Graphics.InfoBoxSegment;
 import Interfaces.ISegmentForm;
-import Obsluha.Control;
 import SPADEPAC.Milestone;
+import Services.Control;
 import javafx.event.EventHandler;
 import javafx.geometry.HPos;
 import javafx.scene.control.Label;

@@ -1,10 +1,12 @@
 package Forms;
 
-import Grafika.CanvasItem;
-import Grafika.InfoBoxSegment;
+import AbstractForm.BasicForm;
+import AbstractForm.DescriptionBasicForm;
+import Graphics.CanvasItem;
+import Graphics.InfoBoxSegment;
 import Interfaces.ISegmentForm;
-import Obsluha.Control;
 import SPADEPAC.Activity;
+import Services.Control;
 import javafx.event.EventHandler;
 import javafx.geometry.HPos;
 import javafx.scene.control.DatePicker;
@@ -12,11 +14,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.WindowEvent;
 
-public class ActivityForm extends BasicForm implements ISegmentForm {
+public class ActivityForm extends DescriptionBasicForm implements ISegmentForm {
 
-	private Label descriptionLB;
-
-	private TextField descriptionTF;
 
 	public ActivityForm(CanvasItem item, Control control, int[] itemArray, Activity activity, int indexForm) {
 
@@ -38,9 +37,15 @@ public class ActivityForm extends BasicForm implements ISegmentForm {
 	@Override
 	public void closeForm() {
 
-		getCanvasItem().setNameText(getNameTF().getText());
-		getControl().getFillForms().fillActivity(getCanvasItem().getForm(), getCanvasItem().getIDs()[1], descriptionTF.getText(),
-				getNameTF().getText(), (int) getCanvasItem().getTranslateX(), (int) getCanvasItem().getTranslateY());
+		String actName = getNameTF().getText();
+		BasicForm form = getCanvasItem().getForm();
+		int[] IDs = getCanvasItem().getIDs();
+		int x = (int) getCanvasItem().getTranslateX();
+		int y = (int) getCanvasItem().getTranslateY();
+		String desc = getDescriptionTF().getText();
+		getCanvasItem().setNameText(actName);
+		
+		getControl().getFillForms().fillActivity(form, IDs[1], desc, actName, x, y);
 	}
 
 	@Override
@@ -51,31 +56,12 @@ public class ActivityForm extends BasicForm implements ISegmentForm {
 
 	@Override
 	public void createForm() {
-		descriptionLB = new Label("Description: ");
-		descriptionTF = new TextField();
 
-		fillInfoPart();
+
 	}
 
 	private void fillInfoPart() {
 
-		getInfoPart().add(descriptionLB, 0, 1);
-		getInfoPart().setHalignment(descriptionLB, HPos.RIGHT);
-		getInfoPart().add(descriptionTF, 1, 1);
-
 	}
 
-
-	/*** Getrs and Setrs ****/
-	
-	public TextField getDescriptionTF() {
-		return descriptionTF;
-	}
-
-	public void setDescriptionTF(TextField descriptionTF) {
-		this.descriptionTF = descriptionTF;
-	}
-
-	
-	
 }

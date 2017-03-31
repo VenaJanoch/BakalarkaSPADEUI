@@ -1,7 +1,7 @@
-package Grafika;
+package Graphics;
 
-import Obsluha.Constans;
-import Obsluha.Control;
+import Services.Constans;
+import Services.Control;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;

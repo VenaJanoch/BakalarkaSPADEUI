@@ -2,12 +2,14 @@ package Forms;
 
 import java.time.LocalDate;
 
-import Grafika.CanvasItem;
-import Grafika.InfoBoxSegment;
+import AbstractForm.BasicForm;
+import AbstractForm.Date2DescBasicForm;
+import Graphics.CanvasItem;
+import Graphics.InfoBoxSegment;
 import Interfaces.ISegmentForm;
-import Obsluha.Control;
-import Obsluha.SegmentType;
 import SPADEPAC.Iteration;
+import Services.Control;
+import Services.SegmentType;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
@@ -19,21 +21,12 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.WindowEvent;
 
-public class IterationForm extends BasicForm implements ISegmentForm {
+public class IterationForm extends Date2DescBasicForm implements ISegmentForm {
 
-	private Label workUnitsLB;
-	private Label startDateLB;
-	private Label endDateLB;
-	private Label descriptionLB;
 	private Label configLB;
 
 	private ChoiceBox<String> configCB;
-	private TextField descriptionTF;
-	private DatePicker endDateDP;
-	private DatePicker startDateDP;
 
-	private Button editConfigBT;
-	private Button newConfigBT;
 	private int chooseConfigID;
 
 	public IterationForm(CanvasItem item, Control control, int[] itemArray, Iteration iteration, int indexForm) {
@@ -56,11 +49,19 @@ public class IterationForm extends BasicForm implements ISegmentForm {
 
 	@Override
 	public void closeForm() {
-		setName(getNameTF().getText());
-		getCanvasItem().setNameText(getName());
-		getControl().getFillForms().fillIteration(getCanvasItem().getForm(), getCanvasItem().getIDs()[1],
-				descriptionTF.getText(), getName(), startDateDP.getValue(), endDateDP.getValue(), chooseConfigID,
-				(int) getCanvasItem().getTranslateX(), (int) getCanvasItem().getTranslateY());
+
+		String actName = getNameTF().getText();
+		BasicForm form = getCanvasItem().getForm();
+		int[] IDs = getCanvasItem().getIDs();
+		int x = (int) getCanvasItem().getTranslateX();
+		int y = (int) getCanvasItem().getTranslateY();
+		LocalDate startDate = getDateDP().getValue();
+		LocalDate endDate = getDate2DP().getValue();
+		String desc = getDescriptionTF().getText();
+		setName(actName);
+		getCanvasItem().setNameText(actName);
+		getControl().getFillForms().fillIteration(form, IDs[1], desc, actName, startDate, endDate,
+				chooseConfigID, x, y);
 	}
 
 	@Override
@@ -75,16 +76,7 @@ public class IterationForm extends BasicForm implements ISegmentForm {
 
 	@Override
 	public void createForm() {
-		startDateLB = new Label("Start Date: ");
-		startDateDP = new DatePicker();
-
-		endDateLB = new Label("End Date: ");
-		endDateDP = new DatePicker();
-
-		startDateDP.setValue(LocalDate.now());
-		endDateDP.setValue(LocalDate.now());
-		descriptionLB = new Label("Description: ");
-		descriptionTF = new TextField();
+		
 
 		configLB = new Label("Configuration: ");
 		configCB = new ChoiceBox<>(getControl().getConfigObservable());
@@ -99,49 +91,19 @@ public class IterationForm extends BasicForm implements ISegmentForm {
 
 			}
 		});
-		newConfigBT = new Button("New");
-		newConfigBT.setOnAction(event -> configBTAction());
-
-		editConfigBT = new Button("Edit");
-		editConfigBT.setOnAction(event -> editBTAction());
-
+	
 		fillInfoPart();
 	}
 
-	private void editBTAction() {
-		if (getControl().getConfigObservable().isEmpty()) {
-			configBTAction();
-		}else{
-			getControl().getForms().get(getControl().getConfigFormIndex().get(chooseConfigID)).show();			
-		}
-	}
-
-	private void configBTAction() {
-		CanvasItem item = new CanvasItem(SegmentType.Configuration, "Name", getControl(), this, true);
-
-		getControl().getForms().get(item.getIDs()[0]).show();
-
-	}
 
 	private void fillInfoPart() {
 
-		getInfoPart().add(descriptionLB, 0, 1);
-		getInfoPart().setHalignment(descriptionLB, HPos.RIGHT);
-		getInfoPart().add(descriptionTF, 1, 1);
-
-		getInfoPart().add(startDateLB, 0, 2);
-		getInfoPart().setHalignment(startDateLB, HPos.RIGHT);
-		getInfoPart().add(startDateDP, 1, 2);
-
-		getInfoPart().add(endDateLB, 0, 3);
-		getInfoPart().setHalignment(endDateLB, HPos.RIGHT);
-		getInfoPart().add(endDateDP, 1, 3);
-
+		getDateLB().setText("Start-Date");
+		getDate2LB().setText("End-Date");
+		
 		getInfoPart().add(configLB, 0, 4);
 		getInfoPart().setHalignment(configLB, HPos.RIGHT);
 		getInfoPart().add(configCB, 1, 4);
-		getInfoPart().add(editConfigBT, 2, 4);
-		getInfoPart().add(newConfigBT, 3, 4);
 
 	}
 
@@ -155,28 +117,5 @@ public class IterationForm extends BasicForm implements ISegmentForm {
 		this.configCB = configCB;
 	}
 
-	public TextField getDescriptionTF() {
-		return descriptionTF;
-	}
-
-	public void setDescriptionTF(TextField descriptionTF) {
-		this.descriptionTF = descriptionTF;
-	}
-
-	public DatePicker getEndDateDP() {
-		return endDateDP;
-	}
-
-	public void setEndDateDP(DatePicker endDateDP) {
-		this.endDateDP = endDateDP;
-	}
-
-	public DatePicker getStartDateDP() {
-		return startDateDP;
-	}
-
-	public void setStartDateDP(DatePicker startDateDP) {
-		this.startDateDP = startDateDP;
-	}
 
 }

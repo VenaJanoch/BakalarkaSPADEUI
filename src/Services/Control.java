@@ -1,4 +1,4 @@
-package Obsluha;
+package Services;
 
 import java.awt.Desktop;
 import java.io.File;
@@ -28,9 +28,9 @@ import javax.xml.namespace.QName;
 
 import com.sun.glass.ui.CommonDialogs.FileChooserResult;
 
+import AbstractForm.BasicForm;
 import Forms.ActivityForm;
 import Forms.ArtifactForm;
-import Forms.BasicForm;
 import Forms.BranchForm;
 import Forms.ChangeForm;
 import Forms.ConfigPersonRelationForm;
@@ -42,10 +42,10 @@ import Forms.PhaseForm;
 import Forms.ProjectForm;
 import Forms.RoleForm;
 import Forms.WorkUnitForm;
-import Grafika.CanvasItem;
-import Grafika.DragAndDropCanvas;
-import Grafika.InfoBoxSegment;
-import Grafika.NodeLink;
+import Graphics.CanvasItem;
+import Graphics.DragAndDropCanvas;
+import Graphics.InfoBoxSegment;
+import Graphics.NodeLink;
 import SPADEPAC.Activity;
 import SPADEPAC.Artifact;
 import SPADEPAC.ArtifactClass;

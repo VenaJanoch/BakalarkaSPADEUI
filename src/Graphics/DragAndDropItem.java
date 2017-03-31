@@ -1,8 +1,8 @@
-package Grafika;
+package Graphics;
 
-import Obsluha.Constans;
-import Obsluha.Control;
-import Obsluha.SegmentType;
+import Services.Constans;
+import Services.Control;
+import Services.SegmentType;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;

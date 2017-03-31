@@ -3,12 +3,13 @@ package Forms;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-import Grafika.CanvasItem;
-import Grafika.InfoBoxSegment;
+import AbstractForm.BasicForm;
+import Graphics.CanvasItem;
+import Graphics.InfoBoxSegment;
 import Interfaces.ISegmentForm;
-import Obsluha.Control;
-import Obsluha.SegmentType;
 import SPADEPAC.Configuration;
+import Services.Control;
+import Services.SegmentType;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
@@ -77,11 +78,15 @@ public class ConfigurationForm extends BasicForm implements ISegmentForm {
 
 	@Override
 	public void closeForm() {
-		setName(getNameTF().getText());
-		getCanvasItem().setNameText(getName());
-		getControl().getFillForms().fillConfiguration(configuration, getCanvasItem().getIDs()[1], isRelease,
-				createdDP.getValue(), getName(), authorIndex, (int) getCanvasItem().getTranslateX(),
-				(int) getCanvasItem().getTranslateY(), isNew);
+
+		String actName = getNameTF().getText();
+		int[] IDs = getCanvasItem().getIDs();
+		LocalDate createDate = createdDP.getValue();
+
+		setName(actName);
+		getCanvasItem().setNameText(actName);
+		getControl().getFillForms().fillConfiguration(configuration, IDs[1], isRelease, createDate, actName,
+				authorIndex, isNew);
 
 		isNew = false;
 	}
@@ -126,7 +131,7 @@ public class ConfigurationForm extends BasicForm implements ISegmentForm {
 	private void editRoleBTAction() {
 		if (getControl().getRoleObservable().isEmpty()) {
 			roleBTAction();
-		}else{			
+		} else {
 			getControl().getForms().get(getControl().getRoleFormIndex().get(authorIndex)).show();
 		}
 	}
@@ -237,7 +242,5 @@ public class ConfigurationForm extends BasicForm implements ISegmentForm {
 	public void setNew(boolean isNew) {
 		this.isNew = isNew;
 	}
-	
-	
 
 }

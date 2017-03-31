@@ -1,6 +1,6 @@
-package Grafika;
+package Graphics;
 
-import Obsluha.SegmentType;
+import Services.SegmentType;
 import javafx.event.EventHandler;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.DragEvent;

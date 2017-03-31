@@ -1,13 +1,13 @@
-package Obsluha;
+package Services;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import com.sun.corba.se.impl.ior.GenericTaggedComponent;
 
+import AbstractForm.BasicForm;
 import Forms.ActivityForm;
 import Forms.ArtifactForm;
-import Forms.BasicForm;
 import Forms.BranchForm;
 import Forms.ChangeForm;
 import Forms.ConfigurationForm;
@@ -17,7 +17,7 @@ import Forms.ProjectForm;
 import Forms.RoleForm;
 import Forms.TagForm;
 import Forms.WorkUnitForm;
-import Grafika.CanvasItem;
+import Graphics.CanvasItem;
 import SPADEPAC.Activity;
 import SPADEPAC.Artifact;
 import SPADEPAC.ArtifactClass;
@@ -59,8 +59,8 @@ public class FillFormsXML {
 		form.setName(project.getName());
 		form.getNameTF().setText(project.getName());
 		form.getDescriptionTF().setText(project.getDescription());
-		form.getStartDateDP().setValue(control.convertDateFromXML(project.getStartDate()));
-		form.getEndDateDP().setValue(control.convertDateFromXML(project.getEndDate()));
+		form.getDateDP().setValue(control.convertDateFromXML(project.getStartDate()));
+		form.getDate2DP().setValue(control.convertDateFromXML(project.getEndDate()));
 
 		fillBranchObservabel(project.getBranches());
 
@@ -95,8 +95,7 @@ public class FillFormsXML {
 		phaseForm.getDescriptionTF().setText(phase.getDescription());
 		phaseForm.getNameTF().setText(phase.getName());
 		phaseForm.setName(phase.getName());
-		phaseForm.getEndDate().setValue(control.convertDateFromXML(phase.getEndDate()));
-		;
+		phaseForm.getDateDP().setValue(control.convertDateFromXML(phase.getEndDate()));
 
 		index++;
 		forms.add(IDs[0], phaseForm);
@@ -106,7 +105,6 @@ public class FillFormsXML {
 			phaseForm.getConfigCB().setValue(phase.getConfiguration().getName());
 		}
 
-		// form.getPhaseArray().add(IDs[1], phase);
 		return IDs;
 
 	}
@@ -137,8 +135,8 @@ public class FillFormsXML {
 
 		iterationForm.getNameTF().setText(iteration.getName());
 		iterationForm.getDescriptionTF().setText(iteration.getDescription());
-		iterationForm.getEndDateDP().setValue(control.convertDateFromXML(iteration.getEndDate()));
-		iterationForm.getStartDateDP().setValue(control.convertDateFromXML(iteration.getStartDate()));
+		iterationForm.getDateDP().setValue(control.convertDateFromXML(iteration.getEndDate()));
+		iterationForm.getDate2DP().setValue(control.convertDateFromXML(iteration.getStartDate()));
 
 		index++;
 		fillConfigurationFromXML(iterationForm, iteration.getConfiguration());
@@ -433,7 +431,7 @@ public class FillFormsXML {
 		artifactForm.getDescriptionTF().setText(artifact.getDescriptoin());
 		// artifactForm.getCreatedDP().se;
 		artifactForm.getMineTypeCB().setValue(ArtifactClass.values()[artifact.getArtifactIndex()]);
-		artifactForm.getCreatedDP().setValue(control.convertDateFromXML(artifact.getCreated()));
+		artifactForm.getDateDP().setValue(control.convertDateFromXML(artifact.getCreated()));
 		artifactForm.getAuthorRoleCB().setValue(artifact.getAuthor().getName());
 		artifactForm.setNew(false);
 
