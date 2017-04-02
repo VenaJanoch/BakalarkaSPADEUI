@@ -58,10 +58,10 @@ public class WorkUnitForm extends DescriptionBasicForm implements ISegmentForm {
 	public WorkUnitForm(CanvasItem item, Control control, WorkUnit unit) {
 		super(item, control);
 		this.unit = unit;
-		
+
 		setRoleArray(new ArrayList<>());
-		getRoleArray().add(unit.getAssignee());
-		getRoleArray().add(unit.getAuthor());
+		getRoleArray().add(unit.getAssigneeIndex());
+		getRoleArray().add(unit.getAuthorIndex());
 		this.setOnCloseRequest(new EventHandler<WindowEvent>() {
 
 			@Override
@@ -91,7 +91,7 @@ public class WorkUnitForm extends DescriptionBasicForm implements ISegmentForm {
 		getCanvasItem().setNameText(actName);
 		setName(actName);
 		getControl().getFillForms().fillWorkUnit(form, IDs[2], getDescriptionTF().getText(), actName, assigneIndex,
-				authorIndex, priority, severity, type, category, x, y, priorityIndex, severityIndex, typeIndex);
+				authorIndex, category, x, y, priorityIndex, severityIndex, typeIndex);
 
 	}
 
@@ -227,7 +227,6 @@ public class WorkUnitForm extends DescriptionBasicForm implements ISegmentForm {
 	}
 
 	/**** Gets and Setrs ***/
-
 
 	public TextField getEstimatedTimeTF() {
 		return estimatedTimeTF;
