@@ -64,6 +64,7 @@ public class InfoBoxSegment extends Group {
 	public void setNameText(String nameStr) {
 
 		Text testname = new Text(nameStr);
+		
 		double width = testname.getLayoutBounds().getWidth();
 
 		name.setText(nameStr);

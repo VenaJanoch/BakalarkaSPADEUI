@@ -13,6 +13,7 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.geometry.Insets;
 import javafx.geometry.Point2D;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -23,6 +24,10 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 
@@ -68,7 +73,6 @@ public class CanvasItem extends AnchorPane {
 			IDs = control.createFormFromXML(this, rootForm);
 		}
 
-		
 		idForm = IDs[0];
 		ID = type.name() + "_" + String.format("%03d", IDs[1]);
 
@@ -79,10 +83,9 @@ public class CanvasItem extends AnchorPane {
 		this.segmentInfo = new InfoBoxSegment(this, type, name);
 		this.length = segmentInfo.getLength();
 		this.getChildren().add(segmentInfo);
-		System.out.println("Phase3");
+
 		mDragLink = new NodeLink(-1);
 		mDragLink.setVisible(false);
-		System.out.println("Phase4");
 
 		parentProperty().addListener(new ChangeListener() {
 
@@ -152,10 +155,12 @@ public class CanvasItem extends AnchorPane {
 	private void repaintStartArrow() {
 
 		for (int i = 0; i < mStartLinkIds.size(); i++) {
+			int arrowIndex = mStartLinkIds.get(i);
+			double width = getTranslateX() + segmentInfo.getLength();
+			double height = getTranslateY() + (getHeight() / 2);
+			
+			control.getArrows().get(arrowIndex).setStart(new Point2D(width, height));
 
-			control.getArrows().get(mStartLinkIds.get(i))
-					.setStart(new Point2D(getTranslateX() + (getWidth()), getTranslateY() + (getHeight() / 2)));
-			control.getArrows().get(mStartLinkIds.get(i)).setTFCoordinate();
 		}
 	}
 
@@ -165,7 +170,7 @@ public class CanvasItem extends AnchorPane {
 
 			control.getArrows().get(mEndLinkIds.get(i))
 					.setEnd(new Point2D(getTranslateX(), getTranslateY() + (getHeight() / 2)));
-			control.getArrows().get(mEndLinkIds.get(i)).setTFCoordinate();
+
 		}
 
 	}

@@ -214,7 +214,6 @@ public class MilestoneForm extends Stage implements ISegmentForm {
 			return;
 		}
 
-		
 		MilestoneTable milestone = new MilestoneTable(nameST, criterionArray.toString());
 		tableTV.getItems().add(milestone);
 		tableTV.sort();

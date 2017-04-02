@@ -183,6 +183,8 @@ public class Control {
 		setArtifactFormIndex(new ArrayList<>());
 		setArtifactObservable(FXCollections.observableArrayList());
 
+		artifactObservable.add("Artifact");
+		artifactList.add(objF.createArtifact());
 		criterionList = project.getCriterions();
 		criterionFormIndex = new ArrayList<>();
 		criterionObservable = FXCollections.observableArrayList();
@@ -221,6 +223,14 @@ public class Control {
 		artifactList.clear();
 		artifactObservable.clear();
 
+		criterionList.clear();
+		criterionFormIndex.clear();
+		criterionObservable.clear();
+
+		milestoneList.clear();
+		milestoneFormIndex.clear();
+		milestoneObservable.clear();
+		
 		configureFileChooser();
 
 		setArrow(false);
@@ -293,6 +303,7 @@ public class Control {
 		int artifactIndex = link.getArtifact()[1];
 
 		changeList.get(changeIndex).setArtifactIndex(artifactIndex);
+		
 	}
 
 	private void sortSegment(CanvasItem item) {
@@ -338,25 +349,6 @@ public class Control {
 
 		case WorkUnit:
 			return fillForms.createWorkUnit(item, form, IDs);
-
-		case Milestone:
-			// Milestone milestone = (Milestone) objF.createMilestone();
-			// forms.add(index, new MilestoneForm(item, this, milestone));
-			// IDs[0] = index;
-			// IDs[1] = idCreater.createMilestoneID();
-			// IDs[2] = form.getIdCreater().createMilestoneID();
-			// index++;
-			// return IDs;
-		case Criterion:
-
-			// forms.add(index, new CriterionForm(item, this));
-			// IDs[0] = index;
-			// IDs[1] = idCreater.createCriterionID();
-			// IDs[2] = form.getIdCreater().createCriterionID();
-			// form.getCriterionnArray().add(IDs[2], (Criterion)
-			// objF.createCriterion());
-			// index++;
-			// return IDs;
 
 		case Configuration:
 			return fillForms.createConfigruration(item, form, IDs);

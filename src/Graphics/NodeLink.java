@@ -3,6 +3,8 @@ package Graphics;
 import java.io.IOException;
 import java.util.UUID;
 
+import SPADEPAC.Artifact;
+import SPADEPAC.Change;
 import javafx.beans.binding.Binding;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.DoubleBinding;
@@ -28,19 +30,23 @@ public class NodeLink extends Group {
 
 	private Line nodeLink;
 	private TextField labelLineTF;
+	
+	private int[] changeIDs;
+	private int[] artifactIDs;
 
 	public NodeLink(int ID) {
 		super();
-		// provide a universally unique identifier for this object
+		
 		this.setVisible(false);
-
 		nodeLink = new Line();
-		labelLineTF = new TextField("-");
-		labelLineTF
-				.setBackground(new Background(new BackgroundFill(Color.TRANSPARENT, CornerRadii.EMPTY, Insets.EMPTY)));
-		labelLineTF.setFont(Font.font ("Verdana",15));
-		labelLineTF.setMaxWidth(300);
-		this.getChildren().addAll(nodeLink, labelLineTF);
+		
+//		labelLineTF = new TextField("-");
+//		labelLineTF
+//				.setBackground(new Background(new BackgroundFill(Color.TRANSPARENT, CornerRadii.EMPTY, Insets.EMPTY)));
+//		labelLineTF.setFont(Font.font ("Verdana",15));
+//		labelLineTF.setMaxWidth(300);
+		
+		this.getChildren().addAll(nodeLink);
 
 		setId(Integer.toString(ID));
 
@@ -59,13 +65,24 @@ public class NodeLink extends Group {
 		this.setVisible(true);
 	}
 
-	public void setTFCoordinate() {
-		double x = (nodeLink.getStartX() + nodeLink.getEndX()) / 2;
-		double y = (nodeLink.getStartY() + nodeLink.getEndY()) / 2;
+	
+	
+	/*** Getrs and Setrs ***/
 
-		labelLineTF.setTranslateX(x);
-		labelLineTF.setTranslateY(y);
+	public int[] getChange() {
+		return changeIDs;
+	}
 
+	public void setChange(int[] changeIDs) {
+		this.changeIDs = changeIDs;
+	}
+
+	public int[] getArtifact() {
+		return artifactIDs;
+	}
+
+	public void setArtifact(int[] artifactIDs) {
+		this.artifactIDs = artifactIDs;
 	}
 
 }

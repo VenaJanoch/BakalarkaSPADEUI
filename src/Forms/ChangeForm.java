@@ -71,51 +71,18 @@ public class ChangeForm extends DescriptionBasicForm implements ISegmentForm {
 
 	@Override
 	public void setActionSubmitButton() {
-		if (getControl().getArtifactList().isEmpty()) {
-			getAlerts().showNoArtifactAlert();
-		} else {
 			closeForm();
 			close();
-		}
+		
 	}
 
 	@Override
 	public void createForm() {
 
-		artifactLB = new Label("Artifact: ");
-		artifactCB = new ComboBox<String>(getControl().getArtifactObservable());
-		artifactCB.setVisibleRowCount(5);
-		artifactCB.getSelectionModel().selectedIndexProperty().addListener(artifactListener);
-
-		fillInfoPart();
-	}
-
-	ChangeListener<Number> artifactListener = new ChangeListener<Number>() {
-
-		@Override
-		public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-
-			artifactIndex = newValue.intValue();
-		}
-	};
-
-	private void fillInfoPart() {
-
-		getInfoPart().add(artifactLB, 0, 2);
-		getInfoPart().setHalignment(artifactLB, HPos.RIGHT);
-		getInfoPart().add(artifactCB, 1, 2);
-
 	}
 
 	/** Getrs and Setrs ***/
 
-	public ComboBox<String> getArtifactCB() {
-		return artifactCB;
-	}
-
-	public void setArtifactCB(ComboBox<String> artifactCB) {
-		this.artifactCB = artifactCB;
-	}
 
 	public ComboBox<String> getChangeCB() {
 		return changeCB;
