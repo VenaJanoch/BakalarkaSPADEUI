@@ -30,6 +30,7 @@ import SPADEPAC.Project;
 import SPADEPAC.Role;
 import SPADEPAC.Tag;
 import SPADEPAC.WorkUnit;
+import javafx.collections.ObservableList;
 
 public class FillForms {
 
@@ -63,7 +64,7 @@ public class FillForms {
 	}
 
 	public void fillPhase(BasicForm form, int ID, String description, String name, LocalDate endDate, int confIndex,
-			int x, int y) {
+			int milestoneIndex, int x, int y) {
 
 		Phase phase = form.getPhaseArray().get(ID);
 		phase.setDescription(description);
@@ -74,6 +75,7 @@ public class FillForms {
 		coord.setYCoordinate(y);
 		phase.setCoordinates(coord);
 		phase.setConfiguration(control.getConfigList().get(confIndex));
+		phase.setMilestoneIndex(milestoneIndex);
 
 	}
 
@@ -136,22 +138,16 @@ public class FillForms {
 	}
 
 	public void fillWorkUnit(BasicForm form, int ID, String description, String name, int authorIndex, int assigneIndex,
-			String priority, String severity, String type, String category, int x, int y, int priorityIndex, int severityIndex,
-			int typeIndex) {
+			String category, int x, int y, int priorityIndex, int severityIndex, int typeIndex) {
 
 		WorkUnit workUnit = form.getWorkUnitArray().get(ID);
 		workUnit.setDescription(description);
 		workUnit.setName(name);
-		workUnit.setAssignee(control.getRoleList().get(assigneIndex));
-		workUnit.setAuthor(control.getRoleList().get(authorIndex));
-		workUnit.setPriority(priority);
-		workUnit.setSeverity(severity);
-		workUnit.setType(type);
+		workUnit.setAssigneeIndex(assigneIndex);
+		workUnit.setAuthorIndex(authorIndex);
 		workUnit.setPriorityIndex(priorityIndex);
 		workUnit.setSeverityIndex(severityIndex);
 		workUnit.setTypeIndex(typeIndex);
-		workUnit.setAssigneIndex(assigneIndex);
-		workUnit.setAuthorIndex(authorIndex);
 		workUnit.setCategory(category);
 
 		Coordinates coord = objF.createCoordinates();
@@ -173,19 +169,29 @@ public class FillForms {
 		return IDs;
 	}
 
-	public void fillMilestone(BasicForm form, int ID, String description, String name) {
-
-		Milestone milestone = form.getMilestoneArray().get(ID);
-		milestone.setDescription(description);
-		milestone.setName(name);
+	public void fillMilestone(String name, ObservableList<Integer> indexs) {
+		
+		 Milestone milestone = (Milestone)objF.createMilestone();
+		 milestone.setName(name);
+		 
+		 for (int i = 0; i < indexs.size(); i++) {
+			milestone.getCriteriaIndexs().add(indexs.get(i));
+		}
+		 
+		control.getMilestoneList().add(milestone);
+		control.getMilestoneObservable().add(milestone.getName());
+		 
 
 	}
 
-	public void fillCriterion(BasicForm form, int ID, String description, String name) {
+	public void fillCriterion( String description, String name) {
 
-		Criterion criterion = form.getCriterionnArray().get(ID);
-		criterion.setDescription(description);
-		criterion.setName(name);
+		 Criterion criterion = objF.createCriterion(); 
+		 criterion.setDescription(description);
+		 criterion.setName(name);
+		 
+		 control.getCriterionList().add(criterion);
+		 control.getCriterionObservable().add(criterion.getName());
 
 	}
 
@@ -196,7 +202,6 @@ public class FillForms {
 		config.setIsRelease(isRelase);
 		config.setCreate(control.convertDate(Ldate));
 		config.setName(name);
-		config.setAuthor(control.getRoleList().get(roleIndex));
 		config.setAuthorIndex(roleIndex);
 
 		if (isNew) {
@@ -223,9 +228,6 @@ public class FillForms {
 		branch.setIsMain(isMain);
 		branch.setName(name);
 		Coordinates coord = objF.createCoordinates();
-		coord.setXCoordinate(x);
-		coord.setYCoordinate(y);
-		branch.setCoordinates(coord);
 
 		if (isNew) {
 			control.getBranchList().add(IDs[1], branch);
@@ -242,18 +244,16 @@ public class FillForms {
 		IDs[1] = idCreater.createBranchID();
 		IDs[2] = form.getIdCreater().createBranchID();
 
-		form.getBranchArray().add(IDs[2], branch);
+		form.getBranchArray().add(IDs[2], IDs[1]);
 		index++;
 		return IDs;
 
 	}
 
-	public void fillChange(Change change, int[] IDs, String description, String name, boolean isNew, int artifactIndex,
-			int x, int y) {
+	public void fillChange(Change change, int[] IDs, String description, String name, boolean isNew, int x, int y) {
 
 		change.setName(name);
 		change.setDescriptoin(description);
-		change.setArtifact(control.getArtifactList().get(artifactIndex));
 
 		Coordinates coord = objF.createCoordinates();
 		coord.setXCoordinate(x);
@@ -276,7 +276,7 @@ public class FillForms {
 		IDs[0] = index;
 		IDs[1] = idCreater.createChangeID();
 		IDs[2] = form.getIdCreater().createChangeID();
-		form.getChangeArray().add(IDs[2], change);
+		form.getChangeArray().add(IDs[2], IDs[1]);
 		index++;
 		return IDs;
 
@@ -290,7 +290,6 @@ public class FillForms {
 		artifact.setDescriptoin(description);
 		artifact.setCreated(control.convertDate(Ldate));
 		artifact.setMimeType(type);
-		artifact.setAuthor(control.getRoleList().get(roleIndex));
 		artifact.setAuthorIndex(roleIndex);
 		artifact.setArtifactIndex(typeIndex);
 		Coordinates coord = objF.createCoordinates();
@@ -312,7 +311,7 @@ public class FillForms {
 		IDs[0] = index;
 		IDs[1] = idCreater.createArtifactID();
 		IDs[2] = form.getIdCreater().createArtifactID();
-		form.getArtifactArray().add(IDs[2], artifact);
+		form.getArtifactArray().add(IDs[2], IDs[1]);
 
 		index++;
 		return IDs;
@@ -341,27 +340,6 @@ public class FillForms {
 		return IDs;
 	}
 
-	public int[] createTag(CanvasItem item, BasicForm form, int[] IDs) {
-		Tag tag = objF.createTag();
-		forms.add(index, new TagForm(item, control, tag));
-		IDs[0] = index;
-		IDs[1] = idCreater.createTagID();
-		IDs[2] = form.getIdCreater().createTagID();
-		form.getTagArray().add(IDs[2], tag);
-		index++;
-		return IDs;
-	}
-
-	public void fillTag(Tag tag, int i, String text, int x, int y) {
-
-		tag.setTag(text);
-		Coordinates coord = objF.createCoordinates();
-		coord.setXCoordinate(x);
-		coord.setYCoordinate(y);
-
-		tag.setCoordinates(coord);
-	}
-
 	public int getIndex() {
 		return index;
 	}
@@ -376,6 +354,16 @@ public class FillForms {
 
 	public void setIdCreater(IdentificatorCreater idCreater) {
 		this.idCreater = idCreater;
+	}
+
+	public void fillTag(Configuration conf, ObservableList<TagTable> tags) {
+
+		for (int i = 0; i < tags.size(); i++) {
+			String tag = tags.get(i).getTag();
+			conf.getTags().add(tag);
+
+		}
+
 	}
 
 }

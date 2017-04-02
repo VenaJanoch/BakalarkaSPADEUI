@@ -60,13 +60,15 @@ public class CanvasItem extends AnchorPane {
 		this.setForm(rootForm);
 		this.setType(type);
 		this.setFillForms(control.getFillForms());
-		this.setFillFormsXML(fillFormsXML);
+		this.setFillFormsXML(control.getFillFormsXML());
+		
 		if (isCreated) {
 			IDs = control.createForm(this, rootForm);
 		} else {
 			IDs = control.createFormFromXML(this, rootForm);
 		}
 
+		
 		idForm = IDs[0];
 		ID = type.name() + "_" + String.format("%03d", IDs[1]);
 
@@ -77,9 +79,10 @@ public class CanvasItem extends AnchorPane {
 		this.segmentInfo = new InfoBoxSegment(this, type, name);
 		this.length = segmentInfo.getLength();
 		this.getChildren().add(segmentInfo);
-
+		System.out.println("Phase3");
 		mDragLink = new NodeLink(-1);
 		mDragLink.setVisible(false);
+		System.out.println("Phase4");
 
 		parentProperty().addListener(new ChangeListener() {
 

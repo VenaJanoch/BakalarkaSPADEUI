@@ -14,6 +14,7 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
 import javafx.geometry.HPos;
+import javafx.scene.Cursor;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
@@ -22,6 +23,7 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.shape.Line;
 import javafx.stage.WindowEvent;
 
 public class ConfigurationForm extends BasicForm implements ISegmentForm {
@@ -29,7 +31,8 @@ public class ConfigurationForm extends BasicForm implements ISegmentForm {
 	private boolean isRelease;
 
 	private Label isMainLB;
-
+	private Button arrowBT;
+	private Button addTag;
 	private boolean isNew;
 
 	final ToggleGroup group = new ToggleGroup();
@@ -48,20 +51,21 @@ public class ConfigurationForm extends BasicForm implements ISegmentForm {
 	private Button editRoleBT;
 
 	private Configuration configuration;
+	private TagForm tagForm;
 
 	public ConfigurationForm(CanvasItem item, Control control, int[] itemArray, Configuration conf, int indexForm) {
 		super(item, control, itemArray, indexForm);
 		this.configuration = conf;
-
+		this.tagForm = new TagForm(conf, control);
 		isNew = true;
 		setConfig(conf);
-		setBranchArray(conf.getBranches());
-		setChangeArray(conf.getChanges());
-		setArtifactArray(conf.getArtifacts());
+		setBranchArray(conf.getBranchesIndexs());
+		setChangeArray(conf.getChangesIndexs());
+		setArtifactArray(conf.getArtifactsIndexs());
 		setTagArray(conf.getTags());
 
 		setRoleArray(new ArrayList<>());
-		getRoleArray().add(conf.getAuthor());
+		getRoleArray().add(conf.getAuthorIndex());
 
 		this.setOnCloseRequest(new EventHandler<WindowEvent>() {
 
@@ -104,6 +108,11 @@ public class ConfigurationForm extends BasicForm implements ISegmentForm {
 	@Override
 	public void createForm() {
 
+		arrowBT = new Button("", new Line(0, 0, 10, 10));
+		getDragBox().setLeft(arrowBT);
+		arrowBT.setOnAction(event -> createArrowButtonEvent());
+
+		
 		createdLB = new Label("Created: ");
 		createdDP = new DatePicker();
 		createdDP.setValue(LocalDate.now());
@@ -125,9 +134,23 @@ public class ConfigurationForm extends BasicForm implements ISegmentForm {
 		editRoleBT = new Button("Edit");
 		editRoleBT.setOnAction(event -> editRoleBTAction());
 
+		addTag = new Button("Add Tag");
+		addTag.setOnAction(event -> tagForm.show());
 		fillInfoPart();
 	}
 
+	public void createArrowButtonEvent() {
+
+		if (getControl().changeArrow()) {
+			getCanvas().getParent().setCursor(Cursor.CROSSHAIR);
+			arrowBT.setCursor(Cursor.DEFAULT);
+		} else {
+			getCanvas().getParent().setCursor(Cursor.DEFAULT);
+		}
+
+	}
+	
+	
 	private void editRoleBTAction() {
 		if (getControl().getRoleObservable().isEmpty()) {
 			roleBTAction();
@@ -158,7 +181,7 @@ public class ConfigurationForm extends BasicForm implements ISegmentForm {
 		getInfoPart().add(authorRoleCB, 1, 3);
 		getInfoPart().add(newRoleBT, 3, 3);
 		getInfoPart().add(editRoleBT, 2, 3);
-
+		getInfoPart().add(addTag, 0, 4);
 		group.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
 
 			@Override

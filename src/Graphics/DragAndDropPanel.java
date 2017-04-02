@@ -18,8 +18,8 @@ import javafx.scene.shape.Line;
 public class DragAndDropPanel extends BorderPane {
 
 	private DragAndDropItem items;
-	private Button arrowB;
 	private Button formBT;
+	private Button addMilestoneBT;
 	private HBox buttonBox;
 	private Control control;
 	
@@ -34,27 +34,18 @@ public class DragAndDropPanel extends BorderPane {
 		items = new DragAndDropItem(control, Constans.projectDragTextIndexs);
 
 		formBT = new Button("Project");
-		arrowB = new Button("", new Line(0, 0, 10, 10));
-		buttonBox.getChildren().addAll(formBT, arrowB);
+		addMilestoneBT = new Button("Add Milestone");
+		
+		buttonBox.getChildren().addAll(formBT,addMilestoneBT);
 		this.setCenter(items);
 
 		this.setLeft(buttonBox);
 
-		arrowB.setOnAction(event -> createArrowButtonEvent());
 		formBT.setOnAction(event -> control.showProjectForm());
-
+		addMilestoneBT.setOnAction(event -> control.showMilestones());
 	}
 
-	public void createArrowButtonEvent() {
-
-		if (control.changeArrow()) {
-			getParent().getParent().setCursor(Cursor.CROSSHAIR);
-			arrowB.setCursor(Cursor.DEFAULT);
-		} else {
-			getParent().getParent().setCursor(Cursor.DEFAULT);
-		}
-
-	}
+	
 
 	public DragAndDropItem getItems() {
 		return items;

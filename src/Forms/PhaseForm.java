@@ -32,20 +32,22 @@ import javafx.stage.WindowEvent;
 public class PhaseForm extends DateDescBasicForm implements ISegmentForm {
 
 	private Label configLB;
+	private Label milestoneLB;
 
 	private ChoiceBox<String> configCB;
+	private ChoiceBox<String> milestoneCB;
 	private Button newConfigBT;
 	private Button editConfigBT;
-	private int chooseConfigID;
+	private int milestoneIndex;
 	private int configIndex;
 	private Phase phase;
 
 	public PhaseForm(CanvasItem item, Control control, int[] itemArray, Phase phase, int indexForm) {
 		super(item, control, itemArray, indexForm);
 		this.phase = phase;
+		
 		setWorkUnitArray(phase.getWorkUnits());
 		setConfig(phase.getConfiguration());
-
 		this.setOnCloseRequest(new EventHandler<WindowEvent>() {
 
 			@Override
@@ -55,6 +57,7 @@ public class PhaseForm extends DateDescBasicForm implements ISegmentForm {
 		});
 		getSubmitButton().setOnAction(event -> setActionSubmitButton());
 		createForm();
+		
 	}
 
 	@Override
@@ -70,7 +73,7 @@ public class PhaseForm extends DateDescBasicForm implements ISegmentForm {
 
 		setName(actName);
 		getCanvasItem().setNameText(actName);
-		getCanvasItem().getFillForms().fillPhase(form, IDs[1], desc, actName, endDateL, chooseConfigID, x, y);
+		getCanvasItem().getFillForms().fillPhase(form, IDs[1], desc, actName, endDateL, configIndex, milestoneIndex, x, y);
 	}
 
 	@Override
@@ -91,28 +94,46 @@ public class PhaseForm extends DateDescBasicForm implements ISegmentForm {
 		configLB = new Label("Configuration: ");
 		configCB = new ChoiceBox<>(getControl().getConfigObservable());
 
-		configCB.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
-
-			@Override
-			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-
-				System.out.println(newValue.intValue());
-				chooseConfigID = newValue.intValue();
-
-			}
-		});
-
+		configCB.getSelectionModel().selectedIndexProperty().addListener(configListener);
+		milestoneLB = new Label("Milestone: ");
+		milestoneCB = new ChoiceBox<>(getControl().getMilestoneObservable());
+		milestoneCB.getSelectionModel().selectedIndexProperty().addListener(milestoneListener);
 		fillInfoPart();
 	}
+	
+	ChangeListener<Number> milestoneListener = new ChangeListener<Number>() {
+
+		@Override
+		public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+
+			
+			milestoneIndex = newValue.intValue();
+
+		}
+	};
+	
+	ChangeListener<Number> configListener = new ChangeListener<Number>() {
+
+		@Override
+		public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+
+			
+			configIndex = newValue.intValue();
+
+		}
+	};
 
 	private void fillInfoPart() {
 
 		getInfoPart().add(configLB, 0, 3);
 		getInfoPart().setHalignment(configLB, HPos.RIGHT);
 		getInfoPart().add(configCB, 1, 3);
-		getInfoPart().add(editConfigBT, 2, 3);
-		getInfoPart().add(newConfigBT, 3, 3);
+		
 
+		getInfoPart().add(milestoneLB, 0, 4);
+		getInfoPart().setHalignment(milestoneLB, HPos.RIGHT);
+		getInfoPart().add(milestoneCB, 1, 4);
+		
 	}
 
 	public ChoiceBox<String> getConfigCB() {

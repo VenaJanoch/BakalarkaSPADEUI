@@ -39,7 +39,7 @@ public class ChangeForm extends DescriptionBasicForm implements ISegmentForm {
 		this.newChange = true;
 		this.change = change;
 		setArtifactArray(new ArrayList());
-		getArtifactArray().add(change.getArtifact());
+		getArtifactArray().add(change.getArtifactIndex());
 
 		this.setOnCloseRequest(new EventHandler<WindowEvent>() {
 
@@ -64,8 +64,7 @@ public class ChangeForm extends DescriptionBasicForm implements ISegmentForm {
 
 		setName(actName);
 		getCanvasItem().setNameText(actName);
-		getControl().getFillForms().fillChange(change, IDs, getDescriptionTF().getText(), actName, newChange,
-				artifactIndex, x, y);
+		getControl().getFillForms().fillChange(change, IDs, getDescriptionTF().getText(), actName, newChange, x, y);
 
 		newChange = false;
 	}

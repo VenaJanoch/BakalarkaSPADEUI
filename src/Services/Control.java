@@ -67,6 +67,8 @@ import SPADEPAC.WorkUnitTypeClass;
 import XML.ProcessGenerator;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Point2D;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -106,6 +108,14 @@ public class Control {
 	private List<Change> changeList;
 	private ArrayList<Integer> changeFormIndex;
 
+	private ObservableList<String> criterionObservable;
+	private List<Criterion> criterionList;
+	private ArrayList<Integer> criterionFormIndex;
+
+	private ObservableList<String> milestoneObservable;
+	private List<Milestone> milestoneList;
+	private ArrayList<Integer> milestoneFormIndex;
+
 	private ObservableList<String> artifactObservable;
 	private List<Artifact> artifactList;
 	private ArrayList<Integer> artifactFormIndex;
@@ -113,36 +123,41 @@ public class Control {
 	private FillFormsXML fillFormsXML;
 	private FillForms fillForms;
 
+	private MilestoneForm milestoneForm;
 	public Control() {
 
 		procesGener = new ProcessGenerator();
 		objF = new ObjectFactory();
 		project = (Project) objF.createProject();
-
 		configureFileChooser();
 		setArrow(false);
 		setStartArrow(false);
 		setForms(new ArrayList<>());
 		getForms().add(0, new ProjectForm(this, project, canvas));
-		
+
 		fillForms = new FillForms(this, project, forms, objF);
 		createLists();
+		milestoneForm = new MilestoneForm(this);
 
 		arrows = new ArrayList<>();
 
 	}
-	
-	public void showProjectForm(){
-		
+
+	public void showProjectForm() {
+
 		forms.get(0).show();
 	}
 	
+	public void showMilestones() {
+		milestoneForm.show();
+	}
 
-	private void updateIndexAndID(){
-		
+
+	private void updateIndexAndID() {
+
 		fillForms.setIndex(fillFormsXML.getIndex());
 		fillForms.setIdCreater(fillFormsXML.getIdCreater());
-		
+
 	}
 
 	public void createLists() {
@@ -167,6 +182,14 @@ public class Control {
 		setArtifactList(project.getArtifacts());
 		setArtifactFormIndex(new ArrayList<>());
 		setArtifactObservable(FXCollections.observableArrayList());
+
+		criterionList = project.getCriterions();
+		criterionFormIndex = new ArrayList<>();
+		criterionObservable = FXCollections.observableArrayList();
+
+		milestoneList = project.getMilestones();
+		milestoneFormIndex = new ArrayList<>();
+		milestoneObservable = FXCollections.observableArrayList();
 
 	}
 
@@ -238,6 +261,8 @@ public class Control {
 			// id = idCreater.createLineID();
 			link = new NodeLink(id);
 
+			sortSegment(item);
+
 			item.getCanvas().getChildren().add(link);
 
 			getArrows().add(id, link);
@@ -251,10 +276,31 @@ public class Control {
 
 		} else {
 
+			sortSegment(item);
 			link.setEnd(new Point2D(item.getTranslateX(), item.getTranslateY() + (item.getHeight() / 2)));
 			item.registerEndLink(id);
 			setStartArrow(false);
+			setChangeArtifactRelation(link);
 
+		}
+
+	}
+
+	public void setChangeArtifactRelation(NodeLink link) {
+
+		int changeIndex = link.getChange()[1];
+		int changeFormIndex = link.getChange()[0];
+		int artifactIndex = link.getArtifact()[1];
+
+		changeList.get(changeIndex).setArtifactIndex(artifactIndex);
+	}
+
+	private void sortSegment(CanvasItem item) {
+
+		if (item.getType() == SegmentType.Change) {
+			link.setChange(item.getIDs());
+		} else {
+			link.setArtifact(item.getIDs());
 		}
 
 	}
@@ -292,7 +338,7 @@ public class Control {
 
 		case WorkUnit:
 			return fillForms.createWorkUnit(item, form, IDs);
-			
+
 		case Milestone:
 			// Milestone milestone = (Milestone) objF.createMilestone();
 			// forms.add(index, new MilestoneForm(item, this, milestone));
@@ -330,9 +376,6 @@ public class Control {
 			return fillForms.createArtifact(item, form, IDs);
 		case Role:
 			return fillForms.createRole(item, form, IDs);
-		case Tag:
-			return fillForms.createTag(item, form, IDs);
-
 		default:
 			return IDs;
 		}
@@ -406,24 +449,24 @@ public class Control {
 			return IDs;
 		}
 	}
-	
-	public boolean checkConfiguration(String newConfName){
-		
+
+	public boolean checkConfiguration(String newConfName) {
+
 		for (int i = 0; i < configObservable.size(); i++) {
-			
+
 			if (configObservable.get(i).equals(newConfName)) {
 				return false;
 			}
-			
+
 		}
-		
+
 		return true;
 	}
 
 	public void saveFile() {
 
 		fileChooser.setTitle("Save Process");
-		
+
 		file = fileChooser.showSaveDialog(new Stage());
 		System.out.println(project.getChanges().toString());
 		if (file != null) {
@@ -445,15 +488,15 @@ public class Control {
 			changeList = project.getChanges();
 			branchList = project.getBranches();
 			artifactList = project.getArtifacts();
-			
+
 			fillFormsXML = new FillFormsXML(this, project, forms);
 			fillFormsXML.fillProjectFromXML(form);
 
 			System.out.println(form.getName() + " name");
 			forms.add(0, form);
-		
+
 			parseProject();
-			
+
 		}
 
 	}
@@ -494,10 +537,6 @@ public class Control {
 		return localDate;
 	}
 
-	
-	
-	
-	
 	/** Getrs and Setrs ***/
 
 	public boolean isArrow() {
@@ -675,6 +714,55 @@ public class Control {
 	public void setFillForms(FillForms fillForms) {
 		this.fillForms = fillForms;
 	}
+
+	public ObservableList<String> getCriterionObservable() {
+		return criterionObservable;
+	}
+
+	public void setCriterionObservable(ObservableList<String> criterionObservable) {
+		this.criterionObservable = criterionObservable;
+	}
+
+	public List<Criterion> getCriterionList() {
+		return criterionList;
+	}
+
+	public void setCriterionList(List<Criterion> criterionList) {
+		this.criterionList = criterionList;
+	}
+
+	public ArrayList<Integer> getCriterionFormIndex() {
+		return criterionFormIndex;
+	}
+
+	public void setCriterionFormIndex(ArrayList<Integer> criterionFormIndex) {
+		this.criterionFormIndex = criterionFormIndex;
+	}
+
+	public ObservableList<String> getMilestoneObservable() {
+		return milestoneObservable;
+	}
+
+	public void setMilestoneObservable(ObservableList<String> milestoneObservable) {
+		this.milestoneObservable = milestoneObservable;
+	}
+
+	public List<Milestone> getMilestoneList() {
+		return milestoneList;
+	}
+
+	public void setMilestoneList(List<Milestone> milestoneList) {
+		this.milestoneList = milestoneList;
+	}
+
+	public ArrayList<Integer> getMilestoneFormIndex() {
+		return milestoneFormIndex;
+	}
+
+	public void setMilestoneFormIndex(ArrayList<Integer> milestoneFormIndex) {
+		this.milestoneFormIndex = milestoneFormIndex;
+	}
+
 	
 	
 

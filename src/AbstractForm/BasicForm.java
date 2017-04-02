@@ -60,28 +60,27 @@ public class BasicForm extends Stage {
 	private DragAndDropItem dgItem;
 	private DragAndDropCanvas canvas;
 	private BorderPane dragBox;
-	
+
 	private List<Phase> phaseArray;
 	private List<Iteration> iterationArray;
 	private List<Activity> activityArray;
 	private List<WorkUnit> workUnitArray;
-	private List<Milestone> milestoneArray;
-	private List<Criterion> criterionnArray;
+	private List<Integer> milestoneArray;
+	private List<Integer> criterionnArray;
 	private Configuration configArray;
-	private List<Branch> branchArray;
-	private List<Change> changeArray;
-	private List<Artifact> artifactArray;
-	private List<Role> roleArray;
-	private List<Tag> TagArray;
-	private List<ConfigPersonRelation> confPRArray;
-	
+	private List<Integer> branchArray;
+	private List<Integer> changeArray;
+	private List<Integer> artifactArray;
+	private List<Integer> roleArray;
+	private List<String> TagArray;
+	private List<Integer> confPRArray;
+
 	private IdentificatorCreater idCreater;
 
 	public BasicForm(CanvasItem item, Control control, int[] itemArray, int indexForm) {
 
 		super();
-		
-		
+
 		this.control = control;
 		this.item = item;
 		this.itemArray = itemArray;
@@ -124,7 +123,6 @@ public class BasicForm extends Stage {
 		this.setScene(creatSceneProject());
 
 	}
-	
 
 	private Scene creatSceneCanvas() {
 
@@ -144,7 +142,7 @@ public class BasicForm extends Stage {
 		creatPanelProject();
 		dragBox.setTop(dgItem);
 		dragBox.setCenter(canvas);
-		
+
 		mainPanel.setCenter(dragBox);
 		mainPanel.setLeft(infoPart);
 		return mainPanel;
@@ -176,14 +174,12 @@ public class BasicForm extends Stage {
 		return mainPanel;
 	}
 
-	
 	@Override
 	public String toString() {
-		
+
 		return getName();
 	}
-	
-	
+
 	/** Getrs and Setrs **/
 
 	public BorderPane getMainPanel() {
@@ -286,23 +282,7 @@ public class BasicForm extends Stage {
 		this.idCreater = idCreater;
 	}
 
-	public List<Milestone> getMilestoneArray() {
-		return milestoneArray;
-	}
 
-	public void setMilestoneArray(List<Milestone> milestoneArray) {
-		this.milestoneArray = milestoneArray;
-	}
-
-	public List<Criterion> getCriterionnArray() {
-		return criterionnArray;
-	}
-
-	public void setCriterionnArray(List<Criterion> criterionnArray) {
-		this.criterionnArray = criterionnArray;
-	}
-
-	
 	public int[] getItemArray() {
 		return itemArray;
 	}
@@ -311,43 +291,67 @@ public class BasicForm extends Stage {
 		this.itemArray = itemArray;
 	}
 
-	public List<Branch> getBranchArray() {
+	public List<Integer> getMilestoneArray() {
+		return milestoneArray;
+	}
+
+	public void setMilestoneArray(List<Integer> milestoneArray) {
+		this.milestoneArray = milestoneArray;
+	}
+
+	public List<Integer> getCriterionnArray() {
+		return criterionnArray;
+	}
+
+	public void setCriterionnArray(List<Integer> criterionnArray) {
+		this.criterionnArray = criterionnArray;
+	}
+
+	public Configuration getConfigArray() {
+		return configArray;
+	}
+
+	public void setConfigArray(Configuration configArray) {
+		this.configArray = configArray;
+	}
+
+	public List<Integer> getBranchArray() {
 		return branchArray;
 	}
 
-	public void setBranchArray(List<Branch> branchArray) {
+	public void setBranchArray(List<Integer> branchArray) {
 		this.branchArray = branchArray;
 	}
 
-	public List<Change> getChangeArray() {
+	public List<Integer> getChangeArray() {
 		return changeArray;
 	}
 
-	public void setChangeArray(List<Change> changeArray) {
+	public void setChangeArray(List<Integer> changeArray) {
 		this.changeArray = changeArray;
 	}
 
-	public List<Artifact> getArtifactArray() {
+	public List<Integer> getArtifactArray() {
 		return artifactArray;
 	}
 
-	public void setArtifactArray(List<Artifact> artifactArray) {
+	public void setArtifactArray(List<Integer> artifactArray) {
 		this.artifactArray = artifactArray;
 	}
 
-	public List<Role> getRoleArray() {
+	public List<Integer> getRoleArray() {
 		return roleArray;
 	}
 
-	public void setRoleArray(List<Role> roleArray) {
+	public void setRoleArray(List<Integer> roleArray) {
 		this.roleArray = roleArray;
 	}
 
-	public List<ConfigPersonRelation> getConfPRArray() {
+	public List<Integer> getConfPRArray() {
 		return confPRArray;
 	}
 
-	public void setConfPRArray(List<ConfigPersonRelation> confPRArray) {
+	public void setConfPRArray(List<Integer> confPRArray) {
 		this.confPRArray = confPRArray;
 	}
 
@@ -367,11 +371,11 @@ public class BasicForm extends Stage {
 		this.canvas = canvas;
 	}
 
-	public List<Tag> getTagArray() {
+	public List<String> getTagArray() {
 		return TagArray;
 	}
 
-	public void setTagArray(List<Tag> tagArray) {
+	public void setTagArray(List<String> tagArray) {
 		TagArray = tagArray;
 	}
 
@@ -389,8 +393,15 @@ public class BasicForm extends Stage {
 
 	public void setAlerts(Alerts alerts) {
 		this.alerts = alerts;
+
 	}
-	
-	
+
+	public BorderPane getDragBox() {
+		return dragBox;
+	}
+
+	public void setDragBox(BorderPane dragBox) {
+		this.dragBox = dragBox;
+	}
 
 }
