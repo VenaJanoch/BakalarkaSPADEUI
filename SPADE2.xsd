@@ -1,0 +1,367 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+	<xs:element name="Poject" type="Project" />
+
+	<xs:complexType name="Coordinates">
+		<xs:attribute name="XCoordinate" type="xs:int" />
+		<xs:attribute name="YCoordinate" type="xs:int" />
+	</xs:complexType>
+
+	<xs:complexType name="Project">
+		<xs:sequence>
+			<xs:element name="workUnits" type="WorkUnit" minOccurs="1"
+				maxOccurs="unbounded" />
+			<xs:element name="phases" type="Phase" minOccurs="1"
+				maxOccurs="unbounded" />
+			<xs:element name="iterations" type="Iteration" minOccurs="1"
+				maxOccurs="unbounded" />
+			<xs:element name="activities" type="Activity" minOccurs="1"
+				maxOccurs="unbounded" />
+			<xs:element name="roles" type="Role" minOccurs="1"
+				maxOccurs="unbounded" />
+			<xs:element name="branches" type="Branch" minOccurs="1"
+				maxOccurs="unbounded" />
+			<xs:element name="changes" type="Change" minOccurs="1"
+				maxOccurs="unbounded" />
+			<xs:element name="artifacts" type="Artifact" minOccurs="1"
+				maxOccurs="unbounded" />
+			<xs:element name="milestones" type="Milestone" minOccurs="1"
+				maxOccurs="unbounded" />
+			<xs:element name="criterions" type="Criterion" minOccurs="1"
+				maxOccurs="unbounded" />
+
+			<xs:element name="cpr" type="ConfigPersonRelation"
+				minOccurs="1" maxOccurs="unbounded" />
+			<xs:element name="configuration" type="Configuration"
+				minOccurs="1" maxOccurs="unbounded" />
+
+
+			<xs:element name="priority" type="Priority" minOccurs="1"
+				maxOccurs="unbounded" />
+			<xs:element name="severity" type="Severity" minOccurs="1"
+				maxOccurs="unbounded" />
+			<xs:element name="type" type="Type" minOccurs="1"
+				maxOccurs="unbounded" />
+				
+				<xs:element name="roleType" type="RoleType" minOccurs="1"
+				maxOccurs="unbounded" />
+
+		</xs:sequence>
+		<xs:attribute name="name" type="xs:string" />
+		<xs:attribute name="description" type="xs:string" />
+		<xs:attribute name="endDate" type="xs:date" />
+		<xs:attribute name="startDate" type="xs:date" />
+	</xs:complexType>
+
+	<xs:complexType name="Phase">
+		<xs:sequence>
+			<xs:element name="configuration" type="Configuration" />
+			<xs:element name="workUnits" type="WorkUnit" maxOccurs="unbounded" />
+			<xs:element name="milestoneIndex" type="xs:int" maxOccurs="1" />
+			<xs:element name="coordinates" type="Coordinates" />
+		</xs:sequence>
+		<xs:attribute name="endDate" type="xs:date" />
+		<xs:attribute name="name" type="xs:string" />
+		<xs:attribute name="description" type="xs:string" />
+	</xs:complexType>
+
+	<xs:complexType name="Criterion">
+		<xs:attribute name="name" type="xs:string" />
+		<xs:attribute name="description" type="xs:string" />
+	</xs:complexType>
+
+
+	<xs:complexType name="Iteration">
+		<xs:sequence>
+			<xs:element name="configuration" type="Configuration" />
+			<xs:element name="workUnits" type="WorkUnit" maxOccurs="unbounded" />
+			<xs:element name="coordinates" type="Coordinates" />
+		</xs:sequence>
+		<xs:attribute name="name" type="xs:string" />
+		<xs:attribute name="description" type="xs:string" />
+		<xs:attribute name="endDate" type="xs:date" />
+		<xs:attribute name="startDate" type="xs:date" />
+	</xs:complexType>
+
+
+
+	<xs:complexType name="Activity">
+
+		<xs:sequence>
+			<xs:element name="workUnits" type="WorkUnit" maxOccurs="unbounded" />
+			<xs:element name="coordinates" type="Coordinates" />
+		</xs:sequence>
+
+		<xs:attribute name="name" type="xs:string" />
+		<xs:attribute name="description" type="xs:string" />
+	</xs:complexType>
+
+	<xs:complexType name="WorkUnit">
+		<xs:sequence>
+			<xs:element name="priorityIndex" type="xs:int" />
+			<xs:element name="severityIndex" type="xs:int" />
+			<xs:element name="category" type="xs:string" />
+			<xs:element name="typeIndex" type="xs:int" />
+			<xs:element name="assigneeIndex" type="xs:int" />
+			<xs:element name="authorIndex" type="xs:int" />
+			<xs:element name="coordinates" type="Coordinates" />
+		</xs:sequence>
+		<xs:attribute name="name" type="xs:string" />
+		<xs:attribute name="description" type="xs:string" />
+		<xs:attribute name="estimatedTime" type="xs:double" />
+	</xs:complexType>
+
+
+	<xs:complexType name="Priority">
+		<xs:attribute name="name" type="xs:string" />
+		<xs:attribute name="priorityClass" type="xs:string" />
+		<xs:attribute name="prioritySuperClass" type="xs:string" />
+	</xs:complexType>
+
+	<xs:complexType name="Severity">
+		<xs:attribute name="name" type="xs:string" />
+		<xs:attribute name="severityClass" type="xs:string" />
+		<xs:attribute name="severitySuperClass" type="xs:string" />
+	</xs:complexType>
+
+	<xs:complexType name="Type">
+		<xs:attribute name="name" type="xs:string" />
+		<xs:attribute name="typeClass" type="xs:string" />
+		<xs:attribute name="typeSuperClass" type="xs:string" />
+	</xs:complexType>
+
+
+	<xs:complexType name="Milestone">
+		<xs:sequence>
+			<xs:element name="criteriaIndexs" type="xs:int" maxOccurs="unbounded" />
+		</xs:sequence>
+		<xs:attribute name="name" type="xs:string" />
+		<xs:attribute name="description" type="xs:string" />
+	</xs:complexType>
+
+	<xs:complexType name="Configuration">
+		<xs:sequence>
+			<xs:element name="authorIndex" type="xs:int" />
+			<xs:element name="artifactsIndexs" type="xs:int"
+				maxOccurs="unbounded" />
+			<xs:element name="changesIndexs" type="xs:int" maxOccurs="unbounded" />
+			<xs:element name="tags" type="xs:string" maxOccurs="unbounded" />
+			<xs:element name="branchesIndexs" type="xs:int" maxOccurs="unbounded" />
+		</xs:sequence>
+		<xs:attribute name="name" type="xs:string" />
+		<xs:attribute name="create" type="xs:date" />
+		<xs:attribute name="isRelease" type="xs:boolean" />
+	</xs:complexType>
+
+	<xs:complexType name="ConfigPersonRelation">
+		<xs:sequence>
+			<xs:element name="personIndex" type="xs:int" />
+			<xs:element name="configurationIndex" type="xs:int" />
+		</xs:sequence>
+		<xs:attribute name="name" type="xs:string" />
+	</xs:complexType>
+
+	<xs:complexType name="Branch">
+
+		<xs:attribute name="name" type="xs:string" />
+		<xs:attribute name="isMain" type="xs:boolean" />
+
+	</xs:complexType>
+
+	<xs:complexType name="Change">
+		<xs:sequence>
+			<xs:element name="artifactIndex" type="xs:int" />
+			<xs:element name="coordinates" type="Coordinates" />
+		</xs:sequence>
+		<xs:attribute name="name" type="xs:string" />
+		<xs:attribute name="descriptoin" type="xs:string" />
+	</xs:complexType>
+
+	<xs:complexType name="Artifact">
+		<xs:sequence>
+			<xs:element name="authorIndex" type="xs:int" />
+			<xs:element name="mimeType" type="xs:string" />
+			<xs:element name="coordinates" type="Coordinates" />
+		</xs:sequence>
+		<xs:attribute name="name" type="xs:string" />
+		<xs:attribute name="descriptoin" type="xs:string" />
+		<xs:attribute name="created" type="xs:dateTime" />
+		<xs:attribute name="artifactIndex" type="xs:int" />
+	</xs:complexType>
+
+	<xs:complexType name="Role">
+		<xs:sequence>
+			<xs:element name="type" type="xs:int" />
+		</xs:sequence>
+		<xs:attribute name="description" type="xs:string" />
+		<xs:attribute name="name" type="xs:string" />
+	</xs:complexType>
+
+
+	<xs:complexType name="RoleType">
+		<xs:attribute name="name" type="xs:string" />
+		<xs:attribute name="RoleClass" type="xs:string" />
+		<xs:attribute name="RoleSuperClass" type="xs:string" />
+	</xs:complexType>
+
+	<xs:simpleType name="ArtifactClass">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="FILE" />
+			<xs:enumeration value="FOLDER" />
+			<xs:enumeration value="WIKIPAGE" />
+			<xs:enumeration value="EMAIL" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="RoleClass">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="PROJECT_MANAGER" />
+			<xs:enumeration value="TEAM_MEMBER" />
+			<xs:enumeration value="DEVELOPER" />
+			<xs:enumeration value="ANALYST" />
+			<xs:enumeration value="DESIGNER" />
+			<xs:enumeration value="TESTER" />
+			<xs:enumeration value="DOCUMENTER" />
+			<xs:enumeration value="STAKEHOLDER" />
+			<xs:enumeration value="MENTOR" />
+			<xs:enumeration value="NON_MEMBER" />
+			<xs:enumeration value="OTHER" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="RoleSuperClass">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="MANAGEMENT" />
+			<xs:enumeration value="TEAM_MEMBER" />
+			<xs:enumeration value="STAKEHOLDER" />
+			<xs:enumeration value="NON_MEMBER" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="Tool">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="REDMINE" />
+			<xs:enumeration value="RTC" />
+			<xs:enumeration value="JIRA" />
+			<xs:enumeration value="BUGZILA" />
+			<xs:enumeration value="ASSEMBLA" />
+			<xs:enumeration value="GITHUB" />
+			<xs:enumeration value="SVN" />
+			<xs:enumeration value="GIT" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="WorkUnitPriorityClass">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="LOWEST" />
+			<xs:enumeration value="LOW" />
+			<xs:enumeration value="NORMAL" />
+			<xs:enumeration value="HIGH" />
+			<xs:enumeration value="HIGHEST" />
+			<xs:enumeration value="UNASSIGNED" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="WorkUnitPrioritySuperClass">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="LOW" />
+			<xs:enumeration value="NORMAL" />
+			<xs:enumeration value="HIGH" />
+			<xs:enumeration value="UNASSIGNED" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="WorkUnitRelationClass">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="DUPLICATES" />
+			<xs:enumeration value="BLOCKS" />
+			<xs:enumeration value="RELATES_TO" />
+			<xs:enumeration value="PRECEDES" />
+			<xs:enumeration value="COPIED_FROM" />
+			<xs:enumeration value="CHILD" />
+			<xs:enumeration value="CAUSES" />
+			<xs:enumeration value="RESOLVES" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="WorkUnitRelationSuperClass">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="GENERAL" />
+			<xs:enumeration value="SIMILARITY" />
+			<xs:enumeration value="TEMPORAL" />
+			<xs:enumeration value="CAUSAL" />
+			<xs:enumeration value="HIERARCHICAL" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="WorkUnitResolutionClass">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="INVALID" />
+			<xs:enumeration value="DUPLICATE" />
+			<xs:enumeration value="WONT_FIX" />
+			<xs:enumeration value="FIXED" />
+			<xs:enumeration value="WORKS_AS_DEISGNED" />
+			<xs:enumeration value="WORKS_FOR_ME" />
+			<xs:enumeration value="INCOMPLETE" />
+			<xs:enumeration value="OTHER" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="WorkUnitResolutionsSuperClass">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="FINISHED" />
+			<xs:enumeration value="UNFINISHED" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="WorkUnitSeverityClass">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="TRIVIAL" />
+			<xs:enumeration value="MINOR" />
+			<xs:enumeration value="NORMAL" />
+			<xs:enumeration value="MAJOR" />
+			<xs:enumeration value="CRITICAL" />
+			<xs:enumeration value="UNASSIGNED" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="WorkUnitSeveritySuperClass">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="MINOR" />
+			<xs:enumeration value="NORMAL" />
+			<xs:enumeration value="MAJOR" />
+			<xs:enumeration value="UNASSIGNED" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="WorkUnitStatusClass">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="NEW" />
+			<xs:enumeration value="ACCEPTED" />
+			<xs:enumeration value="IN_PRGRESS" />
+			<xs:enumeration value="RESOLVED" />
+			<xs:enumeration value="VERIFIED" />
+			<xs:enumeration value="DONE" />
+			<xs:enumeration value="INVALID" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="WorkUnitStatusSuperClass">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="OPEN" />
+			<xs:enumeration value="CLOSED" />
+		</xs:restriction>
+	</xs:simpleType>
+
+
+	<xs:simpleType name="WorkUnitTypeClass">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="TASK" />
+			<xs:enumeration value="BUG" />
+			<xs:enumeration value="ENHANCEMENT" />
+			<xs:enumeration value="FEATURE" />
+		</xs:restriction>
+	</xs:simpleType>
+
+
+</xs:schema>
