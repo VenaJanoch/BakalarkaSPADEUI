@@ -7,11 +7,7 @@ public class TagTable {
 
 	private StringProperty tag;
 
-	@Override
-	public String toString() {
 	
-		return tag.get();
-	}
 	
 	
 	public TagTable(String tag) {
@@ -26,6 +22,12 @@ public class TagTable {
 	public final void setTag(String name) {
 		this.tag.set(name);
 		
+	}
+	
+	@Override
+	public String toString() {
+	
+		return tag.get();
 	}
 
 }
