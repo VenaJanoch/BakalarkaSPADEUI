@@ -23,6 +23,7 @@ import SPADEPAC.Artifact;
 import SPADEPAC.ArtifactClass;
 import SPADEPAC.Branch;
 import SPADEPAC.Change;
+import SPADEPAC.ConfigPersonRelation;
 import SPADEPAC.Configuration;
 import SPADEPAC.Iteration;
 import SPADEPAC.Phase;
@@ -33,6 +34,9 @@ import SPADEPAC.WorkUnit;
 import SPADEPAC.WorkUnitPriorityClass;
 import SPADEPAC.WorkUnitSeverityClass;
 import SPADEPAC.WorkUnitTypeClass;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import tables.CPRTable;
 
 public class FillFormsXML {
 
@@ -67,6 +71,8 @@ public class FillFormsXML {
 		fillChangeObservabel(project.getChanges());
 
 		fillArtifactObservabel(project.getArtifacts());
+
+		fillCPRObservabel(project.getCpr());
 
 	}
 
@@ -359,7 +365,7 @@ public class FillFormsXML {
 		IDs[0] = index;
 		IDs[1] = idCreater.createChangeID();
 		IDs[2] = form.getIdCreater().createChangeID();
-		
+
 		int index = form.getChangeArray().get(IDs[2]);
 		Change change = control.getChangeList().get(index);
 		ChangeForm changeForm = new ChangeForm(item, control, change);
@@ -449,6 +455,18 @@ public class FillFormsXML {
 		for (int i = 0; i < artifacts.size(); i++) {
 			control.getArtifactObservable().add(artifacts.get(i).getName());
 		}
+	}
+
+	private void fillCPRObservabel(List<ConfigPersonRelation> cprs) {
+
+		ObservableList<CPRTable> data = FXCollections.observableArrayList();
+
+		for (int i = 0; i < cprs.size(); i++) {
+			control.getArtifactObservable().add(cprs.get(i).getName());
+			data.add(new CPRTable(cprs.get(i).getName(),"" , ""));
+		}
+		
+		control.getCPRForm().getTableTV().setItems(data);
 	}
 
 	public int getIndex() {

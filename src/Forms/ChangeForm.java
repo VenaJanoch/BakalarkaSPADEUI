@@ -18,17 +18,16 @@ import javafx.geometry.HPos;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.stage.WindowEvent;
 
 public class ChangeForm extends DescriptionBasicForm implements ISegmentForm {
 
-	private Label artifactLB;
-
-	private ComboBox<String> artifactCB;
 	private ComboBox<String> changeCB;
+	private RadioButton existRB;
+	
 
-	private int artifactIndex;
 
 	private boolean newChange;
 	private Change change;
@@ -64,25 +63,29 @@ public class ChangeForm extends DescriptionBasicForm implements ISegmentForm {
 
 		setName(actName);
 		getCanvasItem().setNameText(actName);
-		getControl().getFillForms().fillChange(change, IDs, getDescriptionTF().getText(), actName, newChange, x, y);
+		getControl().getFillForms().fillChange(change, IDs, getDescriptionTF().getText(), actName, newChange, x, y,
+				existRB.isSelected());
 
 		newChange = false;
 	}
 
 	@Override
 	public void setActionSubmitButton() {
-			closeForm();
-			close();
-		
+		closeForm();
+		close();
+
 	}
 
 	@Override
 	public void createForm() {
 
+		
+		existRB = new RadioButton("Exist");
+		getInfoPart().add(existRB, 1, 3);
+
 	}
 
 	/** Getrs and Setrs ***/
-
 
 	public ComboBox<String> getChangeCB() {
 		return changeCB;

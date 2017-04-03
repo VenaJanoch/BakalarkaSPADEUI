@@ -21,6 +21,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.stage.WindowEvent;
 
@@ -32,6 +33,7 @@ public class ArtifactForm extends DateDescBasicForm implements ISegmentForm {
 
 	private ComboBox<String> authorRoleCB;
 	private ComboBox<ArtifactClass> mineTypeCB;
+	private RadioButton existRB;
 
 	private int typeIndex;
 	private int authorIndex;
@@ -72,7 +74,7 @@ public class ArtifactForm extends DateDescBasicForm implements ISegmentForm {
 		setName(actName);
 		getCanvasItem().setNameText(actName);
 		getControl().getFillForms().fillArtifact(artifact, IDs, desc, actName, createdDate, type,
-				authorIndex, x, y, typeIndex, isNew);
+				authorIndex, x, y, typeIndex, isNew, existRB.isSelected());
 		isNew = false;
 
 	}
@@ -101,7 +103,8 @@ public class ArtifactForm extends DateDescBasicForm implements ISegmentForm {
 		mineTypeCB = new ComboBox<ArtifactClass>(FXCollections.observableArrayList(ArtifactClass.values()));
 		mineTypeCB.getSelectionModel().selectedIndexProperty().addListener(typeListener);
 		mineTypeCB.setVisibleRowCount(5);
-
+		existRB = new RadioButton("Exist");
+		
 
 		fillInfoPart();
 	}
@@ -136,6 +139,7 @@ public class ArtifactForm extends DateDescBasicForm implements ISegmentForm {
 		getInfoPart().add(mineTypeLB, 0, 4);
 		getInfoPart().setHalignment(mineTypeLB, HPos.RIGHT);
 		getInfoPart().add(mineTypeCB, 1, 4);
+		getInfoPart().add(existRB, 1, 5);
 
 	}
 

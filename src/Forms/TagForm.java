@@ -7,7 +7,6 @@ import Services.Constans;
 import Services.Control;
 import Services.FillForms;
 import Services.OrderCell;
-import Services.TagTable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
@@ -32,6 +31,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
+import tables.TagTable;
 
 public class TagForm extends Stage implements ISegmentForm {
 

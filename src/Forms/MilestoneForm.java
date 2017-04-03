@@ -12,9 +12,7 @@ import Services.Alerts;
 import Services.Constans;
 import Services.Control;
 import Services.FillForms;
-import Services.MilestoneTable;
 import Services.OrderCell;
-import Services.TagTable;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -45,6 +43,8 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
+import tables.MilestoneTable;
+import tables.TagTable;
 
 public class MilestoneForm extends Stage implements ISegmentForm {
 

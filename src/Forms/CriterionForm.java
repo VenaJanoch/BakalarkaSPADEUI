@@ -7,8 +7,6 @@ import Interfaces.ISegmentForm;
 import SPADEPAC.Criterion;
 import Services.Alerts;
 import Services.Control;
-import Services.CriterionTable;
-import Services.MilestoneTable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
@@ -34,6 +32,8 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.WindowEvent;
+import tables.CriterionTable;
+import tables.MilestoneTable;
 
 public class CriterionForm extends BorderPane {
 

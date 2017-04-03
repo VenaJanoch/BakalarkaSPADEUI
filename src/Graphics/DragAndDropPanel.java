@@ -20,6 +20,7 @@ public class DragAndDropPanel extends BorderPane {
 	private DragAndDropItem items;
 	private Button formBT;
 	private Button addMilestoneBT;
+	private Button addCPRBT;
 	private HBox buttonBox;
 	private Control control;
 	
@@ -35,6 +36,7 @@ public class DragAndDropPanel extends BorderPane {
 
 		formBT = new Button("Project");
 		addMilestoneBT = new Button("Add Milestone");
+		addCPRBT = new Button("Add Config-role");
 		
 		buttonBox.getChildren().addAll(formBT,addMilestoneBT);
 		this.setCenter(items);
@@ -43,6 +45,7 @@ public class DragAndDropPanel extends BorderPane {
 
 		formBT.setOnAction(event -> control.showProjectForm());
 		addMilestoneBT.setOnAction(event -> control.showMilestones());
+		addCPRBT.setOnAction(event -> control.showCPR());
 	}
 
 	

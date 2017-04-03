@@ -51,6 +51,7 @@ import SPADEPAC.Artifact;
 import SPADEPAC.ArtifactClass;
 import SPADEPAC.Branch;
 import SPADEPAC.Change;
+import SPADEPAC.ConfigPersonRelation;
 import SPADEPAC.Configuration;
 import SPADEPAC.Coordinates;
 import SPADEPAC.Criterion;
@@ -120,10 +121,15 @@ public class Control {
 	private List<Artifact> artifactList;
 	private ArrayList<Integer> artifactFormIndex;
 
+	private ObservableList<String> CPRObservable;
+	private List<ConfigPersonRelation> CPRList;
+
 	private FillFormsXML fillFormsXML;
 	private FillForms fillForms;
 
 	private MilestoneForm milestoneForm;
+	private ConfigPersonRelationForm CPRForm;
+
 	public Control() {
 
 		procesGener = new ProcessGenerator();
@@ -138,6 +144,7 @@ public class Control {
 		fillForms = new FillForms(this, project, forms, objF);
 		createLists();
 		milestoneForm = new MilestoneForm(this);
+		CPRForm = new ConfigPersonRelationForm(this);
 
 		arrows = new ArrayList<>();
 
@@ -147,11 +154,22 @@ public class Control {
 
 		forms.get(0).show();
 	}
-	
+
 	public void showMilestones() {
 		milestoneForm.show();
 	}
 
+	public void showCPR() {
+		CPRForm.show();
+	}
+
+	public ConfigPersonRelationForm getCPRForm() {
+		return CPRForm;
+	}
+
+	public void setCPRForm(ConfigPersonRelationForm cPRForm) {
+		CPRForm = cPRForm;
+	}
 
 	private void updateIndexAndID() {
 
@@ -193,6 +211,9 @@ public class Control {
 		milestoneFormIndex = new ArrayList<>();
 		milestoneObservable = FXCollections.observableArrayList();
 
+		setCPRList(project.getCpr());
+		milestoneObservable = FXCollections.observableArrayList();
+
 	}
 
 	public void restartControl() {
@@ -230,7 +251,7 @@ public class Control {
 		milestoneList.clear();
 		milestoneFormIndex.clear();
 		milestoneObservable.clear();
-		
+
 		configureFileChooser();
 
 		setArrow(false);
@@ -303,7 +324,7 @@ public class Control {
 		int artifactIndex = link.getArtifact()[1];
 
 		changeList.get(changeIndex).setArtifactIndex(artifactIndex);
-		
+
 	}
 
 	private void sortSegment(CanvasItem item) {
@@ -755,7 +776,20 @@ public class Control {
 		this.milestoneFormIndex = milestoneFormIndex;
 	}
 
-	
-	
+	public List<ConfigPersonRelation> getCPRList() {
+		return CPRList;
+	}
+
+	public void setCPRList(List<ConfigPersonRelation> cPRList) {
+		CPRList = cPRList;
+	}
+
+	public ObservableList<String> getCPRObservable() {
+		return CPRObservable;
+	}
+
+	public void setCPRObservable(ObservableList<String> cPRObservable) {
+		CPRObservable = cPRObservable;
+	}
 
 }

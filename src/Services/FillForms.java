@@ -19,6 +19,7 @@ import SPADEPAC.Activity;
 import SPADEPAC.Artifact;
 import SPADEPAC.Branch;
 import SPADEPAC.Change;
+import SPADEPAC.ConfigPersonRelation;
 import SPADEPAC.Configuration;
 import SPADEPAC.Coordinates;
 import SPADEPAC.Criterion;
@@ -31,6 +32,7 @@ import SPADEPAC.Role;
 import SPADEPAC.Tag;
 import SPADEPAC.WorkUnit;
 import javafx.collections.ObservableList;
+import tables.TagTable;
 
 public class FillForms {
 
@@ -194,6 +196,18 @@ public class FillForms {
 		 control.getCriterionObservable().add(criterion.getName());
 
 	}
+	
+	public void fillCPR(String name, int conf, int role) {
+
+		 ConfigPersonRelation cpr = objF.createConfigPersonRelation(); 
+		 cpr.setName(name);
+		 cpr.setConfigurationIndex(conf);
+		 cpr.setPersonIndex(role);
+		 
+		 control.getCPRList().add(cpr);
+		 control.getCPRObservable().add(name);
+
+	}
 
 	public void fillConfiguration(Configuration conf, int ID, boolean isRelase, LocalDate Ldate, String name,
 			int roleIndex, boolean isNew) {
@@ -250,7 +264,7 @@ public class FillForms {
 
 	}
 
-	public void fillChange(Change change, int[] IDs, String description, String name, boolean isNew, int x, int y) {
+	public void fillChange(Change change, int[] IDs, String description, String name, boolean isNew, int x, int y, boolean isExist) {
 
 		change.setName(name);
 		change.setDescriptoin(description);
@@ -283,7 +297,7 @@ public class FillForms {
 	}
 
 	public void fillArtifact(Artifact artifact, int[] IDs, String description, String name, LocalDate Ldate,
-			String type, int roleIndex, int x, int y, int typeIndex, boolean isNew) {
+			String type, int roleIndex, int x, int y, int typeIndex, boolean isNew, boolean isExist) {
 
 		// Artifact artifact = form.getArtifactArray().get(ID);
 		artifact.setName(name);

@@ -40,15 +40,17 @@ public class ConfigurationForm extends BasicForm implements ISegmentForm {
 	private Label createdLB;
 	private Label isReleaseLB;
 	private Label authorRoleLB;
+	private Label cprLB;
 
 	private RadioButton rbYes;
 	private RadioButton rbNo;
 	private DatePicker createdDP;
 	private ComboBox<String> authorRoleCB;
+	private ComboBox<String> cprCB;
 
 	private int authorIndex;
-	private Button newRoleBT;
-	private Button editRoleBT;
+	private int cprIndex;
+	
 
 	private Configuration configuration;
 	private TagForm tagForm;
@@ -128,11 +130,11 @@ public class ConfigurationForm extends BasicForm implements ISegmentForm {
 		authorRoleCB = new ComboBox<String>(getControl().getRoleObservable());
 		authorRoleCB.setVisibleRowCount(5);
 		authorRoleCB.getSelectionModel().selectedIndexProperty().addListener(roleListenerAut);
-		newRoleBT = new Button("New");
-		newRoleBT.setOnAction(event -> roleBTAction());
-
-		editRoleBT = new Button("Edit");
-		editRoleBT.setOnAction(event -> editRoleBTAction());
+		
+		cprLB = new Label("Conf-Person: ");
+		cprCB = new ComboBox<String>(getControl().getCPRObservable());
+		cprCB.setVisibleRowCount(5);
+		cprCB.getSelectionModel().selectedIndexProperty().addListener(cprListener);
 
 		addTag = new Button("Add Tag");
 		addTag.setOnAction(event -> tagForm.show());
@@ -150,20 +152,6 @@ public class ConfigurationForm extends BasicForm implements ISegmentForm {
 
 	}
 	
-	
-	private void editRoleBTAction() {
-		if (getControl().getRoleObservable().isEmpty()) {
-			roleBTAction();
-		} else {
-			getControl().getForms().get(getControl().getRoleFormIndex().get(authorIndex)).show();
-		}
-	}
-
-	private void roleBTAction() {
-		CanvasItem item = new CanvasItem(SegmentType.Role, "Name", getControl(), this, true);
-		getControl().getForms().get(item.getIDs()[0]).show();
-
-	}
 
 	private void fillInfoPart() {
 
@@ -179,9 +167,13 @@ public class ConfigurationForm extends BasicForm implements ISegmentForm {
 		getInfoPart().add(authorRoleLB, 0, 3);
 		getInfoPart().setHalignment(authorRoleLB, HPos.RIGHT);
 		getInfoPart().add(authorRoleCB, 1, 3);
-		getInfoPart().add(newRoleBT, 3, 3);
-		getInfoPart().add(editRoleBT, 2, 3);
-		getInfoPart().add(addTag, 0, 4);
+		
+		getInfoPart().add(cprLB, 0, 4);
+		getInfoPart().setHalignment(cprLB, HPos.RIGHT);
+		getInfoPart().add(cprCB, 1, 4);
+		
+		getInfoPart().add(addTag, 1, 5);
+		
 		group.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
 
 			@Override
@@ -200,6 +192,16 @@ public class ConfigurationForm extends BasicForm implements ISegmentForm {
 	}
 
 	ChangeListener<Number> roleListenerAut = new ChangeListener<Number>() {
+
+		@Override
+		public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+			authorIndex = newValue.intValue();
+
+		}
+	};
+	
+	
+	ChangeListener<Number> cprListener = new ChangeListener<Number>() {
 
 		@Override
 		public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
