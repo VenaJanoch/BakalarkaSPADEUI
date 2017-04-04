@@ -2,6 +2,9 @@ package forms;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
+
+import org.controlsfx.control.CheckComboBox;
 
 import SPADEPAC.Configuration;
 import abstractform.BasicForm;
@@ -10,6 +13,8 @@ import graphics.InfoBoxSegment;
 import interfaces.ISegmentForm;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.ListChangeListener;
+import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.geometry.HPos;
 import javafx.scene.Cursor;
@@ -41,15 +46,20 @@ public class ConfigurationForm extends BasicForm implements ISegmentForm {
 	private Label isReleaseLB;
 	private Label authorRoleLB;
 	private Label cprLB;
+	private Label branchLB;
 
 	private RadioButton rbYes;
 	private RadioButton rbNo;
 	private DatePicker createdDP;
+	private CheckComboBox<String> branchCB;	
 	private ComboBox<String> authorRoleCB;
 	private ComboBox<String> cprCB;
 
 	private int authorIndex;
 	private int cprIndex;
+	
+	private ObservableList<String> branchArray;
+	private List<Integer> branchIndex;
 	
 
 	private Configuration configuration;
@@ -60,6 +70,9 @@ public class ConfigurationForm extends BasicForm implements ISegmentForm {
 		this.configuration = conf;
 		this.tagForm = new TagForm(conf, control);
 		isNew = true;
+		
+		branchIndex = conf.getBranchesIndexs();
+		
 		setConfig(conf);
 		setBranchArray(conf.getBranchesIndexs());
 		setChangeArray(conf.getChangesIndexs());
@@ -80,6 +93,7 @@ public class ConfigurationForm extends BasicForm implements ISegmentForm {
 		getSubmitButton().setOnAction(event -> setActionSubmitButton());
 		createForm();
 
+		this.show();
 	}
 
 	@Override
@@ -135,9 +149,22 @@ public class ConfigurationForm extends BasicForm implements ISegmentForm {
 		cprCB = new ComboBox<String>(getControl().getLists().getCPRObservable());
 		cprCB.setVisibleRowCount(5);
 		cprCB.getSelectionModel().selectedIndexProperty().addListener(cprListener);
+		
+		branchLB = new Label("Branches");
+		branchCB = new CheckComboBox<String>(getControl().getLists().getBranchObservable());
+		branchCB.getCheckModel().getCheckedItems().addListener(new ListChangeListener<String>() {
 
+			public void onChanged(ListChangeListener.Change<? extends String> c) {
+				branchIndex = branchCB.getCheckModel().getCheckedIndices();
+				branchArray = branchCB.getCheckModel().getCheckedItems();
+
+			}
+		});
+		
 		addTag = new Button("Add Tag");
 		addTag.setOnAction(event -> tagForm.show());
+		
+		
 		fillInfoPart();
 	}
 
@@ -171,8 +198,13 @@ public class ConfigurationForm extends BasicForm implements ISegmentForm {
 		getInfoPart().add(cprLB, 0, 4);
 		getInfoPart().setHalignment(cprLB, HPos.RIGHT);
 		getInfoPart().add(cprCB, 1, 4);
+
+		getInfoPart().add(branchLB, 0, 5);
+		getInfoPart().setHalignment(branchLB, HPos.RIGHT);
+		getInfoPart().add(branchCB, 1, 5);
+	
 		
-		getInfoPart().add(addTag, 1, 5);
+		getInfoPart().add(addTag, 1, 6);
 		
 		group.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
 
@@ -267,5 +299,9 @@ public class ConfigurationForm extends BasicForm implements ISegmentForm {
 	public void setNew(boolean isNew) {
 		this.isNew = isNew;
 	}
+
+	
+
+	
 
 }

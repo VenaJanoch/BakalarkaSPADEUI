@@ -41,10 +41,13 @@ import forms.WorkUnitForm;
 import graphics.CanvasItem;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import tables.BranchTable;
 import tables.CPRTable;
 import tables.ClassTable;
 import tables.CriterionTable;
 import tables.MilestoneTable;
+import tables.RoleTable;
+import tables.RoleTypeTable;
 
 public class FillFormsXML {
 
@@ -74,8 +77,7 @@ public class FillFormsXML {
 		form.getDescriptionTF().setText(project.getDescription());
 		form.getDateDP().setValue(control.convertDateFromXML(project.getStartDate()));
 		form.getDate2DP().setValue(control.convertDateFromXML(project.getEndDate()));
-		
-		
+
 		fillPrioritybservabel(project.getPriority());
 		fillSeveritybservabel(project.getSeverity());
 		fillRelationbservabel(project.getRelation());
@@ -83,7 +85,7 @@ public class FillFormsXML {
 		fillStatusbservabel(project.getStatus());
 		fillCriterionObservabel(project.getCriterions());
 		fillMilestoneObservabel(project.getMilestones());
-		fillBranchObservabel(project.getBranches());
+		fillBranchFromXML(project.getBranches());
 		fillRoleTypeFromXML(project.getRoleType());
 		fillRoleFromXML(project.getRoles());
 		fillChangeObservabel(project.getChanges());
@@ -112,8 +114,11 @@ public class FillFormsXML {
 
 		IDs[0] = index;
 		IDs[1] = idCreater.createPhaseID();
+
 		Phase phase = form.getPhaseArray().get(IDs[1]);
+
 		PhaseForm phaseForm = new PhaseForm(item, control, Constans.phaseDragTextIndexs, phase, index);
+
 		phaseForm.getDescriptionTF().setText(phase.getDescription());
 		phaseForm.getNameTF().setText(phase.getName());
 		phaseForm.setName(phase.getName());
@@ -262,7 +267,7 @@ public class FillFormsXML {
 
 		IDs[0] = index;
 		IDs[1] = idCreater.createConfigurationID();
-		System.out.println(index + " Config " + IDs[1]);
+
 		Configuration conf = form.getConfig();
 		ConfigurationForm configForm = new ConfigurationForm(item, control, Constans.configurationDragTextIndexs, conf,
 				index);
@@ -271,6 +276,7 @@ public class FillFormsXML {
 		configForm.setName(conf.getName());
 		configForm.getCreatedDP().setValue(control.convertDateFromXML(conf.getCreate()));
 		configForm.setNew(false);
+
 		if (conf.isIsRelease()) {
 			configForm.getRbYes().setSelected(true);
 		} else {
@@ -279,96 +285,65 @@ public class FillFormsXML {
 
 		control.getLists().getConfigFormIndex().add(IDs[1], index);
 		forms.add(index, configForm);
-		System.out.println(forms.get(index).getTitle() + " " + index + " " + IDs[1]);
+
 		index++;
 
 		String author = control.getLists().getRoleList().get(conf.getAuthorIndex()).getName();
 
 		configForm.getAuthorRoleCB().setValue(author);
 
-		fillBranchFromXML(configForm, conf.getBranchesIndexs());
 		fillChangeFromXML(configForm, conf.getChangesIndexs());
+
 		fillArtifactFromXML(configForm, conf.getArtifactsIndexs());
-		fillTagFromXML(configForm, conf.getTags());
 
 		return IDs;
 
 	}
 
 	public void fillRoleFromXML(List<Role> roles) {
+		ObservableList<RoleTable> data = FXCollections.observableArrayList();
 
 		for (int i = 0; i < roles.size(); i++) {
 
 			Role role = roles.get(i);
-
+			data.add(new RoleTable(role.getName(), role.getDescription(),
+					lists.getRoleTypeObservable().get(role.getType())));
 			control.getLists().getRoleObservable().add(role.getName());
 		}
 
 	}
 
 	public void fillRoleTypeFromXML(List<RoleType> roles) {
-
+		ObservableList<RoleTypeTable> data = FXCollections.observableArrayList();
 		for (int i = 0; i < roles.size(); i++) {
 
 			RoleType role = roles.get(i);
 
+			data.add(new RoleTypeTable(role.getName(), role.getRoleClass(), role.getRoleSuperClass()));
 			lists.getRoleTypeObservable().add(role.getName());
 		}
 
 	}
 
-	// public int[] createRoleFormXML(CanvasItem item, BasicForm form, int[]
-	// IDs) {
-	// System.out.println(form.getTitle() + " roole");
-	//
-	// IDs[0] = index;
-	// System.out.println(index + " role");
-	// IDs[1] = idCreater.createRoleID();
-	// IDs[2] = form.getIdCreater().createRoleID();
-	// Role role = project.getRoles().get(IDs[1]);
-	// RoleForm roleForm = new RoleForm(item, control, role);
-	//
-	// roleForm.setName(role.getName());
-	// roleForm.getNameTF().setText(role.getName());
-	// roleForm.getDescriptionTF().setText(role.getDescription());
-	// roleForm.setNew(false);
-	// forms.add(IDs[0], roleForm);
-	// control.getRoleFormIndex().add(index);
-	// index++;
-	//
-	// return IDs;
-	// }
+	public void fillBranchFromXML(List<Branch> item) {
 
-	public void fillBranchFromXML(BasicForm form, List<Integer> branchs) {
-		for (int i = 0; i < branchs.size(); i++) {
+		ObservableList<BranchTable> data = FXCollections.observableArrayList();
 
-			Branch branch = control.getLists().getBranchList().get(branchs.get(i));
+		for (int i = 0; i < item.size(); i++) {
+			String name = item.get(i).getName();
+			boolean main = item.get(i).isIsMain();
 
-			CanvasItem item = new CanvasItem(SegmentType.Branch, branch.getName(), control, form, false);
-			form.getCanvas().getChildren().add(item);
+			if (main) {
+				data.add(new BranchTable(name, "TRUE"));
 
+			} else {
+				data.add(new BranchTable(name, "FALSE"));
+			}
+
+			lists.getBranchObservable().add(item.get(i).getName());
 		}
-	}
 
-	public int[] createBranchFormXML(CanvasItem item, BasicForm form, int[] IDs) {
-
-		IDs[0] = index;
-		System.out.println(index + "Branch");
-		IDs[1] = idCreater.createBranchID();
-		IDs[2] = form.getIdCreater().createBranchID();
-		// System.out.println(form.getTitle());
-		int index = form.getBranchArray().get(IDs[2]);
-		Branch branch = control.getLists().getBranchList().get(index);
-		BranchForm branchForm = new BranchForm(item, control, branch);
-		branchForm.setNewBranch(false);
-		branchForm.getBranchesCB().setValue(branch.getName());
-
-		control.getLists().getBranchFormIndex().add(IDs[1], index);
-		forms.add(IDs[0], branchForm);
-		index++;
-
-		return IDs;
-
+		control.getBranchFrom().getTableTV().setItems(data);
 	}
 
 	public void fillChangeFromXML(BasicForm form, List<Integer> changes) {
@@ -391,12 +366,14 @@ public class FillFormsXML {
 		IDs[1] = idCreater.createChangeID();
 		IDs[2] = form.getIdCreater().createChangeID();
 
-		int index = form.getChangeArray().get(IDs[2]);
-		Change change = control.getLists().getChangeList().get(index);
+		int index1 = form.getChangeArray().get(IDs[2]);
+		Change change = control.getLists().getChangeList().get(index1);
 		ChangeForm changeForm = new ChangeForm(item, control, change);
 
-		changeForm.getChangeCB().setValue(change.getName());
-		changeForm.setNewChange(false);
+		changeForm.setName(change.getName());
+		changeForm.getNameTF().setText(change.getName());
+		changeForm.getDescriptionTF().setText(change.getDescriptoin());
+		
 
 		forms.add(index, changeForm);
 		index++;
@@ -406,6 +383,7 @@ public class FillFormsXML {
 	}
 
 	public void fillArtifactFromXML(BasicForm form, List<Integer> artifacts) {
+
 		for (int i = 0; i < artifacts.size(); i++) {
 			Artifact artifact = control.getLists().getArtifactList().get(artifacts.get(i));
 
@@ -422,22 +400,13 @@ public class FillFormsXML {
 
 	}
 
-	public void fillTagFromXML(BasicForm form, List<String> list) {
-		for (int i = 0; i < list.size(); i++) {
-			String tag = form.getTagArray().get(i);
-			CanvasItem item = new CanvasItem(SegmentType.Tag, "", control, form, false);
-			form.getCanvas().getChildren().add(item);
-		}
-
-	}
-
 	public int[] createArtifactFormXML(CanvasItem item, BasicForm form, int[] IDs) {
 		IDs[0] = index;
 		IDs[1] = idCreater.createArtifactID();
 		IDs[2] = form.getIdCreater().createArtifactID();
 
-		int index = form.getArtifactArray().get(IDs[2]);
-		Artifact artifact = control.getLists().getArtifactList().get(index);
+		int index1 = form.getArtifactArray().get(IDs[2]);
+		Artifact artifact = control.getLists().getArtifactList().get(index1);
 		ArtifactForm artifactForm = new ArtifactForm(item, control, artifact);
 		System.out.println(artifactForm.getTitle());
 
@@ -458,12 +427,6 @@ public class FillFormsXML {
 		index++;
 		return IDs;
 
-	}
-
-	private void fillBranchObservabel(List<Branch> branchs) {
-		for (int i = 0; i < branchs.size(); i++) {
-			control.getLists().getBranchObservable().add(branchs.get(i).getName());
-		}
 	}
 
 	private void fillChangeObservabel(List<Change> changes) {
@@ -491,7 +454,7 @@ public class FillFormsXML {
 
 		control.getCPRForm().getTableTV().setItems(data);
 	}
-	
+
 	private void fillPrioritybservabel(List<Priority> item) {
 
 		ObservableList<ClassTable> data = FXCollections.observableArrayList();
@@ -499,15 +462,15 @@ public class FillFormsXML {
 		for (int i = 0; i < item.size(); i++) {
 			control.getLists().getPriorityObservable().add(item.get(i).getName());
 			String name = item.get(i).getName();
-			String classi = item.get(i).getPriorityClass(); 
+			String classi = item.get(i).getPriorityClass();
 			String superi = item.get(i).getPrioritySuperClass();
-			
+
 			data.add(new ClassTable(name, classi, superi));
 		}
 
 		control.getPriorityForm().getTableTV().setItems(data);
 	}
-	
+
 	private void fillSeveritybservabel(List<Severity> item) {
 
 		ObservableList<ClassTable> data = FXCollections.observableArrayList();
@@ -515,15 +478,15 @@ public class FillFormsXML {
 		for (int i = 0; i < item.size(); i++) {
 			lists.getSeverityTypeObservable().add(item.get(i).getName());
 			String name = item.get(i).getName();
-			String classi = item.get(i).getSeverityClass(); 
+			String classi = item.get(i).getSeverityClass();
 			String superi = item.get(i).getSeveritySuperClass();
-			
+
 			data.add(new ClassTable(name, classi, superi));
 		}
 
 		control.getSeverityForm().getTableTV().setItems(data);
 	}
-	
+
 	private void fillRelationbservabel(List<Relation> item) {
 
 		ObservableList<ClassTable> data = FXCollections.observableArrayList();
@@ -531,15 +494,15 @@ public class FillFormsXML {
 		for (int i = 0; i < item.size(); i++) {
 			lists.getRelationTypeObservable().add(item.get(i).getName());
 			String name = item.get(i).getName();
-			String classi = item.get(i).getRelationClass(); 
+			String classi = item.get(i).getRelationClass();
 			String superi = item.get(i).getRelationSuperClass();
-			
+
 			data.add(new ClassTable(name, classi, superi));
 		}
 
 		control.getRelationForm().getTableTV().setItems(data);
 	}
-	
+
 	private void fillResolutionbservabel(List<Resolution> item) {
 
 		ObservableList<ClassTable> data = FXCollections.observableArrayList();
@@ -547,29 +510,29 @@ public class FillFormsXML {
 		for (int i = 0; i < item.size(); i++) {
 			lists.getResolutionTypeObservable().add(item.get(i).getName());
 			String name = item.get(i).getName();
-			String classi = item.get(i).getResolutionClass(); 
+			String classi = item.get(i).getResolutionClass();
 			String superi = item.get(i).getResolutionSuperClass();
-			
+
 			data.add(new ClassTable(name, classi, superi));
 		}
 
 		control.getResolutionForm().getTableTV().setItems(data);
 	}
-	
+
 	private void fillStatusbservabel(List<Status> item) {
 
 		ObservableList<ClassTable> data = FXCollections.observableArrayList();
 
 		for (int i = 0; i < item.size(); i++) {
-			lists.getResolutionTypeObservable().add(item.get(i).getName());
+			lists.getStatusTypeObservable().add(item.get(i).getName());
 			String name = item.get(i).getName();
-			String classi = item.get(i).getStatusClass(); 
+			String classi = item.get(i).getStatusClass();
 			String superi = item.get(i).getStatusSuperClass();
-			
+
 			data.add(new ClassTable(name, classi, superi));
 		}
 
-		control.getResolutionForm().getTableTV().setItems(data);
+		control.getStatusForm().getTableTV().setItems(data);
 	}
 
 	private void fillMilestoneObservabel(List<Milestone> milestones) {

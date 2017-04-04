@@ -237,7 +237,7 @@ public class FillForms {
 		forms.add(index, new ConfigurationForm(item, control, Constans.configurationDragTextIndexs, conf, index));
 		IDs[0] = index;
 		IDs[1] = idCreater.createConfigurationID();
-		System.out.println("Nevim " + IDs[1]);
+		
 		control.getLists().getConfigList().add(IDs[1], conf);
 		control.getLists().getConfigFormIndex().add(index);
 		index++;
@@ -245,30 +245,15 @@ public class FillForms {
 
 	}
 
-	public void fillBranch(Branch branch, int[] IDs, boolean isMain, String name, boolean isNew, int x, int y) {
+	public void fillBranch(String name, boolean isMain) {
+
+		Branch branch = (Branch) objF.createBranch();
 
 		branch.setIsMain(isMain);
 		branch.setName(name);
-		Coordinates coord = objF.createCoordinates();
 
-		if (isNew) {
-			control.getLists().getBranchList().add(IDs[1], branch);
-			control.getLists().getBranchFormIndex().add(IDs[0]);
-			control.getLists().getBranchObservable().add(name);
-		}
-	}
-
-	public int[] createBranch(CanvasItem item, BasicForm form, int[] IDs) {
-
-		Branch branch = (Branch) objF.createBranch();
-		forms.add(index, new BranchForm(item, control, branch));
-		IDs[0] = index;
-		IDs[1] = idCreater.createBranchID();
-		IDs[2] = form.getIdCreater().createBranchID();
-
-		form.getBranchArray().add(IDs[2], IDs[1]);
-		index++;
-		return IDs;
+		control.getLists().getBranchList().add(branch);
+		control.getLists().getBranchObservable().add(name);
 
 	}
 
@@ -363,33 +348,6 @@ public class FillForms {
 
 	}
 
-	// public int[] createRole(CanvasItem item, BasicForm form, int[] IDs) {
-	// Role role = (Role) objF.createRole();
-	// forms.add(index, new RoleForm(item, control, role));
-	// IDs[0] = index;
-	// IDs[1] = idCreater.createRoleID();
-	// control.getRoleList().add(IDs[1], role);
-	// control.getRoleFormIndex().add(index);
-	// index++;
-	// return IDs;
-	// }
-
-	public int getIndex() {
-		return index;
-	}
-
-	public void setIndex(int index) {
-		this.index = index;
-	}
-
-	public IdentificatorCreater getIdCreater() {
-		return idCreater;
-	}
-
-	public void setIdCreater(IdentificatorCreater idCreater) {
-		this.idCreater = idCreater;
-	}
-
 	public void fillTag(Configuration conf, ObservableList<TagTable> tags) {
 
 		for (int i = 0; i < tags.size(); i++) {
@@ -460,5 +418,22 @@ public class FillForms {
 		lists.getStatusTypeObservable().add(nameST);
 
 	}
+	public int getIndex() {
+		return index;
+	}
+
+	public void setIndex(int index) {
+		this.index = index;
+	}
+
+	public IdentificatorCreater getIdCreater() {
+		return idCreater;
+	}
+
+	public void setIdCreater(IdentificatorCreater idCreater) {
+		this.idCreater = idCreater;
+	}
+
+	
 
 }

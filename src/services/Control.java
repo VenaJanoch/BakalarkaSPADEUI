@@ -111,7 +111,7 @@ public class Control {
 	private RelationForm relationForm;
 	private ResolutionForm resolutionForm;
 	private StatusForm statusForm;
-
+	private BranchForm branchFrom;
 	public Control() {
 
 		procesGener = new ProcessGenerator();
@@ -135,7 +135,8 @@ public class Control {
 		relationForm = new RelationForm(this);
 		resolutionForm = new ResolutionForm(this);
 		statusForm = new StatusForm(this);
-
+		branchFrom = new BranchForm(this);
+		
 		arrows = new ArrayList<>();
 
 	}
@@ -145,35 +146,6 @@ public class Control {
 		forms.get(0).show();
 	}
 
-	public void showMilestones() {
-		milestoneForm.show();
-	}
-
-	public void showCPR() {
-		CPRForm.show();
-	}
-
-	public void showRole() {
-		roleForm.show();
-	}
-	
-	public void showPriority() {
-		priorityForm.show();
-	}
-	
-	public void showSeverity() {
-		severityForm.show();
-	}
-	
-	public void showRelation() {
-		relationForm.show();
-	}
-	public void showResolution() {
-		resolutionForm.show();
-	}
-	public void showStatus() {
-		statusForm.show();
-	}
 
 	private void updateIndexAndID() {
 
@@ -258,7 +230,7 @@ public class Control {
 	public void setChangeArtifactRelation(NodeLink link) {
 
 		int changeIndex = link.getChange()[1];
-		int changeFormIndex = link.getChange()[0];
+	//	int changeFormIndex = link.getChange()[0];
 		int artifactIndex = link.getArtifact()[1];
 
 		lists.getChangeList().get(changeIndex).setArtifactIndex(artifactIndex);
@@ -311,15 +283,11 @@ public class Control {
 
 		case Configuration:
 			return fillForms.createConfigruration(item, form, IDs);
-		case Branch:
-			return fillForms.createBranch(item, form, IDs);
 		case Change:
 			return fillForms.createChange(item, form, IDs);
 
 		case Artifact:
 			return fillForms.createArtifact(item, form, IDs);
-		// case Role:
-		// return fillForms.createRole(item, form, IDs);
 		default:
 			return IDs;
 		}
@@ -351,10 +319,6 @@ public class Control {
 
 			return fillFormsXML.createConfigurationFormXML(item, form, IDs);
 
-		case Branch:
-
-			return fillFormsXML.createBranchFormXML(item, form, IDs);
-
 		case Change:
 
 			return fillFormsXML.createChangeFormXML(item, form, IDs);
@@ -362,9 +326,7 @@ public class Control {
 		case Artifact:
 
 			return fillFormsXML.createArtifactFormXML(item, form, IDs);
-		// case Role:
-		// return fillFormsXML.createRoleFormXML(item, form, IDs);
-
+		
 		default:
 			return IDs;
 		}
@@ -409,13 +371,12 @@ public class Control {
 			lists.setBranchList(project.getBranches());
 			lists.setArtifactList(project.getArtifacts());
 			lists.setRoleTypeList(project.getRoleType());
-			
+
 			fillFormsXML = new FillFormsXML(this, lists, project, forms);
 			fillFormsXML.fillProjectFromXML(form);
-
 			
 			forms.add(0, form);
-
+		
 			parseProject();
 
 		}
@@ -424,10 +385,9 @@ public class Control {
 
 	private void parseProject() {
 		
-		fillFormsXML.fillRoleFromXML(project.getRoles());
-		fillFormsXML.fillPhasesFromXML(forms.get(0));
-		fillFormsXML.fillIterationFromXML(forms.get(0));
-		fillFormsXML.fillActivityFromXML(forms.get(0));
+		fillFormsXML.fillPhasesFromXML(forms.get(0));		
+		fillFormsXML.fillIterationFromXML(forms.get(0));		
+		fillFormsXML.fillActivityFromXML(forms.get(0));		
 		fillFormsXML.fillWorkUnitFromXML(forms.get(0), project.getWorkUnits());
 	}
 
@@ -563,8 +523,15 @@ public class Control {
 	public StatusForm getStatusForm() {
 		return statusForm;
 	}
+
+	public BranchForm getBranchFrom() {
+		return branchFrom;
+	}
+
+	public void setBranchFrom(BranchForm branchFrom) {
+		this.branchFrom = branchFrom;
+	}
 	
 	
 
-	
 }

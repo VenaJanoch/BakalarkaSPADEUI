@@ -24,16 +24,13 @@ public class Constans {
 
 	public static final int[] projectDragTextIndexs = { 0, 1, 2, 3 };
 	public static final int[] phaseDragTextIndexs = { 3 };
-	public static final int[] iterationDragTextIndexs = { 3, 6 };
+	public static final int[] iterationDragTextIndexs = { 3 };
 	public static final int[] activityDragTextIndexs = { 3 };
-	public static final int[] MilestoneDragTextIndexs = { 5 };
-	public static final int[] configurationDragTextIndexs = { 8, 9, 10, 12 };
-	public static final int[] ConfigPersonRelationDragTextIndexs = { 6 };
-	public static final int[] ChangeDragTextIndexs = { 10 };
-
-	public static final int addButtonCount = 9;
+	public static final int[] configurationDragTextIndexs = { 9, 10};
+	
+	public static final int addButtonCount = 11;
 	public static final String[] addButtonsNames = { "Project", "Add Milestone", "Add Config-role", "Add Role",
-			"Add Priority", "Add severity", "Add Relation", "Add Resolution", "Add Status" };
+			"Add Priority", "Add severity", "Add Relation", "Add Resolution", "Add Status", "Add Branch", "Add Configuration" };
 
 	public static final int roleTypeManagementClass = 0;
 	public static final int roleTypeTeamMemberClass = 6;

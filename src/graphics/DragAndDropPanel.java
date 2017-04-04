@@ -14,12 +14,12 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import services.Constans;
 import services.Control;
+import services.SegmentType;
 
 public class DragAndDropPanel extends BorderPane {
 
 	private DragAndDropItem items;
-	private Button[]  addButtons;
-
+	private Button[] addButtons;
 
 	private HBox buttonBox;
 	private Control control;
@@ -37,33 +37,35 @@ public class DragAndDropPanel extends BorderPane {
 		addButtons = new Button[Constans.addButtonCount];
 		createButtons();
 		createAction();
-	
+
 		buttonBox.getChildren().addAll(addButtons);
-		
+
 		this.setCenter(items);
 
 		this.setBottom(buttonBox);
 
-		
 	}
-	
-	public void createButtons(){
-		
+
+	public void createButtons() {
+
 		for (int i = 0; i < addButtons.length; i++) {
 			addButtons[i] = new Button(Constans.addButtonsNames[i]);
 		}
 	}
-	
-	public void createAction(){
+
+	public void createAction() {
 		addButtons[0].setOnAction(event -> control.showProjectForm());
-		addButtons[1].setOnAction(event -> control.showMilestones());
-		addButtons[2].setOnAction(event -> control.showCPR());
-		addButtons[3].setOnAction(event -> control.showRole());
-		addButtons[4].setOnAction(event -> control.showPriority());
-		addButtons[5].setOnAction(event -> control.showSeverity());
-		addButtons[6].setOnAction(event -> control.showRelation());
-		addButtons[7].setOnAction(event -> control.showResolution());
-		addButtons[8].setOnAction(event -> control.showStatus());
+		addButtons[1].setOnAction(event -> control.getMilestoneForm().show());
+		addButtons[2].setOnAction(event -> control.getCPRForm().show());
+		addButtons[3].setOnAction(event -> control.getRoleForm().show());
+		addButtons[4].setOnAction(event -> control.getPriorityForm().show());
+		addButtons[5].setOnAction(event -> control.getSeverityForm().show());
+		addButtons[6].setOnAction(event -> control.getRelationForm().show());
+		addButtons[7].setOnAction(event -> control.getResolutionForm().show());
+		addButtons[8].setOnAction(event -> control.getStatusForm().show());
+		addButtons[9].setOnAction(event -> control.getBranchFrom().show());
+		addButtons[10].setOnAction(
+				event -> new CanvasItem(SegmentType.Configuration, "", control, control.getForms().get(0), true));
 	}
 
 	public DragAndDropItem getItems() {

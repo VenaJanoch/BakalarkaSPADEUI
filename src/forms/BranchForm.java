@@ -2,23 +2,42 @@ package forms;
 
 import SPADEPAC.Branch;
 import abstractform.BasicForm;
+import abstractform.TableBasicForm;
 import graphics.CanvasItem;
 import graphics.InfoBoxSegment;
 import interfaces.ISegmentForm;
+import interfaces.ISegmentTableForm;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.geometry.HPos;
+import javafx.geometry.Insets;
+import javafx.scene.Node;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
+import javafx.scene.control.SelectionMode;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
 import javafx.stage.WindowEvent;
+import services.Alerts;
 import services.Control;
+import services.OrderCell;
+import tables.BranchTable;
+import tables.TagTable;
 
-public class BranchForm extends BasicForm implements ISegmentForm {
+public class BranchForm extends TableBasicForm implements ISegmentTableForm {
 
 	private Label isMainLB;
 	private boolean isMain;
@@ -29,24 +48,17 @@ public class BranchForm extends BasicForm implements ISegmentForm {
 	private RadioButton rbNo;
 
 	private ComboBox<String> branchesCB;
+	private TableView<BranchTable> tableTV;
 	private Label branchesLB;
+
+	private String main = "TRUE";
 
 	private int branchIndex;
 
 	private boolean newBranch;
-	private Branch branch;
 
-	public BranchForm(CanvasItem item, Control control, Branch branch) {
-		super(item, control);
-		this.branch = branch;
-
-		this.setOnCloseRequest(new EventHandler<WindowEvent>() {
-
-			@Override
-			public void handle(WindowEvent event) {
-				closeForm();
-			}
-		});
+	public BranchForm(Control control) {
+		super(control);
 
 		getSubmitButton().setOnAction(event -> setActionSubmitButton());
 		createForm();
@@ -54,27 +66,72 @@ public class BranchForm extends BasicForm implements ISegmentForm {
 	}
 
 	@Override
-	public void closeForm() {
-
-		String actName = getNameTF().getText();
-		BasicForm form = getCanvasItem().getForm();
-		int[] IDs = getCanvasItem().getIDs();
-		int x = (int) getCanvasItem().getTranslateX();
-		int y = (int) getCanvasItem().getTranslateY();
-
-		setName(actName);
-		getCanvasItem().setNameText(actName);
-		getControl().getFillForms().fillBranch(branch, IDs, isMain, actName, newBranch, x, y);
-	}
-
-	@Override
 	public void setActionSubmitButton() {
-		closeForm();
 		close();
 	}
 
 	@Override
 	public void createForm() {
+		getMainPanel().setCenter(getTable());
+		getMainPanel().setBottom(createControlPane());
+	}
+
+	ChangeListener<Number> branchListener = new ChangeListener<Number>() {
+
+		@Override
+		public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+
+			branchIndex = newValue.intValue();
+		}
+	};
+
+	@Override
+	public Node getTable() {
+		tableTV = new TableView<BranchTable>();
+
+		TableColumn<BranchTable, String> nameColumn = new TableColumn<BranchTable, String>("Name");
+		TableColumn<BranchTable, String> mainColumn = new TableColumn<BranchTable, String>("Is Main");
+
+		nameColumn.setCellValueFactory(new PropertyValueFactory("name"));
+		nameColumn.setMinWidth(150);
+		nameColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+
+		mainColumn.setCellValueFactory(new PropertyValueFactory("main"));
+		mainColumn.setMinWidth(150);
+		mainColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+
+		tableTV.getColumns().addAll(nameColumn, mainColumn);
+
+		tableTV.setEditable(true);
+
+		tableTV.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+
+		tableTV.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+
+		tableTV.setOnKeyReleased(event -> deleteSelected(event));
+
+		BorderPane.setMargin(tableTV, new Insets(5));
+
+		return tableTV;
+	}
+
+	@Override
+	public void deleteSelected(KeyEvent event) {
+		ObservableList<BranchTable> selection = FXCollections
+				.observableArrayList(tableTV.getSelectionModel().getSelectedItems());
+
+		if (event.getCode() == KeyCode.DELETE) {
+			if (selection.size() == 0) {
+				Alerts.showNoItemsDeleteAlert();
+			} else {
+				Alerts.showDeleteItemAlert(tableTV, selection);
+			}
+		}
+
+	}
+
+	@Override
+	public GridPane createControlPane() {
 
 		isMainLB = new Label("Main");
 
@@ -98,61 +155,41 @@ public class BranchForm extends BasicForm implements ISegmentForm {
 
 				if (chk.getText().contains("Yes")) {
 					isMain = true;
+					main = "TRUE";
 				} else {
+					main = "FALSE";
 					isMain = false;
 				}
 
 			}
 		});
 
-		fillInfoPart();
+		getControlPane().add(isMainLB, 2, 0);
+		getControlPane().add(rbYes, 3, 0);
+		getControlPane().add(rbNo, 4, 0);
+
+		getControlPane().add(getAddBT(), 5, 0);
+
+		getAddBT().setOnAction(event -> addItem());
+
+		return getControlPane();
 	}
 
-	ChangeListener<Number> branchListener = new ChangeListener<Number>() {
+	@Override
+	public void addItem() {
 
-		@Override
-		public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+		String nameST = getNameTF().getText();
 
-			branchIndex = newValue.intValue();
-			fillFormFromList(branchIndex);
-		}
-	};
-
-	private void fillFormFromList(int index) {
-		System.out.println(index + "Index ");
-		if ((index) > 0) {
-
-			getNameTF().setText(getControl().getLists().getBranchList().get(index - 1).getName());
-			getNameTF().setDisable(true);
-			newBranch = false;
-
-			if (getControl().getLists().getBranchList().get(index - 1).isIsMain()) {
-				rbYes.setSelected(true);
-				rbYes.setDisable(true);
-				rbNo.setDisable(true);
-			} else {
-				rbNo.setSelected(true);
-				rbYes.setDisable(true);
-				rbNo.setDisable(true);
-			}
-
-		} else {
-			getNameTF().setDisable(false);
-			rbYes.setDisable(false);
-			rbNo.setDisable(false);
-			newBranch = true;
+		if (nameST.length() == 0) {
+			Alerts.showNoText("Name");
+			return;
 		}
 
-	}
+		BranchTable tag = new BranchTable(nameST, main);
+		tableTV.getItems().add(tag);
+		tableTV.sort();
 
-	private void fillInfoPart() {
-		getInfoPart().add(isMainLB, 0, 1);
-		getInfoPart().setHalignment(isMainLB, HPos.RIGHT);
-		getInfoPart().add(rbYes, 1, 1);
-		getInfoPart().add(rbNo, 2, 1);
-		getInfoPart().add(branchesLB, 3, 0);
-		getInfoPart().add(branchesCB, 4, 0);
-
+		getControl().getFillForms().fillBranch(nameST, isMain);
 	}
 
 	/*** Getrs and Setrs ***/
@@ -189,12 +226,12 @@ public class BranchForm extends BasicForm implements ISegmentForm {
 		this.rbNo = rbNo;
 	}
 
-	public ComboBox<String> getBranchesCB() {
-		return branchesCB;
+	public TableView<BranchTable> getTableTV() {
+		return tableTV;
 	}
 
-	public void setBranchesCB(ComboBox<String> branchesCB) {
-		this.branchesCB = branchesCB;
+	public void setTableTV(TableView<BranchTable> tableTV) {
+		this.tableTV = tableTV;
 	}
 
 }
