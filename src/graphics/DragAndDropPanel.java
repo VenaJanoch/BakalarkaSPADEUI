@@ -18,13 +18,12 @@ import services.Control;
 public class DragAndDropPanel extends BorderPane {
 
 	private DragAndDropItem items;
-	private Button formBT;
-	private Button addMilestoneBT;
-	private Button addCPRBT;
-	private Button addRoleBT;
+	private Button[]  addButtons;
+
+
 	private HBox buttonBox;
 	private Control control;
-	
+
 	public DragAndDropPanel(Control control) {
 
 		super();
@@ -35,23 +34,37 @@ public class DragAndDropPanel extends BorderPane {
 
 		items = new DragAndDropItem(control, Constans.projectDragTextIndexs);
 
-		formBT = new Button("Project");
-		addMilestoneBT = new Button("Add Milestone");
-		addCPRBT = new Button("Add Config-role");
-		addRoleBT = new Button("Add Role");
+		addButtons = new Button[Constans.addButtonCount];
+		createButtons();
+		createAction();
+	
+		buttonBox.getChildren().addAll(addButtons);
 		
-		buttonBox.getChildren().addAll(formBT,addMilestoneBT,addCPRBT,addRoleBT);
 		this.setCenter(items);
 
-		this.setLeft(buttonBox);
+		this.setBottom(buttonBox);
 
-		formBT.setOnAction(event -> control.showProjectForm());
-		addMilestoneBT.setOnAction(event -> control.showMilestones());
-		addCPRBT.setOnAction(event -> control.showCPR());
-		addRoleBT.setOnAction(event -> control.showRole());
+		
 	}
-
 	
+	public void createButtons(){
+		
+		for (int i = 0; i < addButtons.length; i++) {
+			addButtons[i] = new Button(Constans.addButtonsNames[i]);
+		}
+	}
+	
+	public void createAction(){
+		addButtons[0].setOnAction(event -> control.showProjectForm());
+		addButtons[1].setOnAction(event -> control.showMilestones());
+		addButtons[2].setOnAction(event -> control.showCPR());
+		addButtons[3].setOnAction(event -> control.showRole());
+		addButtons[4].setOnAction(event -> control.showPriority());
+		addButtons[5].setOnAction(event -> control.showSeverity());
+		addButtons[6].setOnAction(event -> control.showRelation());
+		addButtons[7].setOnAction(event -> control.showResolution());
+		addButtons[8].setOnAction(event -> control.showStatus());
+	}
 
 	public DragAndDropItem getItems() {
 		return items;

@@ -14,9 +14,14 @@ import SPADEPAC.Criterion;
 import SPADEPAC.Iteration;
 import SPADEPAC.Milestone;
 import SPADEPAC.Phase;
+import SPADEPAC.Priority;
 import SPADEPAC.Project;
+import SPADEPAC.Relation;
+import SPADEPAC.Resolution;
 import SPADEPAC.Role;
 import SPADEPAC.RoleType;
+import SPADEPAC.Severity;
+import SPADEPAC.Status;
 import SPADEPAC.WorkUnit;
 import SPADEPAC.WorkUnitPriorityClass;
 import SPADEPAC.WorkUnitSeverityClass;
@@ -37,6 +42,7 @@ import graphics.CanvasItem;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import tables.CPRTable;
+import tables.ClassTable;
 import tables.CriterionTable;
 import tables.MilestoneTable;
 
@@ -68,7 +74,13 @@ public class FillFormsXML {
 		form.getDescriptionTF().setText(project.getDescription());
 		form.getDateDP().setValue(control.convertDateFromXML(project.getStartDate()));
 		form.getDate2DP().setValue(control.convertDateFromXML(project.getEndDate()));
-
+		
+		
+		fillPrioritybservabel(project.getPriority());
+		fillSeveritybservabel(project.getSeverity());
+		fillRelationbservabel(project.getRelation());
+		fillResolutionbservabel(project.getResolution());
+		fillStatusbservabel(project.getStatus());
 		fillCriterionObservabel(project.getCriterions());
 		fillMilestoneObservabel(project.getMilestones());
 		fillBranchObservabel(project.getBranches());
@@ -217,10 +229,12 @@ public class FillFormsXML {
 
 		workUnitForm.getNameTF().setText(unit.getName());
 		workUnitForm.getDescriptionTF().setText(unit.getDescription());
-		workUnitForm.getPriorityCB().setValue(WorkUnitPriorityClass.values()[unit.getPriorityIndex()]);
-		workUnitForm.getSeverityCB().setValue(WorkUnitSeverityClass.values()[unit.getSeverityIndex()]);
+		workUnitForm.getPriorityCB().setValue(lists.getPriorityObservable().get(unit.getPriorityIndex()));
+		workUnitForm.getSeverityCB().setValue(lists.getSeverityTypeObservable().get(unit.getSeverityIndex()));
 		workUnitForm.getTypeCB().setValue(WorkUnitTypeClass.values()[unit.getTypeIndex()]);
-		// workUnitForm.getCategoryCB().setValue(WorkUnitPriorityClass.values()[unit.getPriorityIndex()]);
+		workUnitForm.getCategoryTF().setText(unit.getCategory());
+		workUnitForm.getStatusCB().setValue(lists.getStatusTypeObservable().get(unit.getStatusIndex()));
+		workUnitForm.getResolutionCB().setValue(lists.getResolutionTypeObservable().get(unit.getResolutionIndex()));
 
 		index++;
 		forms.add(IDs[0], workUnitForm);
@@ -380,7 +394,7 @@ public class FillFormsXML {
 		int index = form.getChangeArray().get(IDs[2]);
 		Change change = control.getLists().getChangeList().get(index);
 		ChangeForm changeForm = new ChangeForm(item, control, change);
-		
+
 		changeForm.getChangeCB().setValue(change.getName());
 		changeForm.setNewChange(false);
 
@@ -477,6 +491,86 @@ public class FillFormsXML {
 
 		control.getCPRForm().getTableTV().setItems(data);
 	}
+	
+	private void fillPrioritybservabel(List<Priority> item) {
+
+		ObservableList<ClassTable> data = FXCollections.observableArrayList();
+
+		for (int i = 0; i < item.size(); i++) {
+			control.getLists().getPriorityObservable().add(item.get(i).getName());
+			String name = item.get(i).getName();
+			String classi = item.get(i).getPriorityClass(); 
+			String superi = item.get(i).getPrioritySuperClass();
+			
+			data.add(new ClassTable(name, classi, superi));
+		}
+
+		control.getPriorityForm().getTableTV().setItems(data);
+	}
+	
+	private void fillSeveritybservabel(List<Severity> item) {
+
+		ObservableList<ClassTable> data = FXCollections.observableArrayList();
+
+		for (int i = 0; i < item.size(); i++) {
+			lists.getSeverityTypeObservable().add(item.get(i).getName());
+			String name = item.get(i).getName();
+			String classi = item.get(i).getSeverityClass(); 
+			String superi = item.get(i).getSeveritySuperClass();
+			
+			data.add(new ClassTable(name, classi, superi));
+		}
+
+		control.getSeverityForm().getTableTV().setItems(data);
+	}
+	
+	private void fillRelationbservabel(List<Relation> item) {
+
+		ObservableList<ClassTable> data = FXCollections.observableArrayList();
+
+		for (int i = 0; i < item.size(); i++) {
+			lists.getRelationTypeObservable().add(item.get(i).getName());
+			String name = item.get(i).getName();
+			String classi = item.get(i).getRelationClass(); 
+			String superi = item.get(i).getRelationSuperClass();
+			
+			data.add(new ClassTable(name, classi, superi));
+		}
+
+		control.getRelationForm().getTableTV().setItems(data);
+	}
+	
+	private void fillResolutionbservabel(List<Resolution> item) {
+
+		ObservableList<ClassTable> data = FXCollections.observableArrayList();
+
+		for (int i = 0; i < item.size(); i++) {
+			lists.getResolutionTypeObservable().add(item.get(i).getName());
+			String name = item.get(i).getName();
+			String classi = item.get(i).getResolutionClass(); 
+			String superi = item.get(i).getResolutionSuperClass();
+			
+			data.add(new ClassTable(name, classi, superi));
+		}
+
+		control.getResolutionForm().getTableTV().setItems(data);
+	}
+	
+	private void fillStatusbservabel(List<Status> item) {
+
+		ObservableList<ClassTable> data = FXCollections.observableArrayList();
+
+		for (int i = 0; i < item.size(); i++) {
+			lists.getResolutionTypeObservable().add(item.get(i).getName());
+			String name = item.get(i).getName();
+			String classi = item.get(i).getStatusClass(); 
+			String superi = item.get(i).getStatusSuperClass();
+			
+			data.add(new ClassTable(name, classi, superi));
+		}
+
+		control.getResolutionForm().getTableTV().setItems(data);
+	}
 
 	private void fillMilestoneObservabel(List<Milestone> milestones) {
 
@@ -510,7 +604,7 @@ public class FillFormsXML {
 		ObservableList<CriterionTable> data = FXCollections.observableArrayList();
 
 		for (int i = 0; i < criterions.size(); i++) {
-			control.getLists().getArtifactObservable().add(criterions.get(i).getName());
+			control.getLists().getCriterionObservable().add(criterions.get(i).getName());
 			data.add(new CriterionTable(criterions.get(i).getName(), criterions.get(i).getDescription()));
 		}
 

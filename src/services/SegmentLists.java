@@ -10,9 +10,14 @@ import SPADEPAC.ConfigPersonRelation;
 import SPADEPAC.Configuration;
 import SPADEPAC.Criterion;
 import SPADEPAC.Milestone;
+import SPADEPAC.Priority;
 import SPADEPAC.Project;
+import SPADEPAC.Relation;
+import SPADEPAC.Resolution;
 import SPADEPAC.Role;
 import SPADEPAC.RoleType;
+import SPADEPAC.Severity;
+import SPADEPAC.Status;
 import forms.ConfigPersonRelationForm;
 import forms.MilestoneForm;
 import forms.RoleForm;
@@ -55,20 +60,34 @@ public class SegmentLists {
 	private ObservableList<String> roleTypeObservable;
 	private List<RoleType> roleTypeList;
 
-	
-	
+	private ObservableList<String> priorityTypeObservable;
+	private List<Priority> priorityTypeList;
+
+	private ObservableList<String> severityTypeObservable;
+	private List<Severity> severityTypeList;
+
+	private ObservableList<String> relationTypeObservable;
+	private List<Relation> relationTypeList;
+
+	private ObservableList<String> resolutionTypeObservable;
+	private List<Resolution> resolutionTypeList;
+
+	private ObservableList<String> statusTypeObservable;
+	private List<Status> statusTypeList;
+
 	private Control control;
 	private Project project;
+
 	public SegmentLists(Control control, Project project) {
-		
+
 		this.control = control;
 		this.project = project;
 		createLists();
-		
+
 	}
-	
-	public void restartLists(){
-		
+
+	public void restartLists() {
+
 		configList.clear();
 		configFormIndex.clear();
 		configObservable.clear();
@@ -92,15 +111,33 @@ public class SegmentLists {
 		artifactObservable.clear();
 
 		criterionList.clear();
-		criterionFormIndex.clear();
 		criterionObservable.clear();
 
 		milestoneList.clear();
-		milestoneFormIndex.clear();
 		milestoneObservable.clear();
 
+		CPRList.clear();
+		CPRObservable.clear();
+
+		roleTypeList.clear();
+		roleTypeObservable.clear();
+
+		priorityTypeList.clear();
+		priorityTypeObservable.clear();
+
+		severityTypeList.clear();
+		severityTypeObservable.clear();
+
+		relationTypeList.clear();
+		relationTypeObservable.clear();
+
+		resolutionTypeList.clear();
+		resolutionTypeObservable.clear();
+
+		statusTypeList.clear();
+		statusTypeObservable.clear();
 	}
-	
+
 	public void createLists() {
 		configList = new ArrayList<>();
 		configFormIndex = new ArrayList<>();
@@ -123,7 +160,7 @@ public class SegmentLists {
 		setArtifactList(project.getArtifacts());
 		setArtifactFormIndex(new ArrayList<>());
 		setArtifactObservable(FXCollections.observableArrayList());
-		
+
 		criterionList = project.getCriterions();
 		criterionFormIndex = new ArrayList<>();
 		criterionObservable = FXCollections.observableArrayList();
@@ -133,14 +170,28 @@ public class SegmentLists {
 		milestoneObservable = FXCollections.observableArrayList();
 
 		setCPRList(project.getCpr());
-		milestoneObservable = FXCollections.observableArrayList();
-		
+		CPRObservable = FXCollections.observableArrayList();
+
 		setRoleTypeList(project.getRoleType());
 		setRoleTypeObservable(FXCollections.observableArrayList());
 
+		priorityTypeList = project.getPriority();
+		priorityTypeObservable = FXCollections.observableArrayList();
+
+		setSeverityTypeList(project.getSeverity());
+		setSeverityTypeObservable(FXCollections.observableArrayList());
+
+		setRelationTypeList(project.getRelation());
+		relationTypeObservable = FXCollections.observableArrayList();
+
+		resolutionTypeList = project.getResolution();
+		resolutionTypeObservable = FXCollections.observableArrayList();
+
+		statusTypeList = project.getStatus();
+		statusTypeObservable = FXCollections.observableArrayList();
+
 	}
-	
-	
+
 	public ObservableList<String> getConfigObservable() {
 		return configObservable;
 	}
@@ -260,7 +311,7 @@ public class SegmentLists {
 	public void setChangeFormIndex(ArrayList<Integer> changeFormIndex) {
 		this.changeFormIndex = changeFormIndex;
 	}
-	
+
 	public ObservableList<String> getCriterionObservable() {
 		return criterionObservable;
 	}
@@ -339,6 +390,86 @@ public class SegmentLists {
 
 	public void setRoleTypeList(List<RoleType> roleTypeList) {
 		this.roleTypeList = roleTypeList;
+	}
+
+	public ObservableList<String> getPriorityObservable() {
+		return priorityTypeObservable;
+	}
+
+	public void setPriorityTypeObservable(ObservableList<String> priorityObservable) {
+		this.priorityTypeObservable = priorityObservable;
+	}
+
+	public List<Priority> getPriorityTypeList() {
+		return priorityTypeList;
+	}
+
+	public void setPriorityTypeList(List<Priority> priorityTypeList) {
+		this.priorityTypeList = priorityTypeList;
+	}
+
+	public ObservableList<String> getSeverityTypeObservable() {
+		return severityTypeObservable;
+	}
+
+	public void setSeverityTypeObservable(ObservableList<String> severityTypeObservable) {
+		this.severityTypeObservable = severityTypeObservable;
+	}
+
+	public List<Severity> getSeverityTypeList() {
+		return severityTypeList;
+	}
+
+	public void setSeverityTypeList(List<Severity> severityTypeList) {
+		this.severityTypeList = severityTypeList;
+	}
+
+	public ObservableList<String> getRelationTypeObservable() {
+		return relationTypeObservable;
+	}
+
+	public void setRelationTypeObservable(ObservableList<String> relationTypeObservable) {
+		this.relationTypeObservable = relationTypeObservable;
+	}
+
+	public ObservableList<String> getResolutionTypeObservable() {
+		return resolutionTypeObservable;
+	}
+
+	public void setResolutionTypeObservable(ObservableList<String> resolutionTypeObservable) {
+		this.resolutionTypeObservable = resolutionTypeObservable;
+	}
+
+	public ObservableList<String> getStatusTypeObservable() {
+		return statusTypeObservable;
+	}
+
+	public void setStatusTypeObservable(ObservableList<String> statusTypeObservable) {
+		this.statusTypeObservable = statusTypeObservable;
+	}
+
+	public List<Status> getStatusTypeList() {
+		return statusTypeList;
+	}
+
+	public void setStatusTypeList(List<Status> statusTypeList) {
+		this.statusTypeList = statusTypeList;
+	}
+
+	public List<Resolution> getResolutionTypeList() {
+		return resolutionTypeList;
+	}
+
+	public void setResolutionTypeList(List<Resolution> resolutionTypeList) {
+		this.resolutionTypeList = resolutionTypeList;
+	}
+
+	public List<Relation> getRelationTypeList() {
+		return relationTypeList;
+	}
+
+	public void setRelationTypeList(List<Relation> relationTypeList) {
+		this.relationTypeList = relationTypeList;
 	}
 
 }

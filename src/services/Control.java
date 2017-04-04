@@ -59,8 +59,14 @@ import forms.CriterionForm;
 import forms.IterationForm;
 import forms.MilestoneForm;
 import forms.PhaseForm;
+import forms.PriorityForm;
+import forms.PriorityForm;
 import forms.ProjectForm;
+import forms.RelationForm;
+import forms.ResolutionForm;
 import forms.RoleForm;
+import forms.SeverityForm;
+import forms.StatusForm;
 import forms.WorkUnitForm;
 import graphics.CanvasItem;
 import graphics.DragAndDropCanvas;
@@ -100,6 +106,11 @@ public class Control {
 	private MilestoneForm milestoneForm;
 	private ConfigPersonRelationForm CPRForm;
 	private RoleForm roleForm;
+	private PriorityForm priorityForm;
+	private SeverityForm severityForm;
+	private RelationForm relationForm;
+	private ResolutionForm resolutionForm;
+	private StatusForm statusForm;
 
 	public Control() {
 
@@ -119,6 +130,11 @@ public class Control {
 		milestoneForm = new MilestoneForm(this);
 		CPRForm = new ConfigPersonRelationForm(this);
 		roleForm = new RoleForm(this);
+		priorityForm = new PriorityForm(this);
+		severityForm = new SeverityForm(this);
+		relationForm = new RelationForm(this);
+		resolutionForm = new ResolutionForm(this);
+		statusForm = new StatusForm(this);
 
 		arrows = new ArrayList<>();
 
@@ -139,6 +155,24 @@ public class Control {
 
 	public void showRole() {
 		roleForm.show();
+	}
+	
+	public void showPriority() {
+		priorityForm.show();
+	}
+	
+	public void showSeverity() {
+		severityForm.show();
+	}
+	
+	public void showRelation() {
+		relationForm.show();
+	}
+	public void showResolution() {
+		resolutionForm.show();
+	}
+	public void showStatus() {
+		statusForm.show();
 	}
 
 	private void updateIndexAndID() {
@@ -505,4 +539,32 @@ public class Control {
 	public void setCPRForm(ConfigPersonRelationForm cPRForm) {
 		CPRForm = cPRForm;
 	}
+
+	public RoleForm getRoleForm() {
+		return roleForm;
+	}
+
+	public PriorityForm getPriorityForm() {
+		return priorityForm;
+	}
+
+	public SeverityForm getSeverityForm() {
+		return severityForm;
+	}
+
+	public RelationForm getRelationForm() {
+		return relationForm;
+	}
+
+	public ResolutionForm getResolutionForm() {
+		return resolutionForm;
+	}
+
+	public StatusForm getStatusForm() {
+		return statusForm;
+	}
+	
+	
+
+	
 }

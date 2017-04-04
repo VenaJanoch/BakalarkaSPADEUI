@@ -36,13 +36,17 @@ public class WorkUnitForm extends DescriptionBasicForm implements ISegmentForm {
 	private Label priorityLB;
 	private Label severityLB;
 	private Label categoryLB;
+	private Label statusLB;
+	private Label resolutionLB;
 	private Label typeLB;
 	private Label asigneeRoleLB;
 	private Label authorRoleLB;
 
 	private TextField estimatedTimeTF;
-	private ComboBox<WorkUnitPriorityClass> priorityCB;
-	private ComboBox<WorkUnitSeverityClass> severityCB;
+	private ComboBox<String> priorityCB;
+	private ComboBox<String> severityCB;
+	private ComboBox<String> resolutionCB;
+	private ComboBox<String> statusCB;
 	private TextField categoryTF;
 	private ComboBox<WorkUnitTypeClass> typeCB;
 	private ComboBox<String> asigneeRoleCB;
@@ -53,6 +57,9 @@ public class WorkUnitForm extends DescriptionBasicForm implements ISegmentForm {
 	private int assigneIndex;
 	private int typeIndex;
 	private int authorIndex;
+	private int resolutionIndex;
+	private int statusIndex;
+
 	private WorkUnit unit;
 
 	public WorkUnitForm(CanvasItem item, Control control, WorkUnit unit) {
@@ -83,15 +90,12 @@ public class WorkUnitForm extends DescriptionBasicForm implements ISegmentForm {
 		int[] IDs = getCanvasItem().getIDs();
 		int x = (int) getCanvasItem().getTranslateX();
 		int y = (int) getCanvasItem().getTranslateY();
-		String priority = WorkUnitPriorityClass.values()[priorityIndex].name();
-		String severity = WorkUnitSeverityClass.values()[severityIndex].name();
 		String category = categoryTF.getText();
-		String type = WorkUnitTypeClass.values()[typeIndex].name();
 
 		getCanvasItem().setNameText(actName);
 		setName(actName);
 		getControl().getFillForms().fillWorkUnit(form, IDs[2], getDescriptionTF().getText(), actName, assigneIndex,
-				authorIndex, category, x, y, priorityIndex, severityIndex, typeIndex);
+				authorIndex, category, x, y, priorityIndex, severityIndex, typeIndex, resolutionIndex,statusIndex );
 
 	}
 
@@ -113,16 +117,18 @@ public class WorkUnitForm extends DescriptionBasicForm implements ISegmentForm {
 		estimatedTimeTF = new TextField();
 
 		priorityLB = new Label("Priority: ");
-		priorityCB = new ComboBox<WorkUnitPriorityClass>(
-				FXCollections.observableArrayList(WorkUnitPriorityClass.values()));
+		priorityCB = new ComboBox<String>(
+				FXCollections.observableArrayList(getControl().getLists().getPriorityObservable()));
+
 		priorityCB.getSelectionModel().selectedIndexProperty().addListener(priorityListener);
 		priorityCB.setVisibleRowCount(5);
 
 		severityLB = new Label("Severity: ");
-		severityCB = new ComboBox<WorkUnitSeverityClass>(
-				FXCollections.observableArrayList(WorkUnitSeverityClass.values()));
+		severityCB = new ComboBox<String>(
+				FXCollections.observableArrayList(getControl().getLists().getSeverityTypeObservable()));
 		severityCB.getSelectionModel().selectedIndexProperty().addListener(severityListener);
 		severityCB.setVisibleRowCount(5);
+
 		categoryLB = new Label("CategoryLB: ");
 		categoryTF = new TextField();
 
@@ -141,6 +147,18 @@ public class WorkUnitForm extends DescriptionBasicForm implements ISegmentForm {
 		authorRoleCB.setVisibleRowCount(5);
 		authorRoleCB.getSelectionModel().selectedIndexProperty().addListener(roleListenerAut);
 
+		resolutionLB = new Label("Resolution: ");
+		resolutionCB = new ComboBox<String>(
+				FXCollections.observableArrayList(getControl().getLists().getResolutionTypeObservable()));
+		resolutionCB.getSelectionModel().selectedIndexProperty().addListener(resolutionListener);
+		resolutionCB.setVisibleRowCount(5);
+
+		statusLB = new Label("Status: ");
+		statusCB = new ComboBox<String>(
+				FXCollections.observableArrayList(getControl().getLists().getStatusTypeObservable()));
+		statusCB.getSelectionModel().selectedIndexProperty().addListener(statusListener);
+		statusCB.setVisibleRowCount(5);
+
 		fillInfoPart();
 	}
 
@@ -149,8 +167,28 @@ public class WorkUnitForm extends DescriptionBasicForm implements ISegmentForm {
 		@Override
 		public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
 
-			System.out.println(newValue.intValue());
+			
 			typeIndex = newValue.intValue();
+
+		}
+	};
+
+	ChangeListener<Number> resolutionListener = new ChangeListener<Number>() {
+
+		@Override
+		public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+
+			resolutionIndex = newValue.intValue();
+
+		}
+	};
+
+	ChangeListener<Number> statusListener = new ChangeListener<Number>() {
+
+		@Override
+		public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+
+			statusIndex = newValue.intValue();
 
 		}
 	};
@@ -200,29 +238,37 @@ public class WorkUnitForm extends DescriptionBasicForm implements ISegmentForm {
 		getInfoPart().setHalignment(estimatedTimeLB, HPos.RIGHT);
 		getInfoPart().add(estimatedTimeTF, 1, 2);
 
-		getInfoPart().add(priorityLB, 0, 3);
-		getInfoPart().setHalignment(priorityLB, HPos.RIGHT);
-		getInfoPart().add(priorityCB, 1, 3);
-
-		getInfoPart().add(severityLB, 0, 4);
-		getInfoPart().setHalignment(severityLB, HPos.RIGHT);
-		getInfoPart().add(severityCB, 1, 4);
-
-		getInfoPart().add(categoryLB, 0, 5);
+		getInfoPart().add(categoryLB, 0, 3);
 		getInfoPart().setHalignment(categoryLB, HPos.RIGHT);
-		getInfoPart().add(categoryTF, 1, 5);
+		getInfoPart().add(categoryTF, 1, 3);
 
-		getInfoPart().add(typeLB, 0, 6);
+		getInfoPart().add(priorityLB, 0, 4);
+		getInfoPart().setHalignment(priorityLB, HPos.RIGHT);
+		getInfoPart().add(priorityCB, 1, 4);
+
+		getInfoPart().add(severityLB, 0, 5);
+		getInfoPart().setHalignment(severityLB, HPos.RIGHT);
+		getInfoPart().add(severityCB, 1, 5);
+
+		getInfoPart().add(typeLB, 0, 7);
 		getInfoPart().setHalignment(typeLB, HPos.RIGHT);
-		getInfoPart().add(typeCB, 1, 6);
+		getInfoPart().add(typeCB, 1, 7);
 
-		getInfoPart().add(asigneeRoleLB, 0, 7);
+		getInfoPart().add(resolutionLB, 0, 8);
+		getInfoPart().setHalignment(resolutionLB, HPos.RIGHT);
+		getInfoPart().add(resolutionCB, 1, 8);
+
+		getInfoPart().add(statusLB, 0, 9);
+		getInfoPart().setHalignment(statusLB, HPos.RIGHT);
+		getInfoPart().add(statusCB, 1, 9);
+
+		getInfoPart().add(asigneeRoleLB, 0, 10);
 		getInfoPart().setHalignment(asigneeRoleLB, HPos.RIGHT);
-		getInfoPart().add(asigneeRoleCB, 1, 7);
+		getInfoPart().add(asigneeRoleCB, 1, 10);
 
-		getInfoPart().add(authorRoleLB, 0, 8);
+		getInfoPart().add(authorRoleLB, 0, 11);
 		getInfoPart().setHalignment(authorRoleLB, HPos.RIGHT);
-		getInfoPart().add(authorRoleCB, 1, 8);
+		getInfoPart().add(authorRoleCB, 1, 11);
 
 	}
 
@@ -236,19 +282,19 @@ public class WorkUnitForm extends DescriptionBasicForm implements ISegmentForm {
 		this.estimatedTimeTF = estimatedTimeTF;
 	}
 
-	public ComboBox<WorkUnitPriorityClass> getPriorityCB() {
+	public ComboBox<String> getPriorityCB() {
 		return priorityCB;
 	}
 
-	public void setPriorityCB(ComboBox<WorkUnitPriorityClass> priorityCB) {
+	public void setPriorityCB(ComboBox<String> priorityCB) {
 		this.priorityCB = priorityCB;
 	}
 
-	public ComboBox<WorkUnitSeverityClass> getSeverityCB() {
+	public ComboBox<String> getSeverityCB() {
 		return severityCB;
 	}
 
-	public void setSeverityCB(ComboBox<WorkUnitSeverityClass> severityCB) {
+	public void setSeverityCB(ComboBox<String> severityCB) {
 		this.severityCB = severityCB;
 	}
 
@@ -284,4 +330,22 @@ public class WorkUnitForm extends DescriptionBasicForm implements ISegmentForm {
 		this.authorRoleCB = authorRoleCB;
 	}
 
+	public ComboBox<String> getResolutionCB() {
+		return resolutionCB;
+	}
+
+	public void setResolutionCB(ComboBox<String> resolutionCB) {
+		this.resolutionCB = resolutionCB;
+	}
+
+	public ComboBox<String> getStatusCB() {
+		return statusCB;
+	}
+
+	public void setStatusCB(ComboBox<String> statusCB) {
+		this.statusCB = statusCB;
+	}
+
+	
+	
 }

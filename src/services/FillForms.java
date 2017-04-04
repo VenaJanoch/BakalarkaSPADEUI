@@ -15,9 +15,14 @@ import SPADEPAC.Iteration;
 import SPADEPAC.Milestone;
 import SPADEPAC.ObjectFactory;
 import SPADEPAC.Phase;
+import SPADEPAC.Priority;
 import SPADEPAC.Project;
+import SPADEPAC.Relation;
+import SPADEPAC.Resolution;
 import SPADEPAC.Role;
 import SPADEPAC.RoleType;
+import SPADEPAC.Severity;
+import SPADEPAC.Status;
 import SPADEPAC.WorkUnit;
 import abstractform.BasicForm;
 import forms.ActivityForm;
@@ -44,7 +49,8 @@ public class FillForms {
 	private int index;
 	private IdentificatorCreater idCreater;
 
-	public FillForms(Control control, SegmentLists lists, Project project, ArrayList<BasicForm> forms, ObjectFactory objFac) {
+	public FillForms(Control control, SegmentLists lists, Project project, ArrayList<BasicForm> forms,
+			ObjectFactory objFac) {
 
 		this.control = control;
 		this.project = project;
@@ -140,7 +146,8 @@ public class FillForms {
 	}
 
 	public void fillWorkUnit(BasicForm form, int ID, String description, String name, int authorIndex, int assigneIndex,
-			String category, int x, int y, int priorityIndex, int severityIndex, int typeIndex) {
+			String category, int x, int y, int priorityIndex, int severityIndex, int typeIndex, int resolutionIndex,
+			int statusIndex) {
 
 		WorkUnit workUnit = form.getWorkUnitArray().get(ID);
 		workUnit.setDescription(description);
@@ -151,6 +158,8 @@ public class FillForms {
 		workUnit.setSeverityIndex(severityIndex);
 		workUnit.setTypeIndex(typeIndex);
 		workUnit.setCategory(category);
+		workUnit.setResolutionIndex(resolutionIndex);
+		workUnit.setStatusIndex(statusIndex);
 
 		Coordinates coord = objF.createCoordinates();
 		coord.setXCoordinate(x);
@@ -172,40 +181,39 @@ public class FillForms {
 	}
 
 	public void fillMilestone(String name, ObservableList<Integer> indexs) {
-		
-		 Milestone milestone = (Milestone)objF.createMilestone();
-		 milestone.setName(name);
-		 
-		 for (int i = 0; i < indexs.size(); i++) {
+
+		Milestone milestone = (Milestone) objF.createMilestone();
+		milestone.setName(name);
+
+		for (int i = 0; i < indexs.size(); i++) {
 			milestone.getCriteriaIndexs().add(indexs.get(i));
 		}
-		 
+
 		control.getLists().getMilestoneList().add(milestone);
 		control.getLists().getMilestoneObservable().add(milestone.getName());
-		 
 
 	}
 
-	public void fillCriterion( String description, String name) {
+	public void fillCriterion(String name, String description) {
 
-		 Criterion criterion = objF.createCriterion(); 
-		 criterion.setDescription(description);
-		 criterion.setName(name);
-		 
-		 control.getLists().getCriterionList().add(criterion);
-		 control.getLists().getCriterionObservable().add(criterion.getName());
+		Criterion criterion = objF.createCriterion();
+		criterion.setDescription(description);
+		criterion.setName(name);
+
+		control.getLists().getCriterionList().add(criterion);
+		control.getLists().getCriterionObservable().add(criterion.getName());
 
 	}
-	
+
 	public void fillCPR(String name, int conf, int role) {
 
-		 ConfigPersonRelation cpr = objF.createConfigPersonRelation(); 
-		 cpr.setName(name);
-		 cpr.setConfigurationIndex(conf);
-		 cpr.setPersonIndex(role);
-		 
-		 control.getLists().getCPRList().add(cpr);
-		 control.getLists().getCPRObservable().add(name);
+		ConfigPersonRelation cpr = objF.createConfigPersonRelation();
+		cpr.setName(name);
+		cpr.setConfigurationIndex(conf);
+		cpr.setPersonIndex(role);
+
+		control.getLists().getCPRList().add(cpr);
+		control.getLists().getCPRObservable().add(name);
 
 	}
 
@@ -264,7 +272,8 @@ public class FillForms {
 
 	}
 
-	public void fillChange(Change change, int[] IDs, String description, String name, boolean isNew, int x, int y, boolean isExist) {
+	public void fillChange(Change change, int[] IDs, String description, String name, boolean isNew, int x, int y,
+			boolean isExist) {
 
 		change.setName(name);
 		change.setDescriptoin(description);
@@ -332,38 +341,38 @@ public class FillForms {
 	}
 
 	public void fillRole(String description, String name, int type) {
-		
+
 		Role role = objF.createRole();
 		role.setName(name);
 		role.setDescription(description);
 		role.setType(type);
-		
+
 		control.getLists().getRoleObservable().add(name);
 		control.getLists().getRoleList().add(role);
 	}
-	
+
 	public void fillRoleType(String nameST, String classST, String superST) {
 
 		RoleType type = objF.createRoleType();
 		type.setName(nameST);
 		type.setRoleClass(classST);
 		type.setRoleSuperClass(superST);
-		
+
 		lists.getRoleTypeObservable().add(nameST);
 		lists.getRoleTypeList().add(type);
-		
+
 	}
 
-//	public int[] createRole(CanvasItem item, BasicForm form, int[] IDs) {
-//		Role role = (Role) objF.createRole();
-//		forms.add(index, new RoleForm(item, control, role));
-//		IDs[0] = index;
-//		IDs[1] = idCreater.createRoleID();
-//		control.getRoleList().add(IDs[1], role);
-//		control.getRoleFormIndex().add(index);
-//		index++;
-//		return IDs;
-//	}
+	// public int[] createRole(CanvasItem item, BasicForm form, int[] IDs) {
+	// Role role = (Role) objF.createRole();
+	// forms.add(index, new RoleForm(item, control, role));
+	// IDs[0] = index;
+	// IDs[1] = idCreater.createRoleID();
+	// control.getRoleList().add(IDs[1], role);
+	// control.getRoleFormIndex().add(index);
+	// index++;
+	// return IDs;
+	// }
 
 	public int getIndex() {
 		return index;
@@ -391,6 +400,65 @@ public class FillForms {
 
 	}
 
-	
+	public void fillPriorityType(String nameST, String classST, String superST) {
+
+		Priority priority = objF.createPriority();
+
+		priority.setName(nameST);
+		priority.setPriorityClass(classST);
+		priority.setPrioritySuperClass(superST);
+
+		lists.getPriorityObservable().add(nameST);
+		lists.getPriorityTypeList().add(priority);
+
+	}
+
+	public void fillSeverityType(String nameST, String classST, String superST) {
+		Severity severity = objF.createSeverity();
+
+		severity.setName(nameST);
+		severity.setSeverityClass(classST);
+		severity.setSeveritySuperClass(superST);
+
+		lists.getSeverityTypeObservable().add(nameST);
+		lists.getSeverityTypeList().add(severity);
+
+	}
+
+	public void fillRelationType(String nameST, String classST, String superST) {
+
+		Relation relation = objF.createRelation();
+		relation.setName(nameST);
+		relation.setRelationClass(classST);
+		relation.setRelationSuperClass(superST);
+
+		lists.getRelationTypeList().add(relation);
+		lists.getRelationTypeObservable().add(nameST);
+
+	}
+
+	public void fillResolutionType(String nameST, String classST, String superST) {
+
+		Resolution resolution = objF.createResolution();
+		resolution.setName(nameST);
+		resolution.setResolutionClass(classST);
+		resolution.setResolutionSuperClass(superST);
+
+		lists.getResolutionTypeList().add(resolution);
+		lists.getResolutionTypeObservable().add(nameST);
+
+	}
+
+	public void fillStatusType(String nameST, String classST, String superST) {
+
+		Status status = objF.createStatus();
+		status.setName(nameST);
+		status.setStatusClass(classST);
+		status.setStatusSuperClass(superST);
+
+		lists.getStatusTypeList().add(status);
+		lists.getStatusTypeObservable().add(nameST);
+
+	}
 
 }

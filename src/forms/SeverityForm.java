@@ -1,53 +1,40 @@
 package forms;
 
-import javax.management.relation.RoleStatus;
 
-import SPADEPAC.RoleClass;
-import SPADEPAC.RoleSuperClass;
-import abstractform.TableBasicForm;
+import SPADEPAC.WorkUnitPriorityClass;
+import SPADEPAC.WorkUnitPrioritySuperClass;
+import SPADEPAC.WorkUnitSeverityClass;
+import SPADEPAC.WorkUnitSeveritySuperClass;
 import abstractform.TableClassBasicForm;
 import interfaces.ISegmentTableForm;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.geometry.Insets;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.SelectionMode;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
-import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import services.Alerts;
-import services.ClassSwitcher;
 import services.Control;
 import tables.ClassTable;
-import tables.CriterionTable;
-import tables.RoleTable;
-import tables.RoleTypeTable;
 
-public class RoleTypeForm extends TableClassBasicForm implements ISegmentTableForm {
+public class SeverityForm extends TableClassBasicForm implements ISegmentTableForm {
 
 	private Control control;
 
-	private ComboBox<RoleClass> roleClassTypeCB;
-	private ComboBox<RoleSuperClass> roleSuperClassTypeCB;
+	private ComboBox<WorkUnitSeverityClass> classTypeCB;
+	private ComboBox<WorkUnitSeveritySuperClass> superClassTypeCB;
 
-	private Label roleClassTypeLB;
-	private Label roleSuperClassTypeLB;
+	private Label classTypeLB;
+	private Label superClassTypeLB;
 
 	private int classIndex;
 	private int superIndex;
-	
-	public RoleTypeForm(Control control) {
+
+	public SeverityForm(Control control) {
 		super(control);
 
 		this.control = control;
@@ -67,8 +54,11 @@ public class RoleTypeForm extends TableClassBasicForm implements ISegmentTableFo
 
 	@Override
 	public Node getTable() {
+
+		
 		getTableTV().setOnKeyReleased(event -> deleteSelected(event));
 
+		
 		return getTableTV();
 	}
 
@@ -90,19 +80,21 @@ public class RoleTypeForm extends TableClassBasicForm implements ISegmentTableFo
 	@Override
 	public GridPane createControlPane() {
 
-		roleClassTypeLB = new Label("Class: ");
-		roleClassTypeCB = new ComboBox<RoleClass>(FXCollections.observableArrayList(RoleClass.values()));
-		roleClassTypeCB.getSelectionModel().selectedIndexProperty().addListener(classListener);
+		classTypeLB = new Label("Class: ");
+		classTypeCB = new ComboBox<WorkUnitSeverityClass>(
+				FXCollections.observableArrayList(WorkUnitSeverityClass.values()));
+		classTypeCB.getSelectionModel().selectedIndexProperty().addListener(classListener);
 
-		roleSuperClassTypeLB = new Label("SuperClass: ");
-		roleSuperClassTypeCB = new ComboBox<RoleSuperClass>(FXCollections.observableArrayList(RoleSuperClass.values()));
-		roleSuperClassTypeCB.getSelectionModel().selectedIndexProperty().addListener(superListener);
+		superClassTypeLB = new Label("SuperClass: ");
+		superClassTypeCB = new ComboBox<WorkUnitSeveritySuperClass>(
+				FXCollections.observableArrayList(WorkUnitSeveritySuperClass.values()));
+		superClassTypeCB.getSelectionModel().selectedIndexProperty().addListener(superListener);
 
-		getControlPane().add(roleClassTypeLB, 0, 1);
-		getControlPane().add(roleClassTypeCB, 1, 1);
-		getControlPane().add(roleSuperClassTypeLB, 2, 1);
-		getControlPane().add(roleSuperClassTypeCB, 3, 1);
-		getControlPane().add(getAddBT(), 5, 0);
+		getControlPane().add(classTypeLB, 2, 0);
+		getControlPane().add(classTypeCB, 3, 0);
+		getControlPane().add(superClassTypeLB, 4, 0);
+		getControlPane().add(superClassTypeCB, 5, 0);
+		getControlPane().add(getAddBT(), 6, 0);
 
 		getAddBT().setOnAction(event -> addItem());
 
@@ -116,8 +108,8 @@ public class RoleTypeForm extends TableClassBasicForm implements ISegmentTableFo
 
 			classIndex = newValue.intValue();
 			System.out.println(classIndex);
-			superIndex = getSwitcher().roleClassToSupperClass(classIndex);
-			roleSuperClassTypeCB.setValue(RoleSuperClass.values()[superIndex]);
+			superIndex = getSwitcher().priorityClassToSupperClass(classIndex);
+			superClassTypeCB.setValue(WorkUnitSeveritySuperClass.values()[superIndex]);
 		}
 	};
 
@@ -126,9 +118,9 @@ public class RoleTypeForm extends TableClassBasicForm implements ISegmentTableFo
 		@Override
 		public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
 
-	//		superIndex = newValue.intValue();
-//			int index = classSwitcher.roleSuperClassToClass(superIndex); 
-//			roleClassTypeCB.setValue(RoleClass.values()[index]);
+			// superIndex = newValue.intValue();
+			// int index = classSwitcher.roleSuperClassToClass(superIndex);
+			// roleClassTypeCB.setValue(RoleClass.values()[index]);
 
 		}
 	};
@@ -136,8 +128,8 @@ public class RoleTypeForm extends TableClassBasicForm implements ISegmentTableFo
 	@Override
 	public void addItem() {
 		String nameST = getNameTF().getText();
-		String classST = roleClassTypeCB.getValue().name();
-		String superST = roleSuperClassTypeCB.getValue().name();
+		String classST = classTypeCB.getValue().name();
+		String superST = WorkUnitPrioritySuperClass.values()[superIndex].name();
 
 		if (nameST.length() == 0) {
 
@@ -145,12 +137,11 @@ public class RoleTypeForm extends TableClassBasicForm implements ISegmentTableFo
 			return;
 		}
 
-		ClassTable type = new ClassTable(nameST, classST, superST);
+		ClassTable table = new ClassTable(nameST, classST, superST);
 
-		getTableTV().getItems().add(type);
+		getTableTV().getItems().add(table);
 		getTableTV().sort();
-		getControl().getFillForms().fillRoleType(nameST, classST, superST);
-		
+		getControl().getFillForms().fillSeverityType(nameST, classST, superST);
 
 	}
 
