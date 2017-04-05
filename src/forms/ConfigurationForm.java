@@ -35,7 +35,6 @@ public class ConfigurationForm extends BasicForm implements ISegmentForm {
 
 	private boolean isRelease;
 
-	private Label isMainLB;
 	private Button arrowBT;
 	private Button addTag;
 	private boolean isNew;
@@ -70,6 +69,7 @@ public class ConfigurationForm extends BasicForm implements ISegmentForm {
 		this.configuration = conf;
 		this.tagForm = new TagForm(conf, control);
 		isNew = true;
+		isRelease = true;
 		
 		branchIndex = conf.getBranchesIndexs();
 		
@@ -93,7 +93,6 @@ public class ConfigurationForm extends BasicForm implements ISegmentForm {
 		getSubmitButton().setOnAction(event -> setActionSubmitButton());
 		createForm();
 
-		this.show();
 	}
 
 	@Override
@@ -105,20 +104,22 @@ public class ConfigurationForm extends BasicForm implements ISegmentForm {
 
 		setName(actName);
 		getCanvasItem().setNameText(actName);
-		getControl().getFillForms().fillConfiguration(configuration, IDs[1], isRelease, createDate, actName,
+		getControl().getFillForms().fillConfiguration(configuration, IDs, isRelease, createDate, actName,
 				authorIndex, isNew);
-
+		
+		getSubmitButton().setText("Save");
+		
 		isNew = false;
 	}
 
 	@Override
 	public void setActionSubmitButton() {
-		if (getControl().getLists().getRoleList().isEmpty()) {
-			getAlerts().showNoAuthorAlert();
-		} else {
+//		if (getControl().getLists().getRoleList().isEmpty()) {
+//			getAlerts().showNoAuthorAlert();
+//		} else {
 			closeForm();
 			close();
-		}
+//		}
 	}
 
 	@Override
@@ -237,15 +238,24 @@ public class ConfigurationForm extends BasicForm implements ISegmentForm {
 
 		@Override
 		public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-			authorIndex = newValue.intValue();
+			cprIndex = newValue.intValue();
 
 		}
 	};
 
 	/*** Getrs and Setrs ***/
 
+	
 	public Configuration getConfiguration() {
 		return configuration;
+	}
+
+	public TagForm getTagForm() {
+		return tagForm;
+	}
+
+	public void setTagForm(TagForm tagForm) {
+		this.tagForm = tagForm;
 	}
 
 	public void setConfiguration(Configuration configuration) {

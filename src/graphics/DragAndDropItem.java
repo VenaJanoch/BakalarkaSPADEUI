@@ -1,5 +1,6 @@
 package graphics;
 
+import abstractform.BasicForm;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -25,31 +26,57 @@ import services.SegmentType;
 public class DragAndDropItem extends VBox {
 	private HBox box;
 	private DragText[] dragSegmnets;
-	private int[] itemArray; 
+	private int[] itemArray;
 	private Control control;
+	BasicForm form;
+
+	public DragAndDropItem(int[] itemArray) {
+		super(5);		
+		this.setMaxWidth(Constans.width);
+		this.setPadding(new Insets(10));
+		this.itemArray = itemArray;
+		dragSegmnets = new DragText[itemArray.length];
+	}
 
 	public DragAndDropItem(Control control, int[] itemArray) {
-		super(5);
-		this.itemArray = itemArray;
+		this(itemArray);
 		this.control = control;
-		this.setAlignment(Pos.CENTER);
-		this.setMaxWidth(Constans.width);
-		//this.setBackground(new Background(new BackgroundFill(Color.BROWN, CornerRadii.EMPTY, Insets.EMPTY)));
-		this.setAlignment(Pos.CENTER);
-		dragSegmnets = new DragText[itemArray.length];
+		
+		createDragItemsProject();
+	}
+
+	public DragAndDropItem(Control control, int[] itemArray, BasicForm form) {
+		this(itemArray);
+		this.control = control;
+		this.form = form;
+		
 		createDragItems();
 	}
 
 	public void createDragItems() {
 
-		
 		box = new HBox(5);
 		box.setAlignment(Pos.CENTER);
-		
+
 		for (int i = 0; i < itemArray.length; i++) {
-				dragSegmnets[i] = new DragText(SegmentType.values()[itemArray[i]]);
-				box.getChildren().add(dragSegmnets[i]);
-		
+			dragSegmnets[i] = new DragText(SegmentType.values()[itemArray[i]], form);
+			box.getChildren().add(dragSegmnets[i]);
+
+		}
+
+		this.getChildren().addAll(box);
+	}
+
+	public void createDragItemsProject() {
+
+		box = new HBox(5);
+		box.setAlignment(Pos.CENTER);
+
+		for (int i = 0; i < itemArray.length; i++) {
+			dragSegmnets[i] = new DragText(SegmentType.values()[itemArray[i]], control.getCanvas());
+
+			box.getChildren().add(dragSegmnets[i]);
+
 		}
 
 		this.getChildren().addAll(box);

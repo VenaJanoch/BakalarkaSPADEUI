@@ -30,6 +30,7 @@ import forms.ArtifactForm;
 import forms.BranchForm;
 import forms.ChangeForm;
 import forms.ConfigurationForm;
+import forms.ConfigurationTableForm;
 import forms.IterationForm;
 import forms.PhaseForm;
 import forms.RoleForm;
@@ -37,6 +38,8 @@ import forms.TagForm;
 import forms.WorkUnitForm;
 import graphics.CanvasItem;
 import javafx.collections.ObservableList;
+import tables.ConfigTable;
+import tables.MilestoneTable;
 import tables.TagTable;
 
 public class FillForms {
@@ -217,17 +220,34 @@ public class FillForms {
 
 	}
 
-	public void fillConfiguration(Configuration conf, int ID, boolean isRelase, LocalDate Ldate, String name,
+	public void fillConfiguration(Configuration conf, int[] IDs, boolean isRelase, LocalDate Ldate, String name,
 			int roleIndex, boolean isNew) {
 
-		Configuration config = control.getLists().getConfigList().get(ID);
+		Configuration config = control.getLists().getConfigList().get(IDs[1]);
 		config.setIsRelease(isRelase);
 		config.setCreate(control.convertDate(Ldate));
 		config.setName(name);
 		config.setAuthorIndex(roleIndex);
-
+		System.out.println(isRelase);
+		String release = "YES";
+		if (isRelase) {
+			release = "YES";
+		} else {
+			release = "NO";
+		}
 		if (isNew) {
 			control.getLists().getConfigObservable().add(name);
+
+			ConfigTable configTab = new ConfigTable(name, release, IDs[0]);
+			control.getConfTableForm().getTableTV().getItems().add(configTab);
+			control.getConfTableForm().getTableTV().sort();
+			control.getConfTableForm().createConfigItem();
+		} else {
+
+			ConfigTable configTab = control.getConfTableForm().getTableTV().getItems().get(IDs[1]);
+			configTab.setName(name);
+			configTab.setRelease(release);
+			control.getConfTableForm().getMainPanel().setCenter(control.getConfTableForm().getForm().getMainPanel());
 		}
 
 	}
@@ -237,7 +257,7 @@ public class FillForms {
 		forms.add(index, new ConfigurationForm(item, control, Constans.configurationDragTextIndexs, conf, index));
 		IDs[0] = index;
 		IDs[1] = idCreater.createConfigurationID();
-		
+
 		control.getLists().getConfigList().add(IDs[1], conf);
 		control.getLists().getConfigFormIndex().add(index);
 		index++;
@@ -418,6 +438,7 @@ public class FillForms {
 		lists.getStatusTypeObservable().add(nameST);
 
 	}
+
 	public int getIndex() {
 		return index;
 	}
@@ -433,7 +454,5 @@ public class FillForms {
 	public void setIdCreater(IdentificatorCreater idCreater) {
 		this.idCreater = idCreater;
 	}
-
-	
 
 }

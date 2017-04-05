@@ -48,6 +48,7 @@ import tables.CriterionTable;
 import tables.MilestoneTable;
 import tables.RoleTable;
 import tables.RoleTypeTable;
+import tables.TagTable;
 
 public class FillFormsXML {
 
@@ -262,6 +263,18 @@ public class FillFormsXML {
 		}
 
 	}
+	
+	public void fillTagsFromXML(ConfigurationForm formc, List<String> tags) {
+		
+		ObservableList<TagTable> data = FXCollections.observableArrayList();
+
+		for (int i = 0; i < tags.size(); i++) {
+			data.add(new TagTable(tags.get(i)));
+		}
+
+		formc.getTagForm().getTableTV().setItems(data);
+
+	}
 
 	public int[] createConfigurationFormXML(CanvasItem item, BasicForm form, int[] IDs) {
 
@@ -293,7 +306,7 @@ public class FillFormsXML {
 		configForm.getAuthorRoleCB().setValue(author);
 
 		fillChangeFromXML(configForm, conf.getChangesIndexs());
-
+		fillTagsFromXML(configForm, conf.getTags());
 		fillArtifactFromXML(configForm, conf.getArtifactsIndexs());
 
 		return IDs;

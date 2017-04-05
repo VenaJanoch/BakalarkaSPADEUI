@@ -80,7 +80,7 @@ public class MilestoneForm extends Table2BasicForm implements ISegmentTableForm 
 
 		criterionForm = new CriterionForm(getControl());
 
-		
+		getMainPanel().setCenter(getInternalPanel());
 		getMainPanel().setRight(criterionForm);
 		
 
@@ -100,11 +100,11 @@ public class MilestoneForm extends Table2BasicForm implements ISegmentTableForm 
 		TableColumn<MilestoneTable, String> criterionColumn = new TableColumn<MilestoneTable, String>("Criterion");
 
 		nameColumn.setCellValueFactory(new PropertyValueFactory("name"));
-		nameColumn.setMinWidth(150);
+		nameColumn.setMinWidth(100);
 		nameColumn.setCellFactory(TextFieldTableCell.forTableColumn());
 
 		criterionColumn.setCellValueFactory(new PropertyValueFactory("criterion"));
-		criterionColumn.setMinWidth(150);
+		criterionColumn.setMinWidth(100);
 		criterionColumn.setCellFactory(TextFieldTableCell.forTableColumn());
 
 		tableTV.getColumns().addAll(nameColumn, criterionColumn);

@@ -55,6 +55,7 @@ import forms.BranchForm;
 import forms.ChangeForm;
 import forms.ConfigPersonRelationForm;
 import forms.ConfigurationForm;
+import forms.ConfigurationTableForm;
 import forms.CriterionForm;
 import forms.IterationForm;
 import forms.MilestoneForm;
@@ -112,6 +113,7 @@ public class Control {
 	private ResolutionForm resolutionForm;
 	private StatusForm statusForm;
 	private BranchForm branchFrom;
+	private ConfigurationTableForm confTableForm;
 	public Control() {
 
 		procesGener = new ProcessGenerator();
@@ -136,6 +138,7 @@ public class Control {
 		resolutionForm = new ResolutionForm(this);
 		statusForm = new StatusForm(this);
 		branchFrom = new BranchForm(this);
+		setConfTableForm(new ConfigurationTableForm(this));
 		
 		arrows = new ArrayList<>();
 
@@ -530,6 +533,14 @@ public class Control {
 
 	public void setBranchFrom(BranchForm branchFrom) {
 		this.branchFrom = branchFrom;
+	}
+
+	public ConfigurationTableForm getConfTableForm() {
+		return confTableForm;
+	}
+
+	public void setConfTableForm(ConfigurationTableForm confTableForm) {
+		this.confTableForm = confTableForm;
 	}
 	
 	

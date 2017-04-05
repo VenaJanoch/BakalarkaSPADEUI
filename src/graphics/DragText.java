@@ -1,6 +1,8 @@
 package graphics;
 
+import abstractform.BasicForm;
 import javafx.event.EventHandler;
+import javafx.scene.control.Button;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
@@ -11,17 +13,33 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import services.SegmentType;
 
-public class DragText extends Text {
+public class DragText extends Button {
 
 	private SegmentType type;
-	public DragText( SegmentType type) {
+	private DragAndDropCanvas canvas;
+	
+	public DragText(SegmentType type) {
 		super();
 		this.setType(type);
 		this.setText(type.name());
-		this.setFont(Font.font ("Verdana",25));
-		this.setFill(Color.BURLYWOOD);
 		setDragDetected();
 		setDragDone();
+
+	}
+
+	
+	
+	
+	public DragText(SegmentType type, DragAndDropCanvas canvas) {
+		this(type);
+		this.canvas = canvas;
+		this.setOnAction(event -> canvas.addItem(type.name()));
+
+	}
+	
+	public DragText(SegmentType type, BasicForm form) {
+		this(type);
+		this.setOnAction(event -> form.getCanvas().addItem(type.name()));
 
 	}
 
@@ -49,9 +67,6 @@ public class DragText extends Text {
 		
 	this.setOnDragDone(new EventHandler<DragEvent>() {
 		public void handle(DragEvent event) {
-			/* the drag-and-drop gesture ended */
-			//System.out.println("onDragDone");
-			/* if the data was successfully moved, clear it */
 			if (event.getTransferMode() == TransferMode.MOVE) {
 				
 			}

@@ -36,7 +36,7 @@ public class MainWindow extends Stage {
 
 		scena = new Scene(creatPanel(), Constans.width, Constans.height);
 		dragCanvas.setMScene(scena);
-		control.setCanvas(dragCanvas);
+		
 		return scena;
 	}
 
@@ -44,6 +44,7 @@ public class MainWindow extends Stage {
 		menu = new MenuPanel(control, this);
 
 		dragCanvas = new DragAndDropCanvas(control, 0);
+		control.setCanvas(dragCanvas);
 		dragAndDrop = new DragAndDropPanel(control);
 		VBox topPanel = new VBox();
 

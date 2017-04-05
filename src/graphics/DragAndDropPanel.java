@@ -1,5 +1,6 @@
 package graphics;
 
+import abstractform.BasicForm;
 import forms.ProjectForm;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -24,6 +25,7 @@ public class DragAndDropPanel extends BorderPane {
 	private HBox buttonBox;
 	private Control control;
 
+	
 	public DragAndDropPanel(Control control) {
 
 		super();
@@ -33,6 +35,7 @@ public class DragAndDropPanel extends BorderPane {
 		this.setBackground(new Background(new BackgroundFill(Color.BROWN, CornerRadii.EMPTY, Insets.EMPTY)));
 
 		items = new DragAndDropItem(control, Constans.projectDragTextIndexs);
+		this.setAlignment(items, Pos.BOTTOM_LEFT);
 
 		addButtons = new Button[Constans.addButtonCount];
 		createButtons();
@@ -40,12 +43,36 @@ public class DragAndDropPanel extends BorderPane {
 
 		buttonBox.getChildren().addAll(addButtons);
 
-		this.setCenter(items);
+		this.setCenter(buttonBox);
 
-		this.setBottom(buttonBox);
+		this.setBottom(items);
 
 	}
 
+	public DragAndDropPanel(Control control, BasicForm form) {
+
+		super();
+		this.control = control;
+		this.buttonBox = new HBox(5);
+		this.setPadding(new Insets(10));
+		this.setBackground(new Background(new BackgroundFill(Color.BROWN, CornerRadii.EMPTY, Insets.EMPTY)));
+
+		items = new DragAndDropItem(control, Constans.projectDragTextIndexs, form);
+		this.setAlignment(items, Pos.BOTTOM_LEFT);
+
+		addButtons = new Button[Constans.addButtonCount];
+		createButtons();
+		createAction();
+
+		buttonBox.getChildren().addAll(addButtons);
+
+		this.setCenter(buttonBox);
+
+		this.setBottom(items);
+
+	}
+
+	
 	public void createButtons() {
 
 		for (int i = 0; i < addButtons.length; i++) {
@@ -65,7 +92,7 @@ public class DragAndDropPanel extends BorderPane {
 		addButtons[8].setOnAction(event -> control.getStatusForm().show());
 		addButtons[9].setOnAction(event -> control.getBranchFrom().show());
 		addButtons[10].setOnAction(
-				event -> new CanvasItem(SegmentType.Configuration, "", control, control.getForms().get(0), true));
+				event -> control.getConfTableForm().show());
 	}
 
 	public DragAndDropItem getItems() {

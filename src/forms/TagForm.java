@@ -155,4 +155,18 @@ public class TagForm extends TableBasicForm implements ISegmentTableForm {
 
 	}
 
+
+
+	public TableView<TagTable> getTableTV() {
+		return tableTV;
+	}
+
+
+
+	public void setTableTV(TableView<TagTable> tableTV) {
+		this.tableTV = tableTV;
+	}
+
+	
+	
 }

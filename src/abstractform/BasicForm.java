@@ -86,7 +86,7 @@ public class BasicForm extends Stage {
 		this.alerts = new Alerts();
 		this.setIdCreater(new IdentificatorCreater());
 		this.setTitle("Edit " + item.getType().name());
-		this.dgItem = new DragAndDropItem(control, itemArray);
+		this.dgItem = new DragAndDropItem(control, itemArray,this);
 		this.canvas = new DragAndDropCanvas(control, indexForm);
 		this.dragBox = new BorderPane();
 

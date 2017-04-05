@@ -99,7 +99,7 @@ public class DragAndDropCanvas extends AnchorPane {
 
 	}
 
-	private void addItem(String segment) {
+	public void addItem(String segment) {
 
 		SegmentType type = control.findSegmentType(segment);
 		System.out.println(type.name());

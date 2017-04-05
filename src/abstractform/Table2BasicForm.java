@@ -71,7 +71,7 @@ public class Table2BasicForm extends Stage{
 		controlPane.setPadding(new Insets(5));
 
 		mainPanel.setBottom(submitBT);
-		mainPanel.setCenter(internalPanel);
+	//	mainPanel.setCenter(internalPanel);
 		
 
 		return mainPanel;
@@ -147,6 +147,14 @@ public class Table2BasicForm extends Stage{
 
 	public void setInternalPanel(BorderPane internalPanel) {
 		this.internalPanel = internalPanel;
+	}
+
+	public Label getNameLB() {
+		return nameLB;
+	}
+
+	public void setNameLB(Label nameLB) {
+		this.nameLB = nameLB;
 	}
 	
 	
