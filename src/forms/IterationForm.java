@@ -32,7 +32,7 @@ public class IterationForm extends Date2DescBasicForm implements ISegmentForm {
 	public IterationForm(CanvasItem item, Control control, int[] itemArray, Iteration iteration, int indexForm) {
 		super(item, control, itemArray, indexForm);
 		setWorkUnitArray(iteration.getWorkUnits());
-		setConfig(iteration.getConfiguration());
+		setConfig(control.getLists().getConfigList().get(iteration.getConfiguration()));
 
 		this.setOnCloseRequest(new EventHandler<WindowEvent>() {
 

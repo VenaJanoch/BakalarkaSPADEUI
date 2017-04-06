@@ -47,7 +47,7 @@ public class PhaseForm extends DateDescBasicForm implements ISegmentForm {
 		this.phase = phase;
 		
 		setWorkUnitArray(phase.getWorkUnits());
-		setConfig(phase.getConfiguration());
+		setConfig(control.getLists().getConfigList().get(phase.getConfiguration()));
 		this.setOnCloseRequest(new EventHandler<WindowEvent>() {
 
 			@Override

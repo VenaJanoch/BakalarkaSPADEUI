@@ -22,6 +22,7 @@ public class DragText extends Button {
 		super();
 		this.setType(type);
 		this.setText(type.name());
+		this.setFont(Font.font ("Verdana", 20));
 		setDragDetected();
 		setDragDone();
 
@@ -47,7 +48,7 @@ public class DragText extends Button {
 
 		this.setOnDragDetected(new EventHandler<MouseEvent>() {
 			public void handle(MouseEvent event) {
-				//System.out.println("onDragDetected");
+				
 				dragDetected();
 				event.consume();
 			}

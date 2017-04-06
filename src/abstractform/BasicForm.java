@@ -39,7 +39,7 @@ import services.Constans;
 import services.Control;
 import services.IdentificatorCreater;
 
-public class BasicForm extends Stage {
+public abstract class BasicForm extends Stage {
 
 	private BorderPane mainPanel;
 	private Scene scena;

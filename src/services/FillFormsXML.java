@@ -12,6 +12,7 @@ import SPADEPAC.ConfigPersonRelation;
 import SPADEPAC.Configuration;
 import SPADEPAC.Criterion;
 import SPADEPAC.Iteration;
+import SPADEPAC.Link;
 import SPADEPAC.Milestone;
 import SPADEPAC.Phase;
 import SPADEPAC.Priority;
@@ -44,6 +45,7 @@ import javafx.collections.ObservableList;
 import tables.BranchTable;
 import tables.CPRTable;
 import tables.ClassTable;
+import tables.ConfigTable;
 import tables.CriterionTable;
 import tables.MilestoneTable;
 import tables.RoleTable;
@@ -89,9 +91,30 @@ public class FillFormsXML {
 		fillBranchFromXML(project.getBranches());
 		fillRoleTypeFromXML(project.getRoleType());
 		fillRoleFromXML(project.getRoles());
+		
 		fillChangeObservabel(project.getChanges());
 		fillArtifactObservabel(project.getArtifacts());
 		fillCPRObservabel(project.getCpr());
+		
+		fillConfigurationFromXML(form, project.getConfiguration());
+
+	}
+
+	public void createLinks(List<Link> links) {
+
+		for (int i = 0; i < links.size(); i++) {
+
+			int changeI = links.get(i).getChangeIndex();
+			int artifactI = links.get(i).getArtifactIndex();
+
+			CanvasItem itemChange = control.getForms().get(lists.getChangeFormIndex().get(changeI)).getCanvasItem();
+			CanvasItem itemArtifact = control.getForms().get(lists.getArtifactFormIndex().get(artifactI))
+					.getCanvasItem();
+
+			control.ArrowManipulation(itemChange);
+			control.ArrowManipulation(itemArtifact);
+
+		}
 
 	}
 
@@ -129,10 +152,7 @@ public class FillFormsXML {
 		index++;
 		forms.add(IDs[0], phaseForm);
 
-		if (phase.getConfiguration() != null) {
-			fillConfigurationFromXML(phaseForm, phase.getConfiguration());
-			phaseForm.getConfigCB().setValue(phase.getConfiguration().getName());
-		}
+		phaseForm.getConfigCB().setValue(lists.getConfigObservable().get(phase.getConfiguration()));
 
 		return IDs;
 
@@ -168,9 +188,8 @@ public class FillFormsXML {
 		iterationForm.getDate2DP().setValue(control.convertDateFromXML(iteration.getStartDate()));
 
 		index++;
-		fillConfigurationFromXML(iterationForm, iteration.getConfiguration());
 
-		iterationForm.getConfigCB().setValue(iteration.getConfiguration().getName());
+		iterationForm.getConfigCB().setValue(lists.getConfigObservable().get(iteration.getConfiguration()));
 
 		forms.add(IDs[0], iterationForm);
 		return IDs;
@@ -253,19 +272,34 @@ public class FillFormsXML {
 		return IDs;
 	}
 
-	public void fillConfigurationFromXML(BasicForm form, Configuration config) {
-		if (control.checkConfiguration(config.getName())) {
+	public void fillConfigurationFromXML(BasicForm form, List<Configuration> configs) {
 
-			CanvasItem item = new CanvasItem(SegmentType.Configuration, config.getName(), control, form, false);
+		ObservableList<ConfigTable> data = FXCollections.observableArrayList();
 
-			control.getLists().getConfigList().add(item.getIDs()[1], config);
-			control.getLists().getConfigObservable().add(item.getIDs()[1], config.getName());
+		String name;
+		String release;
+		
+		for (int i = 0; i < configs.size(); i++) {
+			
+			name = configs.get(i).getName();
+			
+			if (configs.get(i).isIsRelease()) {
+				release = "YES";
+			}else{
+				release = "NO";
+			}
+			
+			CanvasItem item = new CanvasItem(SegmentType.Configuration, name, control, form, false);
+			data.add(new ConfigTable(name, release, item.getIDs()[0]));
+			
+			lists.getConfigObservable().add(item.getIDs()[1], name);
+			control.getConfTableForm().getTableTV().setItems(data);
 		}
 
 	}
-	
+
 	public void fillTagsFromXML(ConfigurationForm formc, List<String> tags) {
-		
+
 		ObservableList<TagTable> data = FXCollections.observableArrayList();
 
 		for (int i = 0; i < tags.size(); i++) {
@@ -281,7 +315,7 @@ public class FillFormsXML {
 		IDs[0] = index;
 		IDs[1] = idCreater.createConfigurationID();
 
-		Configuration conf = form.getConfig();
+		Configuration conf = lists.getConfigList().get(IDs[1]);
 		ConfigurationForm configForm = new ConfigurationForm(item, control, Constans.configurationDragTextIndexs, conf,
 				index);
 
@@ -296,7 +330,8 @@ public class FillFormsXML {
 			configForm.getRbYes().setSelected(true);
 		}
 
-		control.getLists().getConfigFormIndex().add(IDs[1], index);
+		lists.getConfigFormIndex().add(IDs[1], index);
+		lists.getConfigObservable().add(conf.getName());
 		forms.add(index, configForm);
 
 		index++;
@@ -307,6 +342,7 @@ public class FillFormsXML {
 
 		fillChangeFromXML(configForm, conf.getChangesIndexs());
 		fillTagsFromXML(configForm, conf.getTags());
+		System.out.println(conf.getArtifactsIndexs().size() + "Indexs");
 		fillArtifactFromXML(configForm, conf.getArtifactsIndexs());
 
 		return IDs;
@@ -386,9 +422,9 @@ public class FillFormsXML {
 		changeForm.setName(change.getName());
 		changeForm.getNameTF().setText(change.getName());
 		changeForm.getDescriptionTF().setText(change.getDescriptoin());
-		
 
 		forms.add(index, changeForm);
+		lists.getChangeFormIndex().add(index);
 		index++;
 
 		return IDs;
@@ -408,7 +444,7 @@ public class FillFormsXML {
 
 			item.setTranslateX(artifact.getCoordinates().getXCoordinate());
 			item.setTranslateY(artifact.getCoordinates().getYCoordinate());
-
+			break;
 		}
 
 	}
@@ -435,7 +471,6 @@ public class FillFormsXML {
 		artifactForm.setNew(false);
 
 		forms.add(index, artifactForm);
-		control.getLists().getArtifactList().add(IDs[1], artifact);
 		control.getLists().getArtifactFormIndex().add(index);
 		index++;
 		return IDs;

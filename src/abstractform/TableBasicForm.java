@@ -13,7 +13,7 @@ import javafx.stage.Stage;
 import services.Constans;
 import services.Control;
 
-public class TableBasicForm extends Stage {
+public class TableBasicForm  extends Stage{
 
 	private BorderPane mainPanel;
 	private Scene scena;

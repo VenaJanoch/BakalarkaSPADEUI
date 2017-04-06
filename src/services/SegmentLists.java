@@ -9,6 +9,7 @@ import SPADEPAC.Change;
 import SPADEPAC.ConfigPersonRelation;
 import SPADEPAC.Configuration;
 import SPADEPAC.Criterion;
+import SPADEPAC.Link;
 import SPADEPAC.Milestone;
 import SPADEPAC.Priority;
 import SPADEPAC.Project;
@@ -75,6 +76,8 @@ public class SegmentLists {
 	private ObservableList<String> statusTypeObservable;
 	private List<Status> statusTypeList;
 
+	private List<Link> linksList;
+	
 	private Control control;
 	private Project project;
 
@@ -136,10 +139,14 @@ public class SegmentLists {
 
 		statusTypeList.clear();
 		statusTypeObservable.clear();
+		linksList.clear();
 	}
 
 	public void createLists() {
-		configList = new ArrayList<>();
+		
+		linksList = project.getLinks();
+		
+		configList = project.getConfiguration();
 		configFormIndex = new ArrayList<>();
 		configObservable = FXCollections.observableArrayList();
 
@@ -204,8 +211,8 @@ public class SegmentLists {
 		return configList;
 	}
 
-	public void setConfigList(ArrayList<Configuration> configList) {
-		this.configList = configList;
+	public void setConfigList(List<Configuration> list) {
+		this.configList = list;
 	}
 
 	public ObservableList<String> getRoleObservable() {
@@ -470,6 +477,14 @@ public class SegmentLists {
 
 	public void setRelationTypeList(List<Relation> relationTypeList) {
 		this.relationTypeList = relationTypeList;
+	}
+
+	public List<Link> getLinksList() {
+		return linksList;
+	}
+
+	public void setLinksList(List<Link> linksList) {
+		this.linksList = linksList;
 	}
 
 }

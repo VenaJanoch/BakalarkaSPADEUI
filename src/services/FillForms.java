@@ -85,7 +85,7 @@ public class FillForms {
 		coord.setXCoordinate(x);
 		coord.setYCoordinate(y);
 		phase.setCoordinates(coord);
-		phase.setConfiguration(control.getLists().getConfigList().get(confIndex));
+		phase.setConfiguration(confIndex);
 		phase.setMilestoneIndex(milestoneIndex);
 
 	}
@@ -131,7 +131,7 @@ public class FillForms {
 		iteration.setName(name);
 		iteration.setStartDate(control.convertDate(startDate));
 		iteration.setEndDate(control.convertDate(endDate));
-		iteration.setConfiguration(control.getLists().getConfigList().get(confIndex));
+		iteration.setConfiguration(confIndex);
 		Coordinates coord = objF.createCoordinates();
 		coord.setXCoordinate(x);
 		coord.setYCoordinate(y);
@@ -228,7 +228,7 @@ public class FillForms {
 		config.setCreate(control.convertDate(Ldate));
 		config.setName(name);
 		config.setAuthorIndex(roleIndex);
-		System.out.println(isRelase);
+		
 		String release = "YES";
 		if (isRelase) {
 			release = "YES";
