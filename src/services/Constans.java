@@ -1,17 +1,14 @@
 package services;
 
-import javafx.scene.control.Button;
-import javafx.scene.text.Text;
-
 public class Constans {
 
-	public static final int width = 1000;
+	public static final int width = 1100;
 	public static final int height = 800;
 	public static final int offset = 12;
 
-	public static final int formWidth = 900;
+	public static final int formWidth = 700;
 	public static final int formHeight = 600;
-	public static final int milestoneFormWidth = 950;
+	public static final int milestoneFormWidth = 1000;
 	public static final int milestoneFormHeight = 450;
 
 	public static final int countDragItems = 13;
