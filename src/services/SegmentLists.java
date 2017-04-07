@@ -19,6 +19,7 @@ import SPADEPAC.Role;
 import SPADEPAC.RoleType;
 import SPADEPAC.Severity;
 import SPADEPAC.Status;
+import SPADEPAC.Type;
 import forms.ConfigPersonRelationForm;
 import forms.MilestoneForm;
 import forms.RoleForm;
@@ -75,6 +76,9 @@ public class SegmentLists {
 
 	private ObservableList<String> statusTypeObservable;
 	private List<Status> statusTypeList;
+	
+	private ObservableList<String> typeObservable;
+	private List<Type> typeList;
 
 	private List<Link> linksList;
 	
@@ -140,6 +144,10 @@ public class SegmentLists {
 		statusTypeList.clear();
 		statusTypeObservable.clear();
 		linksList.clear();
+		
+		typeList.clear();
+		typeObservable.clear();
+		
 	}
 
 	public void createLists() {
@@ -196,6 +204,9 @@ public class SegmentLists {
 
 		statusTypeList = project.getStatus();
 		statusTypeObservable = FXCollections.observableArrayList();
+		
+		typeList = project.getTypes();
+		typeObservable = FXCollections.observableArrayList();
 
 	}
 
@@ -485,6 +496,22 @@ public class SegmentLists {
 
 	public void setLinksList(List<Link> linksList) {
 		this.linksList = linksList;
+	}
+
+	public ObservableList<String> getTypeObservable() {
+		return typeObservable;
+	}
+
+	public void setTypeObservable(ObservableList<String> typeObservable) {
+		this.typeObservable = typeObservable;
+	}
+
+	public List<Type> getTypeList() {
+		return typeList;
+	}
+
+	public void setTypeList(List<Type> typeList) {
+		this.typeList = typeList;
 	}
 
 }

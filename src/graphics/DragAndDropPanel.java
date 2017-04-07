@@ -90,8 +90,9 @@ public class DragAndDropPanel extends BorderPane {
 		addButtons[6].setOnAction(event -> control.getRelationForm().show());
 		addButtons[7].setOnAction(event -> control.getResolutionForm().show());
 		addButtons[8].setOnAction(event -> control.getStatusForm().show());
-		addButtons[9].setOnAction(event -> control.getBranchFrom().show());
-		addButtons[10].setOnAction(
+		addButtons[9].setOnAction(event -> control.getTypeForm().show());
+		addButtons[10].setOnAction(event -> control.getBranchFrom().show());
+		addButtons[11].setOnAction(
 				event -> control.getConfTableForm().show());
 	}
 

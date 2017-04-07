@@ -1,67 +1,28 @@
 package services;
 
-import java.awt.Desktop;
 import java.io.File;
-import java.io.IOException;
-import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.List;
-import java.util.Locale;
-import java.util.TimeZone;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
-import javax.xml.datatype.Duration;
 import javax.xml.datatype.XMLGregorianCalendar;
-import javax.xml.namespace.QName;
 
-import com.sun.glass.ui.CommonDialogs.FileChooserResult;
 
-import SPADEPAC.Activity;
-import SPADEPAC.Artifact;
-import SPADEPAC.ArtifactClass;
-import SPADEPAC.Branch;
-import SPADEPAC.Change;
-import SPADEPAC.ConfigPersonRelation;
-import SPADEPAC.Configuration;
-import SPADEPAC.Coordinates;
-import SPADEPAC.Criterion;
-import SPADEPAC.Iteration;
 import SPADEPAC.Link;
-import SPADEPAC.Milestone;
 import SPADEPAC.ObjectFactory;
-import SPADEPAC.Phase;
 import SPADEPAC.Project;
-import SPADEPAC.Role;
-import SPADEPAC.WorkUnit;
-import SPADEPAC.WorkUnitPriorityClass;
-import SPADEPAC.WorkUnitSeverityClass;
-import SPADEPAC.WorkUnitTypeClass;
 import XML.ProcessGenerator;
 import abstractform.BasicForm;
-import forms.ActivityForm;
-import forms.ArtifactForm;
 import forms.BranchForm;
-import forms.ChangeForm;
 import forms.ConfigPersonRelationForm;
-import forms.ConfigurationForm;
 import forms.ConfigurationTableForm;
-import forms.CriterionForm;
-import forms.IterationForm;
 import forms.MilestoneForm;
-import forms.PhaseForm;
-import forms.PriorityForm;
 import forms.PriorityForm;
 import forms.ProjectForm;
 import forms.RelationForm;
@@ -69,15 +30,10 @@ import forms.ResolutionForm;
 import forms.RoleForm;
 import forms.SeverityForm;
 import forms.StatusForm;
-import forms.WorkUnitForm;
+import forms.TypeForm;
 import graphics.CanvasItem;
 import graphics.DragAndDropCanvas;
-import graphics.InfoBoxSegment;
 import graphics.NodeLink;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Point2D;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -115,6 +71,7 @@ public class Control {
 	private StatusForm statusForm;
 	private BranchForm branchFrom;
 	private ConfigurationTableForm confTableForm;
+	private TypeForm typeForm;
 
 	public Control() {
 
@@ -141,7 +98,8 @@ public class Control {
 		statusForm = new StatusForm(this);
 		branchFrom = new BranchForm(this);
 		setConfTableForm(new ConfigurationTableForm(this));
-
+		typeForm = new TypeForm(this);
+		
 		arrows = new ArrayList<>();
 
 	}
@@ -546,6 +504,14 @@ public class Control {
 
 	public void setConfTableForm(ConfigurationTableForm confTableForm) {
 		this.confTableForm = confTableForm;
+	}
+
+	public TypeForm getTypeForm() {
+		return typeForm;
+	}
+
+	public void setTypeForm(TypeForm typeForm) {
+		this.typeForm = typeForm;
 	}
 
 }

@@ -23,6 +23,7 @@ import SPADEPAC.Role;
 import SPADEPAC.RoleType;
 import SPADEPAC.Severity;
 import SPADEPAC.Status;
+import SPADEPAC.Type;
 import SPADEPAC.WorkUnit;
 import SPADEPAC.WorkUnitPriorityClass;
 import SPADEPAC.WorkUnitSeverityClass;
@@ -83,6 +84,7 @@ public class FillFormsXML {
 
 		fillPrioritybservabel(project.getPriority());
 		fillSeveritybservabel(project.getSeverity());
+		fillTypeObservabel(project.getTypes());
 		fillRelationbservabel(project.getRelation());
 		fillResolutionbservabel(project.getResolution());
 		fillStatusbservabel(project.getStatus());
@@ -256,7 +258,7 @@ public class FillFormsXML {
 		workUnitForm.getDescriptionTF().setText(unit.getDescription());
 		workUnitForm.getPriorityCB().setValue(lists.getPriorityObservable().get(unit.getPriorityIndex()));
 		workUnitForm.getSeverityCB().setValue(lists.getSeverityTypeObservable().get(unit.getSeverityIndex()));
-		workUnitForm.getTypeCB().setValue(WorkUnitTypeClass.values()[unit.getTypeIndex()]);
+		workUnitForm.getTypeCB().setValue(lists.getTypeObservable().get(unit.getTypeIndex()));
 		workUnitForm.getCategoryTF().setText(unit.getCategory());
 		workUnitForm.getStatusCB().setValue(lists.getStatusTypeObservable().get(unit.getStatusIndex()));
 		workUnitForm.getResolutionCB().setValue(lists.getResolutionTypeObservable().get(unit.getResolutionIndex()));
@@ -520,6 +522,22 @@ public class FillFormsXML {
 		}
 
 		control.getPriorityForm().getTableTV().setItems(data);
+	}
+
+	private void fillTypeObservabel(List<Type> item) {
+
+		ObservableList<ClassTable> data = FXCollections.observableArrayList();
+
+		for (int i = 0; i < item.size(); i++) {
+			String name = item.get(i).getName();
+			String classi = item.get(i).getTypeClass();
+			String superi = item.get(i).getTypeSuperClass();
+
+			control.getLists().getTypeObservable().add(name);
+			data.add(new ClassTable(name, classi, superi));
+		}
+
+		control.getTypeForm().getTableTV().setItems(data);
 	}
 
 	private void fillSeveritybservabel(List<Severity> item) {

@@ -48,7 +48,7 @@ public class WorkUnitForm extends DescriptionBasicForm implements ISegmentForm {
 	private ComboBox<String> resolutionCB;
 	private ComboBox<String> statusCB;
 	private TextField categoryTF;
-	private ComboBox<WorkUnitTypeClass> typeCB;
+	private ComboBox<String> typeCB;
 	private ComboBox<String> asigneeRoleCB;
 	private ComboBox<String> authorRoleCB;
 
@@ -133,7 +133,7 @@ public class WorkUnitForm extends DescriptionBasicForm implements ISegmentForm {
 		categoryTF = new TextField();
 
 		typeLB = new Label("Type: ");
-		typeCB = new ComboBox<WorkUnitTypeClass>(FXCollections.observableArrayList(WorkUnitTypeClass.values()));
+		typeCB = new ComboBox<String>(getControl().getLists().getTypeObservable());
 		typeCB.getSelectionModel().selectedIndexProperty().addListener(typeListener);
 		typeCB.setVisibleRowCount(5);
 
@@ -217,7 +217,6 @@ public class WorkUnitForm extends DescriptionBasicForm implements ISegmentForm {
 		@Override
 		public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
 
-			System.out.println(newValue.intValue());
 			priorityIndex = newValue.intValue();
 
 		}
@@ -306,11 +305,11 @@ public class WorkUnitForm extends DescriptionBasicForm implements ISegmentForm {
 		this.categoryTF = categoryTF;
 	}
 
-	public ComboBox<WorkUnitTypeClass> getTypeCB() {
+	public ComboBox<String> getTypeCB() {
 		return typeCB;
 	}
 
-	public void setTypeCB(ComboBox<WorkUnitTypeClass> typeCB) {
+	public void setTypeCB(ComboBox<String> typeCB) {
 		this.typeCB = typeCB;
 	}
 

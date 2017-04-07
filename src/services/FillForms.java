@@ -23,6 +23,7 @@ import SPADEPAC.Role;
 import SPADEPAC.RoleType;
 import SPADEPAC.Severity;
 import SPADEPAC.Status;
+import SPADEPAC.Type;
 import SPADEPAC.WorkUnit;
 import abstractform.BasicForm;
 import forms.ActivityForm;
@@ -438,6 +439,19 @@ public class FillForms {
 		lists.getStatusTypeObservable().add(nameST);
 
 	}
+	
+	public void fillType(String nameST, String classST, String superST) {
+		
+		Type type = objF.createType();
+		type.setName(nameST);
+		type.setTypeClass(classST);
+		type.setTypeSuperClass(superST);
+		
+		lists.getTypeList().add(type);
+		lists.getTypeObservable().add(nameST);
+
+		
+	}
 
 	public int getIndex() {
 		return index;
@@ -454,5 +468,7 @@ public class FillForms {
 	public void setIdCreater(IdentificatorCreater idCreater) {
 		this.idCreater = idCreater;
 	}
+
+	
 
 }
