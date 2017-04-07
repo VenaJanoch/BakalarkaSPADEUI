@@ -38,15 +38,17 @@ public class SeverityForm extends TableClassBasicForm implements ISegmentTableFo
 		super(control);
 
 		this.control = control;
-		
+		this.setTitle("Edit Severities");
 		createForm();
-		getSubmitButton().setVisible(false);
-		// getSubmitButton().setOnAction(event -> setActionSubmitButton());
+		//getSubmitButton().setVisible(false);
+		 getSubmitButton().setOnAction(event -> setActionSubmitButton());
 
 	}
 
 	@Override
 	public void createForm() {
+		getFormName().setText("Severity form");
+
 		getMainPanel().setCenter(getTable());
 		getMainPanel().setBottom(createControlPane());
 

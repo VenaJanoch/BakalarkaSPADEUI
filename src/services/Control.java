@@ -115,6 +115,7 @@ public class Control {
 	private StatusForm statusForm;
 	private BranchForm branchFrom;
 	private ConfigurationTableForm confTableForm;
+
 	public Control() {
 
 		procesGener = new ProcessGenerator();
@@ -140,7 +141,7 @@ public class Control {
 		statusForm = new StatusForm(this);
 		branchFrom = new BranchForm(this);
 		setConfTableForm(new ConfigurationTableForm(this));
-		
+
 		arrows = new ArrayList<>();
 
 	}
@@ -149,7 +150,6 @@ public class Control {
 
 		forms.get(0).show();
 	}
-
 
 	private void updateIndexAndID() {
 
@@ -162,7 +162,6 @@ public class Control {
 
 		procesGener = new ProcessGenerator();
 		objF = new ObjectFactory();
-		project = (Project) objF.createProject();
 
 		lists.restartLists();
 
@@ -171,7 +170,6 @@ public class Control {
 		setArrow(false);
 		setStartArrow(false);
 		forms.clear();
-		getForms().add(0, new ProjectForm(this, project, canvas));
 
 		arrows.clear();
 		canvas.restart();
@@ -203,7 +201,7 @@ public class Control {
 
 		if (!isStartArrow()) {
 
-			// id = idCreater.createLineID();
+			id = IdentificatorCreater.createLineID();
 			link = new NodeLink(id);
 
 			sortSegment(item);
@@ -211,7 +209,6 @@ public class Control {
 			item.getCanvas().getChildren().add(link);
 
 			getArrows().add(id, link);
-			
 
 			link.setStart(new Point2D(item.getTranslateX() + (item.getWidth()),
 					item.getTranslateY() + (item.getHeight() / 2)));
@@ -235,15 +232,15 @@ public class Control {
 	public void setChangeArtifactRelation(NodeLink link) {
 
 		int changeIndex = link.getChange()[1];
-	//	int changeFormIndex = link.getChange()[0];
+		// int changeFormIndex = link.getChange()[0];
 		int artifactIndex = link.getArtifact()[1];
 		Link linkP = objF.createLink();
-		
+
 		linkP.setArtifactIndex(artifactIndex);
 		linkP.setChangeIndex(changeIndex);
-		
+
 		lists.getLinksList().add(linkP);
-		
+
 		lists.getChangeList().get(changeIndex).setArtifactIndex(artifactIndex);
 
 	}
@@ -337,7 +334,7 @@ public class Control {
 		case Artifact:
 
 			return fillFormsXML.createArtifactFormXML(item, form, IDs);
-		
+
 		default:
 			return IDs;
 		}
@@ -375,7 +372,6 @@ public class Control {
 		if (file != null) {
 			restartControl();
 			project = procesGener.readProcess(file);
-			forms.clear();
 			ProjectForm form = new ProjectForm(this, project, canvas);
 			lists.setRoleList(project.getRoles());
 			lists.setChangeList(project.getChanges());
@@ -387,8 +383,7 @@ public class Control {
 			forms.add(0, form);
 			fillFormsXML = new FillFormsXML(this, lists, project, forms);
 			fillFormsXML.fillProjectFromXML(form);
-			
-		
+
 			parseProject();
 
 		}
@@ -396,10 +391,10 @@ public class Control {
 	}
 
 	private void parseProject() {
-		
-		fillFormsXML.fillPhasesFromXML(forms.get(0));		
-		fillFormsXML.fillIterationFromXML(forms.get(0));		
-		fillFormsXML.fillActivityFromXML(forms.get(0));		
+
+		fillFormsXML.fillPhasesFromXML(forms.get(0));
+		fillFormsXML.fillIterationFromXML(forms.get(0));
+		fillFormsXML.fillActivityFromXML(forms.get(0));
 		fillFormsXML.fillWorkUnitFromXML(forms.get(0), project.getWorkUnits());
 		fillFormsXML.createLinks(project.getLinks());
 	}
@@ -552,7 +547,5 @@ public class Control {
 	public void setConfTableForm(ConfigurationTableForm confTableForm) {
 		this.confTableForm = confTableForm;
 	}
-	
-	
 
 }

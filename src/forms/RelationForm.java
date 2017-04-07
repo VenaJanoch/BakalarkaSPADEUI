@@ -39,15 +39,17 @@ public class RelationForm extends TableClassBasicForm implements ISegmentTableFo
 		super(control);
 
 		this.control = control;
+		this.setTitle("Edit Relations" );
 
 		createForm();
-		getSubmitButton().setVisible(false);
-		// getSubmitButton().setOnAction(event -> setActionSubmitButton());
+		//getSubmitButton().setVisible(false);
+		 getSubmitButton().setOnAction(event -> setActionSubmitButton());
 
 	}
 
 	@Override
 	public void createForm() {
+		getFormName().setText("Relation form");
 		getMainPanel().setCenter(getTable());
 		getMainPanel().setBottom(createControlPane());
 

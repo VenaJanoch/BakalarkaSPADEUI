@@ -2,6 +2,7 @@ package forms;
 
 import SPADEPAC.Criterion;
 import abstractform.BasicForm;
+import abstractform.TableBasicForm;
 import graphics.CanvasItem;
 import graphics.InfoBoxSegment;
 import interfaces.ISegmentForm;
@@ -36,7 +37,7 @@ import services.Control;
 import tables.CriterionTable;
 import tables.MilestoneTable;
 
-public class CriterionForm extends BorderPane implements ISegmentTableForm {
+public class CriterionForm extends TableBasicForm implements ISegmentTableForm {
 
 	private Label descriptionLB;
 	private Label nameLB;
@@ -48,17 +49,20 @@ public class CriterionForm extends BorderPane implements ISegmentTableForm {
 	private GridPane controlPane;
 
 	public CriterionForm(Control control) {
-
+		super(control);
 		this.control = control;
-
+		
+		getSubmitButton().setVisible(false);
 		createForm();
 
 	}
 
 	public void createForm() {
 
-		this.setCenter(getTable());
-		this.setBottom(createControlPane());
+		getFormName().setText("Criterion form");
+
+		getMainPanel().setCenter(getTable());
+		getMainPanel().setBottom(createControlPane());
 
 	}
 

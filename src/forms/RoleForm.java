@@ -21,6 +21,7 @@ import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -34,6 +35,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import services.Alerts;
@@ -54,6 +56,7 @@ public class RoleForm extends Table2BasicForm implements ISegmentTableForm {
 	private Control control;
 	private ClassSwitcher classSwitcher;
 	private RoleTypeForm roleTForm;
+	private Label formName;
 
 	public RoleForm(Control control) {
 		super(control);
@@ -65,10 +68,18 @@ public class RoleForm extends Table2BasicForm implements ISegmentTableForm {
 
 	public void setActionSubmitButton() {
 		close();
+		
 	}
 
 	@Override
 	public void createForm() {
+		
+		formName = new Label("Roles Form");
+		formName.setFont(Font.font(25));
+	
+		getInternalPanel().setTop(formName);
+		getInternalPanel().setAlignment(formName, Pos.CENTER);
+	
 
 		getInternalPanel().setCenter(getTable());
 		getInternalPanel().setBottom(createControlPane());
@@ -190,4 +201,21 @@ public class RoleForm extends Table2BasicForm implements ISegmentTableForm {
 		this.roleTypeCB = roleTypeCB;
 	}
 
+	public TableView<RoleTable> getTableTV() {
+		return tableTV;
+	}
+
+	public void setTableTV(TableView<RoleTable> tableTV) {
+		this.tableTV = tableTV;
+	}
+
+	public RoleTypeForm getRoleTForm() {
+		return roleTForm;
+	}
+
+	public void setRoleTForm(RoleTypeForm roleTForm) {
+		this.roleTForm = roleTForm;
+	}
+
+	
 }

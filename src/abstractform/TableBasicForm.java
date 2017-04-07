@@ -9,6 +9,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import services.Constans;
 import services.Control;
@@ -23,11 +24,11 @@ public class TableBasicForm  extends Stage{
 	private Button submitButton;
 	private Label nameLB;
 	private TextField nameTF;
+	private Label formName;
 
 	public TableBasicForm(Control control) {
 		super();
 		this.control = control;
-
 		this.setScene(creatSceneProject());
 
 	}
@@ -47,8 +48,7 @@ public class TableBasicForm  extends Stage{
 		
 		controlPane = new GridPane();
 		submitButton = new Button("OK");
-		submitButton.setAlignment(Pos.BOTTOM_CENTER);
-
+		
 		nameLB = new Label("Name");
 		nameTF = new TextField();
 
@@ -67,7 +67,14 @@ public class TableBasicForm  extends Stage{
 		controlPane.setAlignment(Pos.CENTER);
 		controlPane.setPadding(new Insets(5));
 
+		formName = new Label();
+		formName.setAlignment(Pos.CENTER);
+		formName.setFont(Font.font(25));
+		
+		mainPanel.setAlignment(formName, Pos.CENTER);
 		mainPanel.setRight(submitButton);
+		mainPanel.setAlignment(submitButton, Pos.BOTTOM_CENTER);
+		mainPanel.setTop(formName);
 
 		return mainPanel;
 	}
@@ -121,5 +128,23 @@ public class TableBasicForm  extends Stage{
 	public void setNameTF(TextField nameTF) {
 		this.nameTF = nameTF;
 	}
+
+	public Label getNameLB() {
+		return nameLB;
+	}
+
+	public void setNameLB(Label nameLB) {
+		this.nameLB = nameLB;
+	}
+
+	public Label getFormName() {
+		return formName;
+	}
+
+	public void setFormName(Label formName) {
+		this.formName = formName;
+	}
+	
+	
 
 }

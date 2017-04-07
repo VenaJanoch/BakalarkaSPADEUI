@@ -36,15 +36,16 @@ public class PriorityForm extends TableClassBasicForm implements ISegmentTableFo
 		super(control);
 
 		this.control = control;
-		
+		this.setTitle("Edit Priority");
 		createForm();
-		getSubmitButton().setVisible(false);
-		// getSubmitButton().setOnAction(event -> setActionSubmitButton());
+		//getSubmitButton().setVisible();
+		 getSubmitButton().setOnAction(event -> setActionSubmitButton());
 
 	}
 
 	@Override
 	public void createForm() {
+		getFormName().setText("Priority form");
 		getMainPanel().setCenter(getTable());
 		getMainPanel().setBottom(createControlPane());
 

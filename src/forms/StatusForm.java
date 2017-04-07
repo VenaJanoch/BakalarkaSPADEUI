@@ -39,15 +39,16 @@ public class StatusForm extends TableClassBasicForm implements ISegmentTableForm
 		super(control);
 
 		this.control = control;
-
+		this.setTitle("Edit Status");
 		createForm();
-		getSubmitButton().setVisible(false);
-		// getSubmitButton().setOnAction(event -> setActionSubmitButton());
+		getSubmitButton().setOnAction(event -> setActionSubmitButton());
 
 	}
 
 	@Override
 	public void createForm() {
+		getFormName().setText("Status form");
+
 		getMainPanel().setCenter(getTable());
 		getMainPanel().setBottom(createControlPane());
 

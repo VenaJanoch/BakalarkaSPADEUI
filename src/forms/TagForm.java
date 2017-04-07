@@ -53,7 +53,7 @@ public class TagForm extends TableBasicForm implements ISegmentTableForm {
 		// this.confIDs = confIDs;
 		this.control = control;
 		this.config = configuration;
-		
+		this.setTitle("Edit Tags");
 		createForm();
 
 	}
@@ -111,10 +111,9 @@ public class TagForm extends TableBasicForm implements ISegmentTableForm {
 	@Override
 	public GridPane createControlPane() {
 
-		Label tagLB = new Label("Tag: ");
+		getNameLB().setText("Tag");
 		tagTF = new TextField();
 
-		getControlPane().add(tagLB, 0, 0);
 		getControlPane().add(tagTF, 1, 0);
 		getControlPane().add(getAddBT(), 2, 0);
 
@@ -147,6 +146,8 @@ public class TagForm extends TableBasicForm implements ISegmentTableForm {
 
 	@Override
 	public void createForm() {
+
+		getFormName().setText("Tag form");
 
 		getSubmitButton().setOnAction(event -> setActionSubmitButton());
 

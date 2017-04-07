@@ -344,7 +344,6 @@ public class FillFormsXML {
 		fillTagsFromXML(configForm, conf.getTags());
 		System.out.println(conf.getArtifactsIndexs().size() + "Indexs");
 		fillArtifactFromXML(configForm, conf.getArtifactsIndexs());
-
 		return IDs;
 
 	}
@@ -357,21 +356,25 @@ public class FillFormsXML {
 			Role role = roles.get(i);
 			data.add(new RoleTable(role.getName(), role.getDescription(),
 					lists.getRoleTypeObservable().get(role.getType())));
+			
 			control.getLists().getRoleObservable().add(role.getName());
 		}
+		
+		control.getRoleForm().getTableTV().setItems(data);
 
 	}
 
 	public void fillRoleTypeFromXML(List<RoleType> roles) {
-		ObservableList<RoleTypeTable> data = FXCollections.observableArrayList();
+		ObservableList<ClassTable> data = FXCollections.observableArrayList();
 		for (int i = 0; i < roles.size(); i++) {
 
 			RoleType role = roles.get(i);
 
-			data.add(new RoleTypeTable(role.getName(), role.getRoleClass(), role.getRoleSuperClass()));
+			data.add(new ClassTable(role.getName(), role.getRoleClass(), role.getRoleSuperClass()));
 			lists.getRoleTypeObservable().add(role.getName());
 		}
-
+		
+		control.getRoleForm().getRoleTForm().getTableTV().setItems(data);
 	}
 
 	public void fillBranchFromXML(List<Branch> item) {
@@ -444,7 +447,7 @@ public class FillFormsXML {
 
 			item.setTranslateX(artifact.getCoordinates().getXCoordinate());
 			item.setTranslateY(artifact.getCoordinates().getYCoordinate());
-			break;
+			
 		}
 
 	}

@@ -5,13 +5,13 @@ import javafx.scene.text.Text;
 
 public class Constans {
 
-	public static final int width = 700;
-	public static final int height = 600;
+	public static final int width = 1000;
+	public static final int height = 800;
 	public static final int offset = 12;
 
-	public static final int formWidth = 700;
-	public static final int formHeight = 400;
-	public static final int milestoneFormWidth = 850;
+	public static final int formWidth = 900;
+	public static final int formHeight = 600;
+	public static final int milestoneFormWidth = 950;
 	public static final int milestoneFormHeight = 450;
 
 	public static final int countDragItems = 13;
@@ -72,5 +72,13 @@ public class Constans {
 
 	public static final int statusTypeOpenSuperClass = 0;
 	public static final int statusTypeCloseSuperClass = 1;
+	
+	public static final int typeEditionClass = 1;
+	public static final int typeCreationClass = 2;
+
+	
+	public static final int typeEditionSuperClass = 0;
+	public static final int typeCreationSuperClass = 1;
+	public static final int typeGeneralSuperClass = 2;
 
 }

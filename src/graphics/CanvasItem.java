@@ -196,15 +196,16 @@ public class CanvasItem extends AnchorPane {
 		segmentInfo.setNameText(name);
 	}
 
-	/*** Getrs and Setrs ***/
-
 	public void registerStartLink(int linkId) {
 		mStartLinkIds.add(linkId);
 	}
-
+	
 	public void registerEndLink(int linkId) {
 		mEndLinkIds.add(linkId);
 	}
+
+	/*** Getrs and Setrs ***/
+
 
 	public DragAndDropCanvas getCanvas() {
 		return canvas;

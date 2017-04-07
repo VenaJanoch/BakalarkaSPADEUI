@@ -39,15 +39,17 @@ public class ResolutionForm extends TableClassBasicForm implements ISegmentTable
 		super(control);
 
 		this.control = control;
-
+		this.setTitle("Edit Resolutions");
 		createForm();
-		getSubmitButton().setVisible(false);
-		// getSubmitButton().setOnAction(event -> setActionSubmitButton());
+		//getSubmitButton().setVisible(false);
+		 getSubmitButton().setOnAction(event -> setActionSubmitButton());
 
 	}
 
 	@Override
 	public void createForm() {
+		getFormName().setText("Resolution form");
+
 		getMainPanel().setCenter(getTable());
 		getMainPanel().setBottom(createControlPane());
 

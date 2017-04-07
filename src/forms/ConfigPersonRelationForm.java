@@ -62,6 +62,9 @@ public class ConfigPersonRelationForm extends TableBasicForm implements ISegment
 
 	@Override
 	public void createForm() {
+		
+		getFormName().setText("CPR form");
+
 		getMainPanel().setCenter(getTable());
 		getMainPanel().setBottom(createControlPane());
 		

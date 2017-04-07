@@ -8,7 +8,9 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
+import javafx.scene.control.Label;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
@@ -22,6 +24,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TouchEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.text.Font;
 import javafx.util.Callback;
 import services.Alerts;
 import services.Constans;
@@ -33,7 +36,10 @@ import tables.MilestoneTable;
 public class ConfigurationTableForm extends Table2BasicForm implements ISegmentTableForm {
 
 	private TableView<ConfigTable> tableTV;
-	BasicForm form;
+	private BasicForm form;
+	
+	private Label formName;
+	
 	public ConfigurationTableForm(Control control) {
 		super(control);
 
@@ -43,10 +49,15 @@ public class ConfigurationTableForm extends Table2BasicForm implements ISegmentT
 
 	@Override
 	public void createForm() {
-
+		formName = new Label("Configuration form");
+		formName.setFont(Font.font(25));
+		
 		getInternalPanel().setCenter(getTable());
 
 		getMainPanel().setRight(getInternalPanel());
+		getMainPanel().setTop(formName);
+		getMainPanel().setAlignment(formName, Pos.TOP_CENTER);
+		
 		createConfigItem();
 		getNameTF().setVisible(false);
 		getNameLB().setVisible(false);

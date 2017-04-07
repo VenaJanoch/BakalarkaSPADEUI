@@ -103,4 +103,14 @@ public class Alerts {
 
 	}
 
+	public static void ShowNoCriterion() {
+		
+		Alert alert = new Alert(AlertType.WARNING);
+		alert.setTitle("Insert error");
+		alert.setHeaderText("No + criterion + is choosed!");
+		alert.setContentText("Please choosed a + criterion + in corresponding filed!");
+		alert.showAndWait();
+		
+	}
+
 }

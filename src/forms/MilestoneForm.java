@@ -39,6 +39,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import services.Alerts;
@@ -52,6 +53,7 @@ import tables.TagTable;
 public class MilestoneForm extends Table2BasicForm implements ISegmentTableForm {
 
 	private Label criteriaLB;
+	private Label formName;
 	
 	private CheckComboBox<String> criteriaCB;		
 	private TableView<MilestoneTable> tableTV;
@@ -65,7 +67,7 @@ public class MilestoneForm extends Table2BasicForm implements ISegmentTableForm 
 	public MilestoneForm(Control control) {
 
 		super(control);
-
+		this.setTitle("Edit Milestone");
 		createForm();
 		getSubmitBT().setOnAction(event -> setActionSubmitButton());
 
@@ -74,6 +76,11 @@ public class MilestoneForm extends Table2BasicForm implements ISegmentTableForm 
 	@Override
 	public void createForm() {
 		
+		formName = new Label("Milestones Form");
+		formName.setFont(Font.font(25));
+		
+		getInternalPanel().setTop(formName);
+		getInternalPanel().setAlignment(formName, Pos.CENTER);
 		
 		getInternalPanel().setCenter(getTable());
 		getInternalPanel().setBottom(createControlPane());
@@ -81,7 +88,7 @@ public class MilestoneForm extends Table2BasicForm implements ISegmentTableForm 
 		criterionForm = new CriterionForm(getControl());
 
 		getMainPanel().setCenter(getInternalPanel());
-		getMainPanel().setRight(criterionForm);
+		getMainPanel().setRight(criterionForm.getMainPanel());
 		
 
 	}
@@ -164,18 +171,26 @@ public class MilestoneForm extends Table2BasicForm implements ISegmentTableForm 
 
 	@Override
 	public void addItem() {
-		String nameST = getNameTF().getText();
+		
+		if (criterionArray != null) {
 
-		if (nameST.length() == 0) {
+			String nameST = getNameTF().getText();
 
-			Alerts.showNoNameAlert();
-			return;
+			if (nameST.length() == 0) {
+
+				Alerts.showNoNameAlert();
+				return;
+			}
+
+			MilestoneTable milestone = new MilestoneTable(nameST, criterionArray.toString());
+			tableTV.getItems().add(milestone);
+			tableTV.sort();
+			getControl().getFillForms().fillMilestone(nameST, criterionIndex);
+			 criteriaCB.getCheckModel().clearChecks();
+
+		}else{
+			Alerts.ShowNoCriterion();
 		}
-
-		MilestoneTable milestone = new MilestoneTable(nameST, criterionArray.toString());
-		tableTV.getItems().add(milestone);
-		tableTV.sort();
-		getControl().getFillForms().fillMilestone(nameST, criterionIndex);
 
 	}
 

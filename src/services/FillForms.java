@@ -223,7 +223,7 @@ public class FillForms {
 	public void fillConfiguration(Configuration conf, int[] IDs, boolean isRelase, LocalDate Ldate, String name,
 			int roleIndex, boolean isNew) {
 
-		Configuration config = control.getLists().getConfigList().get(IDs[1]);
+		Configuration config = conf;
 		config.setIsRelease(isRelase);
 		config.setCreate(control.convertDate(Ldate));
 		config.setName(name);
@@ -236,7 +236,8 @@ public class FillForms {
 			release = "NO";
 		}
 		if (isNew) {
-			control.getLists().getConfigObservable().add(name);
+			lists.getConfigObservable().add(name);
+			lists.getConfigList().add(IDs[1], conf);
 
 			ConfigTable configTab = new ConfigTable(name, release, IDs[0]);
 			control.getConfTableForm().getTableTV().getItems().add(configTab);
@@ -258,7 +259,6 @@ public class FillForms {
 		IDs[0] = index;
 		IDs[1] = idCreater.createConfigurationID();
 
-		control.getLists().getConfigList().add(IDs[1], conf);
 		control.getLists().getConfigFormIndex().add(index);
 		index++;
 		return IDs;

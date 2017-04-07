@@ -60,6 +60,9 @@ public class RoleTypeForm extends TableClassBasicForm implements ISegmentTableFo
 
 	@Override
 	public void createForm() {
+		
+		getNameLB().setText("Role type");
+		
 		getMainPanel().setCenter(getTable());
 		getMainPanel().setBottom(createControlPane());
 

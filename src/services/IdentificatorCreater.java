@@ -3,7 +3,7 @@ package services;
 
 public class IdentificatorCreater {
 
-	private int linesID = -1;
+	private static int linesID = -1;
 	private int phaseID = -1 ;
 	private int iterationID = -1;
 	private int activityID = -1;
@@ -21,7 +21,7 @@ public class IdentificatorCreater {
 
 	}
 
-	public int createLineID() {
+	public static int createLineID() {
 
 		linesID++;
 

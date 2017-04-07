@@ -71,6 +71,7 @@ public class Table2BasicForm extends Stage{
 		controlPane.setPadding(new Insets(5));
 
 		mainPanel.setBottom(submitBT);
+		mainPanel.setAlignment(submitBT, Pos.TOP_RIGHT);
 	//	mainPanel.setCenter(internalPanel);
 		
 

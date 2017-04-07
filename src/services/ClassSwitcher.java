@@ -98,6 +98,21 @@ public class ClassSwitcher {
 		}
 	}
 
+	public int typeClassToSupperClass(int classIndex) {
+		if (classIndex <= Constans.typeEditionClass) {
+
+			return Constans.typeEditionSuperClass;
+
+		}if (classIndex == Constans.typeCreationClass) {
+
+			return Constans.typeCreationSuperClass;
+
+		} else {
+
+			return Constans.typeGeneralSuperClass;
+		}
+	}
+
 	// public int roleSuperClassToClass(int classIndex) {
 	//
 	// System.out.println(classIndex + "classIndex");

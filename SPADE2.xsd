@@ -38,14 +38,14 @@
 
 			<xs:element name="cpr" type="ConfigPersonRelation"
 				minOccurs="1" maxOccurs="unbounded" />
-				
+
 			<xs:element name="configuration" type="Configuration"
 				minOccurs="1" maxOccurs="unbounded" />
 
 
 			<xs:element name="links" type="Link" minOccurs="1"
 				maxOccurs="unbounded" />
-				
+
 			<xs:element name="priority" type="Priority" minOccurs="1"
 				maxOccurs="unbounded" />
 			<xs:element name="severity" type="Severity" minOccurs="1"
@@ -59,7 +59,7 @@
 
 			<xs:element name="roleType" type="RoleType" minOccurs="1"
 				maxOccurs="unbounded" />
-				
+
 
 		</xs:sequence>
 		<xs:attribute name="name" type="xs:string" />
@@ -389,6 +389,14 @@
 			<xs:enumeration value="BUG" />
 			<xs:enumeration value="ENHANCEMENT" />
 			<xs:enumeration value="FEATURE" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="WorkUnitTypeSuperClass">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="EDITION" />
+			<xs:enumeration value="CREATION" />
+			<xs:enumeration value="GENERAL" />
 		</xs:restriction>
 	</xs:simpleType>
 
