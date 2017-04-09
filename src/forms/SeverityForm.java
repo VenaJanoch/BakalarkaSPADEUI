@@ -31,9 +31,7 @@ public class SeverityForm extends TableClassBasicForm implements ISegmentTableFo
 	private Label classTypeLB;
 	private Label superClassTypeLB;
 
-	private int classIndex;
-	private int superIndex;
-
+	
 	public SeverityForm(Control control) {
 		super(control);
 
@@ -109,7 +107,7 @@ public class SeverityForm extends TableClassBasicForm implements ISegmentTableFo
 		public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
 
 			classIndex = newValue.intValue();
-			System.out.println(classIndex);
+			
 			superIndex = getSwitcher().priorityClassToSupperClass(classIndex);
 			superClassTypeCB.setValue(WorkUnitSeveritySuperClass.values()[superIndex]);
 		}

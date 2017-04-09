@@ -189,7 +189,7 @@ public class MilestoneForm extends Table2BasicForm implements ISegmentTableForm 
 			 criteriaCB.getCheckModel().clearChecks();
 
 		}else{
-			Alerts.ShowNoCriterion();
+			Alerts.showNoText("Criterion");
 		}
 
 	}

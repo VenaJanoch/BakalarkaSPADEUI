@@ -106,13 +106,11 @@ public class SegmentLists {
 		branchList.clear();
 		branchFormIndex.clear();
 		branchObservable.clear();
-		branchObservable.add("New");
-
+		
 		changeList.clear();
 		changeFormIndex.clear();
 		changeObservable.clear();
-		changeObservable.add("New");
-
+		
 		artifactFormIndex.clear();
 		artifactList.clear();
 		artifactObservable.clear();

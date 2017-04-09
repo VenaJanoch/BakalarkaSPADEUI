@@ -22,12 +22,17 @@ public class TableClassBasicForm extends TableBasicForm {
 
 	private ClassSwitcher switcher;
 	private Control control;
+	
+	protected int classIndex;
+	protected int superIndex;
 
 	public TableClassBasicForm(Control control) {
 
 		super(control);
 		this.control = control;
 		setSwitcher(new ClassSwitcher(control));
+		classIndex = 0;
+		setSuperIndex(0);
 		createforms();
 
 	}
@@ -97,6 +102,22 @@ public class TableClassBasicForm extends TableBasicForm {
 
 	public void setTableTV(TableView<ClassTable> tableTV) {
 		this.tableTV = tableTV;
+	}
+
+	public int getClassIndex() {
+		return classIndex;
+	}
+
+	public void setClassIndex(int classIndex) {
+		this.classIndex = classIndex;
+	}
+
+	public int getSuperIndex() {
+		return superIndex;
+	}
+
+	public void setSuperIndex(int superIndex) {
+		this.superIndex = superIndex;
 	}
 
 }

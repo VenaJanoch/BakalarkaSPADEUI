@@ -61,6 +61,7 @@ public class RoleForm extends Table2BasicForm implements ISegmentTableForm {
 	public RoleForm(Control control) {
 		super(control);
 		this.control = control;
+		this.roleIndex = 0;
 		createForm();
 		getSubmitBT().setOnAction(event -> setActionSubmitButton());
 
@@ -172,8 +173,10 @@ public class RoleForm extends Table2BasicForm implements ISegmentTableForm {
 		String nameST = getNameTF().getText();
 		String typeST = roleTypeCB.getValue();
 		String descritpST = descriptionTF.getText();
-
-		if (nameST.length() == 0) {
+		if (getControl().getLists().getRoleTypeList().isEmpty()) {
+			Alerts.showNoText("Role-type");
+			return;
+		}else if (nameST.length() == 0) {
 
 			Alerts.showNoNameAlert();
 			return;

@@ -28,6 +28,7 @@ import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.shape.Line;
 import javafx.stage.WindowEvent;
+import services.Alerts;
 import services.Control;
 import services.SegmentType;
 
@@ -50,16 +51,15 @@ public class ConfigurationForm extends BasicForm implements ISegmentForm {
 	private RadioButton rbYes;
 	private RadioButton rbNo;
 	private DatePicker createdDP;
-	private CheckComboBox<String> branchCB;	
+	private CheckComboBox<String> branchCB;
 	private ComboBox<String> authorRoleCB;
 	private ComboBox<String> cprCB;
 
 	private int authorIndex;
 	private int cprIndex;
-	
+
 	private ObservableList<String> branchArray;
 	private List<Integer> branchIndex;
-	
 
 	private Configuration configuration;
 	private TagForm tagForm;
@@ -70,9 +70,9 @@ public class ConfigurationForm extends BasicForm implements ISegmentForm {
 		this.tagForm = new TagForm(conf, control);
 		isNew = true;
 		isRelease = true;
-		
+
 		branchIndex = conf.getBranchesIndexs();
-		
+
 		setConfig(conf);
 		setBranchArray(conf.getBranchesIndexs());
 		setChangeArray(conf.getChangesIndexs());
@@ -86,7 +86,7 @@ public class ConfigurationForm extends BasicForm implements ISegmentForm {
 
 			@Override
 			public void handle(WindowEvent event) {
-				closeForm();
+				Alerts.showSaveSegment();
 			}
 		});
 
@@ -104,22 +104,26 @@ public class ConfigurationForm extends BasicForm implements ISegmentForm {
 
 		setName(actName);
 		getCanvasItem().setNameText(actName);
-		getControl().getFillForms().fillConfiguration(configuration, IDs, isRelease, createDate, actName,
-				authorIndex, isNew);
-		
+		getControl().getFillForms().fillConfiguration(configuration, IDs, isRelease, createDate, actName, authorIndex,
+				isNew);
+
 		getSubmitButton().setText("Save");
-		
+
 		isNew = false;
 	}
 
 	@Override
 	public void setActionSubmitButton() {
-//		if (getControl().getLists().getRoleList().isEmpty()) {
-//			getAlerts().showNoAuthorAlert();
-//		} else {
+
+		if (getControl().getLists().getRoleList().isEmpty()) {
+			getAlerts().showNoText("Author");
+		} else if (getControl().getLists().getBranchList().isEmpty()) {
+			Alerts.showNoText("Branch");
+		} else {
+
 			closeForm();
 			close();
-//		}
+		}
 	}
 
 	@Override
@@ -129,7 +133,6 @@ public class ConfigurationForm extends BasicForm implements ISegmentForm {
 		getDragBox().setLeft(arrowBT);
 		arrowBT.setOnAction(event -> createArrowButtonEvent());
 
-		
 		createdLB = new Label("Created: ");
 		createdDP = new DatePicker();
 		createdDP.setValue(LocalDate.now());
@@ -145,12 +148,12 @@ public class ConfigurationForm extends BasicForm implements ISegmentForm {
 		authorRoleCB = new ComboBox<String>(getControl().getLists().getRoleObservable());
 		authorRoleCB.setVisibleRowCount(5);
 		authorRoleCB.getSelectionModel().selectedIndexProperty().addListener(roleListenerAut);
-		
+
 		cprLB = new Label("Conf-Person: ");
 		cprCB = new ComboBox<String>(getControl().getLists().getCPRObservable());
 		cprCB.setVisibleRowCount(5);
 		cprCB.getSelectionModel().selectedIndexProperty().addListener(cprListener);
-		
+
 		branchLB = new Label("Branches");
 		branchCB = new CheckComboBox<String>(getControl().getLists().getBranchObservable());
 		branchCB.getCheckModel().getCheckedItems().addListener(new ListChangeListener<String>() {
@@ -161,11 +164,10 @@ public class ConfigurationForm extends BasicForm implements ISegmentForm {
 
 			}
 		});
-		
+
 		addTag = new Button("Add Tag");
 		addTag.setOnAction(event -> tagForm.show());
-		
-		
+
 		fillInfoPart();
 	}
 
@@ -179,7 +181,6 @@ public class ConfigurationForm extends BasicForm implements ISegmentForm {
 		}
 
 	}
-	
 
 	private void fillInfoPart() {
 
@@ -195,7 +196,7 @@ public class ConfigurationForm extends BasicForm implements ISegmentForm {
 		getInfoPart().add(authorRoleLB, 0, 3);
 		getInfoPart().setHalignment(authorRoleLB, HPos.RIGHT);
 		getInfoPart().add(authorRoleCB, 1, 3);
-		
+
 		getInfoPart().add(cprLB, 0, 4);
 		getInfoPart().setHalignment(cprLB, HPos.RIGHT);
 		getInfoPart().add(cprCB, 1, 4);
@@ -203,10 +204,9 @@ public class ConfigurationForm extends BasicForm implements ISegmentForm {
 		getInfoPart().add(branchLB, 0, 5);
 		getInfoPart().setHalignment(branchLB, HPos.RIGHT);
 		getInfoPart().add(branchCB, 1, 5);
-	
-		
+
 		getInfoPart().add(addTag, 1, 6);
-		
+
 		group.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
 
 			@Override
@@ -232,8 +232,7 @@ public class ConfigurationForm extends BasicForm implements ISegmentForm {
 
 		}
 	};
-	
-	
+
 	ChangeListener<Number> cprListener = new ChangeListener<Number>() {
 
 		@Override
@@ -245,7 +244,6 @@ public class ConfigurationForm extends BasicForm implements ISegmentForm {
 
 	/*** Getrs and Setrs ***/
 
-	
 	public Configuration getConfiguration() {
 		return configuration;
 	}
@@ -309,9 +307,5 @@ public class ConfigurationForm extends BasicForm implements ISegmentForm {
 	public void setNew(boolean isNew) {
 		this.isNew = isNew;
 	}
-
-	
-
-	
 
 }

@@ -18,6 +18,7 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.WindowEvent;
+import services.Alerts;
 import services.Control;
 import services.SegmentType;
 
@@ -38,7 +39,7 @@ public class IterationForm extends Date2DescBasicForm implements ISegmentForm {
 
 			@Override
 			public void handle(WindowEvent event) {
-				closeForm();
+				Alerts.showSaveSegment();
 			}
 		});
 
@@ -67,7 +68,7 @@ public class IterationForm extends Date2DescBasicForm implements ISegmentForm {
 	@Override
 	public void setActionSubmitButton() {
 		if (getControl().getLists().getConfigList().isEmpty()) {
-			getAlerts().showNoConfigAlert();
+			getAlerts().showNoText("Configuration");
 		} else {
 			closeForm();
 			close();
@@ -86,7 +87,6 @@ public class IterationForm extends Date2DescBasicForm implements ISegmentForm {
 			@Override
 			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
 
-				System.out.println(newValue.intValue());
 				chooseConfigID = newValue.intValue();
 
 			}

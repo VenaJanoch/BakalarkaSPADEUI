@@ -1,11 +1,14 @@
 package services;
 
+import java.util.Optional;
+
 import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TableView;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonBar.ButtonData;
 import tables.CriterionTable;
 
 public class Alerts {
@@ -14,45 +17,6 @@ public class Alerts {
 
 	}
 
-	public void showNoConfigAlert() {
-
-		Alert alert = new Alert(AlertType.ERROR);
-		alert.setTitle("Error Dialog");
-		alert.setHeaderText("NO CONFIGURATION");
-		alert.setContentText("You must choose configuration or create!");
-
-		alert.showAndWait();
-	}
-
-	public void showNoAuthorAlert() {
-
-		Alert alert = new Alert(AlertType.ERROR);
-		alert.setTitle("Error Dialog");
-		alert.setHeaderText("NO Author");
-		alert.setContentText("You must choose Author or create!");
-
-		alert.showAndWait();
-	}
-
-	public void showNoAssigneeAlert() {
-
-		Alert alert = new Alert(AlertType.ERROR);
-		alert.setTitle("Error Dialog");
-		alert.setHeaderText("NO Assigne");
-		alert.setContentText("You must choose Assignne or create!");
-
-		alert.showAndWait();
-	}
-
-	public void showNoArtifactAlert() {
-
-		Alert alert = new Alert(AlertType.ERROR);
-		alert.setTitle("Error Dialog");
-		alert.setHeaderText("NO ARTIFACT");
-		alert.setContentText("You must choose artifact or create!");
-
-		alert.showAndWait();
-	}
 
 	public static void showNoNameAlert() {
 
@@ -85,32 +49,38 @@ public class Alerts {
 
 	}
 
-	public static void showNoDescription() {
-		Alert alert = new Alert(AlertType.WARNING);
-		alert.setTitle("Insert error");
-		alert.setHeaderText("No description is provided!");
-		alert.setContentText("Please provide a description in corresponding filed!");
-		alert.showAndWait();
-
-	}
-	
 	public static void showNoText(String name) {
 		Alert alert = new Alert(AlertType.WARNING);
 		alert.setTitle("Insert error");
-		alert.setHeaderText("No + name + is provided!");
-		alert.setContentText("Please provide a + name + in corresponding filed!");
+		alert.setHeaderText("No " + name + " is provided!");
+		alert.setContentText("Please provide a "+ name +" in corresponding filed or create new segment!");
 		alert.showAndWait();
 
 	}
 
-	public static void ShowNoCriterion() {
-		
+	public static void showSaveSegment() {
 		Alert alert = new Alert(AlertType.WARNING);
-		alert.setTitle("Insert error");
-		alert.setHeaderText("No + criterion + is choosed!");
-		alert.setContentText("Please choosed a + criterion + in corresponding filed!");
+		alert.setTitle("Closing without save");
+		alert.setHeaderText("Segment did not save!");
 		alert.showAndWait();
-		
+	}
+
+
+	public static void showCloseApp(Control control) {
+		Alert alert = new Alert(AlertType.WARNING);
+		alert.setTitle("Closing APP");
+		alert.setHeaderText("You closing a program");
+		alert.setContentText("Would you save a project?.");
+
+		ButtonType buttonTypeOne = new ButtonType("Save");
+		ButtonType buttonTypeCancel = new ButtonType("Cancel", ButtonData.CANCEL_CLOSE);
+
+		alert.getButtonTypes().setAll(buttonTypeOne, buttonTypeCancel);
+
+		Optional<ButtonType> result = alert.showAndWait();
+		if (result.get() == buttonTypeOne){
+		    control.saveFile();
+		}
 	}
 
 }

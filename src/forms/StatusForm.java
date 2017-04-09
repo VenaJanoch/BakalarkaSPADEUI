@@ -32,9 +32,7 @@ public class StatusForm extends TableClassBasicForm implements ISegmentTableForm
 	private Label classTypeLB;
 	private Label superClassTypeLB;
 
-	private int classIndex;
-	private int superIndex;
-
+	
 	public StatusForm(Control control) {
 		super(control);
 
@@ -107,7 +105,7 @@ public class StatusForm extends TableClassBasicForm implements ISegmentTableForm
 		public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
 
 			classIndex = newValue.intValue();
-			System.out.println(classIndex);
+			
 			superIndex = getSwitcher().statusClassToSupperClass(classIndex);
 			superClassTypeCB.setValue(WorkUnitStatusSuperClass.values()[superIndex]);
 		}

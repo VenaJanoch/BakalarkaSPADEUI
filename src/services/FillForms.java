@@ -229,7 +229,7 @@ public class FillForms {
 		config.setCreate(control.convertDate(Ldate));
 		config.setName(name);
 		config.setAuthorIndex(roleIndex);
-		
+
 		String release = "YES";
 		if (isRelase) {
 			release = "YES";
@@ -291,9 +291,8 @@ public class FillForms {
 
 		if (isNew) {
 
-			control.getLists().getChangeList().add(IDs[1], change);
-			control.getLists().getChangeFormIndex().add(IDs[0]);
-			control.getLists().getChangeObservable().add(name);
+			lists.getChangeFormIndex().add(IDs[0]);
+			lists.getChangeObservable().add(name);
 		}
 
 	}
@@ -306,6 +305,7 @@ public class FillForms {
 		IDs[1] = idCreater.createChangeID();
 		IDs[2] = form.getIdCreater().createChangeID();
 		form.getChangeArray().add(IDs[2], IDs[1]);
+		lists.getChangeList().add(IDs[1], change);
 		index++;
 		return IDs;
 
@@ -327,7 +327,6 @@ public class FillForms {
 		artifact.setCoordinates(coord);
 		if (isNew) {
 			control.getLists().getArtifactObservable().add(name);
-			control.getLists().getArtifactList().add(IDs[1], artifact);
 			control.getLists().getArtifactFormIndex().add(IDs[0]);
 		}
 
@@ -341,7 +340,7 @@ public class FillForms {
 		IDs[1] = idCreater.createArtifactID();
 		IDs[2] = form.getIdCreater().createArtifactID();
 		form.getArtifactArray().add(IDs[2], IDs[1]);
-
+		control.getLists().getArtifactList().add(IDs[1], artifact);
 		index++;
 		return IDs;
 	}
@@ -439,18 +438,17 @@ public class FillForms {
 		lists.getStatusTypeObservable().add(nameST);
 
 	}
-	
+
 	public void fillType(String nameST, String classST, String superST) {
-		
+
 		Type type = objF.createType();
 		type.setName(nameST);
 		type.setTypeClass(classST);
 		type.setTypeSuperClass(superST);
-		
+
 		lists.getTypeList().add(type);
 		lists.getTypeObservable().add(nameST);
 
-		
 	}
 
 	public int getIndex() {
@@ -468,7 +466,5 @@ public class FillForms {
 	public void setIdCreater(IdentificatorCreater idCreater) {
 		this.idCreater = idCreater;
 	}
-
-	
 
 }

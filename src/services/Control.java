@@ -13,7 +13,6 @@ import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 
-
 import SPADEPAC.Link;
 import SPADEPAC.ObjectFactory;
 import SPADEPAC.Project;
@@ -41,7 +40,9 @@ import javafx.stage.Stage;
 public class Control {
 
 	private FileChooser fileChooser;
-
+	private File file;
+	private boolean firstSave;
+	
 	private boolean arrow;
 	private boolean startArrow;
 	private DragAndDropCanvas canvas;
@@ -52,7 +53,6 @@ public class Control {
 	private ClassSwitcher classSwitcher;
 	private int id;
 
-	private File file;
 	private ProcessGenerator procesGener;
 	private ObjectFactory objF;
 	private Project project;
@@ -99,8 +99,10 @@ public class Control {
 		branchFrom = new BranchForm(this);
 		setConfTableForm(new ConfigurationTableForm(this));
 		typeForm = new TypeForm(this);
-		
+
 		arrows = new ArrayList<>();
+		
+		firstSave = true;
 
 	}
 
@@ -131,6 +133,8 @@ public class Control {
 
 		arrows.clear();
 		canvas.restart();
+		
+		firstSave = true;
 
 	}
 
@@ -248,6 +252,7 @@ public class Control {
 			return fillForms.createWorkUnit(item, form, IDs);
 
 		case Configuration:
+			
 			return fillForms.createConfigruration(item, form, IDs);
 		case Change:
 			return fillForms.createChange(item, form, IDs);
@@ -313,10 +318,26 @@ public class Control {
 
 	public void saveFile() {
 
-		fileChooser.setTitle("Save Process");
+		
 
+		if (firstSave) {
+			
+			saveAsFile();
+			firstSave = false;
+		
+		}else{
+			procesGener.saveProcess(file, project);			
+		}
+	
+		
+		
+	}
+	
+	public void saveAsFile(){
+		fileChooser.setTitle("Save Process");
+		
 		file = fileChooser.showSaveDialog(new Stage());
-		System.out.println(project.getChanges().toString());
+		
 		if (file != null) {
 			procesGener.saveProcess(file, project);
 		}
@@ -347,6 +368,9 @@ public class Control {
 		}
 
 	}
+	
+	
+	
 
 	private void parseProject() {
 
@@ -382,6 +406,32 @@ public class Control {
 		ZonedDateTime zdt = instant.atZone(ZoneId.systemDefault());
 		LocalDate localDate = zdt.toLocalDate();
 		return localDate;
+	}
+	
+	public boolean workUnitControl(){
+		
+		if (lists.getPriorityTypeList().isEmpty()) {
+			Alerts.showNoText("Priority");
+			return false;
+		}else if (lists.getSeverityTypeList().isEmpty()) {
+			Alerts.showNoText("Severity");
+			return false;
+		}else if (lists.getResolutionTypeList().isEmpty()) {
+			Alerts.showNoText("Resolution");
+			return false;
+		}else if (lists.getStatusTypeList().isEmpty()) {
+			Alerts.showNoText("Status");
+			return false;
+		}else if (lists.getTypeList().isEmpty()) {
+			Alerts.showNoText("Type");
+			return false;
+		}else if (lists.getRoleList().isEmpty()) {
+			Alerts.showNoText("Role-Type");
+			return false;
+		}
+		
+		return true;
+		
 	}
 
 	/** Getrs and Setrs ***/
@@ -513,5 +563,6 @@ public class Control {
 	public void setTypeForm(TypeForm typeForm) {
 		this.typeForm = typeForm;
 	}
+
 
 }

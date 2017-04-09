@@ -10,6 +10,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import run.Main;
+import services.Alerts;
 import services.Constans;
 import services.Control;
 
@@ -29,6 +30,7 @@ public class MainWindow extends Stage {
 		this.control = control;
 
 		mainPanel = new BorderPane();
+		main.getPrimaryStage().setOnCloseRequest(event -> Alerts.showCloseApp(control));
 		this.setScene(creatScene());
 	}
 

@@ -49,11 +49,8 @@ public class BranchForm extends TableBasicForm implements ISegmentTableForm {
 
 	private ComboBox<String> branchesCB;
 	private TableView<BranchTable> tableTV;
-	private Label branchesLB;
-
+	
 	private String main = "TRUE";
-
-	private int branchIndex;
 
 	private boolean newBranch;
 
@@ -76,15 +73,7 @@ public class BranchForm extends TableBasicForm implements ISegmentTableForm {
 		getMainPanel().setBottom(createControlPane());
 	}
 
-	ChangeListener<Number> branchListener = new ChangeListener<Number>() {
-
-		@Override
-		public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-
-			branchIndex = newValue.intValue();
-		}
-	};
-
+	
 	@Override
 	public Node getTable() {
 		tableTV = new TableView<BranchTable>();
@@ -142,11 +131,7 @@ public class BranchForm extends TableBasicForm implements ISegmentTableForm {
 		rbNo = new RadioButton("No");
 		rbNo.setToggleGroup(group);
 
-		branchesLB = new Label("Branches");
-		branchesCB = new ComboBox<String>(getControl().getLists().getBranchObservable());
-		branchesCB.setVisibleRowCount(5);
-		branchesCB.getSelectionModel().selectedIndexProperty().addListener(branchListener);
-
+	
 		group.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
 
 			@Override

@@ -31,9 +31,7 @@ public class TypeForm extends TableClassBasicForm implements ISegmentTableForm {
 	private Label classTypeLB;
 	private Label superClassTypeLB;
 
-	private int classIndex;
-	private int superIndex;
-
+	
 	public TypeForm(Control control) {
 		super(control);
 

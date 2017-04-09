@@ -21,7 +21,6 @@ public class Main extends Application{
 		this.primaryStage = primaryStage;
 		this.primaryStage.show();
 		
-		
 		mainWindow = new MainWindow(this);
 		this.primaryStage.setTitle(mainWindow.getTitle());
 		this.primaryStage.setScene(mainWindow.getScene());

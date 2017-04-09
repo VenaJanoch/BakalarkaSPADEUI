@@ -44,8 +44,6 @@ public class RoleTypeForm extends TableClassBasicForm implements ISegmentTableFo
 	private Label roleClassTypeLB;
 	private Label roleSuperClassTypeLB;
 
-	private int classIndex;
-	private int superIndex;
 	
 	public RoleTypeForm(Control control) {
 		super(control);
@@ -117,10 +115,9 @@ public class RoleTypeForm extends TableClassBasicForm implements ISegmentTableFo
 		@Override
 		public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
 
-			classIndex = newValue.intValue();
-			System.out.println(classIndex);
-			superIndex = getSwitcher().roleClassToSupperClass(classIndex);
-			roleSuperClassTypeCB.setValue(RoleSuperClass.values()[superIndex]);
+			setClassIndex(newValue.intValue());
+			setSuperIndex(getSwitcher().roleClassToSupperClass(getClassIndex()));
+			roleSuperClassTypeCB.setValue(RoleSuperClass.values()[getSuperIndex()]);
 		}
 	};
 

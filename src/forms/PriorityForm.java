@@ -29,8 +29,6 @@ public class PriorityForm extends TableClassBasicForm implements ISegmentTableFo
 	private Label classTypeLB;
 	private Label superClassTypeLB;
 
-	private int classIndex;
-	private int superIndex;
 
 	public PriorityForm(Control control) {
 		super(control);
@@ -105,10 +103,10 @@ public class PriorityForm extends TableClassBasicForm implements ISegmentTableFo
 		@Override
 		public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
 
-			classIndex = newValue.intValue();
-			System.out.println(classIndex);
-			superIndex = getSwitcher().priorityClassToSupperClass(classIndex);
-			superClassTypeCB.setValue(WorkUnitPrioritySuperClass.values()[superIndex]);
+			setClassIndex(newValue.intValue());
+			
+			setSuperIndex(getSwitcher().priorityClassToSupperClass(getClassIndex()));
+			superClassTypeCB.setValue(WorkUnitPrioritySuperClass.values()[getSuperIndex()]);
 		}
 	};
 
@@ -128,7 +126,7 @@ public class PriorityForm extends TableClassBasicForm implements ISegmentTableFo
 	public void addItem() {
 		String nameST = getNameTF().getText();
 		String classST = classTypeCB.getValue().name();
-		String superST = WorkUnitPrioritySuperClass.values()[superIndex].name();
+		String superST = WorkUnitPrioritySuperClass.values()[getSuperIndex()].name();
 
 		if (nameST.length() == 0) {
 

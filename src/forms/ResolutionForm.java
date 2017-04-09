@@ -32,9 +32,7 @@ public class ResolutionForm extends TableClassBasicForm implements ISegmentTable
 	private Label classTypeLB;
 	private Label superClassTypeLB;
 
-	private int classIndex;
-	private int superIndex;
-
+	
 	public ResolutionForm(Control control) {
 		super(control);
 
@@ -107,10 +105,9 @@ public class ResolutionForm extends TableClassBasicForm implements ISegmentTable
 		@Override
 		public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
 
-			classIndex = newValue.intValue();
-			System.out.println(classIndex);
-			superIndex = getSwitcher().resolutionClassToSupperClass(classIndex);
-			superClassTypeCB.setValue(WorkUnitResolutionsSuperClass.values()[superIndex]);
+			setClassIndex(newValue.intValue());
+			setSuperIndex(getSwitcher().resolutionClassToSupperClass(getClassIndex()));
+			superClassTypeCB.setValue(WorkUnitResolutionsSuperClass.values()[getSuperIndex()]);
 		}
 	};
 
@@ -130,7 +127,7 @@ public class ResolutionForm extends TableClassBasicForm implements ISegmentTable
 	public void addItem() {
 		String nameST = getNameTF().getText();
 		String classST = classTypeCB.getValue().name();
-		String superST = WorkUnitResolutionsSuperClass.values()[superIndex].name();
+		String superST = WorkUnitResolutionsSuperClass.values()[getSuperIndex()].name();
 
 		if (nameST.length() == 0) {
 

@@ -22,6 +22,7 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.WindowEvent;
+import services.Alerts;
 import services.Control;
 
 public class ProjectForm extends Date2DescBasicForm implements ISegmentForm {
@@ -33,16 +34,14 @@ public class ProjectForm extends Date2DescBasicForm implements ISegmentForm {
 		setIterationArray(project.getIterations());
 		setActivityArray(project.getActivities());
 		setWorkUnitArray(project.getWorkUnits());
-		//setConfigArray(project.getConfiguration());
-		//setArtifactArray(project.getArtifacts());
-
+		
 		setCanvas(canvas);
 
 		this.setOnCloseRequest(new EventHandler<WindowEvent>() {
 
 			@Override
 			public void handle(WindowEvent event) {
-				closeForm();
+				Alerts.showSaveSegment();
 			}
 		});
 

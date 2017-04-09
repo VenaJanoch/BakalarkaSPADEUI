@@ -22,6 +22,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.stage.WindowEvent;
+import services.Alerts;
 import services.Control;
 import services.SegmentType;
 
@@ -51,7 +52,7 @@ public class ArtifactForm extends DateDescBasicForm implements ISegmentForm {
 
 			@Override
 			public void handle(WindowEvent event) {
-				closeForm();
+				Alerts.showSaveSegment();
 			}
 		});
 
@@ -82,7 +83,7 @@ public class ArtifactForm extends DateDescBasicForm implements ISegmentForm {
 	@Override
 	public void setActionSubmitButton() {
 		if (getControl().getLists().getRoleList().isEmpty()) {
-			getAlerts().showNoAuthorAlert();
+			getAlerts().showNoText("Role");
 		} else {
 			closeForm();
 			close();

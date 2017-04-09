@@ -12,6 +12,7 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.WindowEvent;
+import services.Alerts;
 import services.Control;
 
 public class ActivityForm extends DescriptionBasicForm implements ISegmentForm {
@@ -25,7 +26,7 @@ public class ActivityForm extends DescriptionBasicForm implements ISegmentForm {
 
 			@Override
 			public void handle(WindowEvent event) {
-				closeForm();
+				Alerts.showSaveSegment();
 			}
 		});
 
@@ -46,6 +47,7 @@ public class ActivityForm extends DescriptionBasicForm implements ISegmentForm {
 		getCanvasItem().setNameText(actName);
 		
 		getControl().getFillForms().fillActivity(form, IDs[1], desc, actName, x, y);
+		
 	}
 
 	@Override

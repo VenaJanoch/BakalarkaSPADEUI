@@ -26,6 +26,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.stage.WindowEvent;
+import services.Alerts;
 import services.Control;
 import services.SegmentType;
 
@@ -45,18 +46,18 @@ public class PhaseForm extends DateDescBasicForm implements ISegmentForm {
 	public PhaseForm(CanvasItem item, Control control, int[] itemArray, Phase phase, int indexForm) {
 		super(item, control, itemArray, indexForm);
 		this.phase = phase;
-		
+
 		setWorkUnitArray(phase.getWorkUnits());
 		this.setOnCloseRequest(new EventHandler<WindowEvent>() {
 
 			@Override
 			public void handle(WindowEvent event) {
-				closeForm();
+				Alerts.showSaveSegment();
 			}
 		});
 		getSubmitButton().setOnAction(event -> setActionSubmitButton());
 		createForm();
-		
+
 	}
 
 	@Override
@@ -72,18 +73,23 @@ public class PhaseForm extends DateDescBasicForm implements ISegmentForm {
 
 		setName(actName);
 		getCanvasItem().setNameText(actName);
-		getCanvasItem().getFillForms().fillPhase(form, IDs[1], desc, actName, endDateL, configIndex, milestoneIndex, x, y);
+		getCanvasItem().getFillForms().fillPhase(form, IDs[1], desc, actName, endDateL, configIndex, milestoneIndex, x,
+				y);
+		
+
 	}
 
 	@Override
 	public void setActionSubmitButton() {
 
-		if (getControl().getLists().getConfigList().isEmpty()) {
-			getAlerts().showNoConfigAlert();
-		} else {
+		if (getControl().getLists().getConfigList().isEmpty() || getControl().getLists().getMilestoneList().isEmpty()) {
 			closeForm();
 			close();
+		} else {
+
+			getAlerts().showNoText("Configuration");
 		}
+
 	}
 
 	@Override
@@ -99,24 +105,22 @@ public class PhaseForm extends DateDescBasicForm implements ISegmentForm {
 		milestoneCB.getSelectionModel().selectedIndexProperty().addListener(milestoneListener);
 		fillInfoPart();
 	}
-	
+
 	ChangeListener<Number> milestoneListener = new ChangeListener<Number>() {
 
 		@Override
 		public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
 
-			
 			milestoneIndex = newValue.intValue();
 
 		}
 	};
-	
+
 	ChangeListener<Number> configListener = new ChangeListener<Number>() {
 
 		@Override
 		public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
 
-			
 			configIndex = newValue.intValue();
 
 		}
@@ -127,12 +131,11 @@ public class PhaseForm extends DateDescBasicForm implements ISegmentForm {
 		getInfoPart().add(configLB, 0, 3);
 		getInfoPart().setHalignment(configLB, HPos.RIGHT);
 		getInfoPart().add(configCB, 1, 3);
-		
 
 		getInfoPart().add(milestoneLB, 0, 4);
 		getInfoPart().setHalignment(milestoneLB, HPos.RIGHT);
 		getInfoPart().add(milestoneCB, 1, 4);
-		
+
 	}
 
 	public ChoiceBox<String> getConfigCB() {
@@ -150,7 +153,5 @@ public class PhaseForm extends DateDescBasicForm implements ISegmentForm {
 	public void setMilestoneCB(ChoiceBox<String> milestoneCB) {
 		this.milestoneCB = milestoneCB;
 	}
-	
-	
 
 }

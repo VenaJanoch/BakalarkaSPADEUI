@@ -156,7 +156,7 @@ public class CriterionForm extends TableBasicForm implements ISegmentTableForm {
 			Alerts.showNoNameAlert();
 			return;
 		} else if (descriptionST.length() == 0) {
-			Alerts.showNoDescription();
+			Alerts.showNoText("Description");
 			return;
 		}
 

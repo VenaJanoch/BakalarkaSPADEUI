@@ -6,6 +6,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.SplitPane;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
@@ -25,6 +26,7 @@ public class Table2BasicForm extends Stage{
 	private GridPane controlPane;
 	private Button addBT;
 	private Button submitBT;
+	private SplitPane splitPane;
 	
 	
 	public Table2BasicForm(Control control) {
@@ -49,6 +51,10 @@ public class Table2BasicForm extends Stage{
 		internalPanel = new BorderPane();
 		
 		internalPanel.setBottom(controlPane);
+		
+		splitPane = new SplitPane();
+		splitPane.setMinWidth(10);
+		internalPanel.setRight(splitPane);
 		
 		submitBT = new Button("OK");
 		submitBT.setAlignment(Pos.BOTTOM_CENTER);

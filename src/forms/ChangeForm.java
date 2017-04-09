@@ -19,6 +19,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.stage.WindowEvent;
+import services.Alerts;
 import services.Control;
 import services.SegmentType;
 
@@ -44,7 +45,7 @@ public class ChangeForm extends DescriptionBasicForm implements ISegmentForm {
 
 			@Override
 			public void handle(WindowEvent event) {
-				closeForm();
+				Alerts.showSaveSegment();
 			}
 		});
 
@@ -71,9 +72,10 @@ public class ChangeForm extends DescriptionBasicForm implements ISegmentForm {
 
 	@Override
 	public void setActionSubmitButton() {
-		closeForm();
-		close();
-
+		
+			closeForm();
+			close();
+	
 	}
 
 	@Override

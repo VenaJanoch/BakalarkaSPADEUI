@@ -54,7 +54,7 @@ public class ProcessGenerator {
 		try {
 
 			rootElement = of.createPoject(project);
-		//	marshaller.setSchema(validator.getSchemaXSD());
+			//marshaller.setSchema(validator.getSchemaXSD());
 			marshaller.marshal(rootElement, new FileOutputStream(file));
 			//validator.validatePrecess(rootElement);
 		} catch (FileNotFoundException e) {

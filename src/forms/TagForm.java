@@ -39,11 +39,9 @@ import tables.TagTable;
 
 public class TagForm extends TableBasicForm implements ISegmentTableForm {
 
-	private Scene scena;
 	private Control control;
 	private TableView<TagTable> tableTV;
 	private TextField tagTF;
-	private int[] confIDs;
 	private Configuration config;
 	
 

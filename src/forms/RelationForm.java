@@ -32,9 +32,7 @@ public class RelationForm extends TableClassBasicForm implements ISegmentTableFo
 	private Label classTypeLB;
 	private Label superClassTypeLB;
 
-	private int classIndex;
-	private int superIndex;
-
+	
 	public RelationForm(Control control) {
 		super(control);
 
@@ -107,10 +105,10 @@ public class RelationForm extends TableClassBasicForm implements ISegmentTableFo
 		@Override
 		public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
 
-			classIndex = newValue.intValue();
-			System.out.println(classIndex);
-			superIndex = getSwitcher().relationClassToSupperClass(classIndex);
-			superClassTypeCB.setValue(WorkUnitRelationSuperClass.values()[superIndex]);
+			setClassIndex(newValue.intValue());
+			
+			setSuperIndex(getSwitcher().relationClassToSupperClass(getClassIndex()));
+			superClassTypeCB.setValue(WorkUnitRelationSuperClass.values()[getSuperIndex()]);
 		}
 	};
 
@@ -130,7 +128,7 @@ public class RelationForm extends TableClassBasicForm implements ISegmentTableFo
 	public void addItem() {
 		String nameST = getNameTF().getText();
 		String classST = classTypeCB.getValue().name();
-		String superST = WorkUnitRelationSuperClass.values()[superIndex].name();
+		String superST = WorkUnitRelationSuperClass.values()[getSuperIndex()].name();
 
 		if (nameST.length() == 0) {
 

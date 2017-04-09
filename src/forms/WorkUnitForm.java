@@ -27,6 +27,7 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.WindowEvent;
+import services.Alerts;
 import services.Control;
 import services.SegmentType;
 
@@ -73,7 +74,7 @@ public class WorkUnitForm extends DescriptionBasicForm implements ISegmentForm {
 
 			@Override
 			public void handle(WindowEvent event) {
-				closeForm();
+				Alerts.showSaveSegment();
 			}
 		});
 
@@ -95,16 +96,14 @@ public class WorkUnitForm extends DescriptionBasicForm implements ISegmentForm {
 		getCanvasItem().setNameText(actName);
 		setName(actName);
 		getControl().getFillForms().fillWorkUnit(form, IDs[2], getDescriptionTF().getText(), actName, assigneIndex,
-				authorIndex, category, x, y, priorityIndex, severityIndex, typeIndex, resolutionIndex,statusIndex );
+				authorIndex, category, x, y, priorityIndex, severityIndex, typeIndex, resolutionIndex, statusIndex);
 
 	}
 
 	@Override
 	public void setActionSubmitButton() {
-		if (getControl().getLists().getRoleList().isEmpty()) {
-			getAlerts().showNoAuthorAlert();
-			getAlerts().showNoAssigneeAlert();
-		} else {
+	
+		if (getControl().workUnitControl()) {
 			closeForm();
 			close();
 		}
@@ -167,7 +166,6 @@ public class WorkUnitForm extends DescriptionBasicForm implements ISegmentForm {
 		@Override
 		public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
 
-			
 			typeIndex = newValue.intValue();
 
 		}
@@ -345,6 +343,4 @@ public class WorkUnitForm extends DescriptionBasicForm implements ISegmentForm {
 		this.statusCB = statusCB;
 	}
 
-	
-	
 }
