@@ -1,12 +1,17 @@
 package graphics;
 
 import abstractform.BasicForm;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
+import javafx.geometry.Orientation;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.ScrollBar;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
@@ -15,24 +20,32 @@ import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
+import services.Constans;
 import services.Control;
 import services.SegmentType;
 
-public class DragAndDropCanvas extends AnchorPane {
+public class DragAndDropCanvas extends HBox {
 
 	private Scene mScene;
 	private Control control;
 	private BasicForm form;
 	private int indexForm;
+	
 	public DragAndDropCanvas(Control control, int indexForm) {
 
 		super();
 		this.control = control;
 		this.indexForm = indexForm;
+		this.setMinWidth(Constans.canvasMaxWidth);
+		this.setMinHeight(Constans.canvasMaxHeight);
 		
+		        
+        
 		this.setBackground(new Background(new BackgroundFill(Color.ANTIQUEWHITE, CornerRadii.EMPTY, Insets.EMPTY)));
 		this.setOnDragOver(new EventHandler<DragEvent>() {
 			public void handle(DragEvent event) {
@@ -99,10 +112,23 @@ public class DragAndDropCanvas extends AnchorPane {
 
 	}
 
+	ChangeListener<Number> scListener  = new ChangeListener<Number>()  {
+        public void changed(ObservableValue<? extends Number> ov,
+            Number old_val, Number new_val) {
+        	
+           changePosition(-new_val.doubleValue());
+        
+        }
+    };
+    
+    public void changePosition(double position){
+    	this.setLayoutY(position);           
+    }
+    
 	public void addItem(String segment) {
 
 		SegmentType type = control.findSegmentType(segment);
-		System.out.println(type.name());
+		
 		this.getChildren().add(new CanvasItem(type, "Name", control, control.getForms().get(indexForm) , true));
 
 	}

@@ -39,20 +39,22 @@ public class MenuPanel extends VBox {
 
 		Menu fileMenu = new Menu("File");
 		Menu setMenu = new Menu("Settings");
-		
+
 		MenuItem newItem = new MenuItem("New");
 		MenuItem openItem = new MenuItem("Open");
 		MenuItem saveItem = new MenuItem("Save");
 		MenuItem saveAsItem = new MenuItem("Save as");
+		MenuItem validationItem = new MenuItem("Validate");
 		MenuItem exitItem = new MenuItem("Exit");
-		fileMenu.getItems().addAll(newItem, new SeparatorMenuItem(), openItem, new SeparatorMenuItem(), saveItem, saveAsItem,
-				new SeparatorMenuItem(), exitItem);
+		fileMenu.getItems().addAll(newItem, new SeparatorMenuItem(), openItem, new SeparatorMenuItem(), saveItem,
+				saveAsItem, new SeparatorMenuItem(),validationItem, new SeparatorMenuItem(), exitItem);
 
 		exitItem.setOnAction(ActionEvent -> Platform.exit());
 		saveItem.setOnAction(event -> control.saveFile());
 		saveAsItem.setOnAction(event -> control.saveAsFile());
 		openItem.setOnAction(event -> openFile());
 		newItem.setOnAction(event -> control.restartControl());
+		validationItem.setOnAction(event -> control.validate());
 		menuMB.getMenus().addAll(fileMenu, setMenu);
 
 		this.getChildren().add(menuMB);

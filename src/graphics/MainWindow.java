@@ -1,10 +1,15 @@
 package graphics;
 
 import forms.ProjectForm;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.geometry.Orientation;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.ScrollBar;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -22,6 +27,7 @@ public class MainWindow extends Stage {
 	private DragAndDropCanvas dragCanvas;
 	private MenuPanel menu;
 	private DragAndDropPanel dragAndDrop;
+	private ScrollPane sc;
 
 	public MainWindow(Main main) {
 		super();
@@ -31,9 +37,11 @@ public class MainWindow extends Stage {
 
 		mainPanel = new BorderPane();
 		main.getPrimaryStage().setOnCloseRequest(event -> Alerts.showCloseApp(control));
+				
 		this.setScene(creatScene());
 	}
 
+	
 	private Scene creatScene() {
 
 		scena = new Scene(creatPanel(), Constans.width, Constans.height);
@@ -48,12 +56,20 @@ public class MainWindow extends Stage {
 		dragCanvas = new DragAndDropCanvas(control, 0);
 		control.setCanvas(dragCanvas);
 		dragAndDrop = new DragAndDropPanel(control);
+		sc = new ScrollPane();
+		sc.setContent(dragCanvas);
+		sc.setPrefSize(Constans.width, Constans.height);
+		sc.setHbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
+		sc.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
+		
+		
+		
 		VBox topPanel = new VBox();
 
 		topPanel.getChildren().addAll(menu, dragAndDrop);
 		mainPanel.setTop(topPanel);
-		// hlavniPanel.setCenter(dragAndDrop);
-		mainPanel.setCenter(dragCanvas);
+	//	mainPanel.setRight(dragAndDrop);
+		mainPanel.setCenter(sc);
 
 		return mainPanel;
 	}

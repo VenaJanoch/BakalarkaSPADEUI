@@ -46,7 +46,7 @@ public class ArtifactForm extends DateDescBasicForm implements ISegmentForm {
 	public ArtifactForm(CanvasItem item, Control control, Artifact artifact) {
 		super(item, control);
 		this.artifact = artifact;
-
+		artifact.setExist(true);
 		isNew = true;
 		this.setOnCloseRequest(new EventHandler<WindowEvent>() {
 
@@ -105,7 +105,7 @@ public class ArtifactForm extends DateDescBasicForm implements ISegmentForm {
 		mineTypeCB.getSelectionModel().selectedIndexProperty().addListener(typeListener);
 		mineTypeCB.setVisibleRowCount(5);
 		existRB = new RadioButton("Exist");
-		
+		existRB.setSelected(true);
 
 		fillInfoPart();
 	}
@@ -171,4 +171,13 @@ public class ArtifactForm extends DateDescBasicForm implements ISegmentForm {
 		this.isNew = isNew;
 	}
 
+	public RadioButton getExistRB() {
+		return existRB;
+	}
+
+	public void setExistRB(RadioButton existRB) {
+		this.existRB = existRB;
+	}
+
+	
 }

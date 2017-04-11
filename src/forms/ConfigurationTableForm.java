@@ -12,6 +12,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.SelectionMode;
+import javafx.scene.control.SplitPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
@@ -53,7 +54,7 @@ public class ConfigurationTableForm extends Table2BasicForm implements ISegmentT
 		formName.setFont(Font.font(25));
 		
 		getInternalPanel().setCenter(getTable());
-
+		getInternalPanel().setLeft(new SplitPane());
 		getMainPanel().setRight(getInternalPanel());
 		getMainPanel().setTop(formName);
 		getMainPanel().setAlignment(formName, Pos.TOP_CENTER);

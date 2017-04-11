@@ -38,6 +38,7 @@ public class ChangeForm extends DescriptionBasicForm implements ISegmentForm {
 
 		this.newChange = true;
 		this.change = change;
+		change.setExist(true);
 		setArtifactArray(new ArrayList());
 		getArtifactArray().add(change.getArtifactIndex());
 
@@ -83,6 +84,7 @@ public class ChangeForm extends DescriptionBasicForm implements ISegmentForm {
 
 		
 		existRB = new RadioButton("Exist");
+		existRB.setSelected(true);
 		getInfoPart().add(existRB, 1, 3);
 
 	}
@@ -104,5 +106,14 @@ public class ChangeForm extends DescriptionBasicForm implements ISegmentForm {
 	public void setNewChange(boolean newChange) {
 		this.newChange = newChange;
 	}
+
+	public RadioButton getExistRB() {
+		return existRB;
+	}
+
+	public void setExistRB(RadioButton existRB) {
+		this.existRB = existRB;
+	}
+	
 
 }

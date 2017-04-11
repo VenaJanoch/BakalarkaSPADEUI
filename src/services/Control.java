@@ -13,6 +13,8 @@ import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 
+import org.xml.sax.SAXException;
+
 import SPADEPAC.Link;
 import SPADEPAC.ObjectFactory;
 import SPADEPAC.Project;
@@ -42,7 +44,7 @@ public class Control {
 	private FileChooser fileChooser;
 	private File file;
 	private boolean firstSave;
-	
+
 	private boolean arrow;
 	private boolean startArrow;
 	private DragAndDropCanvas canvas;
@@ -101,7 +103,7 @@ public class Control {
 		typeForm = new TypeForm(this);
 
 		arrows = new ArrayList<>();
-		
+
 		firstSave = true;
 
 	}
@@ -133,7 +135,7 @@ public class Control {
 
 		arrows.clear();
 		canvas.restart();
-		
+
 		firstSave = true;
 
 	}
@@ -164,7 +166,7 @@ public class Control {
 		if (!isStartArrow()) {
 
 			id = IdentificatorCreater.createLineID();
-			link = new NodeLink(id);
+			link = new NodeLink(id, this);
 
 			sortSegment(item);
 
@@ -191,6 +193,12 @@ public class Control {
 
 	}
 
+	public void deleteArrow(int arrowId, int changeID, int artifactID) {
+		lists.getArtifactList().get(artifactID).setChangeIndex(-1);
+		lists.getChangeList().get(changeID).setArtifactIndex(-1);
+
+	}
+
 	public void setChangeArtifactRelation(NodeLink link) {
 
 		int changeIndex = link.getChange()[1];
@@ -202,8 +210,14 @@ public class Control {
 		linkP.setChangeIndex(changeIndex);
 
 		lists.getLinksList().add(linkP);
+		if (lists.getChangeList().get(changeIndex).isExist()) {
 
-		lists.getChangeList().get(changeIndex).setArtifactIndex(artifactIndex);
+			lists.getChangeList().get(changeIndex).setArtifactIndex(artifactIndex);
+
+		} else if (lists.getArtifactList().get(artifactIndex).isExist()) {
+			lists.getArtifactList().get(artifactIndex).setChangeIndex(changeIndex);
+
+		}
 
 	}
 
@@ -252,7 +266,7 @@ public class Control {
 			return fillForms.createWorkUnit(item, form, IDs);
 
 		case Configuration:
-			
+
 			return fillForms.createConfigruration(item, form, IDs);
 		case Change:
 			return fillForms.createChange(item, form, IDs);
@@ -318,26 +332,24 @@ public class Control {
 
 	public void saveFile() {
 
-		
-
 		if (firstSave) {
-			
+
 			saveAsFile();
 			firstSave = false;
-		
-		}else{
-			procesGener.saveProcess(file, project);			
+
+		} else {
+			procesGener.saveProcess(file, project);
+
 		}
-	
-		
-		
+
 	}
-	
-	public void saveAsFile(){
+
+	public void saveAsFile() {
+
 		fileChooser.setTitle("Save Process");
-		
+
 		file = fileChooser.showSaveDialog(new Stage());
-		
+
 		if (file != null) {
 			procesGener.saveProcess(file, project);
 		}
@@ -368,9 +380,12 @@ public class Control {
 		}
 
 	}
-	
-	
-	
+
+	public void validate() {
+
+		procesGener.validate(project);
+
+	}
 
 	private void parseProject() {
 
@@ -407,31 +422,31 @@ public class Control {
 		LocalDate localDate = zdt.toLocalDate();
 		return localDate;
 	}
-	
-	public boolean workUnitControl(){
-		
+
+	public boolean workUnitControl() {
+
 		if (lists.getPriorityTypeList().isEmpty()) {
 			Alerts.showNoText("Priority");
 			return false;
-		}else if (lists.getSeverityTypeList().isEmpty()) {
+		} else if (lists.getSeverityTypeList().isEmpty()) {
 			Alerts.showNoText("Severity");
 			return false;
-		}else if (lists.getResolutionTypeList().isEmpty()) {
+		} else if (lists.getResolutionTypeList().isEmpty()) {
 			Alerts.showNoText("Resolution");
 			return false;
-		}else if (lists.getStatusTypeList().isEmpty()) {
+		} else if (lists.getStatusTypeList().isEmpty()) {
 			Alerts.showNoText("Status");
 			return false;
-		}else if (lists.getTypeList().isEmpty()) {
+		} else if (lists.getTypeList().isEmpty()) {
 			Alerts.showNoText("Type");
 			return false;
-		}else if (lists.getRoleList().isEmpty()) {
+		} else if (lists.getRoleList().isEmpty()) {
 			Alerts.showNoText("Role-Type");
 			return false;
 		}
-		
+
 		return true;
-		
+
 	}
 
 	/** Getrs and Setrs ***/
@@ -564,5 +579,12 @@ public class Control {
 		this.typeForm = typeForm;
 	}
 
+	public Project getProject() {
+		return project;
+	}
+
+	public void setProject(Project project) {
+		this.project = project;
+	}
 
 }

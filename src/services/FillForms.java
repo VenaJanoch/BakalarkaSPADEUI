@@ -288,9 +288,9 @@ public class FillForms {
 		coord.setXCoordinate(x);
 		coord.setYCoordinate(y);
 		change.setCoordinates(coord);
-
+		change.setExist(isExist);
+	
 		if (isNew) {
-
 			lists.getChangeFormIndex().add(IDs[0]);
 			lists.getChangeObservable().add(name);
 		}
@@ -325,6 +325,7 @@ public class FillForms {
 		coord.setXCoordinate(x);
 		coord.setYCoordinate(y);
 		artifact.setCoordinates(coord);
+		artifact.setExist(isExist);
 		if (isNew) {
 			control.getLists().getArtifactObservable().add(name);
 			control.getLists().getArtifactFormIndex().add(IDs[0]);

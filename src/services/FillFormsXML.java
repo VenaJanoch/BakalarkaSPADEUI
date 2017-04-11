@@ -344,7 +344,6 @@ public class FillFormsXML {
 
 		fillChangeFromXML(configForm, conf.getChangesIndexs());
 		fillTagsFromXML(configForm, conf.getTags());
-		System.out.println(conf.getArtifactsIndexs().size() + "Indexs");
 		fillArtifactFromXML(configForm, conf.getArtifactsIndexs());
 		return IDs;
 
@@ -427,6 +426,7 @@ public class FillFormsXML {
 		changeForm.setName(change.getName());
 		changeForm.getNameTF().setText(change.getName());
 		changeForm.getDescriptionTF().setText(change.getDescriptoin());
+		changeForm.getExistRB().setSelected(change.isExist());
 
 		forms.add(index, changeForm);
 		lists.getChangeFormIndex().add(index);
@@ -462,13 +462,13 @@ public class FillFormsXML {
 		int index1 = form.getArtifactArray().get(IDs[2]);
 		Artifact artifact = control.getLists().getArtifactList().get(index1);
 		ArtifactForm artifactForm = new ArtifactForm(item, control, artifact);
-		System.out.println(artifactForm.getTitle());
-
+		
 		artifactForm.setName(artifact.getName());
 		artifactForm.getDescriptionTF().setText(artifact.getDescriptoin());
 		// artifactForm.getCreatedDP().se;
 		artifactForm.getMineTypeCB().setValue(ArtifactClass.values()[artifact.getArtifactIndex()]);
 		artifactForm.getDateDP().setValue(control.convertDateFromXML(artifact.getCreated()));
+		artifactForm.getExistRB().setSelected(artifact.isExist());
 
 		String author = control.getLists().getRoleList().get(artifact.getAuthorIndex()).getName();
 

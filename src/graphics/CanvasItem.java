@@ -84,7 +84,7 @@ public class CanvasItem extends AnchorPane {
 		this.length = segmentInfo.getLength();
 		this.getChildren().add(segmentInfo);
 
-		mDragLink = new NodeLink(-1);
+		mDragLink = new NodeLink(-1,control);
 		mDragLink.setVisible(false);
 
 		parentProperty().addListener(new ChangeListener() {
@@ -203,6 +203,15 @@ public class CanvasItem extends AnchorPane {
 	public void registerEndLink(int linkId) {
 		mEndLinkIds.add(linkId);
 	}
+	
+	public void deleteStartLink(int linkId) {
+		mStartLinkIds.remove(linkId);
+	}
+	
+	public void deleteEndLink(int linkId) {
+		mEndLinkIds.remove(linkId);
+	}
+	
 
 	/*** Getrs and Setrs ***/
 

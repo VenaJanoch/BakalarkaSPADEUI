@@ -8,6 +8,8 @@ public class Constans {
 
 	public static final int formWidth = 700;
 	public static final int formHeight = 600;
+	public static final int canvasMaxWidth= 2000;
+	public static final int canvasMaxHeight = 2000;
 	public static final int milestoneFormWidth = 1000;
 	public static final int milestoneFormHeight = 450;
 

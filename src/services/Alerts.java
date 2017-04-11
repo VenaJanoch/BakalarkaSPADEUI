@@ -27,13 +27,57 @@ public class Alerts {
 		alert.showAndWait();
 
 	}
+	
+	public static void showValidationError(String error) {
+
+		Alert alert = new Alert(AlertType.ERROR);
+		alert.setTitle("Validation error");
+		alert.setHeaderText("Validation error!");
+		alert.setContentText("Validation massage: " + error);
+		
+		alert.showAndWait();
+		
+	}
+
+	public static boolean showValidationErrorSave(String error) {
+
+		Alert alert = new Alert(AlertType.ERROR);
+		alert.setTitle("Validation error");
+		alert.setHeaderText("Validation error!");
+		alert.setContentText("Validation massage: " + error);
+		
+		ButtonType buttonTypeOne = new ButtonType("Accept");
+		ButtonType buttonTypeCancel = new ButtonType("Cancel", ButtonData.CANCEL_CLOSE);
+
+		alert.getButtonTypes().setAll(buttonTypeOne, buttonTypeCancel);
+
+		Optional<ButtonType> result = alert.showAndWait();
+		if (result.get() == buttonTypeOne){
+		    return true;
+		}
+		
+		return false;
+
+	}
+
+	
+	public static void showValidationOK() {
+
+		Alert alert = new Alert(AlertType.INFORMATION);
+		alert.setTitle("Validation OK");
+		alert.setHeaderText("Validation OK!");
+		alert.setContentText("Validation is OK");
+	
+		alert.showAndWait();
+		
+	}
 
 	public static void showNoItemsDeleteAlert() {
 		Alert alert = new Alert(AlertType.WARNING);
 		alert.setTitle("Deleting items");
 		alert.setHeaderText("No items for deleting were selected!");
 		alert.setContentText("Please select items for deleting.");
-		alert.show();
+		alert.showAndWait();
 	}
 
 	public static void showDeleteItemAlert(TableView table, ObservableList selection) {
