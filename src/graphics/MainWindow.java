@@ -27,13 +27,12 @@ public class MainWindow extends Stage {
 	private DragAndDropCanvas dragCanvas;
 	private MenuPanel menu;
 	private DragAndDropPanel dragAndDrop;
-	private ScrollPane sc;
-
+	
 	public MainWindow(Main main) {
 		super();
 		control = new Control();
 		this.setTitle("SPADE XML editor");
-		this.control = control;
+		
 
 		mainPanel = new BorderPane();
 		main.getPrimaryStage().setOnCloseRequest(event -> Alerts.showCloseApp(control));
@@ -53,14 +52,9 @@ public class MainWindow extends Stage {
 	private Parent creatPanel() {
 		menu = new MenuPanel(control, this);
 
-		dragCanvas = new DragAndDropCanvas(control, 0);
+		dragCanvas = new DragAndDropCanvas(control, 0, control.getContexMenu());
 		control.setCanvas(dragCanvas);
 		dragAndDrop = new DragAndDropPanel(control);
-		sc = new ScrollPane();
-		sc.setContent(dragCanvas);
-		sc.setPrefSize(Constans.width, Constans.height);
-		sc.setHbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
-		sc.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
 		
 		
 		
@@ -69,7 +63,7 @@ public class MainWindow extends Stage {
 		topPanel.getChildren().addAll(menu, dragAndDrop);
 		mainPanel.setTop(topPanel);
 	//	mainPanel.setRight(dragAndDrop);
-		mainPanel.setCenter(sc);
+		mainPanel.setCenter(dragCanvas);
 
 		return mainPanel;
 	}

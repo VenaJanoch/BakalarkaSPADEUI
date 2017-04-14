@@ -141,6 +141,8 @@
 		<xs:attribute name="name" type="xs:string" />
 		<xs:attribute name="relationClass" type="xs:string" />
 		<xs:attribute name="relationSuperClass" type="xs:string" />
+		
+		
 	</xs:complexType>
 
 	<xs:complexType name="Resolution">
@@ -185,6 +187,7 @@
 			<xs:element name="changesIndexs" type="xs:int" maxOccurs="unbounded" />
 			<xs:element name="tags" type="xs:string" maxOccurs="unbounded" />
 			<xs:element name="branchesIndexs" type="xs:int" maxOccurs="unbounded" />
+			<xs:element name="CPRsIndexs" type="xs:int" maxOccurs="unbounded" />
 		</xs:sequence>
 		<xs:attribute name="name" type="xs:string" />
 		<xs:attribute name="create" type="xs:date" />

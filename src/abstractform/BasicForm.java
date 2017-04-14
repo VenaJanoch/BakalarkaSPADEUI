@@ -37,6 +37,7 @@ import javafx.stage.Stage;
 import services.Alerts;
 import services.Constans;
 import services.Control;
+import services.FormControl;
 import services.IdentificatorCreater;
 
 public abstract class BasicForm extends Stage {
@@ -59,6 +60,8 @@ public abstract class BasicForm extends Stage {
 	private DragAndDropItem dgItem;
 	private DragAndDropCanvas canvas;
 	private BorderPane dragBox;
+	
+	private FormControl formControl;
 
 	private List<Phase> phaseArray;
 	private List<Iteration> iterationArray;
@@ -75,11 +78,12 @@ public abstract class BasicForm extends Stage {
 	private List<Integer> confPRArray;
 
 	private IdentificatorCreater idCreater;
+	private String type;
 
 	public BasicForm(CanvasItem item, Control control, int[] itemArray, int indexForm) {
 
 		super();
-
+		type = item.getType().name();
 		this.control = control;
 		this.item = item;
 		this.itemArray = itemArray;
@@ -87,9 +91,9 @@ public abstract class BasicForm extends Stage {
 		this.setIdCreater(new IdentificatorCreater());
 		this.setTitle("Edit " + item.getType().name());
 		this.dgItem = new DragAndDropItem(control, itemArray,this);
-		this.canvas = new DragAndDropCanvas(control, indexForm);
+		this.canvas = new DragAndDropCanvas(control, indexForm, control.getContexMenu());
 		this.dragBox = new BorderPane();
-
+		this.setFormControl(new FormControl(control.getLists()));
 		mainPanel = new BorderPane();
 
 		this.setScene(creatSceneCanvas());
@@ -99,6 +103,7 @@ public abstract class BasicForm extends Stage {
 	public BasicForm(CanvasItem item, Control control) {
 
 		super();
+		type = item.getType().name();
 		this.control = control;
 		this.item = item;
 		this.alerts = new Alerts();
@@ -112,11 +117,12 @@ public abstract class BasicForm extends Stage {
 
 	public BasicForm(Control control) {
 		super();
+		type = "Project";
 		this.control = control;
 		this.alerts = new Alerts();
 		this.setTitle("Edit Project");
 		this.setIdCreater(new IdentificatorCreater());
-
+		
 		mainPanel = new BorderPane();
 
 		this.setScene(creatSceneProject());
@@ -176,7 +182,7 @@ public abstract class BasicForm extends Stage {
 	@Override
 	public String toString() {
 
-		return getName();
+		return type + " " + getName();
 	}
 
 	/** Getrs and Setrs **/
@@ -402,5 +408,15 @@ public abstract class BasicForm extends Stage {
 	public void setDragBox(BorderPane dragBox) {
 		this.dragBox = dragBox;
 	}
+
+	public FormControl getFormControl() {
+		return formControl;
+	}
+
+	public void setFormControl(FormControl formControl) {
+		this.formControl = formControl;
+	}
+	
+	
 
 }

@@ -27,7 +27,16 @@ public class Alerts {
 		alert.showAndWait();
 
 	}
-	
+	public static void showWrongEstimatedTimeAlert() {
+
+		Alert alert = new Alert(AlertType.ERROR);
+		alert.setTitle("Insert error");
+		alert.setHeaderText("Wrong Estimated time!");
+		alert.setContentText("Please provide a number in Estimated time filed! \n"
+				+ "in format 1; 1.1;");
+		alert.showAndWait();
+
+	}
 	public static void showValidationError(String error) {
 
 		Alert alert = new Alert(AlertType.ERROR);

@@ -75,22 +75,18 @@ public class ConfigPersonRelationForm extends TableBasicForm implements ISegment
 		tableTV = new TableView<CPRTable>();
 
 		TableColumn<CPRTable, String> nameColumn = new TableColumn<CPRTable, String>("Name");
-		TableColumn<CPRTable, String> confColumn = new TableColumn<CPRTable, String>("Configuration");
 		TableColumn<CPRTable, String> roleColumn = new TableColumn<CPRTable, String>("Role");
 
 		nameColumn.setCellValueFactory(new PropertyValueFactory("name"));
 		nameColumn.setMinWidth(150);
 		nameColumn.setCellFactory(TextFieldTableCell.forTableColumn());
 
-		confColumn.setCellValueFactory(new PropertyValueFactory("configuration"));
-		confColumn.setMinWidth(150);
-		confColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+		
+		roleColumn.setCellValueFactory(new PropertyValueFactory("role"));
+		roleColumn.setMinWidth(150);
+		roleColumn.setCellFactory(TextFieldTableCell.forTableColumn());
 
-		confColumn.setCellValueFactory(new PropertyValueFactory("role"));
-		confColumn.setMinWidth(150);
-		confColumn.setCellFactory(TextFieldTableCell.forTableColumn());
-
-		tableTV.getColumns().addAll(nameColumn, confColumn, roleColumn);
+		tableTV.getColumns().addAll(nameColumn, roleColumn);
 
 		tableTV.setEditable(false);
 
@@ -124,20 +120,13 @@ public class ConfigPersonRelationForm extends TableBasicForm implements ISegment
 	public GridPane createControlPane() {
 
 		
-		configurationLB = new Label("Configuration: ");
-		configurationCB = new ComboBox<String>(getControl().getLists().getConfigObservable());
-		configurationCB.setVisibleRowCount(5);
-		configurationCB.getSelectionModel().selectedIndexProperty().addListener(configListener);
-
+		
 		personRoleLB = new Label("Person-Role");
 		personCB = new ComboBox<String>(getControl().getLists().getRoleObservable());
 		personCB.setVisibleRowCount(5);
 		personCB.getSelectionModel().selectedIndexProperty().addListener(roleListener);
 
 		
-		getControlPane().add(configurationLB, 2, 0);
-		getControlPane().add(configurationCB, 3, 0);
-
 		getControlPane().add(personRoleLB, 4, 0);
 		getControlPane().add(personCB, 5, 0);
 
@@ -171,7 +160,6 @@ public class ConfigPersonRelationForm extends TableBasicForm implements ISegment
 	@Override
 	public void addItem() {
 		String nameST = getNameTF().getText();
-		String configST = getControl().getLists().getConfigObservable().get(configIndex);
 		String roleST = getControl().getLists().getRoleObservable().get(roleIndex);
 
 		if (nameST.length() == 0) {
@@ -180,7 +168,7 @@ public class ConfigPersonRelationForm extends TableBasicForm implements ISegment
 			return;
 		}
 
-		CPRTable cpr = new CPRTable(nameST, configST, roleST);
+		CPRTable cpr = new CPRTable(nameST, roleST);
 		tableTV.getItems().add(cpr);
 		tableTV.sort();
 		getControl().getFillForms().fillCPR(nameST, configIndex, roleIndex);

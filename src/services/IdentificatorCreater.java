@@ -17,17 +17,10 @@ public class IdentificatorCreater {
 	private int configPRID = -1;
 	private int configID = -1;
 	private int tagID = -1;
-	public IdentificatorCreater() {
-
-	}
-
-	public static int createLineID() {
-
-		linesID++;
-
-		return linesID;
-
-	}
+	
+	private static int index;
+	
+	
 
 	public int createPhaseID() {
 
@@ -103,5 +96,24 @@ public class IdentificatorCreater {
 		return tagID;
 	}
 
+	public static int getIndex() {
+		return index;
+	}
+
+	public static void setIndex(int index) {
+		IdentificatorCreater.index = index;
+	}
+
+	public IdentificatorCreater() {
+		setIndex(1);
+	}
+
+	public static int createLineID() {
+
+		linesID++;
+
+		return linesID;
+
+	}
 	
 }

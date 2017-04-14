@@ -28,6 +28,7 @@ import javafx.scene.layout.HBox;
 import javafx.stage.WindowEvent;
 import services.Alerts;
 import services.Control;
+import services.FormControl;
 import services.SegmentType;
 
 public class PhaseForm extends DateDescBasicForm implements ISegmentForm {
@@ -81,15 +82,11 @@ public class PhaseForm extends DateDescBasicForm implements ISegmentForm {
 
 	@Override
 	public void setActionSubmitButton() {
-
-		if (getControl().getLists().getConfigList().isEmpty() || getControl().getLists().getMilestoneList().isEmpty()) {
+		
+		if (getFormControl().phaseControl()) {
 			closeForm();
 			close();
-		} else {
-
-			getAlerts().showNoText("Configuration");
-		}
-
+		} 
 	}
 
 	@Override

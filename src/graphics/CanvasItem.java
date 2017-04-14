@@ -22,13 +22,17 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
+import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 import services.Constans;
 import services.Control;
+import services.FillCopyForms;
 import services.FillForms;
 import services.FillFormsXML;
+import services.ManipulationControl;
 import services.SegmentType;
 
 public class CanvasItem extends AnchorPane {
@@ -42,10 +46,14 @@ public class CanvasItem extends AnchorPane {
 	private Control control;
 	private FillFormsXML fillFormsXML;
 	private FillForms fillForms;
+	private ManipulationControl manipulation;
 	private Tooltip tooltip;
 
+	private ItemContexMenu contextMenu;
+
 	private NodeLink mDragLink = null;
-	private DragAndDropCanvas canvas = null;
+	private HBox canvas = null;
+	private DragAndDropCanvas dgCanvas;
 
 	private final List<Integer> mStartLinkIds = new ArrayList<Integer>();
 	private final List<Integer> mEndLinkIds = new ArrayList<Integer>();
@@ -57,8 +65,8 @@ public class CanvasItem extends AnchorPane {
 	private SegmentType type;
 	private BasicForm form;
 
-	public CanvasItem(SegmentType type, String name, Control control, BasicForm rootForm, boolean isCreated) {
-
+	public CanvasItem(SegmentType type, String name, Control control, BasicForm rootForm, int isCreated, double x,
+			double y, ItemContexMenu contexMenu) {
 		this.setOnMousePressed(circleOnMousePressedEventHandler);
 		this.setOnMouseDragged(circleOnMouseDraggedEventHandler);
 		this.setOnMouseReleased(onMouseReleaseEventHandler);
@@ -66,13 +74,22 @@ public class CanvasItem extends AnchorPane {
 		this.setType(type);
 		this.setFillForms(control.getFillForms());
 		this.setFillFormsXML(control.getFillFormsXML());
+		this.manipulation = control.getManipulation();
+		this.setTranslateX(x);
+		this.setTranslateY(y);
+		this.contextMenu = contexMenu;
 		
-		if (isCreated) {
+		
+		if (isCreated == 0) {
 			IDs = control.createForm(this, rootForm);
-		} else {
+		} else if (isCreated == 1) {
 			IDs = control.createFormFromXML(this, rootForm);
+		} else {
+			IDs = manipulation.createCopyForm(this, rootForm);
 		}
 
+		this.dgCanvas = control.getCanvas();
+		
 		idForm = IDs[0];
 		ID = type.name() + "_" + String.format("%03d", IDs[1]);
 
@@ -84,18 +101,18 @@ public class CanvasItem extends AnchorPane {
 		this.length = segmentInfo.getLength();
 		this.getChildren().add(segmentInfo);
 
-		mDragLink = new NodeLink(-1,control);
+		mDragLink = new NodeLink(-1, control);
 		mDragLink.setVisible(false);
 
 		parentProperty().addListener(new ChangeListener() {
 
 			@Override
 			public void changed(ObservableValue observable, Object oldValue, Object newValue) {
-				canvas = (DragAndDropCanvas) getParent();
-
+				canvas = (HBox) getParent();
 			}
 
 		});
+		
 
 	}
 
@@ -119,6 +136,9 @@ public class CanvasItem extends AnchorPane {
 					orgTranslateY = ((AnchorPane) (t.getSource())).getTranslateY();
 				}
 			}
+		} else if (t.getButton().equals(MouseButton.SECONDARY)) {
+			contextMenu.setItem(this);
+			contextMenu.show(canvas, t.getScreenX(), t.getScreenY());
 		}
 
 	}
@@ -158,7 +178,7 @@ public class CanvasItem extends AnchorPane {
 			int arrowIndex = mStartLinkIds.get(i);
 			double width = getTranslateX() + segmentInfo.getLength();
 			double height = getTranslateY() + (getHeight() / 2);
-			
+
 			control.getArrows().get(arrowIndex).setStart(new Point2D(width, height));
 
 		}
@@ -196,31 +216,34 @@ public class CanvasItem extends AnchorPane {
 		segmentInfo.setNameText(name);
 	}
 
+	public String getNameText() {
+
+		return segmentInfo.getName().getText();
+	}
+
 	public void registerStartLink(int linkId) {
 		mStartLinkIds.add(linkId);
 	}
-	
+
 	public void registerEndLink(int linkId) {
 		mEndLinkIds.add(linkId);
 	}
-	
+
 	public void deleteStartLink(int linkId) {
 		mStartLinkIds.remove(linkId);
 	}
-	
+
 	public void deleteEndLink(int linkId) {
 		mEndLinkIds.remove(linkId);
 	}
-	
 
 	/*** Getrs and Setrs ***/
 
-
-	public DragAndDropCanvas getCanvas() {
+	public HBox getCanvas() {
 		return canvas;
 	}
 
-	public void setCanvas(DragAndDropCanvas canvas) {
+	public void setCanvas(HBox canvas) {
 		this.canvas = canvas;
 	}
 

@@ -6,13 +6,11 @@ import javafx.beans.property.StringProperty;
 public class CPRTable {
 
 	private StringProperty name;
-	private StringProperty configuration;
 	private StringProperty role;
 	
-	public CPRTable(String name, String configuration, String role) {
+	public CPRTable(String name, String role) {
 		super();
 		this.name = new SimpleStringProperty(name);
-		this.configuration = new SimpleStringProperty(configuration);
 		this.role = new SimpleStringProperty(role);
 	}
 	
@@ -23,15 +21,6 @@ public class CPRTable {
 
 	public final void setName(String name) {
 		this.name.set(name);
-
-	}
-	
-	public final String getConfiguration() {
-		return configuration.get();
-	}
-
-	public final void setConfiguration(String configuration) {
-		this.configuration.set(configuration);
 
 	}
 	

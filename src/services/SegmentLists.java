@@ -76,12 +76,12 @@ public class SegmentLists {
 
 	private ObservableList<String> statusTypeObservable;
 	private List<Status> statusTypeList;
-	
+
 	private ObservableList<String> typeObservable;
 	private List<Type> typeList;
 
 	private List<Link> linksList;
-	
+
 	private Control control;
 	private Project project;
 
@@ -93,65 +93,65 @@ public class SegmentLists {
 
 	}
 
-	public void restartLists() {
-
-		configList.clear();
+	public void restartLists(Project project) {
+		this.project = project;
+		configList = project.getConfiguration();
 		configFormIndex.clear();
 		configObservable.clear();
 
-		roleList.clear();
+		roleList = project.getRoles();
 		roleFormIndex.clear();
 		roleObservable.clear();
 
-		branchList.clear();
+		branchList = project.getBranches();
 		branchFormIndex.clear();
 		branchObservable.clear();
-		
-		changeList.clear();
+
+		changeList = project.getChanges();
 		changeFormIndex.clear();
 		changeObservable.clear();
-		
+
 		artifactFormIndex.clear();
-		artifactList.clear();
+		artifactList = project.getArtifacts();
 		artifactObservable.clear();
 
-		criterionList.clear();
+		criterionList = project.getCriterions();
 		criterionObservable.clear();
 
-		milestoneList.clear();
+		milestoneList = project.getMilestones();
 		milestoneObservable.clear();
 
-		CPRList.clear();
+		CPRList = project.getCpr();
 		CPRObservable.clear();
 
-		roleTypeList.clear();
+		roleTypeList = project.getRoleType();
 		roleTypeObservable.clear();
 
-		priorityTypeList.clear();
+		priorityTypeList = project.getPriority();
 		priorityTypeObservable.clear();
 
-		severityTypeList.clear();
+		severityTypeList = project.getSeverity();
 		severityTypeObservable.clear();
 
-		relationTypeList.clear();
+		relationTypeList = project.getRelation();
 		relationTypeObservable.clear();
 
-		resolutionTypeList.clear();
+		resolutionTypeList = project.getResolution();
 		resolutionTypeObservable.clear();
 
-		statusTypeList.clear();
+		statusTypeList = project.getStatus();
 		statusTypeObservable.clear();
 		linksList.clear();
-		
-		typeList.clear();
+
+		typeList = project.getTypes();
 		typeObservable.clear();
-		
+
 	}
 
 	public void createLists() {
-		
+
 		linksList = project.getLinks();
-		
+
 		configList = project.getConfiguration();
 		configFormIndex = new ArrayList<>();
 		configObservable = FXCollections.observableArrayList();
@@ -202,7 +202,7 @@ public class SegmentLists {
 
 		statusTypeList = project.getStatus();
 		statusTypeObservable = FXCollections.observableArrayList();
-		
+
 		typeList = project.getTypes();
 		typeObservable = FXCollections.observableArrayList();
 

@@ -21,7 +21,9 @@ public class ActivityForm extends DescriptionBasicForm implements ISegmentForm {
 	public ActivityForm(CanvasItem item, Control control, int[] itemArray, Activity activity, int indexForm) {
 
 		super(item, control, itemArray, indexForm);
+		
 		setWorkUnitArray(activity.getWorkUnits());
+		
 		this.setOnCloseRequest(new EventHandler<WindowEvent>() {
 
 			@Override
@@ -45,7 +47,7 @@ public class ActivityForm extends DescriptionBasicForm implements ISegmentForm {
 		int y = (int) getCanvasItem().getTranslateY();
 		String desc = getDescriptionTF().getText();
 		getCanvasItem().setNameText(actName);
-		
+		setName(actName);
 		getControl().getFillForms().fillActivity(form, IDs[1], desc, actName, x, y);
 		
 	}

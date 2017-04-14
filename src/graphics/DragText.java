@@ -34,13 +34,13 @@ public class DragText extends Button {
 	public DragText(SegmentType type, DragAndDropCanvas canvas) {
 		this(type);
 		this.canvas = canvas;
-		this.setOnAction(event -> canvas.addItem(type.name()));
+		this.setOnAction(event -> canvas.addItem(type.name(),0,0));
 
 	}
 	
 	public DragText(SegmentType type, BasicForm form) {
 		this(type);
-		this.setOnAction(event -> form.getCanvas().addItem(type.name()));
+		this.setOnAction(event -> form.getCanvas().addItem(type.name(),0,0));
 
 	}
 

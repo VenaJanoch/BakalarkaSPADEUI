@@ -34,6 +34,7 @@ import forms.StatusForm;
 import forms.TypeForm;
 import graphics.CanvasItem;
 import graphics.DragAndDropCanvas;
+import graphics.ItemContexMenu;
 import graphics.NodeLink;
 import javafx.geometry.Point2D;
 import javafx.stage.FileChooser;
@@ -56,11 +57,18 @@ public class Control {
 	private int id;
 
 	private ProcessGenerator procesGener;
+	private IdentificatorCreater idCreater;
 	private ObjectFactory objF;
 	private Project project;
 
 	private FillFormsXML fillFormsXML;
 	private FillForms fillForms;
+	private FillCopyForms fillCopy;
+	
+	
+	private ManipulationControl manipulation;	
+	private ItemContexMenu contexMenu;
+	
 	private SegmentLists lists;
 
 	private MilestoneForm milestoneForm;
@@ -74,9 +82,9 @@ public class Control {
 	private BranchForm branchFrom;
 	private ConfigurationTableForm confTableForm;
 	private TypeForm typeForm;
-
+	
 	public Control() {
-
+		
 		procesGener = new ProcessGenerator();
 		objF = new ObjectFactory();
 		project = (Project) objF.createProject();
@@ -85,11 +93,19 @@ public class Control {
 		setArrow(false);
 		setStartArrow(false);
 		setForms(new ArrayList<>());
+		System.out.println("Form1 " + forms.toString());
 		getForms().add(0, new ProjectForm(this, project, canvas));
-
+		System.out.println("Form2 " + forms.toString());
 		lists = new SegmentLists(this, project);
 
-		fillForms = new FillForms(this, lists, project, forms, objF);
+		idCreater = new IdentificatorCreater();
+		
+		fillForms = new FillForms(this, lists, project, forms, objF, idCreater);
+		fillFormsXML = new FillFormsXML(this, lists, project, forms, fillCopy, idCreater);
+		fillCopy = new FillCopyForms(this, getLists(), project, forms, objF, idCreater);
+		manipulation = new ManipulationControl(this, fillCopy, project, lists);
+		contexMenu = new ItemContexMenu(this, manipulation, canvas);
+		
 		milestoneForm = new MilestoneForm(this);
 		CPRForm = new ConfigPersonRelationForm(this);
 		roleForm = new RoleForm(this);
@@ -113,28 +129,26 @@ public class Control {
 		forms.get(0).show();
 	}
 
-	private void updateIndexAndID() {
-
-		fillForms.setIndex(fillFormsXML.getIndex());
-		fillForms.setIdCreater(fillFormsXML.getIdCreater());
-
-	}
 
 	public void restartControl() {
 
 		procesGener = new ProcessGenerator();
 		objF = new ObjectFactory();
 
-		lists.restartLists();
+		idCreater = new IdentificatorCreater();
 
-		configureFileChooser();
-
-		setArrow(false);
-		setStartArrow(false);
+		
 		forms.clear();
-
+		
 		arrows.clear();
 		canvas.restart();
+		
+		configureFileChooser();
+
+		
+		setArrow(false);
+		setStartArrow(false);
+
 
 		firstSave = true;
 
@@ -231,7 +245,7 @@ public class Control {
 
 	}
 
-	public SegmentType findSegmentType(String segmentName) {
+	public static SegmentType findSegmentType(String segmentName) {
 
 		for (int i = 0; i < SegmentType.values().length; i++) {
 
@@ -286,11 +300,11 @@ public class Control {
 		switch (sType) {
 		case Phase:
 
-			return fillFormsXML.createPhaseFormXML(item, form, IDs, indexConfig);
+			return fillFormsXML.createPhaseFormXML(item, form, IDs);
 
 		case Iteration:
 
-			return fillFormsXML.createIterationFormXML(item, form, IDs, indexConfig);
+			return fillFormsXML.createIterationFormXML(item, form, IDs);
 
 		case Activity:
 
@@ -363,18 +377,19 @@ public class Control {
 		if (file != null) {
 			restartControl();
 			project = procesGener.readProcess(file);
+
 			ProjectForm form = new ProjectForm(this, project, canvas);
-			lists.setRoleList(project.getRoles());
-			lists.setChangeList(project.getChanges());
-			lists.setBranchList(project.getBranches());
-			lists.setArtifactList(project.getArtifacts());
-			lists.setRoleTypeList(project.getRoleType());
-			lists.setConfigList(project.getConfiguration());
-
 			forms.add(0, form);
-			fillFormsXML = new FillFormsXML(this, lists, project, forms);
-			fillFormsXML.fillProjectFromXML(form);
 
+			lists.restartLists(project);
+			
+			fillForms = new FillForms(this, lists, project, forms, objF, idCreater);
+			fillCopy = new FillCopyForms(this, getLists(), project, forms, objF, idCreater);
+			manipulation.restart(fillCopy, project);
+
+			fillFormsXML = new FillFormsXML(this, lists, project, forms, fillCopy, idCreater);
+			fillFormsXML.fillProjectFromXML(form);
+		
 			parseProject();
 
 		}
@@ -423,7 +438,16 @@ public class Control {
 		return localDate;
 	}
 
-	public boolean workUnitControl() {
+	public boolean workUnitControl(String estimate) {
+
+		double estimated = 0;
+
+		try {
+			estimated = Double.parseDouble(estimate);
+		} catch (NumberFormatException e) {
+			Alerts.showWrongEstimatedTimeAlert();
+			return false;
+		}
 
 		if (lists.getPriorityTypeList().isEmpty()) {
 			Alerts.showNoText("Priority");
@@ -448,6 +472,8 @@ public class Control {
 		return true;
 
 	}
+
+	
 
 	/** Getrs and Setrs ***/
 
@@ -585,6 +611,22 @@ public class Control {
 
 	public void setProject(Project project) {
 		this.project = project;
+	}
+
+	public ManipulationControl getManipulation() {
+		return manipulation;
+	}
+
+	public void setManipulation(ManipulationControl manipulation) {
+		this.manipulation = manipulation;
+	}
+
+	public ItemContexMenu getContexMenu() {
+		return contexMenu;
+	}
+
+	public void setContexMenu(ItemContexMenu contexMenu) {
+		this.contexMenu = contexMenu;
 	}
 
 }

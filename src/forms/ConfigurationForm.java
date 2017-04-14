@@ -53,13 +53,13 @@ public class ConfigurationForm extends BasicForm implements ISegmentForm {
 	private DatePicker createdDP;
 	private CheckComboBox<String> branchCB;
 	private ComboBox<String> authorRoleCB;
-	private ComboBox<String> cprCB;
+	private CheckComboBox<String> cprCB;
 
 	private int authorIndex;
-	private int cprIndex;
 
 	private ObservableList<String> branchArray;
 	private List<Integer> branchIndex;
+	private List<Integer> cprIndex;
 
 	private Configuration configuration;
 	private TagForm tagForm;
@@ -72,6 +72,7 @@ public class ConfigurationForm extends BasicForm implements ISegmentForm {
 		isRelease = true;
 
 		branchIndex = conf.getBranchesIndexs();
+		cprIndex = conf.getCPRsIndexs();
 
 		setConfig(conf);
 		setBranchArray(conf.getBranchesIndexs());
@@ -104,6 +105,7 @@ public class ConfigurationForm extends BasicForm implements ISegmentForm {
 
 		setName(actName);
 		getCanvasItem().setNameText(actName);
+		
 		getControl().getFillForms().fillConfiguration(configuration, IDs, isRelease, createDate, actName, authorIndex,
 				isNew);
 
@@ -150,9 +152,8 @@ public class ConfigurationForm extends BasicForm implements ISegmentForm {
 		authorRoleCB.getSelectionModel().selectedIndexProperty().addListener(roleListenerAut);
 
 		cprLB = new Label("Conf-Person: ");
-		cprCB = new ComboBox<String>(getControl().getLists().getCPRObservable());
-		cprCB.setVisibleRowCount(5);
-		cprCB.getSelectionModel().selectedIndexProperty().addListener(cprListener);
+		cprCB = new CheckComboBox<String>(getControl().getLists().getCPRObservable());
+		cprCB.getCheckModel().getCheckedItems().addListener(cprListener);
 
 		branchLB = new Label("Branches");
 		branchCB = new CheckComboBox<String>(getControl().getLists().getBranchObservable());
@@ -233,11 +234,10 @@ public class ConfigurationForm extends BasicForm implements ISegmentForm {
 		}
 	};
 
-	ChangeListener<Number> cprListener = new ChangeListener<Number>() {
+	ListChangeListener<String> cprListener = new ListChangeListener<String>() {
 
-		@Override
-		public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-			cprIndex = newValue.intValue();
+		public void onChanged(ListChangeListener.Change<? extends String> c) {
+			cprIndex = cprCB.getCheckModel().getCheckedIndices();
 
 		}
 	};

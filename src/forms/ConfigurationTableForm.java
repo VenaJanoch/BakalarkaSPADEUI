@@ -55,6 +55,7 @@ public class ConfigurationTableForm extends Table2BasicForm implements ISegmentT
 		
 		getInternalPanel().setCenter(getTable());
 		getInternalPanel().setLeft(new SplitPane());
+		
 		getMainPanel().setRight(getInternalPanel());
 		getMainPanel().setTop(formName);
 		getMainPanel().setAlignment(formName, Pos.TOP_CENTER);
@@ -68,7 +69,7 @@ public class ConfigurationTableForm extends Table2BasicForm implements ISegmentT
 	public BasicForm createConfigItem() {
 
 		CanvasItem item = new CanvasItem(SegmentType.Configuration, "Name", getControl(),
-				getControl().getForms().get(0), true);
+				getControl().getForms().get(0), 0, 0,0, getControl().getContexMenu());
 
 		form = getControl().getForms().get(item.getIDs()[0]);
 		form.getSubmitButton().setText("Add");

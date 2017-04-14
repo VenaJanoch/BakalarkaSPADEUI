@@ -14,6 +14,8 @@ import javafx.scene.control.ScrollBar;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
@@ -29,36 +31,38 @@ import services.Constans;
 import services.Control;
 import services.SegmentType;
 
-public class DragAndDropCanvas extends HBox {
+public class DragAndDropCanvas extends ScrollPane {
 
 	private Scene mScene;
 	private Control control;
 	private BasicForm form;
 	private int indexForm;
+	private HBox canvas;
+	private ItemContexMenu contexMenu;
 	
-	public DragAndDropCanvas(Control control, int indexForm) {
+	public DragAndDropCanvas(Control control, int indexForm, ItemContexMenu contexMenu) {
 
 		super();
 		this.control = control;
 		this.indexForm = indexForm;
-		this.setMinWidth(Constans.canvasMaxWidth);
-		this.setMinHeight(Constans.canvasMaxHeight);
+		this.contexMenu = contexMenu;
 		
-		        
-        
-		this.setBackground(new Background(new BackgroundFill(Color.ANTIQUEWHITE, CornerRadii.EMPTY, Insets.EMPTY)));
-		this.setOnDragOver(new EventHandler<DragEvent>() {
-			public void handle(DragEvent event) {
-				/* data is dragged over the target */
+		this.canvas = new HBox(5);
+		canvas.setMinWidth(Constans.canvasMaxWidth);
+		canvas.setMinHeight(Constans.canvasMaxHeight);
 
-				/*
-				 * accept it only if it is not dragged from the same node and if
-				 * it has a string data
-				 */
+		this.setContent(canvas);
+		this.setPrefSize(Constans.width, Constans.height);
+		this.setHbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
+		this.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
+
+		canvas.setBackground(new Background(new BackgroundFill(Color.ANTIQUEWHITE, CornerRadii.EMPTY, Insets.EMPTY)));
+		
+		canvas.setOnMouseClicked(OnMousePressedEventHandler);
+		
+		canvas.setOnDragOver(new EventHandler<DragEvent>() {
+			public void handle(DragEvent event) {
 				if (event.getGestureSource() != this && event.getDragboard().hasString()) {
-					/*
-					 * allow for both copying and moving, whatever user chooses
-					 */
 					event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
 				}
 
@@ -66,10 +70,8 @@ public class DragAndDropCanvas extends HBox {
 			}
 		});
 
-		this.setOnDragEntered(new EventHandler<DragEvent>() {
+		canvas.setOnDragEntered(new EventHandler<DragEvent>() {
 			public void handle(DragEvent event) {
-				/* the drag-and-drop gesture entered the target */
-				/* show to the user that it is an actual gesture target */
 				if (event.getGestureSource() != this && event.getDragboard().hasString()) {
 				}
 
@@ -77,32 +79,22 @@ public class DragAndDropCanvas extends HBox {
 			}
 		});
 
-		this.setOnDragExited(new EventHandler<DragEvent>() {
+		canvas.setOnDragExited(new EventHandler<DragEvent>() {
 			public void handle(DragEvent event) {
-				/* mouse moved away, remove the graphical cues */
-				// this.setBackground(new Background(new
-				// BackgroundFill(Color.BLUE, CornerRadii.EMPTY,
-				// Insets.EMPTY)));
-
 				event.consume();
 			}
 		});
 
-		this.setOnDragDropped(new EventHandler<DragEvent>() {
+		canvas.setOnDragDropped(new EventHandler<DragEvent>() {
 			public void handle(DragEvent event) {
-				/* data dropped */
-				/* if there is a string data on dragboard, read it and use it */
 				Dragboard db = event.getDragboard();
 				boolean success = false;
 				if (db.hasString()) {
-					addItem(db.getString());
+
+					addItem(db.getString(), event.getSceneX(), event.getSceneY());
 
 					success = true;
 				}
-				/*
-				 * let the source know whether the string was successfully
-				 * transferred and used
-				 */
 				event.setDropCompleted(success);
 
 				event.consume();
@@ -111,30 +103,49 @@ public class DragAndDropCanvas extends HBox {
 		});
 
 	}
+	
+	public void setClicFromDragPoint(MouseEvent t) {
 
-	ChangeListener<Number> scListener  = new ChangeListener<Number>()  {
-        public void changed(ObservableValue<? extends Number> ov,
-            Number old_val, Number new_val) {
-        	
-           changePosition(-new_val.doubleValue());
-        
-        }
-    };
-    
-    public void changePosition(double position){
-    	this.setLayoutY(position);           
-    }
-    
-	public void addItem(String segment) {
+		if (t.getButton().equals(MouseButton.SECONDARY)) {
+			contexMenu.setDgCanvas(this);
+			contexMenu.show(canvas, t.getScreenX(), t.getScreenY());
+		}
 
-		SegmentType type = control.findSegmentType(segment);
-		
-		this.getChildren().add(new CanvasItem(type, "Name", control, control.getForms().get(indexForm) , true));
+	}
+
+	EventHandler<MouseEvent> OnMousePressedEventHandler = new EventHandler<MouseEvent>() {
+
+		@Override
+		public void handle(MouseEvent t) {
+			System.out.println("Form6 platno " + control.getForms().toString());
+			setClicFromDragPoint(t);
+		}
+	};
+	
+	
+	public void changePosition(double position) {
+		this.setLayoutY(position);
+	}
+
+	public CanvasItem addItem(String segment, double x, double y) {
+
+		SegmentType type = Control.findSegmentType(segment);
+		CanvasItem item = new CanvasItem(type, "Name", control, control.getForms().get(indexForm), 0, x, y, contexMenu);
+		canvas.getChildren().add(item);
+		return item;
 
 	}
 	
-	public void restart(){
-		this.getChildren().clear();
+	public CanvasItem addCopyItem(SegmentType segment, double x, double y) {
+		System.out.println("Copy Platno");
+		CanvasItem item = new CanvasItem(segment, "Name", control, control.getForms().get(indexForm), 2, x, y, contexMenu);
+		canvas.getChildren().add(item);
+		return item;
+
+	}
+
+	public void restart() {
+		canvas.getChildren().clear();
 	}
 
 	public Scene getMScene() {
@@ -143,6 +154,14 @@ public class DragAndDropCanvas extends HBox {
 
 	public void setMScene(Scene scene) {
 		this.mScene = scene;
+	}
+
+	public HBox getCanvas() {
+		return canvas;
+	}
+
+	public void setCanvas(HBox canvas) {
+		this.canvas = canvas;
 	}
 
 }

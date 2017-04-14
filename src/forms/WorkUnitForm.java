@@ -96,14 +96,15 @@ public class WorkUnitForm extends DescriptionBasicForm implements ISegmentForm {
 		getCanvasItem().setNameText(actName);
 		setName(actName);
 		getControl().getFillForms().fillWorkUnit(form, IDs[2], getDescriptionTF().getText(), actName, assigneIndex,
-				authorIndex, category, x, y, priorityIndex, severityIndex, typeIndex, resolutionIndex, statusIndex);
+				authorIndex, category, x, y, priorityIndex, severityIndex, typeIndex, resolutionIndex, statusIndex,
+				Double.parseDouble(estimatedTimeTF.getText()));
 
 	}
 
 	@Override
 	public void setActionSubmitButton() {
-	
-		if (getControl().workUnitControl()) {
+
+		if (getControl().workUnitControl(estimatedTimeTF.getText())) {
 			closeForm();
 			close();
 		}
