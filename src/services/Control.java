@@ -52,13 +52,11 @@ public class Control {
 	private boolean startArrow;
 	private DragAndDropCanvas canvas;
 	private ArrayList<BasicForm> forms;
-	private ArrayList<NodeLink> arrows;
-
-	private NodeLink link;
-	private WorkUnitLink wLink;
-
+	
+	
 	private ClassSwitcher classSwitcher;
-	private int id;
+	
+	private LinkControl linkControl;
 
 	private ProcessGenerator procesGener;
 	private IdentificatorCreater idCreater;
@@ -68,8 +66,6 @@ public class Control {
 	private FillFormsXML fillFormsXML;
 	private FillForms fillForms;
 	private FillCopyForms fillCopy;
-
-	private Line line;
 
 	private ManipulationControl manipulation;
 	private ItemContexMenu contexMenu;
@@ -95,18 +91,28 @@ public class Control {
 		project = (Project) objF.createProject();
 		configureFileChooser();
 		classSwitcher = new ClassSwitcher(this);
+		
+		
 		setArrow(false);
 		setStartArrow(false);
 		setForms(new ArrayList<>());
 
-		getForms().add(0, new ProjectForm(this, project, canvas));
+		ProjectForm form111 = new ProjectForm(this, project, canvas);
+		getForms().add(0, form111);
 
+		project.setDescription("Project");
+		project.setName("Project");
+
+		project.setEndDate(convertDate(form111.getDate2DP().getValue()));
+		project.setStartDate(convertDate(form111.getDate2DP().getValue()));
 		lists = new SegmentLists(this, project);
+
+		linkControl = new LinkControl(this, lists, objF);
 
 		idCreater = new IdentificatorCreater();
 
 		fillForms = new FillForms(this, lists, project, forms, objF, idCreater);
-		fillFormsXML = new FillFormsXML(this, lists, project, forms, fillCopy, idCreater);
+		fillFormsXML = new FillFormsXML(this, lists, project, forms, fillCopy, idCreater, linkControl);
 		fillCopy = new FillCopyForms(this, getLists(), project, forms, objF, idCreater);
 		manipulation = new ManipulationControl(this, fillCopy, project, lists);
 		contexMenu = new ItemContexMenu(this, manipulation, canvas);
@@ -123,7 +129,7 @@ public class Control {
 		setConfTableForm(new ConfigurationTableForm(this));
 		typeForm = new TypeForm(this);
 
-		arrows = new ArrayList<>();
+		
 
 		firstSave = true;
 
@@ -143,7 +149,7 @@ public class Control {
 
 		forms.clear();
 
-		arrows.clear();
+		linkControl.getArrows().clear();
 		canvas.restart();
 
 		configureFileChooser();
@@ -176,122 +182,17 @@ public class Control {
 
 	}
 
-	public void ArrowManipulation(CanvasItem item) {
+	
 
-		if (!isStartArrow()) {
+	public Double[] calculateArrowPosition(Point2D endPoint) {
 
-			id = IdentificatorCreater.createLineID();
-			link = new NodeLink(id, this);
-
-			sortSegmentConf(item);
-			// line = new Line();
-			item.getCanvas().getChildren().add(link);
-
-			getArrows().add(id, link);
-
-			System.out.println(item.getTranslateX() + " x " + item.getWidth() + " y " + item.getTranslateY());
-			// line.setStartX(item.getTranslateX());
-			// line.setStartY(item.getTranslateY());
-
-			link.setStart(new Point2D(item.getTranslateX() + (item.getWidth()),
-					item.getTranslateY() + (item.getHeight() / 2)));
-
-			item.registerStartLink(id);
-
-			setStartArrow(true);
-
-		} else {
-
-			sortSegmentConf(item);
-
-			link.setEnd(new Point2D(item.getTranslateX(), item.getTranslateY() + (item.getHeight() / 2)));
-			item.registerEndLink(id);
-			setStartArrow(false);
-			setChangeArtifactRelation(link);
-
-		}
-
-	}
-
-	public void ArrowManipulationWorkUnit(CanvasItem item) {
-
-		if (!isStartArrow()) {
-
-			id = IdentificatorCreater.createLineID();
-			wLink = new WorkUnitLink(id, this, item.getCanvas());
-
-			wLink.setStartIDs(item.getIDs());
-			item.getCanvas().getChildren().add(wLink);
-
-			getArrows().add(id, wLink);
-
-			wLink.setStart(new Point2D(item.getTranslateX() + (item.getWidth()),
-					item.getTranslateY() + (item.getHeight() / 2)));
-
-			item.registerStartLink(id);
-
-			setStartArrow(true);
-
-		} else {
-
-			// sortSegmentConf(item);
-			wLink.setEndIDs(item.getIDs());
-			wLink.setArrowAndBox(new Point2D(item.getTranslateX(), item.getTranslateY() + (item.getHeight() / 2)));
-			item.registerEndLink(id);
-			setStartArrow(false);
-			// setChangeArtifactRelation(link);
-
-		}
-
-	}
-
-	public void deleteArrow(int arrowId, int changeID, int artifactID) {
-		lists.getArtifactList().get(artifactID).setChangeIndex(-1);
-		lists.getChangeList().get(changeID).setArtifactIndex(-1);
-
-	}
-
-	public void setChangeArtifactRelation(NodeLink link) {
-
-		int changeIndex = link.getStartIDs()[1];
-		// int changeFormIndex = link.getChange()[0];
-		int artifactIndex = link.getEndIDs()[1];
-		Link linkP = objF.createLink();
-
-		linkP.setArtifactIndex(artifactIndex);
-		linkP.setChangeIndex(changeIndex);
-
-		lists.getLinksList().add(linkP);
-		if (lists.getChangeList().get(changeIndex).isExist()) {
-
-			lists.getChangeList().get(changeIndex).setArtifactIndex(artifactIndex);
-
-		} else if (lists.getArtifactList().get(artifactIndex).isExist()) {
-			lists.getArtifactList().get(artifactIndex).setChangeIndex(changeIndex);
-
-		}
-
-	}
-
-	private void sortSegmentConf(CanvasItem item) {
-
-		if (item.getType() == SegmentType.Change) {
-			link.setStartIDs(item.getIDs());
-		} else {
-			link.setEndIDs(item.getIDs());
-		}
-
-	}
-
-	public Double[] calculateArrowPosition(Point2D endPoint){
-		
 		double x = endPoint.getX() - Constans.ArrowRadius;
 		double yUP = endPoint.getY() + Constans.ArrowRadius;
 		double yDW = endPoint.getY() - Constans.ArrowRadius;
-		
-		Double[] position = new Double[] { endPoint.getX(), endPoint.getY(), x,yUP, x,yDW };
+
+		Double[] position = new Double[] { endPoint.getX(), endPoint.getY(), x, yUP, x, yDW };
 		return position;
-		
+
 	}
 
 	public Point2D calculateCenter(Point2D startPoint, Point2D endPoint) {
@@ -301,15 +202,15 @@ public class Control {
 		double y = Math.abs((startPoint.getY() - endPoint.getY()) / 2) + Constans.relationCBOffset;
 
 		if (startPoint.getY() <= endPoint.getY()) {
-			
+
 			if (startPoint.getX() <= endPoint.getX()) {
 				point = new Point2D(startPoint.getX() + x, startPoint.getY() + y);
 			} else {
 				point = new Point2D(startPoint.getX() - x, startPoint.getY() + y);
 			}
-			
+
 		} else {
-			
+
 			if (startPoint.getX() <= endPoint.getX()) {
 
 				point = new Point2D(startPoint.getX() + x, startPoint.getY() - y);
@@ -463,7 +364,7 @@ public class Control {
 			fillCopy = new FillCopyForms(this, getLists(), project, forms, objF, idCreater);
 			manipulation.restart(fillCopy, project);
 
-			fillFormsXML = new FillFormsXML(this, lists, project, forms, fillCopy, idCreater);
+			fillFormsXML = new FillFormsXML(this, lists, project, forms, fillCopy, idCreater, linkControl);
 			fillFormsXML.fillProjectFromXML(form);
 
 			parseProject();
@@ -583,13 +484,6 @@ public class Control {
 		this.startArrow = startArrow;
 	}
 
-	public ArrayList<NodeLink> getArrows() {
-		return arrows;
-	}
-
-	public void setArrows(ArrayList<NodeLink> arrows) {
-		this.arrows = arrows;
-	}
 
 	public DragAndDropCanvas getCanvas() {
 		return canvas;
@@ -702,5 +596,15 @@ public class Control {
 	public void setContexMenu(ItemContexMenu contexMenu) {
 		this.contexMenu = contexMenu;
 	}
+
+	public LinkControl getLinkControl() {
+		return linkControl;
+	}
+
+	public void setLinkControl(LinkControl linkControl) {
+		this.linkControl = linkControl;
+	}
+	
+	
 
 }

@@ -39,14 +39,14 @@ public class DragAndDropCanvas extends ScrollPane {
 	private int indexForm;
 	private AnchorPane canvas;
 	private ItemContexMenu contexMenu;
-	
+
 	public DragAndDropCanvas(Control control, int indexForm, ItemContexMenu contexMenu) {
 
 		super();
 		this.control = control;
 		this.indexForm = indexForm;
 		this.contexMenu = contexMenu;
-		
+
 		this.canvas = new AnchorPane();
 		canvas.setMinWidth(Constans.canvasMaxWidth);
 		canvas.setMinHeight(Constans.canvasMaxHeight);
@@ -57,9 +57,9 @@ public class DragAndDropCanvas extends ScrollPane {
 		this.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
 
 		canvas.setBackground(new Background(new BackgroundFill(Color.ANTIQUEWHITE, CornerRadii.EMPTY, Insets.EMPTY)));
-		
+
 		canvas.setOnMouseClicked(OnMousePressedEventHandler);
-		
+
 		canvas.setOnDragOver(new EventHandler<DragEvent>() {
 			public void handle(DragEvent event) {
 				if (event.getGestureSource() != this && event.getDragboard().hasString()) {
@@ -103,7 +103,7 @@ public class DragAndDropCanvas extends ScrollPane {
 		});
 
 	}
-	
+
 	public void setClicFromDragPoint(MouseEvent t) {
 
 		if (t.getButton().equals(MouseButton.SECONDARY)) {
@@ -121,8 +121,7 @@ public class DragAndDropCanvas extends ScrollPane {
 			setClicFromDragPoint(t);
 		}
 	};
-	
-	
+
 	public void changePosition(double position) {
 		this.setLayoutY(position);
 	}
@@ -130,15 +129,17 @@ public class DragAndDropCanvas extends ScrollPane {
 	public CanvasItem addItem(String segment, double x, double y) {
 
 		SegmentType type = Control.findSegmentType(segment);
-		CanvasItem item = new CanvasItem(type, "Name", control, control.getForms().get(indexForm), 0, x, y, contexMenu);
+		CanvasItem item = new CanvasItem(type, "Name", control, control.getForms().get(indexForm), 0, x, y, contexMenu,
+				control.getLinkControl());
 		canvas.getChildren().add(item);
 		return item;
 
 	}
-	
+
 	public CanvasItem addCopyItem(SegmentType segment, double x, double y) {
-		System.out.println("Copy Platno");
-		CanvasItem item = new CanvasItem(segment, "Name", control, control.getForms().get(indexForm), 2, x, y, contexMenu);
+	
+		CanvasItem item = new CanvasItem(segment, "Name", control, control.getForms().get(indexForm), 2, x, y,
+				contexMenu, control.getLinkControl());
 		canvas.getChildren().add(item);
 		return item;
 

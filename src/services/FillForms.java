@@ -308,7 +308,7 @@ public class FillForms {
 	
 		if (isNew) {
 			lists.getChangeFormIndex().add(IDs[0]);
-			lists.getChangeObservable().add(name);
+		//	lists.getChangeObservable().add(name);
 		}
 
 	}

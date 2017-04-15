@@ -33,6 +33,7 @@ import services.Control;
 import services.FillCopyForms;
 import services.FillForms;
 import services.FillFormsXML;
+import services.LinkControl;
 import services.ManipulationControl;
 import services.SegmentType;
 
@@ -52,7 +53,7 @@ public class CanvasItem extends AnchorPane {
 
 	private ItemContexMenu contextMenu;
 
-	private NodeLink mDragLink = null;
+	
 	private AnchorPane canvas = null;
 	private DragAndDropCanvas dgCanvas;
 
@@ -65,9 +66,9 @@ public class CanvasItem extends AnchorPane {
 
 	private SegmentType type;
 	private BasicForm form;
-
+	private LinkControl linkControl;
 	public CanvasItem(SegmentType type, String name, Control control, BasicForm rootForm, int isCreated, double x,
-			double y, ItemContexMenu contexMenu) {
+			double y, ItemContexMenu contexMenu, LinkControl linkControl) {
 		this.setOnMousePressed(circleOnMousePressedEventHandler);
 		this.setOnMouseDragged(circleOnMouseDraggedEventHandler);
 		this.setOnMouseReleased(onMouseReleaseEventHandler);
@@ -79,6 +80,7 @@ public class CanvasItem extends AnchorPane {
 		this.setTranslateX(x);
 		this.setTranslateY(y);
 		this.contextMenu = contexMenu;
+		this.linkControl = linkControl;
 		//this.setBackground(new Background(new BackgroundFill(Color.BROWN, CornerRadii.EMPTY, Insets.EMPTY)));
 
 		if (isCreated == 0) {
@@ -104,9 +106,6 @@ public class CanvasItem extends AnchorPane {
 		this.setMaxWidth(segmentInfo.getLength());
 		this.getChildren().add(segmentInfo);
 
-		mDragLink = new NodeLink(-1, control);
-		mDragLink.setVisible(false);
-
 		parentProperty().addListener(new ChangeListener() {
 
 			@Override
@@ -124,9 +123,9 @@ public class CanvasItem extends AnchorPane {
 
 			if (control.isArrow()) {
 				if (type == SegmentType.WorkUnit) {
-					control.ArrowManipulationWorkUnit(this);
+					linkControl.ArrowManipulationWorkUnit(this, false);
 				} else if (type == SegmentType.Artifact || type == SegmentType.Change) {
-					control.ArrowManipulation(this);
+					linkControl.ArrowManipulation(this, false);
 				}
 
 			} else {
@@ -186,7 +185,7 @@ public class CanvasItem extends AnchorPane {
 			double width = getTranslateX() + segmentInfo.getLength();
 			double height = getTranslateY() + (getHeight() / 2);
 
-			NodeLink link = control.getArrows().get(arrowIndex);
+			NodeLink link = linkControl.getArrows().get(arrowIndex);
 
 			link.setStart(new Point2D(width, height));
 
@@ -202,7 +201,7 @@ public class CanvasItem extends AnchorPane {
 	private void repaintEndArrow() {
 
 		for (int i = 0; i < mEndLinkIds.size(); i++) {
-			NodeLink link = control.getArrows().get(mEndLinkIds.get(i));
+			NodeLink link = linkControl.getArrows().get(mEndLinkIds.get(i));
 
 			link.setEnd(new Point2D(getTranslateX(), getTranslateY() + (getHeight() / 2)));
 

@@ -11,6 +11,9 @@
 	<xs:complexType name="Link">
 		<xs:attribute name="ChangeIndex" type="xs:int" />
 		<xs:attribute name="ArtifactIndex" type="xs:int" />
+		<xs:attribute name="leftUnitIndex" type="xs:int" />
+		<xs:attribute name="rightUnitIndex" type="xs:int" />
+		<xs:attribute name="Type" type="xs:string" />
 	</xs:complexType>
 
 	<xs:complexType name="Project">
@@ -127,6 +130,8 @@
 			<xs:element name="authorIndex" type="xs:int" />
 			<xs:element name="coordinates" type="Coordinates" />
 			<xs:element name="relationIndex" type="xs:int" />
+			<xs:element name="leftUnitIndex" type="xs:int" />
+			<xs:element name="rightUnitIndex" type="xs:int" />
 		</xs:sequence>
 		<xs:attribute name="name" type="xs:string" />
 		<xs:attribute name="description" type="xs:string" />

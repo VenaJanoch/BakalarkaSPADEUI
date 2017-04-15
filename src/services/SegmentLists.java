@@ -41,7 +41,7 @@ public class SegmentLists {
 	private List<Role> roleList;
 	private ArrayList<Integer> roleFormIndex;
 
-	private ObservableList<String> changeObservable;
+	//private ObservableList<String> changeObservable;
 	private List<Change> changeList;
 	private ArrayList<Integer> changeFormIndex;
 
@@ -100,6 +100,7 @@ public class SegmentLists {
 
 	public void restartLists(Project project) {
 		this.project = project;
+		
 		configList = project.getConfiguration();
 		configFormIndex.clear();
 		configObservable.clear();
@@ -117,7 +118,7 @@ public class SegmentLists {
 
 		changeList = project.getChanges();
 		changeFormIndex.clear();
-		changeObservable.clear();
+//		changeObservable.clear();
 
 		artifactFormIndex.clear();
 		artifactList = project.getArtifacts();
@@ -149,7 +150,8 @@ public class SegmentLists {
 
 		statusTypeList = project.getStatus();
 		statusTypeObservable.clear();
-		linksList.clear();
+	
+		linksList = project.getLinks();
 
 		typeList = project.getTypes();
 		typeObservable.clear();
@@ -174,12 +176,12 @@ public class SegmentLists {
 		branchList = project.getBranches();
 		branchFormIndex = new ArrayList<>();
 		branchObservable = FXCollections.observableArrayList();
-		branchObservable.add("New");
+	
 
 		changeList = project.getChanges();
 		changeFormIndex = new ArrayList<>();
-		changeObservable = FXCollections.observableArrayList();
-		changeObservable.add("New");
+//		changeObservable = FXCollections.observableArrayList();
+//		changeObservable.add("New");
 
 		setArtifactList(project.getArtifacts());
 		setArtifactFormIndex(new ArrayList<>());
@@ -259,13 +261,6 @@ public class SegmentLists {
 		this.branchList = list;
 	}
 
-	public ObservableList<String> getChangeObservable() {
-		return changeObservable;
-	}
-
-	public void setChangeObservable(ObservableList<String> changeObservable) {
-		this.changeObservable = changeObservable;
-	}
 
 	public List<Change> getChangeList() {
 		return changeList;

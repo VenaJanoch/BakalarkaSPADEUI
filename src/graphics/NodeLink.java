@@ -30,6 +30,8 @@ import javafx.scene.shape.Line;
 import javafx.scene.shape.Polygon;
 import javafx.scene.text.Font;
 import services.Control;
+import services.LinkControl;
+import services.SegmentType;
 
 public class NodeLink extends Line {
 
@@ -42,12 +44,16 @@ public class NodeLink extends Line {
 	protected Point2D endPoint;
 	protected LineComboBox relationCB;
 	protected Polygon polygon;
-	
-	public NodeLink(int ID, Control control) {
+	private SegmentType type;
+	private LinkControl linkControl;
+	public NodeLink(int ID, Control control, SegmentType type, LinkControl linkControl) {
 		super();
+		
+		this.type = type;
 		this.control = control;
 		this.id = ID;
 		this.setVisible(false);
+		this.linkControl = linkControl;
 		//this.setBackground(new Background(new BackgroundFill(Color.BROWN, CornerRadii.EMPTY, Insets.EMPTY)));
 
 //		this.getChildren().addAll(nodeLink);
@@ -77,7 +83,12 @@ public class NodeLink extends Line {
 		if (t.getButton().equals(MouseButton.PRIMARY)) {
 			if (t.getClickCount() == 2) {
 				this.setVisible(false);
-				control.deleteArrow(id, startIDs[1], endIDs[1]);
+				
+				if (type == SegmentType.WorkUnit ) {
+					linkControl.deleteWorkUnitArrow(id, startIDs[1], endIDs[1]);
+				}else{
+					linkControl.deleteArrow(id, startIDs[1], endIDs[1]);					
+				}
 			}
 
 		}

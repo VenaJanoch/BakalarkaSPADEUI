@@ -39,8 +39,7 @@ public class LineComboBox extends ComboBox<String>{
 			setRelationIndex(newValue.intValue());
 			leftUnit.setRelationIndex(relationIndex);
 			rightUnit.setRelationIndex(relationIndex);
-			Relation relation = control.getLists().getRelationTypeList().get(relationIndex);
-		
+					
 		}
 	};
 	

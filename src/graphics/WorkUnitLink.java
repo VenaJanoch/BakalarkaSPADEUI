@@ -11,14 +11,16 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.shape.Polygon;
 import services.Constans;
 import services.Control;
+import services.LinkControl;
+import services.SegmentType;
 
 public class WorkUnitLink extends NodeLink {
 
 	
 	private AnchorPane canvas;
-
-	public WorkUnitLink(int ID, Control control, AnchorPane canvas) {
-		super(ID, control);
+	public WorkUnitLink(int ID, Control control, AnchorPane canvas, LinkControl linkControl) {
+		super(ID, control, SegmentType.WorkUnit, linkControl);
+		
 		this.canvas = canvas;
 
 		relationCB = new LineComboBox(control);

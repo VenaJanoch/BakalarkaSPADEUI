@@ -59,13 +59,13 @@ public class FillFormsXML {
 	private Project project;
 	private ArrayList<BasicForm> forms;
 
-	
 	private IdentificatorCreater idCreater;
 	private SegmentLists lists;
 	private FillCopyForms copyForms;
-
+	private LinkControl linkControl;
+	
 	public FillFormsXML(Control control, SegmentLists lists, Project project, ArrayList<BasicForm> forms,
-			FillCopyForms copyForms, IdentificatorCreater idCreator) {
+			FillCopyForms copyForms, IdentificatorCreater idCreator, LinkControl linkControl) {
 
 		this.control = control;
 		this.project = project;
@@ -73,6 +73,7 @@ public class FillFormsXML {
 		this.forms = forms;
 		this.lists = lists;
 		idCreater = idCreator;
+		this.linkControl = linkControl;
 		System.out.println("Form3 XML " + forms.toString());
 
 	}
@@ -97,8 +98,8 @@ public class FillFormsXML {
 		fillRoleTypeFromXML(project.getRoleType());
 		fillRoleFromXML(project.getRoles());
 
-		fillChangeObservabel(project.getChanges());
-		fillArtifactObservabel(project.getArtifacts());
+		// fillChangeObservabel(project.getChanges());
+		// fillArtifactObservabel(project.getArtifacts());
 		fillCPRObservabel(project.getCpr());
 
 		fillConfigurationFromXML(form, project.getConfiguration());
@@ -109,18 +110,43 @@ public class FillFormsXML {
 
 		for (int i = 0; i < links.size(); i++) {
 
-			int changeI = links.get(i).getChangeIndex();
-			int artifactI = links.get(i).getArtifactIndex();
-
-			CanvasItem itemChange = control.getForms().get(lists.getChangeFormIndex().get(changeI)).getCanvasItem();
-			CanvasItem itemArtifact = control.getForms().get(lists.getArtifactFormIndex().get(artifactI))
-					.getCanvasItem();
-
-			control.ArrowManipulation(itemChange);
-			control.ArrowManipulation(itemArtifact);
+			if (links.get(i).getType().equals(SegmentType.WorkUnit.name())) {
+				fillWorkUnitLinks(links.get(i));
+			} else {
+				fillConfigLinks(links.get(i));
+			}
 
 		}
 
+	}
+
+	public void fillWorkUnitLinks(Link link) {
+		int leftI = link.getLeftUnitIndex();
+		int rightI = link.getRightUnitIndex();
+
+		int leftFormI = lists.getWorkUnitFormIndex().get(leftI);
+		int rightFormI = lists.getWorkUnitFormIndex().get(rightI);
+
+		CanvasItem itemChange = control.getForms().get(leftFormI).getCanvasItem();
+		CanvasItem itemArtifact = control.getForms().get(rightFormI).getCanvasItem();
+
+		linkControl.ArrowManipulationWorkUnit(itemChange, true);
+		linkControl.ArrowManipulationWorkUnit(itemArtifact, true);
+
+	}
+
+	public void fillConfigLinks(Link link) {
+		int changeI = link.getChangeIndex();
+		int artifactI = link.getArtifactIndex();
+
+		int chFormI = lists.getChangeFormIndex().get(changeI);
+		int aFormI = lists.getArtifactFormIndex().get(artifactI);
+
+		CanvasItem itemChange = control.getForms().get(chFormI).getCanvasItem();
+		CanvasItem itemArtifact = control.getForms().get(aFormI).getCanvasItem();
+
+		linkControl.ArrowManipulation(itemChange, true);
+		linkControl.ArrowManipulation(itemArtifact, true);
 	}
 
 	public void fillPhasesFromXML(BasicForm form) {
@@ -130,8 +156,8 @@ public class FillFormsXML {
 
 			CanvasItem item = new CanvasItem(SegmentType.Phase, phase.getName(), control, form, 1,
 					phase.getCoordinates().getXCoordinate(), phase.getCoordinates().getYCoordinate(),
-					control.getContexMenu());
-			
+					control.getContexMenu(), linkControl);
+
 			form.getCanvas().getCanvas().getChildren().add(item);
 
 			fillWorkUnitFromXML(control.getForms().get(item.getIDs()[0]), phase.getWorkUnits());
@@ -168,7 +194,7 @@ public class FillFormsXML {
 
 			CanvasItem item = new CanvasItem(SegmentType.Iteration, iteration.getName(), control, forms.get(0), 1,
 					iteration.getCoordinates().getXCoordinate(), iteration.getCoordinates().getYCoordinate(),
-					control.getContexMenu());
+					control.getContexMenu(), linkControl);
 			form.getCanvas().getCanvas().getChildren().add(item);
 
 			fillWorkUnitFromXML(forms.get(item.getIDs()[0]), iteration.getWorkUnits());
@@ -206,7 +232,7 @@ public class FillFormsXML {
 
 			CanvasItem item = new CanvasItem(SegmentType.Activity, activity.getName(), control, forms.get(0), 1,
 					activity.getCoordinates().getXCoordinate(), activity.getCoordinates().getYCoordinate(),
-					control.getContexMenu());
+					control.getContexMenu(), linkControl);
 			form.getCanvas().getCanvas().getChildren().add(item);
 
 			fillWorkUnitFromXML(forms.get(item.getIDs()[0]), activity.getWorkUnits());
@@ -241,7 +267,7 @@ public class FillFormsXML {
 
 			CanvasItem item = new CanvasItem(SegmentType.WorkUnit, unit.getName(), control, form, 1,
 					unit.getCoordinates().getXCoordinate(), unit.getCoordinates().getYCoordinate(),
-					control.getContexMenu());
+					control.getContexMenu(), linkControl);
 			form.getCanvas().getCanvas().getChildren().add(item);
 
 			item.setTranslateX(unit.getCoordinates().getXCoordinate());
@@ -258,7 +284,7 @@ public class FillFormsXML {
 		IDs[2] = form.getIdCreater().createWorkUnitID();
 
 		int tmpIndex = form.getWorkUnitArray().get(IDs[2]);
-		
+
 		WorkUnit unit = lists.getWorkUnitList().get(tmpIndex);
 		WorkUnitForm workUnitForm = new WorkUnitForm(item, control, unit);
 
@@ -275,7 +301,7 @@ public class FillFormsXML {
 		index++;
 		IdentificatorCreater.setIndex(index);
 		forms.add(IDs[0], workUnitForm);
-
+		lists.getWorkUnitFormIndex().add(IDs[1], IDs[0]);
 		String author = control.getLists().getRoleList().get(unit.getAuthorIndex()).getName();
 		String assignee = control.getLists().getRoleList().get(unit.getAssigneeIndex()).getName();
 		workUnitForm.getAuthorRoleCB().setValue(author);
@@ -303,24 +329,12 @@ public class FillFormsXML {
 			}
 
 			CanvasItem item = new CanvasItem(SegmentType.Configuration, name, control, form, 1, 0, 0,
-					control.getContexMenu());
+					control.getContexMenu(), linkControl);
 			data.add(new ConfigTable(name, release, item.getIDs()[0]));
 
 			lists.getConfigObservable().add(item.getIDs()[1], name);
 			control.getConfTableForm().getTableTV().setItems(data);
 		}
-
-	}
-
-	public void fillTagsFromXML(ConfigurationForm formc, List<String> tags) {
-
-		ObservableList<TagTable> data = FXCollections.observableArrayList();
-
-		for (int i = 0; i < tags.size(); i++) {
-			data.add(new TagTable(tags.get(i)));
-		}
-
-		formc.getTagForm().getTableTV().setItems(data);
 
 	}
 
@@ -358,6 +372,18 @@ public class FillFormsXML {
 		fillTagsFromXML(configForm, conf.getTags());
 		fillArtifactFromXML(configForm, conf.getArtifactsIndexs());
 		return IDs;
+
+	}
+
+	public void fillTagsFromXML(ConfigurationForm formc, List<String> tags) {
+
+		ObservableList<TagTable> data = FXCollections.observableArrayList();
+
+		for (int i = 0; i < tags.size(); i++) {
+			data.add(new TagTable(tags.get(i)));
+		}
+
+		formc.getTagForm().getTableTV().setItems(data);
 
 	}
 
@@ -415,10 +441,10 @@ public class FillFormsXML {
 
 		for (int i = 0; i < changes.size(); i++) {
 			Change change = control.getLists().getChangeList().get(changes.get(i));
-
+			System.out.println("Nevim");
 			CanvasItem item = new CanvasItem(SegmentType.Change, change.getName(), control, form, 1,
 					change.getCoordinates().getXCoordinate(), change.getCoordinates().getYCoordinate(),
-					control.getContexMenu());
+					control.getContexMenu(), linkControl);
 			form.getCanvas().getCanvas().getChildren().add(item);
 
 			item.setTranslateX(change.getCoordinates().getXCoordinate());
@@ -458,7 +484,7 @@ public class FillFormsXML {
 
 			CanvasItem item = new CanvasItem(SegmentType.Artifact, artifact.getName(), control, form, 1,
 					artifact.getCoordinates().getXCoordinate(), artifact.getCoordinates().getYCoordinate(),
-					control.getContexMenu());
+					control.getContexMenu(), linkControl);
 
 			if ((form.getCanvasItem().getType() == SegmentType.Configuration)) {
 				form.getCanvas().getCanvas().getChildren().add(item);
@@ -501,20 +527,6 @@ public class FillFormsXML {
 
 	}
 
-	private void fillChangeObservabel(List<Change> changes) {
-
-		for (int i = 0; i < changes.size(); i++) {
-
-			control.getLists().getChangeObservable().add(changes.get(i).getName());
-		}
-	}
-
-	private void fillArtifactObservabel(List<Artifact> artifacts) {
-		for (int i = 0; i < artifacts.size(); i++) {
-			control.getLists().getArtifactObservable().add(artifacts.get(i).getName());
-		}
-	}
-
 	private void fillCPRObservabel(List<ConfigPersonRelation> cprs) {
 
 		ObservableList<CPRTable> data = FXCollections.observableArrayList();
@@ -533,8 +545,7 @@ public class FillFormsXML {
 		ObservableList<ClassTable> data = FXCollections.observableArrayList();
 
 		for (int i = 0; i < item.size(); i++) {
-			
-			
+
 			String name = item.get(i).getName();
 			String classi = item.get(i).getPriorityClass();
 			String superi = item.get(i).getPrioritySuperClass();
@@ -666,7 +677,6 @@ public class FillFormsXML {
 	}
 
 	/*** Getrs and Setrs ****/
-
 
 	public IdentificatorCreater getIdCreater() {
 		return idCreater;
