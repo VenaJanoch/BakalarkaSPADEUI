@@ -33,7 +33,7 @@ public class ProjectForm extends Date2DescBasicForm implements ISegmentForm {
 		setPhaseArray(project.getPhases());
 		setIterationArray(project.getIterations());
 		setActivityArray(project.getActivities());
-		setWorkUnitArray(project.getWorkUnits());
+		setWorkUnitArray(project.getWorkUnitIndexs());
 		
 		setCanvas(canvas);
 

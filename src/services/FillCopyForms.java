@@ -75,10 +75,9 @@ public class FillCopyForms {
 		phase.setCoordinates(copyPhase.getCoordinates());
 		phase.setConfiguration(copyPhase.getConfiguration());
 		phase.setMilestoneIndex(copyPhase.getMilestoneIndex());
-		for (int i = 0; i < copyPhase.getWorkUnits().size(); i++) {
-
-			phase.getWorkUnits().add(fillWorkUnit(copyPhase.getWorkUnits().get(i)));
-		}
+		
+		phase.getWorkUnits().addAll(copyPhase.getWorkUnits());
+		
 		return phase;
 
 	}
@@ -91,7 +90,7 @@ public class FillCopyForms {
 
 		Phase phase = fillPhase(form, item.getIDs(), oldPhase, oldIDs);
 		PhaseForm phaseForm = new PhaseForm(item, control, Constans.phaseDragTextIndexs, phase, index);
-
+		
 		forms.add(index, copyFormPhase(phase, phaseForm));
 
 		index++;
@@ -110,10 +109,7 @@ public class FillCopyForms {
 		activity.setName(copyActivity.getName());
 		activity.setCoordinates(copyActivity.getCoordinates());
 
-		for (int i = 0; i < copyActivity.getWorkUnits().size(); i++) {
-			activity.getWorkUnits().add(fillWorkUnit(copyActivity.getWorkUnits().get(i)));
-		}
-
+		activity.getWorkUnits().addAll(copyActivity.getWorkUnits());
 		return activity;
 
 	}
@@ -171,10 +167,11 @@ public class FillCopyForms {
 		return IDs;
 	}
 
-	public WorkUnit fillWorkUnit(WorkUnit oldUnit) {
+	public int fillWorkUnit(int index) {
 
 		WorkUnit workUnit = (WorkUnit) objF.createWorkUnit();
-
+		WorkUnit oldUnit = lists.getWorkUnitList().get(index);
+		
 		workUnit.setDescription(oldUnit.getDescription());
 		workUnit.setName(oldUnit.getName());
 		workUnit.setAssigneeIndex(oldUnit.getAssigneeIndex());
@@ -189,20 +186,24 @@ public class FillCopyForms {
 
 		workUnit.setCoordinates(oldUnit.getCoordinates());
 
-		return workUnit;
+		lists.getWorkUnitList().add(workUnit);
+		return lists.getWorkUnitList().indexOf(workUnit);
 
 	}
 
 	public int[] createWorkUnit(CanvasItem item, BasicForm form, WorkUnit oldUnit, int[] IDs, int[] oldIDs) {
 		int index = IdentificatorCreater.getIndex();
-		WorkUnit unit = fillWorkUnit(oldUnit);
+		
+		WorkUnit unit = lists.getWorkUnitList().get(fillWorkUnit(oldIDs[1]));
 		WorkUnitForm unitForm = new WorkUnitForm(item, control, unit);
 
 		forms.add(index, copyFormWorkUnit(unit, unitForm));
 		IDs[0] = index;
 		IDs[1] = idCreater.createWorkUnitID();
 		IDs[2] = form.getIdCreater().createWorkUnitID();
-		form.getWorkUnitArray().add(IDs[2], unit);
+		lists.getWorkUnitList().add(unit);
+		lists.getWorkUnitFormIndex().add(index);
+		form.getWorkUnitArray().add(IDs[2], IDs[1]);
 		index++;
 		IdentificatorCreater.setIndex(index);
 		return IDs;
@@ -225,7 +226,7 @@ public class FillCopyForms {
 	public int[] createChange(CanvasItem item, BasicForm form, Change oldChange, int[] IDs, int[] oldIDs) {
 		int index = IdentificatorCreater.getIndex();
 		Change change = fillChange(oldChange);
-		;
+
 		ChangeForm changeForm = new ChangeForm(item, control, change);
 
 		forms.add(index, copyFormChagne(oldChange, changeForm));

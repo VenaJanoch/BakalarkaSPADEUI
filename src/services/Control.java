@@ -36,7 +36,9 @@ import graphics.CanvasItem;
 import graphics.DragAndDropCanvas;
 import graphics.ItemContexMenu;
 import graphics.NodeLink;
+import graphics.WorkUnitLink;
 import javafx.geometry.Point2D;
+import javafx.scene.shape.Line;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -53,6 +55,8 @@ public class Control {
 	private ArrayList<NodeLink> arrows;
 
 	private NodeLink link;
+	private WorkUnitLink wLink;
+
 	private ClassSwitcher classSwitcher;
 	private int id;
 
@@ -64,11 +68,12 @@ public class Control {
 	private FillFormsXML fillFormsXML;
 	private FillForms fillForms;
 	private FillCopyForms fillCopy;
-	
-	
-	private ManipulationControl manipulation;	
+
+	private Line line;
+
+	private ManipulationControl manipulation;
 	private ItemContexMenu contexMenu;
-	
+
 	private SegmentLists lists;
 
 	private MilestoneForm milestoneForm;
@@ -82,9 +87,9 @@ public class Control {
 	private BranchForm branchFrom;
 	private ConfigurationTableForm confTableForm;
 	private TypeForm typeForm;
-	
+
 	public Control() {
-		
+
 		procesGener = new ProcessGenerator();
 		objF = new ObjectFactory();
 		project = (Project) objF.createProject();
@@ -93,19 +98,19 @@ public class Control {
 		setArrow(false);
 		setStartArrow(false);
 		setForms(new ArrayList<>());
-		System.out.println("Form1 " + forms.toString());
+
 		getForms().add(0, new ProjectForm(this, project, canvas));
-		System.out.println("Form2 " + forms.toString());
+
 		lists = new SegmentLists(this, project);
 
 		idCreater = new IdentificatorCreater();
-		
+
 		fillForms = new FillForms(this, lists, project, forms, objF, idCreater);
 		fillFormsXML = new FillFormsXML(this, lists, project, forms, fillCopy, idCreater);
 		fillCopy = new FillCopyForms(this, getLists(), project, forms, objF, idCreater);
 		manipulation = new ManipulationControl(this, fillCopy, project, lists);
 		contexMenu = new ItemContexMenu(this, manipulation, canvas);
-		
+
 		milestoneForm = new MilestoneForm(this);
 		CPRForm = new ConfigPersonRelationForm(this);
 		roleForm = new RoleForm(this);
@@ -129,7 +134,6 @@ public class Control {
 		forms.get(0).show();
 	}
 
-
 	public void restartControl() {
 
 		procesGener = new ProcessGenerator();
@@ -137,18 +141,15 @@ public class Control {
 
 		idCreater = new IdentificatorCreater();
 
-		
 		forms.clear();
-		
+
 		arrows.clear();
 		canvas.restart();
-		
+
 		configureFileChooser();
 
-		
 		setArrow(false);
 		setStartArrow(false);
-
 
 		firstSave = true;
 
@@ -182,11 +183,15 @@ public class Control {
 			id = IdentificatorCreater.createLineID();
 			link = new NodeLink(id, this);
 
-			sortSegment(item);
-
+			sortSegmentConf(item);
+			// line = new Line();
 			item.getCanvas().getChildren().add(link);
 
 			getArrows().add(id, link);
+
+			System.out.println(item.getTranslateX() + " x " + item.getWidth() + " y " + item.getTranslateY());
+			// line.setStartX(item.getTranslateX());
+			// line.setStartY(item.getTranslateY());
 
 			link.setStart(new Point2D(item.getTranslateX() + (item.getWidth()),
 					item.getTranslateY() + (item.getHeight() / 2)));
@@ -197,11 +202,44 @@ public class Control {
 
 		} else {
 
-			sortSegment(item);
+			sortSegmentConf(item);
+
 			link.setEnd(new Point2D(item.getTranslateX(), item.getTranslateY() + (item.getHeight() / 2)));
 			item.registerEndLink(id);
 			setStartArrow(false);
 			setChangeArtifactRelation(link);
+
+		}
+
+	}
+
+	public void ArrowManipulationWorkUnit(CanvasItem item) {
+
+		if (!isStartArrow()) {
+
+			id = IdentificatorCreater.createLineID();
+			wLink = new WorkUnitLink(id, this, item.getCanvas());
+
+			wLink.setStartIDs(item.getIDs());
+			item.getCanvas().getChildren().add(wLink);
+
+			getArrows().add(id, wLink);
+
+			wLink.setStart(new Point2D(item.getTranslateX() + (item.getWidth()),
+					item.getTranslateY() + (item.getHeight() / 2)));
+
+			item.registerStartLink(id);
+
+			setStartArrow(true);
+
+		} else {
+
+			// sortSegmentConf(item);
+			wLink.setEndIDs(item.getIDs());
+			wLink.setArrowAndBox(new Point2D(item.getTranslateX(), item.getTranslateY() + (item.getHeight() / 2)));
+			item.registerEndLink(id);
+			setStartArrow(false);
+			// setChangeArtifactRelation(link);
 
 		}
 
@@ -215,9 +253,9 @@ public class Control {
 
 	public void setChangeArtifactRelation(NodeLink link) {
 
-		int changeIndex = link.getChange()[1];
+		int changeIndex = link.getStartIDs()[1];
 		// int changeFormIndex = link.getChange()[0];
-		int artifactIndex = link.getArtifact()[1];
+		int artifactIndex = link.getEndIDs()[1];
 		Link linkP = objF.createLink();
 
 		linkP.setArtifactIndex(artifactIndex);
@@ -235,14 +273,52 @@ public class Control {
 
 	}
 
-	private void sortSegment(CanvasItem item) {
+	private void sortSegmentConf(CanvasItem item) {
 
 		if (item.getType() == SegmentType.Change) {
-			link.setChange(item.getIDs());
+			link.setStartIDs(item.getIDs());
 		} else {
-			link.setArtifact(item.getIDs());
+			link.setEndIDs(item.getIDs());
 		}
 
+	}
+
+	public Double[] calculateArrowPosition(Point2D endPoint){
+		
+		double x = endPoint.getX() - Constans.ArrowRadius;
+		double yUP = endPoint.getY() + Constans.ArrowRadius;
+		double yDW = endPoint.getY() - Constans.ArrowRadius;
+		
+		Double[] position = new Double[] { endPoint.getX(), endPoint.getY(), x,yUP, x,yDW };
+		return position;
+		
+	}
+
+	public Point2D calculateCenter(Point2D startPoint, Point2D endPoint) {
+
+		Point2D point = null;
+		double x = Math.abs((startPoint.getX() - endPoint.getX()) / 2);
+		double y = Math.abs((startPoint.getY() - endPoint.getY()) / 2) + Constans.relationCBOffset;
+
+		if (startPoint.getY() <= endPoint.getY()) {
+			
+			if (startPoint.getX() <= endPoint.getX()) {
+				point = new Point2D(startPoint.getX() + x, startPoint.getY() + y);
+			} else {
+				point = new Point2D(startPoint.getX() - x, startPoint.getY() + y);
+			}
+			
+		} else {
+			
+			if (startPoint.getX() <= endPoint.getX()) {
+
+				point = new Point2D(startPoint.getX() + x, startPoint.getY() - y);
+			} else {
+				point = new Point2D(startPoint.getX() - x, startPoint.getY() - y);
+			}
+		}
+
+		return point;
 	}
 
 	public static SegmentType findSegmentType(String segmentName) {
@@ -382,14 +458,14 @@ public class Control {
 			forms.add(0, form);
 
 			lists.restartLists(project);
-			
+
 			fillForms = new FillForms(this, lists, project, forms, objF, idCreater);
 			fillCopy = new FillCopyForms(this, getLists(), project, forms, objF, idCreater);
 			manipulation.restart(fillCopy, project);
 
 			fillFormsXML = new FillFormsXML(this, lists, project, forms, fillCopy, idCreater);
 			fillFormsXML.fillProjectFromXML(form);
-		
+
 			parseProject();
 
 		}
@@ -407,7 +483,7 @@ public class Control {
 		fillFormsXML.fillPhasesFromXML(forms.get(0));
 		fillFormsXML.fillIterationFromXML(forms.get(0));
 		fillFormsXML.fillActivityFromXML(forms.get(0));
-		fillFormsXML.fillWorkUnitFromXML(forms.get(0), project.getWorkUnits());
+		fillFormsXML.fillWorkUnitFromXML(forms.get(0), project.getWorkUnitIndexs());
 		fillFormsXML.createLinks(project.getLinks());
 	}
 
@@ -472,8 +548,6 @@ public class Control {
 		return true;
 
 	}
-
-	
 
 	/** Getrs and Setrs ***/
 

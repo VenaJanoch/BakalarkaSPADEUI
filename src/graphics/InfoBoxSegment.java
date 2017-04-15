@@ -29,8 +29,9 @@ public class InfoBoxSegment extends Group {
 			length = 42.0;
 		}
 
-		this.topRectangle = new Rectangle(length, 20);
-		this.botomRectangle = new Rectangle(length, 20);
+		this.topRectangle = new Rectangle(length, Constans.infoBoxHeightRectangle);
+		this.botomRectangle = new Rectangle(length, Constans.infoBoxHeightRectangle);
+		height = Constans.infoBoxHeight;
 		this.getChildren().addAll(topRectangle, botomRectangle, this.segmentName, this.name);
 
 		createBlock();
@@ -94,6 +95,9 @@ public class InfoBoxSegment extends Group {
 		topRectangle.setWidth(length);
 		botomRectangle.setWidth(length);
 		botomRectangle.setHeight(height);
+		
+		canItem.setMaxHeight(height);
+		canItem.setMaxWidth(length);
 
 	}
 
@@ -122,5 +126,14 @@ public class InfoBoxSegment extends Group {
 	public void setName(Text name) {
 		this.name = name;
 	}
+
+	public double getHeight() {
+		return height;
+	}
+
+	public void setHeight(double height) {
+		this.height = height;
+	}
+	
 
 }

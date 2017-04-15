@@ -22,6 +22,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -52,7 +53,7 @@ public class CanvasItem extends AnchorPane {
 	private ItemContexMenu contextMenu;
 
 	private NodeLink mDragLink = null;
-	private HBox canvas = null;
+	private AnchorPane canvas = null;
 	private DragAndDropCanvas dgCanvas;
 
 	private final List<Integer> mStartLinkIds = new ArrayList<Integer>();
@@ -78,8 +79,8 @@ public class CanvasItem extends AnchorPane {
 		this.setTranslateX(x);
 		this.setTranslateY(y);
 		this.contextMenu = contexMenu;
-		
-		
+		//this.setBackground(new Background(new BackgroundFill(Color.BROWN, CornerRadii.EMPTY, Insets.EMPTY)));
+
 		if (isCreated == 0) {
 			IDs = control.createForm(this, rootForm);
 		} else if (isCreated == 1) {
@@ -89,7 +90,7 @@ public class CanvasItem extends AnchorPane {
 		}
 
 		this.dgCanvas = control.getCanvas();
-		
+
 		idForm = IDs[0];
 		ID = type.name() + "_" + String.format("%03d", IDs[1]);
 
@@ -99,6 +100,8 @@ public class CanvasItem extends AnchorPane {
 		this.control = control;
 		this.segmentInfo = new InfoBoxSegment(this, type, name);
 		this.length = segmentInfo.getLength();
+		this.setMaxHeight(segmentInfo.getHeight());
+		this.setMaxWidth(segmentInfo.getLength());
 		this.getChildren().add(segmentInfo);
 
 		mDragLink = new NodeLink(-1, control);
@@ -108,11 +111,10 @@ public class CanvasItem extends AnchorPane {
 
 			@Override
 			public void changed(ObservableValue observable, Object oldValue, Object newValue) {
-				canvas = (HBox) getParent();
+				canvas = (AnchorPane) getParent();
 			}
 
 		});
-		
 
 	}
 
@@ -121,7 +123,11 @@ public class CanvasItem extends AnchorPane {
 		if (t.getButton().equals(MouseButton.PRIMARY)) {
 
 			if (control.isArrow()) {
-				control.ArrowManipulation(this);
+				if (type == SegmentType.WorkUnit) {
+					control.ArrowManipulationWorkUnit(this);
+				} else if (type == SegmentType.Artifact || type == SegmentType.Change) {
+					control.ArrowManipulation(this);
+				}
 
 			} else {
 
@@ -176,10 +182,19 @@ public class CanvasItem extends AnchorPane {
 
 		for (int i = 0; i < mStartLinkIds.size(); i++) {
 			int arrowIndex = mStartLinkIds.get(i);
+
 			double width = getTranslateX() + segmentInfo.getLength();
 			double height = getTranslateY() + (getHeight() / 2);
 
-			control.getArrows().get(arrowIndex).setStart(new Point2D(width, height));
+			NodeLink link = control.getArrows().get(arrowIndex);
+
+			link.setStart(new Point2D(width, height));
+
+			if (type == SegmentType.WorkUnit) {
+				Point2D center = control.calculateCenter(link.startPoint, link.endPoint);
+				link.relationCB.setTranslateX(center.getX());
+				link.relationCB.setTranslateY(center.getY());
+			}
 
 		}
 	}
@@ -187,9 +202,18 @@ public class CanvasItem extends AnchorPane {
 	private void repaintEndArrow() {
 
 		for (int i = 0; i < mEndLinkIds.size(); i++) {
+			NodeLink link = control.getArrows().get(mEndLinkIds.get(i));
 
-			control.getArrows().get(mEndLinkIds.get(i))
-					.setEnd(new Point2D(getTranslateX(), getTranslateY() + (getHeight() / 2)));
+			link.setEnd(new Point2D(getTranslateX(), getTranslateY() + (getHeight() / 2)));
+
+			if (type == SegmentType.WorkUnit) {
+				link.setEnd(new Point2D(getTranslateX(), getTranslateY() + (getHeight() / 2)), Constans.ArrowRadius);
+				Point2D center = control.calculateCenter(link.startPoint, link.endPoint);
+				link.relationCB.setTranslateX(center.getX());
+				link.relationCB.setTranslateY(center.getY());
+				link.polygon.getPoints().clear();
+				link.polygon.getPoints().addAll(control.calculateArrowPosition(link.endPoint));
+			}
 
 		}
 
@@ -239,11 +263,11 @@ public class CanvasItem extends AnchorPane {
 
 	/*** Getrs and Setrs ***/
 
-	public HBox getCanvas() {
+	public AnchorPane getCanvas() {
 		return canvas;
 	}
 
-	public void setCanvas(HBox canvas) {
+	public void setCanvas(AnchorPane canvas) {
 		this.canvas = canvas;
 	}
 

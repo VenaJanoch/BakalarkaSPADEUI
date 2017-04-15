@@ -20,6 +20,7 @@ import SPADEPAC.RoleType;
 import SPADEPAC.Severity;
 import SPADEPAC.Status;
 import SPADEPAC.Type;
+import SPADEPAC.WorkUnit;
 import forms.ConfigPersonRelationForm;
 import forms.MilestoneForm;
 import forms.RoleForm;
@@ -80,6 +81,10 @@ public class SegmentLists {
 	private ObservableList<String> typeObservable;
 	private List<Type> typeList;
 
+	//private ObservableList<String> configObservable;
+	private List<WorkUnit> workUnitList;
+	private ArrayList<Integer> workUnitFormIndex;
+	
 	private List<Link> linksList;
 
 	private Control control;
@@ -99,6 +104,9 @@ public class SegmentLists {
 		configFormIndex.clear();
 		configObservable.clear();
 
+		workUnitFormIndex.clear();
+		workUnitList = project.getWorkUnits();
+		
 		roleList = project.getRoles();
 		roleFormIndex.clear();
 		roleObservable.clear();
@@ -155,6 +163,9 @@ public class SegmentLists {
 		configList = project.getConfiguration();
 		configFormIndex = new ArrayList<>();
 		configObservable = FXCollections.observableArrayList();
+		
+		workUnitFormIndex = new ArrayList<>();
+		workUnitList = project.getWorkUnits();
 
 		roleList = project.getRoles();
 		roleFormIndex = new ArrayList<>();
@@ -510,6 +521,22 @@ public class SegmentLists {
 
 	public void setTypeList(List<Type> typeList) {
 		this.typeList = typeList;
+	}
+
+	public List<WorkUnit> getWorkUnitList() {
+		return workUnitList;
+	}
+
+	public void setWorkUnitList(List<WorkUnit> workUnitList) {
+		this.workUnitList = workUnitList;
+	}
+
+	public ArrayList<Integer> getWorkUnitFormIndex() {
+		return workUnitFormIndex;
+	}
+
+	public void setWorkUnitFormIndex(ArrayList<Integer> workUnitFormIndex) {
+		this.workUnitFormIndex = workUnitFormIndex;
 	}
 
 }

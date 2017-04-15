@@ -162,7 +162,7 @@ public class FillForms {
 			String category, int x, int y, int priorityIndex, int severityIndex, int typeIndex, int resolutionIndex,
 			int statusIndex, double estimate) {
 
-		WorkUnit workUnit = form.getWorkUnitArray().get(ID);
+		WorkUnit workUnit = lists.getWorkUnitList().get(form.getWorkUnitArray().get(ID));
 		workUnit.setDescription(description);
 		workUnit.setName(name);
 		workUnit.setAssigneeIndex(assigneIndex);
@@ -189,7 +189,9 @@ public class FillForms {
 		IDs[0] = index;
 		IDs[1] = idCreater.createWorkUnitID();
 		IDs[2] = form.getIdCreater().createWorkUnitID();
-		form.getWorkUnitArray().add(IDs[2], unit);
+		lists.getWorkUnitList().add(unit);
+		lists.getWorkUnitFormIndex().add(index);
+		form.getWorkUnitArray().add(IDs[2], IDs[1]);
 		index++;
 		IdentificatorCreater.setIndex(index);
 		return IDs;

@@ -79,5 +79,10 @@ public class Constans {
 	public static final int typeEditionSuperClass = 0;
 	public static final int typeCreationSuperClass = 1;
 	public static final int typeGeneralSuperClass = 2;
+	
+	public static final int infoBoxHeightRectangle = 20;
+	public static final double infoBoxHeight = 40;
+	public static final double relationCBOffset = 20;
+	public static final double ArrowRadius = 10;
 
 }

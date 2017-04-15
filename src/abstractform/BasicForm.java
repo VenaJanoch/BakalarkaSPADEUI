@@ -66,7 +66,7 @@ public abstract class BasicForm extends Stage {
 	private List<Phase> phaseArray;
 	private List<Iteration> iterationArray;
 	private List<Activity> activityArray;
-	private List<WorkUnit> workUnitArray;
+	private List<Integer> workUnitArray;
 	private List<Integer> milestoneArray;
 	private List<Integer> criterionnArray;
 	private Configuration configArray;
@@ -271,11 +271,11 @@ public abstract class BasicForm extends Stage {
 		this.activityArray = activityArray;
 	}
 
-	public List<WorkUnit> getWorkUnitArray() {
+	public List<Integer> getWorkUnitArray() {
 		return workUnitArray;
 	}
 
-	public void setWorkUnitArray(List<WorkUnit> workUnitArray) {
+	public void setWorkUnitArray(List<Integer> workUnitArray) {
 		this.workUnitArray = workUnitArray;
 	}
 

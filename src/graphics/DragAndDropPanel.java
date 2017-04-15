@@ -24,7 +24,7 @@ public class DragAndDropPanel extends BorderPane {
 
 	private HBox buttonBox;
 	private Control control;
-
+	private Button unitLine;
 	
 	public DragAndDropPanel(Control control) {
 
@@ -43,13 +43,17 @@ public class DragAndDropPanel extends BorderPane {
 
 		buttonBox.getChildren().addAll(addButtons);
 
-		this.setCenter(buttonBox);
+		unitLine = new Button("/");
+		unitLine.setOnAction(event -> createArrowButtonEvent());
+		this.setTop(buttonBox);
 
-		this.setBottom(items);
+		this.setCenter(items);
+		
+		this.setBottom(unitLine);
 
 	}
 
-	public DragAndDropPanel(Control control, BasicForm form) {
+	public DragAndDropPanel(Control control, BasicForm form, int i) {
 
 		super();
 		this.control = control;
@@ -71,7 +75,15 @@ public class DragAndDropPanel extends BorderPane {
 		this.setBottom(items);
 
 	}
+	public void createArrowButtonEvent() {
 
+		if (control.changeArrow()) {
+			control.getCanvas().getParent().setCursor(Cursor.CROSSHAIR);
+			unitLine.setCursor(Cursor.DEFAULT);
+		} else {
+			control.getCanvas().getParent().setCursor(Cursor.DEFAULT);
+		}
+	}
 	
 	public void createButtons() {
 

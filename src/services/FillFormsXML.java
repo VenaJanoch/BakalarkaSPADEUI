@@ -234,10 +234,10 @@ public class FillFormsXML {
 
 	}
 
-	public void fillWorkUnitFromXML(BasicForm form, List<WorkUnit> units) {
+	public void fillWorkUnitFromXML(BasicForm form, List<Integer> units) {
 
 		for (int i = 0; i < units.size(); i++) {
-			WorkUnit unit = units.get(i);
+			WorkUnit unit = lists.getWorkUnitList().get(units.get(i));
 
 			CanvasItem item = new CanvasItem(SegmentType.WorkUnit, unit.getName(), control, form, 1,
 					unit.getCoordinates().getXCoordinate(), unit.getCoordinates().getYCoordinate(),
@@ -257,7 +257,9 @@ public class FillFormsXML {
 		IDs[1] = idCreater.createWorkUnitID();
 		IDs[2] = form.getIdCreater().createWorkUnitID();
 
-		WorkUnit unit = form.getWorkUnitArray().get(IDs[2]);
+		int tmpIndex = form.getWorkUnitArray().get(IDs[2]);
+		
+		WorkUnit unit = lists.getWorkUnitList().get(tmpIndex);
 		WorkUnitForm workUnitForm = new WorkUnitForm(item, control, unit);
 
 		workUnitForm.getNameTF().setText(unit.getName());

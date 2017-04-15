@@ -37,7 +37,7 @@ public class DragAndDropCanvas extends ScrollPane {
 	private Control control;
 	private BasicForm form;
 	private int indexForm;
-	private HBox canvas;
+	private AnchorPane canvas;
 	private ItemContexMenu contexMenu;
 	
 	public DragAndDropCanvas(Control control, int indexForm, ItemContexMenu contexMenu) {
@@ -47,7 +47,7 @@ public class DragAndDropCanvas extends ScrollPane {
 		this.indexForm = indexForm;
 		this.contexMenu = contexMenu;
 		
-		this.canvas = new HBox(5);
+		this.canvas = new AnchorPane();
 		canvas.setMinWidth(Constans.canvasMaxWidth);
 		canvas.setMinHeight(Constans.canvasMaxHeight);
 
@@ -156,11 +156,11 @@ public class DragAndDropCanvas extends ScrollPane {
 		this.mScene = scene;
 	}
 
-	public HBox getCanvas() {
+	public AnchorPane getCanvas() {
 		return canvas;
 	}
 
-	public void setCanvas(HBox canvas) {
+	public void setCanvas(AnchorPane canvas) {
 		this.canvas = canvas;
 	}
 

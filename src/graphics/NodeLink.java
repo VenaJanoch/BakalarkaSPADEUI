@@ -27,31 +27,37 @@ import javafx.scene.layout.CornerRadii;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.CubicCurve;
 import javafx.scene.shape.Line;
+import javafx.scene.shape.Polygon;
 import javafx.scene.text.Font;
 import services.Control;
 
-public class NodeLink extends Group {
+public class NodeLink extends Line {
 
-	private Line nodeLink;
-	private TextField labelLineTF;
 	
-	private int[] changeIDs;
-	private int[] artifactIDs;
+	protected int[] startIDs;
+	protected int[] endIDs;
 	private int id;
-	private Control control;
+	protected Control control;
+	protected Point2D startPoint;
+	protected Point2D endPoint;
+	protected LineComboBox relationCB;
+	protected Polygon polygon;
+	
 	public NodeLink(int ID, Control control) {
 		super();
 		this.control = control;
 		this.id = ID;
 		this.setVisible(false);
-		nodeLink = new Line();
-				
-		this.getChildren().addAll(nodeLink);
+		//this.setBackground(new Background(new BackgroundFill(Color.BROWN, CornerRadii.EMPTY, Insets.EMPTY)));
+
+//		this.getChildren().addAll(nodeLink);
 		this.setOnMousePressed(circleOnMousePressedEventHandler);
 		setId(Integer.toString(ID));
+		
+		endPoint = new Point2D(0,0);
 
 	}
-	
+
 	EventHandler<MouseEvent> circleOnMousePressedEventHandler = new EventHandler<MouseEvent>() {
 
 		@Override
@@ -61,48 +67,66 @@ public class NodeLink extends Group {
 	};
 
 	public void setStart(Point2D startPoint) {
-
-		nodeLink.setStartX(startPoint.getX());
-		nodeLink.setStartY(startPoint.getY());
+		this.startPoint = startPoint;
+		
+		this.setStartX(startPoint.getX());
+		this.setStartY(startPoint.getY());
 	}
 
 	protected void setDeleteArrow(MouseEvent t) {
 		if (t.getButton().equals(MouseButton.PRIMARY)) {
 			if (t.getClickCount() == 2) {
 				this.setVisible(false);
-				control.deleteArrow(id,changeIDs[1], artifactIDs[1]);
+				control.deleteArrow(id, startIDs[1], endIDs[1]);
 			}
-			
+
 		}
-		
-		
+
 	}
 
 	public void setEnd(Point2D endPoint) {
 
-		nodeLink.setEndX(endPoint.getX());
-		nodeLink.setEndY(endPoint.getY());
+			
+		this.endPoint = endPoint;		
+		
+		this.setEndX(endPoint.getX());
+		this.setEndY(endPoint.getY());
+		
 		this.setVisible(true);
+	
+	}
+	
+	public void setEnd(Point2D endPoint, double offset) {
+
+		
+		this.endPoint = endPoint;		
+		
+		this.setEndX(endPoint.getX() - offset);
+		this.setEndY(endPoint.getY());
+		
+		this.setVisible(true);
+	
 	}
 
-	
-	
+
 	/*** Getrs and Setrs ***/
-
-	public int[] getChange() {
-		return changeIDs;
+	public int[] getStartIDs() {
+		return startIDs;
 	}
 
-	public void setChange(int[] changeIDs) {
-		this.changeIDs = changeIDs;
+	public void setStartIDs(int[] startIDs) {
+		this.startIDs = startIDs;
 	}
 
-	public int[] getArtifact() {
-		return artifactIDs;
+	public int[] getEndIDs() {
+		return endIDs;
 	}
 
-	public void setArtifact(int[] artifactIDs) {
-		this.artifactIDs = artifactIDs;
+	public void setEndIDs(int[] endIDs) {
+		this.endIDs = endIDs;
 	}
+
+
+
 
 }
