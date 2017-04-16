@@ -42,13 +42,13 @@ public class ArtifactForm extends DateDescBasicForm implements ISegmentForm {
 	private int authorIndex;
 
 	private Artifact artifact;
-
+	private Configuration conf;
 	boolean isNew;
 
 	public ArtifactForm(CanvasItem item, Control control, Artifact artifact, DeleteControl deleteControl, Configuration conf) {
 		super(item, control, deleteControl);
 		this.artifact = artifact;
-		this.setConfigArray(conf);
+		this.conf = conf;
 		artifact.setExist(true);
 		isNew = true;
 		this.setOnCloseRequest(new EventHandler<WindowEvent>() {
@@ -85,9 +85,9 @@ public class ArtifactForm extends DateDescBasicForm implements ISegmentForm {
 
 	@Override
 	public void setActionSubmitButton() {
-		if (getControl().getLists().getRoleList().isEmpty()) {
-			getAlerts().showNoText("Role");
-		} else {
+		
+			
+		if(getFormControl().artifactControl()){
 			closeForm();
 			close();
 		}
@@ -150,7 +150,7 @@ public class ArtifactForm extends DateDescBasicForm implements ISegmentForm {
 	@Override
 	public void deleteItem(int iDs[]) {
 	
-		deleteControl.deleteArtifact(getConfigArray(), iDs);
+		deleteControl.deleteArtifact(conf, iDs);
 		
 	}
 

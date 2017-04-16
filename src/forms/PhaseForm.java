@@ -96,8 +96,8 @@ public class PhaseForm extends DateDescBasicForm implements ISegmentForm {
 
 		configLB = new Label("Configuration: ");
 		configCB = new ChoiceBox<>(getControl().getLists().getConfigObservable());
-
 		configCB.getSelectionModel().selectedIndexProperty().addListener(configListener);
+	
 		milestoneLB = new Label("Milestone: ");
 		milestoneCB = new ChoiceBox<>(getControl().getLists().getMilestoneObservable());
 		milestoneCB.getSelectionModel().selectedIndexProperty().addListener(milestoneListener);
@@ -120,7 +120,7 @@ public class PhaseForm extends DateDescBasicForm implements ISegmentForm {
 		public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
 
 			configIndex = newValue.intValue();
-
+			
 		}
 	};
 

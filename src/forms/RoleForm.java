@@ -23,6 +23,7 @@ import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.SelectionMode;
@@ -51,15 +52,16 @@ public class RoleForm extends Table2BasicForm implements ISegmentTableForm {
 	private Label descriptionLB;
 
 	private TextField descriptionTF;
-	private ComboBox<String> roleTypeCB;
+	private ChoiceBox<String> roleTypeCB;
 	private TableView<RoleTable> tableTV;
 	private int roleIndex;
 	private Control control;
 	private ClassSwitcher classSwitcher;
 	private RoleTypeForm roleTForm;
 	private Label formName;
-	
+
 	private DeleteControl deleteControl;
+
 	public RoleForm(Control control, DeleteControl deleteControl) {
 		super(control, deleteControl);
 		this.control = control;
@@ -72,18 +74,17 @@ public class RoleForm extends Table2BasicForm implements ISegmentTableForm {
 
 	public void setActionSubmitButton() {
 		close();
-		
+
 	}
 
 	@Override
 	public void createForm() {
-		
+
 		formName = new Label("Roles Form");
 		formName.setFont(Font.font(25));
-	
+
 		getInternalPanel().setTop(formName);
 		getInternalPanel().setAlignment(formName, Pos.CENTER);
-	
 
 		getInternalPanel().setCenter(getTable());
 		getInternalPanel().setBottom(createControlPane());
@@ -94,7 +95,7 @@ public class RoleForm extends Table2BasicForm implements ISegmentTableForm {
 
 	}
 
-		@Override
+	@Override
 	public Node getTable() {
 		tableTV = new TableView<RoleTable>();
 
@@ -149,7 +150,7 @@ public class RoleForm extends Table2BasicForm implements ISegmentTableForm {
 	public GridPane createControlPane() {
 
 		roleTypeLB = new Label("Type: ");
-		roleTypeCB = new ComboBox<String>(FXCollections.observableArrayList(control.getLists().getRoleTypeObservable()));
+		roleTypeCB = new ChoiceBox<>(getControl().getLists().getRoleTypeObservable());
 		roleTypeCB.getSelectionModel().selectedIndexProperty().addListener(roleListener);
 
 		descriptionLB = new Label("Description");
@@ -165,12 +166,11 @@ public class RoleForm extends Table2BasicForm implements ISegmentTableForm {
 
 		return getControlPane();
 	}
-	
+
 	ChangeListener<Number> roleListener = new ChangeListener<Number>() {
 
 		@Override
 		public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-
 			
 			roleIndex = newValue.intValue();
 
@@ -182,10 +182,11 @@ public class RoleForm extends Table2BasicForm implements ISegmentTableForm {
 		String nameST = getNameTF().getText();
 		String typeST = roleTypeCB.getValue();
 		String descritpST = descriptionTF.getText();
+	
 		if (getControl().getLists().getRoleTypeList().isEmpty()) {
 			Alerts.showNoText("Role-type");
 			return;
-		}else if (nameST.length() == 0) {
+		} else if (nameST.length() == 0) {
 
 			Alerts.showNoNameAlert();
 			return;
@@ -205,11 +206,11 @@ public class RoleForm extends Table2BasicForm implements ISegmentTableForm {
 
 	/*** Getrs and Setrs ***/
 
-	public ComboBox<String> getRoleTypeCB() {
+	public ChoiceBox<String> getRoleTypeCB() {
 		return roleTypeCB;
 	}
 
-	public void setRoleTypeCB(ComboBox<String> roleTypeCB) {
+	public void setRoleTypeCB(ChoiceBox<String> roleTypeCB) {
 		this.roleTypeCB = roleTypeCB;
 	}
 
@@ -229,5 +230,4 @@ public class RoleForm extends Table2BasicForm implements ISegmentTableForm {
 		this.roleTForm = roleTForm;
 	}
 
-	
 }

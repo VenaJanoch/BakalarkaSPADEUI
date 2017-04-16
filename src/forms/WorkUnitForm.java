@@ -105,7 +105,7 @@ public class WorkUnitForm extends DescriptionBasicForm implements ISegmentForm {
 	@Override
 	public void setActionSubmitButton() {
 
-		if (getControl().workUnitControl(estimatedTimeTF.getText())) {
+		if (getFormControl().workUnitControl(estimatedTimeTF.getText())) {
 			closeForm();
 			close();
 		}

@@ -44,7 +44,7 @@ public class DeleteControl {
 	public void deleteTag(Configuration conf, ObservableList<TagTable> tables) {
 		for (int i = 0; i < tables.size(); i++) {
 
-			int index = lists.getPriorityObservable().indexOf(tables.get(i));
+			int index = conf.getTags().indexOf(tables.get(i).getTag());
 			conf.getTags().remove(index);
 		
 
@@ -179,7 +179,7 @@ public class DeleteControl {
 			int index = lists.getConfigObservable().indexOf(tables.get(i).getName());
 
 			lists.getConfigList().remove(index);
-			lists.getConfigList().add(index, null);
+			//lists.getConfigList().add(index, null);
 			lists.getConfigObservable().remove(index);
 
 		}

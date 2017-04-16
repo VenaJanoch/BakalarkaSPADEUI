@@ -361,7 +361,6 @@ public class FillFormsXML {
 		}
 
 		lists.getConfigFormIndex().add(IDs[1], index);
-		lists.getConfigObservable().add(conf.getName());
 		forms.add(index, configForm);
 
 		index++;

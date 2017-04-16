@@ -68,9 +68,7 @@ public class IterationForm extends Date2DescBasicForm implements ISegmentForm {
 
 	@Override
 	public void setActionSubmitButton() {
-		if (getControl().getLists().getConfigList().isEmpty()) {
-			getAlerts().showNoText("Configuration");
-		} else {
+		 if(getFormControl().iterationControl()) {
 			closeForm();
 			close();
 		}

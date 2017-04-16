@@ -49,10 +49,9 @@ public class Control {
 	private boolean startArrow;
 	private DragAndDropCanvas canvas;
 	private ArrayList<BasicForm> forms;
-	
-	
+
 	private ClassSwitcher classSwitcher;
-	
+
 	private LinkControl linkControl;
 	private DeleteControl deleteControl;
 
@@ -89,8 +88,7 @@ public class Control {
 		project = (Project) objF.createProject();
 		configureFileChooser();
 		classSwitcher = new ClassSwitcher(this);
-		
-		
+
 		setArrow(false);
 		setStartArrow(false);
 		setForms(new ArrayList<>());
@@ -127,8 +125,6 @@ public class Control {
 		setConfTableForm(new ConfigurationTableForm(this, deleteControl));
 		typeForm = new TypeForm(this, deleteControl);
 
-		
-
 		firstSave = true;
 
 	}
@@ -138,32 +134,30 @@ public class Control {
 		forms.get(0).show();
 	}
 
-	public void setCopyDisable(){
-		
+	public void setCopyDisable() {
+
 		contexMenu.getPasteItem().setDisable(false);
 		contexMenu.getCopyItem().setDisable(true);
 		contexMenu.getCutItem().setDisable(true);
 		contexMenu.getDeleteItem().setDisable(true);
-	
+
 	}
-	
-	public void setPasteDisable(){
-		
+
+	public void setPasteDisable() {
+
 		contexMenu.getPasteItem().setDisable(true);
 		contexMenu.getCopyItem().setDisable(false);
 		contexMenu.getCutItem().setDisable(false);
 		contexMenu.getDeleteItem().setDisable(false);
-	
+
 	}
-	
+
 	public void restartControl() {
 
 		procesGener = new ProcessGenerator();
 		objF = new ObjectFactory();
 
 		idCreater = new IdentificatorCreater();
-		
-		
 
 		forms.clear();
 
@@ -199,8 +193,6 @@ public class Control {
 		return arrow;
 
 	}
-
-	
 
 	public Double[] calculateArrowPosition(Point2D endPoint) {
 
@@ -326,6 +318,24 @@ public class Control {
 		}
 	}
 
+//	public int mapConfig(int confIndex) {
+//		String name = lists.getConfigObservable().get(confIndex);
+//		
+//		int index = 0;
+//		for (index = 0; index < lists.getConfigList().size(); index++) {
+//		if (lists.getConfigList().get(index) != null) {
+//			
+//			String conf = lists.getConfigList().get(index).getName();
+//			if (conf.equals(name)) {
+//				return index;
+//			}
+//
+//		}		
+//		}
+//		
+//		return 0;
+//	}
+
 	public boolean checkConfiguration(String newConfName) {
 
 		for (int i = 0; i < lists.getConfigObservable().size(); i++) {
@@ -377,7 +387,7 @@ public class Control {
 			forms.add(0, form);
 
 			lists.restartLists(project);
-			
+
 			linkControl = new LinkControl(this, lists, objF);
 			deleteControl = new DeleteControl(this, lists, project);
 
@@ -385,7 +395,8 @@ public class Control {
 			fillCopy = new FillCopyForms(this, getLists(), project, forms, objF, idCreater, deleteControl);
 			manipulation.restart(fillCopy, project, deleteControl, forms);
 
-			fillFormsXML = new FillFormsXML(this, lists, project, forms, fillCopy, idCreater, linkControl, deleteControl);
+			fillFormsXML = new FillFormsXML(this, lists, project, forms, fillCopy, idCreater, linkControl,
+					deleteControl);
 			fillFormsXML.fillProjectFromXML(form);
 
 			parseProject();
@@ -436,40 +447,7 @@ public class Control {
 		return localDate;
 	}
 
-	public boolean workUnitControl(String estimate) {
-
-		double estimated = 0;
-
-		try {
-			estimated = Double.parseDouble(estimate);
-		} catch (NumberFormatException e) {
-			Alerts.showWrongEstimatedTimeAlert();
-			return false;
-		}
-
-		if (lists.getPriorityTypeList().isEmpty()) {
-			Alerts.showNoText("Priority");
-			return false;
-		} else if (lists.getSeverityTypeList().isEmpty()) {
-			Alerts.showNoText("Severity");
-			return false;
-		} else if (lists.getResolutionTypeList().isEmpty()) {
-			Alerts.showNoText("Resolution");
-			return false;
-		} else if (lists.getStatusTypeList().isEmpty()) {
-			Alerts.showNoText("Status");
-			return false;
-		} else if (lists.getTypeList().isEmpty()) {
-			Alerts.showNoText("Type");
-			return false;
-		} else if (lists.getRoleList().isEmpty()) {
-			Alerts.showNoText("Role-Type");
-			return false;
-		}
-
-		return true;
-
-	}
+	
 
 	/** Getrs and Setrs ***/
 
@@ -504,7 +482,6 @@ public class Control {
 	public void setStartArrow(boolean startArrow) {
 		this.startArrow = startArrow;
 	}
-
 
 	public DragAndDropCanvas getCanvas() {
 		return canvas;
@@ -625,7 +602,5 @@ public class Control {
 	public void setLinkControl(LinkControl linkControl) {
 		this.linkControl = linkControl;
 	}
-	
-	
 
 }

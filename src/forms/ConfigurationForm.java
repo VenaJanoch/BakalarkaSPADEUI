@@ -119,11 +119,7 @@ public class ConfigurationForm extends BasicForm implements ISegmentForm {
 	@Override
 	public void setActionSubmitButton() {
 
-		if (getControl().getLists().getRoleList().isEmpty()) {
-			getAlerts().showNoText("Author");
-		} else if (getControl().getLists().getBranchList().isEmpty()) {
-			Alerts.showNoText("Branch");
-		} else {
+		if (getFormControl().configControl()){
 
 			closeForm();
 			close();
@@ -162,7 +158,7 @@ public class ConfigurationForm extends BasicForm implements ISegmentForm {
 		branchCB.getCheckModel().getCheckedItems().addListener(new ListChangeListener<String>() {
 
 			public void onChanged(ListChangeListener.Change<? extends String> c) {
-				branchIndex = branchCB.getCheckModel().getCheckedIndices();
+				branchIndex.addAll(branchCB.getCheckModel().getCheckedIndices());
 				branchArray = branchCB.getCheckModel().getCheckedItems();
 
 			}
@@ -239,7 +235,7 @@ public class ConfigurationForm extends BasicForm implements ISegmentForm {
 	ListChangeListener<String> cprListener = new ListChangeListener<String>() {
 
 		public void onChanged(ListChangeListener.Change<? extends String> c) {
-			cprIndex = cprCB.getCheckModel().getCheckedIndices();
+			cprIndex.addAll(cprCB.getCheckModel().getCheckedIndices());
 
 		}
 	};
