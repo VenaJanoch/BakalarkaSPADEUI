@@ -20,6 +20,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.WindowEvent;
 import services.Alerts;
 import services.Control;
+import services.DeleteControl;
 import services.SegmentType;
 
 public class IterationForm extends Date2DescBasicForm implements ISegmentForm {
@@ -30,8 +31,8 @@ public class IterationForm extends Date2DescBasicForm implements ISegmentForm {
 
 	private int chooseConfigID;
 
-	public IterationForm(CanvasItem item, Control control, int[] itemArray, Iteration iteration, int indexForm) {
-		super(item, control, itemArray, indexForm);
+	public IterationForm(CanvasItem item, Control control, int[] itemArray, Iteration iteration, int indexForm, DeleteControl deleteControl) {
+		super(item, control, itemArray, indexForm, deleteControl);
 		setWorkUnitArray(iteration.getWorkUnits());
 
 
@@ -105,6 +106,13 @@ public class IterationForm extends Date2DescBasicForm implements ISegmentForm {
 		getInfoPart().setHalignment(configLB, HPos.RIGHT);
 		getInfoPart().add(configCB, 1, 4);
 
+	}
+	
+	@Override
+	public void deleteItem(int iDs[]) {
+	
+		deleteControl.deleteIteration(iDs);
+		
 	}
 
 	/*** Getrs and Setrs ***/

@@ -45,8 +45,10 @@ import javafx.stage.WindowEvent;
 import services.Alerts;
 import services.Constans;
 import services.Control;
+import services.DeleteControl;
 import services.FillForms;
 import services.OrderCell;
+import tables.ClassTable;
 import tables.MilestoneTable;
 import tables.TagTable;
 
@@ -64,9 +66,9 @@ public class MilestoneForm extends Table2BasicForm implements ISegmentTableForm 
 	private ObservableList<String> criterionArray;
 	private ObservableList<Integer> criterionIndex;
 	
-	public MilestoneForm(Control control) {
+	public MilestoneForm(Control control, DeleteControl deleteControl) {
 
-		super(control);
+		super(control, deleteControl);
 		this.setTitle("Edit Milestone");
 		createForm();
 		getSubmitBT().setOnAction(event -> setActionSubmitButton());
@@ -85,7 +87,7 @@ public class MilestoneForm extends Table2BasicForm implements ISegmentTableForm 
 		getInternalPanel().setCenter(getTable());
 		getInternalPanel().setBottom(createControlPane());
 
-		criterionForm = new CriterionForm(getControl());
+		criterionForm = new CriterionForm(getControl(), deleteControl);
 
 		getMainPanel().setCenter(getInternalPanel());
 		getMainPanel().setRight(criterionForm.getMainPanel());
@@ -134,11 +136,17 @@ public class MilestoneForm extends Table2BasicForm implements ISegmentTableForm 
 		ObservableList<MilestoneTable> selection = FXCollections
 				.observableArrayList(tableTV.getSelectionModel().getSelectedItems());
 
+		ObservableList<MilestoneTable> list = null;
+
 		if (event.getCode() == KeyCode.DELETE) {
 			if (selection.size() == 0) {
 				Alerts.showNoItemsDeleteAlert();
 			} else {
-				Alerts.showDeleteItemAlert(tableTV, selection);
+				list = Alerts.showDeleteItemMilestoneAlert(getTableTV(), selection);
+				if (list != null) {
+					deleteControl.deleteMilestone(list);
+				}
+
 			}
 		}
 

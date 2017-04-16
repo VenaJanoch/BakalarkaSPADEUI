@@ -41,6 +41,7 @@ import javafx.stage.WindowEvent;
 import services.Alerts;
 import services.ClassSwitcher;
 import services.Control;
+import services.DeleteControl;
 import tables.MilestoneTable;
 import tables.RoleTable;
 
@@ -57,11 +58,13 @@ public class RoleForm extends Table2BasicForm implements ISegmentTableForm {
 	private ClassSwitcher classSwitcher;
 	private RoleTypeForm roleTForm;
 	private Label formName;
-
-	public RoleForm(Control control) {
-		super(control);
+	
+	private DeleteControl deleteControl;
+	public RoleForm(Control control, DeleteControl deleteControl) {
+		super(control, deleteControl);
 		this.control = control;
 		this.roleIndex = 0;
+		this.deleteControl = deleteControl;
 		createForm();
 		getSubmitBT().setOnAction(event -> setActionSubmitButton());
 
@@ -85,7 +88,7 @@ public class RoleForm extends Table2BasicForm implements ISegmentTableForm {
 		getInternalPanel().setCenter(getTable());
 		getInternalPanel().setBottom(createControlPane());
 
-		roleTForm = new RoleTypeForm(control);
+		roleTForm = new RoleTypeForm(control, deleteControl);
 		getMainPanel().setCenter(getInternalPanel());
 		getMainPanel().setRight(roleTForm.getMainPanel());
 
@@ -126,11 +129,17 @@ public class RoleForm extends Table2BasicForm implements ISegmentTableForm {
 		ObservableList<RoleTable> selection = FXCollections
 				.observableArrayList(tableTV.getSelectionModel().getSelectedItems());
 
+		ObservableList<RoleTable> list = null;
+
 		if (event.getCode() == KeyCode.DELETE) {
 			if (selection.size() == 0) {
 				Alerts.showNoItemsDeleteAlert();
 			} else {
-				Alerts.showDeleteItemAlert(tableTV, selection);
+				list = Alerts.showDeleteItemRoleAlert(getTableTV(), selection);
+				if (list != null) {
+					deleteControl.deleteRole(list);
+				}
+
 			}
 		}
 

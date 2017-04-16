@@ -143,6 +143,7 @@ public class CanvasItem extends AnchorPane {
 			}
 		} else if (t.getButton().equals(MouseButton.SECONDARY)) {
 			contextMenu.setItem(this);
+			
 			contextMenu.show(canvas, t.getScreenX(), t.getScreenY());
 		}
 

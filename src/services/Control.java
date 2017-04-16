@@ -13,9 +13,6 @@ import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 
-import org.xml.sax.SAXException;
-
-import SPADEPAC.Link;
 import SPADEPAC.ObjectFactory;
 import SPADEPAC.Project;
 import XML.ProcessGenerator;
@@ -57,6 +54,7 @@ public class Control {
 	private ClassSwitcher classSwitcher;
 	
 	private LinkControl linkControl;
+	private DeleteControl deleteControl;
 
 	private ProcessGenerator procesGener;
 	private IdentificatorCreater idCreater;
@@ -108,26 +106,26 @@ public class Control {
 		lists = new SegmentLists(this, project);
 
 		linkControl = new LinkControl(this, lists, objF);
-
+		deleteControl = new DeleteControl(this, lists, project);
 		idCreater = new IdentificatorCreater();
 
-		fillForms = new FillForms(this, lists, project, forms, objF, idCreater);
-		fillFormsXML = new FillFormsXML(this, lists, project, forms, fillCopy, idCreater, linkControl);
-		fillCopy = new FillCopyForms(this, getLists(), project, forms, objF, idCreater);
-		manipulation = new ManipulationControl(this, fillCopy, project, lists);
+		fillForms = new FillForms(this, lists, project, forms, objF, idCreater, deleteControl);
+		fillFormsXML = new FillFormsXML(this, lists, project, forms, fillCopy, idCreater, linkControl, deleteControl);
+		fillCopy = new FillCopyForms(this, getLists(), project, forms, objF, idCreater, deleteControl);
+		manipulation = new ManipulationControl(this, fillCopy, project, lists, deleteControl, forms);
 		contexMenu = new ItemContexMenu(this, manipulation, canvas);
 
-		milestoneForm = new MilestoneForm(this);
-		CPRForm = new ConfigPersonRelationForm(this);
-		roleForm = new RoleForm(this);
-		priorityForm = new PriorityForm(this);
-		severityForm = new SeverityForm(this);
-		relationForm = new RelationForm(this);
-		resolutionForm = new ResolutionForm(this);
-		statusForm = new StatusForm(this);
-		branchFrom = new BranchForm(this);
-		setConfTableForm(new ConfigurationTableForm(this));
-		typeForm = new TypeForm(this);
+		milestoneForm = new MilestoneForm(this, deleteControl);
+		CPRForm = new ConfigPersonRelationForm(this, deleteControl);
+		roleForm = new RoleForm(this, deleteControl);
+		priorityForm = new PriorityForm(this, deleteControl);
+		severityForm = new SeverityForm(this, deleteControl);
+		relationForm = new RelationForm(this, deleteControl);
+		resolutionForm = new ResolutionForm(this, deleteControl);
+		statusForm = new StatusForm(this, deleteControl);
+		branchFrom = new BranchForm(this, deleteControl);
+		setConfTableForm(new ConfigurationTableForm(this, deleteControl));
+		typeForm = new TypeForm(this, deleteControl);
 
 		
 
@@ -140,12 +138,32 @@ public class Control {
 		forms.get(0).show();
 	}
 
+	public void setCopyDisable(){
+		
+		contexMenu.getPasteItem().setDisable(false);
+		contexMenu.getCopyItem().setDisable(true);
+		contexMenu.getCutItem().setDisable(true);
+		contexMenu.getDeleteItem().setDisable(true);
+	
+	}
+	
+	public void setPasteDisable(){
+		
+		contexMenu.getPasteItem().setDisable(true);
+		contexMenu.getCopyItem().setDisable(false);
+		contexMenu.getCutItem().setDisable(false);
+		contexMenu.getDeleteItem().setDisable(false);
+	
+	}
+	
 	public void restartControl() {
 
 		procesGener = new ProcessGenerator();
 		objF = new ObjectFactory();
 
 		idCreater = new IdentificatorCreater();
+		
+		
 
 		forms.clear();
 
@@ -359,12 +377,15 @@ public class Control {
 			forms.add(0, form);
 
 			lists.restartLists(project);
+			
+			linkControl = new LinkControl(this, lists, objF);
+			deleteControl = new DeleteControl(this, lists, project);
 
-			fillForms = new FillForms(this, lists, project, forms, objF, idCreater);
-			fillCopy = new FillCopyForms(this, getLists(), project, forms, objF, idCreater);
-			manipulation.restart(fillCopy, project);
+			fillForms = new FillForms(this, lists, project, forms, objF, idCreater, deleteControl);
+			fillCopy = new FillCopyForms(this, getLists(), project, forms, objF, idCreater, deleteControl);
+			manipulation.restart(fillCopy, project, deleteControl, forms);
 
-			fillFormsXML = new FillFormsXML(this, lists, project, forms, fillCopy, idCreater, linkControl);
+			fillFormsXML = new FillFormsXML(this, lists, project, forms, fillCopy, idCreater, linkControl, deleteControl);
 			fillFormsXML.fillProjectFromXML(form);
 
 			parseProject();

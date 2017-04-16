@@ -1,5 +1,7 @@
 package services;
 
+import java.util.ArrayList;
+
 import javax.swing.event.ListSelectionEvent;
 
 import SPADEPAC.Activity;
@@ -23,17 +25,24 @@ public class ManipulationControl {
 	private FillCopyForms copyForms;
 	private Project project;
 	private SegmentLists lists;
+	private DeleteControl deleteControl;
+	private ArrayList<BasicForm> forms;
 
-	public ManipulationControl(Control control, FillCopyForms copyForms, Project project, SegmentLists lists) {
+	public ManipulationControl(Control control, FillCopyForms copyForms, Project project, SegmentLists lists,
+			DeleteControl deleteControl, ArrayList<BasicForm> forms) {
 		this.copyForms = copyForms;
 		this.control = control;
 		this.project = project;
 		this.lists = lists;
+		this.deleteControl = deleteControl;
+		this.forms = forms;
 	}
 
-	public void restart(FillCopyForms copyForms, Project project) {
+	public void restart(FillCopyForms copyForms, Project project, DeleteControl deleteControl, ArrayList<BasicForm> forms) {
 		this.copyForms = copyForms;
 		this.project = project;
+		this.deleteControl = deleteControl;
+		this.forms = forms;
 
 	}
 
@@ -47,14 +56,14 @@ public class ManipulationControl {
 
 	public void cutItem(CanvasItem item) {
 
-		itemIds = item.getIDs();
-		itemName = item.getNameText();
-		type = item.getType();
-
+		copyItem(item);
 		deleteItem(item);
 	}
 
 	public void deleteItem(CanvasItem item) {
+		item.setVisible(false);
+		int index = item.getIDs()[0];
+		forms.get(index).deleteItem(item.getIDs());
 
 	}
 
@@ -84,7 +93,7 @@ public class ManipulationControl {
 			return copyForms.createActivity(item, form, activity, IDs, itemIds);
 
 		case WorkUnit:
-			
+
 			int index = form.getWorkUnitArray().get(itemIds[2]);
 			WorkUnit unit = lists.getWorkUnitList().get(index);
 			return copyForms.createWorkUnit(item, form, unit, IDs, itemIds);

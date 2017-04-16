@@ -34,6 +34,8 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.WindowEvent;
 import services.Alerts;
 import services.Control;
+import services.DeleteControl;
+import tables.ClassTable;
 import tables.CriterionTable;
 import tables.MilestoneTable;
 
@@ -48,8 +50,8 @@ public class CriterionForm extends TableBasicForm implements ISegmentTableForm {
 	private Control control;
 	private GridPane controlPane;
 
-	public CriterionForm(Control control) {
-		super(control);
+	public CriterionForm(Control control, DeleteControl deleteControl) {
+		super(control, deleteControl);
 		this.control = control;
 		
 		getSubmitButton().setVisible(false);
@@ -101,13 +103,17 @@ public class CriterionForm extends TableBasicForm implements ISegmentTableForm {
 		ObservableList<CriterionTable> selection = FXCollections
 				.observableArrayList(tableTV.getSelectionModel().getSelectedItems());
 
+		ObservableList<CriterionTable> list = null;
+
 		if (event.getCode() == KeyCode.DELETE) {
 			if (selection.size() == 0) {
-
 				Alerts.showNoItemsDeleteAlert();
 			} else {
+				list = Alerts.showDeleteItemCriterionAlert(getTableTV(), selection);
+				if (list != null) {
+					deleteControl.deleteCriterion(list);
+				}
 
-				Alerts.showDeleteItemAlert(tableTV, selection);
 			}
 		}
 	}

@@ -10,6 +10,7 @@ import javafx.geometry.HPos;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import services.Control;
+import services.DeleteControl;
 
 /**
  * @author Václav
@@ -26,8 +27,8 @@ public class Date2DescBasicForm extends DateDescBasicForm {
 	 * @param itemArray
 	 * @param indexForm
 	 */
-	public Date2DescBasicForm(CanvasItem item, Control control, int[] itemArray, int indexForm) {
-		super(item, control, itemArray, indexForm);
+	public Date2DescBasicForm(CanvasItem item, Control control, int[] itemArray, int indexForm, DeleteControl deleteControl) {
+		super(item, control, itemArray, indexForm, deleteControl);
 		fillForm();
 	}
 
@@ -35,8 +36,8 @@ public class Date2DescBasicForm extends DateDescBasicForm {
 	 * @param item
 	 * @param control
 	 */
-	public Date2DescBasicForm(CanvasItem item, Control control) {
-		super(item, control);
+	public Date2DescBasicForm(CanvasItem item, Control control, DeleteControl deleteControl) {
+		super(item, control, deleteControl);
 		fillForm();
 	}
 

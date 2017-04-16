@@ -54,7 +54,7 @@ public class ItemContexMenu extends ContextMenu {
 	}
 
 	public void setActions(CanvasItem item){
-		System.out.println(control.getForms().toString());
+		
 		copyItem.setOnAction(event -> manipulation.copyItem(item));
 		deleteItem.setOnAction(event -> manipulation.cutItem(item));
 		cutItem.setOnAction(event -> manipulation.deleteItem(item));
@@ -69,6 +69,7 @@ public class ItemContexMenu extends ContextMenu {
 
 	public void setDgCanvas(DragAndDropCanvas dgCanvas) {
 		this.dgCanvas = dgCanvas;
+		
 		pasteItem.setOnAction(event -> manipulation.pasteItem(dgCanvas));
 	}
 
@@ -81,6 +82,40 @@ public class ItemContexMenu extends ContextMenu {
 		this.setActions(item);
 		
 	}
+
+	public MenuItem getCopyItem() {
+		return copyItem;
+	}
+
+	public void setCopyItem(MenuItem copyItem) {
+		this.copyItem = copyItem;
+	}
+
+	public MenuItem getPasteItem() {
+		return pasteItem;
+	}
+
+	public void setPasteItem(MenuItem pasteItem) {
+		this.pasteItem = pasteItem;
+	}
+
+	public MenuItem getDeleteItem() {
+		return deleteItem;
+	}
+
+	public void setDeleteItem(MenuItem deleteItem) {
+		this.deleteItem = deleteItem;
+	}
+
+	public MenuItem getCutItem() {
+		return cutItem;
+	}
+
+	public void setCutItem(MenuItem cutItem) {
+		this.cutItem = cutItem;
+	}
+	
+	
 	
 	
 	

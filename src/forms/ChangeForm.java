@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import SPADEPAC.Artifact;
 import SPADEPAC.Change;
+import SPADEPAC.Configuration;
 import abstractform.BasicForm;
 import abstractform.DescriptionBasicForm;
 import graphics.CanvasItem;
@@ -21,6 +22,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.WindowEvent;
 import services.Alerts;
 import services.Control;
+import services.DeleteControl;
 import services.SegmentType;
 
 public class ChangeForm extends DescriptionBasicForm implements ISegmentForm {
@@ -32,12 +34,14 @@ public class ChangeForm extends DescriptionBasicForm implements ISegmentForm {
 
 	private boolean newChange;
 	private Change change;
-
-	public ChangeForm(CanvasItem item, Control control, Change change) {
-		super(item, control);
+	private Configuration conf;
+	
+	public ChangeForm(CanvasItem item, Control control, Change change, Configuration conf, DeleteControl deleteControl) {
+		super(item, control, deleteControl);
 
 		this.newChange = true;
 		this.change = change;
+		this.conf = conf;
 		change.setExist(true);
 		setArtifactArray(new ArrayList());
 		getArtifactArray().add(change.getArtifactIndex());
@@ -87,6 +91,13 @@ public class ChangeForm extends DescriptionBasicForm implements ISegmentForm {
 		existRB.setSelected(true);
 		getInfoPart().add(existRB, 1, 3);
 
+	}
+	
+	@Override
+	public void deleteItem(int iDs[]) {
+	
+		deleteControl.deleteChange(conf,iDs);
+		
 	}
 
 	/** Getrs and Setrs ***/

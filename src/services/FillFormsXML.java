@@ -50,7 +50,6 @@ import tables.ConfigTable;
 import tables.CriterionTable;
 import tables.MilestoneTable;
 import tables.RoleTable;
-import tables.RoleTypeTable;
 import tables.TagTable;
 
 public class FillFormsXML {
@@ -63,9 +62,11 @@ public class FillFormsXML {
 	private SegmentLists lists;
 	private FillCopyForms copyForms;
 	private LinkControl linkControl;
-	
+	private DeleteControl deleteControl;
+
 	public FillFormsXML(Control control, SegmentLists lists, Project project, ArrayList<BasicForm> forms,
-			FillCopyForms copyForms, IdentificatorCreater idCreator, LinkControl linkControl) {
+			FillCopyForms copyForms, IdentificatorCreater idCreator, LinkControl linkControl,
+			DeleteControl deleteControl) {
 
 		this.control = control;
 		this.project = project;
@@ -74,7 +75,7 @@ public class FillFormsXML {
 		this.lists = lists;
 		idCreater = idCreator;
 		this.linkControl = linkControl;
-		System.out.println("Form3 XML " + forms.toString());
+		this.deleteControl = deleteControl;
 
 	}
 
@@ -174,7 +175,7 @@ public class FillFormsXML {
 
 		Phase phase = form.getPhaseArray().get(IDs[1]);
 
-		PhaseForm phaseForm = new PhaseForm(item, control, Constans.phaseDragTextIndexs, phase, index);
+		PhaseForm phaseForm = new PhaseForm(item, control, Constans.phaseDragTextIndexs, phase, index, deleteControl);
 
 		copyForms.copyFormPhase(phase, phaseForm);
 		index++;
@@ -209,7 +210,7 @@ public class FillFormsXML {
 		IDs[1] = idCreater.createIterationID();
 		Iteration iteration = form.getIterationArray().get(IDs[1]);
 		IterationForm iterationForm = new IterationForm(item, control, Constans.iterationDragTextIndexs, iteration,
-				index);
+				index, deleteControl);
 
 		iterationForm.getNameTF().setText(iteration.getName());
 		iterationForm.getDescriptionTF().setText(iteration.getDescription());
@@ -248,7 +249,8 @@ public class FillFormsXML {
 		IDs[0] = index;
 		IDs[1] = idCreater.createActivityID();
 		Activity activity = form.getActivityArray().get(IDs[1]);
-		ActivityForm activityForm = new ActivityForm(item, control, Constans.activityDragTextIndexs, activity, index);
+		ActivityForm activityForm = new ActivityForm(item, control, Constans.activityDragTextIndexs, activity, index,
+				deleteControl);
 
 		activityForm.getNameTF().setText(activity.getName());
 		activityForm.getDescriptionTF().setText(activity.getDescription());
@@ -286,7 +288,7 @@ public class FillFormsXML {
 		int tmpIndex = form.getWorkUnitArray().get(IDs[2]);
 
 		WorkUnit unit = lists.getWorkUnitList().get(tmpIndex);
-		WorkUnitForm workUnitForm = new WorkUnitForm(item, control, unit);
+		WorkUnitForm workUnitForm = new WorkUnitForm(item, control, unit, deleteControl);
 
 		workUnitForm.getNameTF().setText(unit.getName());
 		workUnitForm.getDescriptionTF().setText(unit.getDescription());
@@ -345,7 +347,7 @@ public class FillFormsXML {
 
 		Configuration conf = lists.getConfigList().get(IDs[1]);
 		ConfigurationForm configForm = new ConfigurationForm(item, control, Constans.configurationDragTextIndexs, conf,
-				index);
+				index, deleteControl);
 
 		configForm.getNameTF().setText(conf.getName());
 		configForm.setName(conf.getName());
@@ -462,7 +464,8 @@ public class FillFormsXML {
 
 		int index1 = form.getChangeArray().get(IDs[2]);
 		Change change = control.getLists().getChangeList().get(index1);
-		ChangeForm changeForm = new ChangeForm(item, control, change);
+		Configuration conf = form.getConfigArray();
+		ChangeForm changeForm = new ChangeForm(item, control, change, conf, deleteControl);
 
 		changeForm.setName(change.getName());
 		changeForm.getNameTF().setText(change.getName());
@@ -505,7 +508,7 @@ public class FillFormsXML {
 
 		int index1 = form.getArtifactArray().get(IDs[2]);
 		Artifact artifact = control.getLists().getArtifactList().get(index1);
-		ArtifactForm artifactForm = new ArtifactForm(item, control, artifact);
+		ArtifactForm artifactForm = new ArtifactForm(item, control, artifact, deleteControl, form.getConfigArray());
 
 		artifactForm.setName(artifact.getName());
 		artifactForm.getDescriptionTF().setText(artifact.getDescriptoin());

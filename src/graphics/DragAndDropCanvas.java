@@ -108,6 +108,7 @@ public class DragAndDropCanvas extends ScrollPane {
 
 		if (t.getButton().equals(MouseButton.SECONDARY)) {
 			contexMenu.setDgCanvas(this);
+			
 			contexMenu.show(canvas, t.getScreenX(), t.getScreenY());
 		}
 

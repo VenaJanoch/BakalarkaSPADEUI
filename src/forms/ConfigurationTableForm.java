@@ -30,6 +30,7 @@ import javafx.util.Callback;
 import services.Alerts;
 import services.Constans;
 import services.Control;
+import services.DeleteControl;
 import services.SegmentType;
 import tables.ConfigTable;
 import tables.MilestoneTable;
@@ -38,11 +39,11 @@ public class ConfigurationTableForm extends Table2BasicForm implements ISegmentT
 
 	private TableView<ConfigTable> tableTV;
 	private BasicForm form;
-	
+
 	private Label formName;
-	
-	public ConfigurationTableForm(Control control) {
-		super(control);
+
+	public ConfigurationTableForm(Control control, DeleteControl deleteControl) {
+		super(control, deleteControl);
 
 		createForm();
 		getSubmitBT().setOnAction(event -> setActionSubmitButton());
@@ -52,14 +53,14 @@ public class ConfigurationTableForm extends Table2BasicForm implements ISegmentT
 	public void createForm() {
 		formName = new Label("Configuration form");
 		formName.setFont(Font.font(25));
-		
+
 		getInternalPanel().setCenter(getTable());
 		getInternalPanel().setLeft(new SplitPane());
-		
+
 		getMainPanel().setRight(getInternalPanel());
 		getMainPanel().setTop(formName);
 		getMainPanel().setAlignment(formName, Pos.TOP_CENTER);
-		
+
 		createConfigItem();
 		getNameTF().setVisible(false);
 		getNameLB().setVisible(false);
@@ -69,7 +70,7 @@ public class ConfigurationTableForm extends Table2BasicForm implements ISegmentT
 	public BasicForm createConfigItem() {
 
 		CanvasItem item = new CanvasItem(SegmentType.Configuration, "Name", getControl(),
-				getControl().getForms().get(0), 0, 0,0, getControl().getContexMenu(), getControl().getLinkControl());
+				getControl().getForms().get(0), 0, 0, 0, getControl().getContexMenu(), getControl().getLinkControl());
 
 		form = getControl().getForms().get(item.getIDs()[0]);
 		form.getSubmitButton().setText("Add");
@@ -98,7 +99,7 @@ public class ConfigurationTableForm extends Table2BasicForm implements ISegmentT
 		tableTV.getColumns().addAll(nameColumn, releaseColumn);
 
 		tableTV.setEditable(false);
-					
+
 		tableTV.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
 		tableTV.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
@@ -109,19 +110,17 @@ public class ConfigurationTableForm extends Table2BasicForm implements ISegmentT
 
 		return tableTV;
 	}
-	
+
 	EventHandler<MouseEvent> OnMousePressedEventHandler = new EventHandler<MouseEvent>() {
 
 		@Override
 		public void handle(MouseEvent t) {
-			
-				ConfigTable config = tableTV.getSelectionModel().getSelectedItems().get(0);
-				int id = config.getId().intValue();
+
+			ConfigTable config = tableTV.getSelectionModel().getSelectedItems().get(0);
+			int id = config.getId().intValue();
 			getMainPanel().setCenter(getControl().getForms().get(id).getMainPanel());
 		}
 	};
-
-	
 
 	@Override
 	public void deleteSelected(KeyEvent event) {
@@ -129,11 +128,17 @@ public class ConfigurationTableForm extends Table2BasicForm implements ISegmentT
 		ObservableList<ConfigTable> selection = FXCollections
 				.observableArrayList(tableTV.getSelectionModel().getSelectedItems());
 
+		ObservableList<ConfigTable> list = null;
+
 		if (event.getCode() == KeyCode.DELETE) {
 			if (selection.size() == 0) {
 				Alerts.showNoItemsDeleteAlert();
 			} else {
-				Alerts.showDeleteItemAlert(tableTV, selection);
+				list = Alerts.showDeleteItemConfigAlert(getTableTV(), selection);
+				if (list != null) {
+					deleteControl.deleteConfig(list);
+				}
+
 			}
 		}
 
@@ -172,7 +177,5 @@ public class ConfigurationTableForm extends Table2BasicForm implements ISegmentT
 	public void setForm(BasicForm form) {
 		this.form = form;
 	}
-	
-	
 
 }

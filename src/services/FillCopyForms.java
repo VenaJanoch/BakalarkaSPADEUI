@@ -52,17 +52,17 @@ public class FillCopyForms {
 	private ObjectFactory objF;
 	private SegmentLists lists;
 	private IdentificatorCreater idCreater;
+	private DeleteControl deleteControl;
 
 	public FillCopyForms(Control control, SegmentLists lists, Project project, ArrayList<BasicForm> forms,
-			ObjectFactory objFac, IdentificatorCreater idCreator) {
+			ObjectFactory objFac, IdentificatorCreater idCreator, DeleteControl deleteControl) {
 
 		this.control = control;
 		this.forms = forms;
 		this.lists = lists;
 		this.objF = objFac;
-		System.out.println("Form5 copy" + forms.toString());
 		this.idCreater = idCreator;
-
+		this.deleteControl = deleteControl;
 	}
 
 	public Phase fillPhase(BasicForm form, int[] newIDs, Phase copyPhase, int[] oldIDs) {
@@ -89,7 +89,7 @@ public class FillCopyForms {
 		IDs[1] = idCreater.createPhaseID();
 
 		Phase phase = fillPhase(form, item.getIDs(), oldPhase, oldIDs);
-		PhaseForm phaseForm = new PhaseForm(item, control, Constans.phaseDragTextIndexs, phase, index);
+		PhaseForm phaseForm = new PhaseForm(item, control, Constans.phaseDragTextIndexs, phase, index, deleteControl);
 		
 		forms.add(index, copyFormPhase(phase, phaseForm));
 
@@ -122,7 +122,7 @@ public class FillCopyForms {
 		IDs[1] = idCreater.createActivityID();
 
 		Activity activity = fillActivity(form, item.getIDs(), oldActivity, oldIDs);
-		ActivityForm activityForm = new ActivityForm(item, control, Constans.phaseDragTextIndexs, activity, index);
+		ActivityForm activityForm = new ActivityForm(item, control, Constans.phaseDragTextIndexs, activity, index, deleteControl);
 
 		forms.add(index, copyFormActivity(activity, activityForm));
 		index++;
@@ -156,7 +156,7 @@ public class FillCopyForms {
 
 		Iteration iteration = fillIteration(form, item.getIDs(), oldIteration, oldIDs);
 		IterationForm iterationForm = new IterationForm(item, control, Constans.iterationDragTextIndexs, iteration,
-				index);
+				index, deleteControl);
 		forms.add(index, copyFormIteration(iteration, iterationForm));
 		index++;
 		IdentificatorCreater.setIndex(index);
@@ -195,7 +195,7 @@ public class FillCopyForms {
 		int index = IdentificatorCreater.getIndex();
 		
 		WorkUnit unit = lists.getWorkUnitList().get(fillWorkUnit(oldIDs[1]));
-		WorkUnitForm unitForm = new WorkUnitForm(item, control, unit);
+		WorkUnitForm unitForm = new WorkUnitForm(item, control, unit, deleteControl);
 
 		forms.add(index, copyFormWorkUnit(unit, unitForm));
 		IDs[0] = index;
@@ -226,8 +226,8 @@ public class FillCopyForms {
 	public int[] createChange(CanvasItem item, BasicForm form, Change oldChange, int[] IDs, int[] oldIDs) {
 		int index = IdentificatorCreater.getIndex();
 		Change change = fillChange(oldChange);
-
-		ChangeForm changeForm = new ChangeForm(item, control, change);
+		Configuration conf = form.getConfigArray();
+		ChangeForm changeForm = new ChangeForm(item, control, change, conf, deleteControl);
 
 		forms.add(index, copyFormChagne(oldChange, changeForm));
 
@@ -262,7 +262,7 @@ public class FillCopyForms {
 	public int[] createArtifact(CanvasItem item, BasicForm form, Artifact oldArtifact, int[] IDs, int[] oldIDs) {
 		int index = IdentificatorCreater.getIndex();
 		Artifact artifact = fillArtifact(oldArtifact);
-		ArtifactForm artifactForm = new ArtifactForm(item, control, artifact);
+		ArtifactForm artifactForm = new ArtifactForm(item, control, artifact, deleteControl, form.getConfigArray());
 		forms.add(index, copyFormArtifact(artifact, artifactForm));
 		IDs[0] = index;
 		IDs[1] = idCreater.createArtifactID();

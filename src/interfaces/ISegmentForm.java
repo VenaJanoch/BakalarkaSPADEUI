@@ -9,6 +9,8 @@ public interface ISegmentForm {
 	
 	public void createForm();
 	
+	public void deleteItem(int[] IDs);
+	
 	
 	
 }

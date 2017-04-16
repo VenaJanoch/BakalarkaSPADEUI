@@ -1,6 +1,5 @@
 package forms;
 
-
 import SPADEPAC.WorkUnitPriorityClass;
 import SPADEPAC.WorkUnitPrioritySuperClass;
 import abstractform.TableClassBasicForm;
@@ -17,7 +16,9 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
 import services.Alerts;
 import services.Control;
+import services.DeleteControl;
 import tables.ClassTable;
+import java.util.List;
 
 public class PriorityForm extends TableClassBasicForm implements ISegmentTableForm {
 
@@ -29,15 +30,14 @@ public class PriorityForm extends TableClassBasicForm implements ISegmentTableFo
 	private Label classTypeLB;
 	private Label superClassTypeLB;
 
-
-	public PriorityForm(Control control) {
-		super(control);
+	public PriorityForm(Control control, DeleteControl deleteControl) {
+		super(control, deleteControl);
 
 		this.control = control;
 		this.setTitle("Edit Priority");
 		createForm();
-		//getSubmitButton().setVisible();
-		 getSubmitButton().setOnAction(event -> setActionSubmitButton());
+		// getSubmitButton().setVisible();
+		getSubmitButton().setOnAction(event -> setActionSubmitButton());
 
 	}
 
@@ -52,10 +52,8 @@ public class PriorityForm extends TableClassBasicForm implements ISegmentTableFo
 	@Override
 	public Node getTable() {
 
-		
 		getTableTV().setOnKeyReleased(event -> deleteSelected(event));
 
-		
 		return getTableTV();
 	}
 
@@ -63,12 +61,18 @@ public class PriorityForm extends TableClassBasicForm implements ISegmentTableFo
 	public void deleteSelected(KeyEvent event) {
 		ObservableList<ClassTable> selection = FXCollections
 				.observableArrayList(getTableTV().getSelectionModel().getSelectedItems());
+		
+		ObservableList<ClassTable> list = null;
 
 		if (event.getCode() == KeyCode.DELETE) {
 			if (selection.size() == 0) {
 				Alerts.showNoItemsDeleteAlert();
 			} else {
-				Alerts.showDeleteItemAlert(getTableTV(), selection);
+				list = Alerts.showDeleteItemAlert(getTableTV(), selection);
+				if (list != null) {
+					deleteControl.deletePriority(list);
+				}
+
 			}
 		}
 
@@ -104,7 +108,7 @@ public class PriorityForm extends TableClassBasicForm implements ISegmentTableFo
 		public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
 
 			setClassIndex(newValue.intValue());
-			
+
 			setSuperIndex(getSwitcher().priorityClassToSupperClass(getClassIndex()));
 			superClassTypeCB.setValue(WorkUnitPrioritySuperClass.values()[getSuperIndex()]);
 		}

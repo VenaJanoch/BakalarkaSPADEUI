@@ -1,5 +1,7 @@
 package forms;
 
+import java.util.List;
+
 import SPADEPAC.WorkUnitPriorityClass;
 import SPADEPAC.WorkUnitPrioritySuperClass;
 import SPADEPAC.WorkUnitStatusClass;
@@ -20,6 +22,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
 import services.Alerts;
 import services.Control;
+import services.DeleteControl;
 import tables.ClassTable;
 
 public class StatusForm extends TableClassBasicForm implements ISegmentTableForm {
@@ -33,8 +36,8 @@ public class StatusForm extends TableClassBasicForm implements ISegmentTableForm
 	private Label superClassTypeLB;
 
 	
-	public StatusForm(Control control) {
-		super(control);
+	public StatusForm(Control control, DeleteControl deleteControl) {
+		super(control, deleteControl);
 
 		this.control = control;
 		this.setTitle("Edit Status");
@@ -65,11 +68,17 @@ public class StatusForm extends TableClassBasicForm implements ISegmentTableForm
 		ObservableList<ClassTable> selection = FXCollections
 				.observableArrayList(getTableTV().getSelectionModel().getSelectedItems());
 
+		ObservableList<ClassTable> list = null;
+
 		if (event.getCode() == KeyCode.DELETE) {
 			if (selection.size() == 0) {
 				Alerts.showNoItemsDeleteAlert();
 			} else {
-				Alerts.showDeleteItemAlert(getTableTV(), selection);
+				list = Alerts.showDeleteItemAlert(getTableTV(), selection);
+				if (list != null) {
+					deleteControl.deleteStatus(list);
+				}
+
 			}
 		}
 

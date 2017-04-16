@@ -14,13 +14,14 @@ import javafx.scene.control.TextField;
 import javafx.stage.WindowEvent;
 import services.Alerts;
 import services.Control;
+import services.DeleteControl;
 
 public class ActivityForm extends DescriptionBasicForm implements ISegmentForm {
 
 
-	public ActivityForm(CanvasItem item, Control control, int[] itemArray, Activity activity, int indexForm) {
+	public ActivityForm(CanvasItem item, Control control, int[] itemArray, Activity activity, int indexForm, DeleteControl deleteControl) {
 
-		super(item, control, itemArray, indexForm);
+		super(item, control, itemArray, indexForm, deleteControl);
 		
 		setWorkUnitArray(activity.getWorkUnits());
 		
@@ -66,6 +67,13 @@ public class ActivityForm extends DescriptionBasicForm implements ISegmentForm {
 
 	private void fillInfoPart() {
 
+	}
+
+	@Override
+	public void deleteItem(int iDs[]) {
+		System.out.println("Activity delete");
+		deleteControl.deleteActivity(iDs);
+		
 	}
 
 }

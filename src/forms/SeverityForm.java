@@ -1,6 +1,8 @@
 package forms;
 
 
+import java.util.List;
+
 import SPADEPAC.WorkUnitPriorityClass;
 import SPADEPAC.WorkUnitPrioritySuperClass;
 import SPADEPAC.WorkUnitSeverityClass;
@@ -19,6 +21,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
 import services.Alerts;
 import services.Control;
+import services.DeleteControl;
 import tables.ClassTable;
 
 public class SeverityForm extends TableClassBasicForm implements ISegmentTableForm {
@@ -32,8 +35,8 @@ public class SeverityForm extends TableClassBasicForm implements ISegmentTableFo
 	private Label superClassTypeLB;
 
 	
-	public SeverityForm(Control control) {
-		super(control);
+	public SeverityForm(Control control, DeleteControl deleteControl) {
+		super(control, deleteControl);
 
 		this.control = control;
 		this.setTitle("Edit Severities");
@@ -67,11 +70,17 @@ public class SeverityForm extends TableClassBasicForm implements ISegmentTableFo
 		ObservableList<ClassTable> selection = FXCollections
 				.observableArrayList(getTableTV().getSelectionModel().getSelectedItems());
 
+		ObservableList<ClassTable> list = null;
+
 		if (event.getCode() == KeyCode.DELETE) {
 			if (selection.size() == 0) {
 				Alerts.showNoItemsDeleteAlert();
 			} else {
-				Alerts.showDeleteItemAlert(getTableTV(), selection);
+				list = Alerts.showDeleteItemAlert(getTableTV(), selection);
+				if (list != null) {
+					deleteControl.deleteSeverity(list);
+				}
+
 			}
 		}
 

@@ -30,6 +30,7 @@ import javafx.scene.shape.Line;
 import javafx.stage.WindowEvent;
 import services.Alerts;
 import services.Control;
+import services.DeleteControl;
 import services.SegmentType;
 
 public class ConfigurationForm extends BasicForm implements ISegmentForm {
@@ -64,10 +65,11 @@ public class ConfigurationForm extends BasicForm implements ISegmentForm {
 	private Configuration configuration;
 	private TagForm tagForm;
 
-	public ConfigurationForm(CanvasItem item, Control control, int[] itemArray, Configuration conf, int indexForm) {
-		super(item, control, itemArray, indexForm);
+	public ConfigurationForm(CanvasItem item, Control control, int[] itemArray, Configuration conf, int indexForm, DeleteControl deleteControl) {
+		super(item, control, itemArray, indexForm, deleteControl);
 		this.configuration = conf;
-		this.tagForm = new TagForm(conf, control);
+		setConfigArray(conf);
+		this.tagForm = new TagForm(conf, control, deleteControl);
 		isNew = true;
 		isRelease = true;
 
@@ -241,6 +243,8 @@ public class ConfigurationForm extends BasicForm implements ISegmentForm {
 
 		}
 	};
+	
+	
 
 	/*** Getrs and Setrs ***/
 

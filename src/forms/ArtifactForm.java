@@ -4,6 +4,7 @@ import java.time.LocalDate;
 
 import SPADEPAC.Artifact;
 import SPADEPAC.ArtifactClass;
+import SPADEPAC.Configuration;
 import SPADEPAC.WorkUnitPriorityClass;
 import abstractform.BasicForm;
 import abstractform.DateDescBasicForm;
@@ -24,6 +25,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.WindowEvent;
 import services.Alerts;
 import services.Control;
+import services.DeleteControl;
 import services.SegmentType;
 
 public class ArtifactForm extends DateDescBasicForm implements ISegmentForm {
@@ -43,9 +45,10 @@ public class ArtifactForm extends DateDescBasicForm implements ISegmentForm {
 
 	boolean isNew;
 
-	public ArtifactForm(CanvasItem item, Control control, Artifact artifact) {
-		super(item, control);
+	public ArtifactForm(CanvasItem item, Control control, Artifact artifact, DeleteControl deleteControl, Configuration conf) {
+		super(item, control, deleteControl);
 		this.artifact = artifact;
+		this.setConfigArray(conf);
 		artifact.setExist(true);
 		isNew = true;
 		this.setOnCloseRequest(new EventHandler<WindowEvent>() {
@@ -125,7 +128,7 @@ public class ArtifactForm extends DateDescBasicForm implements ISegmentForm {
 		@Override
 		public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
 
-			System.out.println(newValue.intValue());
+			
 			typeIndex = newValue.intValue();
 
 		}
@@ -142,6 +145,13 @@ public class ArtifactForm extends DateDescBasicForm implements ISegmentForm {
 		getInfoPart().add(mineTypeCB, 1, 4);
 		getInfoPart().add(existRB, 1, 5);
 
+	}
+	
+	@Override
+	public void deleteItem(int iDs[]) {
+	
+		deleteControl.deleteArtifact(getConfigArray(), iDs);
+		
 	}
 
 	/** Getrs and Setrs ***/

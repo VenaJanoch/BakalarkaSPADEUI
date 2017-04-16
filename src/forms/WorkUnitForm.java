@@ -29,6 +29,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.WindowEvent;
 import services.Alerts;
 import services.Control;
+import services.DeleteControl;
 import services.SegmentType;
 
 public class WorkUnitForm extends DescriptionBasicForm implements ISegmentForm {
@@ -63,8 +64,8 @@ public class WorkUnitForm extends DescriptionBasicForm implements ISegmentForm {
 
 	private WorkUnit unit;
 
-	public WorkUnitForm(CanvasItem item, Control control, WorkUnit unit) {
-		super(item, control);
+	public WorkUnitForm(CanvasItem item, Control control, WorkUnit unit, DeleteControl deleteControl) {
+		super(item, control, deleteControl);
 		this.unit = unit;
 
 		setRoleArray(new ArrayList<>());
@@ -95,7 +96,7 @@ public class WorkUnitForm extends DescriptionBasicForm implements ISegmentForm {
 
 		getCanvasItem().setNameText(actName);
 		setName(actName);
-		getControl().getFillForms().fillWorkUnit(form, IDs[2], getDescriptionTF().getText(), actName, assigneIndex,
+		getControl().getFillForms().fillWorkUnit(form, IDs[1], getDescriptionTF().getText(), actName, assigneIndex,
 				authorIndex, category, x, y, priorityIndex, severityIndex, typeIndex, resolutionIndex, statusIndex,
 				Double.parseDouble(estimatedTimeTF.getText()));
 
@@ -270,6 +271,13 @@ public class WorkUnitForm extends DescriptionBasicForm implements ISegmentForm {
 
 	}
 
+	
+	@Override
+	public void deleteItem(int iDs[]) {
+	
+		deleteControl.deleteWorkUnit(iDs);
+		
+	}
 	/**** Gets and Setrs ***/
 
 	public TextField getEstimatedTimeTF() {

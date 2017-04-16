@@ -37,6 +37,7 @@ import javafx.stage.Stage;
 import services.Alerts;
 import services.Constans;
 import services.Control;
+import services.DeleteControl;
 import services.FormControl;
 import services.IdentificatorCreater;
 
@@ -62,7 +63,7 @@ public abstract class BasicForm extends Stage {
 	private BorderPane dragBox;
 	
 	private FormControl formControl;
-
+	protected DeleteControl deleteControl;
 	private List<Phase> phaseArray;
 	private List<Iteration> iterationArray;
 	private List<Activity> activityArray;
@@ -80,10 +81,11 @@ public abstract class BasicForm extends Stage {
 	private IdentificatorCreater idCreater;
 	private String type;
 
-	public BasicForm(CanvasItem item, Control control, int[] itemArray, int indexForm) {
+	public BasicForm(CanvasItem item, Control control, int[] itemArray, int indexForm, DeleteControl deleteControl) {
 
 		super();
 		type = item.getType().name();
+		this.deleteControl = deleteControl;
 		this.control = control;
 		this.item = item;
 		this.itemArray = itemArray;
@@ -100,10 +102,11 @@ public abstract class BasicForm extends Stage {
 
 	}
 
-	public BasicForm(CanvasItem item, Control control) {
+	public BasicForm(CanvasItem item, Control control, DeleteControl deleteControl) {
 
 		super();
 		type = item.getType().name();
+		this.deleteControl = deleteControl;
 		this.control = control;
 		this.item = item;
 		this.alerts = new Alerts();
@@ -177,6 +180,11 @@ public abstract class BasicForm extends Stage {
 		mainPanel.setBottom(buttonBox);
 
 		return mainPanel;
+	}
+	
+	public void deleteItem(int[] i) {
+		// TODO Auto-generated method stub
+		System.out.println("BasicForm");
 	}
 
 	@Override
@@ -416,6 +424,8 @@ public abstract class BasicForm extends Stage {
 	public void setFormControl(FormControl formControl) {
 		this.formControl = formControl;
 	}
+
+	
 	
 	
 

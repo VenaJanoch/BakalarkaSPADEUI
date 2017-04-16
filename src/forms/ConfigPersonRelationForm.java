@@ -30,7 +30,9 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.WindowEvent;
 import services.Alerts;
 import services.Control;
+import services.DeleteControl;
 import tables.CPRTable;
+import tables.ClassTable;
 import tables.CriterionTable;
 import tables.MilestoneTable;
 
@@ -47,8 +49,8 @@ public class ConfigPersonRelationForm extends TableBasicForm implements ISegment
 	private int roleIndex;
 	private int configIndex;
 
-	public ConfigPersonRelationForm(Control control) {
-		super(control);
+	public ConfigPersonRelationForm(Control control, DeleteControl deleteControl) {
+		super(control, deleteControl);
 
 		createForm();
 		getSubmitButton().setOnAction(event -> setActionSubmitButton());
@@ -62,12 +64,12 @@ public class ConfigPersonRelationForm extends TableBasicForm implements ISegment
 
 	@Override
 	public void createForm() {
-		
+
 		getFormName().setText("CPR form");
 
 		getMainPanel().setCenter(getTable());
 		getMainPanel().setBottom(createControlPane());
-		
+
 	}
 
 	@Override
@@ -81,7 +83,6 @@ public class ConfigPersonRelationForm extends TableBasicForm implements ISegment
 		nameColumn.setMinWidth(150);
 		nameColumn.setCellFactory(TextFieldTableCell.forTableColumn());
 
-		
 		roleColumn.setCellValueFactory(new PropertyValueFactory("role"));
 		roleColumn.setMinWidth(150);
 		roleColumn.setCellFactory(TextFieldTableCell.forTableColumn());
@@ -106,11 +107,17 @@ public class ConfigPersonRelationForm extends TableBasicForm implements ISegment
 		ObservableList<CPRTable> selection = FXCollections
 				.observableArrayList(tableTV.getSelectionModel().getSelectedItems());
 
+		ObservableList<CPRTable> list = null;
+
 		if (event.getCode() == KeyCode.DELETE) {
 			if (selection.size() == 0) {
 				Alerts.showNoItemsDeleteAlert();
 			} else {
-				Alerts.showDeleteItemAlert(tableTV, selection);
+				list = Alerts.showDeleteItemCPRAlert(getTableTV(), selection);
+				if (list != null) {
+					deleteControl.deleteCPR(list);
+				}
+
 			}
 		}
 
@@ -119,14 +126,11 @@ public class ConfigPersonRelationForm extends TableBasicForm implements ISegment
 	@Override
 	public GridPane createControlPane() {
 
-		
-		
 		personRoleLB = new Label("Person-Role");
 		personCB = new ComboBox<String>(getControl().getLists().getRoleObservable());
 		personCB.setVisibleRowCount(5);
 		personCB.getSelectionModel().selectedIndexProperty().addListener(roleListener);
 
-		
 		getControlPane().add(personRoleLB, 4, 0);
 		getControlPane().add(personCB, 5, 0);
 
@@ -181,8 +185,5 @@ public class ConfigPersonRelationForm extends TableBasicForm implements ISegment
 	public void setTableTV(TableView<CPRTable> tableTV) {
 		this.tableTV = tableTV;
 	}
-	
-	
-	
 
 }

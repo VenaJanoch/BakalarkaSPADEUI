@@ -38,8 +38,7 @@ public class MenuPanel extends VBox {
 		MenuBar menuMB = new MenuBar();
 
 		Menu fileMenu = new Menu("File");
-		Menu setMenu = new Menu("Settings");
-
+		
 		MenuItem newItem = new MenuItem("New");
 		MenuItem openItem = new MenuItem("Open");
 		MenuItem saveItem = new MenuItem("Save");
@@ -55,7 +54,7 @@ public class MenuPanel extends VBox {
 		openItem.setOnAction(event -> openFile());
 		newItem.setOnAction(event -> control.restartControl());
 		validationItem.setOnAction(event -> control.validate());
-		menuMB.getMenus().addAll(fileMenu, setMenu);
+		menuMB.getMenus().addAll(fileMenu);
 
 		this.getChildren().add(menuMB);
 	}

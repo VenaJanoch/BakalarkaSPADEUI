@@ -33,8 +33,10 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.WindowEvent;
 import services.Alerts;
 import services.Control;
+import services.DeleteControl;
 import services.OrderCell;
 import tables.BranchTable;
+import tables.ClassTable;
 import tables.TagTable;
 
 public class BranchForm extends TableBasicForm implements ISegmentTableForm {
@@ -54,8 +56,8 @@ public class BranchForm extends TableBasicForm implements ISegmentTableForm {
 
 	private boolean newBranch;
 
-	public BranchForm(Control control) {
-		super(control);
+	public BranchForm(Control control, DeleteControl deleteControl) {
+		super(control, deleteControl);
 
 		getSubmitButton().setOnAction(event -> setActionSubmitButton());
 		createForm();
@@ -108,12 +110,18 @@ public class BranchForm extends TableBasicForm implements ISegmentTableForm {
 	public void deleteSelected(KeyEvent event) {
 		ObservableList<BranchTable> selection = FXCollections
 				.observableArrayList(tableTV.getSelectionModel().getSelectedItems());
+		
+		ObservableList<BranchTable> list = null;
 
 		if (event.getCode() == KeyCode.DELETE) {
 			if (selection.size() == 0) {
 				Alerts.showNoItemsDeleteAlert();
 			} else {
-				Alerts.showDeleteItemAlert(tableTV, selection);
+				list = Alerts.showDeleteItemBranchAlert(getTableTV(), selection);
+				if (list != null) {
+					deleteControl.deleteBranch(list);
+				}
+
 			}
 		}
 

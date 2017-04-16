@@ -19,8 +19,6 @@ public class IdentificatorCreater {
 	private int tagID = -1;
 	
 	private static int index;
-	
-	
 
 	public int createPhaseID() {
 

@@ -1,5 +1,7 @@
 package tables;
 
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
@@ -14,6 +16,7 @@ public class ClassTable {
 		this.name = new SimpleStringProperty(name);
 		this.classType = new SimpleStringProperty(classType);
 		this.superType = new SimpleStringProperty(superType);
+		
 	}
 	
 	

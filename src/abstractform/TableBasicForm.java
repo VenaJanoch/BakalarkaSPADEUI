@@ -13,6 +13,7 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import services.Constans;
 import services.Control;
+import services.DeleteControl;
 
 public class TableBasicForm  extends Stage{
 
@@ -25,10 +26,11 @@ public class TableBasicForm  extends Stage{
 	private Label nameLB;
 	private TextField nameTF;
 	private Label formName;
-
-	public TableBasicForm(Control control) {
+	protected DeleteControl deleteControl;
+	public TableBasicForm(Control control, DeleteControl deleteControl) {
 		super();
 		this.control = control;
+		this.deleteControl = deleteControl;
 		this.setScene(creatSceneProject());
 
 	}

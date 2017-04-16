@@ -28,6 +28,7 @@ import javafx.scene.layout.HBox;
 import javafx.stage.WindowEvent;
 import services.Alerts;
 import services.Control;
+import services.DeleteControl;
 import services.FormControl;
 import services.SegmentType;
 
@@ -44,8 +45,9 @@ public class PhaseForm extends DateDescBasicForm implements ISegmentForm {
 	private int configIndex;
 	private Phase phase;
 
-	public PhaseForm(CanvasItem item, Control control, int[] itemArray, Phase phase, int indexForm) {
-		super(item, control, itemArray, indexForm);
+	public PhaseForm(CanvasItem item, Control control, int[] itemArray, Phase phase, int indexForm,
+			DeleteControl deleteControl) {
+		super(item, control, itemArray, indexForm, deleteControl);
 		this.phase = phase;
 
 		setWorkUnitArray(phase.getWorkUnits());
@@ -76,17 +78,16 @@ public class PhaseForm extends DateDescBasicForm implements ISegmentForm {
 		getCanvasItem().setNameText(actName);
 		getCanvasItem().getFillForms().fillPhase(form, IDs[1], desc, actName, endDateL, configIndex, milestoneIndex, x,
 				y);
-		
 
 	}
 
 	@Override
 	public void setActionSubmitButton() {
-		
+
 		if (getFormControl().phaseControl()) {
 			closeForm();
 			close();
-		} 
+		}
 	}
 
 	@Override
@@ -132,6 +133,13 @@ public class PhaseForm extends DateDescBasicForm implements ISegmentForm {
 		getInfoPart().add(milestoneLB, 0, 4);
 		getInfoPart().setHalignment(milestoneLB, HPos.RIGHT);
 		getInfoPart().add(milestoneCB, 1, 4);
+
+	}
+
+	@Override
+	public void deleteItem(int iDs[]) {
+
+		deleteControl.deletePhase(iDs);
 
 	}
 

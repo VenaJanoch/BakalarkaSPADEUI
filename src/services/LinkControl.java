@@ -38,10 +38,6 @@ public class LinkControl {
 
 			getArrows().add(id, link);
 
-			System.out.println(item.getTranslateX() + " x " + item.getWidth() + " y " + item.getTranslateY());
-			// line.setStartX(item.getTranslateX());
-			// line.setStartY(item.getTranslateY());
-
 			link.setStart(new Point2D(item.getTranslateX() + (item.getWidth()),
 					item.getTranslateY() + (item.getHeight() / 2)));
 

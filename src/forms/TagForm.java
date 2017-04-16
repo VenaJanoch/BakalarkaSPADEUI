@@ -33,8 +33,10 @@ import javafx.stage.WindowEvent;
 import services.Alerts;
 import services.Constans;
 import services.Control;
+import services.DeleteControl;
 import services.FillForms;
 import services.OrderCell;
+import tables.ClassTable;
 import tables.TagTable;
 
 public class TagForm extends TableBasicForm implements ISegmentTableForm {
@@ -45,9 +47,9 @@ public class TagForm extends TableBasicForm implements ISegmentTableForm {
 	private Configuration config;
 	
 
-	public TagForm(Configuration configuration, Control control) {
+	public TagForm(Configuration configuration, Control control, DeleteControl deleteControl) {
 
-		super(control);
+		super(control, deleteControl);
 		// this.confIDs = confIDs;
 		this.control = control;
 		this.config = configuration;
@@ -97,13 +99,20 @@ public class TagForm extends TableBasicForm implements ISegmentTableForm {
 		ObservableList<TagTable> selection = FXCollections
 				.observableArrayList(tableTV.getSelectionModel().getSelectedItems());
 
+		ObservableList<TagTable> list = null;
+
 		if (event.getCode() == KeyCode.DELETE) {
 			if (selection.size() == 0) {
 				Alerts.showNoItemsDeleteAlert();
 			} else {
-				Alerts.showDeleteItemAlert(tableTV, selection);
+				list = Alerts.showDeleteItemTagAlert(getTableTV(), selection);
+				if (list != null) {
+					deleteControl.deleteTag(config ,list);
+				}
+
 			}
 		}
+
 	}
 
 	@Override

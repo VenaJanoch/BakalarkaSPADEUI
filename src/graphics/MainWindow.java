@@ -30,11 +30,11 @@ public class MainWindow extends Stage {
 	
 	public MainWindow(Main main) {
 		super();
-		control = new Control();
+		
 		this.setTitle("SPADE XML editor");
 		
 
-		mainPanel = new BorderPane();
+	
 		main.getPrimaryStage().setOnCloseRequest(event -> Alerts.showCloseApp(control));
 				
 		this.setScene(creatScene());
@@ -50,6 +50,8 @@ public class MainWindow extends Stage {
 	}
 
 	private Parent creatPanel() {
+		mainPanel = new BorderPane();
+		control = new Control();
 		menu = new MenuPanel(control, this);
 
 		dragCanvas = new DragAndDropCanvas(control, 0, control.getContexMenu());
@@ -66,6 +68,11 @@ public class MainWindow extends Stage {
 		mainPanel.setCenter(dragCanvas);
 
 		return mainPanel;
+	}
+
+
+	public void newItem() {
+		this.setScene(creatScene());
 	}
 	
 

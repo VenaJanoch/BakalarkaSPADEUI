@@ -50,20 +50,20 @@ public class FillForms {
 	private ArrayList<BasicForm> forms;
 	private ObjectFactory objF;
 	private SegmentLists lists;
-	
+
 	private IdentificatorCreater idCreater;
+	private DeleteControl deleteControl;
 
 	public FillForms(Control control, SegmentLists lists, Project project, ArrayList<BasicForm> forms,
-			ObjectFactory objFac, IdentificatorCreater idCreater) {
+			ObjectFactory objFac, IdentificatorCreater idCreater, DeleteControl deleteControl) {
 
 		this.control = control;
 		this.project = project;
 		this.forms = forms;
 		this.lists = lists;
 		this.objF = objFac;
-		System.out.println("Form3 fillforms " + forms.toString() + " d");
 		this.idCreater = idCreater;
-		
+		this.deleteControl = deleteControl;
 
 	}
 
@@ -94,9 +94,9 @@ public class FillForms {
 	public int[] createPhase(CanvasItem item, BasicForm form, int[] IDs) {
 
 		int index = IdentificatorCreater.getIndex();
-		
+
 		Phase phase = (Phase) objF.createPhase();
-		forms.add(index, new PhaseForm(item, control, Constans.phaseDragTextIndexs, phase, index));
+		forms.add(index, new PhaseForm(item, control, Constans.phaseDragTextIndexs, phase, index, deleteControl));
 		IDs[0] = index;
 		IDs[1] = idCreater.createPhaseID();
 
@@ -120,13 +120,14 @@ public class FillForms {
 	public int[] createActivity(CanvasItem item, BasicForm form, int[] IDs) {
 		int index = IdentificatorCreater.getIndex();
 		Activity activity = (Activity) objF.createActivity();
-		forms.add(index, new ActivityForm(item, control, Constans.activityDragTextIndexs, activity, index));
-		
+		forms.add(index,
+				new ActivityForm(item, control, Constans.activityDragTextIndexs, activity, index, deleteControl));
+
 		IDs[0] = index;
 		index++;
 		IdentificatorCreater.setIndex(index);
 		IDs[1] = idCreater.createActivityID();
-		
+
 		form.getActivityArray().add(IDs[1], activity);
 		return IDs;
 	}
@@ -149,7 +150,8 @@ public class FillForms {
 	public int[] createIteration(CanvasItem item, BasicForm form, int[] IDs) {
 		int index = IdentificatorCreater.getIndex();
 		Iteration iteration = (Iteration) objF.createIteration();
-		forms.add(index, new IterationForm(item, control, Constans.iterationDragTextIndexs, iteration, index));
+		forms.add(index,
+				new IterationForm(item, control, Constans.iterationDragTextIndexs, iteration, index, deleteControl));
 		IDs[0] = index;
 		IDs[1] = idCreater.createIterationID();
 		form.getIterationArray().add(IDs[1], iteration);
@@ -185,7 +187,7 @@ public class FillForms {
 	public int[] createWorkUnit(CanvasItem item, BasicForm form, int[] IDs) {
 		int index = IdentificatorCreater.getIndex();
 		WorkUnit unit = (WorkUnit) objF.createWorkUnit();
-		forms.add(index, new WorkUnitForm(item, control, unit));
+		forms.add(index, new WorkUnitForm(item, control, unit, deleteControl));
 		IDs[0] = index;
 		IDs[1] = idCreater.createWorkUnitID();
 		IDs[2] = form.getIdCreater().createWorkUnitID();
@@ -243,7 +245,6 @@ public class FillForms {
 		config.setName(name);
 		config.setAuthorIndex(roleIndex);
 
-
 		String release = "YES";
 		if (isRelase) {
 			release = "YES";
@@ -271,7 +272,8 @@ public class FillForms {
 	public int[] createConfigruration(CanvasItem item, BasicForm form, int[] IDs) {
 		int index = IdentificatorCreater.getIndex();
 		Configuration conf = (Configuration) objF.createConfiguration();
-		forms.add(index, new ConfigurationForm(item, control, Constans.configurationDragTextIndexs, conf, index));
+		forms.add(index,
+				new ConfigurationForm(item, control, Constans.configurationDragTextIndexs, conf, index, deleteControl));
 		IDs[0] = index;
 		IDs[1] = idCreater.createConfigurationID();
 
@@ -305,10 +307,10 @@ public class FillForms {
 		coord.setYCoordinate(y);
 		change.setCoordinates(coord);
 		change.setExist(isExist);
-	
+
 		if (isNew) {
 			lists.getChangeFormIndex().add(IDs[0]);
-		//	lists.getChangeObservable().add(name);
+			// lists.getChangeObservable().add(name);
 		}
 
 	}
@@ -316,7 +318,8 @@ public class FillForms {
 	public int[] createChange(CanvasItem item, BasicForm form, int[] IDs) {
 		int index = IdentificatorCreater.getIndex();
 		Change change = (Change) objF.createChange();
-		forms.add(index, new ChangeForm(item, control, change));
+		Configuration conf = form.getConfigArray();
+		forms.add(index, new ChangeForm(item, control, change, conf, deleteControl));
 		IDs[0] = index;
 		IDs[1] = idCreater.createChangeID();
 		IDs[2] = form.getIdCreater().createChangeID();
@@ -353,7 +356,7 @@ public class FillForms {
 	public int[] createArtifact(CanvasItem item, BasicForm form, int[] IDs) {
 		int index = IdentificatorCreater.getIndex();
 		Artifact artifact = (Artifact) objF.createArtifact();
-		forms.add(index, new ArtifactForm(item, control, artifact));
+		forms.add(index, new ArtifactForm(item, control, artifact, deleteControl, form.getConfigArray()));
 		IDs[0] = index;
 		IDs[1] = idCreater.createArtifactID();
 		IDs[2] = form.getIdCreater().createArtifactID();

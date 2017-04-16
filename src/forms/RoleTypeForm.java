@@ -1,5 +1,7 @@
 package forms;
 
+import java.util.List;
+
 import javax.management.relation.RoleStatus;
 
 import SPADEPAC.RoleClass;
@@ -29,10 +31,11 @@ import javafx.scene.layout.GridPane;
 import services.Alerts;
 import services.ClassSwitcher;
 import services.Control;
+import services.DeleteControl;
 import tables.ClassTable;
 import tables.CriterionTable;
 import tables.RoleTable;
-import tables.RoleTypeTable;
+
 
 public class RoleTypeForm extends TableClassBasicForm implements ISegmentTableForm {
 
@@ -45,8 +48,8 @@ public class RoleTypeForm extends TableClassBasicForm implements ISegmentTableFo
 	private Label roleSuperClassTypeLB;
 
 	
-	public RoleTypeForm(Control control) {
-		super(control);
+	public RoleTypeForm(Control control, DeleteControl deleteControl) {
+		super(control, deleteControl);
 
 		this.control = control;
 		
@@ -78,11 +81,17 @@ public class RoleTypeForm extends TableClassBasicForm implements ISegmentTableFo
 		ObservableList<ClassTable> selection = FXCollections
 				.observableArrayList(getTableTV().getSelectionModel().getSelectedItems());
 
+		ObservableList<ClassTable> list = null;
+
 		if (event.getCode() == KeyCode.DELETE) {
 			if (selection.size() == 0) {
 				Alerts.showNoItemsDeleteAlert();
 			} else {
-				Alerts.showDeleteItemAlert(getTableTV(), selection);
+				list = Alerts.showDeleteItemAlert(getTableTV(), selection);
+				if (list != null) {
+					deleteControl.deleteRoleType(list);
+				}
+
 			}
 		}
 
