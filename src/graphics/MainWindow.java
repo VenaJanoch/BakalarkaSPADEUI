@@ -16,6 +16,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import run.Main;
 import services.Alerts;
+import services.CanvasType;
 import services.Constans;
 import services.Control;
 
@@ -27,10 +28,10 @@ public class MainWindow extends Stage {
 	private DragAndDropCanvas dragCanvas;
 	private MenuPanel menu;
 	private DragAndDropPanel dragAndDrop;
-	
+	private Main main;
 	public MainWindow(Main main) {
 		super();
-		
+		this.main = main;
 		this.setTitle("SPADE XML editor");
 		
 
@@ -54,8 +55,9 @@ public class MainWindow extends Stage {
 		control = new Control();
 		menu = new MenuPanel(control, this);
 
-		dragCanvas = new DragAndDropCanvas(control, 0, control.getContexMenu());
+		dragCanvas = new DragAndDropCanvas(control, 0, control.getContexMenu(), CanvasType.Project);
 		control.setCanvas(dragCanvas);
+		
 		dragAndDrop = new DragAndDropPanel(control);
 		
 		
@@ -73,6 +75,7 @@ public class MainWindow extends Stage {
 
 	public void newItem() {
 		this.setScene(creatScene());
+		main.getPrimaryStage().setScene(getScene());
 	}
 	
 

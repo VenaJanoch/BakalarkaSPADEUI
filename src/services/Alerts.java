@@ -307,6 +307,15 @@ public class Alerts {
 		}
 	}
 
+	public static void badCopyItem(SegmentType segment, CanvasType canvasType) {
+		Alert alert = new Alert(AlertType.ERROR);
+		alert.setTitle("Copy error");
+		alert.setHeaderText("Bad segment " + segment + " for this type canvas !");
+		alert.setContentText("Please paste item in corresponding segment!");
+		alert.showAndWait();
+		
+	}
+
 	
 
 }

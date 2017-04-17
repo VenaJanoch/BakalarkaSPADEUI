@@ -248,7 +248,7 @@ public class Control {
 
 	public int[] createForm(CanvasItem item, BasicForm form) {
 		SegmentType sType = item.getType();
-		int[] IDs = new int[3];
+		int[] IDs = new int[4];
 
 		switch (sType) {
 		case Phase:
@@ -274,6 +274,9 @@ public class Control {
 
 		case Artifact:
 			return fillForms.createArtifact(item, form, IDs);
+		case Project:
+			IDs[0] = 0;
+			return IDs;
 		default:
 			return IDs;
 		}
@@ -282,7 +285,7 @@ public class Control {
 	public int[] createFormFromXML(CanvasItem item, BasicForm form) {
 		SegmentType sType = item.getType();
 
-		int[] IDs = new int[3];
+		int[] IDs = new int[4];
 		int indexConfig = -1;
 		switch (sType) {
 		case Phase:
@@ -312,29 +315,16 @@ public class Control {
 		case Artifact:
 
 			return fillFormsXML.createArtifactFormXML(item, form, IDs);
+		case Project:
+			IDs[0] = 0;
+			return IDs;
 
 		default:
 			return IDs;
 		}
 	}
 
-//	public int mapConfig(int confIndex) {
-//		String name = lists.getConfigObservable().get(confIndex);
-//		
-//		int index = 0;
-//		for (index = 0; index < lists.getConfigList().size(); index++) {
-//		if (lists.getConfigList().get(index) != null) {
-//			
-//			String conf = lists.getConfigList().get(index).getName();
-//			if (conf.equals(name)) {
-//				return index;
-//			}
-//
-//		}		
-//		}
-//		
-//		return 0;
-//	}
+
 
 	public boolean checkConfiguration(String newConfName) {
 

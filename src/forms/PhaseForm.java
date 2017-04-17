@@ -27,6 +27,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.stage.WindowEvent;
 import services.Alerts;
+import services.CanvasType;
 import services.Control;
 import services.DeleteControl;
 import services.FormControl;
@@ -44,12 +45,12 @@ public class PhaseForm extends DateDescBasicForm implements ISegmentForm {
 	private int milestoneIndex;
 	private int configIndex;
 	private Phase phase;
-
+	private boolean isNew;
 	public PhaseForm(CanvasItem item, Control control, int[] itemArray, Phase phase, int indexForm,
 			DeleteControl deleteControl) {
-		super(item, control, itemArray, indexForm, deleteControl);
+		super(item, control, itemArray, indexForm, deleteControl, CanvasType.Phase);
 		this.phase = phase;
-
+		isNew = true;
 		setWorkUnitArray(phase.getWorkUnits());
 		this.setOnCloseRequest(new EventHandler<WindowEvent>() {
 
@@ -76,8 +77,10 @@ public class PhaseForm extends DateDescBasicForm implements ISegmentForm {
 
 		setName(actName);
 		getCanvasItem().setNameText(actName);
-		getCanvasItem().getFillForms().fillPhase(form, IDs[1], desc, actName, endDateL, configIndex, milestoneIndex, x,
-				y);
+		getCanvasItem().getFillForms().fillPhase(phase, IDs, desc, actName, endDateL, configIndex, milestoneIndex, x,
+				y, isNew);
+		
+		isNew = false;
 
 	}
 

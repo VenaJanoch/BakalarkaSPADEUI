@@ -13,18 +13,21 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.WindowEvent;
 import services.Alerts;
+import services.CanvasType;
 import services.Control;
 import services.DeleteControl;
 
 public class ActivityForm extends DescriptionBasicForm implements ISegmentForm {
 
+	private Activity activity;
+	private boolean isNew;
 
 	public ActivityForm(CanvasItem item, Control control, int[] itemArray, Activity activity, int indexForm, DeleteControl deleteControl) {
 
-		super(item, control, itemArray, indexForm, deleteControl);
-		
+		super(item, control, itemArray, indexForm, deleteControl, CanvasType.Activity);
+		this.activity = activity;
 		setWorkUnitArray(activity.getWorkUnits());
-		
+		isNew = true;
 		this.setOnCloseRequest(new EventHandler<WindowEvent>() {
 
 			@Override
@@ -49,7 +52,8 @@ public class ActivityForm extends DescriptionBasicForm implements ISegmentForm {
 		String desc = getDescriptionTF().getText();
 		getCanvasItem().setNameText(actName);
 		setName(actName);
-		getControl().getFillForms().fillActivity(form, IDs[1], desc, actName, x, y);
+		getControl().getFillForms().fillActivity(activity, IDs, desc, actName, x, y, isNew);
+		isNew = false;
 		
 	}
 

@@ -75,10 +75,9 @@ public class FillForms {
 		project.setStartDate(control.convertDate(startDate));
 	}
 
-	public void fillPhase(BasicForm form, int ID, String description, String name, LocalDate endDate, int confIndex,
-			int milestoneIndex, int x, int y) {
+	public void fillPhase(Phase phase, int[] ID, String description, String name, LocalDate endDate, int confIndex,
+			int milestoneIndex, int x, int y, boolean isNew) {
 
-		Phase phase = form.getPhaseArray().get(ID);
 		phase.setDescription(description);
 		phase.setName(name);
 		phase.setEndDate(control.convertDate(endDate));
@@ -89,6 +88,11 @@ public class FillForms {
 		phase.setConfiguration(confIndex);
 		phase.setMilestoneIndex(milestoneIndex);
 
+		if (isNew) {
+			BasicForm rForm = control.getForms().get(ID[3]);
+			rForm.getPhaseArray().add(ID[1], phase);
+		}
+
 	}
 
 	public int[] createPhase(CanvasItem item, BasicForm form, int[] IDs) {
@@ -96,25 +100,33 @@ public class FillForms {
 		int index = IdentificatorCreater.getIndex();
 
 		Phase phase = (Phase) objF.createPhase();
+		Coordinates coord = objF.createCoordinates();
+
 		forms.add(index, new PhaseForm(item, control, Constans.phaseDragTextIndexs, phase, index, deleteControl));
 		IDs[0] = index;
 		IDs[1] = idCreater.createPhaseID();
+		System.out.println(form.getCanvasItem().getIDs()[0]);
+		IDs[3] = form.getCanvasItem().getIDs()[0];
 
-		form.getPhaseArray().add(IDs[1], phase);
 		index++;
 		IdentificatorCreater.setIndex(index);
 		return IDs;
 	}
 
-	public void fillActivity(BasicForm form, int ID, String description, String name, int x, int y) {
+	public void fillActivity(Activity activity, int[] ID, String description, String name, int x, int y,
+			boolean isNew) {
 
-		Activity activity = form.getActivityArray().get(ID);
 		activity.setDescription(description);
 		activity.setName(name);
 		Coordinates coord = objF.createCoordinates();
 		coord.setXCoordinate(x);
 		coord.setYCoordinate(y);
 		activity.setCoordinates(coord);
+
+		if (isNew) {
+			BasicForm rForm = control.getForms().get(ID[3]);
+			rForm.getActivityArray().add(ID[1], activity);
+		}
 	}
 
 	public int[] createActivity(CanvasItem item, BasicForm form, int[] IDs) {
@@ -127,15 +139,13 @@ public class FillForms {
 		index++;
 		IdentificatorCreater.setIndex(index);
 		IDs[1] = idCreater.createActivityID();
-
-		form.getActivityArray().add(IDs[1], activity);
+		IDs[3] = form.getCanvasItem().getIDs()[0];
 		return IDs;
 	}
 
-	public void fillIteration(BasicForm form, int ID, String description, String name, LocalDate startDate,
-			LocalDate endDate, int confIndex, int x, int y) {
+	public void fillIteration(Iteration iteration, int[] ID, String description, String name, LocalDate startDate,
+			LocalDate endDate, int confIndex, int x, int y, boolean isNew) {
 
-		Iteration iteration = form.getIterationArray().get(ID);
 		iteration.setDescription(description);
 		iteration.setName(name);
 		iteration.setStartDate(control.convertDate(startDate));
@@ -145,6 +155,11 @@ public class FillForms {
 		coord.setXCoordinate(x);
 		coord.setYCoordinate(y);
 		iteration.setCoordinates(coord);
+
+		if (isNew) {
+			BasicForm rForm = control.getForms().get(ID[3]);
+			rForm.getIterationArray().add(ID[1], iteration);
+		}
 	}
 
 	public int[] createIteration(CanvasItem item, BasicForm form, int[] IDs) {
@@ -154,17 +169,17 @@ public class FillForms {
 				new IterationForm(item, control, Constans.iterationDragTextIndexs, iteration, index, deleteControl));
 		IDs[0] = index;
 		IDs[1] = idCreater.createIterationID();
-		form.getIterationArray().add(IDs[1], iteration);
+		IDs[3] = form.getCanvasItem().getIDs()[0];
+
 		index++;
 		IdentificatorCreater.setIndex(index);
 		return IDs;
 	}
 
-	public void fillWorkUnit(BasicForm form, int ID, String description, String name, int authorIndex, int assigneIndex,
-			String category, int x, int y, int priorityIndex, int severityIndex, int typeIndex, int resolutionIndex,
-			int statusIndex, double estimate) {
+	public void fillWorkUnit(WorkUnit workUnit, int[] ID, String description, String name, int authorIndex,
+			int assigneIndex, String category, int x, int y, int priorityIndex, int severityIndex, int typeIndex,
+			int resolutionIndex, int statusIndex, double estimate, boolean isNew) {
 
-		WorkUnit workUnit = lists.getWorkUnitList().get(form.getWorkUnitArray().get(ID));
 		workUnit.setDescription(description);
 		workUnit.setName(name);
 		workUnit.setAssigneeIndex(assigneIndex);
@@ -182,6 +197,12 @@ public class FillForms {
 		coord.setYCoordinate(y);
 		workUnit.setCoordinates(coord);
 
+		if (isNew) {
+			BasicForm rForm = control.getForms().get(ID[3]);
+			rForm.getWorkUnitArray().add(ID[2], ID[1]);
+			lists.getWorkUnitList().add(workUnit);
+
+		}
 	}
 
 	public int[] createWorkUnit(CanvasItem item, BasicForm form, int[] IDs) {
@@ -191,9 +212,10 @@ public class FillForms {
 		IDs[0] = index;
 		IDs[1] = idCreater.createWorkUnitID();
 		IDs[2] = form.getIdCreater().createWorkUnitID();
-		lists.getWorkUnitList().add(unit);
+		IDs[3] = form.getCanvasItem().getIDs()[0];
+
 		lists.getWorkUnitFormIndex().add(index);
-		form.getWorkUnitArray().add(IDs[2], IDs[1]);
+
 		index++;
 		IdentificatorCreater.setIndex(index);
 		return IDs;
@@ -244,7 +266,7 @@ public class FillForms {
 		config.setCreate(control.convertDate(Ldate));
 		config.setName(name);
 		config.setAuthorIndex(roleIndex);
-		
+
 		String release = "YES";
 		if (isRelase) {
 			release = "YES";

@@ -8,6 +8,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import services.Alerts;
+import services.CanvasType;
 import services.Control;
 import services.DeleteControl;
 import services.IdentificatorCreater;
@@ -18,9 +19,10 @@ public class DescriptionBasicForm extends BasicForm {
 	private Label descriptionLB;
 	private TextField descriptionTF;
 
-	public DescriptionBasicForm(CanvasItem item, Control control, int[] itemArray, int indexForm, DeleteControl deleteControl) {
+	public DescriptionBasicForm(CanvasItem item, Control control, int[] itemArray, int indexForm,
+			DeleteControl deleteControl, CanvasType canvasType) {
 
-		super(item, control, itemArray, indexForm, deleteControl);
+		super(item, control, itemArray, indexForm, deleteControl, canvasType);
 		fillForm();
 	}
 
@@ -61,7 +63,5 @@ public class DescriptionBasicForm extends BasicForm {
 	public void setDescriptionTF(TextField descriptionTF) {
 		this.descriptionTF = descriptionTF;
 	}
-	
-	
 
 }

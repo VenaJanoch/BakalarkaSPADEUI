@@ -19,6 +19,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.WindowEvent;
 import services.Alerts;
+import services.CanvasType;
 import services.Control;
 import services.DeleteControl;
 import services.SegmentType;
@@ -28,14 +29,15 @@ public class IterationForm extends Date2DescBasicForm implements ISegmentForm {
 	private Label configLB;
 
 	private ChoiceBox<String> configCB;
-
+	private boolean isNew;
+	
 	private int chooseConfigID;
-
+	private Iteration iteration;
 	public IterationForm(CanvasItem item, Control control, int[] itemArray, Iteration iteration, int indexForm, DeleteControl deleteControl) {
-		super(item, control, itemArray, indexForm, deleteControl);
+		super(item, control, itemArray, indexForm, deleteControl, CanvasType.Iteration);
 		setWorkUnitArray(iteration.getWorkUnits());
-
-
+		this.iteration = iteration;
+		isNew = true;
 		this.setOnCloseRequest(new EventHandler<WindowEvent>() {
 
 			@Override
@@ -62,8 +64,9 @@ public class IterationForm extends Date2DescBasicForm implements ISegmentForm {
 		String desc = getDescriptionTF().getText();
 		setName(actName);
 		getCanvasItem().setNameText(actName);
-		getControl().getFillForms().fillIteration(form, IDs[1], desc, actName, startDate, endDate,
-				chooseConfigID, x, y);
+		getControl().getFillForms().fillIteration(iteration, IDs, desc, actName, startDate, endDate,
+				chooseConfigID, x, y, isNew);
+		isNew = false;
 	}
 
 	@Override

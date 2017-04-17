@@ -27,8 +27,11 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
+import services.Alerts;
+import services.CanvasType;
 import services.Constans;
 import services.Control;
+import services.FormControl;
 import services.SegmentType;
 
 public class DragAndDropCanvas extends ScrollPane {
@@ -40,12 +43,15 @@ public class DragAndDropCanvas extends ScrollPane {
 	private AnchorPane canvas;
 	private ItemContexMenu contexMenu;
 
-	public DragAndDropCanvas(Control control, int indexForm, ItemContexMenu contexMenu) {
+	private CanvasType canvasType;
+
+	public DragAndDropCanvas(Control control, int indexForm, ItemContexMenu contexMenu, CanvasType canvasType) {
 
 		super();
 		this.control = control;
 		this.indexForm = indexForm;
 		this.contexMenu = contexMenu;
+		this.canvasType = canvasType;
 
 		this.canvas = new AnchorPane();
 		canvas.setMinWidth(Constans.canvasMaxWidth);
@@ -108,7 +114,7 @@ public class DragAndDropCanvas extends ScrollPane {
 
 		if (t.getButton().equals(MouseButton.SECONDARY)) {
 			contexMenu.setDgCanvas(this);
-			
+
 			contexMenu.show(canvas, t.getScreenX(), t.getScreenY());
 		}
 
@@ -138,11 +144,17 @@ public class DragAndDropCanvas extends ScrollPane {
 	}
 
 	public CanvasItem addCopyItem(SegmentType segment, double x, double y) {
-	
-		CanvasItem item = new CanvasItem(segment, "Name", control, control.getForms().get(indexForm), 2, x, y,
-				contexMenu, control.getLinkControl());
-		canvas.getChildren().add(item);
-		return item;
+		if (FormControl.copyControl(segment, canvasType)) {
+
+			CanvasItem item = new CanvasItem(segment, "Name", control, control.getForms().get(indexForm), 2, x, y,
+					contexMenu, control.getLinkControl());
+			canvas.getChildren().add(item);
+			return item;
+		}else{
+			
+			Alerts.badCopyItem(segment, canvasType);
+		}
+		return null;
 
 	}
 
@@ -164,6 +176,14 @@ public class DragAndDropCanvas extends ScrollPane {
 
 	public void setCanvas(AnchorPane canvas) {
 		this.canvas = canvas;
+	}
+
+	public CanvasType getCanvasType() {
+		return canvasType;
+	}
+
+	public void setCanvasType(CanvasType canvasType) {
+		this.canvasType = canvasType;
 	}
 
 }

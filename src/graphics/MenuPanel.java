@@ -52,7 +52,7 @@ public class MenuPanel extends VBox {
 		saveItem.setOnAction(event -> control.saveFile());
 		saveAsItem.setOnAction(event -> control.saveAsFile());
 		openItem.setOnAction(event -> openFile());
-		newItem.setOnAction(event -> control.restartControl());
+		newItem.setOnAction(event -> mainWindow.newItem());
 		validationItem.setOnAction(event -> control.validate());
 		menuMB.getMenus().addAll(fileMenu);
 

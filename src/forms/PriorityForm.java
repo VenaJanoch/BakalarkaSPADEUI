@@ -61,7 +61,7 @@ public class PriorityForm extends TableClassBasicForm implements ISegmentTableFo
 	public void deleteSelected(KeyEvent event) {
 		ObservableList<ClassTable> selection = FXCollections
 				.observableArrayList(getTableTV().getSelectionModel().getSelectedItems());
-		
+
 		ObservableList<ClassTable> list = null;
 
 		if (event.getCode() == KeyCode.DELETE) {
@@ -90,7 +90,7 @@ public class PriorityForm extends TableClassBasicForm implements ISegmentTableFo
 		superClassTypeCB = new ComboBox<WorkUnitPrioritySuperClass>(
 				FXCollections.observableArrayList(WorkUnitPrioritySuperClass.values()));
 		superClassTypeCB.getSelectionModel().selectedIndexProperty().addListener(superListener);
-
+		
 		getControlPane().add(classTypeLB, 2, 0);
 		getControlPane().add(classTypeCB, 3, 0);
 		getControlPane().add(superClassTypeLB, 4, 0);

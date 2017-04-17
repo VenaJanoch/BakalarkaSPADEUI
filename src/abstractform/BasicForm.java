@@ -35,6 +35,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import services.Alerts;
+import services.CanvasType;
 import services.Constans;
 import services.Control;
 import services.DeleteControl;
@@ -61,7 +62,7 @@ public abstract class BasicForm extends Stage {
 	private DragAndDropItem dgItem;
 	private DragAndDropCanvas canvas;
 	private BorderPane dragBox;
-	
+
 	private FormControl formControl;
 	protected DeleteControl deleteControl;
 	private List<Phase> phaseArray;
@@ -81,7 +82,8 @@ public abstract class BasicForm extends Stage {
 	private IdentificatorCreater idCreater;
 	private String type;
 
-	public BasicForm(CanvasItem item, Control control, int[] itemArray, int indexForm, DeleteControl deleteControl) {
+	public BasicForm(CanvasItem item, Control control, int[] itemArray, int indexForm, DeleteControl deleteControl,
+			CanvasType canvasType) {
 
 		super();
 		type = item.getType().name();
@@ -92,8 +94,8 @@ public abstract class BasicForm extends Stage {
 		this.alerts = new Alerts();
 		this.setIdCreater(new IdentificatorCreater());
 		this.setTitle("Edit " + item.getType().name());
-		this.dgItem = new DragAndDropItem(control, itemArray,this);
-		this.canvas = new DragAndDropCanvas(control, indexForm, control.getContexMenu());
+		this.dgItem = new DragAndDropItem(control, itemArray, this);
+		this.canvas = new DragAndDropCanvas(control, indexForm, control.getContexMenu(), canvasType);
 		this.dragBox = new BorderPane();
 		this.setFormControl(new FormControl(control.getLists()));
 		mainPanel = new BorderPane();
@@ -113,6 +115,7 @@ public abstract class BasicForm extends Stage {
 		this.setIdCreater(new IdentificatorCreater());
 		this.setTitle("Edit " + item.getType().name());
 		mainPanel = new BorderPane();
+		this.setFormControl(new FormControl(control.getLists()));
 
 		this.setScene(creatSceneProject());
 
@@ -125,7 +128,8 @@ public abstract class BasicForm extends Stage {
 		this.alerts = new Alerts();
 		this.setTitle("Edit Project");
 		this.setIdCreater(new IdentificatorCreater());
-		
+		this.setFormControl(new FormControl(control.getLists()));
+
 		mainPanel = new BorderPane();
 
 		this.setScene(creatSceneProject());
@@ -181,7 +185,7 @@ public abstract class BasicForm extends Stage {
 
 		return mainPanel;
 	}
-	
+
 	public void deleteItem(int[] i) {
 		// TODO Auto-generated method stub
 		System.out.println("BasicForm");
@@ -294,7 +298,6 @@ public abstract class BasicForm extends Stage {
 	public void setIdCreater(IdentificatorCreater idCreater) {
 		this.idCreater = idCreater;
 	}
-
 
 	public int[] getItemArray() {
 		return itemArray;
@@ -424,9 +427,5 @@ public abstract class BasicForm extends Stage {
 	public void setFormControl(FormControl formControl) {
 		this.formControl = formControl;
 	}
-
-	
-	
-	
 
 }

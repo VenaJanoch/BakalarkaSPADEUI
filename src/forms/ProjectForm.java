@@ -24,6 +24,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.WindowEvent;
 import services.Alerts;
 import services.Control;
+import services.SegmentType;
 
 public class ProjectForm extends Date2DescBasicForm implements ISegmentForm {
 
@@ -34,8 +35,11 @@ public class ProjectForm extends Date2DescBasicForm implements ISegmentForm {
 		setIterationArray(project.getIterations());
 		setActivityArray(project.getActivities());
 		setWorkUnitArray(project.getWorkUnitIndexs());
-		
+
 		setCanvas(canvas);
+
+		setCanvasItem(new CanvasItem(SegmentType.Project, "", control, this, 0, 0, 0, control.getContexMenu(),
+				control.getLinkControl()));
 
 		this.setOnCloseRequest(new EventHandler<WindowEvent>() {
 
@@ -79,5 +83,4 @@ public class ProjectForm extends Date2DescBasicForm implements ISegmentForm {
 
 	/*** Getrs and setrs ***/
 
-	
 }

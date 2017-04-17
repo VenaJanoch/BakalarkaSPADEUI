@@ -94,8 +94,8 @@ public class ManipulationControl {
 
 		case WorkUnit:
 
-			int index = form.getWorkUnitArray().get(itemIds[2]);
-			WorkUnit unit = lists.getWorkUnitList().get(index);
+			
+			WorkUnit unit = lists.getWorkUnitList().get(itemIds[1]);
 			return copyForms.createWorkUnit(item, form, unit, IDs, itemIds);
 
 		// case Configuration:
