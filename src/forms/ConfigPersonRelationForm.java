@@ -75,7 +75,7 @@ public class ConfigPersonRelationForm extends TableBasicForm implements ISegment
 	@Override
 	public Node getTable() {
 		tableTV = new TableView<CPRTable>();
-
+		tableTV.setId("cprTable");
 		TableColumn<CPRTable, String> nameColumn = new TableColumn<CPRTable, String>("Name");
 		TableColumn<CPRTable, String> roleColumn = new TableColumn<CPRTable, String>("Role");
 
@@ -130,7 +130,7 @@ public class ConfigPersonRelationForm extends TableBasicForm implements ISegment
 		personCB = new ComboBox<String>(getControl().getLists().getRoleObservable());
 		personCB.setVisibleRowCount(5);
 		personCB.getSelectionModel().selectedIndexProperty().addListener(roleListener);
-
+		personCB.setId("personCB");
 		getControlPane().add(personRoleLB, 4, 0);
 		getControlPane().add(personCB, 5, 0);
 

@@ -81,7 +81,8 @@ public abstract class BasicForm extends Stage {
 
 	private IdentificatorCreater idCreater;
 	private String type;
-
+	private boolean isNew;
+	
 	public BasicForm(CanvasItem item, Control control, int[] itemArray, int indexForm, DeleteControl deleteControl,
 			CanvasType canvasType) {
 
@@ -161,14 +162,21 @@ public abstract class BasicForm extends Stage {
 	}
 
 	private Parent creatPanelProject() {
+		
 		mainPanel.setPadding(new Insets(5));
 		buttonBox = new HBox(5);
+		
 		infoPart = new GridPane();
 		infoPart.setAlignment(Pos.CENTER);
+		
 		nameLB = new Label("Name: ");
 		nameTF = new TextField();
+		nameTF.setId("formName");
+		
 		submitButton = new Button("OK");
+		submitButton.setId("formSubmit");
 		nameLB.setAlignment(Pos.CENTER_RIGHT);
+		
 		HBox nameBox = new HBox(5);
 		nameBox.getChildren().addAll(nameLB, nameTF);
 
@@ -426,6 +434,14 @@ public abstract class BasicForm extends Stage {
 
 	public void setFormControl(FormControl formControl) {
 		this.formControl = formControl;
+	}
+
+	public boolean isNew() {
+		return isNew;
+	}
+
+	public void setNew(boolean isNew) {
+		this.isNew = isNew;
 	}
 
 }

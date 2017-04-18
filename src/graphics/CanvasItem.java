@@ -95,7 +95,8 @@ public class CanvasItem extends AnchorPane {
 
 		idForm = IDs[0];
 		ID = type.name() + "_" + String.format("%03d", IDs[1]);
-
+		System.out.println(ID);
+		this.setID(ID);
 		this.tooltip = new Tooltip(ID);
 		Tooltip.install(this, tooltip);
 
@@ -124,6 +125,7 @@ public class CanvasItem extends AnchorPane {
 			if (control.isArrow()) {
 				if (type == SegmentType.WorkUnit) {
 					linkControl.ArrowManipulationWorkUnit(this, false);
+				
 				} else if (type == SegmentType.Artifact || type == SegmentType.Change) {
 					linkControl.ArrowManipulation(this, false);
 				}
@@ -133,7 +135,7 @@ public class CanvasItem extends AnchorPane {
 				if (t.getClickCount() == 2) {
 					control.getForms().get(idForm).show();
 
-				} else {
+				} else if (!control.isArrow()){
 
 					orgSceneX = t.getSceneX();
 					orgSceneY = t.getSceneY();
@@ -150,17 +152,18 @@ public class CanvasItem extends AnchorPane {
 	}
 
 	public void setDragFromDragPoint(MouseEvent t) {
-
-		double offsetX = t.getSceneX() - orgSceneX;
-		double offsetY = t.getSceneY() - orgSceneY;
-		double newTranslateX = orgTranslateX + offsetX;
-		double newTranslateY = orgTranslateY + offsetY;
-
-		// if (t.getSceneX() > 0 && t.getSceneX() < canvas.getWidth() &&
-		// t.getSceneY() > canvas.getTranslateY() + 90
-		// && t.getSceneY() < canvas.getHeight() + 50) {
-		((AnchorPane) (t.getSource())).setTranslateX(newTranslateX);
-		((AnchorPane) (t.getSource())).setTranslateY(newTranslateY);
+		if (!control.isArrow()) {			
+			double offsetX = t.getSceneX() - orgSceneX;
+			double offsetY = t.getSceneY() - orgSceneY;
+			double newTranslateX = orgTranslateX + offsetX;
+			double newTranslateY = orgTranslateY + offsetY;
+			
+			// if (t.getSceneX() > 0 && t.getSceneX() < canvas.getWidth() &&
+			// t.getSceneY() > canvas.getTranslateY() + 90
+			// && t.getSceneY() < canvas.getHeight() + 50) {
+			((AnchorPane) (t.getSource())).setTranslateX(newTranslateX);
+			((AnchorPane) (t.getSource())).setTranslateY(newTranslateY);
+		}
 
 		// }
 

@@ -56,7 +56,8 @@ public class DragAndDropCanvas extends ScrollPane {
 		this.canvas = new AnchorPane();
 		canvas.setMinWidth(Constans.canvasMaxWidth);
 		canvas.setMinHeight(Constans.canvasMaxHeight);
-
+		canvas.setId("canvasID");
+		this.setId("canvas");
 		this.setContent(canvas);
 		this.setPrefSize(Constans.width, Constans.height);
 		this.setHbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
@@ -95,12 +96,14 @@ public class DragAndDropCanvas extends ScrollPane {
 			public void handle(DragEvent event) {
 				Dragboard db = event.getDragboard();
 				boolean success = false;
+			
 				if (db.hasString()) {
 
 					addItem(db.getString(), event.getSceneX(), event.getSceneY());
 
 					success = true;
 				}
+				
 				event.setDropCompleted(success);
 
 				event.consume();

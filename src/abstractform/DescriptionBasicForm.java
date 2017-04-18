@@ -41,7 +41,7 @@ public class DescriptionBasicForm extends BasicForm {
 	private void fillForm() {
 		descriptionLB = new Label("Description: ");
 		descriptionTF = new TextField();
-
+		descriptionTF.setId("formDesc");
 		getInfoPart().add(descriptionLB, 0, 1);
 		getInfoPart().setHalignment(descriptionLB, HPos.RIGHT);
 		getInfoPart().add(descriptionTF, 1, 1);

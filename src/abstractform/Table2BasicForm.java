@@ -59,11 +59,12 @@ public class Table2BasicForm extends Stage{
 		internalPanel.setRight(splitPane);
 		
 		submitBT = new Button("OK");
+		submitBT.setId("formSubmit");
 		submitBT.setAlignment(Pos.BOTTOM_CENTER);
 
 		nameLB = new Label("Name");
 		nameTF = new TextField();
-
+		nameTF.setId("formName");
 		addBT = new Button("Add");
 
 		addBT.setPrefWidth(60);

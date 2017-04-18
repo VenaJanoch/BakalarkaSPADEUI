@@ -117,8 +117,10 @@ public class ConfigurationTableForm extends Table2BasicForm implements ISegmentT
 		public void handle(MouseEvent t) {
 
 			ConfigTable config = tableTV.getSelectionModel().getSelectedItems().get(0);
-			int id = config.getId().intValue();
-			getMainPanel().setCenter(getControl().getForms().get(id).getMainPanel());
+			if (config != null) {
+				int id = config.getId().intValue();
+				getMainPanel().setCenter(getControl().getForms().get(id).getMainPanel());
+			}
 		}
 	};
 

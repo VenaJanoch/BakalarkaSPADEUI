@@ -45,12 +45,12 @@ public class PhaseForm extends DateDescBasicForm implements ISegmentForm {
 	private int milestoneIndex;
 	private int configIndex;
 	private Phase phase;
-	private boolean isNew;
+	
 	public PhaseForm(CanvasItem item, Control control, int[] itemArray, Phase phase, int indexForm,
 			DeleteControl deleteControl) {
 		super(item, control, itemArray, indexForm, deleteControl, CanvasType.Phase);
 		this.phase = phase;
-		isNew = true;
+		setNew(true);
 		setWorkUnitArray(phase.getWorkUnits());
 		this.setOnCloseRequest(new EventHandler<WindowEvent>() {
 
@@ -78,9 +78,9 @@ public class PhaseForm extends DateDescBasicForm implements ISegmentForm {
 		setName(actName);
 		getCanvasItem().setNameText(actName);
 		getCanvasItem().getFillForms().fillPhase(phase, IDs, desc, actName, endDateL, configIndex, milestoneIndex, x,
-				y, isNew);
+				y, isNew());
 		
-		isNew = false;
+		setNew(false);
 
 	}
 

@@ -31,9 +31,7 @@ public class ItemContexMenu extends ContextMenu {
 	public ItemContexMenu(Control control, ManipulationControl manipulation, DragAndDropCanvas dgCanvas) {
 		super();
 		this.control = control;
-		this.mainWindow = mainWindow;
 		this.manipulation = manipulation;
-		this.item = item;
 		this.dgCanvas = dgCanvas;
 	
 		createMenu();
@@ -56,8 +54,8 @@ public class ItemContexMenu extends ContextMenu {
 	public void setActions(CanvasItem item){
 		
 		copyItem.setOnAction(event -> manipulation.copyItem(item));
-		deleteItem.setOnAction(event -> manipulation.cutItem(item));
-		cutItem.setOnAction(event -> manipulation.deleteItem(item));
+		deleteItem.setOnAction(event -> manipulation.deleteItem(item));
+		cutItem.setOnAction(event -> manipulation.cutItem(item));
 	}
 	
 	

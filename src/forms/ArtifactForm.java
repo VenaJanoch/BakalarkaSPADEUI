@@ -43,14 +43,14 @@ public class ArtifactForm extends DateDescBasicForm implements ISegmentForm {
 
 	private Artifact artifact;
 	private Configuration conf;
-	boolean isNew;
+	
 
 	public ArtifactForm(CanvasItem item, Control control, Artifact artifact, DeleteControl deleteControl, Configuration conf) {
 		super(item, control, deleteControl);
 		this.artifact = artifact;
 		this.conf = conf;
 		artifact.setExist(true);
-		isNew = true;
+		setNew(true);
 		this.setOnCloseRequest(new EventHandler<WindowEvent>() {
 
 			@Override
@@ -78,8 +78,8 @@ public class ArtifactForm extends DateDescBasicForm implements ISegmentForm {
 		setName(actName);
 		getCanvasItem().setNameText(actName);
 		getControl().getFillForms().fillArtifact(artifact, IDs, desc, actName, createdDate, type,
-				authorIndex, x, y, typeIndex, isNew, existRB.isSelected());
-		isNew = false;
+				authorIndex, x, y, typeIndex, isNew(), existRB.isSelected());
+		setNew(false);
 
 	}
 
@@ -171,14 +171,6 @@ public class ArtifactForm extends DateDescBasicForm implements ISegmentForm {
 
 	public void setMineTypeCB(ComboBox<ArtifactClass> mineTypeCB) {
 		this.mineTypeCB = mineTypeCB;
-	}
-
-	public boolean isNew() {
-		return isNew;
-	}
-
-	public void setNew(boolean isNew) {
-		this.isNew = isNew;
 	}
 
 	public RadioButton getExistRB() {

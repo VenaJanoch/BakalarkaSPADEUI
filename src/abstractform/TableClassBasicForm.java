@@ -46,7 +46,7 @@ public class TableClassBasicForm extends TableBasicForm {
 		setSuperLB(new Label("Super"));
 	
 		tableTV = new TableView<ClassTable>();
-
+		tableTV.setId("classTable");
 		TableColumn<ClassTable, String> nameColumn = new TableColumn<ClassTable, String>("Name");
 		TableColumn<ClassTable, String> classColumn = new TableColumn<ClassTable, String>("Class");
 		TableColumn<ClassTable, String> superColumn = new TableColumn<ClassTable, String>("SuperClass");

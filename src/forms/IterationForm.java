@@ -29,7 +29,7 @@ public class IterationForm extends Date2DescBasicForm implements ISegmentForm {
 	private Label configLB;
 
 	private ChoiceBox<String> configCB;
-	private boolean isNew;
+	
 	
 	private int chooseConfigID;
 	private Iteration iteration;
@@ -37,7 +37,7 @@ public class IterationForm extends Date2DescBasicForm implements ISegmentForm {
 		super(item, control, itemArray, indexForm, deleteControl, CanvasType.Iteration);
 		setWorkUnitArray(iteration.getWorkUnits());
 		this.iteration = iteration;
-		isNew = true;
+		setNew(true);
 		this.setOnCloseRequest(new EventHandler<WindowEvent>() {
 
 			@Override
@@ -65,8 +65,8 @@ public class IterationForm extends Date2DescBasicForm implements ISegmentForm {
 		setName(actName);
 		getCanvasItem().setNameText(actName);
 		getControl().getFillForms().fillIteration(iteration, IDs, desc, actName, startDate, endDate,
-				chooseConfigID, x, y, isNew);
-		isNew = false;
+				chooseConfigID, x, y, isNew());
+		setNew(false);
 	}
 
 	@Override

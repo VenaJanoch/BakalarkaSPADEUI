@@ -18,76 +18,131 @@ public class LinkControl {
 	private SegmentLists lists;
 	private int id;
 	private ObjectFactory objF;
+
 	public LinkControl(Control control, SegmentLists lists, ObjectFactory objF) {
 		this.setArrows(new ArrayList<>());
 		this.control = control;
 		this.lists = lists;
 		this.objF = objF;
 	}
-	
+
 	public void ArrowManipulation(CanvasItem item, boolean isSave) {
 
 		if (!control.isStartArrow()) {
+			try {
+				if (fillControl(item)) {
 
-			id = IdentificatorCreater.createLineID();
-			link = new NodeLink(id, control, SegmentType.Configuration, this);
+					id = IdentificatorCreater.createLineID();
+					link = new NodeLink(id, control, SegmentType.Configuration, this);
 
-			sortSegmentConf(item);
-			// line = new Line();
-			item.getCanvas().getChildren().add(link);
+					sortSegmentConf(item);
+					// line = new Line();
+					item.getCanvas().getChildren().add(link);
 
-			getArrows().add(id, link);
+					getArrows().add(id, link);
 
-			link.setStart(new Point2D(item.getTranslateX() + (item.getWidth()),
-					item.getTranslateY() + (item.getHeight() / 2)));
+					link.setStart(new Point2D(item.getTranslateX() + (item.getWidth()),
+							item.getTranslateY() + (item.getHeight() / 2)));
 
-			item.registerStartLink(id);
+					item.registerStartLink(id);
 
-			control.setStartArrow(true);
+					control.setStartArrow(true);
+				} else {
+					Alerts.showNoWorkUnit();
+				}
+
+			} catch (Exception e) {
+				Alerts.showNoWorkUnit();
+			}
 
 		} else {
+			try {
+				if (fillControl(item)) {
 
-			sortSegmentConf(item);
+					sortSegmentConf(item);
 
-			link.setEnd(new Point2D(item.getTranslateX(), item.getTranslateY() + (item.getHeight() / 2)));
-			item.registerEndLink(id);
-			control.setStartArrow(false);
-			if(!isSave){
-				setChangeArtifactRelation(link);				
+					link.setEnd(new Point2D(item.getTranslateX(), item.getTranslateY() + (item.getHeight() / 2)));
+					item.registerEndLink(id);
+					control.setStartArrow(false);
+					if (!isSave) {
+						setChangeArtifactRelation(link);
+					}
+				} else {
+					Alerts.showNoWorkUnit();
+				}
+
+			} catch (Exception e) {
+				Alerts.showNoWorkUnit();
 			}
 
 		}
 
 	}
 
+	private boolean fillControl(CanvasItem item) {
+		if (item.getType() == SegmentType.Change) {
+			if (lists.getChangeList().get(item.getIDs()[1]) == null) {
+				return false;
+			}
+		} else {
+			if (lists.getArtifactList().get(item.getIDs()[1]) == null) {
+				return false;
+			}
+
+		}
+		return true;
+	}
+
 	public void ArrowManipulationWorkUnit(CanvasItem item, boolean isSave) {
 
 		if (!control.isStartArrow()) {
+			try {
 
-			id = IdentificatorCreater.createLineID();
-			wLink = new WorkUnitLink(id, control, item.getCanvas(), this);
+				if (control.getLists().getWorkUnitList().get(item.getIDs()[1]) != null) {
 
-			wLink.setStartIDs(item.getIDs());
-			item.getCanvas().getChildren().add(wLink);
+					id = IdentificatorCreater.createLineID();
+					wLink = new WorkUnitLink(id, control, item.getCanvas(), this);
 
-			getArrows().add(id, wLink);
+					wLink.setStartIDs(item.getIDs());
+					item.getCanvas().getChildren().add(wLink);
 
-			wLink.setStart(new Point2D(item.getTranslateX() + (item.getWidth()),
-					item.getTranslateY() + (item.getHeight() / 2)));
+					getArrows().add(id, wLink);
 
-			item.registerStartLink(id);
+					wLink.setStart(new Point2D(item.getTranslateX() + (item.getWidth()),
+							item.getTranslateY() + (item.getHeight() / 2)));
 
-			control.setStartArrow(true);
+					item.registerStartLink(id);
+
+					control.setStartArrow(true);
+				} else {
+					Alerts.showNoWorkUnit();
+				}
+
+			} catch (Exception e) {
+				Alerts.showNoWorkUnit();
+			}
 
 		} else {
 
-			// sortSegmentConf(item);
-			wLink.setEndIDs(item.getIDs());
-			wLink.setArrowAndBox(new Point2D(item.getTranslateX(), item.getTranslateY() + (item.getHeight() / 2)));
-			item.registerEndLink(id);
-			control.setStartArrow(false);
-			if (!isSave) {
-				setWorkUnitRelation(wLink);	
+			try {
+				if (control.getLists().getWorkUnitList().get(item.getIDs()[1]) != null) {
+					// sortSegmentConf(item);
+					wLink.setEndIDs(item.getIDs());
+					wLink.setArrowAndBox(
+							new Point2D(item.getTranslateX(), item.getTranslateY() + (item.getHeight() / 2)));
+					item.registerEndLink(id);
+					control.setStartArrow(false);
+
+					if (!isSave) {
+						setWorkUnitRelation(wLink);
+					}
+
+				} else {
+					Alerts.showNoWorkUnit();
+				}
+
+			} catch (Exception e) {
+				Alerts.showNoWorkUnit();
 			}
 
 		}
@@ -99,44 +154,45 @@ public class LinkControl {
 		lists.getChangeList().get(changeID).setArtifactIndex(-1);
 
 	}
-	
+
 	public void deleteWorkUnitArrow(int arrowId, int leftID, int rightID) {
-			lists.getWorkUnitList().get(leftID).setRightUnitIndex(-1);
-			lists.getWorkUnitList().get(rightID).setLeftUnitIndex(-1);
+		lists.getWorkUnitList().get(leftID).setRightUnitIndex(-1);
+		lists.getWorkUnitList().get(rightID).setLeftUnitIndex(-1);
 	}
 
 	public void setChangeArtifactRelation(NodeLink link) {
 
 		int changeIndex = link.getStartIDs()[1];
-		
+
 		int artifactIndex = link.getEndIDs()[1];
 		Link linkP = objF.createLink();
-		
+
 		linkP.setType("Config");
 		linkP.setArtifactIndex(artifactIndex);
 		linkP.setChangeIndex(changeIndex);
 
 		lists.getLinksList().add(linkP);
-		
+
 		lists.getChangeList().get(changeIndex).setArtifactIndex(artifactIndex);
 		lists.getArtifactList().get(artifactIndex).setChangeIndex(changeIndex);
 
 	}
-	
+
 	public void setWorkUnitRelation(NodeLink link) {
 
 		int leftIndex = link.getStartIDs()[1];
-		
+
 		int rightIndex = link.getEndIDs()[1];
 		Link linkP = objF.createLink();
-		
+
 		linkP.setType("WorkUnit");
 		linkP.setLeftUnitIndex(leftIndex);
 		linkP.setRightUnitIndex(rightIndex);
 
 		lists.getLinksList().add(linkP);
-		
-		lists.getWorkUnitList().get(leftIndex).setRightUnitIndex(rightIndex);;
+
+		lists.getWorkUnitList().get(leftIndex).setRightUnitIndex(rightIndex);
+		;
 		lists.getWorkUnitList().get(rightIndex).setLeftUnitIndex(leftIndex);
 
 	}

@@ -106,7 +106,11 @@ public class SegmentLists {
 		configObservable.clear();
 
 		workUnitFormIndex.clear();
+		for (int i = 0; i < project.getWorkUnits().size(); i++) {
+			workUnitFormIndex.add(null);			
+		}
 		workUnitList = project.getWorkUnits();
+		
 		
 		roleList = project.getRoles();
 		roleFormIndex.clear();
@@ -118,12 +122,18 @@ public class SegmentLists {
 
 		changeList = project.getChanges();
 		changeFormIndex.clear();
-//		changeObservable.clear();
+		for (int i = 0; i < project.getChanges().size(); i++) {
+			changeFormIndex.add(null);
+		}
 
 		artifactFormIndex.clear();
 		artifactList = project.getArtifacts();
 		artifactObservable.clear();
-
+		
+		for (int i = 0; i < project.getArtifacts().size(); i++) {
+			artifactFormIndex.add(null);
+		}
+		
 		criterionList = project.getCriterions();
 		criterionObservable.clear();
 

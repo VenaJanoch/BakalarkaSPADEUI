@@ -33,7 +33,7 @@ public class DragAndDropPanel extends BorderPane {
 		this.buttonBox = new HBox(5);
 		this.setPadding(new Insets(10));
 		this.setBackground(new Background(new BackgroundFill(Color.BROWN, CornerRadii.EMPTY, Insets.EMPTY)));
-
+		this.setId("panelTable");
 		items = new DragAndDropItem(control, Constans.projectDragTextIndexs);
 		this.setAlignment(items, Pos.BOTTOM_LEFT);
 

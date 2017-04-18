@@ -87,6 +87,7 @@ public class FillCopyForms {
 		int index = IdentificatorCreater.getIndex();
 		IDs[0] = index;
 		IDs[1] = idCreater.createPhaseID();
+		IDs[3] = form.getCanvasItem().getIDs()[0];
 
 		Phase phase = fillPhase(form, item.getIDs(), oldPhase, oldIDs);
 		PhaseForm phaseForm = new PhaseForm(item, control, Constans.phaseDragTextIndexs, phase, index, deleteControl);
@@ -120,6 +121,7 @@ public class FillCopyForms {
 
 		IDs[0] = index;
 		IDs[1] = idCreater.createActivityID();
+		IDs[3] = form.getCanvasItem().getIDs()[0];
 
 		Activity activity = fillActivity(form, item.getIDs(), oldActivity, oldIDs);
 		ActivityForm activityForm = new ActivityForm(item, control, Constans.phaseDragTextIndexs, activity, index, deleteControl);
@@ -153,6 +155,7 @@ public class FillCopyForms {
 		int index = IdentificatorCreater.getIndex();
 		IDs[0] = index;
 		IDs[1] = idCreater.createIterationID();
+		IDs[3] = form.getCanvasItem().getIDs()[0];
 
 		Iteration iteration = fillIteration(form, item.getIDs(), oldIteration, oldIDs);
 		IterationForm iterationForm = new IterationForm(item, control, Constans.iterationDragTextIndexs, iteration,
@@ -201,9 +204,12 @@ public class FillCopyForms {
 		IDs[0] = index;
 		IDs[1] = idCreater.createWorkUnitID();
 		IDs[2] = form.getIdCreater().createWorkUnitID();
-		lists.getWorkUnitList().add(unit);
+		IDs[3] = form.getCanvasItem().getIDs()[0];
+		
+		//lists.getWorkUnitList().add(unit);
 		lists.getWorkUnitFormIndex().add(index);
 		form.getWorkUnitArray().add(IDs[2], IDs[1]);
+		
 		index++;
 		IdentificatorCreater.setIndex(index);
 		return IDs;

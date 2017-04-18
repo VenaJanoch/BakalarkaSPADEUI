@@ -79,7 +79,7 @@ public class BranchForm extends TableBasicForm implements ISegmentTableForm {
 	@Override
 	public Node getTable() {
 		tableTV = new TableView<BranchTable>();
-
+		tableTV.setId("branchTable");
 		TableColumn<BranchTable, String> nameColumn = new TableColumn<BranchTable, String>("Name");
 		TableColumn<BranchTable, String> mainColumn = new TableColumn<BranchTable, String>("Is Main");
 
@@ -135,10 +135,10 @@ public class BranchForm extends TableBasicForm implements ISegmentTableForm {
 		rbYes = new RadioButton("Yes");
 		rbYes.setToggleGroup(group);
 		rbYes.setSelected(true);
-
+		rbYes.setId("YesRB");
 		rbNo = new RadioButton("No");
 		rbNo.setToggleGroup(group);
-
+		rbNo.setId("NoRB");
 	
 		group.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
 

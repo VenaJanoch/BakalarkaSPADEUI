@@ -55,6 +55,7 @@ public class Date2DescBasicForm extends DateDescBasicForm {
 
 		date2LB = new Label("Created: ");
 		date2DP = new DatePicker();
+		date2DP.setId("DP2");
 		date2DP.setValue(LocalDate.now());
 
 		getInfoPart().add(date2LB, 0, 3);

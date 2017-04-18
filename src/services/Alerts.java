@@ -316,6 +316,15 @@ public class Alerts {
 		
 	}
 
+	public static void showNoWorkUnit() {
+		Alert alert = new Alert(AlertType.ERROR);
+		alert.setTitle("Link error");
+		alert.setHeaderText("Uncomplete Workunit segment !");
+		alert.setContentText("Please fill this item!");
+		alert.showAndWait();
+		
+	}
+
 	
 
 }

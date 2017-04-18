@@ -20,14 +20,14 @@ import services.DeleteControl;
 public class ActivityForm extends DescriptionBasicForm implements ISegmentForm {
 
 	private Activity activity;
-	private boolean isNew;
+	
 
 	public ActivityForm(CanvasItem item, Control control, int[] itemArray, Activity activity, int indexForm, DeleteControl deleteControl) {
 
 		super(item, control, itemArray, indexForm, deleteControl, CanvasType.Activity);
 		this.activity = activity;
 		setWorkUnitArray(activity.getWorkUnits());
-		isNew = true;
+		setNew(true);
 		this.setOnCloseRequest(new EventHandler<WindowEvent>() {
 
 			@Override
@@ -52,8 +52,8 @@ public class ActivityForm extends DescriptionBasicForm implements ISegmentForm {
 		String desc = getDescriptionTF().getText();
 		getCanvasItem().setNameText(actName);
 		setName(actName);
-		getControl().getFillForms().fillActivity(activity, IDs, desc, actName, x, y, isNew);
-		isNew = false;
+		getControl().getFillForms().fillActivity(activity, IDs, desc, actName, x, y, isNew());
+		setNew(false);
 		
 	}
 

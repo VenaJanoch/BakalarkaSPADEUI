@@ -90,6 +90,7 @@ public class FillForms {
 
 		if (isNew) {
 			BasicForm rForm = control.getForms().get(ID[3]);
+			rForm.getPhaseArray().remove(ID[1]);
 			rForm.getPhaseArray().add(ID[1], phase);
 		}
 
@@ -107,7 +108,7 @@ public class FillForms {
 		IDs[1] = idCreater.createPhaseID();
 		System.out.println(form.getCanvasItem().getIDs()[0]);
 		IDs[3] = form.getCanvasItem().getIDs()[0];
-
+		form.getPhaseArray().add(IDs[1], null);
 		index++;
 		IdentificatorCreater.setIndex(index);
 		return IDs;
@@ -125,6 +126,7 @@ public class FillForms {
 
 		if (isNew) {
 			BasicForm rForm = control.getForms().get(ID[3]);
+			rForm.getActivityArray().remove(ID[1]);
 			rForm.getActivityArray().add(ID[1], activity);
 		}
 	}
@@ -140,6 +142,8 @@ public class FillForms {
 		IdentificatorCreater.setIndex(index);
 		IDs[1] = idCreater.createActivityID();
 		IDs[3] = form.getCanvasItem().getIDs()[0];
+		form.getActivityArray().add(IDs[1], null);
+
 		return IDs;
 	}
 
@@ -158,6 +162,7 @@ public class FillForms {
 
 		if (isNew) {
 			BasicForm rForm = control.getForms().get(ID[3]);
+			rForm.getIterationArray().remove(ID[1]);
 			rForm.getIterationArray().add(ID[1], iteration);
 		}
 	}
@@ -170,7 +175,7 @@ public class FillForms {
 		IDs[0] = index;
 		IDs[1] = idCreater.createIterationID();
 		IDs[3] = form.getCanvasItem().getIDs()[0];
-
+		form.getIterationArray().add(IDs[1], null);
 		index++;
 		IdentificatorCreater.setIndex(index);
 		return IDs;
@@ -199,8 +204,10 @@ public class FillForms {
 
 		if (isNew) {
 			BasicForm rForm = control.getForms().get(ID[3]);
+			rForm.getWorkUnitArray().remove(ID[2]);
 			rForm.getWorkUnitArray().add(ID[2], ID[1]);
-			lists.getWorkUnitList().add(workUnit);
+			lists.getWorkUnitList().remove(ID[1]);
+			lists.getWorkUnitList().add(ID[1], workUnit);
 
 		}
 	}
@@ -215,7 +222,8 @@ public class FillForms {
 		IDs[3] = form.getCanvasItem().getIDs()[0];
 
 		lists.getWorkUnitFormIndex().add(index);
-
+		lists.getWorkUnitList().add(IDs[1], null);
+		form.getWorkUnitArray().add(IDs[2], null);
 		index++;
 		IdentificatorCreater.setIndex(index);
 		return IDs;
@@ -332,7 +340,12 @@ public class FillForms {
 
 		if (isNew) {
 			lists.getChangeFormIndex().add(IDs[0]);
-			// lists.getChangeObservable().add(name);
+			BasicForm rForm = control.getForms().get(IDs[3]);
+			System.out.println("form " + rForm);
+			rForm.getChangeArray().remove(IDs[2]);
+			rForm.getChangeArray().add(IDs[2], IDs[1]);
+			lists.getChangeList().remove(IDs[1]);
+			lists.getChangeList().add(IDs[1], change);
 		}
 
 	}
@@ -345,8 +358,9 @@ public class FillForms {
 		IDs[0] = index;
 		IDs[1] = idCreater.createChangeID();
 		IDs[2] = form.getIdCreater().createChangeID();
-		form.getChangeArray().add(IDs[2], IDs[1]);
-		lists.getChangeList().add(IDs[1], change);
+		IDs[3] = form.getCanvasItem().getIDs()[0];
+		form.getChangeArray().add(IDs[2], null);
+		lists.getChangeList().add(IDs[1], null);
 		index++;
 		IdentificatorCreater.setIndex(index);
 		return IDs;
@@ -371,6 +385,13 @@ public class FillForms {
 		if (isNew) {
 			control.getLists().getArtifactObservable().add(name);
 			control.getLists().getArtifactFormIndex().add(IDs[0]);
+
+			BasicForm rForm = control.getForms().get(IDs[3]);
+
+			rForm.getArtifactArray().remove(IDs[2]);
+			rForm.getArtifactArray().add(IDs[2], IDs[1]);
+			lists.getArtifactList().remove(IDs[1]);
+			lists.getArtifactList().add(IDs[1], artifact);
 		}
 
 	}
@@ -382,8 +403,9 @@ public class FillForms {
 		IDs[0] = index;
 		IDs[1] = idCreater.createArtifactID();
 		IDs[2] = form.getIdCreater().createArtifactID();
-		form.getArtifactArray().add(IDs[2], IDs[1]);
-		control.getLists().getArtifactList().add(IDs[1], artifact);
+		IDs[3] = form.getCanvasItem().getIDs()[0];
+		form.getArtifactArray().add(IDs[2], null);
+		lists.getArtifactList().add(IDs[1], null);
 		index++;
 		IdentificatorCreater.setIndex(index);
 		return IDs;
@@ -396,8 +418,8 @@ public class FillForms {
 		role.setDescription(description);
 		role.setType(type);
 
-		control.getLists().getRoleObservable().add(name);
-		control.getLists().getRoleList().add(role);
+		lists.getRoleObservable().add(name);
+		lists.getRoleList().add(role);
 	}
 
 	public void fillRoleType(String nameST, String classST, String superST) {

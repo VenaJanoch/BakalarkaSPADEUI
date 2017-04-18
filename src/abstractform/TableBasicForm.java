@@ -53,7 +53,7 @@ public class TableBasicForm  extends Stage{
 		
 		nameLB = new Label("Name");
 		nameTF = new TextField();
-
+		nameTF.setId("formName");
 		add = new Button("Add");
 
 		add.setPrefWidth(60);
@@ -72,6 +72,7 @@ public class TableBasicForm  extends Stage{
 		formName = new Label();
 		formName.setAlignment(Pos.CENTER);
 		formName.setFont(Font.font(25));
+		formName.setId("formID");
 		
 		mainPanel.setAlignment(formName, Pos.CENTER);
 		mainPanel.setRight(submitButton);

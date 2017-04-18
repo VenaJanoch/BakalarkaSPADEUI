@@ -35,6 +35,7 @@ public class DragAndDropItem extends HBox {
 		this.setMaxWidth(Constans.width);
 		this.setPadding(new Insets(10));
 		this.itemArray = itemArray;
+		this.setId("dgItem");
 	//	this.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
 		dragSegmnets = new DragText[itemArray.length];
 	}

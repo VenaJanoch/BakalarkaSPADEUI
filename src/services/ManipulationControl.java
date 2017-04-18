@@ -63,20 +63,27 @@ public class ManipulationControl {
 	public void deleteItem(CanvasItem item) {
 		item.setVisible(false);
 		int index = item.getIDs()[0];
-		forms.get(index).deleteItem(item.getIDs());
+		if (!forms.get(index).isNew()) {			
+			forms.get(index).deleteItem(item.getIDs());
+		}
 
 	}
 
 	public void pasteItem(DragAndDropCanvas canvas) {
-
-		CanvasItem item = canvas.addCopyItem(type, 0, 0);
+		int index = itemIds[0];
+		
+		if (forms.get(index).isNew()) {
+		canvas.addItem(type.name(), 0, 0);
+		}else{
+		canvas.addCopyItem(type, 0, 0);			
+		}
 
 	}
 
 	public int[] createCopyForm(CanvasItem item, BasicForm form) {
 		SegmentType sType = item.getType();
 
-		int[] IDs = new int[3];
+		int[] IDs = new int[4];
 
 		switch (sType) {
 		case Phase:

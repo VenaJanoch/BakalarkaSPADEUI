@@ -61,13 +61,13 @@ public class WorkUnitForm extends DescriptionBasicForm implements ISegmentForm {
 	private int authorIndex;
 	private int resolutionIndex;
 	private int statusIndex;
-	private boolean isNew;
+	
 	private WorkUnit unit;
 
 	public WorkUnitForm(CanvasItem item, Control control, WorkUnit unit, DeleteControl deleteControl) {
 		super(item, control, deleteControl);
 		this.unit = unit;
-		isNew = true;
+		setNew(true);
 		setRoleArray(new ArrayList<>());
 		getRoleArray().add(unit.getAssigneeIndex());
 		getRoleArray().add(unit.getAuthorIndex());
@@ -98,8 +98,8 @@ public class WorkUnitForm extends DescriptionBasicForm implements ISegmentForm {
 		setName(actName);
 		getControl().getFillForms().fillWorkUnit(unit, IDs, getDescriptionTF().getText(), actName, assigneIndex,
 				authorIndex, category, x, y, priorityIndex, severityIndex, typeIndex, resolutionIndex, statusIndex,
-				Double.parseDouble(estimatedTimeTF.getText()), isNew);
-		isNew = false;
+				Double.parseDouble(estimatedTimeTF.getText()), isNew());
+		setNew(false);
 
 	}
 

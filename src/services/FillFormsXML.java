@@ -93,14 +93,15 @@ public class FillFormsXML {
 		fillRelationbservabel(project.getRelation());
 		fillResolutionbservabel(project.getResolution());
 		fillStatusbservabel(project.getStatus());
+		
 		fillCriterionObservabel(project.getCriterions());
 		fillMilestoneObservabel(project.getMilestones());
+		
 		fillBranchFromXML(project.getBranches());
+		
 		fillRoleTypeFromXML(project.getRoleType());
 		fillRoleFromXML(project.getRoles());
-
-		// fillChangeObservabel(project.getChanges());
-		// fillArtifactObservabel(project.getArtifacts());
+		
 		fillCPRObservabel(project.getCpr());
 
 		fillConfigurationFromXML(form, project.getConfiguration());
@@ -112,6 +113,7 @@ public class FillFormsXML {
 		for (int i = 0; i < links.size(); i++) {
 
 			if (links.get(i).getType().equals(SegmentType.WorkUnit.name())) {
+				System.out.println("WorkUnit");
 				fillWorkUnitLinks(links.get(i));
 			} else {
 				fillConfigLinks(links.get(i));
@@ -122,6 +124,7 @@ public class FillFormsXML {
 	}
 
 	public void fillWorkUnitLinks(Link link) {
+		
 		int leftI = link.getLeftUnitIndex();
 		int rightI = link.getRightUnitIndex();
 
@@ -129,14 +132,16 @@ public class FillFormsXML {
 		int rightFormI = lists.getWorkUnitFormIndex().get(rightI);
 
 		CanvasItem itemChange = control.getForms().get(leftFormI).getCanvasItem();
+			
 		CanvasItem itemArtifact = control.getForms().get(rightFormI).getCanvasItem();
-
+		
 		linkControl.ArrowManipulationWorkUnit(itemChange, true);
 		linkControl.ArrowManipulationWorkUnit(itemArtifact, true);
 
 	}
 
 	public void fillConfigLinks(Link link) {
+	
 		int changeI = link.getChangeIndex();
 		int artifactI = link.getArtifactIndex();
 
@@ -172,7 +177,7 @@ public class FillFormsXML {
 		int index = IdentificatorCreater.getIndex();
 		IDs[0] = index;
 		IDs[1] = idCreater.createPhaseID();
-
+		IDs[3] = form.getCanvasItem().getIDs()[0];
 		Phase phase = form.getPhaseArray().get(IDs[1]);
 
 		PhaseForm phaseForm = new PhaseForm(item, control, Constans.phaseDragTextIndexs, phase, index, deleteControl);
@@ -208,6 +213,7 @@ public class FillFormsXML {
 		int index = IdentificatorCreater.getIndex();
 		IDs[0] = index;
 		IDs[1] = idCreater.createIterationID();
+		IDs[3] = form.getCanvasItem().getIDs()[0];
 		Iteration iteration = form.getIterationArray().get(IDs[1]);
 		IterationForm iterationForm = new IterationForm(item, control, Constans.iterationDragTextIndexs, iteration,
 				index, deleteControl);
@@ -248,6 +254,7 @@ public class FillFormsXML {
 		int index = IdentificatorCreater.getIndex();
 		IDs[0] = index;
 		IDs[1] = idCreater.createActivityID();
+		IDs[3] = form.getCanvasItem().getIDs()[0];
 		Activity activity = form.getActivityArray().get(IDs[1]);
 		ActivityForm activityForm = new ActivityForm(item, control, Constans.activityDragTextIndexs, activity, index,
 				deleteControl);
@@ -278,18 +285,23 @@ public class FillFormsXML {
 
 	}
 
+	
+	
+	
+	
 	public int[] createWorkUnitFormXML(CanvasItem item, BasicForm form, int[] IDs) {
 		int index = IdentificatorCreater.getIndex();
 
 		IDs[0] = index;
 		IDs[1] = idCreater.createWorkUnitID();
 		IDs[2] = form.getIdCreater().createWorkUnitID();
-
+		IDs[3] = form.getCanvasItem().getIDs()[0];
+		
 		int tmpIndex = form.getWorkUnitArray().get(IDs[2]);
 
 		WorkUnit unit = lists.getWorkUnitList().get(tmpIndex);
 		WorkUnitForm workUnitForm = new WorkUnitForm(item, control, unit, deleteControl);
-
+		workUnitForm.setName(unit.getName());
 		workUnitForm.getNameTF().setText(unit.getName());
 		workUnitForm.getDescriptionTF().setText(unit.getDescription());
 		workUnitForm.getPriorityCB().setValue(lists.getPriorityObservable().get(unit.getPriorityIndex()));
@@ -303,7 +315,8 @@ public class FillFormsXML {
 		index++;
 		IdentificatorCreater.setIndex(index);
 		forms.add(IDs[0], workUnitForm);
-		lists.getWorkUnitFormIndex().add(IDs[1], IDs[0]);
+		lists.getWorkUnitFormIndex().add(tmpIndex, IDs[0]);
+		
 		String author = control.getLists().getRoleList().get(unit.getAuthorIndex()).getName();
 		String assignee = control.getLists().getRoleList().get(unit.getAssigneeIndex()).getName();
 		workUnitForm.getAuthorRoleCB().setValue(author);
@@ -344,7 +357,7 @@ public class FillFormsXML {
 		int index = IdentificatorCreater.getIndex();
 		IDs[0] = index;
 		IDs[1] = idCreater.createConfigurationID();
-
+		IDs[3] = form.getCanvasItem().getIDs()[0];
 		Configuration conf = lists.getConfigList().get(IDs[1]);
 		ConfigurationForm configForm = new ConfigurationForm(item, control, Constans.configurationDragTextIndexs, conf,
 				index, deleteControl);
@@ -369,9 +382,9 @@ public class FillFormsXML {
 
 		configForm.getAuthorRoleCB().setValue(author);
 
-		fillChangeFromXML(configForm, conf.getChangesIndexs());
+		fillChangeFromXML(configForm, conf.getChangesIndexs(),IDs[0]);
 		fillTagsFromXML(configForm, conf.getTags());
-		fillArtifactFromXML(configForm, conf.getArtifactsIndexs());
+		fillArtifactFromXML(configForm, conf.getArtifactsIndexs(), IDs[0]);
 		return IDs;
 
 	}
@@ -438,14 +451,17 @@ public class FillFormsXML {
 		control.getBranchFrom().getTableTV().setItems(data);
 	}
 
-	public void fillChangeFromXML(BasicForm form, List<Integer> changes) {
+	public void fillChangeFromXML(BasicForm form, List<Integer> changes, int formId) {
 
 		for (int i = 0; i < changes.size(); i++) {
-			Change change = control.getLists().getChangeList().get(changes.get(i));
-			System.out.println("Nevim");
+			Change change = lists.getChangeList().get(changes.get(i));
+			
 			CanvasItem item = new CanvasItem(SegmentType.Change, change.getName(), control, form, 1,
 					change.getCoordinates().getXCoordinate(), change.getCoordinates().getYCoordinate(),
 					control.getContexMenu(), linkControl);
+			
+			item.getIDs()[3] = formId;
+			
 			form.getCanvas().getCanvas().getChildren().add(item);
 
 			item.setTranslateX(change.getCoordinates().getXCoordinate());
@@ -460,9 +476,10 @@ public class FillFormsXML {
 		IDs[0] = index;
 		IDs[1] = idCreater.createChangeID();
 		IDs[2] = form.getIdCreater().createChangeID();
-
+		
+		
 		int index1 = form.getChangeArray().get(IDs[2]);
-		Change change = control.getLists().getChangeList().get(index1);
+		Change change = lists.getChangeList().get(index1);
 		Configuration conf = form.getConfigArray();
 		ChangeForm changeForm = new ChangeForm(item, control, change, conf, deleteControl);
 
@@ -472,14 +489,14 @@ public class FillFormsXML {
 		changeForm.getExistRB().setSelected(change.isExist());
 
 		forms.add(index, changeForm);
-		lists.getChangeFormIndex().add(index);
+		lists.getChangeFormIndex().add(index1, index);
 		index++;
 		IdentificatorCreater.setIndex(index);
 		return IDs;
 
 	}
 
-	public void fillArtifactFromXML(BasicForm form, List<Integer> artifacts) {
+	public void fillArtifactFromXML(BasicForm form, List<Integer> artifacts, int formId) {
 
 		for (int i = 0; i < artifacts.size(); i++) {
 			Artifact artifact = control.getLists().getArtifactList().get(artifacts.get(i));
@@ -487,7 +504,7 @@ public class FillFormsXML {
 			CanvasItem item = new CanvasItem(SegmentType.Artifact, artifact.getName(), control, form, 1,
 					artifact.getCoordinates().getXCoordinate(), artifact.getCoordinates().getYCoordinate(),
 					control.getContexMenu(), linkControl);
-
+			item.getIDs()[3] = formId;
 			if ((form.getCanvasItem().getType() == SegmentType.Configuration)) {
 				form.getCanvas().getCanvas().getChildren().add(item);
 			}
@@ -504,7 +521,7 @@ public class FillFormsXML {
 		IDs[0] = index;
 		IDs[1] = idCreater.createArtifactID();
 		IDs[2] = form.getIdCreater().createArtifactID();
-
+		
 		int index1 = form.getArtifactArray().get(IDs[2]);
 		Artifact artifact = control.getLists().getArtifactList().get(index1);
 		ArtifactForm artifactForm = new ArtifactForm(item, control, artifact, deleteControl, form.getConfigArray());
@@ -522,7 +539,7 @@ public class FillFormsXML {
 		artifactForm.setNew(false);
 
 		forms.add(index, artifactForm);
-		control.getLists().getArtifactFormIndex().add(index);
+		control.getLists().getArtifactFormIndex().add(index1, index);
 		index++;
 		IdentificatorCreater.setIndex(index);
 		return IDs;

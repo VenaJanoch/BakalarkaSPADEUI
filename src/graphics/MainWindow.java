@@ -63,7 +63,7 @@ public class MainWindow extends Stage {
 		
 		
 		VBox topPanel = new VBox();
-
+		mainPanel.setId("main");
 		topPanel.getChildren().addAll(menu, dragAndDrop);
 		mainPanel.setTop(topPanel);
 	//	mainPanel.setRight(dragAndDrop);
