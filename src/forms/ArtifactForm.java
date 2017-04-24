@@ -5,7 +5,6 @@ import java.time.LocalDate;
 import SPADEPAC.Artifact;
 import SPADEPAC.ArtifactClass;
 import SPADEPAC.Configuration;
-import SPADEPAC.WorkUnitPriorityClass;
 import abstractform.BasicForm;
 import abstractform.DateDescBasicForm;
 import graphics.CanvasItem;
@@ -52,11 +51,14 @@ public class ArtifactForm extends DateDescBasicForm implements ISegmentForm {
 		this.conf = conf;
 		artifact.setExist(true);
 		setNew(true);
-		this.setOnCloseRequest(new EventHandler<WindowEvent>() {
+		this.setOnCloseRequest(e -> {
 
-			@Override
-			public void handle(WindowEvent event) {
-				Alerts.showSaveSegment();
+			e.consume();
+			int result = Alerts.showSaveSegment();
+			if (result == 1) {
+				setActionSubmitButton();
+			} else if (result == 0) {
+				this.close();
 			}
 		});
 

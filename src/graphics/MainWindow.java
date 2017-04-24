@@ -1,6 +1,7 @@
 package graphics;
 
 import forms.ProjectForm;
+import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.geometry.Orientation;
@@ -36,7 +37,16 @@ public class MainWindow extends Stage {
 		
 
 	
-		main.getPrimaryStage().setOnCloseRequest(event -> Alerts.showCloseApp(control));
+		main.getPrimaryStage().setOnCloseRequest(event ->{
+			event.consume();
+			int result = Alerts.showCloseApp(control);
+			
+			if (result == 1 ) {
+				Platform.exit();
+			}
+			
+			
+		});
 				
 		this.setScene(creatScene());
 	}

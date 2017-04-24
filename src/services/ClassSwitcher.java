@@ -15,6 +15,10 @@ public class ClassSwitcher {
 
 			return Constans.roleTypeManagementSuperClass;
 
+		} else if (classIndex == 0) {
+
+			return -1;
+
 		} else if (classIndex > Constans.roleTypeManagementClass && classIndex <= Constans.roleTypeTeamMemberClass) {
 
 			return Constans.roleTypeTeamMemberSuperClass;
@@ -36,9 +40,13 @@ public class ClassSwitcher {
 
 			return Constans.priorityTypeNormaSuperClass;
 
-		} else if (classIndex <= Constans.priorityTypeLowClass) {
+		} else if (classIndex >= 1 && classIndex <= Constans.priorityTypeLowClass) {
 
 			return Constans.priorityTypeLowSuperClass;
+
+		} else if (classIndex < 1) {
+
+			return -1;
 
 		} else if (classIndex > Constans.priorityTypeNormalClass && classIndex <= Constans.priorityTypeHighClass) {
 
@@ -56,7 +64,11 @@ public class ClassSwitcher {
 
 			return Constans.relationTypeGeneralSuperClass;
 
-		} else if (classIndex <= Constans.relationTypeSimilaryClass) {
+		} else if (classIndex == 0) {
+
+			return -1;
+
+		} else if (classIndex >= 1 && classIndex <= Constans.relationTypeSimilaryClass) {
 
 			return Constans.relationTypeSimilarySuperClass;
 
@@ -81,6 +93,9 @@ public class ClassSwitcher {
 
 			return Constans.resolutionFinishedSuperClass;
 
+		} else if (classIndex == 0) {
+
+			return -1;
 		} else {
 
 			return Constans.resolutionUnFinishedSuperClass;
@@ -88,10 +103,12 @@ public class ClassSwitcher {
 	}
 
 	public int statusClassToSupperClass(int classIndex) {
-		if (classIndex <= Constans.statusTypeOpenClass) {
+		if (classIndex >= 1 && classIndex <= Constans.statusTypeOpenClass) {
 
 			return Constans.statusTypeOpenSuperClass;
 
+		} else if (classIndex == 0) {
+			return -1;
 		} else {
 
 			return Constans.statusTypeCloseSuperClass;
@@ -99,41 +116,22 @@ public class ClassSwitcher {
 	}
 
 	public int typeClassToSupperClass(int classIndex) {
-		if (classIndex <= Constans.typeEditionClass) {
+		if (classIndex >= 1 && classIndex <= Constans.typeEditionClass) {
 
 			return Constans.typeEditionSuperClass;
 
-		}if (classIndex == Constans.typeCreationClass) {
+		}else if (classIndex == Constans.typeCreationClass) {
 
 			return Constans.typeCreationSuperClass;
+
+		}else if (classIndex == 0) {
+
+			return -1;
 
 		} else {
 
 			return Constans.typeGeneralSuperClass;
 		}
 	}
-
-	// public int roleSuperClassToClass(int classIndex) {
-	//
-	// System.out.println(classIndex + "classIndex");
-	//
-	// if (classIndex == Constans.roleTypeManagementSuperClass) {
-	// System.out.println(Constans.roleTypeManagementClass + "1");
-	//
-	// return Constans.roleTypeManagementClass;
-	//
-	// } else if (classIndex > Constans.roleTypeManagementSuperClass
-	// && classIndex < Constans.roleTypeTeamMemberSuperClass) {
-	// System.out.println(Constans.roleTypeTeamMemberClass);
-	// return Constans.roleTypeTeamMemberClass;
-	//
-	// } else if (classIndex > Constans.roleTypeTeamMemberSuperClass
-	// && classIndex < Constans.roleTypeStakeholederSuperClass) {
-	// return Constans.roleTypeStakeholederClass;
-	// } else {
-	// return Constans.roleTypeOtherClass;
-	// }
-	//
-	// }
 
 }

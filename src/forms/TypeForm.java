@@ -4,6 +4,7 @@ import java.util.List;
 
 import SPADEPAC.WorkUnitPriorityClass;
 import SPADEPAC.WorkUnitPrioritySuperClass;
+import SPADEPAC.WorkUnitStatusSuperClass;
 import SPADEPAC.WorkUnitTypeClass;
 import SPADEPAC.WorkUnitTypeSuperClass;
 import abstractform.TableClassBasicForm;
@@ -112,7 +113,14 @@ public class TypeForm extends TableClassBasicForm implements ISegmentTableForm {
 			classIndex = newValue.intValue();
 
 			superIndex = getSwitcher().typeClassToSupperClass(classIndex);
-			superClassTypeCB.setValue(WorkUnitTypeSuperClass.values()[superIndex]);
+			if (superIndex == -1) {
+				superClassTypeCB.setDisable(false);
+				superClassTypeCB.setValue(WorkUnitTypeSuperClass.values()[0]);
+				superIndex = 0;
+			} else {
+				superClassTypeCB.setDisable(true);
+				superClassTypeCB.setValue(WorkUnitTypeSuperClass.values()[getSuperIndex()]);
+			}
 		}
 	};
 
@@ -121,17 +129,19 @@ public class TypeForm extends TableClassBasicForm implements ISegmentTableForm {
 		@Override
 		public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
 
-			// superIndex = newValue.intValue();
-			// int index = classSwitcher.roleSuperClassToClass(superIndex);
-			// roleClassTypeCB.setValue(RoleClass.values()[index]);
-
+			superIndex = newValue.intValue();
 		}
 	};
 
 	@Override
 	public void addItem() {
 		String nameST = getNameTF().getText();
-		String classST = classTypeCB.getValue().name();
+		String classST;
+		if (classTypeCB.getValue() == null || getClassIndex() == 0) {
+			classST = "";
+		} else {
+			classST = classTypeCB.getValue().name();
+		}
 		String superST = WorkUnitTypeSuperClass.values()[superIndex].name();
 
 		if (nameST.length() == 0) {

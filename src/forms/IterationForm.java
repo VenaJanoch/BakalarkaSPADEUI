@@ -29,20 +29,24 @@ public class IterationForm extends Date2DescBasicForm implements ISegmentForm {
 	private Label configLB;
 
 	private ChoiceBox<String> configCB;
-	
-	
+
 	private int chooseConfigID;
 	private Iteration iteration;
-	public IterationForm(CanvasItem item, Control control, int[] itemArray, Iteration iteration, int indexForm, DeleteControl deleteControl) {
+
+	public IterationForm(CanvasItem item, Control control, int[] itemArray, Iteration iteration, int indexForm,
+			DeleteControl deleteControl) {
 		super(item, control, itemArray, indexForm, deleteControl, CanvasType.Iteration);
 		setWorkUnitArray(iteration.getWorkUnits());
 		this.iteration = iteration;
 		setNew(true);
-		this.setOnCloseRequest(new EventHandler<WindowEvent>() {
+		this.setOnCloseRequest(e -> {
 
-			@Override
-			public void handle(WindowEvent event) {
-				Alerts.showSaveSegment();
+			e.consume();
+			int result = Alerts.showSaveSegment();
+			if (result == 1) {
+				setActionSubmitButton();
+			} else if (result == 0) {
+				this.close();
 			}
 		});
 
@@ -64,14 +68,14 @@ public class IterationForm extends Date2DescBasicForm implements ISegmentForm {
 		String desc = getDescriptionTF().getText();
 		setName(actName);
 		getCanvasItem().setNameText(actName);
-		getControl().getFillForms().fillIteration(iteration, IDs, desc, actName, startDate, endDate,
-				chooseConfigID, x, y, isNew());
+		getControl().getFillForms().fillIteration(iteration, IDs, desc, actName, startDate, endDate, chooseConfigID, x,
+				y, isNew());
 		setNew(false);
 	}
 
 	@Override
 	public void setActionSubmitButton() {
-		 if(getFormControl().iterationControl()) {
+		if (getFormControl().iterationControl()) {
 			closeForm();
 			close();
 		}
@@ -79,7 +83,6 @@ public class IterationForm extends Date2DescBasicForm implements ISegmentForm {
 
 	@Override
 	public void createForm() {
-		
 
 		configLB = new Label("Configuration: ");
 		configCB = new ChoiceBox<>(getControl().getLists().getConfigObservable());
@@ -93,27 +96,26 @@ public class IterationForm extends Date2DescBasicForm implements ISegmentForm {
 
 			}
 		});
-	
+
 		fillInfoPart();
 	}
-
 
 	private void fillInfoPart() {
 
 		getDateLB().setText("Start-Date");
 		getDate2LB().setText("End-Date");
-		
+
 		getInfoPart().add(configLB, 0, 4);
 		getInfoPart().setHalignment(configLB, HPos.RIGHT);
 		getInfoPart().add(configCB, 1, 4);
 
 	}
-	
+
 	@Override
 	public void deleteItem(int iDs[]) {
-	
+
 		deleteControl.deleteIteration(iDs);
-		
+
 	}
 
 	/*** Getrs and Setrs ***/
@@ -125,6 +127,5 @@ public class IterationForm extends Date2DescBasicForm implements ISegmentForm {
 	public void setConfigCB(ChoiceBox<String> configCB) {
 		this.configCB = configCB;
 	}
-
 
 }

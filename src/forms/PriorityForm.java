@@ -110,7 +110,14 @@ public class PriorityForm extends TableClassBasicForm implements ISegmentTableFo
 			setClassIndex(newValue.intValue());
 
 			setSuperIndex(getSwitcher().priorityClassToSupperClass(getClassIndex()));
-			superClassTypeCB.setValue(WorkUnitPrioritySuperClass.values()[getSuperIndex()]);
+			if(getSuperIndex() == -1){
+				superClassTypeCB.setDisable(false);
+				superClassTypeCB.setValue(WorkUnitPrioritySuperClass.values()[0]);
+				superIndex = 0;
+			}else{
+				superClassTypeCB.setDisable(true);
+				superClassTypeCB.setValue(WorkUnitPrioritySuperClass.values()[getSuperIndex()]);
+			}
 		}
 	};
 
@@ -119,9 +126,7 @@ public class PriorityForm extends TableClassBasicForm implements ISegmentTableFo
 		@Override
 		public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
 
-			// superIndex = newValue.intValue();
-			// int index = classSwitcher.roleSuperClassToClass(superIndex);
-			// roleClassTypeCB.setValue(RoleClass.values()[index]);
+			setSuperIndex(newValue.intValue());
 
 		}
 	};
@@ -129,7 +134,13 @@ public class PriorityForm extends TableClassBasicForm implements ISegmentTableFo
 	@Override
 	public void addItem() {
 		String nameST = getNameTF().getText();
-		String classST = classTypeCB.getValue().name();
+		String classST;
+		
+		if (classTypeCB.getValue() == null || classIndex == 0) {
+		classST = "";	
+		}else{
+			classST = classTypeCB.getValue().name();			
+		}
 		String superST = WorkUnitPrioritySuperClass.values()[getSuperIndex()].name();
 
 		if (nameST.length() == 0) {

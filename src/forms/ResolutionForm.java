@@ -35,15 +35,14 @@ public class ResolutionForm extends TableClassBasicForm implements ISegmentTable
 	private Label classTypeLB;
 	private Label superClassTypeLB;
 
-	
 	public ResolutionForm(Control control, DeleteControl deleteControl) {
 		super(control, deleteControl);
 
 		this.control = control;
 		this.setTitle("Edit Resolutions");
 		createForm();
-		//getSubmitButton().setVisible(false);
-		 getSubmitButton().setOnAction(event -> setActionSubmitButton());
+		// getSubmitButton().setVisible(false);
+		getSubmitButton().setOnAction(event -> setActionSubmitButton());
 
 	}
 
@@ -116,7 +115,14 @@ public class ResolutionForm extends TableClassBasicForm implements ISegmentTable
 
 			setClassIndex(newValue.intValue());
 			setSuperIndex(getSwitcher().resolutionClassToSupperClass(getClassIndex()));
-			superClassTypeCB.setValue(WorkUnitResolutionsSuperClass.values()[getSuperIndex()]);
+			if (superIndex == -1) {
+				superClassTypeCB.setDisable(false);
+				superClassTypeCB.setValue(WorkUnitResolutionsSuperClass.values()[0]);
+				superIndex = 0;
+			} else {
+				superClassTypeCB.setDisable(true);
+				superClassTypeCB.setValue(WorkUnitResolutionsSuperClass.values()[getSuperIndex()]);
+			}
 		}
 	};
 
@@ -125,9 +131,7 @@ public class ResolutionForm extends TableClassBasicForm implements ISegmentTable
 		@Override
 		public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
 
-			// superIndex = newValue.intValue();
-			// int index = classSwitcher.roleSuperClassToClass(superIndex);
-			// roleClassTypeCB.setValue(RoleClass.values()[index]);
+			superIndex = newValue.intValue();
 
 		}
 	};
@@ -135,7 +139,12 @@ public class ResolutionForm extends TableClassBasicForm implements ISegmentTable
 	@Override
 	public void addItem() {
 		String nameST = getNameTF().getText();
-		String classST = classTypeCB.getValue().name();
+		String classST;
+		if (classTypeCB.getValue() == null || getClassIndex() == 0) {
+			classST = "";
+		} else {
+			classST = classTypeCB.getValue().name();
+		}
 		String superST = WorkUnitResolutionsSuperClass.values()[getSuperIndex()].name();
 
 		if (nameST.length() == 0) {

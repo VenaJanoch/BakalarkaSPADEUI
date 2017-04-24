@@ -283,28 +283,50 @@ public class Alerts {
 
 	}
 
-	public static void showSaveSegment() {
+	public static int showSaveSegment() {
 		Alert alert = new Alert(AlertType.WARNING);
 		alert.setTitle("Closing without save");
 		alert.setHeaderText("Segment did not save!");
-		alert.showAndWait();
+		
+		ButtonType buttonSave = new ButtonType("Save");
+		ButtonType buttonOK = new ButtonType("OK", ButtonData.OK_DONE);
+		ButtonType buttonTypeCancel = new ButtonType("Cancel", ButtonData.CANCEL_CLOSE);
+
+		alert.getButtonTypes().setAll(buttonSave, buttonOK, buttonTypeCancel);
+
+		Optional<ButtonType> result = alert.showAndWait();
+		
+		if (result.get() == buttonSave) {
+			return 1;
+		}else if (result.get() == buttonOK) {
+			return 0;
+		} 
+		
+		return -1;
+		
 	}
 
-	public static void showCloseApp(Control control) {
+	public static int showCloseApp(Control control) {
 		Alert alert = new Alert(AlertType.WARNING);
 		alert.setTitle("Closing APP");
 		alert.setHeaderText("You closing a program");
 		alert.setContentText("Would you save a project?.");
 
 		ButtonType buttonTypeOne = new ButtonType("Save");
+		ButtonType buttonOK = new ButtonType("NO", ButtonData.OK_DONE);
 		ButtonType buttonTypeCancel = new ButtonType("Cancel", ButtonData.CANCEL_CLOSE);
 
-		alert.getButtonTypes().setAll(buttonTypeOne, buttonTypeCancel);
+		alert.getButtonTypes().setAll(buttonTypeOne, buttonOK, buttonTypeCancel);
 
 		Optional<ButtonType> result = alert.showAndWait();
 		if (result.get() == buttonTypeOne) {
 			control.saveFile();
+			return 0;
+		}else if(result.get() == buttonOK){
+			return 1;
 		}
+		
+		return -1;
 	}
 
 	public static void badCopyItem(SegmentType segment, CanvasType canvasType) {

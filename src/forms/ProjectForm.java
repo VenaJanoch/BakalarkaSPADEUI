@@ -41,11 +41,14 @@ public class ProjectForm extends Date2DescBasicForm implements ISegmentForm {
 		setCanvasItem(new CanvasItem(SegmentType.Project, "", control, this, 0, 0, 0, control.getContexMenu(),
 				control.getLinkControl(), control.getCanvas()));
 
-		this.setOnCloseRequest(new EventHandler<WindowEvent>() {
+		this.setOnCloseRequest(e -> {
 
-			@Override
-			public void handle(WindowEvent event) {
-				Alerts.showSaveSegment();
+			e.consume();
+			int result = Alerts.showSaveSegment();
+			if (result == 1) {
+				setActionSubmitButton();
+			} else if (result == 0) {
+				this.close();
 			}
 		});
 

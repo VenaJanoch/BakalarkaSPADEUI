@@ -1,6 +1,5 @@
 package forms;
 
-
 import java.util.List;
 
 import SPADEPAC.WorkUnitPriorityClass;
@@ -34,15 +33,14 @@ public class SeverityForm extends TableClassBasicForm implements ISegmentTableFo
 	private Label classTypeLB;
 	private Label superClassTypeLB;
 
-	
 	public SeverityForm(Control control, DeleteControl deleteControl) {
 		super(control, deleteControl);
 
 		this.control = control;
 		this.setTitle("Edit Severities");
 		createForm();
-		//getSubmitButton().setVisible(false);
-		 getSubmitButton().setOnAction(event -> setActionSubmitButton());
+		// getSubmitButton().setVisible(false);
+		getSubmitButton().setOnAction(event -> setActionSubmitButton());
 
 	}
 
@@ -58,10 +56,8 @@ public class SeverityForm extends TableClassBasicForm implements ISegmentTableFo
 	@Override
 	public Node getTable() {
 
-		
 		getTableTV().setOnKeyReleased(event -> deleteSelected(event));
 
-		
 		return getTableTV();
 	}
 
@@ -116,9 +112,17 @@ public class SeverityForm extends TableClassBasicForm implements ISegmentTableFo
 		public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
 
 			classIndex = newValue.intValue();
-			
+
 			superIndex = getSwitcher().priorityClassToSupperClass(classIndex);
-			superClassTypeCB.setValue(WorkUnitSeveritySuperClass.values()[superIndex]);
+			if (getSuperIndex() == -1) {
+				superClassTypeCB.setDisable(false);
+				superClassTypeCB.setValue(WorkUnitSeveritySuperClass.values()[0]);
+				superIndex = 0;
+			} else {
+				superClassTypeCB.setDisable(true);
+				superClassTypeCB.setValue(WorkUnitSeveritySuperClass.values()[getSuperIndex()]);
+			}
+
 		}
 	};
 
@@ -127,9 +131,7 @@ public class SeverityForm extends TableClassBasicForm implements ISegmentTableFo
 		@Override
 		public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
 
-			// superIndex = newValue.intValue();
-			// int index = classSwitcher.roleSuperClassToClass(superIndex);
-			// roleClassTypeCB.setValue(RoleClass.values()[index]);
+			superIndex = newValue.intValue();
 
 		}
 	};
@@ -137,7 +139,13 @@ public class SeverityForm extends TableClassBasicForm implements ISegmentTableFo
 	@Override
 	public void addItem() {
 		String nameST = getNameTF().getText();
-		String classST = classTypeCB.getValue().name();
+		String classST;
+
+		if (classTypeCB.getValue() == null || classIndex == 0) {
+			classST = "";
+		} else {
+			classST = classTypeCB.getValue().name();
+		}
 		String superST = WorkUnitPrioritySuperClass.values()[superIndex].name();
 
 		if (nameST.length() == 0) {

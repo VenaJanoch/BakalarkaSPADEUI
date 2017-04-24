@@ -266,6 +266,7 @@
 
 	<xs:simpleType name="RoleClass">
 		<xs:restriction base="xs:string">
+			<xs:enumeration value="FREE" />
 			<xs:enumeration value="PROJECT_MANAGER" />
 			<xs:enumeration value="TEAM_MEMBER" />
 			<xs:enumeration value="DEVELOPER" />
@@ -304,6 +305,7 @@
 
 	<xs:simpleType name="WorkUnitPriorityClass">
 		<xs:restriction base="xs:string">
+			<xs:enumeration value="FREE" />
 			<xs:enumeration value="LOWEST" />
 			<xs:enumeration value="LOW" />
 			<xs:enumeration value="NORMAL" />
@@ -324,11 +326,12 @@
 
 	<xs:simpleType name="WorkUnitRelationClass">
 		<xs:restriction base="xs:string">
+			<xs:enumeration value="FREE" />
 			<xs:enumeration value="DUPLICATES" />
-			<xs:enumeration value="BLOCKS" />
-			<xs:enumeration value="RELATES_TO" />
-			<xs:enumeration value="PRECEDES" />
 			<xs:enumeration value="COPIED_FROM" />
+			<xs:enumeration value="BLOCKS" />
+			<xs:enumeration value="PRECEDES" />
+			<xs:enumeration value="RELATES_TO" />
 			<xs:enumeration value="CHILD" />
 			<xs:enumeration value="CAUSES" />
 			<xs:enumeration value="RESOLVES" />
@@ -337,16 +340,17 @@
 
 	<xs:simpleType name="WorkUnitRelationSuperClass">
 		<xs:restriction base="xs:string">
-			<xs:enumeration value="GENERAL" />
 			<xs:enumeration value="SIMILARITY" />
 			<xs:enumeration value="TEMPORAL" />
-			<xs:enumeration value="CAUSAL" />
+			<xs:enumeration value="GENERAL" />
 			<xs:enumeration value="HIERARCHICAL" />
+			<xs:enumeration value="CAUSAL" />
 		</xs:restriction>
 	</xs:simpleType>
 
 	<xs:simpleType name="WorkUnitResolutionClass">
 		<xs:restriction base="xs:string">
+			<xs:enumeration value="FREE" />
 			<xs:enumeration value="INVALID" />
 			<xs:enumeration value="DUPLICATE" />
 			<xs:enumeration value="WONT_FIX" />
@@ -366,11 +370,12 @@
 
 	<xs:simpleType name="WorkUnitSeverityClass">
 		<xs:restriction base="xs:string">
-			<xs:enumeration value="TRIVIAL" />
-			<xs:enumeration value="MINOR" />
-			<xs:enumeration value="NORMAL" />
-			<xs:enumeration value="MAJOR" />
+			<xs:enumeration value="FREE" />
 			<xs:enumeration value="CRITICAL" />
+			<xs:enumeration value="MAJOR" />
+			<xs:enumeration value="NORMAL" />
+			<xs:enumeration value="MINOR" />
+			<xs:enumeration value="TRIVIAL" />
 			<xs:enumeration value="UNASSIGNED" />
 		</xs:restriction>
 	</xs:simpleType>
@@ -386,6 +391,7 @@
 
 	<xs:simpleType name="WorkUnitStatusClass">
 		<xs:restriction base="xs:string">
+			<xs:enumeration value="FREE" />
 			<xs:enumeration value="NEW" />
 			<xs:enumeration value="ACCEPTED" />
 			<xs:enumeration value="IN_PRGRESS" />
@@ -406,10 +412,11 @@
 
 	<xs:simpleType name="WorkUnitTypeClass">
 		<xs:restriction base="xs:string">
-			<xs:enumeration value="TASK" />
+			<xs:enumeration value="FREE" />
 			<xs:enumeration value="BUG" />
 			<xs:enumeration value="ENHANCEMENT" />
 			<xs:enumeration value="FEATURE" />
+			<xs:enumeration value="TASK" />
 		</xs:restriction>
 	</xs:simpleType>
 

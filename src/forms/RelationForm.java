@@ -2,6 +2,7 @@ package forms;
 
 import java.util.List;
 
+import SPADEPAC.RoleSuperClass;
 import SPADEPAC.WorkUnitPriorityClass;
 import SPADEPAC.WorkUnitPrioritySuperClass;
 import SPADEPAC.WorkUnitRelationClass;
@@ -35,16 +36,15 @@ public class RelationForm extends TableClassBasicForm implements ISegmentTableFo
 	private Label classTypeLB;
 	private Label superClassTypeLB;
 
-	
 	public RelationForm(Control control, DeleteControl deleteControl) {
 		super(control, deleteControl);
 
 		this.control = control;
-		this.setTitle("Edit Relations" );
+		this.setTitle("Edit Relations");
 
 		createForm();
-		//getSubmitButton().setVisible(false);
-		 getSubmitButton().setOnAction(event -> setActionSubmitButton());
+		// getSubmitButton().setVisible(false);
+		getSubmitButton().setOnAction(event -> setActionSubmitButton());
 
 	}
 
@@ -68,7 +68,7 @@ public class RelationForm extends TableClassBasicForm implements ISegmentTableFo
 	public void deleteSelected(KeyEvent event) {
 		ObservableList<ClassTable> selection = FXCollections
 				.observableArrayList(getTableTV().getSelectionModel().getSelectedItems());
-		
+
 		ObservableList<ClassTable> list = null;
 
 		if (event.getCode() == KeyCode.DELETE) {
@@ -115,9 +115,16 @@ public class RelationForm extends TableClassBasicForm implements ISegmentTableFo
 		public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
 
 			setClassIndex(newValue.intValue());
-			
+
 			setSuperIndex(getSwitcher().relationClassToSupperClass(getClassIndex()));
-			superClassTypeCB.setValue(WorkUnitRelationSuperClass.values()[getSuperIndex()]);
+			if (getSuperIndex() == -1) {
+				superClassTypeCB.setDisable(false);
+				superClassTypeCB.setValue(WorkUnitRelationSuperClass.values()[0]);
+				superIndex = 0;
+			} else {
+				superClassTypeCB.setDisable(true);
+				superClassTypeCB.setValue(WorkUnitRelationSuperClass.values()[getSuperIndex()]);
+			}
 		}
 	};
 
@@ -126,9 +133,7 @@ public class RelationForm extends TableClassBasicForm implements ISegmentTableFo
 		@Override
 		public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
 
-			// superIndex = newValue.intValue();
-			// int index = classSwitcher.roleSuperClassToClass(superIndex);
-			// roleClassTypeCB.setValue(RoleClass.values()[index]);
+			superIndex = newValue.intValue();
 
 		}
 	};
@@ -136,7 +141,13 @@ public class RelationForm extends TableClassBasicForm implements ISegmentTableFo
 	@Override
 	public void addItem() {
 		String nameST = getNameTF().getText();
-		String classST = classTypeCB.getValue().name();
+		String classST;
+
+		if (classTypeCB.getValue() == null || getClassIndex() == 0) {
+			classST = "";
+		} else {
+			classST = classTypeCB.getValue().name();
+		}
 		String superST = WorkUnitRelationSuperClass.values()[getSuperIndex()].name();
 
 		if (nameST.length() == 0) {

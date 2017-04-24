@@ -16,6 +16,7 @@ import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import services.Alerts;
 import services.Constans;
 import services.Control;
 
@@ -38,7 +39,7 @@ public class MenuPanel extends VBox {
 		MenuBar menuMB = new MenuBar();
 
 		Menu fileMenu = new Menu("File");
-		
+
 		MenuItem newItem = new MenuItem("New");
 		MenuItem openItem = new MenuItem("Open");
 		MenuItem saveItem = new MenuItem("Save");
@@ -46,9 +47,17 @@ public class MenuPanel extends VBox {
 		MenuItem validationItem = new MenuItem("Validate");
 		MenuItem exitItem = new MenuItem("Exit");
 		fileMenu.getItems().addAll(newItem, new SeparatorMenuItem(), openItem, new SeparatorMenuItem(), saveItem,
-				saveAsItem, new SeparatorMenuItem(),validationItem, new SeparatorMenuItem(), exitItem);
+				saveAsItem, new SeparatorMenuItem(), validationItem, new SeparatorMenuItem(), exitItem);
 
-		exitItem.setOnAction(ActionEvent -> Platform.exit());
+		exitItem.setOnAction(event -> {
+			event.consume();
+			int result = Alerts.showCloseApp(control);
+
+			if (result == 1) {
+				Platform.exit();
+			}
+
+		});
 		saveItem.setOnAction(event -> control.saveFile());
 		saveAsItem.setOnAction(event -> control.saveAsFile());
 		openItem.setOnAction(event -> openFile());

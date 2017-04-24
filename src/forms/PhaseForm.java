@@ -45,18 +45,21 @@ public class PhaseForm extends DateDescBasicForm implements ISegmentForm {
 	private int milestoneIndex;
 	private int configIndex;
 	private Phase phase;
-	
+
 	public PhaseForm(CanvasItem item, Control control, int[] itemArray, Phase phase, int indexForm,
 			DeleteControl deleteControl) {
 		super(item, control, itemArray, indexForm, deleteControl, CanvasType.Phase);
 		this.phase = phase;
 		setNew(true);
 		setWorkUnitArray(phase.getWorkUnits());
-		this.setOnCloseRequest(new EventHandler<WindowEvent>() {
+		this.setOnCloseRequest(e -> {
 
-			@Override
-			public void handle(WindowEvent event) {
-				Alerts.showSaveSegment();
+			e.consume();
+			int result = Alerts.showSaveSegment();
+			if (result == 1) {
+				setActionSubmitButton();
+			} else if (result == 0) {
+				this.close();
 			}
 		});
 		getSubmitButton().setOnAction(event -> setActionSubmitButton());
@@ -77,9 +80,9 @@ public class PhaseForm extends DateDescBasicForm implements ISegmentForm {
 
 		setName(actName);
 		getCanvasItem().setNameText(actName);
-		getCanvasItem().getFillForms().fillPhase(phase, IDs, desc, actName, endDateL, configIndex, milestoneIndex, x,
-				y, isNew());
-		
+		getCanvasItem().getFillForms().fillPhase(phase, IDs, desc, actName, endDateL, configIndex, milestoneIndex, x, y,
+				isNew());
+
 		setNew(false);
 
 	}
@@ -100,7 +103,7 @@ public class PhaseForm extends DateDescBasicForm implements ISegmentForm {
 		configLB = new Label("Configuration: ");
 		configCB = new ChoiceBox<>(getControl().getLists().getConfigObservable());
 		configCB.getSelectionModel().selectedIndexProperty().addListener(configListener);
-	
+
 		milestoneLB = new Label("Milestone: ");
 		milestoneCB = new ChoiceBox<>(getControl().getLists().getMilestoneObservable());
 		milestoneCB.getSelectionModel().selectedIndexProperty().addListener(milestoneListener);
@@ -123,7 +126,7 @@ public class PhaseForm extends DateDescBasicForm implements ISegmentForm {
 		public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
 
 			configIndex = newValue.intValue();
-			
+
 		}
 	};
 

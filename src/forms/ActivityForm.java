@@ -28,11 +28,14 @@ public class ActivityForm extends DescriptionBasicForm implements ISegmentForm {
 		this.activity = activity;
 		setWorkUnitArray(activity.getWorkUnits());
 		setNew(true);
-		this.setOnCloseRequest(new EventHandler<WindowEvent>() {
+		this.setOnCloseRequest(e -> {
 
-			@Override
-			public void handle(WindowEvent event) {
-				Alerts.showSaveSegment();
+			e.consume();
+			int result = Alerts.showSaveSegment();
+			if (result == 1) {
+				setActionSubmitButton();
+			} else if (result == 0) {
+				this.close();
 			}
 		});
 

@@ -77,11 +77,14 @@ public class WorkUnitForm extends DescriptionBasicForm implements ISegmentForm {
 		setRoleArray(new ArrayList<>());
 		getRoleArray().add(unit.getAssigneeIndex());
 		getRoleArray().add(unit.getAuthorIndex());
-		this.setOnCloseRequest(new EventHandler<WindowEvent>() {
+		this.setOnCloseRequest(e -> {
 
-			@Override
-			public void handle(WindowEvent event) {
-				Alerts.showSaveSegment();
+			e.consume();
+			int result = Alerts.showSaveSegment();
+			if (result == 1) {
+				setActionSubmitButton();
+			} else if (result == 0) {
+				this.close();
 			}
 		});
 

@@ -6,6 +6,7 @@ import javax.management.relation.RoleStatus;
 
 import SPADEPAC.RoleClass;
 import SPADEPAC.RoleSuperClass;
+import SPADEPAC.WorkUnitPrioritySuperClass;
 import abstractform.TableBasicForm;
 import abstractform.TableClassBasicForm;
 import interfaces.ISegmentTableForm;
@@ -36,7 +37,6 @@ import tables.ClassTable;
 import tables.CriterionTable;
 import tables.RoleTable;
 
-
 public class RoleTypeForm extends TableClassBasicForm implements ISegmentTableForm {
 
 	private Control control;
@@ -47,12 +47,11 @@ public class RoleTypeForm extends TableClassBasicForm implements ISegmentTableFo
 	private Label roleClassTypeLB;
 	private Label roleSuperClassTypeLB;
 
-	
 	public RoleTypeForm(Control control, DeleteControl deleteControl) {
 		super(control, deleteControl);
 
 		this.control = control;
-		
+
 		createForm();
 		getSubmitButton().setVisible(false);
 		// getSubmitButton().setOnAction(event -> setActionSubmitButton());
@@ -61,9 +60,9 @@ public class RoleTypeForm extends TableClassBasicForm implements ISegmentTableFo
 
 	@Override
 	public void createForm() {
-		
+
 		getNameLB().setText("Role type");
-		
+
 		getMainPanel().setCenter(getTable());
 		getMainPanel().setBottom(createControlPane());
 
@@ -126,7 +125,14 @@ public class RoleTypeForm extends TableClassBasicForm implements ISegmentTableFo
 
 			setClassIndex(newValue.intValue());
 			setSuperIndex(getSwitcher().roleClassToSupperClass(getClassIndex()));
-			roleSuperClassTypeCB.setValue(RoleSuperClass.values()[getSuperIndex()]);
+			if (getSuperIndex() == -1) {
+				roleSuperClassTypeCB.setDisable(false);
+				roleSuperClassTypeCB.setValue(RoleSuperClass.values()[0]);
+				superIndex = 0;
+			} else {
+				roleSuperClassTypeCB.setDisable(true);
+				roleSuperClassTypeCB.setValue(RoleSuperClass.values()[getSuperIndex()]);
+			}
 		}
 	};
 
@@ -135,17 +141,20 @@ public class RoleTypeForm extends TableClassBasicForm implements ISegmentTableFo
 		@Override
 		public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
 
-	//		superIndex = newValue.intValue();
-//			int index = classSwitcher.roleSuperClassToClass(superIndex); 
-//			roleClassTypeCB.setValue(RoleClass.values()[index]);
-
+			setSuperIndex(newValue.intValue());
 		}
 	};
 
 	@Override
 	public void addItem() {
 		String nameST = getNameTF().getText();
-		String classST = roleClassTypeCB.getValue().name();
+		String classST;
+
+		if (roleClassTypeCB.getValue() == null || getClassIndex() == 0) {
+			classST = "";
+		} else {
+			classST = roleClassTypeCB.getValue().name();
+		}
 		String superST = roleSuperClassTypeCB.getValue().name();
 
 		if (nameST.length() == 0) {
@@ -159,7 +168,6 @@ public class RoleTypeForm extends TableClassBasicForm implements ISegmentTableFo
 		getTableTV().getItems().add(type);
 		getTableTV().sort();
 		getControl().getFillForms().fillRoleType(nameST, classST, superST);
-		
 
 	}
 

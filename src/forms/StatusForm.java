@@ -4,6 +4,7 @@ import java.util.List;
 
 import SPADEPAC.WorkUnitPriorityClass;
 import SPADEPAC.WorkUnitPrioritySuperClass;
+import SPADEPAC.WorkUnitResolutionsSuperClass;
 import SPADEPAC.WorkUnitStatusClass;
 import SPADEPAC.WorkUnitStatusSuperClass;
 import SPADEPAC.WorkUnitSeverityClass;
@@ -116,7 +117,14 @@ public class StatusForm extends TableClassBasicForm implements ISegmentTableForm
 			classIndex = newValue.intValue();
 			
 			superIndex = getSwitcher().statusClassToSupperClass(classIndex);
-			superClassTypeCB.setValue(WorkUnitStatusSuperClass.values()[superIndex]);
+			if (superIndex == -1) {
+				superClassTypeCB.setDisable(false);
+				superClassTypeCB.setValue(WorkUnitStatusSuperClass.values()[0]);
+				superIndex = 0;
+			} else {
+				superClassTypeCB.setDisable(true);
+				superClassTypeCB.setValue(WorkUnitStatusSuperClass.values()[getSuperIndex()]);
+			}
 		}
 	};
 
@@ -125,9 +133,8 @@ public class StatusForm extends TableClassBasicForm implements ISegmentTableForm
 		@Override
 		public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
 
-			// superIndex = newValue.intValue();
-			// int index = classSwitcher.roleSuperClassToClass(superIndex);
-			// roleClassTypeCB.setValue(RoleClass.values()[index]);
+			superIndex = newValue.intValue();
+			
 
 		}
 	};
@@ -135,7 +142,12 @@ public class StatusForm extends TableClassBasicForm implements ISegmentTableForm
 	@Override
 	public void addItem() {
 		String nameST = getNameTF().getText();
-		String classST = classTypeCB.getValue().name();
+		String classST;
+		if (classTypeCB.getValue() == null || getClassIndex() == 0) {
+			classST = "";
+		} else {
+			classST = classTypeCB.getValue().name();
+		}
 		String superST = WorkUnitStatusSuperClass.values()[superIndex].name();
 
 		if (nameST.length() == 0) {

@@ -8,6 +8,7 @@ import javafx.scene.Cursor;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ToggleButton;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
@@ -31,7 +32,7 @@ import services.SegmentType;
 public class DragAndDropItem extends HBox {
 
 	private DragText[] dragSegmnets;
-	private Button link;
+	private ToggleButton link;
 	private int[] itemArray;
 	private Control control;
 	private BasicForm form;
@@ -93,7 +94,8 @@ public class DragAndDropItem extends HBox {
 	public void createLinkButton(DragAndDropCanvas canvas) {
 		
 		this.canvas = canvas;
-		link = new Button();
+		link = new ToggleButton();
+		
 		link.setText(Constans.linkSimbol);
 		link.setFont(Font.font("Verdana", 20));
 		link.setOnAction(event -> createArrowButtonEvent(canvas));
@@ -125,8 +127,11 @@ public class DragAndDropItem extends HBox {
 		if (canvas.changeArrow()) {
 			canvas.setCursor(Cursor.CROSSHAIR);
 			link.setCursor(Cursor.DEFAULT);
+			
+			
 		} else {
 			canvas.setCursor(Cursor.DEFAULT);
+		
 		}
 	}
 	

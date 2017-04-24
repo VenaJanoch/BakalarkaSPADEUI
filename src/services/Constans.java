@@ -42,20 +42,20 @@ public class Constans {
 
 	public static final String linkSimbol = "-->";
 
-	public static final int roleTypeManagementClass = 0;
-	public static final int roleTypeTeamMemberClass = 6;
-	public static final int roleTypeStakeholederClass = 8;
-	public static final int roleTypeOtherClass = 9;
+	public static final int roleTypeManagementClass = 1;
+	public static final int roleTypeTeamMemberClass = 7;
+	public static final int roleTypeStakeholederClass = 9;
+	public static final int roleTypeOtherClass = 10;
 
 	public static final int roleTypeManagementSuperClass = 0;
 	public static final int roleTypeTeamMemberSuperClass = 1;
 	public static final int roleTypeStakeholederSuperClass = 2;
 	public static final int roleTypeOtherSuperClass = 3;
 
-	public static final int priorityTypeLowClass = 1;
-	public static final int priorityTypeNormalClass = 2;
-	public static final int priorityTypeHighClass = 4;
-	public static final int priorityTypeOtherClass = 5;
+	public static final int priorityTypeLowClass = 2;
+	public static final int priorityTypeNormalClass = 3;
+	public static final int priorityTypeHighClass = 5;
+	public static final int priorityTypeOtherClass = 6;
 
 	public static final int priorityTypeLowSuperClass = 0;
 	public static final int priorityTypeNormaSuperClass = 1;
@@ -67,10 +67,10 @@ public class Constans {
 	public static final int resolutionFinishedSuperClass = 0;
 	public static final int resolutionUnFinishedSuperClass = 1;
 
-	public static final int relationTypeSimilaryClass = 1;
-	public static final int relationTypeTemporalClass = 3;
-	public static final int relationTypeGeneralClass = 4;
-	public static final int relationTypeHierachyClass = 5;
+	public static final int relationTypeSimilaryClass = 2;
+	public static final int relationTypeTemporalClass = 4;
+	public static final int relationTypeGeneralClass = 5;
+	public static final int relationTypeHierachyClass = 6;
 
 	public static final int relationTypeSimilarySuperClass = 0;
 	public static final int relationTypeTemporalSuperClass = 1;
@@ -79,12 +79,11 @@ public class Constans {
 	public static final int relationTypeCasualSuperClass = 4;
 
 	public static final int statusTypeOpenClass = 5;
-
 	public static final int statusTypeOpenSuperClass = 0;
 	public static final int statusTypeCloseSuperClass = 1;
 
-	public static final int typeEditionClass = 1;
-	public static final int typeCreationClass = 2;
+	public static final int typeEditionClass = 2;
+	public static final int typeCreationClass = 3;
 
 	public static final int typeEditionSuperClass = 0;
 	public static final int typeCreationSuperClass = 1;

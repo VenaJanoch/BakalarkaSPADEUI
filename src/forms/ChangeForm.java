@@ -47,11 +47,14 @@ public class ChangeForm extends DescriptionBasicForm implements ISegmentForm {
 		setArtifactArray(new ArrayList());
 		getArtifactArray().add(change.getArtifactIndex());
 
-		this.setOnCloseRequest(new EventHandler<WindowEvent>() {
+		this.setOnCloseRequest(e -> {
 
-			@Override
-			public void handle(WindowEvent event) {
-				Alerts.showSaveSegment();
+			e.consume();
+			int result = Alerts.showSaveSegment();
+			if (result == 1) {
+				setActionSubmitButton();
+			} else if (result == 0) {
+				this.close();
 			}
 		});
 
