@@ -121,4 +121,9 @@ public class ManipulationControl {
 			return IDs;
 		}
 	}
+
+	public int[] createCopyWorkUnitForm(CanvasItem canvasItem, BasicForm rootForm) {
+		int[] IDs = new int[4];
+		return copyForms.createCopyWorkUnit(canvasItem, rootForm, IDs);
+	}
 }

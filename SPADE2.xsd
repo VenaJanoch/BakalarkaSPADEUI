@@ -136,6 +136,7 @@
 		<xs:attribute name="name" type="xs:string" />
 		<xs:attribute name="description" type="xs:string" />
 		<xs:attribute name="estimatedTime" type="xs:double" />
+		<xs:attribute name="exist" type="xs:boolean" />
 	</xs:complexType>
 
 

@@ -82,6 +82,7 @@ public abstract class BasicForm extends Stage {
 	private IdentificatorCreater idCreater;
 	private String type;
 	private boolean isNew;
+	private int indexForm;
 	
 	public BasicForm(CanvasItem item, Control control, int[] itemArray, int indexForm, DeleteControl deleteControl,
 			CanvasType canvasType) {
@@ -93,6 +94,7 @@ public abstract class BasicForm extends Stage {
 		this.item = item;
 		this.itemArray = itemArray;
 		this.alerts = new Alerts();
+		this.indexForm = indexForm;
 		this.setIdCreater(new IdentificatorCreater());
 		this.setTitle("Edit " + item.getType().name());
 		this.canvas = new DragAndDropCanvas(control, indexForm, control.getContexMenu(), canvasType);
@@ -127,6 +129,7 @@ public abstract class BasicForm extends Stage {
 		type = "Project";
 		this.control = control;
 		this.alerts = new Alerts();
+		this.indexForm = 0;
 		this.setTitle("Edit Project");
 		this.setIdCreater(new IdentificatorCreater());
 		this.setFormControl(new FormControl(control.getLists()));
@@ -443,6 +446,14 @@ public abstract class BasicForm extends Stage {
 
 	public void setNew(boolean isNew) {
 		this.isNew = isNew;
+	}
+
+	public int getFormID() {
+		return indexForm;
+	}
+
+	public void setFormID(int formID) {
+		this.indexForm = formID;
 	}
 
 }

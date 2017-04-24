@@ -2,6 +2,7 @@ package services;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 
 import SPADEPAC.Activity;
 import SPADEPAC.Artifact;
@@ -53,6 +54,8 @@ public class FillCopyForms {
 	private SegmentLists lists;
 	private IdentificatorCreater idCreater;
 	private DeleteControl deleteControl;
+	
+	private int oldUnit;
 
 	public FillCopyForms(Control control, SegmentLists lists, Project project, ArrayList<BasicForm> forms,
 			ObjectFactory objFac, IdentificatorCreater idCreator, DeleteControl deleteControl) {
@@ -76,8 +79,6 @@ public class FillCopyForms {
 		phase.setConfiguration(copyPhase.getConfiguration());
 		phase.setMilestoneIndex(copyPhase.getMilestoneIndex());
 		
-		phase.getWorkUnits().addAll(copyPhase.getWorkUnits());
-		
 		return phase;
 
 	}
@@ -91,16 +92,36 @@ public class FillCopyForms {
 
 		Phase phase = fillPhase(form, item.getIDs(), oldPhase, oldIDs);
 		PhaseForm phaseForm = new PhaseForm(item, control, Constans.phaseDragTextIndexs, phase, index, deleteControl);
-		
+
 		forms.add(index, copyFormPhase(phase, phaseForm));
 
 		index++;
 		IdentificatorCreater.setIndex(index);
 
-		control.getFillFormsXML().fillWorkUnitFromXML(phaseForm, oldPhase.getWorkUnits());
+		fillWorkUnitFromCopy(phaseForm, oldPhase.getWorkUnits());
 
 		form.getPhaseArray().add(IDs[1], phase);
 		return IDs;
+	}
+
+	public void fillWorkUnitFromCopy(BasicForm form, List<Integer> units) {
+
+		for (int i = 0; i < units.size(); i++) {
+			WorkUnit unit = lists.getWorkUnitList().get(units.get(i));
+			oldUnit = units.get(i);
+			
+			CanvasItem item = new CanvasItem(SegmentType.WorkUnit, unit.getName(), control, form, 3,
+					unit.getCoordinates().getXCoordinate(), unit.getCoordinates().getYCoordinate(),
+					control.getContexMenu(), control.getLinkControl(), form.getCanvas());
+
+			form.getCanvas().getCanvas().getChildren().add(item);
+
+			item.setTranslateX(unit.getCoordinates().getXCoordinate());
+			item.setTranslateY(unit.getCoordinates().getYCoordinate());
+		
+		}
+	
+
 	}
 
 	public Activity fillActivity(BasicForm form, int[] newIDs, Activity copyActivity, int[] oldIDs) {
@@ -110,7 +131,6 @@ public class FillCopyForms {
 		activity.setName(copyActivity.getName());
 		activity.setCoordinates(copyActivity.getCoordinates());
 
-		activity.getWorkUnits().addAll(copyActivity.getWorkUnits());
 		return activity;
 
 	}
@@ -124,14 +144,14 @@ public class FillCopyForms {
 		IDs[3] = form.getCanvasItem().getIDs()[0];
 
 		Activity activity = fillActivity(form, item.getIDs(), oldActivity, oldIDs);
-		ActivityForm activityForm = new ActivityForm(item, control, Constans.phaseDragTextIndexs, activity, index, deleteControl);
+		ActivityForm activityForm = new ActivityForm(item, control, Constans.phaseDragTextIndexs, activity, index,
+				deleteControl);
 
 		forms.add(index, copyFormActivity(activity, activityForm));
 		index++;
 		IdentificatorCreater.setIndex(index);
 
-		control.getFillFormsXML().fillWorkUnitFromXML(activityForm, oldActivity.getWorkUnits());
-
+		fillWorkUnitFromCopy(activityForm, oldActivity.getWorkUnits());
 		form.getActivityArray().add(IDs[1], activity);
 		return IDs;
 	}
@@ -146,8 +166,7 @@ public class FillCopyForms {
 		iteration.setConfiguration(oldIteration.getConfiguration());
 
 		iteration.setCoordinates(oldIteration.getCoordinates());
-		iteration.getWorkUnits().addAll(oldIteration.getWorkUnits());
-
+		
 		return iteration;
 	}
 
@@ -164,8 +183,7 @@ public class FillCopyForms {
 		index++;
 		IdentificatorCreater.setIndex(index);
 
-		control.getFillFormsXML().fillWorkUnitFromXML(iterationForm, oldIteration.getWorkUnits());
-
+		fillWorkUnitFromCopy(iterationForm, oldIteration.getWorkUnits());
 		form.getIterationArray().add(IDs[1], iteration);
 		return IDs;
 	}
@@ -174,7 +192,7 @@ public class FillCopyForms {
 
 		WorkUnit workUnit = (WorkUnit) objF.createWorkUnit();
 		WorkUnit oldUnit = lists.getWorkUnitList().get(index);
-		
+
 		workUnit.setDescription(oldUnit.getDescription());
 		workUnit.setName(oldUnit.getName());
 		workUnit.setAssigneeIndex(oldUnit.getAssigneeIndex());
@@ -186,30 +204,50 @@ public class FillCopyForms {
 		workUnit.setResolutionIndex(oldUnit.getResolutionIndex());
 		workUnit.setStatusIndex(oldUnit.getStatusIndex());
 		workUnit.setEstimatedTime(oldUnit.getEstimatedTime());
-
+		workUnit.setExist(oldUnit.isExist());
 		workUnit.setCoordinates(oldUnit.getCoordinates());
 
 		lists.getWorkUnitList().add(workUnit);
 		return lists.getWorkUnitList().indexOf(workUnit);
 
 	}
-
-	public int[] createWorkUnit(CanvasItem item, BasicForm form, WorkUnit oldUnit, int[] IDs, int[] oldIDs) {
+	
+	public int[] createCopyWorkUnit(CanvasItem item, BasicForm form, int[] IDs) {
 		int index = IdentificatorCreater.getIndex();
-		
-		WorkUnit unit = lists.getWorkUnitList().get(fillWorkUnit(oldIDs[1]));
-		WorkUnitForm unitForm = new WorkUnitForm(item, control, unit, deleteControl);
-
-		forms.add(index, copyFormWorkUnit(unit, unitForm));
 		IDs[0] = index;
 		IDs[1] = idCreater.createWorkUnitID();
 		IDs[2] = form.getIdCreater().createWorkUnitID();
-		IDs[3] = form.getCanvasItem().getIDs()[0];
+		IDs[3] = form.getFormID();
 		
-		//lists.getWorkUnitList().add(unit);
+		
+		WorkUnit unit = lists.getWorkUnitList().get(fillWorkUnit(oldUnit));
+		WorkUnitForm unitForm = new WorkUnitForm(item, control,unit, deleteControl);
+
+		forms.add(index, copyFormWorkUnit(unit, unitForm, item));
+		// lists.getWorkUnitList().add(unit);
+		lists.getWorkUnitFormIndex().add(index);
+		form.getWorkUnitArray().add(IDs[2],IDs[1]);
+		index++;
+		IdentificatorCreater.setIndex(index);
+		return IDs;
+	}
+
+	public int[] createWorkUnit(CanvasItem item, BasicForm form, WorkUnit oldUnit, int[] IDs, int[] oldIDs) {
+		int index = IdentificatorCreater.getIndex();
+
+		WorkUnit unit = lists.getWorkUnitList().get(fillWorkUnit(oldIDs[1]));
+		WorkUnitForm unitForm = new WorkUnitForm(item, control, unit, deleteControl);
+
+		forms.add(index, copyFormWorkUnit(unit, unitForm, item));
+		IDs[0] = index;
+		IDs[1] = idCreater.createWorkUnitID();
+		IDs[2] = form.getIdCreater().createWorkUnitID();
+		IDs[3] = form.getFormID();
+
+		// lists.getWorkUnitList().add(unit);
 		lists.getWorkUnitFormIndex().add(index);
 		form.getWorkUnitArray().add(IDs[2], IDs[1]);
-		
+
 		index++;
 		IdentificatorCreater.setIndex(index);
 		return IDs;
@@ -241,7 +279,7 @@ public class FillCopyForms {
 		IDs[1] = idCreater.createChangeID();
 		IDs[2] = form.getIdCreater().createChangeID();
 		IDs[3] = form.getCanvasItem().getIDs()[0];
-		
+
 		form.getChangeArray().add(IDs[2], IDs[1]);
 		lists.getChangeList().add(IDs[1], change);
 		index++;
@@ -286,33 +324,27 @@ public class FillCopyForms {
 
 	public PhaseForm copyFormPhase(Phase phase, PhaseForm phaseForm) {
 
-		System.out.println("CreatePhase");
-
 		phaseForm.getDescriptionTF().setText(phase.getDescription());
 		phaseForm.getNameTF().setText(phase.getName());
 		phaseForm.setName(phase.getName());
 		phaseForm.getDateDP().setValue(control.convertDateFromXML(phase.getEndDate()));
 		phaseForm.getMilestoneCB().setValue(control.getLists().getMilestoneObservable().get(phase.getMilestoneIndex()));
 		phaseForm.getConfigCB().setValue(control.getLists().getConfigObservable().get(phase.getConfiguration()));
-
+		phaseForm.setNew(false);
 		return phaseForm;
 	}
 
 	public ActivityForm copyFormActivity(Activity activity, ActivityForm form) {
 
-		System.out.println("CreateActivity");
-
 		form.getDescriptionTF().setText(activity.getDescription());
 		form.getNameTF().setText(activity.getName());
 		form.setName(activity.getName());
-
+		form.setNew(false);
 		return form;
 
 	}
 
 	public IterationForm copyFormIteration(Iteration iteration, IterationForm form) {
-
-		System.out.println("CreateIteration");
 
 		form.getDescriptionTF().setText(iteration.getDescription());
 		form.getNameTF().setText(iteration.getName());
@@ -321,15 +353,14 @@ public class FillCopyForms {
 		form.getConfigCB().setValue(control.getLists().getConfigObservable().get(iteration.getConfiguration()));
 		form.getDateDP().setValue(control.convertDateFromXML(iteration.getEndDate()));
 		form.getDate2DP().setValue(control.convertDateFromXML(iteration.getStartDate()));
-
+		form.setNew(false);
 		return form;
 
 	}
 
-	public WorkUnitForm copyFormWorkUnit(WorkUnit unit, WorkUnitForm form) {
+	public WorkUnitForm copyFormWorkUnit(WorkUnit unit, WorkUnitForm form, CanvasItem item) {
 
-		System.out.println("CreateUnit");
-
+		form.setName(unit.getName());
 		form.getNameTF().setText(unit.getName());
 		form.getDescriptionTF().setText(unit.getDescription());
 		form.getPriorityCB().setValue(lists.getPriorityObservable().get(unit.getPriorityIndex()));
@@ -339,32 +370,42 @@ public class FillCopyForms {
 		form.getStatusCB().setValue(lists.getStatusTypeObservable().get(unit.getStatusIndex()));
 		form.getResolutionCB().setValue(lists.getResolutionTypeObservable().get(unit.getResolutionIndex()));
 		form.getEstimatedTimeTF().setText(String.valueOf(unit.getEstimatedTime()));
+		form.getExistRB().setSelected(unit.isExist());
 
 		String author = control.getLists().getRoleList().get(unit.getAuthorIndex()).getName();
 		String assignee = control.getLists().getRoleList().get(unit.getAssigneeIndex()).getName();
 
 		form.getAuthorRoleCB().setValue(author);
 		form.getAsigneeRoleCB().setValue(assignee);
-
+		
+		if (!unit.isExist()) {
+			item.getSegmentInfo().setRectangleColor(Constans.nonExistRectangleBorderColor);
+		}
+		form.setNew(false);
 		return form;
 
 	}
 
-	private ChangeForm copyFormChange(Change change, ChangeForm changeForm) {
+	public ChangeForm copyFormChange(Change change, ChangeForm changeForm) {
 
 		changeForm.setName(change.getName());
 		changeForm.getNameTF().setText(change.getName());
 		changeForm.getDescriptionTF().setText(change.getDescriptoin());
 		changeForm.getExistRB().setSelected(change.isExist());
 
+		if (!change.isExist()) {
+			changeForm.getCanvasItem().getSegmentInfo().setRectangleColor(Constans.nonExistRectangleBorderColor);
+			
+		}
 		changeForm.setNew(false);
-		
+
 		return changeForm;
 	}
 
-	private ArtifactForm copyFormArtifact(Artifact artifact, ArtifactForm artifactForm) {
+	public ArtifactForm copyFormArtifact(Artifact artifact, ArtifactForm artifactForm) {
 
 		artifactForm.setName(artifact.getName());
+		artifactForm.getNameTF().setText(artifact.getName());
 		artifactForm.getDescriptionTF().setText(artifact.getDescriptoin());
 		artifactForm.getMineTypeCB().setValue(ArtifactClass.values()[artifact.getArtifactIndex()]);
 		artifactForm.getDateDP().setValue(control.convertDateFromXML(artifact.getCreated()));
@@ -374,6 +415,10 @@ public class FillCopyForms {
 
 		artifactForm.getAuthorRoleCB().setValue(author);
 		artifactForm.setNew(false);
+		
+		if (!artifact.isExist()) {
+			artifactForm.getCanvasItem().getSegmentInfo().setRectangleColor(Constans.nonExistRectangleBorderColor);
+		}
 
 		return artifactForm;
 	}

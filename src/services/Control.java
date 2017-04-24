@@ -566,4 +566,13 @@ public class Control {
 		this.linkControl = linkControl;
 	}
 
+	public FillCopyForms getFillCopy() {
+		return fillCopy;
+	}
+
+	public void setFillCopy(FillCopyForms fillCopy) {
+		this.fillCopy = fillCopy;
+	}
+	
+
 }

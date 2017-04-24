@@ -37,14 +37,22 @@ public class InfoBoxSegment extends Group {
 		createBlock();
 
 	}
+	
+	public void setRectangleColor(Color color){
+		
+		topRectangle.setStroke(color);
+		botomRectangle.setStroke(color);
+	}
 
 	private void createBlock() {
 
+		setRectangleColor(Constans.rectangleBorderColor);
+		
 		topRectangle.setFill(Color.TRANSPARENT);
 		botomRectangle.setFill(Color.TRANSPARENT);
-		topRectangle.setStroke(Color.RED);
+		
 		topRectangle.setStrokeWidth(3);
-		botomRectangle.setStroke(Color.RED);
+
 		botomRectangle.setStrokeWidth(3);
 
 		topRectangle.setTranslateX(0);

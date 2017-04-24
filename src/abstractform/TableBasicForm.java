@@ -51,14 +51,15 @@ public class TableBasicForm  extends Stage{
 		controlPane = new GridPane();
 		submitButton = new Button("OK");
 		
-		nameLB = new Label("Name");
+		nameLB = new Label("Name: ");
 		nameTF = new TextField();
 		nameTF.setId("formName");
 		add = new Button("Add");
 
 		add.setPrefWidth(60);
 		add.setPrefHeight(60);
-
+		controlPane.setVgap(5);
+		
 		controlPane.add(nameLB, 0, 0);
 		controlPane.add(nameTF, 1, 0);
 		

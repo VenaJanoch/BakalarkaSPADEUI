@@ -21,6 +21,7 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.stage.WindowEvent;
 import services.Alerts;
+import services.Constans;
 import services.Control;
 import services.DeleteControl;
 import services.SegmentType;
@@ -71,6 +72,12 @@ public class ChangeForm extends DescriptionBasicForm implements ISegmentForm {
 		getCanvasItem().setNameText(actName);
 		getControl().getFillForms().fillChange(change, IDs, getDescriptionTF().getText(), actName, newChange, x, y,
 				existRB.isSelected());
+		
+		if (!existRB.isSelected()) {
+			getCanvasItem().getSegmentInfo().setRectangleColor(Constans.nonExistRectangleBorderColor);
+		}else{
+			getCanvasItem().getSegmentInfo().setRectangleColor(Constans.rectangleBorderColor);
+		}
 
 		newChange = false;
 	}

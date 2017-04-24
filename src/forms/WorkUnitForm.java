@@ -25,6 +25,7 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.stage.WindowEvent;
 import services.Alerts;
@@ -44,8 +45,9 @@ public class WorkUnitForm extends DescriptionBasicForm implements ISegmentForm {
 	private Label typeLB;
 	private Label asigneeRoleLB;
 	private Label authorRoleLB;
-
+		
 	private TextField estimatedTimeTF;
+	private RadioButton existRB;
 	private ComboBox<String> priorityCB;
 	private ComboBox<String> severityCB;
 	private ComboBox<String> resolutionCB;
@@ -101,7 +103,13 @@ public class WorkUnitForm extends DescriptionBasicForm implements ISegmentForm {
 		setName(actName);
 		getControl().getFillForms().fillWorkUnit(unit, IDs, getDescriptionTF().getText(), actName, assigneIndex,
 				authorIndex, category, x, y, priorityIndex, severityIndex, typeIndex, resolutionIndex, statusIndex,
-				Double.parseDouble(estimatedTimeTF.getText()), isNew());
+				Double.parseDouble(estimatedTimeTF.getText()), isNew(), existRB.isSelected());
+		
+		if (!existRB.isSelected()) {
+			getCanvasItem().getSegmentInfo().setRectangleColor(Constans.nonExistRectangleBorderColor);
+		}else{
+			getCanvasItem().getSegmentInfo().setRectangleColor(Constans.rectangleBorderColor);
+		}
 		setNew(false);
 
 	}
@@ -164,6 +172,9 @@ public class WorkUnitForm extends DescriptionBasicForm implements ISegmentForm {
 		statusCB.getSelectionModel().selectedIndexProperty().addListener(statusListener);
 		statusCB.setVisibleRowCount(5);
 
+		existRB = new RadioButton("Exist");
+		existRB.setSelected(true);
+		
 		fillInfoPart();
 	}
 
@@ -253,25 +264,28 @@ public class WorkUnitForm extends DescriptionBasicForm implements ISegmentForm {
 		getInfoPart().setHalignment(severityLB, HPos.RIGHT);
 		getInfoPart().add(severityCB, 1, 5);
 
-		getInfoPart().add(typeLB, 0, 7);
+		getInfoPart().add(typeLB, 0, 6);
 		getInfoPart().setHalignment(typeLB, HPos.RIGHT);
-		getInfoPart().add(typeCB, 1, 7);
+		getInfoPart().add(typeCB, 1, 6);
 
-		getInfoPart().add(resolutionLB, 0, 8);
+		getInfoPart().add(resolutionLB, 0, 7);
 		getInfoPart().setHalignment(resolutionLB, HPos.RIGHT);
-		getInfoPart().add(resolutionCB, 1, 8);
+		getInfoPart().add(resolutionCB, 1, 7);
 
-		getInfoPart().add(statusLB, 0, 9);
+		getInfoPart().add(statusLB, 0, 8);
 		getInfoPart().setHalignment(statusLB, HPos.RIGHT);
-		getInfoPart().add(statusCB, 1, 9);
+		getInfoPart().add(statusCB, 1, 8);
 
-		getInfoPart().add(asigneeRoleLB, 0, 10);
+		getInfoPart().add(asigneeRoleLB, 0, 9);
 		getInfoPart().setHalignment(asigneeRoleLB, HPos.RIGHT);
-		getInfoPart().add(asigneeRoleCB, 1, 10);
+		getInfoPart().add(asigneeRoleCB, 1, 9);
 
-		getInfoPart().add(authorRoleLB, 0, 11);
+		getInfoPart().add(authorRoleLB, 0, 10);
 		getInfoPart().setHalignment(authorRoleLB, HPos.RIGHT);
-		getInfoPart().add(authorRoleCB, 1, 11);
+		getInfoPart().add(authorRoleCB, 1, 10);
+		
+
+		getInfoPart().add(existRB, 1, 11);
 
 	}
 
@@ -355,5 +369,15 @@ public class WorkUnitForm extends DescriptionBasicForm implements ISegmentForm {
 	public void setStatusCB(ComboBox<String> statusCB) {
 		this.statusCB = statusCB;
 	}
+
+	public RadioButton getExistRB() {
+		return existRB;
+	}
+
+	public void setExistRB(RadioButton existRB) {
+		this.existRB = existRB;
+	}
+	
+	
 
 }

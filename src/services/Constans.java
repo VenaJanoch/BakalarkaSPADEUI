@@ -1,5 +1,8 @@
 package services;
 
+import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
+
 public class Constans {
 
 	public static final int width = 1100;
@@ -92,5 +95,7 @@ public class Constans {
 	public static final double relationCBOffset = 20;
 	public static final double ArrowRadius = 10;
 	public static final double checkComboBox = 50;
+	public static final Color rectangleBorderColor = Color.BLACK;
+	public static final Color nonExistRectangleBorderColor = Color.RED;
 
 }

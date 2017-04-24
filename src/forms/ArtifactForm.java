@@ -24,6 +24,7 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.stage.WindowEvent;
 import services.Alerts;
+import services.Constans;
 import services.Control;
 import services.DeleteControl;
 import services.SegmentType;
@@ -79,6 +80,13 @@ public class ArtifactForm extends DateDescBasicForm implements ISegmentForm {
 		getCanvasItem().setNameText(actName);
 		getControl().getFillForms().fillArtifact(artifact, IDs, desc, actName, createdDate, type,
 				authorIndex, x, y, typeIndex, isNew(), existRB.isSelected());
+		
+		if (!existRB.isSelected()) {
+			getCanvasItem().getSegmentInfo().setRectangleColor(Constans.nonExistRectangleBorderColor);
+		}else{
+			getCanvasItem().getSegmentInfo().setRectangleColor(Constans.rectangleBorderColor);
+		}
+		
 		setNew(false);
 
 	}

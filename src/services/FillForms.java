@@ -101,7 +101,7 @@ public class FillForms {
 		forms.add(index, new PhaseForm(item, control, Constans.phaseDragTextIndexs, phase, index, deleteControl));
 		IDs[0] = index;
 		IDs[1] = idCreater.createPhaseID();
-		System.out.println(form.getCanvasItem().getIDs()[0]);
+		
 		IDs[3] = form.getCanvasItem().getIDs()[0];
 		form.getPhaseArray().add(IDs[1], null);
 		index++;
@@ -178,7 +178,7 @@ public class FillForms {
 
 	public void fillWorkUnit(WorkUnit workUnit, int[] ID, String description, String name, int authorIndex,
 			int assigneIndex, String category, int x, int y, int priorityIndex, int severityIndex, int typeIndex,
-			int resolutionIndex, int statusIndex, double estimate, boolean isNew) {
+			int resolutionIndex, int statusIndex, double estimate, boolean isNew, boolean isExist) {
 
 		workUnit.setDescription(description);
 		workUnit.setName(name);
@@ -191,6 +191,7 @@ public class FillForms {
 		workUnit.setResolutionIndex(resolutionIndex);
 		workUnit.setStatusIndex(statusIndex);
 		workUnit.setEstimatedTime(estimate);
+		workUnit.setExist(isExist);
 
 		Coordinates coord = objF.createCoordinates();
 		coord.setXCoordinate(x);

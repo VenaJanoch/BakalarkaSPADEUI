@@ -48,6 +48,7 @@ public class CanvasItem extends AnchorPane {
 	private Control control;
 	private FillFormsXML fillFormsXML;
 	private FillForms fillForms;
+	private FillCopyForms fillCopy;
 	private ManipulationControl manipulation;
 	private Tooltip tooltip;
 
@@ -76,12 +77,14 @@ public class CanvasItem extends AnchorPane {
 		this.setType(type);
 		this.setFillForms(control.getFillForms());
 		this.setFillFormsXML(control.getFillFormsXML());
+		this.fillCopy = control.getFillCopy();
 		this.manipulation = control.getManipulation();
 		this.setTranslateX(x);
 		this.setTranslateY(y);
 		this.contextMenu = contexMenu;
 		this.linkControl = linkControl;
 		this.dgCanvas = dgCanvas;
+		this.segmentInfo = new InfoBoxSegment(this, type, name);
 		
 		// this.setBackground(new Background(new BackgroundFill(Color.BROWN,
 		// CornerRadii.EMPTY, Insets.EMPTY)));
@@ -90,8 +93,10 @@ public class CanvasItem extends AnchorPane {
 			IDs = control.createForm(this, rootForm);
 		} else if (isCreated == 1) {
 			IDs = control.createFormFromXML(this, rootForm);
-		} else {
+		} else if(isCreated == 2){
 			IDs = manipulation.createCopyForm(this, rootForm);
+		}else{
+			IDs = manipulation.createCopyWorkUnitForm(this, rootForm);
 		}
 
 
@@ -103,7 +108,6 @@ public class CanvasItem extends AnchorPane {
 		Tooltip.install(this, tooltip);
 
 		this.control = control;
-		this.segmentInfo = new InfoBoxSegment(this, type, name);
 		this.length = segmentInfo.getLength();
 		this.setMaxHeight(segmentInfo.getHeight());
 		this.setMaxWidth(segmentInfo.getLength());
@@ -354,5 +358,23 @@ public class CanvasItem extends AnchorPane {
 	public void setDgCanvas(DragAndDropCanvas dgCanvas) {
 		this.dgCanvas = dgCanvas;
 	}
+
+	public FillCopyForms getFillCopy() {
+		return fillCopy;
+	}
+
+	public void setFillCopy(FillCopyForms fillCopy) {
+		this.fillCopy = fillCopy;
+	}
+
+	public InfoBoxSegment getSegmentInfo() {
+		return segmentInfo;
+	}
+
+	public void setSegmentInfo(InfoBoxSegment segmentInfo) {
+		this.segmentInfo = segmentInfo;
+	}
+	
+	
 
 }
