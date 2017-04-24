@@ -28,6 +28,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.WindowEvent;
 import services.Alerts;
+import services.Constans;
 import services.Control;
 import services.DeleteControl;
 import services.SegmentType;
@@ -67,6 +68,9 @@ public class WorkUnitForm extends DescriptionBasicForm implements ISegmentForm {
 	public WorkUnitForm(CanvasItem item, Control control, WorkUnit unit, DeleteControl deleteControl) {
 		super(item, control, deleteControl);
 		this.unit = unit;
+		
+		getMainPanel().setMinSize(Constans.workUnitformWidth, Constans.workUnitformHeight);
+		getMainPanel().setMaxSize(Constans.workUnitformWidth, Constans.workUnitformHeight);
 		setNew(true);
 		setRoleArray(new ArrayList<>());
 		getRoleArray().add(unit.getAssigneeIndex());
@@ -88,7 +92,6 @@ public class WorkUnitForm extends DescriptionBasicForm implements ISegmentForm {
 	public void closeForm() {
 
 		String actName = getNameTF().getText();
-		BasicForm form = getCanvasItem().getForm();
 		int[] IDs = getCanvasItem().getIDs();
 		int x = (int) getCanvasItem().getTranslateX();
 		int y = (int) getCanvasItem().getTranslateY();
@@ -131,7 +134,7 @@ public class WorkUnitForm extends DescriptionBasicForm implements ISegmentForm {
 		severityCB.getSelectionModel().selectedIndexProperty().addListener(severityListener);
 		severityCB.setVisibleRowCount(5);
 
-		categoryLB = new Label("CategoryLB: ");
+		categoryLB = new Label("Category: ");
 		categoryTF = new TextField();
 
 		typeLB = new Label("Type: ");

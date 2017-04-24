@@ -1,6 +1,5 @@
 package forms;
 
-
 import java.util.List;
 
 import SPADEPAC.WorkUnitPriorityClass;
@@ -20,6 +19,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
 import services.Alerts;
+import services.Constans;
 import services.Control;
 import services.DeleteControl;
 import tables.ClassTable;
@@ -34,15 +34,14 @@ public class TypeForm extends TableClassBasicForm implements ISegmentTableForm {
 	private Label classTypeLB;
 	private Label superClassTypeLB;
 
-	
 	public TypeForm(Control control, DeleteControl deleteControl) {
 		super(control, deleteControl);
 
 		this.control = control;
 		this.setTitle("Edit WorkUnit type");
 		createForm();
-		//getSubmitButton().setVisible();
-		 getSubmitButton().setOnAction(event -> setActionSubmitButton());
+		// getSubmitButton().setVisible();
+		getSubmitButton().setOnAction(event -> setActionSubmitButton());
 
 	}
 
@@ -57,10 +56,8 @@ public class TypeForm extends TableClassBasicForm implements ISegmentTableForm {
 	@Override
 	public Node getTable() {
 
-		
 		getTableTV().setOnKeyReleased(event -> deleteSelected(event));
 
-		
 		return getTableTV();
 	}
 
@@ -89,10 +86,8 @@ public class TypeForm extends TableClassBasicForm implements ISegmentTableForm {
 	public GridPane createControlPane() {
 
 		classTypeLB = new Label("Class: ");
-		classTypeCB = new ComboBox<WorkUnitTypeClass>(
-				FXCollections.observableArrayList(WorkUnitTypeClass.values()));
+		classTypeCB = new ComboBox<WorkUnitTypeClass>(FXCollections.observableArrayList(WorkUnitTypeClass.values()));
 		classTypeCB.getSelectionModel().selectedIndexProperty().addListener(classListener);
-
 		superClassTypeLB = new Label("SuperClass: ");
 		superClassTypeCB = new ComboBox<WorkUnitTypeSuperClass>(
 				FXCollections.observableArrayList(WorkUnitTypeSuperClass.values()));
@@ -115,7 +110,7 @@ public class TypeForm extends TableClassBasicForm implements ISegmentTableForm {
 		public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
 
 			classIndex = newValue.intValue();
-			
+
 			superIndex = getSwitcher().typeClassToSupperClass(classIndex);
 			superClassTypeCB.setValue(WorkUnitTypeSuperClass.values()[superIndex]);
 		}
@@ -158,7 +153,5 @@ public class TypeForm extends TableClassBasicForm implements ISegmentTableForm {
 		close();
 
 	}
-	
-	
 
 }

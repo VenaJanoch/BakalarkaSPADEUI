@@ -45,6 +45,9 @@ public class DragAndDropCanvas extends ScrollPane {
 
 	private CanvasType canvasType;
 
+	private boolean arrow;
+	private boolean startArrow;
+	
 	public DragAndDropCanvas(Control control, int indexForm, ItemContexMenu contexMenu, CanvasType canvasType) {
 
 		super();
@@ -57,9 +60,13 @@ public class DragAndDropCanvas extends ScrollPane {
 		canvas.setMinWidth(Constans.canvasMaxWidth);
 		canvas.setMinHeight(Constans.canvasMaxHeight);
 		canvas.setId("canvasID");
+		
+		setArrow(false);
+		setStartArrow(false);
+		
 		this.setId("canvas");
 		this.setContent(canvas);
-		this.setPrefSize(Constans.width, Constans.height);
+	
 		this.setHbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
 		this.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
 
@@ -96,20 +103,34 @@ public class DragAndDropCanvas extends ScrollPane {
 			public void handle(DragEvent event) {
 				Dragboard db = event.getDragboard();
 				boolean success = false;
-			
+
 				if (db.hasString()) {
 
 					addItem(db.getString(), event.getSceneX(), event.getSceneY());
 
 					success = true;
 				}
-				
+
 				event.setDropCompleted(success);
 
 				event.consume();
 			}
 
 		});
+		
+	}
+	
+	public boolean changeArrow() {
+
+		if (arrow) {
+
+			arrow = false;
+		} else {
+			arrow = true;
+			setStartArrow(false);
+		}
+
+		return arrow;
 
 	}
 
@@ -140,7 +161,7 @@ public class DragAndDropCanvas extends ScrollPane {
 
 		SegmentType type = Control.findSegmentType(segment);
 		CanvasItem item = new CanvasItem(type, "Name", control, control.getForms().get(indexForm), 0, x, y, contexMenu,
-				control.getLinkControl());
+				control.getLinkControl(), this);
 		canvas.getChildren().add(item);
 		return item;
 
@@ -150,11 +171,11 @@ public class DragAndDropCanvas extends ScrollPane {
 		if (FormControl.copyControl(segment, canvasType)) {
 
 			CanvasItem item = new CanvasItem(segment, "Name", control, control.getForms().get(indexForm), 2, x, y,
-					contexMenu, control.getLinkControl());
+					contexMenu, control.getLinkControl(), this);
 			canvas.getChildren().add(item);
 			return item;
-		}else{
-			
+		} else {
+
 			Alerts.badCopyItem(segment, canvasType);
 		}
 		return null;
@@ -162,6 +183,10 @@ public class DragAndDropCanvas extends ScrollPane {
 	}
 
 	public void restart() {
+		
+		setArrow(false);
+		setStartArrow(false);
+		
 		canvas.getChildren().clear();
 	}
 
@@ -188,5 +213,22 @@ public class DragAndDropCanvas extends ScrollPane {
 	public void setCanvasType(CanvasType canvasType) {
 		this.canvasType = canvasType;
 	}
+
+	public boolean isArrow() {
+		return arrow;
+	}
+
+	public void setArrow(boolean arrow) {
+		this.arrow = arrow;
+	}
+
+	public boolean isStartArrow() {
+		return startArrow;
+	}
+
+	public void setStartArrow(boolean startArrow) {
+		this.startArrow = startArrow;
+	}
+	
 
 }

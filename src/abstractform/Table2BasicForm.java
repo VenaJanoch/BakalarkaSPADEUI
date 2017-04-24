@@ -62,7 +62,7 @@ public class Table2BasicForm extends Stage{
 		submitBT.setId("formSubmit");
 		submitBT.setAlignment(Pos.BOTTOM_CENTER);
 
-		nameLB = new Label("Name");
+		nameLB = new Label("Name: ");
 		nameTF = new TextField();
 		nameTF.setId("formName");
 		addBT = new Button("Add");

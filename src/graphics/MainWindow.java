@@ -45,6 +45,7 @@ public class MainWindow extends Stage {
 	private Scene creatScene() {
 
 		scena = new Scene(creatPanel(), Constans.width, Constans.height);
+	
 		dragCanvas.setMScene(scena);
 		
 		return scena;

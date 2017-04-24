@@ -16,6 +16,16 @@ public class CriterionTable {
 	}
 
 	
+	@Override
+	public String toString() {
+
+		return name.get();
+	}
+	
+	
+	
+	
+	
 	public final String getName() {
 		return name.get();
 	}

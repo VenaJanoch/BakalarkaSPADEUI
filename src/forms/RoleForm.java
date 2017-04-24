@@ -41,6 +41,7 @@ import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import services.Alerts;
 import services.ClassSwitcher;
+import services.Constans;
 import services.Control;
 import services.DeleteControl;
 import tables.MilestoneTable;
@@ -152,8 +153,8 @@ public class RoleForm extends Table2BasicForm implements ISegmentTableForm {
 		roleTypeLB = new Label("Type: ");
 		roleTypeCB = new ChoiceBox<>(getControl().getLists().getRoleTypeObservable());
 		roleTypeCB.getSelectionModel().selectedIndexProperty().addListener(roleListener);
-
-		descriptionLB = new Label("Description");
+		roleTypeCB.setMaxWidth(Constans.checkComboBox);
+		descriptionLB = new Label("Description: ");
 		descriptionTF = new TextField();
 
 		getControlPane().add(descriptionLB, 2, 0);

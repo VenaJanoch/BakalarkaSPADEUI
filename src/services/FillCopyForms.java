@@ -235,12 +235,13 @@ public class FillCopyForms {
 		Configuration conf = form.getConfigArray();
 		ChangeForm changeForm = new ChangeForm(item, control, change, conf, deleteControl);
 
-		forms.add(index, copyFormChagne(oldChange, changeForm));
+		forms.add(index, copyFormChange(oldChange, changeForm));
 
 		IDs[0] = index;
 		IDs[1] = idCreater.createChangeID();
 		IDs[2] = form.getIdCreater().createChangeID();
-
+		IDs[3] = form.getCanvasItem().getIDs()[0];
+		
 		form.getChangeArray().add(IDs[2], IDs[1]);
 		lists.getChangeList().add(IDs[1], change);
 		index++;
@@ -273,7 +274,7 @@ public class FillCopyForms {
 		IDs[0] = index;
 		IDs[1] = idCreater.createArtifactID();
 		IDs[2] = form.getIdCreater().createArtifactID();
-
+		IDs[3] = form.getCanvasItem().getIDs()[0];
 		form.getArtifactArray().add(IDs[2], IDs[1]);
 
 		control.getLists().getArtifactList().add(IDs[1], artifact);
@@ -349,14 +350,16 @@ public class FillCopyForms {
 
 	}
 
-	private ChangeForm copyFormChagne(Change change, ChangeForm changeForm) {
+	private ChangeForm copyFormChange(Change change, ChangeForm changeForm) {
 
 		changeForm.setName(change.getName());
 		changeForm.getNameTF().setText(change.getName());
 		changeForm.getDescriptionTF().setText(change.getDescriptoin());
 		changeForm.getExistRB().setSelected(change.isExist());
 
-		return null;
+		changeForm.setNew(false);
+		
+		return changeForm;
 	}
 
 	private ArtifactForm copyFormArtifact(Artifact artifact, ArtifactForm artifactForm) {

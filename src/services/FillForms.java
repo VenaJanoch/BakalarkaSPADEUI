@@ -28,19 +28,14 @@ import SPADEPAC.WorkUnit;
 import abstractform.BasicForm;
 import forms.ActivityForm;
 import forms.ArtifactForm;
-import forms.BranchForm;
 import forms.ChangeForm;
 import forms.ConfigurationForm;
-import forms.ConfigurationTableForm;
 import forms.IterationForm;
 import forms.PhaseForm;
-import forms.RoleForm;
-import forms.TagForm;
 import forms.WorkUnitForm;
 import graphics.CanvasItem;
 import javafx.collections.ObservableList;
 import tables.ConfigTable;
-import tables.MilestoneTable;
 import tables.TagTable;
 
 public class FillForms {
@@ -341,7 +336,7 @@ public class FillForms {
 		if (isNew) {
 			lists.getChangeFormIndex().add(IDs[0]);
 			BasicForm rForm = control.getForms().get(IDs[3]);
-			System.out.println("form " + rForm);
+			System.out.println(rForm);
 			rForm.getChangeArray().remove(IDs[2]);
 			rForm.getChangeArray().add(IDs[2], IDs[1]);
 			lists.getChangeList().remove(IDs[1]);
@@ -382,12 +377,12 @@ public class FillForms {
 		coord.setYCoordinate(y);
 		artifact.setCoordinates(coord);
 		artifact.setExist(isExist);
+		
 		if (isNew) {
 			control.getLists().getArtifactObservable().add(name);
 			control.getLists().getArtifactFormIndex().add(IDs[0]);
 
 			BasicForm rForm = control.getForms().get(IDs[3]);
-
 			rForm.getArtifactArray().remove(IDs[2]);
 			rForm.getArtifactArray().add(IDs[2], IDs[1]);
 			lists.getArtifactList().remove(IDs[1]);

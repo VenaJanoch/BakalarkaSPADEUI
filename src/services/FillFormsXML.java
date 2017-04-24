@@ -162,7 +162,7 @@ public class FillFormsXML {
 
 			CanvasItem item = new CanvasItem(SegmentType.Phase, phase.getName(), control, form, 1,
 					phase.getCoordinates().getXCoordinate(), phase.getCoordinates().getYCoordinate(),
-					control.getContexMenu(), linkControl);
+					control.getContexMenu(), linkControl, control.getCanvas());
 
 			form.getCanvas().getCanvas().getChildren().add(item);
 
@@ -200,7 +200,7 @@ public class FillFormsXML {
 
 			CanvasItem item = new CanvasItem(SegmentType.Iteration, iteration.getName(), control, forms.get(0), 1,
 					iteration.getCoordinates().getXCoordinate(), iteration.getCoordinates().getYCoordinate(),
-					control.getContexMenu(), linkControl);
+					control.getContexMenu(), linkControl, control.getCanvas());
 			form.getCanvas().getCanvas().getChildren().add(item);
 
 			fillWorkUnitFromXML(forms.get(item.getIDs()[0]), iteration.getWorkUnits());
@@ -239,7 +239,7 @@ public class FillFormsXML {
 
 			CanvasItem item = new CanvasItem(SegmentType.Activity, activity.getName(), control, forms.get(0), 1,
 					activity.getCoordinates().getXCoordinate(), activity.getCoordinates().getYCoordinate(),
-					control.getContexMenu(), linkControl);
+					control.getContexMenu(), linkControl, control.getCanvas());
 			form.getCanvas().getCanvas().getChildren().add(item);
 
 			fillWorkUnitFromXML(forms.get(item.getIDs()[0]), activity.getWorkUnits());
@@ -276,7 +276,7 @@ public class FillFormsXML {
 
 			CanvasItem item = new CanvasItem(SegmentType.WorkUnit, unit.getName(), control, form, 1,
 					unit.getCoordinates().getXCoordinate(), unit.getCoordinates().getYCoordinate(),
-					control.getContexMenu(), linkControl);
+					control.getContexMenu(), linkControl, form.getCanvas());
 			form.getCanvas().getCanvas().getChildren().add(item);
 
 			item.setTranslateX(unit.getCoordinates().getXCoordinate());
@@ -344,7 +344,7 @@ public class FillFormsXML {
 			}
 
 			CanvasItem item = new CanvasItem(SegmentType.Configuration, name, control, form, 1, 0, 0,
-					control.getContexMenu(), linkControl);
+					control.getContexMenu(), linkControl, form.getCanvas());
 			data.add(new ConfigTable(name, release, item.getIDs()[0]));
 
 			lists.getConfigObservable().add(item.getIDs()[1], name);
@@ -458,7 +458,7 @@ public class FillFormsXML {
 			
 			CanvasItem item = new CanvasItem(SegmentType.Change, change.getName(), control, form, 1,
 					change.getCoordinates().getXCoordinate(), change.getCoordinates().getYCoordinate(),
-					control.getContexMenu(), linkControl);
+					control.getContexMenu(), linkControl, form.getCanvas());
 			
 			item.getIDs()[3] = formId;
 			
@@ -503,7 +503,7 @@ public class FillFormsXML {
 
 			CanvasItem item = new CanvasItem(SegmentType.Artifact, artifact.getName(), control, form, 1,
 					artifact.getCoordinates().getXCoordinate(), artifact.getCoordinates().getYCoordinate(),
-					control.getContexMenu(), linkControl);
+					control.getContexMenu(), linkControl, form.getCanvas());
 			item.getIDs()[3] = formId;
 			if ((form.getCanvasItem().getType() == SegmentType.Configuration)) {
 				form.getCanvas().getCanvas().getChildren().add(item);

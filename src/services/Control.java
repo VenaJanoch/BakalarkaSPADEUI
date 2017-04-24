@@ -45,8 +45,7 @@ public class Control {
 	private File file;
 	private boolean firstSave;
 
-	private boolean arrow;
-	private boolean startArrow;
+	
 	private DragAndDropCanvas canvas;
 	private ArrayList<BasicForm> forms;
 
@@ -89,8 +88,7 @@ public class Control {
 		configureFileChooser();
 		classSwitcher = new ClassSwitcher(this);
 
-		setArrow(false);
-		setStartArrow(false);
+		
 		setForms(new ArrayList<>());
 
 		ProjectForm form111 = new ProjectForm(this, project, canvas);
@@ -166,8 +164,7 @@ public class Control {
 
 		configureFileChooser();
 
-		setArrow(false);
-		setStartArrow(false);
+		
 
 		firstSave = true;
 
@@ -180,19 +177,7 @@ public class Control {
 		fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("XML", "*.xml"));
 	}
 
-	public boolean changeArrow() {
-
-		if (arrow) {
-
-			arrow = false;
-
-		} else {
-			arrow = true;
-		}
-
-		return arrow;
-
-	}
+	
 
 	public Double[] calculateArrowPosition(Point2D endPoint) {
 
@@ -441,10 +426,7 @@ public class Control {
 
 	/** Getrs and Setrs ***/
 
-	public boolean isArrow() {
-		return arrow;
-	}
-
+	
 	public SegmentLists getLists() {
 		return lists;
 	}
@@ -453,9 +435,7 @@ public class Control {
 		this.lists = lists;
 	}
 
-	public void setArrow(boolean arrow) {
-		this.arrow = arrow;
-	}
+	
 
 	public ArrayList<BasicForm> getForms() {
 		return forms;
@@ -465,14 +445,7 @@ public class Control {
 		this.forms = forms;
 	}
 
-	public boolean isStartArrow() {
-		return startArrow;
-	}
-
-	public void setStartArrow(boolean startArrow) {
-		this.startArrow = startArrow;
-	}
-
+	
 	public DragAndDropCanvas getCanvas() {
 		return canvas;
 	}

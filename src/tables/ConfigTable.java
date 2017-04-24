@@ -21,6 +21,15 @@ public class ConfigTable {
 	}
 
 	
+	@Override
+	public String toString() {
+
+		return name.get();
+	}
+	
+	
+	
+	
 	public final String getName() {
 		return name.get();
 	}

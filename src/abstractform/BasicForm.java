@@ -45,7 +45,7 @@ import services.IdentificatorCreater;
 public abstract class BasicForm extends Stage {
 
 	private BorderPane mainPanel;
-	private Scene scena;
+	protected Scene scena;
 	private Alerts alerts;
 	private String name;
 	private Label nameLB;
@@ -95,8 +95,8 @@ public abstract class BasicForm extends Stage {
 		this.alerts = new Alerts();
 		this.setIdCreater(new IdentificatorCreater());
 		this.setTitle("Edit " + item.getType().name());
-		this.dgItem = new DragAndDropItem(control, itemArray, this);
 		this.canvas = new DragAndDropCanvas(control, indexForm, control.getContexMenu(), canvasType);
+		this.dgItem = new DragAndDropItem(control, itemArray, this);
 		this.dragBox = new BorderPane();
 		this.setFormControl(new FormControl(control.getLists()));
 		mainPanel = new BorderPane();
@@ -139,14 +139,14 @@ public abstract class BasicForm extends Stage {
 
 	private Scene creatSceneCanvas() {
 
-		scena = new Scene(createPanelCanvas(), Constans.formWidth, Constans.formHeight);
+		scena = new Scene(createPanelCanvas());
 
 		return scena;
 	}
 
 	private Scene creatSceneProject() {
 
-		scena = new Scene(creatPanelProject(), Constans.formWidth, Constans.formHeight);
+		scena = new Scene(creatPanelProject());
 
 		return scena;
 	}
@@ -165,10 +165,11 @@ public abstract class BasicForm extends Stage {
 		
 		mainPanel.setPadding(new Insets(5));
 		buttonBox = new HBox(5);
-		
+		mainPanel.setMinSize(Constans.formWidth, Constans.formHeight);
 		infoPart = new GridPane();
 		infoPart.setAlignment(Pos.CENTER);
-		
+		infoPart.setVgap(10);
+		infoPart.setHgap(10);
 		nameLB = new Label("Name: ");
 		nameTF = new TextField();
 		nameTF.setId("formName");

@@ -53,7 +53,6 @@ public class CanvasItem extends AnchorPane {
 
 	private ItemContexMenu contextMenu;
 
-	
 	private AnchorPane canvas = null;
 	private DragAndDropCanvas dgCanvas;
 
@@ -67,8 +66,9 @@ public class CanvasItem extends AnchorPane {
 	private SegmentType type;
 	private BasicForm form;
 	private LinkControl linkControl;
+
 	public CanvasItem(SegmentType type, String name, Control control, BasicForm rootForm, int isCreated, double x,
-			double y, ItemContexMenu contexMenu, LinkControl linkControl) {
+			double y, ItemContexMenu contexMenu, LinkControl linkControl, DragAndDropCanvas dgCanvas) {
 		this.setOnMousePressed(circleOnMousePressedEventHandler);
 		this.setOnMouseDragged(circleOnMouseDraggedEventHandler);
 		this.setOnMouseReleased(onMouseReleaseEventHandler);
@@ -81,7 +81,10 @@ public class CanvasItem extends AnchorPane {
 		this.setTranslateY(y);
 		this.contextMenu = contexMenu;
 		this.linkControl = linkControl;
-		//this.setBackground(new Background(new BackgroundFill(Color.BROWN, CornerRadii.EMPTY, Insets.EMPTY)));
+		this.dgCanvas = dgCanvas;
+		
+		// this.setBackground(new Background(new BackgroundFill(Color.BROWN,
+		// CornerRadii.EMPTY, Insets.EMPTY)));
 
 		if (isCreated == 0) {
 			IDs = control.createForm(this, rootForm);
@@ -91,11 +94,10 @@ public class CanvasItem extends AnchorPane {
 			IDs = manipulation.createCopyForm(this, rootForm);
 		}
 
-		this.dgCanvas = control.getCanvas();
 
 		idForm = IDs[0];
 		ID = type.name() + "_" + String.format("%03d", IDs[1]);
-		System.out.println(ID);
+		
 		this.setID(ID);
 		this.tooltip = new Tooltip(ID);
 		Tooltip.install(this, tooltip);
@@ -121,12 +123,14 @@ public class CanvasItem extends AnchorPane {
 	public void setClicFromDragPoint(MouseEvent t) {
 
 		if (t.getButton().equals(MouseButton.PRIMARY)) {
-
-			if (control.isArrow()) {
-				if (type == SegmentType.WorkUnit) {
-					linkControl.ArrowManipulationWorkUnit(this, false);
+			
+			if (dgCanvas.isArrow()) {
 				
+				if (type == SegmentType.WorkUnit) {
+					
+					linkControl.ArrowManipulationWorkUnit(this, false);
 				} else if (type == SegmentType.Artifact || type == SegmentType.Change) {
+					
 					linkControl.ArrowManipulation(this, false);
 				}
 
@@ -135,7 +139,7 @@ public class CanvasItem extends AnchorPane {
 				if (t.getClickCount() == 2) {
 					control.getForms().get(idForm).show();
 
-				} else if (!control.isArrow()){
+				} else if (!dgCanvas.isArrow()) {
 
 					orgSceneX = t.getSceneX();
 					orgSceneY = t.getSceneY();
@@ -145,19 +149,19 @@ public class CanvasItem extends AnchorPane {
 			}
 		} else if (t.getButton().equals(MouseButton.SECONDARY)) {
 			contextMenu.setItem(this);
-			
+
 			contextMenu.show(canvas, t.getScreenX(), t.getScreenY());
 		}
 
 	}
 
 	public void setDragFromDragPoint(MouseEvent t) {
-		if (!control.isArrow()) {			
+		if (!dgCanvas.isArrow()) {
 			double offsetX = t.getSceneX() - orgSceneX;
 			double offsetY = t.getSceneY() - orgSceneY;
 			double newTranslateX = orgTranslateX + offsetX;
 			double newTranslateY = orgTranslateY + offsetY;
-			
+
 			// if (t.getSceneX() > 0 && t.getSceneX() < canvas.getWidth() &&
 			// t.getSceneY() > canvas.getTranslateY() + 90
 			// && t.getSceneY() < canvas.getHeight() + 50) {
@@ -184,40 +188,45 @@ public class CanvasItem extends AnchorPane {
 	private void repaintStartArrow() {
 
 		for (int i = 0; i < mStartLinkIds.size(); i++) {
-			int arrowIndex = mStartLinkIds.get(i);
+			if (linkControl.getArrows().get(mStartLinkIds.get(i)) != null) {
 
-			double width = getTranslateX() + segmentInfo.getLength();
-			double height = getTranslateY() + (getHeight() / 2);
+				int arrowIndex = mStartLinkIds.get(i);
 
-			NodeLink link = linkControl.getArrows().get(arrowIndex);
+				double width = getTranslateX() + segmentInfo.getLength();
+				double height = getTranslateY() + (getHeight() / 2);
 
-			link.setStart(new Point2D(width, height));
+				NodeLink link = linkControl.getArrows().get(arrowIndex);
 
-			if (type == SegmentType.WorkUnit) {
-				Point2D center = control.calculateCenter(link.startPoint, link.endPoint);
-				link.relationCB.setTranslateX(center.getX());
-				link.relationCB.setTranslateY(center.getY());
+				link.setStart(new Point2D(width, height));
+
+				if (type == SegmentType.WorkUnit) {
+					Point2D center = control.calculateCenter(link.startPoint, link.endPoint);
+					link.relationCB.setTranslateX(center.getX());
+					link.relationCB.setTranslateY(center.getY());
+				}
 			}
-
 		}
 	}
 
 	private void repaintEndArrow() {
 
 		for (int i = 0; i < mEndLinkIds.size(); i++) {
-			NodeLink link = linkControl.getArrows().get(mEndLinkIds.get(i));
+			if (linkControl.getArrows().get(mEndLinkIds.get(i)) != null) {
+				NodeLink link = linkControl.getArrows().get(mEndLinkIds.get(i));
 
-			link.setEnd(new Point2D(getTranslateX(), getTranslateY() + (getHeight() / 2)));
+				link.setEnd(new Point2D(getTranslateX(), getTranslateY() + (getHeight() / 2)));
 
-			if (type == SegmentType.WorkUnit) {
-				link.setEnd(new Point2D(getTranslateX(), getTranslateY() + (getHeight() / 2)), Constans.ArrowRadius);
-				Point2D center = control.calculateCenter(link.startPoint, link.endPoint);
-				link.relationCB.setTranslateX(center.getX());
-				link.relationCB.setTranslateY(center.getY());
-				link.polygon.getPoints().clear();
-				link.polygon.getPoints().addAll(control.calculateArrowPosition(link.endPoint));
+				if (type == SegmentType.WorkUnit) {
+					link.setEnd(new Point2D(getTranslateX(), getTranslateY() + (getHeight() / 2)),
+							Constans.ArrowRadius);
+					Point2D center = control.calculateCenter(link.startPoint, link.endPoint);
+					link.relationCB.setTranslateX(center.getX());
+					link.relationCB.setTranslateY(center.getY());
+					link.polygon.getPoints().clear();
+					link.polygon.getPoints().addAll(control.calculateArrowPosition(link.endPoint));
+				}
+
 			}
-
 		}
 
 	}
@@ -336,6 +345,14 @@ public class CanvasItem extends AnchorPane {
 
 	public void setFillForms(FillForms fillForms) {
 		this.fillForms = fillForms;
+	}
+
+	public DragAndDropCanvas getDgCanvas() {
+		return dgCanvas;
+	}
+
+	public void setDgCanvas(DragAndDropCanvas dgCanvas) {
+		this.dgCanvas = dgCanvas;
 	}
 
 }

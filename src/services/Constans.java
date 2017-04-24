@@ -8,10 +8,14 @@ public class Constans {
 
 	public static final int formWidth = 700;
 	public static final int formHeight = 600;
-	public static final int canvasMaxWidth= 2000;
+	public static final int workUnitformWidth = 300;
+	public static final int workUnitformHeight = 500;
+	
+	
+	public static final int canvasMaxWidth = 2000;
 	public static final int canvasMaxHeight = 2000;
-	public static final int milestoneFormWidth = 1000;
-	public static final int milestoneFormHeight = 450;
+	public static final int milestoneFormWidth = 1100;
+	public static final int milestoneFormHeight = 750;
 
 	public static final int countDragItems = 13;
 	public static final int countItemsBox = 6;
@@ -25,11 +29,15 @@ public class Constans {
 	public static final int[] phaseDragTextIndexs = { 3 };
 	public static final int[] iterationDragTextIndexs = { 3 };
 	public static final int[] activityDragTextIndexs = { 3 };
-	public static final int[] configurationDragTextIndexs = { 9, 10};
-	
+	public static final int[] configurationDragTextIndexs = { 9, 10 };
+
 	public static final int addButtonCount = 12;
 	public static final String[] addButtonsNames = { "Project", "Add Milestone", "Add Config-role", "Add Role",
-			"Add Priority", "Add severity", "Add Relation", "Add Resolution", "Add Status","Add Type", "Add Branch", "Add Configuration" };
+			"Add Priority", "Add severity", "Add Relation", "Add Resolution", "Add Status", "Add Type", "Add Branch",
+			"Add Configuration" };
+	
+
+	public static final String linkSimbol = "-->";
 
 	public static final int roleTypeManagementClass = 0;
 	public static final int roleTypeTeamMemberClass = 6;
@@ -71,18 +79,18 @@ public class Constans {
 
 	public static final int statusTypeOpenSuperClass = 0;
 	public static final int statusTypeCloseSuperClass = 1;
-	
+
 	public static final int typeEditionClass = 1;
 	public static final int typeCreationClass = 2;
 
-	
 	public static final int typeEditionSuperClass = 0;
 	public static final int typeCreationSuperClass = 1;
 	public static final int typeGeneralSuperClass = 2;
-	
+
 	public static final int infoBoxHeightRectangle = 20;
 	public static final double infoBoxHeight = 40;
 	public static final double relationCBOffset = 20;
 	public static final double ArrowRadius = 10;
+	public static final double checkComboBox = 50;
 
 }

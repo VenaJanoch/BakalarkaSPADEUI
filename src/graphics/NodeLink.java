@@ -35,32 +35,33 @@ import services.SegmentType;
 
 public class NodeLink extends Line {
 
-	
 	protected int[] startIDs;
 	protected int[] endIDs;
-	private int id;
+	protected int id;
 	protected Control control;
 	protected Point2D startPoint;
 	protected Point2D endPoint;
 	protected LineComboBox relationCB;
 	protected Polygon polygon;
 	private SegmentType type;
-	private LinkControl linkControl;
+	protected LinkControl linkControl;
+
 	public NodeLink(int ID, Control control, SegmentType type, LinkControl linkControl) {
 		super();
-		
+
 		this.type = type;
 		this.control = control;
 		this.id = ID;
 		this.setVisible(false);
 		this.linkControl = linkControl;
-		//this.setBackground(new Background(new BackgroundFill(Color.BROWN, CornerRadii.EMPTY, Insets.EMPTY)));
+		// this.setBackground(new Background(new BackgroundFill(Color.BROWN,
+		// CornerRadii.EMPTY, Insets.EMPTY)));
 
-//		this.getChildren().addAll(nodeLink);
+		// this.getChildren().addAll(nodeLink);
 		this.setOnMousePressed(circleOnMousePressedEventHandler);
 		setId(Integer.toString(ID));
-		
-		endPoint = new Point2D(0,0);
+
+		endPoint = new Point2D(0, 0);
 
 	}
 
@@ -74,21 +75,19 @@ public class NodeLink extends Line {
 
 	public void setStart(Point2D startPoint) {
 		this.startPoint = startPoint;
-		
+
 		this.setStartX(startPoint.getX());
 		this.setStartY(startPoint.getY());
 	}
 
 	protected void setDeleteArrow(MouseEvent t) {
+
 		if (t.getButton().equals(MouseButton.PRIMARY)) {
 			if (t.getClickCount() == 2) {
 				this.setVisible(false);
-				
-				if (type == SegmentType.WorkUnit ) {
-					linkControl.deleteWorkUnitArrow(id, startIDs[1], endIDs[1]);
-				}else{
-					linkControl.deleteArrow(id, startIDs[1], endIDs[1]);					
-				}
+
+				linkControl.deleteArrow(id, startIDs[1], endIDs[1]);
+
 			}
 
 		}
@@ -97,28 +96,25 @@ public class NodeLink extends Line {
 
 	public void setEnd(Point2D endPoint) {
 
-			
-		this.endPoint = endPoint;		
-		
+		this.endPoint = endPoint;
+
 		this.setEndX(endPoint.getX());
 		this.setEndY(endPoint.getY());
-		
+
 		this.setVisible(true);
-	
+
 	}
-	
+
 	public void setEnd(Point2D endPoint, double offset) {
 
-		
-		this.endPoint = endPoint;		
-		
+		this.endPoint = endPoint;
+
 		this.setEndX(endPoint.getX() - offset);
 		this.setEndY(endPoint.getY());
-		
-		this.setVisible(true);
-	
-	}
 
+		this.setVisible(true);
+
+	}
 
 	/*** Getrs and Setrs ***/
 	public int[] getStartIDs() {
@@ -136,8 +132,5 @@ public class NodeLink extends Line {
 	public void setEndIDs(int[] endIDs) {
 		this.endIDs = endIDs;
 	}
-
-
-
 
 }

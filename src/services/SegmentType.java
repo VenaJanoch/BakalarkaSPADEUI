@@ -14,5 +14,5 @@ public enum SegmentType {
 	Artifact,
 	Role,
 	Tag,
-	Project
+	Project,
 }

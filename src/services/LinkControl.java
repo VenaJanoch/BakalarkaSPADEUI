@@ -28,25 +28,23 @@ public class LinkControl {
 
 	public void ArrowManipulation(CanvasItem item, boolean isSave) {
 
-		if (!control.isStartArrow()) {
+		if (!item.getDgCanvas().isStartArrow()) {
 			try {
+
 				if (fillControl(item)) {
 
 					id = IdentificatorCreater.createLineID();
 					link = new NodeLink(id, control, SegmentType.Configuration, this);
 
 					sortSegmentConf(item);
-					// line = new Line();
 					item.getCanvas().getChildren().add(link);
-
 					getArrows().add(id, link);
-
 					link.setStart(new Point2D(item.getTranslateX() + (item.getWidth()),
 							item.getTranslateY() + (item.getHeight() / 2)));
 
 					item.registerStartLink(id);
 
-					control.setStartArrow(true);
+					item.getDgCanvas().setStartArrow(true);
 				} else {
 					Alerts.showNoWorkUnit();
 				}
@@ -57,18 +55,16 @@ public class LinkControl {
 
 		} else {
 			try {
-				if (fillControl(item)) {
+				if (segmentControl(item)) {
 
 					sortSegmentConf(item);
 
 					link.setEnd(new Point2D(item.getTranslateX(), item.getTranslateY() + (item.getHeight() / 2)));
 					item.registerEndLink(id);
-					control.setStartArrow(false);
+					item.getDgCanvas().setStartArrow(false);
 					if (!isSave) {
 						setChangeArtifactRelation(link);
 					}
-				} else {
-					Alerts.showNoWorkUnit();
 				}
 
 			} catch (Exception e) {
@@ -80,6 +76,7 @@ public class LinkControl {
 	}
 
 	private boolean fillControl(CanvasItem item) {
+
 		if (item.getType() == SegmentType.Change) {
 			if (lists.getChangeList().get(item.getIDs()[1]) == null) {
 				return false;
@@ -93,9 +90,24 @@ public class LinkControl {
 		return true;
 	}
 
+	private boolean segmentControl(CanvasItem item) {
+		if (fillControl(item)) {
+
+			if (link.getStartIDs() == null && item.getType() == SegmentType.Change) {
+				return true;
+			} else if (link.getEndIDs() == null && item.getType() == SegmentType.Artifact) {
+				return true;
+			}
+		} else {
+			Alerts.showNoWorkUnit();
+		}
+
+		return false;
+	}
+
 	public void ArrowManipulationWorkUnit(CanvasItem item, boolean isSave) {
 
-		if (!control.isStartArrow()) {
+		if (!item.getDgCanvas().isStartArrow()) {
 			try {
 
 				if (control.getLists().getWorkUnitList().get(item.getIDs()[1]) != null) {
@@ -113,7 +125,7 @@ public class LinkControl {
 
 					item.registerStartLink(id);
 
-					control.setStartArrow(true);
+					item.getDgCanvas().setStartArrow(true);
 				} else {
 					Alerts.showNoWorkUnit();
 				}
@@ -125,13 +137,13 @@ public class LinkControl {
 		} else {
 
 			try {
-				if (control.getLists().getWorkUnitList().get(item.getIDs()[1]) != null) {
+				if (lists.getWorkUnitList().get(item.getIDs()[1]) != null) {
 					// sortSegmentConf(item);
 					wLink.setEndIDs(item.getIDs());
 					wLink.setArrowAndBox(
 							new Point2D(item.getTranslateX(), item.getTranslateY() + (item.getHeight() / 2)));
 					item.registerEndLink(id);
-					control.setStartArrow(false);
+					item.getDgCanvas().setStartArrow(false);
 
 					if (!isSave) {
 						setWorkUnitRelation(wLink);
@@ -150,12 +162,20 @@ public class LinkControl {
 	}
 
 	public void deleteArrow(int arrowId, int changeID, int artifactID) {
+
+		arrows.remove(arrowId);
+		arrows.add(arrowId, null);
+
 		lists.getArtifactList().get(artifactID).setChangeIndex(-1);
 		lists.getChangeList().get(changeID).setArtifactIndex(-1);
 
 	}
 
 	public void deleteWorkUnitArrow(int arrowId, int leftID, int rightID) {
+
+		arrows.remove(arrowId);
+		arrows.add(arrowId, null);
+
 		lists.getWorkUnitList().get(leftID).setRightUnitIndex(-1);
 		lists.getWorkUnitList().get(rightID).setLeftUnitIndex(-1);
 	}

@@ -39,7 +39,7 @@ public class ProjectForm extends Date2DescBasicForm implements ISegmentForm {
 		setCanvas(canvas);
 
 		setCanvasItem(new CanvasItem(SegmentType.Project, "", control, this, 0, 0, 0, control.getContexMenu(),
-				control.getLinkControl()));
+				control.getLinkControl(), control.getCanvas()));
 
 		this.setOnCloseRequest(new EventHandler<WindowEvent>() {
 

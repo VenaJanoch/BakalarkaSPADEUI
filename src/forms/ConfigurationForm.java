@@ -30,6 +30,7 @@ import javafx.scene.shape.Line;
 import javafx.stage.WindowEvent;
 import services.Alerts;
 import services.CanvasType;
+import services.Constans;
 import services.Control;
 import services.DeleteControl;
 import services.SegmentType;
@@ -38,7 +39,6 @@ public class ConfigurationForm extends BasicForm implements ISegmentForm {
 
 	private boolean isRelease;
 
-	private Button arrowBT;
 	private Button addTag;
 	private boolean isNew;
 
@@ -66,7 +66,8 @@ public class ConfigurationForm extends BasicForm implements ISegmentForm {
 	private Configuration configuration;
 	private TagForm tagForm;
 
-	public ConfigurationForm(CanvasItem item, Control control, int[] itemArray, Configuration conf, int indexForm, DeleteControl deleteControl) {
+	public ConfigurationForm(CanvasItem item, Control control, int[] itemArray, Configuration conf, int indexForm,
+			DeleteControl deleteControl) {
 		super(item, control, itemArray, indexForm, deleteControl, CanvasType.Configuration);
 		this.configuration = conf;
 		setConfigArray(conf);
@@ -108,7 +109,7 @@ public class ConfigurationForm extends BasicForm implements ISegmentForm {
 
 		setName(actName);
 		getCanvasItem().setNameText(actName);
-		
+
 		getControl().getFillForms().fillConfiguration(configuration, IDs, isRelease, createDate, actName, authorIndex,
 				isNew);
 
@@ -120,7 +121,7 @@ public class ConfigurationForm extends BasicForm implements ISegmentForm {
 	@Override
 	public void setActionSubmitButton() {
 
-		if (getFormControl().configControl()){
+		if (getFormControl().configControl()) {
 
 			closeForm();
 			close();
@@ -129,10 +130,6 @@ public class ConfigurationForm extends BasicForm implements ISegmentForm {
 
 	@Override
 	public void createForm() {
-
-		arrowBT = new Button("", new Line(0, 0, 10, 10));
-		getDragBox().setLeft(arrowBT);
-		arrowBT.setOnAction(event -> createArrowButtonEvent());
 
 		createdLB = new Label("Created: ");
 		createdDP = new DatePicker();
@@ -149,15 +146,17 @@ public class ConfigurationForm extends BasicForm implements ISegmentForm {
 		authorRoleCB = new ComboBox<String>(getControl().getLists().getRoleObservable());
 		authorRoleCB.setVisibleRowCount(5);
 		authorRoleCB.getSelectionModel().selectedIndexProperty().addListener(roleListenerAut);
-
+		
 		cprLB = new Label("Conf-Person: ");
 		cprCB = new CheckComboBox<String>(getControl().getLists().getCPRObservable());
 		cprCB.getCheckModel().getCheckedItems().addListener(cprListener);
-
+		cprCB.setMaxWidth(Constans.checkComboBox);
+		
 		branchLB = new Label("Branches");
 		branchCB = new CheckComboBox<String>(getControl().getLists().getBranchObservable());
+		branchCB.setMaxWidth(Constans.checkComboBox);
 		branchCB.getCheckModel().getCheckedItems().addListener(new ListChangeListener<String>() {
-
+		
 			public void onChanged(ListChangeListener.Change<? extends String> c) {
 				branchIndex.addAll(branchCB.getCheckModel().getCheckedIndices());
 				branchArray = branchCB.getCheckModel().getCheckedItems();
@@ -169,17 +168,6 @@ public class ConfigurationForm extends BasicForm implements ISegmentForm {
 		addTag.setOnAction(event -> tagForm.show());
 
 		fillInfoPart();
-	}
-
-	public void createArrowButtonEvent() {
-
-		if (getControl().changeArrow()) {
-			getCanvas().getParent().setCursor(Cursor.CROSSHAIR);
-			arrowBT.setCursor(Cursor.DEFAULT);
-		} else {
-			getCanvas().getParent().setCursor(Cursor.DEFAULT);
-		}
-
 	}
 
 	private void fillInfoPart() {
@@ -240,8 +228,6 @@ public class ConfigurationForm extends BasicForm implements ISegmentForm {
 
 		}
 	};
-	
-	
 
 	/*** Getrs and Setrs ***/
 

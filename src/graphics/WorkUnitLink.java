@@ -5,8 +5,11 @@ import SPADEPAC.WorkUnit;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
+import javafx.event.EventHandler;
 import javafx.geometry.Point2D;
 import javafx.scene.control.ComboBox;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.shape.Polygon;
 import services.Alerts;
@@ -57,4 +60,30 @@ public class WorkUnitLink extends NodeLink {
 
 		polygon.setVisible(true);
 	}
+	
+	EventHandler<MouseEvent> circleOnMousePressedEventHandler = new EventHandler<MouseEvent>() {
+
+		@Override
+		public void handle(MouseEvent t) {
+			setDeleteArrow(t);
+		}
+	};
+
+
+	protected void setDeleteArrow(MouseEvent t) {
+		
+		if (t.getButton().equals(MouseButton.PRIMARY)) {
+			if (t.getClickCount() == 2) {
+				this.setVisible(false);
+				relationCB.setVisible(false);
+				relationCB = null;
+				polygon.setVisible(false);
+				polygon = null;
+					linkControl.deleteWorkUnitArrow(id, startIDs[1], endIDs[1]);
+			}
+
+		}
+
+	}
+
 }

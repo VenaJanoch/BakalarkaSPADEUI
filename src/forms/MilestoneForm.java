@@ -157,6 +157,7 @@ public class MilestoneForm extends Table2BasicForm implements ISegmentTableForm 
 		
 		criteriaLB = new Label("Criteria: ");
 		criteriaCB = new CheckComboBox<String>(getControl().getLists().getCriterionObservable());
+		criteriaCB.setMaxWidth(Constans.checkComboBox);
 		criteriaCB.getCheckModel().getCheckedItems().addListener(new ListChangeListener<String>() {
 
 			public void onChanged(ListChangeListener.Change<? extends String> c) {
