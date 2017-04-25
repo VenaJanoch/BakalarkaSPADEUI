@@ -278,7 +278,7 @@ public class Alerts {
 		Alert alert = new Alert(AlertType.WARNING);
 		alert.setTitle("Insert error");
 		alert.setHeaderText("No " + name + " is provided!");
-		alert.setContentText("Please provide a " + name + " in corresponding filed or create new segment!");
+		alert.setContentText("Please provide a " + name + " in corresponding field or create new segment!");
 		alert.showAndWait();
 
 	}

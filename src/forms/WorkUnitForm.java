@@ -133,15 +133,13 @@ public class WorkUnitForm extends DescriptionBasicForm implements ISegmentForm {
 		estimatedTimeTF = new TextField();
 
 		priorityLB = new Label("Priority: ");
-		priorityCB = new ComboBox<String>(
-				FXCollections.observableArrayList(getControl().getLists().getPriorityObservable()));
+		priorityCB = new ComboBox<String>(getControl().getLists().getPriorityObservable());
 
 		priorityCB.getSelectionModel().selectedIndexProperty().addListener(priorityListener);
 		priorityCB.setVisibleRowCount(5);
 
 		severityLB = new Label("Severity: ");
-		severityCB = new ComboBox<String>(
-				FXCollections.observableArrayList(getControl().getLists().getSeverityTypeObservable()));
+		severityCB = new ComboBox<String>(getControl().getLists().getSeverityTypeObservable());
 		severityCB.getSelectionModel().selectedIndexProperty().addListener(severityListener);
 		severityCB.setVisibleRowCount(5);
 
@@ -164,14 +162,12 @@ public class WorkUnitForm extends DescriptionBasicForm implements ISegmentForm {
 		authorRoleCB.getSelectionModel().selectedIndexProperty().addListener(roleListenerAut);
 
 		resolutionLB = new Label("Resolution: ");
-		resolutionCB = new ComboBox<String>(
-				FXCollections.observableArrayList(getControl().getLists().getResolutionTypeObservable()));
+		resolutionCB = new ComboBox<String>(getControl().getLists().getResolutionTypeObservable());
 		resolutionCB.getSelectionModel().selectedIndexProperty().addListener(resolutionListener);
 		resolutionCB.setVisibleRowCount(5);
 
 		statusLB = new Label("Status: ");
-		statusCB = new ComboBox<String>(
-				FXCollections.observableArrayList(getControl().getLists().getStatusTypeObservable()));
+		statusCB = new ComboBox<String>(getControl().getLists().getStatusTypeObservable());
 		statusCB.getSelectionModel().selectedIndexProperty().addListener(statusListener);
 		statusCB.setVisibleRowCount(5);
 

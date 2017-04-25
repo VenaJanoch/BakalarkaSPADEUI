@@ -85,7 +85,7 @@ public class CanvasItem extends AnchorPane {
 		this.linkControl = linkControl;
 		this.dgCanvas = dgCanvas;
 		this.segmentInfo = new InfoBoxSegment(this, type, name);
-		
+
 		// this.setBackground(new Background(new BackgroundFill(Color.BROWN,
 		// CornerRadii.EMPTY, Insets.EMPTY)));
 
@@ -93,21 +93,22 @@ public class CanvasItem extends AnchorPane {
 			IDs = control.createForm(this, rootForm);
 		} else if (isCreated == 1) {
 			IDs = control.createFormFromXML(this, rootForm);
-		} else if(isCreated == 2){
+		} else if (isCreated == 2) {
 			IDs = manipulation.createCopyForm(this, rootForm);
-		}else{
+		} else {
 			IDs = manipulation.createCopyWorkUnitForm(this, rootForm);
 		}
 
-
 		idForm = IDs[0];
 		ID = type.name() + "_" + String.format("%03d", IDs[1]);
-		
+
 		this.setID(ID);
 		this.tooltip = new Tooltip(ID);
 		Tooltip.install(this, tooltip);
 
 		this.control = control;
+		segmentInfo.getSegmentName().setText(ID);
+
 		this.length = segmentInfo.getLength();
 		this.setMaxHeight(segmentInfo.getHeight());
 		this.setMaxWidth(segmentInfo.getLength());
@@ -127,14 +128,14 @@ public class CanvasItem extends AnchorPane {
 	public void setClicFromDragPoint(MouseEvent t) {
 
 		if (t.getButton().equals(MouseButton.PRIMARY)) {
-			
+
 			if (dgCanvas.isArrow()) {
-				
+
 				if (type == SegmentType.WorkUnit) {
-					
+
 					linkControl.ArrowManipulationWorkUnit(this, false);
 				} else if (type == SegmentType.Artifact || type == SegmentType.Change) {
-					
+
 					linkControl.ArrowManipulation(this, false);
 				}
 
@@ -142,6 +143,7 @@ public class CanvasItem extends AnchorPane {
 
 				if (t.getClickCount() == 2) {
 					control.getForms().get(idForm).show();
+					control.getForms().get(idForm).toFront();
 
 				} else if (!dgCanvas.isArrow()) {
 
@@ -166,24 +168,29 @@ public class CanvasItem extends AnchorPane {
 			double newTranslateX = orgTranslateX + offsetX;
 			double newTranslateY = orgTranslateY + offsetY;
 
-			// if (t.getSceneX() > 0 && t.getSceneX() < canvas.getWidth() &&
-			// t.getSceneY() > canvas.getTranslateY() + 90
-			// && t.getSceneY() < canvas.getHeight() + 50) {
 			((AnchorPane) (t.getSource())).setTranslateX(newTranslateX);
 			((AnchorPane) (t.getSource())).setTranslateY(newTranslateY);
+			
+			
 		}
 
-		// }
+	}
 
+	public void setPosition(Point2D point) {
+		System.out.println(point + " set position");
+		this.setTranslateX(point.getX());
+		this.setTranslateY(point.getY());
 	}
 
 	EventHandler<MouseEvent> onMouseReleaseEventHandler = new EventHandler<MouseEvent>() {
 
 		@Override
 		public void handle(MouseEvent t) {
+				setPosition(control.canvasItemPositionControl(getTranslateX(), getTranslateY()));
+				repaintStartArrow();
+				repaintEndArrow();
 
-			repaintStartArrow();
-			repaintEndArrow();
+		
 
 		}
 
@@ -250,6 +257,22 @@ public class CanvasItem extends AnchorPane {
 			setDragFromDragPoint(t);
 		}
 	};
+
+	public void deleteLinks() {
+
+		for (int i = 0; i < mStartLinkIds.size(); i++) {
+			if (linkControl.getArrows().get(mStartLinkIds.get(i)) != null) {
+				linkControl.getArrows().get(mStartLinkIds.get(i)).deleteArrow();
+			}
+		}
+
+		for (int i = 0; i < mEndLinkIds.size(); i++) {
+			if (linkControl.getArrows().get(mEndLinkIds.get(i)) != null) {
+				linkControl.getArrows().get(mEndLinkIds.get(i)).deleteArrow();
+			}
+		}
+
+	}
 
 	public void setNameText(String name) {
 
@@ -374,7 +397,5 @@ public class CanvasItem extends AnchorPane {
 	public void setSegmentInfo(InfoBoxSegment segmentInfo) {
 		this.segmentInfo = segmentInfo;
 	}
-	
-	
 
 }

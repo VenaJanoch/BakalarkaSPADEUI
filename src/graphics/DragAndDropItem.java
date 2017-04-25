@@ -119,6 +119,7 @@ public class DragAndDropItem extends HBox {
 			canvas.setArrow(false);
 			canvas.setStartArrow(false);
 			canvas.setCursor(Cursor.DEFAULT);
+			
 		}
 	}
 

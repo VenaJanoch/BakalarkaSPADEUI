@@ -35,6 +35,7 @@ import graphics.ItemContexMenu;
 import graphics.NodeLink;
 import graphics.WorkUnitLink;
 import javafx.geometry.Point2D;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.shape.Line;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -45,7 +46,6 @@ public class Control {
 	private File file;
 	private boolean firstSave;
 
-	
 	private DragAndDropCanvas canvas;
 	private ArrayList<BasicForm> forms;
 
@@ -88,7 +88,6 @@ public class Control {
 		configureFileChooser();
 		classSwitcher = new ClassSwitcher(this);
 
-		
 		setForms(new ArrayList<>());
 
 		ProjectForm form111 = new ProjectForm(this, project, canvas);
@@ -126,28 +125,54 @@ public class Control {
 		firstSave = true;
 
 	}
+	
+	public void closeAllWindows(){
+		
+		forms.get(0).close();
+		getMilestoneForm().close();
+		getCPRForm().close();
+		getRoleForm().close();
+		getPriorityForm().close();
+		getSeverityForm().close();
+		getRelationForm().close();
+		getResolutionForm().close();
+		getStatusForm().close();
+		getTypeForm().close();
+		getBranchFrom().close();
+		getConfTableForm().close();		
+	}
 
 	public void showProjectForm() {
 
 		forms.get(0).show();
+		forms.get(0).toFront();
 	}
 
-	public void setCopyDisable() {
+	public Point2D canvasItemPositionControl(double x, double y) {
 
-		contexMenu.getPasteItem().setDisable(false);
-		contexMenu.getCopyItem().setDisable(true);
-		contexMenu.getCutItem().setDisable(true);
-		contexMenu.getDeleteItem().setDisable(true);
-
-	}
-
-	public void setPasteDisable() {
-
-		contexMenu.getPasteItem().setDisable(true);
-		contexMenu.getCopyItem().setDisable(false);
-		contexMenu.getCutItem().setDisable(false);
-		contexMenu.getDeleteItem().setDisable(false);
-
+		Point2D point = new Point2D(x, y);
+		
+		
+		if (y <= 0) {
+			point = new Point2D(x, 0);
+		}
+		
+		if (x <= 0) {
+			
+			point = new Point2D(0,y);
+		}
+		
+		if (x >= Constans.canvasMaxWidth) {
+			point = new Point2D(Constans.canvasMaxWidth - Constans.offset, y);
+		}
+		
+		if (y >= Constans.canvasMaxHeight) {
+			point = new Point2D(x, Constans.canvasMaxHeight- Constans.offset);
+		}
+		
+		return point;
+		
+		
 	}
 
 	public void restartControl() {
@@ -164,8 +189,6 @@ public class Control {
 
 		configureFileChooser();
 
-		
-
 		firstSave = true;
 
 	}
@@ -176,8 +199,6 @@ public class Control {
 		fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
 		fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("XML", "*.xml"));
 	}
-
-	
 
 	public Double[] calculateArrowPosition(Point2D endPoint) {
 
@@ -309,8 +330,6 @@ public class Control {
 		}
 	}
 
-
-
 	public boolean checkConfiguration(String newConfName) {
 
 		for (int i = 0; i < lists.getConfigObservable().size(); i++) {
@@ -422,11 +441,8 @@ public class Control {
 		return localDate;
 	}
 
-	
-
 	/** Getrs and Setrs ***/
 
-	
 	public SegmentLists getLists() {
 		return lists;
 	}
@@ -434,8 +450,6 @@ public class Control {
 	public void setLists(SegmentLists lists) {
 		this.lists = lists;
 	}
-
-	
 
 	public ArrayList<BasicForm> getForms() {
 		return forms;
@@ -445,7 +459,6 @@ public class Control {
 		this.forms = forms;
 	}
 
-	
 	public DragAndDropCanvas getCanvas() {
 		return canvas;
 	}
@@ -573,6 +586,5 @@ public class Control {
 	public void setFillCopy(FillCopyForms fillCopy) {
 		this.fillCopy = fillCopy;
 	}
-	
 
 }

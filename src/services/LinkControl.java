@@ -137,7 +137,7 @@ public class LinkControl {
 		} else {
 
 			try {
-				if (lists.getWorkUnitList().get(item.getIDs()[1]) != null) {
+				if (segmentWorkUnitControl(item)) {
 					// sortSegmentConf(item);
 					wLink.setEndIDs(item.getIDs());
 					wLink.setArrowAndBox(
@@ -149,8 +149,6 @@ public class LinkControl {
 						setWorkUnitRelation(wLink);
 					}
 
-				} else {
-					Alerts.showNoWorkUnit();
 				}
 
 			} catch (Exception e) {
@@ -159,6 +157,19 @@ public class LinkControl {
 
 		}
 
+	}
+
+	private boolean segmentWorkUnitControl(CanvasItem item) {
+		if (lists.getWorkUnitList().get(item.getIDs()[1]) != null) {
+
+			if (item.getIDs()[1] != wLink.getStartIDs()[1]) {
+				return true;
+			}
+		} else {
+			Alerts.showNoWorkUnit();
+		}
+
+		return false;
 	}
 
 	public void deleteArrow(int arrowId, int changeID, int artifactID) {

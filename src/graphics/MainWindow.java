@@ -41,7 +41,7 @@ public class MainWindow extends Stage {
 			event.consume();
 			int result = Alerts.showCloseApp(control);
 			
-			if (result == 1 ) {
+			if (result == 1 ) {	
 				Platform.exit();
 			}
 			

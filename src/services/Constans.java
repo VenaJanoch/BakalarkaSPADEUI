@@ -23,6 +23,7 @@ public class Constans {
 	public static final int countDragItems = 13;
 	public static final int countItemsBox = 6;
 
+	public static final double minCanvasItemWidth = 90;
 	public static final double maxCanvasItemWidth = 90;
 
 	public static final String XSDNAME = "SPADE2.xsd";

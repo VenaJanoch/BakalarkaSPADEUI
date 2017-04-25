@@ -62,6 +62,7 @@ public class ManipulationControl {
 
 	public void deleteItem(CanvasItem item) {
 		item.setVisible(false);
+		item.deleteLinks();
 		int index = item.getIDs()[0];
 		if (!forms.get(index).isNew()) {			
 			forms.get(index).deleteItem(item.getIDs());

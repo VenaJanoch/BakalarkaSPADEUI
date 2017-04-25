@@ -23,7 +23,7 @@ public class InfoBoxSegment extends Group {
 		this.name = new Text(name);
 
 		this.segmentName = new Text(type.name());
-		this.length = this.segmentName.getLayoutBounds().getWidth() + Constans.offset * 2;
+		this.length = Constans.minCanvasItemWidth;
 
 		if (length < 40) {
 			length = 42.0;

@@ -69,7 +69,7 @@ public class NodeLink extends Line {
 
 		@Override
 		public void handle(MouseEvent t) {
-			setDeleteArrow(t);
+			pressedDeleteArrow(t);
 		}
 	};
 
@@ -80,14 +80,18 @@ public class NodeLink extends Line {
 		this.setStartY(startPoint.getY());
 	}
 
-	protected void setDeleteArrow(MouseEvent t) {
+	protected void deleteArrow() {
+		this.setVisible(false);
+
+		linkControl.deleteArrow(id, startIDs[1], endIDs[1]);
+
+	}
+
+	protected void pressedDeleteArrow(MouseEvent t) {
 
 		if (t.getButton().equals(MouseButton.PRIMARY)) {
 			if (t.getClickCount() == 2) {
-				this.setVisible(false);
-
-				linkControl.deleteArrow(id, startIDs[1], endIDs[1]);
-
+				deleteArrow();
 			}
 
 		}

@@ -86,7 +86,7 @@ public class IterationForm extends Date2DescBasicForm implements ISegmentForm {
 
 		configLB = new Label("Configuration: ");
 		configCB = new ChoiceBox<>(getControl().getLists().getConfigObservable());
-
+		
 		configCB.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
 
 			@Override

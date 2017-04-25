@@ -9,6 +9,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
@@ -24,8 +25,8 @@ public class PriorityForm extends TableClassBasicForm implements ISegmentTableFo
 
 	private Control control;
 
-	private ComboBox<WorkUnitPriorityClass> classTypeCB;
-	private ComboBox<WorkUnitPrioritySuperClass> superClassTypeCB;
+	private ChoiceBox<WorkUnitPriorityClass> classTypeCB;
+	private ChoiceBox<WorkUnitPrioritySuperClass> superClassTypeCB;
 
 	private Label classTypeLB;
 	private Label superClassTypeLB;
@@ -82,12 +83,12 @@ public class PriorityForm extends TableClassBasicForm implements ISegmentTableFo
 	public GridPane createControlPane() {
 
 		classTypeLB = new Label("Class: ");
-		classTypeCB = new ComboBox<WorkUnitPriorityClass>(
+		classTypeCB = new ChoiceBox<WorkUnitPriorityClass>(
 				FXCollections.observableArrayList(WorkUnitPriorityClass.values()));
 		classTypeCB.getSelectionModel().selectedIndexProperty().addListener(classListener);
 
 		superClassTypeLB = new Label("SuperClass: ");
-		superClassTypeCB = new ComboBox<WorkUnitPrioritySuperClass>(
+		superClassTypeCB = new ChoiceBox<WorkUnitPrioritySuperClass>(
 				FXCollections.observableArrayList(WorkUnitPrioritySuperClass.values()));
 		superClassTypeCB.getSelectionModel().selectedIndexProperty().addListener(superListener);
 		

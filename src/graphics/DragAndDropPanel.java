@@ -79,23 +79,24 @@ public class DragAndDropPanel extends BorderPane {
 
 		for (int i = 0; i < addButtons.length; i++) {
 			addButtons[i] = new Button(Constans.addButtonsNames[i]);
+			
 		}
 	}
 
 	public void createAction() {
 		addButtons[0].setOnAction(event -> control.showProjectForm());
-		addButtons[1].setOnAction(event -> control.getMilestoneForm().show());
-		addButtons[2].setOnAction(event -> control.getCPRForm().show());
-		addButtons[3].setOnAction(event -> control.getRoleForm().show());
-		addButtons[4].setOnAction(event -> control.getPriorityForm().show());
-		addButtons[5].setOnAction(event -> control.getSeverityForm().show());
-		addButtons[6].setOnAction(event -> control.getRelationForm().show());
-		addButtons[7].setOnAction(event -> control.getResolutionForm().show());
-		addButtons[8].setOnAction(event -> control.getStatusForm().show());
-		addButtons[9].setOnAction(event -> control.getTypeForm().show());
-		addButtons[10].setOnAction(event -> control.getBranchFrom().show());
+		addButtons[1].setOnAction(event -> {control.getMilestoneForm().show();control.getMilestoneForm().toFront();});
+		addButtons[2].setOnAction(event -> {control.getCPRForm().show(); control.getCPRForm().toFront();});
+		addButtons[3].setOnAction(event -> {control.getRoleForm().show(); control.getRoleForm().toFront();});
+		addButtons[4].setOnAction(event -> {control.getPriorityForm().show(); control.getPriorityForm().toFront();});
+		addButtons[5].setOnAction(event -> {control.getSeverityForm().show(); control.getSeverityForm().toFront();});
+		addButtons[6].setOnAction(event -> {control.getRelationForm().show(); control.getRelationForm().toFront();});
+		addButtons[7].setOnAction(event -> {control.getResolutionForm().show(); control.getResolutionForm().toFront();});
+		addButtons[8].setOnAction(event -> {control.getStatusForm().show(); control.getStatusForm().toFront();});
+		addButtons[9].setOnAction(event -> {control.getTypeForm().show(); control.getTypeForm().toFront();});
+		addButtons[10].setOnAction(event ->{control.getBranchFrom().show(); control.getBranchFrom().toFront();});
 		addButtons[11].setOnAction(
-				event -> control.getConfTableForm().show());
+				event -> {control.getConfTableForm().show(); control.getConfTableForm().toFront();});
 	}
 
 	public DragAndDropItem getItems() {

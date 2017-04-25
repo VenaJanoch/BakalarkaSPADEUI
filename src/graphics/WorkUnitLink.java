@@ -65,21 +65,26 @@ public class WorkUnitLink extends NodeLink {
 
 		@Override
 		public void handle(MouseEvent t) {
-			setDeleteArrow(t);
+			pressedDeleteArrow(t);
 		}
 	};
 
 
-	protected void setDeleteArrow(MouseEvent t) {
+	protected void deleteArrow(){
+		this.setVisible(false);
+		relationCB.setVisible(false);
+		relationCB = null;
+		polygon.setVisible(false);
+		polygon = null;
+			linkControl.deleteWorkUnitArrow(id, startIDs[1], endIDs[1]);
+	}
+	
+	
+	protected void pressedDeleteArrow(MouseEvent t) {
 		
 		if (t.getButton().equals(MouseButton.PRIMARY)) {
 			if (t.getClickCount() == 2) {
-				this.setVisible(false);
-				relationCB.setVisible(false);
-				relationCB = null;
-				polygon.setVisible(false);
-				polygon = null;
-					linkControl.deleteWorkUnitArrow(id, startIDs[1], endIDs[1]);
+				deleteArrow();
 			}
 
 		}
