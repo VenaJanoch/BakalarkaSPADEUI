@@ -147,17 +147,11 @@ public class ResolutionForm extends TableClassBasicForm implements ISegmentTable
 		}
 		String superST = WorkUnitResolutionsSuperClass.values()[getSuperIndex()].name();
 
-		if (nameST.length() == 0) {
-
-			Alerts.showNoNameAlert();
-			return;
-		}
-
 		ClassTable table = new ClassTable(nameST, classST, superST);
 
 		getTableTV().getItems().add(table);
 		getTableTV().sort();
-		getControl().getFillForms().fillResolutionType(nameST, classST, superST);
+		getControl().getFillForms().fillResolutionType(formControl.fillTextMapper(nameST), formControl.fillTextMapper(classST), superST);
 
 	}
 

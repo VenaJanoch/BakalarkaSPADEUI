@@ -144,17 +144,11 @@ public class PriorityForm extends TableClassBasicForm implements ISegmentTableFo
 		}
 		String superST = WorkUnitPrioritySuperClass.values()[getSuperIndex()].name();
 
-		if (nameST.length() == 0) {
-
-			Alerts.showNoNameAlert();
-			return;
-		}
-
 		ClassTable table = new ClassTable(nameST, classST, superST);
 
 		getTableTV().getItems().add(table);
 		getTableTV().sort();
-		getControl().getFillForms().fillPriorityType(nameST, classST, superST);
+		getControl().getFillForms().fillPriorityType(formControl.fillTextMapper(nameST), formControl.fillTextMapper(classST), superST);
 
 	}
 

@@ -155,19 +155,14 @@ public class RoleTypeForm extends TableClassBasicForm implements ISegmentTableFo
 		} else {
 			classST = roleClassTypeCB.getValue().name();
 		}
-		String superST = roleSuperClassTypeCB.getValue().name();
+		String superST = RoleSuperClass.values()[superIndex].name();
 
-		if (nameST.length() == 0) {
-
-			Alerts.showNoNameAlert();
-			return;
-		}
 
 		ClassTable type = new ClassTable(nameST, classST, superST);
 
 		getTableTV().getItems().add(type);
 		getTableTV().sort();
-		getControl().getFillForms().fillRoleType(nameST, classST, superST);
+		getControl().getFillForms().fillRoleType(formControl.fillTextMapper(nameST), formControl.fillTextMapper(classST), superST);
 
 	}
 

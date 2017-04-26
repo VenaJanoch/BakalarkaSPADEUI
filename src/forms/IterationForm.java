@@ -75,10 +75,8 @@ public class IterationForm extends Date2DescBasicForm implements ISegmentForm {
 
 	@Override
 	public void setActionSubmitButton() {
-		if (getFormControl().iterationControl()) {
 			closeForm();
 			close();
-		}
 	}
 
 	@Override

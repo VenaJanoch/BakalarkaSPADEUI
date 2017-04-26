@@ -59,6 +59,7 @@ public class Control {
 	private ObjectFactory objF;
 	private Project project;
 
+	private FormControl formControl;
 	private FillFormsXML fillFormsXML;
 	private FillForms fillForms;
 	private FillCopyForms fillCopy;
@@ -90,6 +91,7 @@ public class Control {
 
 		setForms(new ArrayList<>());
 
+		
 		ProjectForm form111 = new ProjectForm(this, project, canvas);
 		getForms().add(0, form111);
 
@@ -99,14 +101,15 @@ public class Control {
 		project.setEndDate(convertDate(form111.getDate2DP().getValue()));
 		project.setStartDate(convertDate(form111.getDate2DP().getValue()));
 		lists = new SegmentLists(this, project);
+		formControl = new FormControl(lists);
 
 		linkControl = new LinkControl(this, lists, objF);
 		deleteControl = new DeleteControl(this, lists, project);
 		idCreater = new IdentificatorCreater();
 
-		fillForms = new FillForms(this, lists, project, forms, objF, idCreater, deleteControl);
+		fillForms = new FillForms(this, lists, project, forms, objF, idCreater, deleteControl,formControl);
 		fillFormsXML = new FillFormsXML(this, lists, project, forms, fillCopy, idCreater, linkControl, deleteControl);
-		fillCopy = new FillCopyForms(this, getLists(), project, forms, objF, idCreater, deleteControl);
+		fillCopy = new FillCopyForms(this, getLists(), project, forms, objF, idCreater, deleteControl,formControl);
 		manipulation = new ManipulationControl(this, fillCopy, project, lists, deleteControl, forms);
 		contexMenu = new ItemContexMenu(this, manipulation, canvas);
 
@@ -147,7 +150,7 @@ public class Control {
 		forms.get(0).show();
 		forms.get(0).toFront();
 	}
-
+	
 	public Point2D canvasItemPositionControl(double x, double y) {
 
 		Point2D point = new Point2D(x, y);
@@ -385,8 +388,8 @@ public class Control {
 			linkControl = new LinkControl(this, lists, objF);
 			deleteControl = new DeleteControl(this, lists, project);
 
-			fillForms = new FillForms(this, lists, project, forms, objF, idCreater, deleteControl);
-			fillCopy = new FillCopyForms(this, getLists(), project, forms, objF, idCreater, deleteControl);
+			fillForms = new FillForms(this, lists, project, forms, objF, idCreater, deleteControl, formControl);
+			fillCopy = new FillCopyForms(this, getLists(), project, forms, objF, idCreater, deleteControl, formControl);
 			manipulation.restart(fillCopy, project, deleteControl, forms);
 
 			fillFormsXML = new FillFormsXML(this, lists, project, forms, fillCopy, idCreater, linkControl,
@@ -415,6 +418,12 @@ public class Control {
 	}
 
 	public XMLGregorianCalendar convertDate(LocalDate Ldate) {
+		
+		if (Ldate == null) {
+			return null;
+		}
+		
+		
 		Instant instant = Instant.from(Ldate.atStartOfDay(ZoneId.systemDefault()));
 		Date date = Date.from(instant);
 		GregorianCalendar c = new GregorianCalendar();
@@ -434,6 +443,10 @@ public class Control {
 
 	public LocalDate convertDateFromXML(XMLGregorianCalendar xmlDate) {
 
+		if (xmlDate == null) {
+			return null;
+		}
+		
 		Date date = xmlDate.toGregorianCalendar().getTime();
 		Instant instant = date.toInstant();
 		ZonedDateTime zdt = instant.atZone(ZoneId.systemDefault());

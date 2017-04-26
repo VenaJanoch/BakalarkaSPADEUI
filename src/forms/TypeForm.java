@@ -144,17 +144,12 @@ public class TypeForm extends TableClassBasicForm implements ISegmentTableForm {
 		}
 		String superST = WorkUnitTypeSuperClass.values()[superIndex].name();
 
-		if (nameST.length() == 0) {
-
-			Alerts.showNoNameAlert();
-			return;
-		}
 
 		ClassTable table = new ClassTable(nameST, classST, superST);
 
 		getTableTV().getItems().add(table);
 		getTableTV().sort();
-		getControl().getFillForms().fillType(nameST, classST, superST);
+		getControl().getFillForms().fillType(formControl.fillTextMapper(nameST), formControl.fillTextMapper(classST), superST);
 
 	}
 

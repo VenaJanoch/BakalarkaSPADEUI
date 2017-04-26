@@ -15,6 +15,7 @@ import services.Alerts;
 import services.Constans;
 import services.Control;
 import services.DeleteControl;
+import services.FormControl;
 
 public class Table2BasicForm extends Stage{
 
@@ -29,11 +30,13 @@ public class Table2BasicForm extends Stage{
 	private Button submitBT;
 	private SplitPane splitPane;
 	protected DeleteControl deleteControl;
+	protected FormControl formControl;
 	
 	public Table2BasicForm(Control control, DeleteControl deleteControl) {
 		this.control = control;
 		this.setScene(creatScene());
 		this.deleteControl = deleteControl;
+		this.formControl = new FormControl(control.getLists());
 
 	}
 

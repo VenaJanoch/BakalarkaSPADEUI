@@ -158,18 +158,10 @@ public class CriterionForm extends TableBasicForm implements ISegmentTableForm {
 		String nameST = nameTF.getText();
 		String descriptionST = descriptionTF.getText();
 
-		if (nameST.length() == 0) {
-			Alerts.showNoNameAlert();
-			return;
-		} else if (descriptionST.length() == 0) {
-			Alerts.showNoText("Description");
-			return;
-		}
-
 		CriterionTable criterion = new CriterionTable(nameST, descriptionST);
 		tableTV.getItems().add(criterion);
 		tableTV.sort();
-		control.getFillForms().fillCriterion(nameST, descriptionST);
+		control.getFillForms().fillCriterion(formControl.fillTextMapper(nameST), formControl.fillTextMapper(descriptionST));
 	}
 
 	public TableView<CriterionTable> getTableTV() {

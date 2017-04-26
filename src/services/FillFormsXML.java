@@ -113,7 +113,7 @@ public class FillFormsXML {
 		for (int i = 0; i < links.size(); i++) {
 
 			if (links.get(i).getType().equals(SegmentType.WorkUnit.name())) {
-				System.out.println("WorkUnit");
+				
 				fillWorkUnitLinks(links.get(i));
 			} else {
 				fillConfigLinks(links.get(i));
@@ -187,9 +187,6 @@ public class FillFormsXML {
 		index++;
 		IdentificatorCreater.setIndex(index);
 		forms.add(IDs[0], phaseForm);
-
-		phaseForm.getConfigCB().setValue(lists.getConfigObservable().get(phase.getConfiguration()));
-
 		return IDs;
 
 	}
@@ -223,8 +220,7 @@ public class FillFormsXML {
 
 		index++;
 		IdentificatorCreater.setIndex(index);
-		iterationForm.getConfigCB().setValue(lists.getConfigObservable().get(iteration.getConfiguration()));
-
+		
 		forms.add(IDs[0], iterationForm);
 		return IDs;
 
@@ -345,6 +341,10 @@ public class FillFormsXML {
 		configForm.getNameTF().setText(conf.getName());
 		configForm.setName(conf.getName());
 		configForm.getCreatedDP().setValue(control.convertDateFromXML(conf.getCreate()));
+		if (conf.getArtifactsIndexs() != null) {
+			configForm.getAuthorRoleCB().setValue(lists.getRoleObservable().get(conf.getAuthorIndex()+1));
+		}
+				
 		configForm.setNew(false);
 
 		if (conf.isIsRelease()) {
@@ -387,8 +387,12 @@ public class FillFormsXML {
 		for (int i = 0; i < roles.size(); i++) {
 
 			Role role = roles.get(i);
+			int roleI = 0;
+			if (role.getType() != null) {
+				roleI = role.getType();
+			}
 			data.add(new RoleTable(role.getName(), role.getDescription(),
-					lists.getRoleTypeObservable().get(role.getType())));
+					lists.getRoleTypeObservable().get(roleI)));
 
 			control.getLists().getRoleObservable().add(role.getName());
 		}
@@ -402,8 +406,13 @@ public class FillFormsXML {
 		for (int i = 0; i < roles.size(); i++) {
 
 			RoleType role = roles.get(i);
-
-			data.add(new ClassTable(role.getName(), role.getRoleClass(), role.getRoleSuperClass()));
+			
+			String classI = "";
+			if (role.getRoleClass() != null) {
+				classI = role.getRoleClass();
+			}
+						
+			data.add(new ClassTable(role.getName(), classI, role.getRoleSuperClass()));
 			lists.getRoleTypeObservable().add(role.getName());
 		}
 
@@ -518,8 +527,14 @@ public class FillFormsXML {
 
 		for (int i = 0; i < cprs.size(); i++) {
 			control.getLists().getCPRObservable().add(cprs.get(i).getName());
-			String role = lists.getRoleList().get(cprs.get(i).getPersonIndex()).getName();
-			data.add(new CPRTable(cprs.get(i).getName(), role));
+			
+			String classI = "";
+			if (cprs.get(i).getPersonIndex() != null) {
+				String role = lists.getRoleList().get(cprs.get(i).getPersonIndex()).getName();
+			}
+			
+			
+			data.add(new CPRTable(cprs.get(i).getName(), classI));
 		}
 
 		control.getCPRForm().getTableTV().setItems(data);
@@ -532,9 +547,13 @@ public class FillFormsXML {
 		for (int i = 0; i < item.size(); i++) {
 
 			String name = item.get(i).getName();
-			String classi = item.get(i).getPriorityClass();
 			String superi = item.get(i).getPrioritySuperClass();
 
+			String classi = "";
+			if (item.get(i).getPriorityClass() != null) {
+				classi = item.get(i).getPriorityClass();
+			}
+						
 			control.getLists().getPriorityObservable().add(name);
 			data.add(new ClassTable(name, classi, superi));
 		}
@@ -548,9 +567,11 @@ public class FillFormsXML {
 
 		for (int i = 0; i < item.size(); i++) {
 			String name = item.get(i).getName();
-			String classi = item.get(i).getTypeClass();
+			String classi = "";
+			if (item.get(i).getTypeClass() != null) {
+				classi = item.get(i).getTypeClass();
+			}
 			String superi = item.get(i).getTypeSuperClass();
-
 			control.getLists().getTypeObservable().add(name);
 			data.add(new ClassTable(name, classi, superi));
 		}
@@ -565,7 +586,10 @@ public class FillFormsXML {
 		for (int i = 0; i < item.size(); i++) {
 			lists.getSeverityTypeObservable().add(item.get(i).getName());
 			String name = item.get(i).getName();
-			String classi = item.get(i).getSeverityClass();
+			String classi = "";
+			if (item.get(i).getSeverityClass() != null) {
+				classi = item.get(i).getSeverityClass();
+			}
 			String superi = item.get(i).getSeveritySuperClass();
 
 			data.add(new ClassTable(name, classi, superi));
@@ -581,7 +605,10 @@ public class FillFormsXML {
 		for (int i = 0; i < item.size(); i++) {
 			lists.getRelationTypeObservable().add(item.get(i).getName());
 			String name = item.get(i).getName();
-			String classi = item.get(i).getRelationClass();
+			String classi = "";
+			if (item.get(i).getRelationClass() != null) {
+				classi = item.get(i).getRelationClass();
+			}
 			String superi = item.get(i).getRelationSuperClass();
 
 			data.add(new ClassTable(name, classi, superi));
@@ -596,8 +623,10 @@ public class FillFormsXML {
 
 		for (int i = 0; i < item.size(); i++) {
 			lists.getResolutionTypeObservable().add(item.get(i).getName());
-			String name = item.get(i).getName();
-			String classi = item.get(i).getResolutionClass();
+			String name = item.get(i).getName();String classi = "";
+			if (item.get(i).getResolutionClass() != null) {
+				classi = item.get(i).getResolutionClass();
+			}
 			String superi = item.get(i).getResolutionSuperClass();
 
 			data.add(new ClassTable(name, classi, superi));
@@ -612,8 +641,10 @@ public class FillFormsXML {
 
 		for (int i = 0; i < item.size(); i++) {
 			lists.getStatusTypeObservable().add(item.get(i).getName());
-			String name = item.get(i).getName();
-			String classi = item.get(i).getStatusClass();
+			String name = item.get(i).getName();String classi = "";
+			if (item.get(i).getStatusClass() != null) {
+				classi = item.get(i).getStatusClass();
+			}
 			String superi = item.get(i).getStatusSuperClass();
 
 			data.add(new ClassTable(name, classi, superi));
@@ -629,9 +660,12 @@ public class FillFormsXML {
 		for (int i = 0; i < milestones.size(); i++) {
 			String name = milestones.get(i).getName();
 			control.getLists().getMilestoneObservable().add(name);
-			String criterion = createCriterionsString(milestones.get(i).getCriteriaIndexs());
-
-			data.add(new MilestoneTable(milestones.get(i).getName(), criterion));
+			
+			String classi = "";
+			if (milestones.get(i).getCriteriaIndexs() != null) {
+				classi = createCriterionsString(milestones.get(i).getCriteriaIndexs());
+			}
+			data.add(new MilestoneTable(milestones.get(i).getName(), classi));
 		}
 
 		control.getMilestoneForm().getTableTV().setItems(data);
@@ -641,7 +675,7 @@ public class FillFormsXML {
 
 		String tmp = "[ ";
 		for (int i = 0; i < indexs.size(); i++) {
-			tmp += control.getLists().getCriterionObservable().get(indexs.get(i)) + ", ";
+			tmp += control.getLists().getCriterionObservable().get(indexs.get(i)-1) + ", ";
 		}
 
 		tmp += " ]";
@@ -655,6 +689,7 @@ public class FillFormsXML {
 
 		for (int i = 0; i < criterions.size(); i++) {
 			control.getLists().getCriterionObservable().add(criterions.get(i).getName());
+			
 			data.add(new CriterionTable(criterions.get(i).getName(), criterions.get(i).getDescription()));
 		}
 

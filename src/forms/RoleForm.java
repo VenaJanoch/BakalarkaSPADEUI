@@ -184,24 +184,10 @@ public class RoleForm extends Table2BasicForm implements ISegmentTableForm {
 		String typeST = roleTypeCB.getValue();
 		String descritpST = descriptionTF.getText();
 	
-		if (getControl().getLists().getRoleTypeList().isEmpty()) {
-			Alerts.showNoText("Role-type");
-			return;
-		} else if (nameST.length() == 0) {
-
-			Alerts.showNoNameAlert();
-			return;
-		} else if (descritpST.length() == 0) {
-
-			Alerts.showNoText("Description");
-
-			return;
-		}
-
 		RoleTable role = new RoleTable(nameST, descritpST, typeST);
 		tableTV.getItems().add(role);
 		tableTV.sort();
-		getControl().getFillForms().fillRole(descritpST, nameST, roleIndex);
+		getControl().getFillForms().fillRole(formControl.fillTextMapper(descritpST), formControl.fillTextMapper(nameST), roleIndex);
 
 	}
 

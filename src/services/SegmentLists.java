@@ -104,6 +104,7 @@ public class SegmentLists {
 		configList = project.getConfiguration();
 		configFormIndex.clear();
 		configObservable.clear();
+		configObservable.add(" ");
 
 		workUnitFormIndex.clear();
 		for (int i = 0; i < project.getWorkUnits().size(); i++) {
@@ -115,11 +116,12 @@ public class SegmentLists {
 		roleList = project.getRoles();
 		roleFormIndex.clear();
 		roleObservable.clear();
+		roleObservable.add("");
 
 		branchList = project.getBranches();
 		branchFormIndex.clear();
 		branchObservable.clear();
-
+		
 		changeList = project.getChanges();
 		changeFormIndex.clear();
 		for (int i = 0; i < project.getChanges().size(); i++) {
@@ -136,35 +138,43 @@ public class SegmentLists {
 		
 		criterionList = project.getCriterions();
 		criterionObservable.clear();
-
+		
+		
 		milestoneList = project.getMilestones();
 		milestoneObservable.clear();
-
+		milestoneObservable.add(" ");
+		milestoneObservable.add("");
 		CPRList = project.getCpr();
 		CPRObservable.clear();
+		CPRObservable.add("");
 
 		roleTypeList = project.getRoleType();
 		roleTypeObservable.clear();
+		roleObservable.add("");
 
 		priorityTypeList = project.getPriority();
 		priorityTypeObservable.clear();
+		priorityTypeObservable.add("");
 
 		severityTypeList = project.getSeverity();
 		severityTypeObservable.clear();
-
+		severityTypeObservable.add("");
 		relationTypeList = project.getRelation();
 		relationTypeObservable.clear();
+		relationTypeObservable.add("");
 
 		resolutionTypeList = project.getResolution();
 		resolutionTypeObservable.clear();
+		resolutionTypeObservable.add("");
 
 		statusTypeList = project.getStatus();
 		statusTypeObservable.clear();
-	
+		statusTypeObservable.add("");
 		linksList = project.getLinks();
 
 		typeList = project.getTypes();
 		typeObservable.clear();
+		typeObservable.add("");
 
 	}
 
@@ -175,14 +185,16 @@ public class SegmentLists {
 		configList = project.getConfiguration();
 		configFormIndex = new ArrayList<>();
 		configObservable = FXCollections.observableArrayList();
+		configObservable.add("");
 		
 		workUnitFormIndex = new ArrayList<>();
 		workUnitList = project.getWorkUnits();
-
+		
 		roleList = project.getRoles();
 		roleFormIndex = new ArrayList<>();
 		setRoleObservable(FXCollections.observableArrayList());
-
+		roleObservable.add("");
+		
 		branchList = project.getBranches();
 		branchFormIndex = new ArrayList<>();
 		branchObservable = FXCollections.observableArrayList();
@@ -200,35 +212,42 @@ public class SegmentLists {
 		criterionList = project.getCriterions();
 		criterionFormIndex = new ArrayList<>();
 		criterionObservable = FXCollections.observableArrayList();
-
+		criterionObservable.add("");
+		
 		milestoneList = project.getMilestones();
 		milestoneFormIndex = new ArrayList<>();
 		milestoneObservable = FXCollections.observableArrayList();
-
+		milestoneObservable.add("");
+		
 		setCPRList(project.getCpr());
 		CPRObservable = FXCollections.observableArrayList();
 
 		setRoleTypeList(project.getRoleType());
 		setRoleTypeObservable(FXCollections.observableArrayList());
-
+		roleTypeObservable.add("");
+		
 		priorityTypeList = project.getPriority();
 		priorityTypeObservable = FXCollections.observableArrayList();
-
+		priorityTypeObservable.add("");
+		
+		
 		setSeverityTypeList(project.getSeverity());
 		setSeverityTypeObservable(FXCollections.observableArrayList());
-
+		severityTypeObservable.add("");
+		
 		setRelationTypeList(project.getRelation());
 		relationTypeObservable = FXCollections.observableArrayList();
-
+		relationTypeObservable.add("");
 		resolutionTypeList = project.getResolution();
 		resolutionTypeObservable = FXCollections.observableArrayList();
 
 		statusTypeList = project.getStatus();
 		statusTypeObservable = FXCollections.observableArrayList();
-
+		statusTypeObservable.add("");
+		
 		typeList = project.getTypes();
 		typeObservable = FXCollections.observableArrayList();
-
+		typeObservable.add("");
 	}
 
 	public ObservableList<String> getConfigObservable() {

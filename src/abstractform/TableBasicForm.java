@@ -14,6 +14,7 @@ import javafx.stage.Stage;
 import services.Constans;
 import services.Control;
 import services.DeleteControl;
+import services.FormControl;
 
 public class TableBasicForm  extends Stage{
 
@@ -27,12 +28,13 @@ public class TableBasicForm  extends Stage{
 	private TextField nameTF;
 	private Label formName;
 	protected DeleteControl deleteControl;
+	protected FormControl formControl;
 	public TableBasicForm(Control control, DeleteControl deleteControl) {
 		super();
 		this.control = control;
 		this.deleteControl = deleteControl;
 		this.setScene(creatSceneProject());
-
+		this.formControl = new FormControl(control.getLists());
 	}
 
 	private Scene creatSceneProject() {

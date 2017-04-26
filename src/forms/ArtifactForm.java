@@ -96,11 +96,8 @@ public class ArtifactForm extends DateDescBasicForm implements ISegmentForm {
 	@Override
 	public void setActionSubmitButton() {
 		
-			
-		if(getFormControl().artifactControl()){
 			closeForm();
 			close();
-		}
 	}
 
 	@Override

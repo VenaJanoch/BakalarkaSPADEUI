@@ -106,7 +106,7 @@ public class WorkUnitForm extends DescriptionBasicForm implements ISegmentForm {
 		setName(actName);
 		getControl().getFillForms().fillWorkUnit(unit, IDs, getDescriptionTF().getText(), actName, assigneIndex,
 				authorIndex, category, x, y, priorityIndex, severityIndex, typeIndex, resolutionIndex, statusIndex,
-				Double.parseDouble(estimatedTimeTF.getText()), isNew(), existRB.isSelected());
+				estimatedTimeTF.getText(), isNew(), existRB.isSelected());
 		
 		if (!existRB.isSelected()) {
 			getCanvasItem().getSegmentInfo().setRectangleColor(Constans.nonExistRectangleBorderColor);
@@ -119,11 +119,9 @@ public class WorkUnitForm extends DescriptionBasicForm implements ISegmentForm {
 
 	@Override
 	public void setActionSubmitButton() {
-
-		if (getFormControl().workUnitControl(estimatedTimeTF.getText())) {
 			closeForm();
 			close();
-		}
+
 	}
 
 	@Override

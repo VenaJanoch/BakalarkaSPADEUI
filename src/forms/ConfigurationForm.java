@@ -121,11 +121,8 @@ public class ConfigurationForm extends BasicForm implements ISegmentForm {
 	@Override
 	public void setActionSubmitButton() {
 
-		if (getFormControl().configControl()) {
-
 			closeForm();
 			close();
-		}
 	}
 
 	@Override

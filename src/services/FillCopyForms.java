@@ -54,11 +54,11 @@ public class FillCopyForms {
 	private SegmentLists lists;
 	private IdentificatorCreater idCreater;
 	private DeleteControl deleteControl;
-	
+	private FormControl formControl;
 	private int oldUnit;
 
 	public FillCopyForms(Control control, SegmentLists lists, Project project, ArrayList<BasicForm> forms,
-			ObjectFactory objFac, IdentificatorCreater idCreator, DeleteControl deleteControl) {
+			ObjectFactory objFac, IdentificatorCreater idCreator, DeleteControl deleteControl, FormControl formControl) {
 
 		this.control = control;
 		this.forms = forms;
@@ -66,6 +66,7 @@ public class FillCopyForms {
 		this.objF = objFac;
 		this.idCreater = idCreator;
 		this.deleteControl = deleteControl;
+		this.formControl = formControl;
 	}
 
 	public Phase fillPhase(BasicForm form, int[] newIDs, Phase copyPhase, int[] oldIDs) {
@@ -78,7 +79,7 @@ public class FillCopyForms {
 		phase.setCoordinates(copyPhase.getCoordinates());
 		phase.setConfiguration(copyPhase.getConfiguration());
 		phase.setMilestoneIndex(copyPhase.getMilestoneIndex());
-		
+
 		return phase;
 
 	}
@@ -109,7 +110,7 @@ public class FillCopyForms {
 		for (int i = 0; i < units.size(); i++) {
 			WorkUnit unit = lists.getWorkUnitList().get(units.get(i));
 			oldUnit = units.get(i);
-			
+
 			CanvasItem item = new CanvasItem(SegmentType.WorkUnit, unit.getName(), control, form, 3,
 					unit.getCoordinates().getXCoordinate(), unit.getCoordinates().getYCoordinate(),
 					control.getContexMenu(), control.getLinkControl(), form.getCanvas());
@@ -118,9 +119,8 @@ public class FillCopyForms {
 
 			item.setTranslateX(unit.getCoordinates().getXCoordinate());
 			item.setTranslateY(unit.getCoordinates().getYCoordinate());
-		
+
 		}
-	
 
 	}
 
@@ -166,7 +166,7 @@ public class FillCopyForms {
 		iteration.setConfiguration(oldIteration.getConfiguration());
 
 		iteration.setCoordinates(oldIteration.getCoordinates());
-		
+
 		return iteration;
 	}
 
@@ -211,22 +211,21 @@ public class FillCopyForms {
 		return lists.getWorkUnitList().indexOf(workUnit);
 
 	}
-	
+
 	public int[] createCopyWorkUnit(CanvasItem item, BasicForm form, int[] IDs) {
 		int index = IdentificatorCreater.getIndex();
 		IDs[0] = index;
 		IDs[1] = idCreater.createWorkUnitID();
 		IDs[2] = form.getIdCreater().createWorkUnitID();
 		IDs[3] = form.getFormID();
-		
-		
+
 		WorkUnit unit = lists.getWorkUnitList().get(fillWorkUnit(oldUnit));
-		WorkUnitForm unitForm = new WorkUnitForm(item, control,unit, deleteControl);
+		WorkUnitForm unitForm = new WorkUnitForm(item, control, unit, deleteControl);
 
 		forms.add(index, copyFormWorkUnit(unit, unitForm, item));
 		// lists.getWorkUnitList().add(unit);
 		lists.getWorkUnitFormIndex().add(index);
-		form.getWorkUnitArray().add(IDs[2],IDs[1]);
+		form.getWorkUnitArray().add(IDs[2], IDs[1]);
 		index++;
 		IdentificatorCreater.setIndex(index);
 		return IDs;
@@ -328,8 +327,14 @@ public class FillCopyForms {
 		phaseForm.getNameTF().setText(phase.getName());
 		phaseForm.setName(phase.getName());
 		phaseForm.getDateDP().setValue(control.convertDateFromXML(phase.getEndDate()));
-		phaseForm.getMilestoneCB().setValue(control.getLists().getMilestoneObservable().get(phase.getMilestoneIndex()));
-		phaseForm.getConfigCB().setValue(control.getLists().getConfigObservable().get(phase.getConfiguration()));
+		if (phase.getMilestoneIndex() != null) {
+			phaseForm.getMilestoneCB()
+					.setValue(control.getLists().getMilestoneObservable().get(phase.getMilestoneIndex()+1));
+		}
+		if (phase.getConfiguration() != null) {
+			phaseForm.getConfigCB().setValue(control.getLists().getConfigObservable().get(phase.getConfiguration()+1));
+		}
+
 		phaseForm.setNew(false);
 		return phaseForm;
 	}
@@ -350,7 +355,10 @@ public class FillCopyForms {
 		form.getNameTF().setText(iteration.getName());
 		form.setName(iteration.getName());
 
-		form.getConfigCB().setValue(control.getLists().getConfigObservable().get(iteration.getConfiguration()));
+		if (iteration.getConfiguration() != null) {
+			form.getConfigCB().setValue(control.getLists().getConfigObservable().get(iteration.getConfiguration()+1));
+		}
+		
 		form.getDateDP().setValue(control.convertDateFromXML(iteration.getEndDate()));
 		form.getDate2DP().setValue(control.convertDateFromXML(iteration.getStartDate()));
 		form.setNew(false);
@@ -363,20 +371,7 @@ public class FillCopyForms {
 		form.setName(unit.getName());
 		form.getNameTF().setText(unit.getName());
 		form.getDescriptionTF().setText(unit.getDescription());
-		form.getPriorityCB().setValue(lists.getPriorityObservable().get(unit.getPriorityIndex()));
-		form.getSeverityCB().setValue(lists.getSeverityTypeObservable().get(unit.getSeverityIndex()));
-		form.getTypeCB().setValue(lists.getTypeObservable().get(unit.getTypeIndex()));
-		form.getCategoryTF().setText(unit.getCategory());
-		form.getStatusCB().setValue(lists.getStatusTypeObservable().get(unit.getStatusIndex()));
-		form.getResolutionCB().setValue(lists.getResolutionTypeObservable().get(unit.getResolutionIndex()));
-		form.getEstimatedTimeTF().setText(String.valueOf(unit.getEstimatedTime()));
-		form.getExistRB().setSelected(unit.isExist());
-
-		String author = control.getLists().getRoleList().get(unit.getAuthorIndex()).getName();
-		String assignee = control.getLists().getRoleList().get(unit.getAssigneeIndex()).getName();
-
-		form.getAuthorRoleCB().setValue(author);
-		form.getAsigneeRoleCB().setValue(assignee);
+		formControl.workUnitFormControl(form, unit);
 		
 		if (!unit.isExist()) {
 			item.getSegmentInfo().setRectangleColor(Constans.nonExistRectangleBorderColor);
@@ -395,7 +390,7 @@ public class FillCopyForms {
 
 		if (!change.isExist()) {
 			changeForm.getCanvasItem().getSegmentInfo().setRectangleColor(Constans.nonExistRectangleBorderColor);
-			
+
 		}
 		changeForm.setNew(false);
 
@@ -411,11 +406,13 @@ public class FillCopyForms {
 		artifactForm.getDateDP().setValue(control.convertDateFromXML(artifact.getCreated()));
 		artifactForm.getExistRB().setSelected(artifact.isExist());
 
-		String author = control.getLists().getRoleList().get(artifact.getAuthorIndex()).getName();
+		if (artifact.getAuthorIndex() != null) {
+			String author = lists.getRoleList().get(artifact.getAuthorIndex()).getName();
+			artifactForm.getAuthorRoleCB().setValue(author);			
+		}
 
-		artifactForm.getAuthorRoleCB().setValue(author);
 		artifactForm.setNew(false);
-		
+
 		if (!artifact.isExist()) {
 			artifactForm.getCanvasItem().getSegmentInfo().setRectangleColor(Constans.nonExistRectangleBorderColor);
 		}

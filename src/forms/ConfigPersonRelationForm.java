@@ -166,16 +166,12 @@ public class ConfigPersonRelationForm extends TableBasicForm implements ISegment
 		String nameST = getNameTF().getText();
 		String roleST = getControl().getLists().getRoleObservable().get(roleIndex);
 
-		if (nameST.length() == 0) {
-
-			Alerts.showNoNameAlert();
-			return;
-		}
+		
 
 		CPRTable cpr = new CPRTable(nameST, roleST);
 		tableTV.getItems().add(cpr);
 		tableTV.sort();
-		getControl().getFillForms().fillCPR(nameST, configIndex, roleIndex);
+		getControl().getFillForms().fillCPR(formControl.fillTextMapper(nameST), configIndex, roleIndex);
 	}
 
 	public TableView<CPRTable> getTableTV() {

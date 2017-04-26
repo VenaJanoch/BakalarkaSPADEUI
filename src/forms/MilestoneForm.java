@@ -56,16 +56,15 @@ public class MilestoneForm extends Table2BasicForm implements ISegmentTableForm 
 
 	private Label criteriaLB;
 	private Label formName;
-	
-	private CheckComboBox<String> criteriaCB;		
+
+	private CheckComboBox<String> criteriaCB;
 	private TableView<MilestoneTable> tableTV;
-	
 
 	private CriterionForm criterionForm;
 
 	private ObservableList<String> criterionArray;
 	private ObservableList<Integer> criterionIndex;
-	
+
 	public MilestoneForm(Control control, DeleteControl deleteControl) {
 
 		super(control, deleteControl);
@@ -77,13 +76,13 @@ public class MilestoneForm extends Table2BasicForm implements ISegmentTableForm 
 
 	@Override
 	public void createForm() {
-		
+
 		formName = new Label("Milestones Form");
 		formName.setFont(Font.font(25));
-		
+
 		getInternalPanel().setTop(formName);
 		getInternalPanel().setAlignment(formName, Pos.CENTER);
-		
+
 		getInternalPanel().setCenter(getTable());
 		getInternalPanel().setBottom(createControlPane());
 
@@ -91,7 +90,6 @@ public class MilestoneForm extends Table2BasicForm implements ISegmentTableForm 
 
 		getMainPanel().setCenter(getInternalPanel());
 		getMainPanel().setRight(criterionForm.getMainPanel());
-		
 
 	}
 
@@ -154,7 +152,7 @@ public class MilestoneForm extends Table2BasicForm implements ISegmentTableForm 
 
 	@Override
 	public GridPane createControlPane() {
-		
+
 		criteriaLB = new Label("Criteria: ");
 		criteriaCB = new CheckComboBox<String>(getControl().getLists().getCriterionObservable());
 		criteriaCB.setMaxWidth(Constans.checkComboBox);
@@ -167,39 +165,29 @@ public class MilestoneForm extends Table2BasicForm implements ISegmentTableForm 
 			}
 		});
 
-		
 		getControlPane().add(criteriaLB, 2, 0);
 		getControlPane().add(criteriaCB, 3, 0);
 		getControlPane().add(getAddBT(), 4, 0);
 
 		getAddBT().setOnAction(event -> addItem());
 
-		
 		return getControlPane();
 	}
 
 	@Override
 	public void addItem() {
-		
+
+		String nameST = getNameTF().getText();
+		String criterion = "";
 		if (criterionArray != null) {
-
-			String nameST = getNameTF().getText();
-
-			if (nameST.length() == 0) {
-
-				Alerts.showNoNameAlert();
-				return;
-			}
-
-			MilestoneTable milestone = new MilestoneTable(nameST, criterionArray.toString());
-			tableTV.getItems().add(milestone);
-			tableTV.sort();
-			getControl().getFillForms().fillMilestone(nameST, criterionIndex);
-			 criteriaCB.getCheckModel().clearChecks();
-
-		}else{
-			Alerts.showNoText("Criterion");
+			criterion = criterionArray.toString();
 		}
+
+		MilestoneTable milestone = new MilestoneTable(nameST, criterion);
+		tableTV.getItems().add(milestone);
+		tableTV.sort();
+		getControl().getFillForms().fillMilestone(formControl.fillTextMapper(nameST), criterionIndex);
+		criteriaCB.getCheckModel().clearChecks();
 
 	}
 
@@ -218,8 +206,5 @@ public class MilestoneForm extends Table2BasicForm implements ISegmentTableForm 
 	public void setCriterionForm(CriterionForm criterionForm) {
 		this.criterionForm = criterionForm;
 	}
-	
-	
-	
 
 }

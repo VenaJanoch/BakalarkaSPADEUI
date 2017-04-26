@@ -177,8 +177,8 @@ public class LinkControl {
 		arrows.remove(arrowId);
 		arrows.add(arrowId, null);
 
-		lists.getArtifactList().get(artifactID).setChangeIndex(-1);
-		lists.getChangeList().get(changeID).setArtifactIndex(-1);
+		lists.getArtifactList().get(artifactID).getChangeIndex().remove(0);
+		lists.getChangeList().get(changeID).getArtifactIndex().remove(0);
 
 	}
 
@@ -204,8 +204,8 @@ public class LinkControl {
 
 		lists.getLinksList().add(linkP);
 
-		lists.getChangeList().get(changeIndex).setArtifactIndex(artifactIndex);
-		lists.getArtifactList().get(artifactIndex).setChangeIndex(changeIndex);
+		lists.getChangeList().get(changeIndex).getArtifactIndex().add(artifactIndex);
+		lists.getArtifactList().get(artifactIndex).getChangeIndex().add(changeIndex);
 
 	}
 

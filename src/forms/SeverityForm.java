@@ -148,17 +148,11 @@ public class SeverityForm extends TableClassBasicForm implements ISegmentTableFo
 		}
 		String superST = WorkUnitPrioritySuperClass.values()[superIndex].name();
 
-		if (nameST.length() == 0) {
-
-			Alerts.showNoNameAlert();
-			return;
-		}
-
 		ClassTable table = new ClassTable(nameST, classST, superST);
 
 		getTableTV().getItems().add(table);
 		getTableTV().sort();
-		getControl().getFillForms().fillSeverityType(nameST, classST, superST);
+		getControl().getFillForms().fillSeverityType(formControl.fillTextMapper(nameST), formControl.fillTextMapper(classST), superST);
 
 	}
 

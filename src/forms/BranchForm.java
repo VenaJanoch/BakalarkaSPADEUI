@@ -173,16 +173,11 @@ public class BranchForm extends TableBasicForm implements ISegmentTableForm {
 
 		String nameST = getNameTF().getText();
 
-		if (nameST.length() == 0) {
-			Alerts.showNoText("Name");
-			return;
-		}
-
 		BranchTable tag = new BranchTable(nameST, main);
 		tableTV.getItems().add(tag);
 		tableTV.sort();
 
-		getControl().getFillForms().fillBranch(nameST, isMain);
+		getControl().getFillForms().fillBranch(formControl.fillTextMapper(nameST), isMain);
 	}
 
 	/*** Getrs and Setrs ***/

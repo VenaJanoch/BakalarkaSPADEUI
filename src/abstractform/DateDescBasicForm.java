@@ -14,7 +14,7 @@ import services.Control;
 import services.DeleteControl;
 
 /**
- * @author Václav
+ * @author Vï¿½clav
  *
  */
 public class DateDescBasicForm extends DescriptionBasicForm {
@@ -56,7 +56,6 @@ public class DateDescBasicForm extends DescriptionBasicForm {
 		dateLB = new Label("Created: ");
 		dateDP = new DatePicker();
 		dateDP.setId("DP1");
-		dateDP.setValue(LocalDate.now());
 
 		getInfoPart().add(dateLB, 0, 2);
 		getInfoPart().setHalignment(dateLB, HPos.RIGHT);

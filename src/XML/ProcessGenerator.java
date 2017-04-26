@@ -53,7 +53,7 @@ public class ProcessGenerator {
 			marshallerVal.setProperty(Marshaller.JAXB_ENCODING, "UTF8");
 			marshallerVal.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
 			marshallerVal.setProperty(Marshaller.JAXB_NO_NAMESPACE_SCHEMA_LOCATION, Constans.XSDNAME);
-			//marshallerVal.setSchema(validator.getSchemaXSD());
+			marshallerVal.setSchema(validator.getSchemaXSD());
 
 			unMarshallerVal = jc.createUnmarshaller();
 
@@ -71,7 +71,7 @@ public class ProcessGenerator {
 			StringWriter errors = new StringWriter();
 			e.printStackTrace(new PrintWriter(errors));
 			Alerts.showValidationError(errors.toString().substring(0, 300) + " ....");
-		//	validator.validatePrecess(rootElement);
+			validator.validatePrecess(rootElement);
 			return;
 			
 		}catch (FileNotFoundException e) {

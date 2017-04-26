@@ -45,8 +45,7 @@ public class ChangeForm extends DescriptionBasicForm implements ISegmentForm {
 		this.conf = conf;
 		change.setExist(true);
 		setArtifactArray(new ArrayList());
-		getArtifactArray().add(change.getArtifactIndex());
-
+		
 		this.setOnCloseRequest(e -> {
 
 			e.consume();

@@ -40,8 +40,6 @@ public class PhaseForm extends DateDescBasicForm implements ISegmentForm {
 
 	private ChoiceBox<String> configCB;
 	private ChoiceBox<String> milestoneCB;
-	private Button newConfigBT;
-	private Button editConfigBT;
 	private int milestoneIndex;
 	private int configIndex;
 	private Phase phase;
@@ -89,11 +87,8 @@ public class PhaseForm extends DateDescBasicForm implements ISegmentForm {
 
 	@Override
 	public void setActionSubmitButton() {
-
-		if (getFormControl().phaseControl()) {
-			closeForm();
-			close();
-		}
+		closeForm();
+		close();		
 	}
 
 	@Override

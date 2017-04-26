@@ -150,17 +150,11 @@ public class RelationForm extends TableClassBasicForm implements ISegmentTableFo
 		}
 		String superST = WorkUnitRelationSuperClass.values()[getSuperIndex()].name();
 
-		if (nameST.length() == 0) {
-
-			Alerts.showNoNameAlert();
-			return;
-		}
-
 		ClassTable table = new ClassTable(nameST, classST, superST);
 
 		getTableTV().getItems().add(table);
 		getTableTV().sort();
-		getControl().getFillForms().fillRelationType(nameST, classST, superST);
+		getControl().getFillForms().fillRelationType(formControl.fillTextMapper(nameST), formControl.fillTextMapper(classST), superST);
 
 	}
 
