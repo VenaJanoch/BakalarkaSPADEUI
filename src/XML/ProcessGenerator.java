@@ -131,7 +131,7 @@ public class ProcessGenerator {
 
 		try {
 			element = (JAXBElement) unMarshaller.unmarshal(file);
-			// validator.validatePrecess(element);
+			 validator.validatePrecess(element);
 
 		} catch (JAXBException e) {
 			// TODO Auto-generated catch block

@@ -69,7 +69,7 @@ public class ConfigurationTableForm extends Table2BasicForm implements ISegmentT
 
 	public BasicForm createConfigItem() {
 
-		CanvasItem item = new CanvasItem(SegmentType.Configuration, "Name", getControl(),
+		CanvasItem item = new CanvasItem(SegmentType.Configuration, "New", getControl(),
 				getControl().getForms().get(0), 0, 0, 0, getControl().getContexMenu(), getControl().getLinkControl(), getControl().getCanvas());
 
 		form = getControl().getForms().get(item.getIDs()[0]);

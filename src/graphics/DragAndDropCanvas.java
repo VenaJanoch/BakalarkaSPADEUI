@@ -160,7 +160,7 @@ public class DragAndDropCanvas extends ScrollPane {
 	public CanvasItem addItem(String segment, double x, double y) {
 
 		SegmentType type = Control.findSegmentType(segment);
-		CanvasItem item = new CanvasItem(type, "Name", control, control.getForms().get(indexForm), 0, x, y, contexMenu,
+		CanvasItem item = new CanvasItem(type, "New", control, control.getForms().get(indexForm), 0, x, y, contexMenu,
 				control.getLinkControl(), this);
 		canvas.getChildren().add(item);
 		return item;
@@ -170,7 +170,7 @@ public class DragAndDropCanvas extends ScrollPane {
 	public CanvasItem addCopyItem(SegmentType segment, double x, double y) {
 		if (FormControl.copyControl(segment, canvasType)) {
 
-			CanvasItem item = new CanvasItem(segment, "Name", control, control.getForms().get(indexForm), 2, x, y,
+			CanvasItem item = new CanvasItem(segment, "New", control, control.getForms().get(indexForm), 2, x, y,
 					contexMenu, control.getLinkControl(), this);
 			canvas.getChildren().add(item);
 			return item;

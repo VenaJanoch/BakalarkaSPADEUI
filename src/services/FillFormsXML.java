@@ -675,7 +675,7 @@ public class FillFormsXML {
 
 		String tmp = "[ ";
 		for (int i = 0; i < indexs.size(); i++) {
-			tmp += control.getLists().getCriterionObservable().get(indexs.get(i)-1) + ", ";
+			tmp += control.getLists().getCriterionObservable().get(indexs.get(i)+1) + ", ";
 		}
 
 		tmp += " ]";

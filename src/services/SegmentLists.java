@@ -138,7 +138,7 @@ public class SegmentLists {
 		
 		criterionList = project.getCriterions();
 		criterionObservable.clear();
-		
+		criterionObservable.add("");
 		
 		milestoneList = project.getMilestones();
 		milestoneObservable.clear();

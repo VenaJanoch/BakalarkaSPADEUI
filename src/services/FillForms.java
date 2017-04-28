@@ -227,7 +227,7 @@ public class FillForms {
 		milestone.setName(formControl.fillTextMapper(name));
 		if (indexs != null) {
 			for (int i = 0; i < indexs.size(); i++) {
-				milestone.getCriteriaIndexs().add(indexs.get(i));
+				milestone.getCriteriaIndexs().add(indexs.get(i)-1);
 			}
 			
 			control.getLists().getMilestoneList().add(milestone);
