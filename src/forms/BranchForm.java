@@ -32,6 +32,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.WindowEvent;
 import services.Alerts;
+import services.Constans;
 import services.Control;
 import services.DeleteControl;
 import services.OrderCell;
@@ -58,6 +59,9 @@ public class BranchForm extends TableBasicForm implements ISegmentTableForm {
 
 	public BranchForm(Control control, DeleteControl deleteControl) {
 		super(control, deleteControl);
+		
+		getMainPanel().setMinSize(Constans.littleformWidth, Constans.littleformHeight);
+		getMainPanel().setMaxSize(Constans.littleformWidth, Constans.littleformHeight);
 
 		getSubmitButton().setOnAction(event -> setActionSubmitButton());
 		createForm();
@@ -71,6 +75,7 @@ public class BranchForm extends TableBasicForm implements ISegmentTableForm {
 
 	@Override
 	public void createForm() {
+		getFormName().setText("Branch Form");
 		getMainPanel().setCenter(getTable());
 		getMainPanel().setBottom(createControlPane());
 	}

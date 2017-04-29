@@ -86,9 +86,6 @@ public class CanvasItem extends AnchorPane {
 		this.dgCanvas = dgCanvas;
 		this.segmentInfo = new InfoBoxSegment(this, type, name);
 
-		// this.setBackground(new Background(new BackgroundFill(Color.BROWN,
-		// CornerRadii.EMPTY, Insets.EMPTY)));
-
 		if (isCreated == 0) {
 			IDs = control.createForm(this, rootForm);
 		} else if (isCreated == 1) {
@@ -177,7 +174,6 @@ public class CanvasItem extends AnchorPane {
 	}
 
 	public void setPosition(Point2D point) {
-		System.out.println(point + " set position");
 		this.setTranslateX(point.getX());
 		this.setTranslateY(point.getY());
 	}

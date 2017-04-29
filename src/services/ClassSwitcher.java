@@ -89,7 +89,7 @@ public class ClassSwitcher {
 	}
 
 	public int resolutionClassToSupperClass(int classIndex) {
-		if (classIndex <= Constans.resolutionTypeFinishedClass) {
+		if (classIndex <= Constans.resolutionTypeFinishedClass && classIndex > 0) {
 
 			return Constans.resolutionFinishedSuperClass;
 

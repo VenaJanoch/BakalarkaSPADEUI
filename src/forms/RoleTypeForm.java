@@ -7,6 +7,8 @@ import javax.management.relation.RoleStatus;
 import SPADEPAC.RoleClass;
 import SPADEPAC.RoleSuperClass;
 import SPADEPAC.WorkUnitPrioritySuperClass;
+import SPADEPAC.WorkUnitTypeClass;
+import SPADEPAC.WorkUnitTypeSuperClass;
 import abstractform.TableBasicForm;
 import abstractform.TableClassBasicForm;
 import interfaces.ISegmentTableForm;
@@ -61,7 +63,7 @@ public class RoleTypeForm extends TableClassBasicForm implements ISegmentTableFo
 	@Override
 	public void createForm() {
 
-		getNameLB().setText("Role type");
+		getFormName().setText("Role Classification Type Form");
 
 		getMainPanel().setCenter(getTable());
 		getMainPanel().setBottom(createControlPane());
@@ -107,9 +109,12 @@ public class RoleTypeForm extends TableClassBasicForm implements ISegmentTableFo
 		roleSuperClassTypeCB = new ComboBox<RoleSuperClass>(FXCollections.observableArrayList(RoleSuperClass.values()));
 		roleSuperClassTypeCB.getSelectionModel().selectedIndexProperty().addListener(superListener);
 
-		getControlPane().add(roleClassTypeLB, 0, 1);
+		roleClassTypeCB.setValue(RoleClass.UNASSIGNED);
+		roleSuperClassTypeCB.setValue(RoleSuperClass.UNASSIGNED);
+		
+		getControlPane().add(classLB, 2, 0);
 		getControlPane().add(roleClassTypeCB, 1, 1);
-		getControlPane().add(roleSuperClassTypeLB, 2, 1);
+		getControlPane().add(superLB, 4, 0);
 		getControlPane().add(roleSuperClassTypeCB, 3, 1);
 		getControlPane().add(getAddBT(), 5, 0);
 
@@ -151,7 +156,7 @@ public class RoleTypeForm extends TableClassBasicForm implements ISegmentTableFo
 		String classST;
 
 		if (roleClassTypeCB.getValue() == null || getClassIndex() == 0) {
-			classST = "";
+			classST = RoleClass.UNASSIGNED.name();
 		} else {
 			classST = roleClassTypeCB.getValue().name();
 		}

@@ -20,12 +20,12 @@ public class TableBasicForm  extends Stage{
 
 	private BorderPane mainPanel;
 	private Scene scena;
-	private Control control;
-	private GridPane controlPane;
-	private Button add;
+	protected Control control;
+	protected GridPane controlPane;
+	protected Button add;
 	private Button submitButton;
-	private Label nameLB;
-	private TextField nameTF;
+	protected Label nameLB;
+	protected TextField nameTF;
 	private Label formName;
 	protected DeleteControl deleteControl;
 	protected FormControl formControl;

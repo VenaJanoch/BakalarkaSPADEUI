@@ -65,7 +65,7 @@ public class ConfigPersonRelationForm extends TableBasicForm implements ISegment
 	@Override
 	public void createForm() {
 
-		getFormName().setText("CPR form");
+		getFormName().setText("Configuration Person Relation Form");
 
 		getMainPanel().setCenter(getTable());
 		getMainPanel().setBottom(createControlPane());
@@ -126,7 +126,7 @@ public class ConfigPersonRelationForm extends TableBasicForm implements ISegment
 	@Override
 	public GridPane createControlPane() {
 
-		personRoleLB = new Label("Person-Role");
+		personRoleLB = new Label("Person-Role: ");
 		personCB = new ComboBox<String>(getControl().getLists().getRoleObservable());
 		personCB.setVisibleRowCount(5);
 		personCB.getSelectionModel().selectedIndexProperty().addListener(roleListener);

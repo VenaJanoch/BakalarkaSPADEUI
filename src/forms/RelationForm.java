@@ -9,6 +9,8 @@ import SPADEPAC.WorkUnitRelationClass;
 import SPADEPAC.WorkUnitRelationSuperClass;
 import SPADEPAC.WorkUnitSeverityClass;
 import SPADEPAC.WorkUnitSeveritySuperClass;
+import SPADEPAC.WorkUnitTypeClass;
+import SPADEPAC.WorkUnitTypeSuperClass;
 import abstractform.TableClassBasicForm;
 import interfaces.ISegmentTableForm;
 import javafx.beans.value.ChangeListener;
@@ -50,7 +52,7 @@ public class RelationForm extends TableClassBasicForm implements ISegmentTableFo
 
 	@Override
 	public void createForm() {
-		getFormName().setText("Relation form");
+		getFormName().setText("Relation Form");
 		getMainPanel().setCenter(getTable());
 		getMainPanel().setBottom(createControlPane());
 
@@ -98,9 +100,12 @@ public class RelationForm extends TableClassBasicForm implements ISegmentTableFo
 				FXCollections.observableArrayList(WorkUnitRelationSuperClass.values()));
 		superClassTypeCB.getSelectionModel().selectedIndexProperty().addListener(superListener);
 
-		getControlPane().add(classTypeLB, 2, 0);
+		classTypeCB.setValue(WorkUnitRelationClass.UNASSIGNED);
+		superClassTypeCB.setValue(WorkUnitRelationSuperClass.UNASSIGNED);
+		
+		getControlPane().add(classLB, 2, 0);
 		getControlPane().add(classTypeCB, 3, 0);
-		getControlPane().add(superClassTypeLB, 4, 0);
+		getControlPane().add(superLB, 4, 0);
 		getControlPane().add(superClassTypeCB, 5, 0);
 		getControlPane().add(getAddBT(), 6, 0);
 
@@ -144,7 +149,7 @@ public class RelationForm extends TableClassBasicForm implements ISegmentTableFo
 		String classST;
 
 		if (classTypeCB.getValue() == null || getClassIndex() == 0) {
-			classST = "";
+			classST = WorkUnitRelationClass.UNASSIGNED.name();
 		} else {
 			classST = classTypeCB.getValue().name();
 		}

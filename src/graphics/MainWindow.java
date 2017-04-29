@@ -33,7 +33,7 @@ public class MainWindow extends Stage {
 	public MainWindow(Main main) {
 		super();
 		this.main = main;
-		this.setTitle("SPADE XML editor");
+		this.setTitle("SPADe Process Editor");
 		
 
 	

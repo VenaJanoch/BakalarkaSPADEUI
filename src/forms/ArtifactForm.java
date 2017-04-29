@@ -51,6 +51,11 @@ public class ArtifactForm extends DateDescBasicForm implements ISegmentForm {
 		this.conf = conf;
 		artifact.setExist(true);
 		setNew(true);
+	
+		getMainPanel().setMinSize(Constans.littleformWidth, Constans.littleformHeight);
+		getMainPanel().setMaxSize(Constans.littleformWidth, Constans.littleformHeight);
+
+		
 		this.setOnCloseRequest(e -> {
 
 			e.consume();

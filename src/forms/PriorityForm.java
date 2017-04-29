@@ -2,6 +2,8 @@ package forms;
 
 import SPADEPAC.WorkUnitPriorityClass;
 import SPADEPAC.WorkUnitPrioritySuperClass;
+import SPADEPAC.WorkUnitTypeClass;
+import SPADEPAC.WorkUnitTypeSuperClass;
 import abstractform.TableClassBasicForm;
 import interfaces.ISegmentTableForm;
 import javafx.beans.value.ChangeListener;
@@ -44,7 +46,7 @@ public class PriorityForm extends TableClassBasicForm implements ISegmentTableFo
 
 	@Override
 	public void createForm() {
-		getFormName().setText("Priority form");
+		getFormName().setText("Priority Form");
 		getMainPanel().setCenter(getTable());
 		getMainPanel().setBottom(createControlPane());
 
@@ -92,9 +94,12 @@ public class PriorityForm extends TableClassBasicForm implements ISegmentTableFo
 				FXCollections.observableArrayList(WorkUnitPrioritySuperClass.values()));
 		superClassTypeCB.getSelectionModel().selectedIndexProperty().addListener(superListener);
 		
-		getControlPane().add(classTypeLB, 2, 0);
+		classTypeCB.setValue(WorkUnitPriorityClass.UNASSIGNED);
+		superClassTypeCB.setValue(WorkUnitPrioritySuperClass.UNASSIGNED);
+		
+		getControlPane().add(classLB, 2, 0);
 		getControlPane().add(classTypeCB, 3, 0);
-		getControlPane().add(superClassTypeLB, 4, 0);
+		getControlPane().add(superLB, 4, 0);
 		getControlPane().add(superClassTypeCB, 5, 0);
 		getControlPane().add(getAddBT(), 6, 0);
 
@@ -138,7 +143,7 @@ public class PriorityForm extends TableClassBasicForm implements ISegmentTableFo
 		String classST;
 		
 		if (classTypeCB.getValue() == null || classIndex == 0) {
-		classST = "";	
+		classST = WorkUnitPriorityClass.UNASSIGNED.name();	
 		}else{
 			classST = classTypeCB.getValue().name();			
 		}

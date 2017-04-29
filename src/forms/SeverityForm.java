@@ -6,6 +6,8 @@ import SPADEPAC.WorkUnitPriorityClass;
 import SPADEPAC.WorkUnitPrioritySuperClass;
 import SPADEPAC.WorkUnitSeverityClass;
 import SPADEPAC.WorkUnitSeveritySuperClass;
+import SPADEPAC.WorkUnitTypeClass;
+import SPADEPAC.WorkUnitTypeSuperClass;
 import abstractform.TableClassBasicForm;
 import interfaces.ISegmentTableForm;
 import javafx.beans.value.ChangeListener;
@@ -46,7 +48,7 @@ public class SeverityForm extends TableClassBasicForm implements ISegmentTableFo
 
 	@Override
 	public void createForm() {
-		getFormName().setText("Severity form");
+		getFormName().setText("Severity Form");
 
 		getMainPanel().setCenter(getTable());
 		getMainPanel().setBottom(createControlPane());
@@ -95,9 +97,11 @@ public class SeverityForm extends TableClassBasicForm implements ISegmentTableFo
 				FXCollections.observableArrayList(WorkUnitSeveritySuperClass.values()));
 		superClassTypeCB.getSelectionModel().selectedIndexProperty().addListener(superListener);
 
-		getControlPane().add(classTypeLB, 2, 0);
+		classTypeCB.setValue(WorkUnitSeverityClass.UNASSIGNED);
+		superClassTypeCB.setValue(WorkUnitSeveritySuperClass.UNASSIGNED);
+		getControlPane().add(classLB, 2, 0);
 		getControlPane().add(classTypeCB, 3, 0);
-		getControlPane().add(superClassTypeLB, 4, 0);
+		getControlPane().add(superLB, 4, 0);
 		getControlPane().add(superClassTypeCB, 5, 0);
 		getControlPane().add(getAddBT(), 6, 0);
 
@@ -142,11 +146,11 @@ public class SeverityForm extends TableClassBasicForm implements ISegmentTableFo
 		String classST;
 
 		if (classTypeCB.getValue() == null || classIndex == 0) {
-			classST = "";
+			classST = WorkUnitSeverityClass.UNASSIGNED.name();
 		} else {
 			classST = classTypeCB.getValue().name();
 		}
-		String superST = WorkUnitPrioritySuperClass.values()[superIndex].name();
+		String superST = WorkUnitSeveritySuperClass.values()[superIndex].name();
 
 		ClassTable table = new ClassTable(nameST, classST, superST);
 

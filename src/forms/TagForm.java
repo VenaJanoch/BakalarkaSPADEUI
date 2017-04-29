@@ -154,7 +154,7 @@ public class TagForm extends TableBasicForm implements ISegmentTableForm {
 	@Override
 	public void createForm() {
 
-		getFormName().setText("Tag form");
+		getFormName().setText("Tag Form");
 
 		getSubmitButton().setOnAction(event -> setActionSubmitButton());
 

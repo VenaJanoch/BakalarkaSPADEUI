@@ -23,6 +23,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.WindowEvent;
 import services.Alerts;
+import services.Constans;
 import services.Control;
 import services.SegmentType;
 
@@ -37,6 +38,9 @@ public class ProjectForm extends Date2DescBasicForm implements ISegmentForm {
 		setWorkUnitArray(project.getWorkUnitIndexs());
 
 		setCanvas(canvas);
+
+		getMainPanel().setMinSize(Constans.littleformWidth, Constans.littleformHeight);
+		getMainPanel().setMaxSize(Constans.littleformWidth, Constans.littleformHeight);
 
 		setCanvasItem(new CanvasItem(SegmentType.Project, "", control, this, 0, 0, 0, control.getContexMenu(),
 				control.getLinkControl(), control.getCanvas()));

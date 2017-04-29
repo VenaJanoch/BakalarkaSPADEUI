@@ -13,7 +13,10 @@ public class Constans {
 	public static final int formHeight = 600;
 	public static final int workUnitformWidth = 300;
 	public static final int workUnitformHeight = 500;
-	
+	public static final double littleformWidth = 300;
+	public static final double littleformHeight = 300;
+
+
 	
 	public static final int canvasMaxWidth = 2000;
 	public static final int canvasMaxHeight = 2000;
@@ -37,7 +40,7 @@ public class Constans {
 
 	public static final int addButtonCount = 12;
 	public static final String[] addButtonsNames = { "Project", "Add Milestone", "Add Config-role", "Add Role",
-			"Add Priority", "Add severity", "Add Relation", "Add Resolution", "Add Status", "Add Type", "Add Branch",
+			"Add Priority", "Add Severity", "Add Relation", "Add Resolution", "Add Status", "Add Type", "Add Branch",
 			"Add Configuration" };
 	
 
@@ -48,47 +51,48 @@ public class Constans {
 	public static final int roleTypeStakeholederClass = 9;
 	public static final int roleTypeOtherClass = 10;
 
-	public static final int roleTypeManagementSuperClass = 0;
-	public static final int roleTypeTeamMemberSuperClass = 1;
-	public static final int roleTypeStakeholederSuperClass = 2;
-	public static final int roleTypeOtherSuperClass = 3;
+	public static final int typeSuperClassUnassigned = 0;
+	public static final int roleTypeManagementSuperClass = 1;
+	public static final int roleTypeTeamMemberSuperClass = 2;
+	public static final int roleTypeStakeholederSuperClass = 3;
+	public static final int roleTypeOtherSuperClass = 4;
 
 	public static final int priorityTypeLowClass = 2;
 	public static final int priorityTypeNormalClass = 3;
 	public static final int priorityTypeHighClass = 5;
 	public static final int priorityTypeOtherClass = 6;
 
-	public static final int priorityTypeLowSuperClass = 0;
-	public static final int priorityTypeNormaSuperClass = 1;
-	public static final int priorityTypeHighClassSuperClass = 2;
-	public static final int priorityTypeOtherSuperClass = 3;
+	public static final int priorityTypeLowSuperClass = 1;
+	public static final int priorityTypeNormaSuperClass = 2;
+	public static final int priorityTypeHighClassSuperClass = 3;
+	public static final int priorityTypeOtherSuperClass = 4;
 
 	public static final int resolutionTypeFinishedClass = 5;
 
-	public static final int resolutionFinishedSuperClass = 0;
-	public static final int resolutionUnFinishedSuperClass = 1;
+	public static final int resolutionFinishedSuperClass = 1;
+	public static final int resolutionUnFinishedSuperClass = 2;
 
 	public static final int relationTypeSimilaryClass = 2;
 	public static final int relationTypeTemporalClass = 4;
 	public static final int relationTypeGeneralClass = 5;
 	public static final int relationTypeHierachyClass = 6;
 
-	public static final int relationTypeSimilarySuperClass = 0;
-	public static final int relationTypeTemporalSuperClass = 1;
-	public static final int relationTypeGeneralSuperClass = 2;
-	public static final int relationTypeHierachySuperClass = 3;
-	public static final int relationTypeCasualSuperClass = 4;
+	public static final int relationTypeSimilarySuperClass = 1;
+	public static final int relationTypeTemporalSuperClass = 2;
+	public static final int relationTypeGeneralSuperClass = 3;
+	public static final int relationTypeHierachySuperClass = 4;
+	public static final int relationTypeCasualSuperClass = 5;
 
 	public static final int statusTypeOpenClass = 5;
-	public static final int statusTypeOpenSuperClass = 0;
-	public static final int statusTypeCloseSuperClass = 1;
+	public static final int statusTypeOpenSuperClass = 1;
+	public static final int statusTypeCloseSuperClass = 2;
 
 	public static final int typeEditionClass = 2;
 	public static final int typeCreationClass = 3;
 
-	public static final int typeEditionSuperClass = 0;
-	public static final int typeCreationSuperClass = 1;
-	public static final int typeGeneralSuperClass = 2;
+	public static final int typeEditionSuperClass = 1;
+	public static final int typeCreationSuperClass = 2;
+	public static final int typeGeneralSuperClass = 3;
 
 	public static final int infoBoxHeightRectangle = 20;
 	public static final double infoBoxHeight = 40;
@@ -97,5 +101,5 @@ public class Constans {
 	public static final double checkComboBox = 50;
 	public static final Color rectangleBorderColor = Color.BLACK;
 	public static final Color nonExistRectangleBorderColor = Color.RED;
-
+	
 }

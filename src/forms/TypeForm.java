@@ -31,10 +31,7 @@ public class TypeForm extends TableClassBasicForm implements ISegmentTableForm {
 
 	private ComboBox<WorkUnitTypeClass> classTypeCB;
 	private ComboBox<WorkUnitTypeSuperClass> superClassTypeCB;
-
-	private Label classTypeLB;
-	private Label superClassTypeLB;
-
+	
 	public TypeForm(Control control, DeleteControl deleteControl) {
 		super(control, deleteControl);
 
@@ -48,7 +45,7 @@ public class TypeForm extends TableClassBasicForm implements ISegmentTableForm {
 
 	@Override
 	public void createForm() {
-		getFormName().setText("WorkUnit type form");
+		getFormName().setText("WorkUnit Type Form");
 		getMainPanel().setCenter(getTable());
 		getMainPanel().setBottom(createControlPane());
 
@@ -86,17 +83,17 @@ public class TypeForm extends TableClassBasicForm implements ISegmentTableForm {
 	@Override
 	public GridPane createControlPane() {
 
-		classTypeLB = new Label("Class: ");
 		classTypeCB = new ComboBox<WorkUnitTypeClass>(FXCollections.observableArrayList(WorkUnitTypeClass.values()));
 		classTypeCB.getSelectionModel().selectedIndexProperty().addListener(classListener);
-		superClassTypeLB = new Label("SuperClass: ");
 		superClassTypeCB = new ComboBox<WorkUnitTypeSuperClass>(
 				FXCollections.observableArrayList(WorkUnitTypeSuperClass.values()));
+		classTypeCB.setValue(WorkUnitTypeClass.UNASSIGNED);
+		superClassTypeCB.setValue(WorkUnitTypeSuperClass.UNASSIGNED);
 		superClassTypeCB.getSelectionModel().selectedIndexProperty().addListener(superListener);
 
-		getControlPane().add(classTypeLB, 2, 0);
+		getControlPane().add(classLB, 2, 0);
 		getControlPane().add(classTypeCB, 3, 0);
-		getControlPane().add(superClassTypeLB, 4, 0);
+		getControlPane().add(superLB, 4, 0);
 		getControlPane().add(superClassTypeCB, 5, 0);
 		getControlPane().add(getAddBT(), 6, 0);
 
@@ -138,7 +135,7 @@ public class TypeForm extends TableClassBasicForm implements ISegmentTableForm {
 		String nameST = getNameTF().getText();
 		String classST;
 		if (classTypeCB.getValue() == null || getClassIndex() == 0) {
-			classST = "";
+			classST = WorkUnitTypeClass.UNASSIGNED.name();
 		} else {
 			classST = classTypeCB.getValue().name();
 		}

@@ -7,6 +7,8 @@ import SPADEPAC.WorkUnitPrioritySuperClass;
 import SPADEPAC.WorkUnitResolutionsSuperClass;
 import SPADEPAC.WorkUnitStatusClass;
 import SPADEPAC.WorkUnitStatusSuperClass;
+import SPADEPAC.WorkUnitTypeClass;
+import SPADEPAC.WorkUnitTypeSuperClass;
 import SPADEPAC.WorkUnitSeverityClass;
 import SPADEPAC.WorkUnitSeveritySuperClass;
 import abstractform.TableClassBasicForm;
@@ -49,7 +51,7 @@ public class StatusForm extends TableClassBasicForm implements ISegmentTableForm
 
 	@Override
 	public void createForm() {
-		getFormName().setText("Status form");
+		getFormName().setText("Status Form");
 
 		getMainPanel().setCenter(getTable());
 		getMainPanel().setBottom(createControlPane());
@@ -88,19 +90,20 @@ public class StatusForm extends TableClassBasicForm implements ISegmentTableForm
 	@Override
 	public GridPane createControlPane() {
 
-		classTypeLB = new Label("Class: ");
-		classTypeCB = new ComboBox<WorkUnitStatusClass>(
+				classTypeCB = new ComboBox<WorkUnitStatusClass>(
 				FXCollections.observableArrayList(WorkUnitStatusClass.values()));
 		classTypeCB.getSelectionModel().selectedIndexProperty().addListener(classListener);
 
-		superClassTypeLB = new Label("SuperClass: ");
-		superClassTypeCB = new ComboBox<WorkUnitStatusSuperClass>(
+				superClassTypeCB = new ComboBox<WorkUnitStatusSuperClass>(
 				FXCollections.observableArrayList(WorkUnitStatusSuperClass.values()));
 		superClassTypeCB.getSelectionModel().selectedIndexProperty().addListener(superListener);
 
-		getControlPane().add(classTypeLB, 2, 0);
+		classTypeCB.setValue(WorkUnitStatusClass.UNASSIGNED);
+		superClassTypeCB.setValue(WorkUnitStatusSuperClass.UNASSIGNED);
+		
+		getControlPane().add(classLB, 2, 0);
 		getControlPane().add(classTypeCB, 3, 0);
-		getControlPane().add(superClassTypeLB, 4, 0);
+		getControlPane().add(superLB, 4, 0);
 		getControlPane().add(superClassTypeCB, 5, 0);
 		getControlPane().add(getAddBT(), 6, 0);
 
@@ -144,7 +147,7 @@ public class StatusForm extends TableClassBasicForm implements ISegmentTableForm
 		String nameST = getNameTF().getText();
 		String classST;
 		if (classTypeCB.getValue() == null || getClassIndex() == 0) {
-			classST = "";
+			classST = WorkUnitStatusClass.UNASSIGNED.name();
 		} else {
 			classST = classTypeCB.getValue().name();
 		}

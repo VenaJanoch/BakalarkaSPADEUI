@@ -313,7 +313,7 @@ public class Alerts {
 		alert.setContentText("Would you save a project?.");
 
 		ButtonType buttonTypeOne = new ButtonType("Save");
-		ButtonType buttonOK = new ButtonType("NO", ButtonData.OK_DONE);
+		ButtonType buttonOK = new ButtonType("Close", ButtonData.OK_DONE);
 		ButtonType buttonTypeCancel = new ButtonType("Cancel", ButtonData.CANCEL_CLOSE);
 
 		alert.getButtonTypes().setAll(buttonTypeOne, buttonOK, buttonTypeCancel);

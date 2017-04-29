@@ -81,7 +81,7 @@ public class RoleForm extends Table2BasicForm implements ISegmentTableForm {
 	@Override
 	public void createForm() {
 
-		formName = new Label("Roles Form");
+		formName = new Label("Role Form");
 		formName.setFont(Font.font(25));
 
 		getInternalPanel().setTop(formName);

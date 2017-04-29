@@ -42,13 +42,10 @@ import tables.MilestoneTable;
 public class CriterionForm extends TableBasicForm implements ISegmentTableForm {
 
 	private Label descriptionLB;
-	private Label nameLB;
 	private TextField descriptionTF;
-	private TextField nameTF;
-	private Button addBT;
 	private TableView<CriterionTable> tableTV;
 	private Control control;
-	private GridPane controlPane;
+
 
 	public CriterionForm(Control control, DeleteControl deleteControl) {
 		super(control, deleteControl);
@@ -61,7 +58,7 @@ public class CriterionForm extends TableBasicForm implements ISegmentTableForm {
 
 	public void createForm() {
 
-		getFormName().setText("Criterion form");
+		getFormName().setText("Criterion Form");
 
 		getMainPanel().setCenter(getTable());
 		getMainPanel().setBottom(createControlPane());
@@ -126,23 +123,16 @@ public class CriterionForm extends TableBasicForm implements ISegmentTableForm {
 	@Override
 	public GridPane createControlPane() {
 
-		nameLB = new Label("Name");
-		nameTF = new TextField();
-
+		
 		descriptionLB = new Label("Description: ");
 		descriptionTF = new TextField();
 
-		addBT = new Button("Add");
-		addBT.setPrefWidth(60);
-		addBT.setPrefHeight(60);
-		addBT.setOnAction(event -> addItem());
+		add.setOnAction(event -> addItem());
 
-		controlPane = new GridPane();
-		controlPane.add(nameLB, 0, 0);
-		controlPane.add(nameTF, 1, 0);
+		
 		controlPane.add(descriptionLB, 2, 0);
 		controlPane.add(descriptionTF, 3, 0);
-		controlPane.add(addBT, 4, 0);
+		controlPane.add(add, 4, 0);
 
 		controlPane.setHgap(3);
 		controlPane.setVgap(3);

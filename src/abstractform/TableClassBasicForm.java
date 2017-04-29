@@ -17,8 +17,8 @@ import javafx.scene.layout.BorderPane;
 
 public class TableClassBasicForm extends TableBasicForm {
 
-	private Label classLB;
-	private Label superLB;
+	protected Label classLB;
+	protected Label superLB;
 	private TableView<ClassTable> tableTV;
 
 	private ClassSwitcher switcher;
@@ -43,13 +43,13 @@ public class TableClassBasicForm extends TableBasicForm {
 	public void createforms() {
 
 		setClassLB(new Label("Class: "));
-		setSuperLB(new Label("Super"));
+		setSuperLB(new Label("Super Class: "));
 	
 		tableTV = new TableView<ClassTable>();
 		tableTV.setId("classTable");
 		TableColumn<ClassTable, String> nameColumn = new TableColumn<ClassTable, String>("Name");
 		TableColumn<ClassTable, String> classColumn = new TableColumn<ClassTable, String>("Class");
-		TableColumn<ClassTable, String> superColumn = new TableColumn<ClassTable, String>("SuperClass");
+		TableColumn<ClassTable, String> superColumn = new TableColumn<ClassTable, String>("Super Class");
 
 		nameColumn.setCellValueFactory(new PropertyValueFactory("name"));
 		nameColumn.setMinWidth(150);

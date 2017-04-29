@@ -8,6 +8,8 @@ import SPADEPAC.WorkUnitResolutionClass;
 import SPADEPAC.WorkUnitResolutionsSuperClass;
 import SPADEPAC.WorkUnitSeverityClass;
 import SPADEPAC.WorkUnitSeveritySuperClass;
+import SPADEPAC.WorkUnitTypeClass;
+import SPADEPAC.WorkUnitTypeSuperClass;
 import abstractform.TableClassBasicForm;
 import interfaces.ISegmentTableForm;
 import javafx.beans.value.ChangeListener;
@@ -48,7 +50,7 @@ public class ResolutionForm extends TableClassBasicForm implements ISegmentTable
 
 	@Override
 	public void createForm() {
-		getFormName().setText("Resolution form");
+		getFormName().setText("Resolution Form");
 
 		getMainPanel().setCenter(getTable());
 		getMainPanel().setBottom(createControlPane());
@@ -97,9 +99,12 @@ public class ResolutionForm extends TableClassBasicForm implements ISegmentTable
 				FXCollections.observableArrayList(WorkUnitResolutionsSuperClass.values()));
 		superClassTypeCB.getSelectionModel().selectedIndexProperty().addListener(superListener);
 
-		getControlPane().add(classTypeLB, 2, 0);
+		classTypeCB.setValue(WorkUnitResolutionClass.UNASSIGNED);
+		superClassTypeCB.setValue(WorkUnitResolutionsSuperClass.UNASSIGNED);
+		
+		getControlPane().add(classLB, 2, 0);
 		getControlPane().add(classTypeCB, 3, 0);
-		getControlPane().add(superClassTypeLB, 4, 0);
+		getControlPane().add(superLB, 4, 0);
 		getControlPane().add(superClassTypeCB, 5, 0);
 		getControlPane().add(getAddBT(), 6, 0);
 
@@ -141,7 +146,7 @@ public class ResolutionForm extends TableClassBasicForm implements ISegmentTable
 		String nameST = getNameTF().getText();
 		String classST;
 		if (classTypeCB.getValue() == null || getClassIndex() == 0) {
-			classST = "";
+			classST = WorkUnitResolutionClass.UNASSIGNED.name();
 		} else {
 			classST = classTypeCB.getValue().name();
 		}

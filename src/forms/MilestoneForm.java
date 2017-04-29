@@ -77,7 +77,7 @@ public class MilestoneForm extends Table2BasicForm implements ISegmentTableForm 
 	@Override
 	public void createForm() {
 
-		formName = new Label("Milestones Form");
+		formName = new Label("Milestone Form");
 		formName.setFont(Font.font(25));
 
 		getInternalPanel().setTop(formName);

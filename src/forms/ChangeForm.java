@@ -46,6 +46,10 @@ public class ChangeForm extends DescriptionBasicForm implements ISegmentForm {
 		change.setExist(true);
 		setArtifactArray(new ArrayList());
 		
+		getMainPanel().setMinSize(Constans.littleformWidth, Constans.littleformHeight);
+		getMainPanel().setMaxSize(Constans.littleformWidth, Constans.littleformHeight);
+
+		
 		this.setOnCloseRequest(e -> {
 
 			e.consume();
