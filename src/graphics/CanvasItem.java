@@ -15,6 +15,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Tooltip;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.DragEvent;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
@@ -95,9 +96,13 @@ public class CanvasItem extends AnchorPane {
 		} else {
 			IDs = manipulation.createCopyWorkUnitForm(this, rootForm);
 		}
-
 		idForm = IDs[0];
 		ID = type.name() + "_" + String.format("%03d", IDs[1]);
+		if (IDs[0] != 0) {
+			String title = control.getForms().get(IDs[0]).getTitle();
+			control.getForms().get(IDs[0]).getFormName().setText(title + " " + ID);
+
+		}
 
 		this.setID(ID);
 		this.tooltip = new Tooltip(ID);
@@ -119,11 +124,11 @@ public class CanvasItem extends AnchorPane {
 			}
 
 		});
-
+		
 	}
-
+	
 	public void setClicFromDragPoint(MouseEvent t) {
-
+		manipulation.setClicItem(this);
 		if (t.getButton().equals(MouseButton.PRIMARY)) {
 
 			if (dgCanvas.isArrow()) {
@@ -167,8 +172,7 @@ public class CanvasItem extends AnchorPane {
 
 			((AnchorPane) (t.getSource())).setTranslateX(newTranslateX);
 			((AnchorPane) (t.getSource())).setTranslateY(newTranslateY);
-			
-			
+
 		}
 
 	}
@@ -182,11 +186,9 @@ public class CanvasItem extends AnchorPane {
 
 		@Override
 		public void handle(MouseEvent t) {
-				setPosition(control.canvasItemPositionControl(getTranslateX(), getTranslateY()));
-				repaintStartArrow();
-				repaintEndArrow();
-
-		
+			setPosition(control.canvasItemPositionControl(getTranslateX(), getTranslateY()));
+			repaintStartArrow();
+			repaintEndArrow();
 
 		}
 

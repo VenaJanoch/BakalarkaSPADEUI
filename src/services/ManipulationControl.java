@@ -14,7 +14,9 @@ import SPADEPAC.WorkUnit;
 import abstractform.BasicForm;
 import graphics.CanvasItem;
 import graphics.DragAndDropCanvas;
+import graphics.NodeLink;
 import javafx.scene.layout.HBox;
+import javafx.scene.paint.Color;
 
 public class ManipulationControl {
 
@@ -27,6 +29,9 @@ public class ManipulationControl {
 	private SegmentLists lists;
 	private DeleteControl deleteControl;
 	private ArrayList<BasicForm> forms;
+	private CanvasItem clicItem;
+	private boolean isCut;
+	private NodeLink link;;
 
 	public ManipulationControl(Control control, FillCopyForms copyForms, Project project, SegmentLists lists,
 			DeleteControl deleteControl, ArrayList<BasicForm> forms) {
@@ -36,9 +41,11 @@ public class ManipulationControl {
 		this.lists = lists;
 		this.deleteControl = deleteControl;
 		this.forms = forms;
+		isCut = false;
 	}
 
-	public void restart(FillCopyForms copyForms, Project project, DeleteControl deleteControl, ArrayList<BasicForm> forms) {
+	public void restart(FillCopyForms copyForms, Project project, DeleteControl deleteControl,
+			ArrayList<BasicForm> forms) {
 		this.copyForms = copyForms;
 		this.project = project;
 		this.deleteControl = deleteControl;
@@ -47,37 +54,50 @@ public class ManipulationControl {
 	}
 
 	public void copyItem(CanvasItem item) {
-
-		itemIds = item.getIDs();
-		itemName = item.getNameText();
-		type = item.getType();
+		System.out.println(item.getID() + " click " + clicItem.getID());
+		if (clicItem != null) {
+			System.out.println(item.getID());
+			itemIds = item.getIDs();
+			itemName = item.getNameText();
+			type = item.getType();
+		}
 
 	}
 
 	public void cutItem(CanvasItem item) {
 
-		copyItem(item);
-		deleteItem(item);
+		if (clicItem != null) {
+			copyItem(item);
+			deleteItem(item);
+		}
 	}
 
 	public void deleteItem(CanvasItem item) {
-		item.setVisible(false);
-		item.deleteLinks();
-		int index = item.getIDs()[0];
-		if (!forms.get(index).isNew()) {			
-			forms.get(index).deleteItem(item.getIDs());
+		if (clicItem != null) {
+			item.setVisible(false);
+			item.deleteLinks();
+			int index = item.getIDs()[0];
+			if (!forms.get(index).isNew()) {
+				forms.get(index).deleteItem(item.getIDs());
+			}
+
 		}
+		clicItem = null;
+
 
 	}
 
 	public void pasteItem(DragAndDropCanvas canvas) {
-		int index = itemIds[0];
+		if (clicItem != null && itemIds != null) {
+
+			int index = itemIds[0];
+				if (forms.get(index).isNew()) {
+					canvas.addItem(type.name(), 0, 0);
+				} else {
+					canvas.addCopyItem(type, 0, 0);
+				}				
+			}
 		
-		if (forms.get(index).isNew()) {
-		canvas.addItem(type.name(), 0, 0);
-		}else{
-		canvas.addCopyItem(type, 0, 0);			
-		}
 
 	}
 
@@ -102,7 +122,6 @@ public class ManipulationControl {
 
 		case WorkUnit:
 
-			
 			WorkUnit unit = lists.getWorkUnitList().get(itemIds[1]);
 			return copyForms.createWorkUnit(item, form, unit, IDs, itemIds);
 
@@ -126,5 +145,24 @@ public class ManipulationControl {
 	public int[] createCopyWorkUnitForm(CanvasItem canvasItem, BasicForm rootForm) {
 		int[] IDs = new int[4];
 		return copyForms.createCopyWorkUnit(canvasItem, rootForm, IDs);
+	}
+
+	public CanvasItem getClicItem() {
+		return clicItem;
+	}
+
+	public void setClicItem(CanvasItem clicItem) {
+		this.clicItem = clicItem;
+	}
+
+	public NodeLink getLink() {
+		return link;
+	}
+
+	public void setLink(NodeLink link) {
+		if (this.link != null) {
+			this.link.getBackgroundPolygon().setStroke(Color.TRANSPARENT);	
+		}
+		this.link = link;
 	}
 }

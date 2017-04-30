@@ -78,6 +78,7 @@ public class FormControl {
 
 	public void configControl(Configuration conf, int index) {
 		if (index != 0) {
+			System.out.println(index + " Nevim");
 			conf.setAuthorIndex(index-1);
 		} 
 	}

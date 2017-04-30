@@ -43,32 +43,37 @@ public class NodeLink extends Line {
 	protected Point2D endPoint;
 	protected LineComboBox relationCB;
 	protected Polygon polygon;
+	private Polygon backgroundPolygon;
 	private SegmentType type;
 	protected LinkControl linkControl;
+	protected AnchorPane canvas;
 
-	public NodeLink(int ID, Control control, SegmentType type, LinkControl linkControl) {
+
+	public NodeLink(int ID, Control control, SegmentType type, LinkControl linkControl, AnchorPane canvas) {
 		super();
 
 		this.type = type;
+		this.canvas = canvas;
 		this.control = control;
 		this.id = ID;
 		this.setVisible(false);
 		this.linkControl = linkControl;
-		// this.setBackground(new Background(new BackgroundFill(Color.BROWN,
-		// CornerRadii.EMPTY, Insets.EMPTY)));
-
-		// this.getChildren().addAll(nodeLink);
-		this.setOnMousePressed(circleOnMousePressedEventHandler);
 		setId(Integer.toString(ID));
 
 		endPoint = new Point2D(0, 0);
-
+		backgroundPolygon = new Polygon();
+		backgroundPolygon.setOnMouseClicked(polygonMouseEvent);
+		backgroundPolygon.setFill(Color.TRANSPARENT);
+		canvas.getChildren().add(backgroundPolygon);
 	}
-
-	EventHandler<MouseEvent> circleOnMousePressedEventHandler = new EventHandler<MouseEvent>() {
+	
+	EventHandler<MouseEvent> polygonMouseEvent = new EventHandler<MouseEvent>() {
 
 		@Override
 		public void handle(MouseEvent t) {
+			backgroundPolygon.setStroke(Color.BLACK);
+			backgroundPolygon.getStrokeDashArray().add(2d);
+			
 			pressedDeleteArrow(t);
 		}
 	};
@@ -78,17 +83,22 @@ public class NodeLink extends Line {
 
 		this.setStartX(startPoint.getX());
 		this.setStartY(startPoint.getY());
+		if (endPoint != null) {
+			backgroundPolygon.getPoints().clear();
+			backgroundPolygon.getPoints().addAll(control.countBackgroundPlygon(startPoint, endPoint));
+		}
 	}
 
 	protected void deleteArrow() {
 		this.setVisible(false);
-
+		backgroundPolygon.setVisible(false);
+		backgroundPolygon = null;
 		linkControl.deleteArrow(id, startIDs[1], endIDs[1]);
 
 	}
 
 	protected void pressedDeleteArrow(MouseEvent t) {
-
+		control.getManipulation().setLink(this);
 		if (t.getButton().equals(MouseButton.PRIMARY)) {
 			if (t.getClickCount() == 2) {
 				deleteArrow();
@@ -104,8 +114,11 @@ public class NodeLink extends Line {
 
 		this.setEndX(endPoint.getX());
 		this.setEndY(endPoint.getY());
-
 		this.setVisible(true);
+		backgroundPolygon.getPoints().clear();
+		backgroundPolygon.getPoints().addAll(control.countBackgroundPlygon(startPoint, endPoint));
+		backgroundPolygon.setVisible(true);
+		
 
 	}
 
@@ -136,5 +149,14 @@ public class NodeLink extends Line {
 	public void setEndIDs(int[] endIDs) {
 		this.endIDs = endIDs;
 	}
+
+	public Polygon getBackgroundPolygon() {
+		return backgroundPolygon;
+	}
+
+	public void setBackgroundPolygon(Polygon backgroundPolygon) {
+		this.backgroundPolygon = backgroundPolygon;
+	}
+	
 
 }

@@ -35,6 +35,7 @@ import services.Constans;
 import services.Control;
 import services.DeleteControl;
 import services.FillForms;
+import services.IdentificatorCreater;
 import services.OrderCell;
 import tables.ClassTable;
 import tables.TagTable;
@@ -47,9 +48,9 @@ public class TagForm extends TableBasicForm implements ISegmentTableForm {
 	private Configuration config;
 	
 
-	public TagForm(Configuration configuration, Control control, DeleteControl deleteControl) {
+	public TagForm(Configuration configuration, Control control, DeleteControl deleteControl, IdentificatorCreater idCreator) {
 
-		super(control, deleteControl);
+		super(control, deleteControl, idCreator);
 		// this.confIDs = confIDs;
 		this.control = control;
 		this.config = configuration;
@@ -132,13 +133,14 @@ public class TagForm extends TableBasicForm implements ISegmentTableForm {
 	@Override
 	public void addItem() {
 		String tagST = tagTF.getText();
+		String idName = idCreator.createTagID() + "_" + tagST;
 
 		if (tagST.length() == 0) {
 			Alerts.showNoText("Tag");
 			return;
 		}
 
-		TagTable tag = new TagTable(tagST);
+		TagTable tag = new TagTable(idName);
 		config.getTags().add(tagST);
 		tableTV.getItems().add(tag);
 		tableTV.sort();

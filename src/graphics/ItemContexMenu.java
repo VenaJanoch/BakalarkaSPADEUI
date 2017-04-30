@@ -41,10 +41,12 @@ public class ItemContexMenu extends ContextMenu {
 	private void createMenu() {
 
 		copyItem = new MenuItem("Copy");
+		copyItem.setAccelerator(Constans.controlC);
 		pasteItem = new MenuItem("Paste");
-
+		pasteItem.setAccelerator(Constans.controlV);
 		deleteItem = new MenuItem("Delete");
 		cutItem = new MenuItem("Cut");
+		cutItem.setAccelerator(Constans.controlX);
 		
 		this.getItems().addAll(copyItem, new SeparatorMenuItem(), cutItem, new SeparatorMenuItem(), pasteItem,
 				new SeparatorMenuItem(), deleteItem);

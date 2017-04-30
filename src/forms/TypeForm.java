@@ -23,6 +23,7 @@ import services.Alerts;
 import services.Constans;
 import services.Control;
 import services.DeleteControl;
+import services.IdentificatorCreater;
 import tables.ClassTable;
 
 public class TypeForm extends TableClassBasicForm implements ISegmentTableForm {
@@ -32,8 +33,8 @@ public class TypeForm extends TableClassBasicForm implements ISegmentTableForm {
 	private ComboBox<WorkUnitTypeClass> classTypeCB;
 	private ComboBox<WorkUnitTypeSuperClass> superClassTypeCB;
 	
-	public TypeForm(Control control, DeleteControl deleteControl) {
-		super(control, deleteControl);
+	public TypeForm(Control control, DeleteControl deleteControl, IdentificatorCreater idCreator) {
+		super(control, deleteControl, idCreator);
 
 		this.control = control;
 		this.setTitle("Edit WorkUnit type");
@@ -134,6 +135,8 @@ public class TypeForm extends TableClassBasicForm implements ISegmentTableForm {
 	public void addItem() {
 		String nameST = getNameTF().getText();
 		String classST;
+		String idName = idCreator.createTypeID() + "_" + nameST;
+
 		if (classTypeCB.getValue() == null || getClassIndex() == 0) {
 			classST = WorkUnitTypeClass.UNASSIGNED.name();
 		} else {
@@ -142,11 +145,11 @@ public class TypeForm extends TableClassBasicForm implements ISegmentTableForm {
 		String superST = WorkUnitTypeSuperClass.values()[superIndex].name();
 
 
-		ClassTable table = new ClassTable(nameST, classST, superST);
+		ClassTable table = new ClassTable(idName, classST, superST);
 
 		getTableTV().getItems().add(table);
 		getTableTV().sort();
-		getControl().getFillForms().fillType(formControl.fillTextMapper(nameST), formControl.fillTextMapper(classST), superST);
+		getControl().getFillForms().fillType(idName,formControl.fillTextMapper(nameST), formControl.fillTextMapper(classST), superST);
 
 	}
 

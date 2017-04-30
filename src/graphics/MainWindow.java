@@ -30,15 +30,15 @@ public class MainWindow extends Stage {
 	private MenuPanel menu;
 	private DragAndDropPanel dragAndDrop;
 	private Main main;
+	private boolean alert;
 	public MainWindow(Main main) {
 		super();
 		this.main = main;
 		this.setTitle("SPADe Process Editor");
 		
-
-	
 		main.getPrimaryStage().setOnCloseRequest(event ->{
 			event.consume();
+			
 			int result = Alerts.showCloseApp(control);
 			
 			if (result == 1 ) {	
@@ -79,7 +79,7 @@ public class MainWindow extends Stage {
 		mainPanel.setTop(topPanel);
 	//	mainPanel.setRight(dragAndDrop);
 		mainPanel.setCenter(dragCanvas);
-
+		
 		return mainPanel;
 	}
 

@@ -44,6 +44,7 @@ import services.ClassSwitcher;
 import services.Constans;
 import services.Control;
 import services.DeleteControl;
+import services.IdentificatorCreater;
 import tables.MilestoneTable;
 import tables.RoleTable;
 
@@ -63,8 +64,8 @@ public class RoleForm extends Table2BasicForm implements ISegmentTableForm {
 
 	private DeleteControl deleteControl;
 
-	public RoleForm(Control control, DeleteControl deleteControl) {
-		super(control, deleteControl);
+	public RoleForm(Control control, DeleteControl deleteControl, IdentificatorCreater idCreator) {
+		super(control, deleteControl, idCreator);
 		this.control = control;
 		this.roleIndex = 0;
 		this.deleteControl = deleteControl;
@@ -90,7 +91,7 @@ public class RoleForm extends Table2BasicForm implements ISegmentTableForm {
 		getInternalPanel().setCenter(getTable());
 		getInternalPanel().setBottom(createControlPane());
 
-		roleTForm = new RoleTypeForm(control, deleteControl);
+		roleTForm = new RoleTypeForm(control, deleteControl, idCreator);
 		getMainPanel().setCenter(getInternalPanel());
 		getMainPanel().setRight(roleTForm.getMainPanel());
 
@@ -183,11 +184,12 @@ public class RoleForm extends Table2BasicForm implements ISegmentTableForm {
 		String nameST = getNameTF().getText();
 		String typeST = roleTypeCB.getValue();
 		String descritpST = descriptionTF.getText();
-	
-		RoleTable role = new RoleTable(nameST, descritpST, typeST);
+		String idName = idCreator.createRoleID() + "_" + nameST;
+
+		RoleTable role = new RoleTable(idName, descritpST, typeST);
 		tableTV.getItems().add(role);
 		tableTV.sort();
-		getControl().getFillForms().fillRole(formControl.fillTextMapper(descritpST), formControl.fillTextMapper(nameST), roleIndex);
+		getControl().getFillForms().fillRole(idName, formControl.fillTextMapper(descritpST), formControl.fillTextMapper(nameST), roleIndex);
 
 	}
 

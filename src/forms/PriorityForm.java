@@ -20,6 +20,7 @@ import javafx.scene.layout.GridPane;
 import services.Alerts;
 import services.Control;
 import services.DeleteControl;
+import services.IdentificatorCreater;
 import tables.ClassTable;
 import java.util.List;
 
@@ -33,8 +34,8 @@ public class PriorityForm extends TableClassBasicForm implements ISegmentTableFo
 	private Label classTypeLB;
 	private Label superClassTypeLB;
 
-	public PriorityForm(Control control, DeleteControl deleteControl) {
-		super(control, deleteControl);
+	public PriorityForm(Control control, DeleteControl deleteControl, IdentificatorCreater idCreator) {
+		super(control, deleteControl, idCreator);
 
 		this.control = control;
 		this.setTitle("Edit Priority");
@@ -140,6 +141,7 @@ public class PriorityForm extends TableClassBasicForm implements ISegmentTableFo
 	@Override
 	public void addItem() {
 		String nameST = getNameTF().getText();
+		String idName = idCreator.createPriorityID() + "_" + nameST;
 		String classST;
 		
 		if (classTypeCB.getValue() == null || classIndex == 0) {
@@ -149,11 +151,11 @@ public class PriorityForm extends TableClassBasicForm implements ISegmentTableFo
 		}
 		String superST = WorkUnitPrioritySuperClass.values()[getSuperIndex()].name();
 
-		ClassTable table = new ClassTable(nameST, classST, superST);
+		ClassTable table = new ClassTable(idName, classST, superST);
 
 		getTableTV().getItems().add(table);
 		getTableTV().sort();
-		getControl().getFillForms().fillPriorityType(formControl.fillTextMapper(nameST), formControl.fillTextMapper(classST), superST);
+		getControl().getFillForms().fillPriorityType(idName,formControl.fillTextMapper(nameST), formControl.fillTextMapper(classST), superST);
 
 	}
 

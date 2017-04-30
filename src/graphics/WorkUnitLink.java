@@ -11,6 +11,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
 import services.Alerts;
 import services.Constans;
@@ -20,12 +21,8 @@ import services.SegmentType;
 
 public class WorkUnitLink extends NodeLink {
 
-	private AnchorPane canvas;
-
 	public WorkUnitLink(int ID, Control control, AnchorPane canvas, LinkControl linkControl) {
-		super(ID, control, SegmentType.WorkUnit, linkControl);
-
-		this.canvas = canvas;
+		super(ID, control, SegmentType.WorkUnit, linkControl, canvas);
 
 		relationCB = new LineComboBox(control);
 		polygon = new Polygon();
@@ -34,7 +31,6 @@ public class WorkUnitLink extends NodeLink {
 		polygon.setVisible(false);
 
 		canvas.getChildren().addAll(relationCB, polygon);
-		// this.getChildren().addAll(relationCB, polygon);
 
 	}
 
@@ -60,33 +56,35 @@ public class WorkUnitLink extends NodeLink {
 
 		polygon.setVisible(true);
 	}
-	
-	EventHandler<MouseEvent> circleOnMousePressedEventHandler = new EventHandler<MouseEvent>() {
+
+	EventHandler<MouseEvent> polygonMouseEvent = new EventHandler<MouseEvent>() {
 
 		@Override
 		public void handle(MouseEvent t) {
-			pressedDeleteArrow(t);
+				pressedDeleteArrow(t);
 		}
 	};
 
-
-	protected void deleteArrow(){
+	protected void deleteArrow() {
 		this.setVisible(false);
 		relationCB.setVisible(false);
 		relationCB = null;
 		polygon.setVisible(false);
 		polygon = null;
-			linkControl.deleteWorkUnitArrow(id, startIDs[1], endIDs[1]);
+		getBackgroundPolygon().setVisible(false);
+		setBackgroundPolygon(null);
+		linkControl.deleteWorkUnitArrow(id, startIDs[1], endIDs[1]);
 	}
-	
-	
+
 	protected void pressedDeleteArrow(MouseEvent t) {
-		
+		control.getManipulation().setLink(this);
 		if (t.getButton().equals(MouseButton.PRIMARY)) {
 			if (t.getClickCount() == 2) {
 				deleteArrow();
 			}
 
+		}else{
+		getBackgroundPolygon().setVisible(true);
 		}
 
 	}

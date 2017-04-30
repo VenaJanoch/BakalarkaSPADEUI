@@ -35,6 +35,7 @@ import javafx.stage.WindowEvent;
 import services.Alerts;
 import services.Control;
 import services.DeleteControl;
+import services.IdentificatorCreater;
 import tables.ClassTable;
 import tables.CriterionTable;
 import tables.MilestoneTable;
@@ -47,8 +48,8 @@ public class CriterionForm extends TableBasicForm implements ISegmentTableForm {
 	private Control control;
 
 
-	public CriterionForm(Control control, DeleteControl deleteControl) {
-		super(control, deleteControl);
+	public CriterionForm(Control control, DeleteControl deleteControl, IdentificatorCreater idCreator) {
+		super(control, deleteControl, idCreator);
 		this.control = control;
 		
 		getSubmitButton().setVisible(false);
@@ -147,11 +148,12 @@ public class CriterionForm extends TableBasicForm implements ISegmentTableForm {
 	public void addItem() {
 		String nameST = nameTF.getText();
 		String descriptionST = descriptionTF.getText();
+		String idName = idCreator.createCriterionID() + "_" + nameST;
 
-		CriterionTable criterion = new CriterionTable(nameST, descriptionST);
+		CriterionTable criterion = new CriterionTable(idName, descriptionST);
 		tableTV.getItems().add(criterion);
 		tableTV.sort();
-		control.getFillForms().fillCriterion(formControl.fillTextMapper(nameST), formControl.fillTextMapper(descriptionST));
+		control.getFillForms().fillCriterion(idName,formControl.fillTextMapper(nameST), formControl.fillTextMapper(descriptionST));
 	}
 
 	public TableView<CriterionTable> getTableTV() {

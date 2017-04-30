@@ -31,6 +31,7 @@ import javafx.stage.WindowEvent;
 import services.Alerts;
 import services.Control;
 import services.DeleteControl;
+import services.IdentificatorCreater;
 import tables.CPRTable;
 import tables.ClassTable;
 import tables.CriterionTable;
@@ -49,8 +50,8 @@ public class ConfigPersonRelationForm extends TableBasicForm implements ISegment
 	private int roleIndex;
 	private int configIndex;
 
-	public ConfigPersonRelationForm(Control control, DeleteControl deleteControl) {
-		super(control, deleteControl);
+	public ConfigPersonRelationForm(Control control, DeleteControl deleteControl, IdentificatorCreater idCreator) {
+		super(control, deleteControl, idCreator);
 
 		createForm();
 		getSubmitButton().setOnAction(event -> setActionSubmitButton());
@@ -165,13 +166,14 @@ public class ConfigPersonRelationForm extends TableBasicForm implements ISegment
 	public void addItem() {
 		String nameST = getNameTF().getText();
 		String roleST = getControl().getLists().getRoleObservable().get(roleIndex);
+		String idName = idCreator.createCPRID() + "_" + nameST;
 
 		
 
-		CPRTable cpr = new CPRTable(nameST, roleST);
+		CPRTable cpr = new CPRTable(idName, roleST);
 		tableTV.getItems().add(cpr);
 		tableTV.sort();
-		getControl().getFillForms().fillCPR(formControl.fillTextMapper(nameST), configIndex, roleIndex);
+		getControl().getFillForms().fillCPR(idName,formControl.fillTextMapper(nameST), configIndex, roleIndex);
 	}
 
 	public TableView<CPRTable> getTableTV() {

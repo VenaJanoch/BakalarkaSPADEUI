@@ -3,9 +3,11 @@ package graphics;
 import abstractform.BasicForm;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
+import javafx.scene.Cursor;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
@@ -14,6 +16,8 @@ import javafx.scene.control.ScrollBar;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
@@ -32,6 +36,7 @@ import services.CanvasType;
 import services.Constans;
 import services.Control;
 import services.FormControl;
+import services.ManipulationControl;
 import services.SegmentType;
 
 public class DragAndDropCanvas extends ScrollPane {
@@ -47,7 +52,7 @@ public class DragAndDropCanvas extends ScrollPane {
 
 	private boolean arrow;
 	private boolean startArrow;
-	
+
 	public DragAndDropCanvas(Control control, int indexForm, ItemContexMenu contexMenu, CanvasType canvasType) {
 
 		super();
@@ -60,19 +65,42 @@ public class DragAndDropCanvas extends ScrollPane {
 		canvas.setMinWidth(Constans.canvasMaxWidth);
 		canvas.setMinHeight(Constans.canvasMaxHeight);
 		canvas.setId("canvasID");
-		
+
 		setArrow(false);
 		setStartArrow(false);
-		
+
 		this.setId("canvas");
 		this.setContent(canvas);
-	
+
 		this.setHbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
 		this.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
 
 		canvas.setBackground(new Background(new BackgroundFill(Color.ANTIQUEWHITE, CornerRadii.EMPTY, Insets.EMPTY)));
 
 		canvas.setOnMouseClicked(OnMousePressedEventHandler);
+
+		this.addEventHandler(KeyEvent.KEY_RELEASED, new EventHandler<KeyEvent>() {
+
+			@Override
+			public void handle(KeyEvent event) {
+				if (Constans.controlV.match(event)) {
+					pasteItem();
+				} else if (Constans.controlC.match(event)) {
+					copyItem();
+				} else if (Constans.controlX.match(event)) {
+					cutItem();
+				} else if (event.getCode() == KeyCode.DELETE) {
+					CanvasItem item = control.getManipulation().getClicItem();
+					control.getManipulation().deleteItem(item);
+				} else if (event.getCode() == KeyCode.ESCAPE) {
+					if (control.getManipulation().getLink() != null) {
+						control.getManipulation().getLink().getBackgroundPolygon().setStroke(Color.TRANSPARENT);
+					}
+				}
+
+			}
+
+		});
 
 		canvas.setOnDragOver(new EventHandler<DragEvent>() {
 			public void handle(DragEvent event) {
@@ -117,9 +145,9 @@ public class DragAndDropCanvas extends ScrollPane {
 			}
 
 		});
-		
+
 	}
-	
+
 	public boolean changeArrow() {
 
 		if (arrow) {
@@ -132,6 +160,20 @@ public class DragAndDropCanvas extends ScrollPane {
 
 		return arrow;
 
+	}
+
+	private void pasteItem() {
+		control.getManipulation().pasteItem(this);
+	}
+
+	private void copyItem() {
+		CanvasItem item = control.getManipulation().getClicItem();
+		control.getManipulation().copyItem(item);
+	}
+
+	private void cutItem() {
+		CanvasItem item = control.getManipulation().getClicItem();
+		control.getManipulation().cutItem(item);
 	}
 
 	public void setClicFromDragPoint(MouseEvent t) {
@@ -148,7 +190,6 @@ public class DragAndDropCanvas extends ScrollPane {
 
 		@Override
 		public void handle(MouseEvent t) {
-			System.out.println("Form6 platno " + control.getForms().toString());
 			setClicFromDragPoint(t);
 		}
 	};
@@ -183,10 +224,10 @@ public class DragAndDropCanvas extends ScrollPane {
 	}
 
 	public void restart() {
-		
+
 		setArrow(false);
 		setStartArrow(false);
-		
+
 		canvas.getChildren().clear();
 	}
 
@@ -229,6 +270,5 @@ public class DragAndDropCanvas extends ScrollPane {
 	public void setStartArrow(boolean startArrow) {
 		this.startArrow = startArrow;
 	}
-	
 
 }

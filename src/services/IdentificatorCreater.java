@@ -1,10 +1,9 @@
 package services;
 
-
 public class IdentificatorCreater {
 
 	private static int linesID = -1;
-	private int phaseID = -1 ;
+	private int phaseID = -1;
 	private int iterationID = -1;
 	private int activityID = -1;
 	private int workUnitID = -1;
@@ -17,8 +16,73 @@ public class IdentificatorCreater {
 	private int configPRID = -1;
 	private int configID = -1;
 	private int tagID = -1;
-	
+	private int CPRID = -1;
+
+	private int priorityID = -1;
+	private int severityID = -1;
+	private int resolutionID = -1;
+	private int relationID = -1;
+	private int statusID = -1;
+	private int typeID = -1;
+	private int roleTypeID = -1;
+
 	private static int index;
+
+	public int createRoleTypeID() {
+
+		roleTypeID++;
+
+		return roleTypeID;
+
+	}
+
+	public int createTypeID() {
+
+		typeID++;
+
+		return typeID;
+
+	}
+
+	public int createStatusID() {
+
+		statusID++;
+
+		return statusID;
+
+	}
+
+	public int createRelationID() {
+
+		relationID++;
+
+		return relationID;
+
+	}
+
+	public int createResolutionID() {
+
+		resolutionID++;
+
+		return resolutionID;
+
+	}
+
+	public int createSeverityID() {
+
+		severityID++;
+
+		return severityID;
+
+	}
+
+	public int createPriorityID() {
+
+		priorityID++;
+
+		return priorityID;
+
+	}
 
 	public int createPhaseID() {
 
@@ -34,7 +98,7 @@ public class IdentificatorCreater {
 
 		return iterationID;
 	}
-	
+
 	public int createActivityID() {
 
 		activityID++;
@@ -113,5 +177,5 @@ public class IdentificatorCreater {
 		return linesID;
 
 	}
-	
+
 }

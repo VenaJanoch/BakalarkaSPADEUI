@@ -44,7 +44,7 @@ public class DragAndDropPanel extends BorderPane {
 
 		buttonBox.getChildren().addAll(addButtons);
 
-	
+		buttonBox.setPadding(new Insets(0,0,0,5));
 		this.setTop(buttonBox);
 
 		this.setCenter(items);

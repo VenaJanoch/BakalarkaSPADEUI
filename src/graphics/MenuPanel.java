@@ -41,11 +41,18 @@ public class MenuPanel extends VBox {
 		Menu fileMenu = new Menu("File");
 
 		MenuItem newItem = new MenuItem("New");
-		MenuItem openItem = new MenuItem("Open");
+		newItem.setAccelerator(Constans.controlN);
+		MenuItem openItem = new MenuItem("Open...");
+		openItem.setAccelerator(Constans.controlO);
 		MenuItem saveItem = new MenuItem("Save");
-		MenuItem saveAsItem = new MenuItem("Save as");
+		saveItem.setAccelerator(Constans.controlS);
+		MenuItem saveAsItem = new MenuItem("Save as...");
+		saveAsItem.setAccelerator(Constans.controlSA);
 		MenuItem validationItem = new MenuItem("Validate");
+		validationItem.setAccelerator(Constans.controlF);
 		MenuItem exitItem = new MenuItem("Exit");
+		exitItem.setAccelerator(Constans.altF4);
+		
 		fileMenu.getItems().addAll(newItem, new SeparatorMenuItem(), openItem, new SeparatorMenuItem(), saveItem,
 				saveAsItem, new SeparatorMenuItem(), validationItem, new SeparatorMenuItem(), exitItem);
 
@@ -54,7 +61,7 @@ public class MenuPanel extends VBox {
 			int result = Alerts.showCloseApp(control);
 
 			if (result == 1) {
-				Platform.exit();
+				mainWindow.close();
 			}
 
 		});

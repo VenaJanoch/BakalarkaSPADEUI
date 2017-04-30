@@ -317,8 +317,8 @@ public class Alerts {
 		ButtonType buttonTypeCancel = new ButtonType("Cancel", ButtonData.CANCEL_CLOSE);
 
 		alert.getButtonTypes().setAll(buttonTypeOne, buttonOK, buttonTypeCancel);
-
 		Optional<ButtonType> result = alert.showAndWait();
+		
 		if (result.get() == buttonTypeOne) {
 			control.saveFile();
 			return 0;

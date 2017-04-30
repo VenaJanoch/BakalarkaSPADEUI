@@ -26,6 +26,7 @@ import javafx.scene.layout.GridPane;
 import services.Alerts;
 import services.Control;
 import services.DeleteControl;
+import services.IdentificatorCreater;
 import tables.ClassTable;
 
 public class StatusForm extends TableClassBasicForm implements ISegmentTableForm {
@@ -39,8 +40,8 @@ public class StatusForm extends TableClassBasicForm implements ISegmentTableForm
 	private Label superClassTypeLB;
 
 	
-	public StatusForm(Control control, DeleteControl deleteControl) {
-		super(control, deleteControl);
+	public StatusForm(Control control, DeleteControl deleteControl, IdentificatorCreater idCreator) {
+		super(control, deleteControl, idCreator);
 
 		this.control = control;
 		this.setTitle("Edit Status");
@@ -146,6 +147,8 @@ public class StatusForm extends TableClassBasicForm implements ISegmentTableForm
 	public void addItem() {
 		String nameST = getNameTF().getText();
 		String classST;
+		String idName = idCreator.createStatusID() + "_" + nameST;
+
 		if (classTypeCB.getValue() == null || getClassIndex() == 0) {
 			classST = WorkUnitStatusClass.UNASSIGNED.name();
 		} else {
@@ -153,11 +156,11 @@ public class StatusForm extends TableClassBasicForm implements ISegmentTableForm
 		}
 		String superST = WorkUnitStatusSuperClass.values()[superIndex].name();
 
-		ClassTable table = new ClassTable(nameST, classST, superST);
+		ClassTable table = new ClassTable(idName, classST, superST);
 
 		getTableTV().getItems().add(table);
 		getTableTV().sort();
-		getControl().getFillForms().fillStatusType(formControl.fillTextMapper(nameST), formControl.fillTextMapper(classST), superST);
+		getControl().getFillForms().fillStatusType(idName,formControl.fillTextMapper(nameST), formControl.fillTextMapper(classST), superST);
 
 	}
 

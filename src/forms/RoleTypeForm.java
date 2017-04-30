@@ -35,6 +35,7 @@ import services.Alerts;
 import services.ClassSwitcher;
 import services.Control;
 import services.DeleteControl;
+import services.IdentificatorCreater;
 import tables.ClassTable;
 import tables.CriterionTable;
 import tables.RoleTable;
@@ -49,8 +50,8 @@ public class RoleTypeForm extends TableClassBasicForm implements ISegmentTableFo
 	private Label roleClassTypeLB;
 	private Label roleSuperClassTypeLB;
 
-	public RoleTypeForm(Control control, DeleteControl deleteControl) {
-		super(control, deleteControl);
+	public RoleTypeForm(Control control, DeleteControl deleteControl, IdentificatorCreater idCreator) {
+		super(control, deleteControl, idCreator);
 
 		this.control = control;
 
@@ -112,9 +113,9 @@ public class RoleTypeForm extends TableClassBasicForm implements ISegmentTableFo
 		roleClassTypeCB.setValue(RoleClass.UNASSIGNED);
 		roleSuperClassTypeCB.setValue(RoleSuperClass.UNASSIGNED);
 		
-		getControlPane().add(classLB, 2, 0);
+		getControlPane().add(classLB, 2, 1);
 		getControlPane().add(roleClassTypeCB, 1, 1);
-		getControlPane().add(superLB, 4, 0);
+		getControlPane().add(superLB, 4, 1);
 		getControlPane().add(roleSuperClassTypeCB, 3, 1);
 		getControlPane().add(getAddBT(), 5, 0);
 
@@ -154,6 +155,7 @@ public class RoleTypeForm extends TableClassBasicForm implements ISegmentTableFo
 	public void addItem() {
 		String nameST = getNameTF().getText();
 		String classST;
+		String idName = idCreator.createRoleTypeID() + "_" + nameST;
 
 		if (roleClassTypeCB.getValue() == null || getClassIndex() == 0) {
 			classST = RoleClass.UNASSIGNED.name();
@@ -163,11 +165,11 @@ public class RoleTypeForm extends TableClassBasicForm implements ISegmentTableFo
 		String superST = RoleSuperClass.values()[superIndex].name();
 
 
-		ClassTable type = new ClassTable(nameST, classST, superST);
+		ClassTable type = new ClassTable(idName, classST, superST);
 
 		getTableTV().getItems().add(type);
 		getTableTV().sort();
-		getControl().getFillForms().fillRoleType(formControl.fillTextMapper(nameST), formControl.fillTextMapper(classST), superST);
+		getControl().getFillForms().fillRoleType(idName, formControl.fillTextMapper(nameST), formControl.fillTextMapper(classST), superST);
 
 	}
 

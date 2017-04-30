@@ -91,7 +91,6 @@ public class Control {
 
 		setForms(new ArrayList<>());
 
-		
 		ProjectForm form111 = new ProjectForm(this, project, canvas);
 		getForms().add(0, form111);
 
@@ -107,30 +106,31 @@ public class Control {
 		deleteControl = new DeleteControl(this, lists, project);
 		idCreater = new IdentificatorCreater();
 
-		fillForms = new FillForms(this, lists, project, forms, objF, idCreater, deleteControl,formControl);
-		fillFormsXML = new FillFormsXML(this, lists, project, forms, fillCopy, idCreater, linkControl, deleteControl);
-		fillCopy = new FillCopyForms(this, getLists(), project, forms, objF, idCreater, deleteControl,formControl);
+		fillForms = new FillForms(this, lists, project, forms, objF, idCreater, deleteControl, formControl);
+		fillFormsXML = new FillFormsXML(this, lists, project, forms, fillCopy, idCreater, linkControl, deleteControl,
+				formControl);
+		fillCopy = new FillCopyForms(this, getLists(), project, forms, objF, idCreater, deleteControl, formControl);
 		manipulation = new ManipulationControl(this, fillCopy, project, lists, deleteControl, forms);
 		contexMenu = new ItemContexMenu(this, manipulation, canvas);
 
-		milestoneForm = new MilestoneForm(this, deleteControl);
-		CPRForm = new ConfigPersonRelationForm(this, deleteControl);
-		roleForm = new RoleForm(this, deleteControl);
-		priorityForm = new PriorityForm(this, deleteControl);
-		severityForm = new SeverityForm(this, deleteControl);
-		relationForm = new RelationForm(this, deleteControl);
-		resolutionForm = new ResolutionForm(this, deleteControl);
-		statusForm = new StatusForm(this, deleteControl);
-		branchFrom = new BranchForm(this, deleteControl);
-		setConfTableForm(new ConfigurationTableForm(this, deleteControl));
-		typeForm = new TypeForm(this, deleteControl);
+		milestoneForm = new MilestoneForm(this, deleteControl, idCreater);
+		CPRForm = new ConfigPersonRelationForm(this, deleteControl, idCreater);
+		roleForm = new RoleForm(this, deleteControl, idCreater);
+		priorityForm = new PriorityForm(this, deleteControl, idCreater);
+		severityForm = new SeverityForm(this, deleteControl, idCreater);
+		relationForm = new RelationForm(this, deleteControl, idCreater);
+		resolutionForm = new ResolutionForm(this, deleteControl, idCreater);
+		statusForm = new StatusForm(this, deleteControl, idCreater);
+		branchFrom = new BranchForm(this, deleteControl, idCreater);
+		setConfTableForm(new ConfigurationTableForm(this, deleteControl, idCreater));
+		typeForm = new TypeForm(this, deleteControl, idCreater);
 
 		firstSave = true;
 
 	}
-	
-	public void closeAllWindows(){
-		
+
+	public void closeAllWindows() {
+
 		forms.get(0).close();
 		getMilestoneForm().close();
 		getCPRForm().close();
@@ -142,7 +142,7 @@ public class Control {
 		getStatusForm().close();
 		getTypeForm().close();
 		getBranchFrom().close();
-		getConfTableForm().close();		
+		getConfTableForm().close();
 	}
 
 	public void showProjectForm() {
@@ -150,32 +150,30 @@ public class Control {
 		forms.get(0).show();
 		forms.get(0).toFront();
 	}
-	
+
 	public Point2D canvasItemPositionControl(double x, double y) {
 
 		Point2D point = new Point2D(x, y);
-		
-		
+
 		if (y <= 0) {
 			point = new Point2D(x, 0);
 		}
-		
+
 		if (x <= 0) {
-			
-			point = new Point2D(0,y);
+
+			point = new Point2D(0, y);
 		}
-		
+
 		if (x >= Constans.canvasMaxWidth) {
 			point = new Point2D(Constans.canvasMaxWidth - Constans.offset, y);
 		}
-		
+
 		if (y >= Constans.canvasMaxHeight) {
-			point = new Point2D(x, Constans.canvasMaxHeight- Constans.offset);
+			point = new Point2D(x, Constans.canvasMaxHeight - Constans.offset);
 		}
-		
+
 		return point;
-		
-		
+
 	}
 
 	public void restartControl() {
@@ -239,6 +237,20 @@ public class Control {
 		}
 
 		return point;
+	}
+
+	public Double[] countBackgroundPlygon(Point2D startPoint, Point2D endPoint) {
+
+		Double[] points = new Double[8];
+		points[0] = startPoint.getX();
+		points[1] = startPoint.getY() + Constans.polygonHeight;
+		points[2] = startPoint.getX();
+		points[3] = startPoint.getY() - Constans.polygonHeight;
+		points[4] = endPoint.getX();
+		points[5] = endPoint.getY() - Constans.polygonHeight;
+		points[6] = endPoint.getX();
+		points[7] = endPoint.getY() + Constans.polygonHeight;
+		return points;
 	}
 
 	public static SegmentType findSegmentType(String segmentName) {
@@ -393,7 +405,7 @@ public class Control {
 			manipulation.restart(fillCopy, project, deleteControl, forms);
 
 			fillFormsXML = new FillFormsXML(this, lists, project, forms, fillCopy, idCreater, linkControl,
-					deleteControl);
+					deleteControl, formControl);
 			fillFormsXML.fillProjectFromXML(form);
 
 			parseProject();
@@ -418,12 +430,11 @@ public class Control {
 	}
 
 	public XMLGregorianCalendar convertDate(LocalDate Ldate) {
-		
+
 		if (Ldate == null) {
 			return null;
 		}
-		
-		
+
 		Instant instant = Instant.from(Ldate.atStartOfDay(ZoneId.systemDefault()));
 		Date date = Date.from(instant);
 		GregorianCalendar c = new GregorianCalendar();
@@ -446,7 +457,7 @@ public class Control {
 		if (xmlDate == null) {
 			return null;
 		}
-		
+
 		Date date = xmlDate.toGregorianCalendar().getTime();
 		Instant instant = date.toInstant();
 		ZonedDateTime zdt = instant.atZone(ZoneId.systemDefault());

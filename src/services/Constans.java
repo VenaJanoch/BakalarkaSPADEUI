@@ -1,5 +1,8 @@
 package services;
 
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyCodeCombination;
+import javafx.scene.input.KeyCombination;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 
@@ -11,7 +14,7 @@ public class Constans {
 
 	public static final int formWidth = 700;
 	public static final int formHeight = 600;
-	public static final int workUnitformWidth = 300;
+	public static final int workUnitformWidth = 350;
 	public static final int workUnitformHeight = 500;
 	public static final double littleformWidth = 300;
 	public static final double littleformHeight = 300;
@@ -97,9 +100,26 @@ public class Constans {
 	public static final int infoBoxHeightRectangle = 20;
 	public static final double infoBoxHeight = 40;
 	public static final double relationCBOffset = 20;
+	
 	public static final double ArrowRadius = 10;
+	public static final double polygonHeight = 5;
+	
 	public static final double checkComboBox = 50;
 	public static final Color rectangleBorderColor = Color.BLACK;
 	public static final Color nonExistRectangleBorderColor = Color.RED;
 	
+	
+	public static final KeyCodeCombination controlN = new KeyCodeCombination(KeyCode.N, KeyCombination.CONTROL_ANY);
+	public static final KeyCodeCombination controlO = new KeyCodeCombination(KeyCode.O, KeyCombination.CONTROL_ANY);
+	public static final KeyCodeCombination controlS = new KeyCodeCombination(KeyCode.S, KeyCombination.CONTROL_ANY);
+	public static final KeyCodeCombination controlSA = new KeyCodeCombination(KeyCode.S, KeyCombination.CONTROL_ANY,KeyCodeCombination.SHIFT_ANY);
+	public static final KeyCodeCombination controlF = new KeyCodeCombination(KeyCode.F, KeyCombination.CONTROL_ANY);
+	public static final KeyCodeCombination altF4 = new KeyCodeCombination(KeyCode.F4, KeyCombination.ALT_ANY);
+	
+	public static final KeyCodeCombination controlC = new KeyCodeCombination(KeyCode.C, KeyCombination.CONTROL_ANY);
+	public static final KeyCodeCombination controlV = new KeyCodeCombination(KeyCode.V, KeyCombination.CONTROL_ANY);
+	public static final KeyCodeCombination controlX = new KeyCodeCombination(KeyCode.X, KeyCombination.CONTROL_ANY);
+	public static final KeyCode delete = KeyCode.DELETE;
+	public static final String linkPicture = "link.svn";
+
 }

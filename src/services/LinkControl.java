@@ -34,7 +34,7 @@ public class LinkControl {
 				if (fillControl(item)) {
 
 					id = IdentificatorCreater.createLineID();
-					link = new NodeLink(id, control, SegmentType.Configuration, this);
+					link = new NodeLink(id, control, SegmentType.Configuration, this, item.getCanvas());
 
 					sortSegmentConf(item);
 					item.getCanvas().getChildren().add(link);
@@ -50,6 +50,7 @@ public class LinkControl {
 				}
 
 			} catch (Exception e) {
+				e.printStackTrace();
 				Alerts.showNoWorkUnit();
 			}
 
@@ -127,11 +128,13 @@ public class LinkControl {
 
 					item.getDgCanvas().setStartArrow(true);
 				} else {
+					System.out.println("nevim");
 					Alerts.showNoWorkUnit();
 				}
 
 			} catch (Exception e) {
-				Alerts.showNoWorkUnit();
+				e.printStackTrace();
+				//	Alerts.showNoWorkUnit();
 			}
 
 		} else {

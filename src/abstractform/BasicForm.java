@@ -33,6 +33,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import services.Alerts;
 import services.CanvasType;
@@ -49,6 +50,7 @@ public abstract class BasicForm extends Stage {
 	private Alerts alerts;
 	private String name;
 	private Label nameLB;
+	private Label formName;
 	private TextField nameTF;
 	private Button submitButton;
 
@@ -96,7 +98,7 @@ public abstract class BasicForm extends Stage {
 		this.alerts = new Alerts();
 		this.indexForm = indexForm;
 		this.setIdCreater(new IdentificatorCreater());
-		this.setTitle("Edit " + item.getType().name());
+		this.setTitle("Edit " + item.getType().name() + " Form");
 		this.canvas = new DragAndDropCanvas(control, indexForm, control.getContexMenu(), canvasType);
 		this.dgItem = new DragAndDropItem(control, itemArray, this);
 		this.dragBox = new BorderPane();
@@ -181,6 +183,13 @@ public abstract class BasicForm extends Stage {
 		submitButton.setId("formSubmit");
 		nameLB.setAlignment(Pos.CENTER_RIGHT);
 		
+		formName = new Label();
+		formName.setAlignment(Pos.CENTER);
+		formName.setFont(Font.font(25));
+		formName.setId("formID");
+		mainPanel.setAlignment(formName, Pos.CENTER);
+		mainPanel.setTop(formName);
+		
 		HBox nameBox = new HBox(5);
 		nameBox.getChildren().addAll(nameLB, nameTF);
 
@@ -211,8 +220,19 @@ public abstract class BasicForm extends Stage {
 
 	/** Getrs and Setrs **/
 
+	
+	
+	
 	public BorderPane getMainPanel() {
 		return mainPanel;
+	}
+
+	public Label getFormName() {
+		return formName;
+	}
+
+	public void setFormName(Label formName) {
+		this.formName = formName;
 	}
 
 	public void setMainPanel(BorderPane mainPanel) {

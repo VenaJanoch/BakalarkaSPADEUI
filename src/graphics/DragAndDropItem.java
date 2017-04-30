@@ -42,7 +42,7 @@ public class DragAndDropItem extends HBox {
 	public DragAndDropItem(int[] itemArray) {
 		super(5);
 		this.setPrefWidth(Constans.width);
-		this.setPadding(new Insets(10));
+		this.setPadding(new Insets(5));
 		this.itemArray = itemArray;
 		this.setId("dgItem");
 		
@@ -93,14 +93,17 @@ public class DragAndDropItem extends HBox {
 	public void createLinkButton(DragAndDropCanvas canvas) {
 		
 		this.canvas = canvas;
+		HBox box = new HBox();
 		link = new ToggleButton();
-		
+		box.setMinWidth(30);
+		box.getChildren().add(link);
+		box.setAlignment(Pos.BASELINE_RIGHT);
 		link.setText(Constans.linkSimbol);
-		link.setFont(Font.font("Verdana", 20));
+		link.setFont(Font.font("Verdana", 15));
 		link.setOnAction(event -> createArrowButtonEvent(canvas));
 		link.setOnKeyPressed(keyListener);
 		canvas.setOnKeyPressed(keyListener);
-		this.getChildren().add(link);
+		this.getChildren().add(box);
 
 	}
 

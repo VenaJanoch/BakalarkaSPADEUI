@@ -221,56 +221,56 @@ public class FillForms {
 		return IDs;
 	}
 
-	public void fillMilestone(String name, ObservableList<Integer> indexs) {
+	public void fillMilestone(String id, String name, ObservableList<Integer> indexs) {
 
 		Milestone milestone = (Milestone) objF.createMilestone();
 		milestone.setName(formControl.fillTextMapper(name));
 		if (indexs != null) {
 			for (int i = 0; i < indexs.size(); i++) {
-				milestone.getCriteriaIndexs().add(indexs.get(i)-1);
+				milestone.getCriteriaIndexs().add(indexs.get(i) - 1);
 			}
-			
+
 			control.getLists().getMilestoneList().add(milestone);
-			control.getLists().getMilestoneObservable().add(milestone.getName());			
+			control.getLists().getMilestoneObservable().add(id);
 		}
 
 	}
 
-	public void fillCriterion(String name, String description) {
+	public void fillCriterion(String id, String name, String description) {
 
 		Criterion criterion = objF.createCriterion();
 		criterion.setDescription(formControl.fillTextMapper(description));
 		criterion.setName(formControl.fillTextMapper(name));
 
 		control.getLists().getCriterionList().add(criterion);
-		control.getLists().getCriterionObservable().add(criterion.getName());
+		control.getLists().getCriterionObservable().add(id);
 
 	}
 
-	public void fillCPR(String name, int conf, int role) {
+	public void fillCPR(String id, String name, int conf, int role) {
 
 		ConfigPersonRelation cpr = objF.createConfigPersonRelation();
 		cpr.setName(formControl.fillTextMapper(name));
 		if (conf != 0) {
-			cpr.setConfigurationIndex(conf-1);
+			cpr.setConfigurationIndex(conf - 1);
 		}
-		if(role != 0){
-			cpr.setPersonIndex(role-1);			
+		if (role != 0) {
+			cpr.setPersonIndex(role - 1);
 		}
 
 		control.getLists().getCPRList().add(cpr);
-		control.getLists().getCPRObservable().add(name);
+		control.getLists().getCPRObservable().add(id);
 
 	}
 
 	public void fillConfiguration(Configuration conf, int[] IDs, boolean isRelase, LocalDate Ldate, String name,
-			int roleIndex, boolean isNew) {
-
+			int roleIndex, boolean isNew, CanvasItem item) {
+System.out.println(roleIndex);
 		Configuration config = conf;
 		config.setIsRelease(isRelase);
 		config.setCreate(control.convertDate(Ldate));
 		config.setName(formControl.fillTextMapper(name));
-		
+
 		formControl.configControl(conf, roleIndex);
 
 		String release = "YES";
@@ -280,17 +280,17 @@ public class FillForms {
 			release = "NO";
 		}
 		if (isNew) {
-			lists.getConfigObservable().add(name);
+			lists.getConfigObservable().add(item.getID() + "_" + name);
 			lists.getConfigList().add(IDs[1], conf);
 
-			ConfigTable configTab = new ConfigTable(name, release, IDs[0]);
+			ConfigTable configTab = new ConfigTable(item.getID() + "_" + name, release, IDs[0]);
 			control.getConfTableForm().getTableTV().getItems().add(configTab);
 			control.getConfTableForm().getTableTV().sort();
 			control.getConfTableForm().createConfigItem();
 		} else {
 
 			ConfigTable configTab = control.getConfTableForm().getTableTV().getItems().get(IDs[1]);
-			configTab.setName(name);
+			configTab.setName(item.getID() + "_" + name);
 			configTab.setRelease(release);
 			control.getConfTableForm().getMainPanel().setCenter(control.getConfTableForm().getForm().getMainPanel());
 		}
@@ -300,8 +300,8 @@ public class FillForms {
 	public int[] createConfigruration(CanvasItem item, BasicForm form, int[] IDs) {
 		int index = IdentificatorCreater.getIndex();
 		Configuration conf = (Configuration) objF.createConfiguration();
-		forms.add(index,
-				new ConfigurationForm(item, control, Constans.configurationDragTextIndexs, conf, index, deleteControl));
+		forms.add(index, new ConfigurationForm(item, control, Constans.configurationDragTextIndexs, conf, index,
+				deleteControl, idCreater));
 		IDs[0] = index;
 		IDs[1] = idCreater.createConfigurationID();
 
@@ -312,7 +312,7 @@ public class FillForms {
 
 	}
 
-	public void fillBranch(String name, boolean isMain) {
+	public void fillBranch(String name, String id, boolean isMain) {
 
 		Branch branch = (Branch) objF.createBranch();
 
@@ -407,27 +407,27 @@ public class FillForms {
 		return IDs;
 	}
 
-	public void fillRole(String description, String name, int type) {
+	public void fillRole(String id, String description, String name, int type) {
 
 		Role role = objF.createRole();
 		role.setName(formControl.fillTextMapper(name));
 		role.setDescription(formControl.fillTextMapper(description));
 		if (type != 0) {
-			role.setType(type-1);			
+			role.setType(type - 1);
 		}
 
-		lists.getRoleObservable().add(name);
+		lists.getRoleObservable().add(id);
 		lists.getRoleList().add(role);
 	}
 
-	public void fillRoleType(String nameST, String classST, String superST) {
+	public void fillRoleType(String id, String nameST, String classST, String superST) {
 
 		RoleType type = objF.createRoleType();
 		type.setName(formControl.fillTextMapper(nameST));
 		type.setRoleClass(formControl.fillTextMapper(classST));
 		type.setRoleSuperClass(formControl.fillTextMapper(superST));
 
-		lists.getRoleTypeObservable().add(nameST);
+		lists.getRoleTypeObservable().add(id);
 		lists.getRoleTypeList().add(type);
 
 	}
@@ -442,7 +442,7 @@ public class FillForms {
 
 	}
 
-	public void fillPriorityType(String nameST, String classST, String superST) {
+	public void fillPriorityType(String id, String nameST, String classST, String superST) {
 
 		Priority priority = objF.createPriority();
 
@@ -450,24 +450,24 @@ public class FillForms {
 		priority.setPriorityClass(formControl.fillTextMapper(classST));
 		priority.setPrioritySuperClass(formControl.fillTextMapper(superST));
 
-		lists.getPriorityObservable().add(nameST);
+		lists.getPriorityObservable().add(id);
 		lists.getPriorityTypeList().add(priority);
 
 	}
 
-	public void fillSeverityType(String nameST, String classST, String superST) {
+	public void fillSeverityType(String id, String nameST, String classST, String superST) {
 		Severity severity = objF.createSeverity();
 
 		severity.setName(formControl.fillTextMapper(nameST));
 		severity.setSeverityClass(formControl.fillTextMapper(classST));
 		severity.setSeveritySuperClass(formControl.fillTextMapper(superST));
 
-		lists.getSeverityTypeObservable().add(nameST);
+		lists.getSeverityTypeObservable().add(id);
 		lists.getSeverityTypeList().add(severity);
 
 	}
 
-	public void fillRelationType(String nameST, String classST, String superST) {
+	public void fillRelationType(String id, String nameST, String classST, String superST) {
 
 		Relation relation = objF.createRelation();
 		relation.setName(formControl.fillTextMapper(nameST));
@@ -475,11 +475,11 @@ public class FillForms {
 		relation.setRelationSuperClass(formControl.fillTextMapper(superST));
 
 		lists.getRelationTypeList().add(relation);
-		lists.getRelationTypeObservable().add(nameST);
+		lists.getRelationTypeObservable().add(id);
 
 	}
 
-	public void fillResolutionType(String nameST, String classST, String superST) {
+	public void fillResolutionType(String id, String nameST, String classST, String superST) {
 
 		Resolution resolution = objF.createResolution();
 		resolution.setName(formControl.fillTextMapper(nameST));
@@ -487,11 +487,11 @@ public class FillForms {
 		resolution.setResolutionSuperClass(formControl.fillTextMapper(superST));
 
 		lists.getResolutionTypeList().add(resolution);
-		lists.getResolutionTypeObservable().add(nameST);
+		lists.getResolutionTypeObservable().add(id);
 
 	}
 
-	public void fillStatusType(String nameST, String classST, String superST) {
+	public void fillStatusType(String id, String nameST, String classST, String superST) {
 
 		Status status = objF.createStatus();
 		status.setName(formControl.fillTextMapper(nameST));
@@ -499,11 +499,11 @@ public class FillForms {
 		status.setStatusSuperClass(formControl.fillTextMapper(superST));
 
 		lists.getStatusTypeList().add(status);
-		lists.getStatusTypeObservable().add(nameST);
+		lists.getStatusTypeObservable().add(id);
 
 	}
 
-	public void fillType(String nameST, String classST, String superST) {
+	public void fillType(String id, String nameST, String classST, String superST) {
 
 		Type type = objF.createType();
 		type.setName(formControl.fillTextMapper(nameST));
@@ -511,7 +511,7 @@ public class FillForms {
 		type.setTypeSuperClass(formControl.fillTextMapper(superST));
 
 		lists.getTypeList().add(type);
-		lists.getTypeObservable().add(nameST);
+		lists.getTypeObservable().add(id);
 
 	}
 

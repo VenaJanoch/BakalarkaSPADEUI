@@ -63,13 +63,15 @@ public class FillFormsXML {
 	private FillCopyForms copyForms;
 	private LinkControl linkControl;
 	private DeleteControl deleteControl;
+	private FormControl formControl;
 
 	public FillFormsXML(Control control, SegmentLists lists, Project project, ArrayList<BasicForm> forms,
 			FillCopyForms copyForms, IdentificatorCreater idCreator, LinkControl linkControl,
-			DeleteControl deleteControl) {
+			DeleteControl deleteControl, FormControl formControl) {
 
 		this.control = control;
 		this.project = project;
+		this.formControl = formControl;
 		this.copyForms = copyForms;
 		this.forms = forms;
 		this.lists = lists;
@@ -113,7 +115,7 @@ public class FillFormsXML {
 		for (int i = 0; i < links.size(); i++) {
 
 			if (links.get(i).getType().equals(SegmentType.WorkUnit.name())) {
-				
+
 				fillWorkUnitLinks(links.get(i));
 			} else {
 				fillConfigLinks(links.get(i));
@@ -220,7 +222,7 @@ public class FillFormsXML {
 
 		index++;
 		IdentificatorCreater.setIndex(index);
-		
+
 		forms.add(IDs[0], iterationForm);
 		return IDs;
 
@@ -284,7 +286,7 @@ public class FillFormsXML {
 		IDs[0] = index;
 		IDs[1] = idCreater.createWorkUnitID();
 		IDs[2] = form.getIdCreater().createWorkUnitID();
-		
+
 		IDs[3] = form.getFormID();
 
 		int tmpIndex = form.getWorkUnitArray().get(IDs[2]);
@@ -297,7 +299,7 @@ public class FillFormsXML {
 		index++;
 		IdentificatorCreater.setIndex(index);
 		forms.add(IDs[0], workUnitForm);
-		lists.getWorkUnitFormIndex().add(tmpIndex, IDs[0]);   
+		lists.getWorkUnitFormIndex().add(tmpIndex, IDs[0]);
 		return IDs;
 	}
 
@@ -311,7 +313,7 @@ public class FillFormsXML {
 		for (int i = 0; i < configs.size(); i++) {
 
 			Configuration conf = configs.get(i);
-			name = conf.getName();
+			name = formControl.fillTextFromXMLMapper(conf.getName());
 
 			if (conf.isIsRelease()) {
 				release = "YES";
@@ -321,9 +323,9 @@ public class FillFormsXML {
 
 			CanvasItem item = new CanvasItem(SegmentType.Configuration, name, control, form, 1, 0, 0,
 					control.getContexMenu(), linkControl, form.getCanvas());
-			data.add(new ConfigTable(name, release, item.getIDs()[0]));
+			data.add(new ConfigTable(item.getID() + "_" + name, release, item.getIDs()[0]));
 
-			lists.getConfigObservable().add(item.getIDs()[1], name);
+			lists.getConfigObservable().add(item.getID() + "_" + name);
 			control.getConfTableForm().getTableTV().setItems(data);
 		}
 
@@ -336,15 +338,17 @@ public class FillFormsXML {
 		IDs[3] = form.getCanvasItem().getIDs()[0];
 		Configuration conf = lists.getConfigList().get(IDs[1]);
 		ConfigurationForm configForm = new ConfigurationForm(item, control, Constans.configurationDragTextIndexs, conf,
-				index, deleteControl);
+				index, deleteControl, idCreater);
 
 		configForm.getNameTF().setText(conf.getName());
 		configForm.setName(conf.getName());
 		configForm.getCreatedDP().setValue(control.convertDateFromXML(conf.getCreate()));
-		if (conf.getArtifactsIndexs() != null) {
-			configForm.getAuthorRoleCB().setValue(lists.getRoleObservable().get(conf.getAuthorIndex()+1));
+		if (conf.getAuthorIndex() != null) {
+			configForm.getAuthorRoleCB().setValue(lists.getRoleObservable().get(conf.getAuthorIndex() + 1));
+			String author = control.getLists().getRoleList().get(conf.getAuthorIndex()).getName();			
+			configForm.getAuthorRoleCB().setValue(author);
 		}
-				
+
 		configForm.setNew(false);
 
 		if (conf.isIsRelease()) {
@@ -358,9 +362,6 @@ public class FillFormsXML {
 
 		index++;
 		IdentificatorCreater.setIndex(index);
-		String author = control.getLists().getRoleList().get(conf.getAuthorIndex()).getName();
-
-		configForm.getAuthorRoleCB().setValue(author);
 
 		fillChangeFromXML(configForm, conf.getChangesIndexs(), IDs[0]);
 		fillTagsFromXML(configForm, conf.getTags());
@@ -374,7 +375,8 @@ public class FillFormsXML {
 		ObservableList<TagTable> data = FXCollections.observableArrayList();
 
 		for (int i = 0; i < tags.size(); i++) {
-			data.add(new TagTable(tags.get(i)));
+			String id = idCreater.createTagID() + "_" + formControl.fillTextFromXMLMapper(tags.get(i));
+			data.add(new TagTable(id));
 		}
 
 		formc.getTagForm().getTableTV().setItems(data);
@@ -387,14 +389,14 @@ public class FillFormsXML {
 		for (int i = 0; i < roles.size(); i++) {
 
 			Role role = roles.get(i);
+			String name = idCreater.createRoleID() + "_" + formControl.fillTextFromXMLMapper(role.getName());
 			int roleI = 0;
 			if (role.getType() != null) {
 				roleI = role.getType();
 			}
-			data.add(new RoleTable(role.getName(), role.getDescription(),
-					lists.getRoleTypeObservable().get(roleI)));
+			data.add(new RoleTable(name, role.getDescription(), lists.getRoleTypeObservable().get(roleI)));
 
-			control.getLists().getRoleObservable().add(role.getName());
+			control.getLists().getRoleObservable().add(name);
 		}
 
 		control.getRoleForm().getTableTV().setItems(data);
@@ -406,14 +408,14 @@ public class FillFormsXML {
 		for (int i = 0; i < roles.size(); i++) {
 
 			RoleType role = roles.get(i);
-			
+			String id = idCreater.createRoleTypeID() + "_" + formControl.fillTextFromXMLMapper(role.getName());
 			String classI = "";
 			if (role.getRoleClass() != null) {
 				classI = role.getRoleClass();
 			}
-						
-			data.add(new ClassTable(role.getName(), classI, role.getRoleSuperClass()));
-			lists.getRoleTypeObservable().add(role.getName());
+
+			data.add(new ClassTable(id, classI, role.getRoleSuperClass()));
+			lists.getRoleTypeObservable().add(id);
 		}
 
 		control.getRoleForm().getRoleTForm().getTableTV().setItems(data);
@@ -425,16 +427,17 @@ public class FillFormsXML {
 
 		for (int i = 0; i < item.size(); i++) {
 			String name = item.get(i).getName();
+			String id = idCreater.createBranchID() + "_" + formControl.fillTextFromXMLMapper(name);
 			boolean main = item.get(i).isIsMain();
 
 			if (main) {
-				data.add(new BranchTable(name, "TRUE"));
+				data.add(new BranchTable(id, "TRUE"));
 
 			} else {
-				data.add(new BranchTable(name, "FALSE"));
+				data.add(new BranchTable(id, "FALSE"));
 			}
 
-			lists.getBranchObservable().add(item.get(i).getName());
+			lists.getBranchObservable().add(id);
 		}
 
 		control.getBranchFrom().getTableTV().setItems(data);
@@ -526,15 +529,16 @@ public class FillFormsXML {
 		ObservableList<CPRTable> data = FXCollections.observableArrayList();
 
 		for (int i = 0; i < cprs.size(); i++) {
-			control.getLists().getCPRObservable().add(cprs.get(i).getName());
-			
+			String name = cprs.get(i).getName();
+			String id = idCreater.createCPRID() + "_" + formControl.fillTextFromXMLMapper(name);
+			control.getLists().getCPRObservable().add(id);
+
 			String classI = "";
 			if (cprs.get(i).getPersonIndex() != null) {
 				String role = lists.getRoleList().get(cprs.get(i).getPersonIndex()).getName();
 			}
-			
-			
-			data.add(new CPRTable(cprs.get(i).getName(), classI));
+
+			data.add(new CPRTable(id, classI));
 		}
 
 		control.getCPRForm().getTableTV().setItems(data);
@@ -547,15 +551,16 @@ public class FillFormsXML {
 		for (int i = 0; i < item.size(); i++) {
 
 			String name = item.get(i).getName();
+			String id = idCreater.createPriorityID() + "_" + formControl.fillTextFromXMLMapper(name);
 			String superi = item.get(i).getPrioritySuperClass();
 
 			String classi = "";
 			if (item.get(i).getPriorityClass() != null) {
 				classi = item.get(i).getPriorityClass();
 			}
-						
-			control.getLists().getPriorityObservable().add(name);
-			data.add(new ClassTable(name, classi, superi));
+
+			control.getLists().getPriorityObservable().add(id);
+			data.add(new ClassTable(id, classi, superi));
 		}
 
 		control.getPriorityForm().getTableTV().setItems(data);
@@ -567,13 +572,15 @@ public class FillFormsXML {
 
 		for (int i = 0; i < item.size(); i++) {
 			String name = item.get(i).getName();
+			String id = idCreater.createTypeID() + "_" + formControl.fillTextFromXMLMapper(name);
+
 			String classi = "";
 			if (item.get(i).getTypeClass() != null) {
 				classi = item.get(i).getTypeClass();
 			}
 			String superi = item.get(i).getTypeSuperClass();
-			control.getLists().getTypeObservable().add(name);
-			data.add(new ClassTable(name, classi, superi));
+			control.getLists().getTypeObservable().add(id);
+			data.add(new ClassTable(id, classi, superi));
 		}
 
 		control.getTypeForm().getTableTV().setItems(data);
@@ -584,15 +591,16 @@ public class FillFormsXML {
 		ObservableList<ClassTable> data = FXCollections.observableArrayList();
 
 		for (int i = 0; i < item.size(); i++) {
-			lists.getSeverityTypeObservable().add(item.get(i).getName());
 			String name = item.get(i).getName();
+			String id = idCreater.createSeverityID() + "_" + formControl.fillTextFromXMLMapper(name);
+			lists.getSeverityTypeObservable().add(id);
 			String classi = "";
 			if (item.get(i).getSeverityClass() != null) {
 				classi = item.get(i).getSeverityClass();
 			}
 			String superi = item.get(i).getSeveritySuperClass();
 
-			data.add(new ClassTable(name, classi, superi));
+			data.add(new ClassTable(id, classi, superi));
 		}
 
 		control.getSeverityForm().getTableTV().setItems(data);
@@ -603,15 +611,17 @@ public class FillFormsXML {
 		ObservableList<ClassTable> data = FXCollections.observableArrayList();
 
 		for (int i = 0; i < item.size(); i++) {
-			lists.getRelationTypeObservable().add(item.get(i).getName());
 			String name = item.get(i).getName();
+			String id = idCreater.createRelationID() + "_" + formControl.fillTextFromXMLMapper(name);
+			lists.getRelationTypeObservable().add(id);
+
 			String classi = "";
 			if (item.get(i).getRelationClass() != null) {
 				classi = item.get(i).getRelationClass();
 			}
 			String superi = item.get(i).getRelationSuperClass();
 
-			data.add(new ClassTable(name, classi, superi));
+			data.add(new ClassTable(id, classi, superi));
 		}
 
 		control.getRelationForm().getTableTV().setItems(data);
@@ -622,14 +632,16 @@ public class FillFormsXML {
 		ObservableList<ClassTable> data = FXCollections.observableArrayList();
 
 		for (int i = 0; i < item.size(); i++) {
-			lists.getResolutionTypeObservable().add(item.get(i).getName());
-			String name = item.get(i).getName();String classi = "";
+			String name = item.get(i).getName();
+			String classi = "";
+			String id = idCreater.createResolutionID() + "_" + formControl.fillTextFromXMLMapper(name);
+			lists.getResolutionTypeObservable().add(id);
 			if (item.get(i).getResolutionClass() != null) {
 				classi = item.get(i).getResolutionClass();
 			}
 			String superi = item.get(i).getResolutionSuperClass();
 
-			data.add(new ClassTable(name, classi, superi));
+			data.add(new ClassTable(id, classi, superi));
 		}
 
 		control.getResolutionForm().getTableTV().setItems(data);
@@ -640,14 +652,17 @@ public class FillFormsXML {
 		ObservableList<ClassTable> data = FXCollections.observableArrayList();
 
 		for (int i = 0; i < item.size(); i++) {
-			lists.getStatusTypeObservable().add(item.get(i).getName());
-			String name = item.get(i).getName();String classi = "";
+			String name = item.get(i).getName();
+			String classi = "";
+			String id = idCreater.createStatusID() + "_" + formControl.fillTextFromXMLMapper(name);
+			lists.getStatusTypeObservable().add(id);
+
 			if (item.get(i).getStatusClass() != null) {
 				classi = item.get(i).getStatusClass();
 			}
 			String superi = item.get(i).getStatusSuperClass();
 
-			data.add(new ClassTable(name, classi, superi));
+			data.add(new ClassTable(id, classi, superi));
 		}
 
 		control.getStatusForm().getTableTV().setItems(data);
@@ -659,13 +674,15 @@ public class FillFormsXML {
 
 		for (int i = 0; i < milestones.size(); i++) {
 			String name = milestones.get(i).getName();
-			control.getLists().getMilestoneObservable().add(name);
-			
+			String id = idCreater.createMilestoneID() + "_" + formControl.fillTextFromXMLMapper(name);
+
+			control.getLists().getMilestoneObservable().add(id);
+
 			String classi = "";
 			if (milestones.get(i).getCriteriaIndexs() != null) {
 				classi = createCriterionsString(milestones.get(i).getCriteriaIndexs());
 			}
-			data.add(new MilestoneTable(milestones.get(i).getName(), classi));
+			data.add(new MilestoneTable(id, classi));
 		}
 
 		control.getMilestoneForm().getTableTV().setItems(data);
@@ -675,7 +692,7 @@ public class FillFormsXML {
 
 		String tmp = "[ ";
 		for (int i = 0; i < indexs.size(); i++) {
-			tmp += control.getLists().getCriterionObservable().get(indexs.get(i)+1) + ", ";
+			tmp += control.getLists().getCriterionObservable().get(indexs.get(i) + 1) + ", ";
 		}
 
 		tmp += " ]";
@@ -688,9 +705,12 @@ public class FillFormsXML {
 		ObservableList<CriterionTable> data = FXCollections.observableArrayList();
 
 		for (int i = 0; i < criterions.size(); i++) {
-			control.getLists().getCriterionObservable().add(criterions.get(i).getName());
-			
-			data.add(new CriterionTable(criterions.get(i).getName(), criterions.get(i).getDescription()));
+			String name = criterions.get(i).getName();
+			String id = idCreater.createCriterionID() + "_" + formControl.fillTextFromXMLMapper(name);
+
+			control.getLists().getCriterionObservable().add(id);
+
+			data.add(new CriterionTable(id, criterions.get(i).getDescription()));
 		}
 
 		control.getMilestoneForm().getCriterionForm().getTableTV().setItems(data);

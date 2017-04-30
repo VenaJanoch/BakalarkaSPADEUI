@@ -31,6 +31,7 @@ import services.Alerts;
 import services.Constans;
 import services.Control;
 import services.DeleteControl;
+import services.IdentificatorCreater;
 import services.SegmentType;
 import tables.ConfigTable;
 import tables.MilestoneTable;
@@ -42,8 +43,8 @@ public class ConfigurationTableForm extends Table2BasicForm implements ISegmentT
 
 	private Label formName;
 
-	public ConfigurationTableForm(Control control, DeleteControl deleteControl) {
-		super(control, deleteControl);
+	public ConfigurationTableForm(Control control, DeleteControl deleteControl, IdentificatorCreater idCreator) {
+		super(control, deleteControl, idCreator);
 
 		createForm();
 		getSubmitBT().setOnAction(event -> setActionSubmitButton());

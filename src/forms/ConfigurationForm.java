@@ -33,6 +33,7 @@ import services.CanvasType;
 import services.Constans;
 import services.Control;
 import services.DeleteControl;
+import services.IdentificatorCreater;
 import services.SegmentType;
 
 public class ConfigurationForm extends BasicForm implements ISegmentForm {
@@ -67,11 +68,11 @@ public class ConfigurationForm extends BasicForm implements ISegmentForm {
 	private TagForm tagForm;
 
 	public ConfigurationForm(CanvasItem item, Control control, int[] itemArray, Configuration conf, int indexForm,
-			DeleteControl deleteControl) {
+			DeleteControl deleteControl, IdentificatorCreater idCreater) {
 		super(item, control, itemArray, indexForm, deleteControl, CanvasType.Configuration);
 		this.configuration = conf;
 		setConfigArray(conf);
-		this.tagForm = new TagForm(conf, control, deleteControl);
+		this.tagForm = new TagForm(conf, control, deleteControl, idCreater);
 		isNew = true;
 		isRelease = true;
 
@@ -111,7 +112,7 @@ public class ConfigurationForm extends BasicForm implements ISegmentForm {
 		getCanvasItem().setNameText(actName);
 
 		getControl().getFillForms().fillConfiguration(configuration, IDs, isRelease, createDate, actName, authorIndex,
-				isNew);
+				isNew, getCanvasItem());
 
 		getSubmitButton().setText("Save");
 

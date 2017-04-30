@@ -44,7 +44,7 @@ public class ProjectForm extends Date2DescBasicForm implements ISegmentForm {
 
 		setCanvasItem(new CanvasItem(SegmentType.Project, "", control, this, 0, 0, 0, control.getContexMenu(),
 				control.getLinkControl(), control.getCanvas()));
-
+		
 		this.setOnCloseRequest(e -> {
 
 			e.consume();
@@ -58,7 +58,7 @@ public class ProjectForm extends Date2DescBasicForm implements ISegmentForm {
 
 		getSubmitButton().setOnAction(event -> setActionSubmitButton());
 		createForm();
-
+		getFormName().setText(getTitle());
 	}
 
 	@Override

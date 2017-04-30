@@ -150,7 +150,7 @@ public class SegmentLists {
 
 		roleTypeList = project.getRoleType();
 		roleTypeObservable.clear();
-		roleObservable.add("");
+		roleTypeObservable.add("");
 
 		priorityTypeList = project.getPriority();
 		priorityTypeObservable.clear();

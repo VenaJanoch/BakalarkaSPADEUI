@@ -22,7 +22,7 @@ public class DragText extends Button {
 		super();
 		this.setType(type);
 		this.setText(type.name());
-		this.setFont(Font.font ("Verdana", 20));
+		this.setFont(Font.font ("Verdana", 15));
 		this.setId("dg"+ type);
 		setDragDetected();
 		setDragDone();

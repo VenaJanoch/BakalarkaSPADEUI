@@ -3,6 +3,7 @@ package abstractform;
 import services.ClassSwitcher;
 import services.Control;
 import services.DeleteControl;
+import services.IdentificatorCreater;
 import tables.ClassTable;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
@@ -28,9 +29,9 @@ public class TableClassBasicForm extends TableBasicForm {
 	protected int classIndex;
 	protected int superIndex;
 
-	public TableClassBasicForm(Control control, DeleteControl deleteControl) {
+	public TableClassBasicForm(Control control, DeleteControl deleteControl, IdentificatorCreater idCreator) {
 
-		super(control, deleteControl);
+		super(control, deleteControl, idCreator);
 		this.control = control;
 		this.deleteControl = deleteControl;
 		setSwitcher(new ClassSwitcher(control));

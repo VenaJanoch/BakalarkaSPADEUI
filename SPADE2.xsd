@@ -207,7 +207,7 @@
 
 	<xs:complexType name="Configuration">
 		<xs:sequence>
-			<xs:element name="authorIndex" type="xs:int" />
+			<xs:element name="authorIndex" type="xs:int" minOccurs="0" maxOccurs="1"/>
 			<xs:element name="artifactsIndexs" type="xs:int"
 				minOccurs="0" maxOccurs="unbounded" />
 			<xs:element name="changesIndexs" type="xs:int" minOccurs="0"

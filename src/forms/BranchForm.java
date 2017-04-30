@@ -35,6 +35,7 @@ import services.Alerts;
 import services.Constans;
 import services.Control;
 import services.DeleteControl;
+import services.IdentificatorCreater;
 import services.OrderCell;
 import tables.BranchTable;
 import tables.ClassTable;
@@ -57,8 +58,8 @@ public class BranchForm extends TableBasicForm implements ISegmentTableForm {
 
 	private boolean newBranch;
 
-	public BranchForm(Control control, DeleteControl deleteControl) {
-		super(control, deleteControl);
+	public BranchForm(Control control, DeleteControl deleteControl, IdentificatorCreater idCreator) {
+		super(control, deleteControl, idCreator);
 		
 		getMainPanel().setMinSize(Constans.littleformWidth, Constans.littleformHeight);
 		getMainPanel().setMaxSize(Constans.littleformWidth, Constans.littleformHeight);
@@ -177,12 +178,13 @@ public class BranchForm extends TableBasicForm implements ISegmentTableForm {
 	public void addItem() {
 
 		String nameST = getNameTF().getText();
+		String idName = idCreator.createBranchID() + "_" + nameST;
 
-		BranchTable tag = new BranchTable(nameST, main);
+		BranchTable tag = new BranchTable(idName, main);
 		tableTV.getItems().add(tag);
 		tableTV.sort();
 
-		getControl().getFillForms().fillBranch(formControl.fillTextMapper(nameST), isMain);
+		getControl().getFillForms().fillBranch(formControl.fillTextMapper(nameST), idName, isMain);
 	}
 
 	/*** Getrs and Setrs ***/

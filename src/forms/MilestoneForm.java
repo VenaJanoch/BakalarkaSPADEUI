@@ -47,6 +47,7 @@ import services.Constans;
 import services.Control;
 import services.DeleteControl;
 import services.FillForms;
+import services.IdentificatorCreater;
 import services.OrderCell;
 import tables.ClassTable;
 import tables.MilestoneTable;
@@ -65,9 +66,9 @@ public class MilestoneForm extends Table2BasicForm implements ISegmentTableForm 
 	private ObservableList<String> criterionArray;
 	private ObservableList<Integer> criterionIndex;
 
-	public MilestoneForm(Control control, DeleteControl deleteControl) {
+	public MilestoneForm(Control control, DeleteControl deleteControl, IdentificatorCreater idCreator) {
 
-		super(control, deleteControl);
+		super(control, deleteControl, idCreator);
 		this.setTitle("Edit Milestone");
 		createForm();
 		getSubmitBT().setOnAction(event -> setActionSubmitButton());
@@ -86,7 +87,7 @@ public class MilestoneForm extends Table2BasicForm implements ISegmentTableForm 
 		getInternalPanel().setCenter(getTable());
 		getInternalPanel().setBottom(createControlPane());
 
-		criterionForm = new CriterionForm(getControl(), deleteControl);
+		criterionForm = new CriterionForm(getControl(), deleteControl, idCreator);
 
 		getMainPanel().setCenter(getInternalPanel());
 		getMainPanel().setRight(criterionForm.getMainPanel());
@@ -178,15 +179,16 @@ public class MilestoneForm extends Table2BasicForm implements ISegmentTableForm 
 	public void addItem() {
 
 		String nameST = getNameTF().getText();
+		String idName = idCreator.createMilestoneID() + "_" + nameST;
 		String criterion = "";
 		if (criterionArray != null) {
 			criterion = criterionArray.toString();
 		}
 
-		MilestoneTable milestone = new MilestoneTable(nameST, criterion);
+		MilestoneTable milestone = new MilestoneTable(idName, criterion);
 		tableTV.getItems().add(milestone);
 		tableTV.sort();
-		getControl().getFillForms().fillMilestone(formControl.fillTextMapper(nameST), criterionIndex);
+		getControl().getFillForms().fillMilestone(idName, formControl.fillTextMapper(nameST), criterionIndex);
 		criteriaCB.getCheckModel().clearChecks();
 
 	}

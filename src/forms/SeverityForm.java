@@ -23,6 +23,7 @@ import javafx.scene.layout.GridPane;
 import services.Alerts;
 import services.Control;
 import services.DeleteControl;
+import services.IdentificatorCreater;
 import tables.ClassTable;
 
 public class SeverityForm extends TableClassBasicForm implements ISegmentTableForm {
@@ -35,8 +36,8 @@ public class SeverityForm extends TableClassBasicForm implements ISegmentTableFo
 	private Label classTypeLB;
 	private Label superClassTypeLB;
 
-	public SeverityForm(Control control, DeleteControl deleteControl) {
-		super(control, deleteControl);
+	public SeverityForm(Control control, DeleteControl deleteControl, IdentificatorCreater idCreator) {
+		super(control, deleteControl, idCreator);
 
 		this.control = control;
 		this.setTitle("Edit Severities");
@@ -144,6 +145,7 @@ public class SeverityForm extends TableClassBasicForm implements ISegmentTableFo
 	public void addItem() {
 		String nameST = getNameTF().getText();
 		String classST;
+		String idName = idCreator.createSeverityID() + "_" + nameST;
 
 		if (classTypeCB.getValue() == null || classIndex == 0) {
 			classST = WorkUnitSeverityClass.UNASSIGNED.name();
@@ -152,11 +154,11 @@ public class SeverityForm extends TableClassBasicForm implements ISegmentTableFo
 		}
 		String superST = WorkUnitSeveritySuperClass.values()[superIndex].name();
 
-		ClassTable table = new ClassTable(nameST, classST, superST);
+		ClassTable table = new ClassTable(idName, classST, superST);
 
 		getTableTV().getItems().add(table);
 		getTableTV().sort();
-		getControl().getFillForms().fillSeverityType(formControl.fillTextMapper(nameST), formControl.fillTextMapper(classST), superST);
+		getControl().getFillForms().fillSeverityType(idName, formControl.fillTextMapper(nameST), formControl.fillTextMapper(classST), superST);
 
 	}
 

@@ -25,6 +25,7 @@ import javafx.scene.layout.GridPane;
 import services.Alerts;
 import services.Control;
 import services.DeleteControl;
+import services.IdentificatorCreater;
 import tables.ClassTable;
 
 public class ResolutionForm extends TableClassBasicForm implements ISegmentTableForm {
@@ -37,8 +38,8 @@ public class ResolutionForm extends TableClassBasicForm implements ISegmentTable
 	private Label classTypeLB;
 	private Label superClassTypeLB;
 
-	public ResolutionForm(Control control, DeleteControl deleteControl) {
-		super(control, deleteControl);
+	public ResolutionForm(Control control, DeleteControl deleteControl, IdentificatorCreater idCreator) {
+		super(control, deleteControl, idCreator);
 
 		this.control = control;
 		this.setTitle("Edit Resolutions");
@@ -145,6 +146,8 @@ public class ResolutionForm extends TableClassBasicForm implements ISegmentTable
 	public void addItem() {
 		String nameST = getNameTF().getText();
 		String classST;
+		String idName = idCreator.createResolutionID() + "_" + nameST;
+
 		if (classTypeCB.getValue() == null || getClassIndex() == 0) {
 			classST = WorkUnitResolutionClass.UNASSIGNED.name();
 		} else {
@@ -152,11 +155,11 @@ public class ResolutionForm extends TableClassBasicForm implements ISegmentTable
 		}
 		String superST = WorkUnitResolutionsSuperClass.values()[getSuperIndex()].name();
 
-		ClassTable table = new ClassTable(nameST, classST, superST);
+		ClassTable table = new ClassTable(idName, classST, superST);
 
 		getTableTV().getItems().add(table);
 		getTableTV().sort();
-		getControl().getFillForms().fillResolutionType(formControl.fillTextMapper(nameST), formControl.fillTextMapper(classST), superST);
+		getControl().getFillForms().fillResolutionType(idName, formControl.fillTextMapper(nameST), formControl.fillTextMapper(classST), superST);
 
 	}
 

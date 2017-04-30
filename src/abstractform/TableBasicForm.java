@@ -15,6 +15,7 @@ import services.Constans;
 import services.Control;
 import services.DeleteControl;
 import services.FormControl;
+import services.IdentificatorCreater;
 
 public class TableBasicForm  extends Stage{
 
@@ -29,9 +30,11 @@ public class TableBasicForm  extends Stage{
 	private Label formName;
 	protected DeleteControl deleteControl;
 	protected FormControl formControl;
-	public TableBasicForm(Control control, DeleteControl deleteControl) {
+	protected IdentificatorCreater idCreator;
+	public TableBasicForm(Control control, DeleteControl deleteControl, IdentificatorCreater idCreater) {
 		super();
 		this.control = control;
+		this.idCreator = idCreater;
 		this.deleteControl = deleteControl;
 		this.setScene(creatSceneProject());
 		this.formControl = new FormControl(control.getLists());
