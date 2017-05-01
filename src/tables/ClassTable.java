@@ -7,10 +7,18 @@ import javafx.beans.property.StringProperty;
 
 public class ClassTable {
 
+	/** Globální proměnné třídy **/
 	private StringProperty name;
 	private StringProperty classType;
 	private StringProperty superType;
 	
+	
+	/**
+	 * Konstruktor třídy
+	 * @param name jméno výčtového typu
+	 * @param classType class
+	 * @param superType super class
+	 */
 	public ClassTable(String name, String classType, String superType) {
 		super();
 		this.name = new SimpleStringProperty(name);
@@ -19,7 +27,18 @@ public class ClassTable {
 		
 	}
 	
+
+	/**
+	 * Vypíše informace o prvku
+	 */
+	@Override
+	public String toString() {
+
+		return name.get();
+	}
+
 	
+	/** Getrs and Setrs */
 	public final String getName() {
 		return name.get();
 	}
@@ -47,11 +66,6 @@ public class ClassTable {
 
 	}
 
-	@Override
-	public String toString() {
-
-		return name.get();
-	}
 
 
 }

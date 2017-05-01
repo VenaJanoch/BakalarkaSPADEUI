@@ -7,30 +7,38 @@ import javafx.beans.value.ObservableValue;
 import javafx.scene.control.ComboBox;
 import services.Control;
 
-public class LineComboBox extends ComboBox<String>{
+/**
+ * Třída definující box pro výběr relace mezi dvěma Work Unit. Odděděná od třídy
+ * ComboBox
+ * 
+ * @author Václav Janoch
+ *
+ */
+public class LineComboBox extends ComboBox<String> {
 
+	/** Globální proměnné třídy */
 	private Control control;
 	private int relationIndex;
-	
+
 	private int[] startIDs;
 	private int[] endIDs;
-	
+
 	private WorkUnit leftUnit;
 	private WorkUnit rightUnit;
-	
+
 	public LineComboBox(Control control) {
 		super(control.getLists().getRelationTypeObservable());
 		this.control = control;
-		
-	
-		
+
 		this.getSelectionModel().selectedIndexProperty().addListener(relationListener);
 		this.setVisibleRowCount(5);
 
 	}
-	
-	
 
+	/**
+	 * ChangeListener pro získání indexu vybrané relace a přídání relace od
+	 * datových struktru
+	 */
 	ChangeListener<Number> relationListener = new ChangeListener<Number>() {
 
 		@Override
@@ -39,11 +47,11 @@ public class LineComboBox extends ComboBox<String>{
 			setRelationIndex(newValue.intValue());
 			leftUnit.setRelationIndex(relationIndex);
 			rightUnit.setRelationIndex(relationIndex);
-					
+
 		}
 	};
-	
-	
+
+	/** Getrs and Setrs */
 	public int getRelationIndex() {
 		return relationIndex;
 	}
@@ -83,9 +91,5 @@ public class LineComboBox extends ComboBox<String>{
 	public void setEndIDs(int[] endIDs) {
 		this.endIDs = endIDs;
 	}
-	
-
-	
-	
 
 }

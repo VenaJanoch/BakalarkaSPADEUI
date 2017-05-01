@@ -8,17 +8,35 @@ import javafx.collections.ObservableList;
 
 public class MilestoneTable {
 
+	/** Globální proměnné třídy **/
 	private StringProperty name;
 	private StringProperty criterion;
 
-
+	/**
+	 * Konstruktor třídy Zinicializuje globální proměnnné třídy
+	 * 
+	 * @param name
+	 *            jméno milestone
+	 * @param criterium
+	 *            criterio array
+	 */
 	public MilestoneTable(String name, String criterium) {
 		super();
 		this.name = new SimpleStringProperty(name);
 		this.criterion = new SimpleStringProperty(criterium);
-		
+
+	}
+	
+	/**
+	 * Vypíše info o prvku 
+	 */
+	@Override
+	public String toString() {
+
+		return name.get();
 	}
 
+	/** Globální proměnné třídy **/
 	public final String getName() {
 		return name.get();
 	}
@@ -27,7 +45,7 @@ public class MilestoneTable {
 		this.name.set(name);
 
 	}
-	
+
 	public final String getCriterion() {
 		return criterion.get();
 	}
@@ -35,15 +53,6 @@ public class MilestoneTable {
 	public final void setCriterion(String name) {
 		this.criterion.set(name);
 
-	}
-	
-
-	
-
-	@Override
-	public String toString() {
-
-		return name.get();
 	}
 
 }

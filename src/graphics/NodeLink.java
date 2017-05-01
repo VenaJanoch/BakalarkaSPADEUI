@@ -33,8 +33,16 @@ import services.Control;
 import services.LinkControl;
 import services.SegmentType;
 
+/**
+ * /** Třída vykreslující spojení mezi Change a Artifact
+ * 
+ * @author Václav Janoch
+ *
+ */
+
 public class NodeLink extends Line {
 
+	/*** Globální proměnné třídy */
 	protected int[] startIDs;
 	protected int[] endIDs;
 	protected int id;
@@ -48,7 +56,20 @@ public class NodeLink extends Line {
 	protected LinkControl linkControl;
 	protected AnchorPane canvas;
 
-
+	/**
+	 * Konstruktor třídy Zinicizalizuje globální proměnné třídy
+	 * 
+	 * @param ID
+	 *            Identifikace spojnice
+	 * @param control
+	 *            instance třídy Control
+	 * @param type
+	 *            SegmentType
+	 * @param linkControl
+	 *            LinkControl
+	 * @param canvas
+	 *            Canvas
+	 */
 	public NodeLink(int ID, Control control, SegmentType type, LinkControl linkControl, AnchorPane canvas) {
 		super();
 
@@ -66,18 +87,28 @@ public class NodeLink extends Line {
 		backgroundPolygon.setFill(Color.TRANSPARENT);
 		canvas.getChildren().add(backgroundPolygon);
 	}
-	
+
+	/**
+	 * MouseEvent Handler pro reakci na kliknutí do okolí spojnice a zvýraznění
+	 * oblasti šipky a zavolání kontroly smazání šipky
+	 */
 	EventHandler<MouseEvent> polygonMouseEvent = new EventHandler<MouseEvent>() {
 
 		@Override
 		public void handle(MouseEvent t) {
 			backgroundPolygon.setStroke(Color.BLACK);
 			backgroundPolygon.getStrokeDashArray().add(2d);
-			
+
 			pressedDeleteArrow(t);
 		}
 	};
 
+	/**
+	 * Metoda pro nastavení počáteční polohy spojnice
+	 * 
+	 * @param startPoint
+	 *            Point2D počáteční bod
+	 */
 	public void setStart(Point2D startPoint) {
 		this.startPoint = startPoint;
 
@@ -89,6 +120,10 @@ public class NodeLink extends Line {
 		}
 	}
 
+	/**
+	 * Metoda pro smazání spojice mezi prvky a zavolání metody pro smazání
+	 * spojení z datových struktur
+	 */
 	protected void deleteArrow() {
 		this.setVisible(false);
 		backgroundPolygon.setVisible(false);
@@ -97,6 +132,12 @@ public class NodeLink extends Line {
 
 	}
 
+	/**
+	 * Kontrolní metoda pro reakci na dvojklik do okolí spojnice
+	 * 
+	 * @param t
+	 *            MouseEvent
+	 */
 	protected void pressedDeleteArrow(MouseEvent t) {
 		control.getManipulation().setLink(this);
 		if (t.getButton().equals(MouseButton.PRIMARY)) {
@@ -108,6 +149,12 @@ public class NodeLink extends Line {
 
 	}
 
+	/**
+	 * Metoda pro nastavení koncového bodu spojnice, spočtení velikosti
+	 * obdelníku pro zvýranění a zobrazení spojnice
+	 * 
+	 * @param endPoint
+	 */
 	public void setEnd(Point2D endPoint) {
 
 		this.endPoint = endPoint;
@@ -118,10 +165,16 @@ public class NodeLink extends Line {
 		backgroundPolygon.getPoints().clear();
 		backgroundPolygon.getPoints().addAll(control.countBackgroundPlygon(startPoint, endPoint));
 		backgroundPolygon.setVisible(true);
-		
 
 	}
 
+	/**
+	 * Přetížená metoda umožnující přídání offsetu pro výpočet velikosti
+	 * spojnice a možnosti vložení šipky určující směr
+	 * 
+	 * @param endPoint
+	 * @param offset
+	 */
 	public void setEnd(Point2D endPoint, double offset) {
 
 		this.endPoint = endPoint;
@@ -157,6 +210,5 @@ public class NodeLink extends Line {
 	public void setBackgroundPolygon(Polygon backgroundPolygon) {
 		this.backgroundPolygon = backgroundPolygon;
 	}
-	
 
 }

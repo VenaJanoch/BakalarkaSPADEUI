@@ -38,8 +38,15 @@ import services.LinkControl;
 import services.ManipulationControl;
 import services.SegmentType;
 
-public class CanvasItem extends AnchorPane {
+/**
+ * Třída představující prvek plátna, kontajner pro přídu InfoBoxSegment
+ * 
+ * @author Václav Janoch
+ *
+ */
 
+public class CanvasItem extends AnchorPane {
+	/** Globální proměnné tříd **/
 	private InfoBoxSegment segmentInfo;
 	private double orgSceneX, orgSceneY;
 	private double orgTranslateX, orgTranslateY;
@@ -69,6 +76,28 @@ public class CanvasItem extends AnchorPane {
 	private BasicForm form;
 	private LinkControl linkControl;
 
+	/**
+	 * Konstruktor třídy. Zinicializuje globální proměnné třídy. Získá
+	 * identifikátory formuláře a objektu v seznamech. Vytvoří zobrazované ID
+	 * prvku
+	 * 
+	 * @param type
+	 *            SegmentType
+	 * @param name
+	 * @param control
+	 *            Control
+	 * @param rootForm
+	 *            BasicForm
+	 * @param isCreated
+	 * @param x
+	 * @param y
+	 * @param contexMenu
+	 *            ItemContexMenu
+	 * @param linkControl
+	 *            LinkControl
+	 * @param dgCanvas
+	 *            DragAndDropCanvas
+	 */
 	public CanvasItem(SegmentType type, String name, Control control, BasicForm rootForm, int isCreated, double x,
 			double y, ItemContexMenu contexMenu, LinkControl linkControl, DragAndDropCanvas dgCanvas) {
 		this.setOnMousePressed(circleOnMousePressedEventHandler);
@@ -124,9 +153,16 @@ public class CanvasItem extends AnchorPane {
 			}
 
 		});
-		
+
 	}
-	
+
+	/**
+	 * Metoda určující reakce na kliknutí na prvek, Při jednoduchém kliku načte
+	 * aktuální polohu prvku pro výpočet posunu prvku, nebo pokud se jedná o mod
+	 * kreslení vybere prvek pro spojení. Dvojklikem vyvolá příslušny formulář
+	 * 
+	 * @param t
+	 */
 	public void setClicFromDragPoint(MouseEvent t) {
 		manipulation.setClicItem(this);
 		if (t.getButton().equals(MouseButton.PRIMARY)) {
@@ -163,6 +199,11 @@ public class CanvasItem extends AnchorPane {
 
 	}
 
+	/**
+	 * Pomocná metoda pro výpočet polohy prvku při drag and drop
+	 * 
+	 * @param t
+	 */
 	public void setDragFromDragPoint(MouseEvent t) {
 		if (!dgCanvas.isArrow()) {
 			double offsetX = t.getSceneX() - orgSceneX;
@@ -177,11 +218,20 @@ public class CanvasItem extends AnchorPane {
 
 	}
 
+	/**
+	 * Pomocná metoda pro kontrolu polohy prvku
+	 * 
+	 * @param point
+	 *            Point2D
+	 */
 	public void setPosition(Point2D point) {
 		this.setTranslateX(point.getX());
 		this.setTranslateY(point.getY());
 	}
 
+	/**
+	 * Event handler pro zachycení spuštění tlačítka myši na prvku
+	 */
 	EventHandler<MouseEvent> onMouseReleaseEventHandler = new EventHandler<MouseEvent>() {
 
 		@Override
@@ -194,6 +244,9 @@ public class CanvasItem extends AnchorPane {
 
 	};
 
+	/**
+	 * Překreslí spojnici mezi prvky po přesunu počátečního prvku
+	 */
 	private void repaintStartArrow() {
 
 		for (int i = 0; i < mStartLinkIds.size(); i++) {
@@ -217,6 +270,9 @@ public class CanvasItem extends AnchorPane {
 		}
 	}
 
+	/**
+	 * Překreslí spojnici mezi prvky po přesunu koncového prvku
+	 */
 	private void repaintEndArrow() {
 
 		for (int i = 0; i < mEndLinkIds.size(); i++) {
@@ -240,6 +296,9 @@ public class CanvasItem extends AnchorPane {
 
 	}
 
+	/**
+	 * Event handler pro zachycení kliku na prvek
+	 */
 	EventHandler<MouseEvent> circleOnMousePressedEventHandler = new EventHandler<MouseEvent>() {
 
 		@Override
@@ -248,6 +307,9 @@ public class CanvasItem extends AnchorPane {
 		}
 	};
 
+	/**
+	 * Event hadler pro zachycení drag and drop
+	 */
 	EventHandler<MouseEvent> circleOnMouseDraggedEventHandler = new EventHandler<MouseEvent>() {
 
 		@Override
@@ -256,6 +318,9 @@ public class CanvasItem extends AnchorPane {
 		}
 	};
 
+	/**
+	 * Metoda pro smazání spojnic mezi prvky a smazání z datových struktur
+	 */
 	public void deleteLinks() {
 
 		for (int i = 0; i < mStartLinkIds.size(); i++) {
@@ -272,6 +337,7 @@ public class CanvasItem extends AnchorPane {
 
 	}
 
+	/** Gerts and Setrs **/
 	public void setNameText(String name) {
 
 		segmentInfo.setNameText(name);

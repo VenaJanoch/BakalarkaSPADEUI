@@ -19,6 +19,7 @@ import services.Constans;
 
 public class ProcessValidator {
 
+	/** Globání proměnné třídy **/ 
 	private SchemaFactory schFac;
 	private Source souborSchema;
 	private Schema schemaXSD;
@@ -27,6 +28,12 @@ public class ProcessValidator {
 	private JAXBContext jc;
 	private JAXBElement root;
 
+	/**
+	 * Konstruktor třídy
+	 * Vytvoří inicialici globálních proměnných
+	 * @param jc instance třídy JAXBContext
+	 */
+	
 	public ProcessValidator(JAXBContext jc) {
 
 		this.jc = jc;
@@ -47,6 +54,10 @@ public class ProcessValidator {
 
 	}
 
+	/**
+	 * Zvaliduje aktuální proces v paměti a vypíše případnou chybu
+	 * @param root kořenový element
+	 */
 	public void validatePrecess(JAXBElement root) {
 
 		try {
@@ -59,6 +70,8 @@ public class ProcessValidator {
 
 	}
 
+	
+	/** Getrs and Setrs **/
 	public Schema getSchemaXSD() {
 		return schemaXSD;
 	}

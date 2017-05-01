@@ -19,11 +19,26 @@ import javafx.scene.paint.Color;
 import services.Alerts;
 import services.Constans;
 import services.Control;
-
+/**
+ * Třídy definující hlavní menu aplikace
+ * @author Václav Janoch
+ *
+ */
 public class MenuPanel extends VBox {
+	
+	/**
+	 * Globální proměnné třídy
+	 */
+	
 	Control control;
 	MainWindow mainWindow;
 
+	/**
+	 * Konstruktor třídy
+	 * Zinicializuje globální proměnné třídy
+	 * @param control Control
+	 * @param mainWindow MainWindow
+	 */
 	public MenuPanel(Control control, MainWindow mainWindow) {
 		super();
 		this.control = control;
@@ -34,6 +49,9 @@ public class MenuPanel extends VBox {
 
 	}
 
+	/**
+	 * Vytvoří MenuBar a vloží do něho pložky s natavenými klávesovými zkratkami
+	 */
 	private void createMenu() {
 
 		MenuBar menuMB = new MenuBar();
@@ -52,7 +70,7 @@ public class MenuPanel extends VBox {
 		validationItem.setAccelerator(Constans.controlF);
 		MenuItem exitItem = new MenuItem("Exit");
 		exitItem.setAccelerator(Constans.altF4);
-		
+
 		fileMenu.getItems().addAll(newItem, new SeparatorMenuItem(), openItem, new SeparatorMenuItem(), saveItem,
 				saveAsItem, new SeparatorMenuItem(), validationItem, new SeparatorMenuItem(), exitItem);
 
@@ -60,8 +78,9 @@ public class MenuPanel extends VBox {
 			event.consume();
 			int result = Alerts.showCloseApp(control);
 
-			if (result == 1) {
-				mainWindow.close();
+			if (result != -1) {
+				control.setClose(true);
+				Platform.exit();
 			}
 
 		});
@@ -75,7 +94,11 @@ public class MenuPanel extends VBox {
 		this.getChildren().add(menuMB);
 	}
 
+	/**
+	 * Pomocná metoda pro otevření procesu z XML
+	 */
 	private void openFile() {
 		control.openFile();
 	}
+
 }

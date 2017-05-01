@@ -17,8 +17,15 @@ import services.DeleteControl;
 import services.FormControl;
 import services.IdentificatorCreater;
 
-public class TableBasicForm  extends Stage{
+/**
+ * Třída umožňující vytvoření tabulkového formuláře
+ * 
+ * @author Václav Janoch
+ *
+ */
+public class TableBasicForm extends Stage {
 
+	/** Globální proměnné třídy **/
 	private BorderPane mainPanel;
 	private Scene scena;
 	protected Control control;
@@ -31,6 +38,17 @@ public class TableBasicForm  extends Stage{
 	protected DeleteControl deleteControl;
 	protected FormControl formControl;
 	protected IdentificatorCreater idCreator;
+
+	/**
+	 * Konstruktor třídy Zinicializuje globální proměnné třídy
+	 * 
+	 * @param control
+	 *            Control
+	 * @param deleteControl
+	 *            DeleteControl
+	 * @param idCreater
+	 *            IdentificatorCreater
+	 */
 	public TableBasicForm(Control control, DeleteControl deleteControl, IdentificatorCreater idCreater) {
 		super();
 		this.control = control;
@@ -40,6 +58,11 @@ public class TableBasicForm  extends Stage{
 		this.formControl = new FormControl(control.getLists());
 	}
 
+	/**
+	 * Vytvoří scénu pro formulář projektu
+	 * 
+	 * @return Scene
+	 */
 	private Scene creatSceneProject() {
 
 		scena = new Scene(creatPanel(), Constans.formWidth, Constans.formHeight);
@@ -47,15 +70,19 @@ public class TableBasicForm  extends Stage{
 		return scena;
 	}
 
+	/**
+	 * Vytvoří a rozloží základní prvky ve formuláři
+	 * 
+	 * @return BorderPane
+	 */
 	private Parent creatPanel() {
 
 		mainPanel = new BorderPane();
 		mainPanel.setPadding(new Insets(5));
 
-		
 		controlPane = new GridPane();
 		submitButton = new Button("OK");
-		
+
 		nameLB = new Label("Name: ");
 		nameTF = new TextField();
 		nameTF.setId("formName");
@@ -64,11 +91,10 @@ public class TableBasicForm  extends Stage{
 		add.setPrefWidth(60);
 		add.setPrefHeight(60);
 		controlPane.setVgap(5);
-		
+
 		controlPane.add(nameLB, 0, 0);
 		controlPane.add(nameTF, 1, 0);
-		
-	
+
 		controlPane.setHgap(3);
 		controlPane.setVgap(3);
 
@@ -79,7 +105,7 @@ public class TableBasicForm  extends Stage{
 		formName.setAlignment(Pos.CENTER);
 		formName.setFont(Font.font(25));
 		formName.setId("formID");
-		
+
 		mainPanel.setAlignment(formName, Pos.CENTER);
 		mainPanel.setRight(submitButton);
 		mainPanel.setAlignment(submitButton, Pos.BOTTOM_CENTER);
@@ -153,7 +179,5 @@ public class TableBasicForm  extends Stage{
 	public void setFormName(Label formName) {
 		this.formName = formName;
 	}
-	
-	
 
 }

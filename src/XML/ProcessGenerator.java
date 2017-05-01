@@ -25,6 +25,7 @@ import services.Constans;
 
 public class ProcessGenerator {
 
+	/** Globální proměnné třídy **/
 	private JAXBContext jc;
 	private ObjectFactory of;
 	private JAXBElement rootElement;
@@ -34,6 +35,9 @@ public class ProcessGenerator {
 	private Unmarshaller unMarshaller;
 	private ProcessValidator validator;
 
+	/**
+	 * Konstruktor třídy Vytvoří inicializaci globálních proměnných
+	 */
 	public ProcessGenerator() {
 
 		try {
@@ -48,7 +52,7 @@ public class ProcessGenerator {
 			marshaller.setProperty(Marshaller.JAXB_NO_NAMESPACE_SCHEMA_LOCATION, Constans.XSDNAME);
 
 			unMarshaller = jc.createUnmarshaller();
-			
+
 			marshallerVal = jc.createMarshaller();
 			marshallerVal.setProperty(Marshaller.JAXB_ENCODING, "UTF8");
 			marshallerVal.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
@@ -63,18 +67,26 @@ public class ProcessGenerator {
 		}
 
 	}
-	public void validate(Project project){
+
+	/**
+	 * Umožní zvalidování processu v paměti předaného pomocí kořenového elemetnu
+	 * project
+	 * 
+	 * @param project
+	 *            instance třídy Project - Kořenový element
+	 */
+	public void validate(Project project) {
 		rootElement = of.createPoject(project);
 		try {
 			marshallerVal.marshal(rootElement, new FileOutputStream(new File("Testovaci")));
-		}catch (MarshalException e){
+		} catch (MarshalException e) {
 			StringWriter errors = new StringWriter();
 			e.printStackTrace(new PrintWriter(errors));
 			Alerts.showValidationError(errors.toString().substring(0, 300) + " ....");
 			validator.validatePrecess(rootElement);
 			return;
-			
-		}catch (FileNotFoundException e) {
+
+		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (JAXBException e) {
@@ -84,54 +96,80 @@ public class ProcessGenerator {
 		Alerts.showValidationOK();
 	}
 
-	public void saveProcess(File file, Project project){
+	/**
+	 * Umožní uložení procesu v paměti do XML souboru
+	 * 
+	 * @param file
+	 *            jméno souboru pro XML
+	 * @param project
+	 *            kořenový element
+	 */
 
-			rootElement = of.createPoject(project);
-			try {
+	public void saveProcess(File file, Project project) {
 
-				marshallerVal.marshal(rootElement, new FileOutputStream(file));
-			}catch (MarshalException e){
-				StringWriter errors = new StringWriter();
-				e.printStackTrace(new PrintWriter(errors));
-				
-				boolean tmp = Alerts.showValidationErrorSave(errors.toString().substring(0, 300) + " ....");
-				if (tmp) {
-					saveWithOutValidation(file, project);
-				}
-				
-			}catch (FileNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (JAXBException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			validator.validatePrecess(rootElement);
-		
-
-	}
-
-	private void saveWithOutValidation(File file, Project project) {
 		rootElement = of.createPoject(project);
-		
 		try {
-			marshaller.marshal(rootElement, new FileOutputStream(file));
-		}catch (FileNotFoundException e) {
+
+			marshallerVal.marshal(rootElement, new FileOutputStream(file));
+		} catch (MarshalException e) {
+			StringWriter errors = new StringWriter();
+			e.printStackTrace(new PrintWriter(errors));
+
+			boolean tmp = Alerts.showValidationErrorSave(errors.toString().substring(0, 300) + " ....");
+			if (tmp) {
+				saveWithOutValidation(file, project);
+			}
+
+		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (JAXBException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+		validator.validatePrecess(rootElement);
+
 	}
+
+	/**
+	 * Pomocná metoda pro uložení Vykoná uložení po volbě uživatele uložení s
+	 * chybami
+	 * 
+	 * @param file
+	 *            jméno souboru pro XML
+	 * @param project
+	 *            kořenový element
+	 */
+
+	private void saveWithOutValidation(File file, Project project) {
+		rootElement = of.createPoject(project);
+
+		try {
+			marshaller.marshal(rootElement, new FileOutputStream(file));
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (JAXBException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+
+	/**
+	 * Umožní načtení procesu uloženého v XML do paměti
+	 * 
+	 * @param file
+	 *            Soubor s XML
+	 * @return Project kořenový element
+	 */
 	public Project readProcess(File file) {
 
 		JAXBElement element = null;
 
 		try {
 			element = (JAXBElement) unMarshaller.unmarshal(file);
-			 validator.validatePrecess(element);
+			validator.validatePrecess(element);
 
 		} catch (JAXBException e) {
 			// TODO Auto-generated catch block

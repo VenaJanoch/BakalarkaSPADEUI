@@ -19,8 +19,22 @@ import services.Control;
 import services.LinkControl;
 import services.SegmentType;
 
+/**
+ * Třída vykreslující spojení mezi WorkUnity odděděná od třídy NodeLink
+ * @author Václav Janoch
+ *
+ */
 public class WorkUnitLink extends NodeLink {
-
+	
+	/**
+	 * Konstruktor třídy
+	 * Naplní globálí proměné rodičovské třídy
+	 * @param ID
+	 * @param control
+	 * @param canvas
+	 * @param linkControl
+	 */
+	
 	public WorkUnitLink(int ID, Control control, AnchorPane canvas, LinkControl linkControl) {
 		super(ID, control, SegmentType.WorkUnit, linkControl, canvas);
 
@@ -34,6 +48,11 @@ public class WorkUnitLink extends NodeLink {
 
 	}
 
+	/**
+	 * Metoda pro nastavení koncového bodu spojnice, zviditelnění spojnice, šipky a výběrového boxu
+	 * @param endPointL koncový bod
+	 */
+	
 	public void setArrowAndBox(Point2D endPointL) {
 
 		setEnd(endPointL, Constans.ArrowRadius);
@@ -57,6 +76,9 @@ public class WorkUnitLink extends NodeLink {
 		polygon.setVisible(true);
 	}
 
+	/**
+	 * MouseEvent handler pro reakci na kliknutí na šipku
+	 */
 	EventHandler<MouseEvent> polygonMouseEvent = new EventHandler<MouseEvent>() {
 
 		@Override
@@ -65,6 +87,9 @@ public class WorkUnitLink extends NodeLink {
 		}
 	};
 
+	/**
+	 * Metoda pro smazání spojnice mezi Work Units, vymazání spojení z datových struktur
+	 */
 	protected void deleteArrow() {
 		this.setVisible(false);
 		relationCB.setVisible(false);
@@ -76,6 +101,9 @@ public class WorkUnitLink extends NodeLink {
 		linkControl.deleteWorkUnitArrow(id, startIDs[1], endIDs[1]);
 	}
 
+	/**
+	 * Metoda kontrolující dvojklik na spojnici
+	 */
 	protected void pressedDeleteArrow(MouseEvent t) {
 		control.getManipulation().setLink(this);
 		if (t.getButton().equals(MouseButton.PRIMARY)) {

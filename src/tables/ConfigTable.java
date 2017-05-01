@@ -8,10 +8,19 @@ import javafx.beans.property.StringProperty;
 
 public class ConfigTable {
 
+	/** Globální proměnné třídy **/
 	private StringProperty name;
 	private StringProperty release;
 	private IntegerProperty id;
 
+	
+	/**
+	 * Konstruktor třídy 
+	 * Zinicializuje globální proměnné třídy 
+	 * @param name jméno configurace
+	 * @param release hodnota release
+	 * @param id identikace 
+	 */
 	public ConfigTable(String name, String release, int id) {
 		super();
 		this.name = new SimpleStringProperty(name);
@@ -20,16 +29,16 @@ public class ConfigTable {
 		
 	}
 
-	
+	/**
+	 * Vypíše informace o prvku
+	 */
 	@Override
 	public String toString() {
 
 		return name.get();
 	}
 	
-	
-	
-	
+	/** Getrs and Setrs **/
 	public final String getName() {
 		return name.get();
 	}

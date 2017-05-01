@@ -1,6 +1,3 @@
-/**
- * 
- */
 package abstractform;
 
 import java.time.LocalDate;
@@ -14,7 +11,8 @@ import services.Control;
 import services.DeleteControl;
 
 /**
- * @author V�clav
+ * Třída odděděná ze třídy DescriptionBasicForm přidávající vstupní pole pro Date
+ * @author Václav Janoch
  *
  */
 public class DateDescBasicForm extends DescriptionBasicForm {
@@ -23,6 +21,7 @@ public class DateDescBasicForm extends DescriptionBasicForm {
 	private DatePicker dateDP;
 
 	/**
+	 * Konstruktor třídy
 	 * @param item
 	 * @param control
 	 * @param itemArray
@@ -35,8 +34,9 @@ public class DateDescBasicForm extends DescriptionBasicForm {
 	}
 
 	/**
-	 * @param item
-	 * @param control
+	 * Přetížený konstruktor třídy
+	 * @param item CanvasItem
+	 * @param control Control 
 	 */
 	public DateDescBasicForm(CanvasItem item, Control control, DeleteControl deleteControl) {
 		super(item, control, deleteControl);
@@ -44,13 +44,17 @@ public class DateDescBasicForm extends DescriptionBasicForm {
 	}
 
 	/**
-	 * @param control
+	 * Přetížený konstruktor třídy
+	 * @param control Control
 	 */
 	public DateDescBasicForm(Control control) {
 		super(control);
 		fillForm();
 	}
 
+	/**
+	 * Vytvoří vstupní pole pro Date a přidá ho do GridPane
+	 */
 	private void fillForm() {
 
 		dateLB = new Label("Created: ");
@@ -63,6 +67,8 @@ public class DateDescBasicForm extends DescriptionBasicForm {
 
 	}
 
+	
+	/** Getrs and Setrs **/
 	public Label getDateLB() {
 		return dateLB;
 	}

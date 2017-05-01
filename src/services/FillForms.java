@@ -40,6 +40,7 @@ import tables.TagTable;
 
 public class FillForms {
 
+	/** Globální proměnné třídy */
 	private Control control;
 	private Project project;
 	private ArrayList<BasicForm> forms;
@@ -50,6 +51,18 @@ public class FillForms {
 	private DeleteControl deleteControl;
 	private FormControl formControl;
 
+	/**
+	 * Konstruktor třídy Zinicializuje globální proměnné třídy
+	 * 
+	 * @param control
+	 * @param lists
+	 * @param project
+	 * @param forms
+	 * @param objFac
+	 * @param idCreater
+	 * @param deleteControl
+	 * @param formControl
+	 */
 	public FillForms(Control control, SegmentLists lists, Project project, ArrayList<BasicForm> forms,
 			ObjectFactory objFac, IdentificatorCreater idCreater, DeleteControl deleteControl,
 			FormControl formControl) {
@@ -65,6 +78,18 @@ public class FillForms {
 
 	}
 
+	/**
+	 * Vyplní data z formuláře do datové struktury pro Project
+	 * 
+	 * @param description
+	 *            popis description
+	 * @param name
+	 *            data z pole name
+	 * @param startDate
+	 *            data z kalendaře
+	 * @param endDate
+	 *            data z kalendaře
+	 */
 	public void fillProject(String description, String name, LocalDate startDate, LocalDate endDate) {
 
 		project.setDescription(formControl.fillTextMapper(description));
@@ -73,6 +98,22 @@ public class FillForms {
 		project.setStartDate(control.convertDate(startDate));
 	}
 
+	/**
+	 * Vyplní data z formuláře Phase do datové struktury pro Phase
+	 * 
+	 * @param phase
+	 *            instance třídy phase
+	 * @param ID
+	 *            identifikátory dané phase
+	 * @param description
+	 * @param name
+	 * @param endDate
+	 * @param confIndex
+	 * @param milestoneIndex
+	 * @param x
+	 * @param y
+	 * @param isNew
+	 */
 	public void fillPhase(Phase phase, int[] ID, String description, String name, LocalDate endDate, int confIndex,
 			int milestoneIndex, int x, int y, boolean isNew) {
 
@@ -93,6 +134,18 @@ public class FillForms {
 
 	}
 
+	/**
+	 * Vytvoří nový formulář pro Phase s identifikacemi
+	 * 
+	 * @param item
+	 *            položka plátna
+	 * @param form
+	 *            kořenový formulář
+	 * @param IDs
+	 *            instance identifikaci o prvku
+	 * @return identifikátory
+	 */
+
 	public int[] createPhase(CanvasItem item, BasicForm form, int[] IDs) {
 
 		int index = IdentificatorCreater.getIndex();
@@ -111,6 +164,19 @@ public class FillForms {
 		return IDs;
 	}
 
+	/**
+	 * Vyplní data z formuláře Activity do datových struktur pro Activity
+	 * 
+	 * @param activity
+	 *            instance activity
+	 * @param ID
+	 *            identifikátory dané activity
+	 * @param description
+	 * @param name
+	 * @param x
+	 * @param y
+	 * @param isNew
+	 */
 	public void fillActivity(Activity activity, int[] ID, String description, String name, int x, int y,
 			boolean isNew) {
 
@@ -128,6 +194,17 @@ public class FillForms {
 		}
 	}
 
+	/**
+	 * Vytvoří nový formulář pro Activity s identifikacemi
+	 * 
+	 * @param item
+	 *            položka plátna
+	 * @param form
+	 *            kořenový formulář
+	 * @param IDs
+	 *            instance identifikaci o prvku
+	 * @return identifikátory
+	 */
 	public int[] createActivity(CanvasItem item, BasicForm form, int[] IDs) {
 		int index = IdentificatorCreater.getIndex();
 		Activity activity = (Activity) objF.createActivity();
@@ -144,6 +221,22 @@ public class FillForms {
 		return IDs;
 	}
 
+	/**
+	 * Vyplní informace z formuláře Iteration do datových struktru pro Iteration
+	 * 
+	 * @param iteration
+	 *            instance Iteration
+	 * @param ID
+	 *            identifikátory dané iteration
+	 * @param description
+	 * @param name
+	 * @param startDate
+	 * @param endDate
+	 * @param confIndex
+	 * @param x
+	 * @param y
+	 * @param isNew
+	 */
 	public void fillIteration(Iteration iteration, int[] ID, String description, String name, LocalDate startDate,
 			LocalDate endDate, int confIndex, int x, int y, boolean isNew) {
 
@@ -164,6 +257,17 @@ public class FillForms {
 		}
 	}
 
+	/**
+	 * Vytvoří nový formulář pro Iteration s identifikacemi
+	 * 
+	 * @param item
+	 *            položka plátna
+	 * @param form
+	 *            kořenový formulář
+	 * @param IDs
+	 *            instance identifikaci o prvku
+	 * @return identifikátory
+	 */
 	public int[] createIteration(CanvasItem item, BasicForm form, int[] IDs) {
 		int index = IdentificatorCreater.getIndex();
 		Iteration iteration = (Iteration) objF.createIteration();
@@ -178,6 +282,29 @@ public class FillForms {
 		return IDs;
 	}
 
+	/**
+	 * Vyplní data z formuláře Work Unit do datových struktur pro WorkUnit
+	 * 
+	 * @param workUnit
+	 *            instatnce Work Unit
+	 * @param ID
+	 *            identifikátory daného Work Unitu
+	 * @param description
+	 * @param name
+	 * @param authorIndex
+	 * @param assigneIndex
+	 * @param category
+	 * @param x
+	 * @param y
+	 * @param priorityIndex
+	 * @param severityIndex
+	 * @param typeIndex
+	 * @param resolutionIndex
+	 * @param statusIndex
+	 * @param estimate
+	 * @param isNew
+	 * @param isExist
+	 */
 	public void fillWorkUnit(WorkUnit workUnit, int[] ID, String description, String name, int authorIndex,
 			int assigneIndex, String category, int x, int y, int priorityIndex, int severityIndex, int typeIndex,
 			int resolutionIndex, int statusIndex, String estimate, boolean isNew, boolean isExist) {
@@ -204,6 +331,17 @@ public class FillForms {
 		}
 	}
 
+	/**
+	 * Vytvoří nový formulář pro Work Unit s identifikacemi
+	 * 
+	 * @param item
+	 *            položka plátna
+	 * @param form
+	 *            kořenový formulář
+	 * @param IDs
+	 *            instance identifikaci o prvku
+	 * @return identifikátory
+	 */
 	public int[] createWorkUnit(CanvasItem item, BasicForm form, int[] IDs) {
 		int index = IdentificatorCreater.getIndex();
 		WorkUnit unit = (WorkUnit) objF.createWorkUnit();
@@ -221,6 +359,16 @@ public class FillForms {
 		return IDs;
 	}
 
+	/**
+	 * Vyplní data o Milestone z formuláře do datové struktury pro Milestone
+	 * 
+	 * @param id
+	 *            identifikátor pro výběrové seznamy
+	 * @param name
+	 *            jméno milestone
+	 * @param indexs
+	 *            indexi s criterii
+	 */
 	public void fillMilestone(String id, String name, ObservableList<Integer> indexs) {
 
 		Milestone milestone = (Milestone) objF.createMilestone();
@@ -230,12 +378,20 @@ public class FillForms {
 				milestone.getCriteriaIndexs().add(indexs.get(i) - 1);
 			}
 
-			control.getLists().getMilestoneList().add(milestone);
-			control.getLists().getMilestoneObservable().add(id);
 		}
+		control.getLists().getMilestoneList().add(milestone);
+		control.getLists().getMilestoneObservable().add(id);
 
 	}
 
+	/**
+	 * Vyplní data o Criterion z formuláře do datových struktur pro Criterion
+	 * 
+	 * @param id
+	 *            identifikátor pro výběrové seznamy
+	 * @param name
+	 * @param description
+	 */
 	public void fillCriterion(String id, String name, String description) {
 
 		Criterion criterion = objF.createCriterion();
@@ -247,6 +403,14 @@ public class FillForms {
 
 	}
 
+	/**
+	 * Vyplní data o Config Person Relation z formuláře do datových struktur
+	 * 
+	 * @param id
+	 * @param name
+	 * @param conf
+	 * @param role
+	 */
 	public void fillCPR(String id, String name, int conf, int role) {
 
 		ConfigPersonRelation cpr = objF.createConfigPersonRelation();
@@ -263,9 +427,23 @@ public class FillForms {
 
 	}
 
+	/**
+	 * Vyplní data o Configuration z formuláře do datových struktur
+	 * 
+	 * @param conf
+	 *            instance třídy Configuration
+	 * @param IDs
+	 *            identifikátory dané Configuration
+	 * @param isRelase
+	 * @param Ldate
+	 * @param name
+	 * @param roleIndex
+	 * @param isNew
+	 * @param item
+	 */
 	public void fillConfiguration(Configuration conf, int[] IDs, boolean isRelase, LocalDate Ldate, String name,
 			int roleIndex, boolean isNew, CanvasItem item) {
-System.out.println(roleIndex);
+
 		Configuration config = conf;
 		config.setIsRelease(isRelase);
 		config.setCreate(control.convertDate(Ldate));
@@ -297,6 +475,17 @@ System.out.println(roleIndex);
 
 	}
 
+	/**
+	 * Vytvoří nový formulář pro Configuration s identifikacemi
+	 * 
+	 * @param item
+	 *            položka plátna
+	 * @param form
+	 *            kořenový formulář
+	 * @param IDs
+	 *            instance identifikaci o prvku
+	 * @return identifikátory
+	 */
 	public int[] createConfigruration(CanvasItem item, BasicForm form, int[] IDs) {
 		int index = IdentificatorCreater.getIndex();
 		Configuration conf = (Configuration) objF.createConfiguration();
@@ -312,6 +501,14 @@ System.out.println(roleIndex);
 
 	}
 
+	/**
+	 * Vyplní data o Branch z formuláře do datových struktur
+	 * 
+	 * @param name
+	 * @param id
+	 *            identifikace pro výběrové seznamy
+	 * @param isMain
+	 */
 	public void fillBranch(String name, String id, boolean isMain) {
 
 		Branch branch = (Branch) objF.createBranch();
@@ -320,10 +517,24 @@ System.out.println(roleIndex);
 		branch.setName(formControl.fillTextMapper(name));
 
 		control.getLists().getBranchList().add(branch);
-		control.getLists().getBranchObservable().add(name);
+		control.getLists().getBranchObservable().add(id);
 
 	}
 
+	/**
+	 * Vyplní data o Change z formuláře do datových struktur
+	 * 
+	 * @param change
+	 *            Instance Change
+	 * @param IDs
+	 *            identifikátory dané Change
+	 * @param description
+	 * @param name
+	 * @param isNew
+	 * @param x
+	 * @param y
+	 * @param isExist
+	 */
 	public void fillChange(Change change, int[] IDs, String description, String name, boolean isNew, int x, int y,
 			boolean isExist) {
 
@@ -364,6 +575,24 @@ System.out.println(roleIndex);
 
 	}
 
+	/**
+	 * Vyplní data o Artifact z formuláře do datových struktur
+	 * 
+	 * @param artifact
+	 *            instance artifact
+	 * @param IDs
+	 *            identifikátory daného Artifact
+	 * @param description
+	 * @param name
+	 * @param Ldate
+	 * @param type
+	 * @param roleIndex
+	 * @param x
+	 * @param y
+	 * @param typeIndex
+	 * @param isNew
+	 * @param isExist
+	 */
 	public void fillArtifact(Artifact artifact, int[] IDs, String description, String name, LocalDate Ldate,
 			String type, int roleIndex, int x, int y, int typeIndex, boolean isNew, boolean isExist) {
 
@@ -407,6 +636,15 @@ System.out.println(roleIndex);
 		return IDs;
 	}
 
+	/**
+	 * Vyplní data o Role z formuláře do datových struktur pro Role
+	 * 
+	 * @param id
+	 *            identifikátor pro výběrové seznamy
+	 * @param description
+	 * @param name
+	 * @param type
+	 */
 	public void fillRole(String id, String description, String name, int type) {
 
 		Role role = objF.createRole();
@@ -420,6 +658,15 @@ System.out.println(roleIndex);
 		lists.getRoleList().add(role);
 	}
 
+	/**
+	 * Vyplní data o Role-Type z formuláře do datových struktur o Role-Type
+	 * 
+	 * @param id
+	 *            identifikátor pro výběrový seznam
+	 * @param nameST
+	 * @param classST
+	 * @param superST
+	 */
 	public void fillRoleType(String id, String nameST, String classST, String superST) {
 
 		RoleType type = objF.createRoleType();
@@ -432,6 +679,14 @@ System.out.println(roleIndex);
 
 	}
 
+	/**
+	 * Vyplní data o Tag z formuláře do datových struktur
+	 * 
+	 * @param conf
+	 *            Instance Configuration pro přídání tagů
+	 * @param tags
+	 *            tagy
+	 */
 	public void fillTag(Configuration conf, ObservableList<TagTable> tags) {
 
 		for (int i = 0; i < tags.size(); i++) {
@@ -442,6 +697,15 @@ System.out.println(roleIndex);
 
 	}
 
+	/**
+	 * Vyplní data o Priority z formuláře do datových struktur
+	 * 
+	 * @param id
+	 *            identifikátor pro výběrový seznam
+	 * @param nameST
+	 * @param classST
+	 * @param superST
+	 */
 	public void fillPriorityType(String id, String nameST, String classST, String superST) {
 
 		Priority priority = objF.createPriority();
@@ -455,6 +719,15 @@ System.out.println(roleIndex);
 
 	}
 
+	/**
+	 * Vyplní data o Severity z formuláře do datových struktur
+	 * 
+	 * @param id
+	 *            identifikátor pro výběrový seznam
+	 * @param nameST
+	 * @param classST
+	 * @param superST
+	 */
 	public void fillSeverityType(String id, String nameST, String classST, String superST) {
 		Severity severity = objF.createSeverity();
 
@@ -467,6 +740,15 @@ System.out.println(roleIndex);
 
 	}
 
+	/**
+	 * Vyplní data o Relation z formuláře do datových struktur
+	 * 
+	 * @param id
+	 *            identifikátor pro výběrový seznam
+	 * @param nameST
+	 * @param classST
+	 * @param superST
+	 */
 	public void fillRelationType(String id, String nameST, String classST, String superST) {
 
 		Relation relation = objF.createRelation();
@@ -479,6 +761,15 @@ System.out.println(roleIndex);
 
 	}
 
+	/**
+	 * Vyplní data o Resolution z formuláře do datových struktur
+	 * 
+	 * @param id
+	 *            identifikátor pro výběrový seznam
+	 * @param nameST
+	 * @param classST
+	 * @param superST
+	 */
 	public void fillResolutionType(String id, String nameST, String classST, String superST) {
 
 		Resolution resolution = objF.createResolution();
@@ -491,6 +782,15 @@ System.out.println(roleIndex);
 
 	}
 
+	/**
+	 * Vyplní data o Status z formuláře do datových struktur
+	 * 
+	 * @param id
+	 *            identifikátor pro výběrový seznam
+	 * @param nameST
+	 * @param classST
+	 * @param superST
+	 */
 	public void fillStatusType(String id, String nameST, String classST, String superST) {
 
 		Status status = objF.createStatus();
@@ -503,6 +803,15 @@ System.out.println(roleIndex);
 
 	}
 
+	/**
+	 * Vyplní data o Type z formuláře do datových struktur
+	 * 
+	 * @param id
+	 *            identifikátor pro výběrový seznam
+	 * @param nameST
+	 * @param classST
+	 * @param superST
+	 */
 	public void fillType(String id, String nameST, String classST, String superST) {
 
 		Type type = objF.createType();

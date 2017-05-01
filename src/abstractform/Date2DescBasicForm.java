@@ -14,7 +14,8 @@ import services.Control;
 import services.DeleteControl;
 
 /**
- * @author V�clav
+ * Třída odděděná ze třídy DateDescBasicForm přidávající vstupní pole pro druhý Date
+ * @author Václav Janoch
  *
  */
 public class Date2DescBasicForm extends DateDescBasicForm {
@@ -23,6 +24,7 @@ public class Date2DescBasicForm extends DateDescBasicForm {
 	private DatePicker date2DP;
 
 	/**
+	 * Konstruktor Třídy
 	 * @param item
 	 * @param control
 	 * @param itemArray
@@ -35,6 +37,7 @@ public class Date2DescBasicForm extends DateDescBasicForm {
 	}
 
 	/**
+	 * Přetížený konstruktor
 	 * @param item
 	 * @param control
 	 */
@@ -44,6 +47,7 @@ public class Date2DescBasicForm extends DateDescBasicForm {
 	}
 
 	/**
+	 * Přetížený konstruktor
 	 * @param control
 	 */
 	public Date2DescBasicForm(Control control) {
@@ -51,6 +55,9 @@ public class Date2DescBasicForm extends DateDescBasicForm {
 		fillForm();
 	}
 
+	/**
+	 * Vytvoří vstupní pole pro druhý Date a přidá ho do GridPane
+	 */
 	private void fillForm() {
 
 		date2LB = new Label("Created: ");

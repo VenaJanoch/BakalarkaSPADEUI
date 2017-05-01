@@ -28,7 +28,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 public class SegmentLists {
-
+	/** Globální proměnné třídy **/
 	private ObservableList<String> configObservable;
 	private List<Configuration> configList;
 	private ArrayList<Integer> configFormIndex;
@@ -41,7 +41,7 @@ public class SegmentLists {
 	private List<Role> roleList;
 	private ArrayList<Integer> roleFormIndex;
 
-	//private ObservableList<String> changeObservable;
+	// private ObservableList<String> changeObservable;
 	private List<Change> changeList;
 	private ArrayList<Integer> changeFormIndex;
 
@@ -81,15 +81,23 @@ public class SegmentLists {
 	private ObservableList<String> typeObservable;
 	private List<Type> typeList;
 
-	//private ObservableList<String> configObservable;
 	private List<WorkUnit> workUnitList;
 	private ArrayList<Integer> workUnitFormIndex;
-	
+
 	private List<Link> linksList;
 
 	private Control control;
 	private Project project;
 
+	/**
+	 * Konstruktor třídy Zinicializuje globální proměnné a zavolá metodu pro
+	 * vytvoření seznamů
+	 * 
+	 * @param control
+	 *            instanace třídy Control
+	 * @param project
+	 *            Instance kořenové třídy
+	 */
 	public SegmentLists(Control control, Project project) {
 
 		this.control = control;
@@ -98,21 +106,27 @@ public class SegmentLists {
 
 	}
 
+	/**
+	 * Umožňí vymazání seznamů
+	 * 
+	 * @param project
+	 *            Kořenový element
+	 */
 	public void restartLists(Project project) {
 		this.project = project;
-		
+
 		configList = project.getConfiguration();
 		configFormIndex.clear();
 		configObservable.clear();
 		configObservable.add(" ");
 
 		workUnitFormIndex.clear();
+
 		for (int i = 0; i < project.getWorkUnits().size(); i++) {
-			workUnitFormIndex.add(null);			
+			workUnitFormIndex.add(null);
 		}
 		workUnitList = project.getWorkUnits();
-		
-		
+
 		roleList = project.getRoles();
 		roleFormIndex.clear();
 		roleObservable.clear();
@@ -121,9 +135,10 @@ public class SegmentLists {
 		branchList = project.getBranches();
 		branchFormIndex.clear();
 		branchObservable.clear();
-		
+
 		changeList = project.getChanges();
 		changeFormIndex.clear();
+
 		for (int i = 0; i < project.getChanges().size(); i++) {
 			changeFormIndex.add(null);
 		}
@@ -131,15 +146,15 @@ public class SegmentLists {
 		artifactFormIndex.clear();
 		artifactList = project.getArtifacts();
 		artifactObservable.clear();
-		
+
 		for (int i = 0; i < project.getArtifacts().size(); i++) {
 			artifactFormIndex.add(null);
 		}
-		
+
 		criterionList = project.getCriterions();
 		criterionObservable.clear();
 		criterionObservable.add("");
-		
+
 		milestoneList = project.getMilestones();
 		milestoneObservable.clear();
 		milestoneObservable.add(" ");
@@ -178,6 +193,9 @@ public class SegmentLists {
 
 	}
 
+	/**
+	 * Zinicializuje veškeré seznami pro práci se segmenty a elementy
+	 */
 	public void createLists() {
 
 		linksList = project.getLinks();
@@ -186,24 +204,23 @@ public class SegmentLists {
 		configFormIndex = new ArrayList<>();
 		configObservable = FXCollections.observableArrayList();
 		configObservable.add("");
-		
+
 		workUnitFormIndex = new ArrayList<>();
 		workUnitList = project.getWorkUnits();
-		
+
 		roleList = project.getRoles();
 		roleFormIndex = new ArrayList<>();
 		setRoleObservable(FXCollections.observableArrayList());
 		roleObservable.add("");
-		
+
 		branchList = project.getBranches();
 		branchFormIndex = new ArrayList<>();
 		branchObservable = FXCollections.observableArrayList();
-	
 
 		changeList = project.getChanges();
 		changeFormIndex = new ArrayList<>();
-//		changeObservable = FXCollections.observableArrayList();
-//		changeObservable.add("New");
+		// changeObservable = FXCollections.observableArrayList();
+		// changeObservable.add("New");
 
 		setArtifactList(project.getArtifacts());
 		setArtifactFormIndex(new ArrayList<>());
@@ -213,28 +230,27 @@ public class SegmentLists {
 		criterionFormIndex = new ArrayList<>();
 		criterionObservable = FXCollections.observableArrayList();
 		criterionObservable.add("");
-		
+
 		milestoneList = project.getMilestones();
 		milestoneFormIndex = new ArrayList<>();
 		milestoneObservable = FXCollections.observableArrayList();
 		milestoneObservable.add("");
-		
+
 		setCPRList(project.getCpr());
 		CPRObservable = FXCollections.observableArrayList();
 
 		setRoleTypeList(project.getRoleType());
 		setRoleTypeObservable(FXCollections.observableArrayList());
 		roleTypeObservable.add("");
-		
+
 		priorityTypeList = project.getPriority();
 		priorityTypeObservable = FXCollections.observableArrayList();
 		priorityTypeObservable.add("");
-		
-		
+
 		setSeverityTypeList(project.getSeverity());
 		setSeverityTypeObservable(FXCollections.observableArrayList());
 		severityTypeObservable.add("");
-		
+
 		setRelationTypeList(project.getRelation());
 		relationTypeObservable = FXCollections.observableArrayList();
 		relationTypeObservable.add("");
@@ -244,11 +260,13 @@ public class SegmentLists {
 		statusTypeList = project.getStatus();
 		statusTypeObservable = FXCollections.observableArrayList();
 		statusTypeObservable.add("");
-		
+
 		typeList = project.getTypes();
 		typeObservable = FXCollections.observableArrayList();
 		typeObservable.add("");
 	}
+
+	/** Getrs and Setrs **/
 
 	public ObservableList<String> getConfigObservable() {
 		return configObservable;
@@ -289,7 +307,6 @@ public class SegmentLists {
 	public void setBranchList(List<Branch> list) {
 		this.branchList = list;
 	}
-
 
 	public List<Change> getChangeList() {
 		return changeList;

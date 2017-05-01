@@ -20,6 +20,7 @@ import javafx.scene.paint.Color;
 
 public class ManipulationControl {
 
+	/** Globální proměnné třídy */
 	private Control control;
 	private int[] itemIds;
 	private String itemName;
@@ -33,6 +34,22 @@ public class ManipulationControl {
 	private boolean isCut;
 	private NodeLink link;;
 
+	/**
+	 * Konstruktor třídy Zinicializuje globální proměnné třídy
+	 * 
+	 * @param control
+	 *            instance třídy control
+	 * @param copyForms
+	 *            instrance třídy copyForms
+	 * @param project
+	 *            kořenový element
+	 * @param lists
+	 *            instance třídy SegmentLists
+	 * @param deleteControl
+	 *            instanace třídy DeleteControl
+	 * @param forms
+	 *            instance seznamu všech formulářů
+	 */
 	public ManipulationControl(Control control, FillCopyForms copyForms, Project project, SegmentLists lists,
 			DeleteControl deleteControl, ArrayList<BasicForm> forms) {
 		this.copyForms = copyForms;
@@ -44,6 +61,18 @@ public class ManipulationControl {
 		isCut = false;
 	}
 
+	/**
+	 * Restartuje globální proměnné třídy
+	 * 
+	 * @param copyForms
+	 *            instance třídy CopyForm
+	 * @param project
+	 *            instance kořenového elementu
+	 * @param deleteControl
+	 *            instance třídy DeleteControl
+	 * @param forms
+	 *            instance seznamu formulářů
+	 */
 	public void restart(FillCopyForms copyForms, Project project, DeleteControl deleteControl,
 			ArrayList<BasicForm> forms) {
 		this.copyForms = copyForms;
@@ -53,10 +82,15 @@ public class ManipulationControl {
 
 	}
 
+	/**
+	 * Uloží data o kopírovaném prvku
+	 * 
+	 * @param item
+	 *            instance třídy CanvasItem
+	 */
 	public void copyItem(CanvasItem item) {
-		System.out.println(item.getID() + " click " + clicItem.getID());
+
 		if (clicItem != null) {
-			System.out.println(item.getID());
 			itemIds = item.getIDs();
 			itemName = item.getNameText();
 			type = item.getType();
@@ -64,6 +98,12 @@ public class ManipulationControl {
 
 	}
 
+	/**
+	 * Uloží data o vyjmutém prvku a smaže ho z plátna
+	 * 
+	 * @param item
+	 *            instance třídy CanvasItem
+	 */
 	public void cutItem(CanvasItem item) {
 
 		if (clicItem != null) {
@@ -72,6 +112,12 @@ public class ManipulationControl {
 		}
 	}
 
+	/**
+	 * Smaže prvek ze seznamů a zneviditelní na plátně
+	 * 
+	 * @param item
+	 *            instance třídy CanvasItem
+	 */
 	public void deleteItem(CanvasItem item) {
 		if (clicItem != null) {
 			item.setVisible(false);
@@ -84,23 +130,36 @@ public class ManipulationControl {
 		}
 		clicItem = null;
 
-
 	}
 
+	/**
+	 * Vloží nový pvek na plátno
+	 * 
+	 * @param canvas
+	 *            instance třídy DragAndDrop
+	 */
 	public void pasteItem(DragAndDropCanvas canvas) {
 		if (clicItem != null && itemIds != null) {
 
 			int index = itemIds[0];
-				if (forms.get(index).isNew()) {
-					canvas.addItem(type.name(), 0, 0);
-				} else {
-					canvas.addCopyItem(type, 0, 0);
-				}				
+			if (forms.get(index).isNew()) {
+				canvas.addItem(type.name(), 0, 0);
+			} else {
+				canvas.addCopyItem(type, 0, 0);
 			}
-		
+		}
 
 	}
 
+	/**
+	 * Rozhodne, který segment nebo element se vytvoří
+	 * 
+	 * @param item
+	 *            instance třídy CanvasItem
+	 * @param form
+	 *            instance seznamu formulářů
+	 * @return pole identifikátorů prvku
+	 */
 	public int[] createCopyForm(CanvasItem item, BasicForm form) {
 		SegmentType sType = item.getType();
 
@@ -125,10 +184,6 @@ public class ManipulationControl {
 			WorkUnit unit = lists.getWorkUnitList().get(itemIds[1]);
 			return copyForms.createWorkUnit(item, form, unit, IDs, itemIds);
 
-		// case Configuration:
-		//
-		// return fillFormsXML.createConfigurationFormXML(item, form, IDs);
-		//
 		case Change:
 			Change change = lists.getChangeList().get(itemIds[1]);
 			return copyForms.createChange(item, form, change, IDs, itemIds);
@@ -142,10 +197,21 @@ public class ManipulationControl {
 		}
 	}
 
+	/**
+	 * Metoda pro vytvoření nových Work Unit u nových prvků s daty starých
+	 * 
+	 * @param canvasItem
+	 *            instance třídy CanvasItem
+	 * @param rootForm
+	 *            kořenový formulář
+	 * @return
+	 */
 	public int[] createCopyWorkUnitForm(CanvasItem canvasItem, BasicForm rootForm) {
 		int[] IDs = new int[4];
 		return copyForms.createCopyWorkUnit(canvasItem, rootForm, IDs);
 	}
+
+	/** Getrs and Setrs */
 
 	public CanvasItem getClicItem() {
 		return clicItem;
@@ -161,7 +227,7 @@ public class ManipulationControl {
 
 	public void setLink(NodeLink link) {
 		if (this.link != null) {
-			this.link.getBackgroundPolygon().setStroke(Color.TRANSPARENT);	
+			this.link.getBackgroundPolygon().setStroke(Color.TRANSPARENT);
 		}
 		this.link = link;
 	}

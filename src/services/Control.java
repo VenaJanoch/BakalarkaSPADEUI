@@ -32,6 +32,7 @@ import forms.TypeForm;
 import graphics.CanvasItem;
 import graphics.DragAndDropCanvas;
 import graphics.ItemContexMenu;
+import graphics.MainWindow;
 import graphics.NodeLink;
 import graphics.WorkUnitLink;
 import javafx.geometry.Point2D;
@@ -41,10 +42,11 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 public class Control {
-
+	/** Globální proměnné třídy **/
 	private FileChooser fileChooser;
 	private File file;
 	private boolean firstSave;
+	private boolean isClose;
 
 	private DragAndDropCanvas canvas;
 	private ArrayList<BasicForm> forms;
@@ -69,6 +71,7 @@ public class Control {
 
 	private SegmentLists lists;
 
+	/** Proměnné tabulkových formulářů */
 	private MilestoneForm milestoneForm;
 	private ConfigPersonRelationForm CPRForm;
 	private RoleForm roleForm;
@@ -80,9 +83,17 @@ public class Control {
 	private BranchForm branchFrom;
 	private ConfigurationTableForm confTableForm;
 	private TypeForm typeForm;
+	private MainWindow mainWindow;
 
-	public Control() {
+	/**
+	 * Konstruktor třídy Zinicializuje Globální proměnné třídy
+	 * 
+	 * @param mainWindow
+	 *            MainWindow
+	 */
+	public Control(MainWindow mainWindow) {
 
+		this.mainWindow = mainWindow;
 		procesGener = new ProcessGenerator();
 		objF = new ObjectFactory();
 		project = (Project) objF.createProject();
@@ -94,17 +105,12 @@ public class Control {
 		ProjectForm form111 = new ProjectForm(this, project, canvas);
 		getForms().add(0, form111);
 
-		project.setDescription("Project");
-		project.setName("Project");
-
-		project.setEndDate(convertDate(form111.getDate2DP().getValue()));
-		project.setStartDate(convertDate(form111.getDate2DP().getValue()));
 		lists = new SegmentLists(this, project);
 		formControl = new FormControl(lists);
 
-		linkControl = new LinkControl(this, lists, objF);
-		deleteControl = new DeleteControl(this, lists, project);
 		idCreater = new IdentificatorCreater();
+		linkControl = new LinkControl(this, lists, objF, idCreater);
+		deleteControl = new DeleteControl(this, lists, project);
 
 		fillForms = new FillForms(this, lists, project, forms, objF, idCreater, deleteControl, formControl);
 		fillFormsXML = new FillFormsXML(this, lists, project, forms, fillCopy, idCreater, linkControl, deleteControl,
@@ -129,28 +135,25 @@ public class Control {
 
 	}
 
-	public void closeAllWindows() {
-
-		forms.get(0).close();
-		getMilestoneForm().close();
-		getCPRForm().close();
-		getRoleForm().close();
-		getPriorityForm().close();
-		getSeverityForm().close();
-		getRelationForm().close();
-		getResolutionForm().close();
-		getStatusForm().close();
-		getTypeForm().close();
-		getBranchFrom().close();
-		getConfTableForm().close();
-	}
-
+	/**
+	 * Pomocná metoda pro zviditelnění formuláře pro Project
+	 */
 	public void showProjectForm() {
 
 		forms.get(0).show();
 		forms.get(0).toFront();
 	}
 
+	/**
+	 * Slouží ke kontorle pozice prvku na plátně, při přejetí hranic plátna je
+	 * prvek vrácen na okraj plátna
+	 * 
+	 * @param x
+	 *            souřadnice prvku
+	 * @param y
+	 *            souřadnice prvku
+	 * @return Point2D zkontrolovaná poloha
+	 */
 	public Point2D canvasItemPositionControl(double x, double y) {
 
 		Point2D point = new Point2D(x, y);
@@ -176,6 +179,9 @@ public class Control {
 
 	}
 
+	/**
+	 * Vymazání seznamů a znovu inicializování proměnných
+	 */
 	public void restartControl() {
 
 		procesGener = new ProcessGenerator();
@@ -185,7 +191,6 @@ public class Control {
 
 		forms.clear();
 
-		linkControl.getArrows().clear();
 		canvas.restart();
 
 		configureFileChooser();
@@ -194,6 +199,9 @@ public class Control {
 
 	}
 
+	/**
+	 * Metoda pro konfiguraci FileChooseru
+	 */
 	private void configureFileChooser() {
 
 		fileChooser = new FileChooser();
@@ -201,6 +209,12 @@ public class Control {
 		fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("XML", "*.xml"));
 	}
 
+	/**
+	 * Vypočte polohu šipky ukazující směr propojení Work Unit
+	 * 
+	 * @param endPoint
+	 * @return Double body s polohou
+	 */
 	public Double[] calculateArrowPosition(Point2D endPoint) {
 
 		double x = endPoint.getX() - Constans.ArrowRadius;
@@ -212,6 +226,15 @@ public class Control {
 
 	}
 
+	/**
+	 * Vypočte střed spojovací čáry pro vložení boxu s výběrem relace
+	 * 
+	 * @param startPoint
+	 *            startovní bod spojnice
+	 * @param endPoint
+	 *            koncový bod spojnice
+	 * @return Point2D bod pro box
+	 */
 	public Point2D calculateCenter(Point2D startPoint, Point2D endPoint) {
 
 		Point2D point = null;
@@ -239,6 +262,15 @@ public class Control {
 		return point;
 	}
 
+	/**
+	 * Vypočte souřadnice pro zvýraznění spojnice při kliku na ni
+	 * 
+	 * @param startPoint
+	 *            počáteční bod
+	 * @param endPoint
+	 *            koncový bod
+	 * @return body pro vykreslení zvýraznění
+	 */
 	public Double[] countBackgroundPlygon(Point2D startPoint, Point2D endPoint) {
 
 		Double[] points = new Double[8];
@@ -253,6 +285,13 @@ public class Control {
 		return points;
 	}
 
+	/**
+	 * Pomocná metoda pro určení výčtového typu SegmentType pomocí Stringu
+	 * 
+	 * @param segmentName
+	 *            String s názvem segmentu
+	 * @return SegmentType
+	 */
 	public static SegmentType findSegmentType(String segmentName) {
 
 		for (int i = 0; i < SegmentType.values().length; i++) {
@@ -267,6 +306,15 @@ public class Control {
 
 	}
 
+	/**
+	 * Metoda pro určení metody pro vytvoření konkrétního segmentu nebo elementu
+	 * 
+	 * @param item
+	 *            CavasItem
+	 * @param form
+	 *            kořenový formulář
+	 * @return identifikátory objektu pro CanvasItem
+	 */
 	public int[] createForm(CanvasItem item, BasicForm form) {
 		SegmentType sType = item.getType();
 		int[] IDs = new int[4];
@@ -303,6 +351,16 @@ public class Control {
 		}
 	}
 
+	/**
+	 * Metoda pro určení metody pro vytvoření a nakopírování dat z konkrétního
+	 * segmentu nebo elementu v XML
+	 * 
+	 * @param item
+	 *            CavasItem
+	 * @param form
+	 *            kořenový formulář
+	 * @return identifikátory objektu pro CanvasItem
+	 */
 	public int[] createFormFromXML(CanvasItem item, BasicForm form) {
 		SegmentType sType = item.getType();
 
@@ -345,26 +403,15 @@ public class Control {
 		}
 	}
 
-	public boolean checkConfiguration(String newConfName) {
-
-		for (int i = 0; i < lists.getConfigObservable().size(); i++) {
-
-			if (lists.getConfigObservable().get(i).equals(newConfName)) {
-				return false;
-			}
-
-		}
-
-		return true;
-	}
-
+	/**
+	 * Rozhodne o vyvolání okna pro uložení nebo automatickém uložení do již
+	 * zvoleného souboru
+	 */
 	public void saveFile() {
 
-		if (firstSave) {
-
+		if (file == null || firstSave) {
 			saveAsFile();
 			firstSave = false;
-
 		} else {
 			procesGener.saveProcess(file, project);
 
@@ -372,8 +419,12 @@ public class Control {
 
 	}
 
-	public void saveAsFile() {
+	/**
+	 * Umožní zobrazení systémového okna pro výběr souboru k uložení. Načte
+	 * soubor do globální proměnné file pro další polužití
+	 */
 
+	public void saveAsFile() {
 		fileChooser.setTitle("Save Process");
 
 		file = fileChooser.showSaveDialog(new Stage());
@@ -383,42 +434,64 @@ public class Control {
 		}
 	}
 
+	/**
+	 * Umožní zobrazneí systémového okna pro výběr souboru k načtení XML souboru
+	 * s procesem Zavolá metody pro restartování datových struktur
+	 */
 	public void openFile() {
 
 		fileChooser.setTitle("Open Process");
 
 		file = fileChooser.showOpenDialog(new Stage());
 		if (file != null) {
-			restartControl();
-			project = procesGener.readProcess(file);
-
-			ProjectForm form = new ProjectForm(this, project, canvas);
-			forms.add(0, form);
-
-			lists.restartLists(project);
-
-			linkControl = new LinkControl(this, lists, objF);
-			deleteControl = new DeleteControl(this, lists, project);
-
-			fillForms = new FillForms(this, lists, project, forms, objF, idCreater, deleteControl, formControl);
-			fillCopy = new FillCopyForms(this, getLists(), project, forms, objF, idCreater, deleteControl, formControl);
-			manipulation.restart(fillCopy, project, deleteControl, forms);
-
-			fillFormsXML = new FillFormsXML(this, lists, project, forms, fillCopy, idCreater, linkControl,
-					deleteControl, formControl);
-			fillFormsXML.fillProjectFromXML(form);
-
-			parseProject();
-
+			mainWindow.openFile(file);
 		}
 
 	}
+
+	/**
+	 * Vytvoří nové instance s potřebnými třídamy a restartuje třídu Control
+	 * 
+	 * @param file
+	 */
+	public void openFile(File file) {
+		restartControl();
+		project = procesGener.readProcess(file);
+
+		ProjectForm form = new ProjectForm(this, project, canvas);
+		forms.add(0, form);
+
+		lists.restartLists(project);
+
+		linkControl = new LinkControl(this, lists, objF, idCreater);
+		linkControl.restart();
+		deleteControl = new DeleteControl(this, lists, project);
+
+		fillForms = new FillForms(this, lists, project, forms, objF, idCreater, deleteControl, formControl);
+		fillCopy = new FillCopyForms(this, getLists(), project, forms, objF, idCreater, deleteControl, formControl);
+		manipulation.restart(fillCopy, project, deleteControl, forms);
+
+		fillFormsXML = new FillFormsXML(this, lists, project, forms, fillCopy, idCreater, linkControl, deleteControl,
+				formControl);
+		fillFormsXML.fillProjectFromXML(form);
+
+		parseProject();
+
+	}
+
+	/**
+	 * Pomocná metoda pro validaci souboru
+	 */
 
 	public void validate() {
 
 		procesGener.validate(project);
 
 	}
+
+	/**
+	 * Pomocná metoda pro zpracování segmentů procesu
+	 */
 
 	private void parseProject() {
 
@@ -429,6 +502,14 @@ public class Control {
 		fillFormsXML.createLinks(project.getLinks());
 	}
 
+	/**
+	 * Umožní převedení data ve formátu LocalDate do formátu
+	 * XMLGregorianCalendar pro uložení do XML
+	 * 
+	 * @param Ldate
+	 *            LocalDate
+	 * @return XMLGregorianCalendar
+	 */
 	public XMLGregorianCalendar convertDate(LocalDate Ldate) {
 
 		if (Ldate == null) {
@@ -452,6 +533,14 @@ public class Control {
 		return dateXML;
 	}
 
+	/**
+	 * Umožní převedení data ve formátu XMLGregorianCalendar uloženého v XML do
+	 * formátu LocalDate
+	 * 
+	 * @param xmlDate
+	 *            XMLGregorianCalendar
+	 * @return LocalDate
+	 */
 	public LocalDate convertDateFromXML(XMLGregorianCalendar xmlDate) {
 
 		if (xmlDate == null) {
@@ -609,6 +698,14 @@ public class Control {
 
 	public void setFillCopy(FillCopyForms fillCopy) {
 		this.fillCopy = fillCopy;
+	}
+
+	public boolean isClose() {
+		return isClose;
+	}
+
+	public void setClose(boolean isClose) {
+		this.isClose = isClose;
 	}
 
 }

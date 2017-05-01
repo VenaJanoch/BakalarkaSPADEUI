@@ -16,19 +16,37 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.BorderPane;
 
+/**
+ * Třída sloužící k vytvoření tabulkového formuláře výčtových typů. Odděděná od
+ * třídy TableBasicForm
+ * 
+ * @author Václav Janoch
+ *
+ */
 public class TableClassBasicForm extends TableBasicForm {
-
+	/**
+	 * Globální proměnné třídy
+	 */
 	protected Label classLB;
 	protected Label superLB;
 	private TableView<ClassTable> tableTV;
 
 	private ClassSwitcher switcher;
 	private Control control;
-	
-	
+
 	protected int classIndex;
 	protected int superIndex;
 
+	/**
+	 * Konstruktor třídy Zinicializuje globální proměnné třídy
+	 * 
+	 * @param control
+	 *            Control
+	 * @param deleteControl
+	 *            DeleteControl
+	 * @param idCreator
+	 *            IdentificatorCreater
+	 */
 	public TableClassBasicForm(Control control, DeleteControl deleteControl, IdentificatorCreater idCreator) {
 
 		super(control, deleteControl, idCreator);
@@ -40,12 +58,15 @@ public class TableClassBasicForm extends TableBasicForm {
 		createforms();
 
 	}
-
+	/**
+	 * Vytvoří TableView pro typ ClassTable
+	 * 
+	 */
 	public void createforms() {
 
 		setClassLB(new Label("Class: "));
 		setSuperLB(new Label("Super Class: "));
-	
+
 		tableTV = new TableView<ClassTable>();
 		tableTV.setId("classTable");
 		TableColumn<ClassTable, String> nameColumn = new TableColumn<ClassTable, String>("Name");
@@ -76,6 +97,9 @@ public class TableClassBasicForm extends TableBasicForm {
 
 	}
 
+	/**
+	 * Getrs and Setrs
+	 */
 	public ClassSwitcher getSwitcher() {
 		return switcher;
 	}

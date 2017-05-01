@@ -46,9 +46,9 @@ public class TagForm extends TableBasicForm implements ISegmentTableForm {
 	private TableView<TagTable> tableTV;
 	private TextField tagTF;
 	private Configuration config;
-	
 
-	public TagForm(Configuration configuration, Control control, DeleteControl deleteControl, IdentificatorCreater idCreator) {
+	public TagForm(Configuration configuration, Control control, DeleteControl deleteControl,
+			IdentificatorCreater idCreator) {
 
 		super(control, deleteControl, idCreator);
 		// this.confIDs = confIDs;
@@ -58,8 +58,6 @@ public class TagForm extends TableBasicForm implements ISegmentTableForm {
 		createForm();
 
 	}
-
-	
 
 	@Override
 	public Node getTable() {
@@ -108,7 +106,7 @@ public class TagForm extends TableBasicForm implements ISegmentTableForm {
 			} else {
 				list = Alerts.showDeleteItemTagAlert(getTableTV(), selection);
 				if (list != null) {
-					deleteControl.deleteTag(config ,list);
+					deleteControl.deleteTag(config, list);
 				}
 
 			}
@@ -135,13 +133,8 @@ public class TagForm extends TableBasicForm implements ISegmentTableForm {
 		String tagST = tagTF.getText();
 		String idName = idCreator.createTagID() + "_" + tagST;
 
-		if (tagST.length() == 0) {
-			Alerts.showNoText("Tag");
-			return;
-		}
-
 		TagTable tag = new TagTable(idName);
-		config.getTags().add(tagST);
+		config.getTags().add(formControl.fillTextMapper(tagST));
 		tableTV.getItems().add(tag);
 		tableTV.sort();
 
@@ -165,18 +158,12 @@ public class TagForm extends TableBasicForm implements ISegmentTableForm {
 
 	}
 
-
-
 	public TableView<TagTable> getTableTV() {
 		return tableTV;
 	}
-
-
 
 	public void setTableTV(TableView<TagTable> tableTV) {
 		this.tableTV = tableTV;
 	}
 
-	
-	
 }

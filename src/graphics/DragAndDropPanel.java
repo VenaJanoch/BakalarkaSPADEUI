@@ -16,15 +16,27 @@ import javafx.scene.shape.Line;
 import services.Constans;
 import services.Control;
 import services.SegmentType;
-
+/**
+ * Třída tvořící panel tlačítek 
+ * @author Václav Janoch
+ *
+ */
 public class DragAndDropPanel extends BorderPane {
 
+	/**
+	 * Globální proměnné třídy
+	 */
 	private DragAndDropItem items;
 	private Button[] addButtons;
-
 	private HBox buttonBox;
 	private Control control;
 
+	/**
+	 * Konstruktor třídy
+	 * Zinicializuje globální proměnné třídy
+	 * 
+	 * @param control
+	 */
 	
 	public DragAndDropPanel(Control control) {
 
@@ -51,6 +63,12 @@ public class DragAndDropPanel extends BorderPane {
 
 	}
 
+	/**
+	 * Přetížený konstruktor třídy využívají kořenový formulář do kterého se přidá 
+	 * @param control Control 
+	 * @param form BasicForm 
+	 * @param i int
+	 */
 	public DragAndDropPanel(Control control, BasicForm form, int i) {
 
 		super();
@@ -75,6 +93,9 @@ public class DragAndDropPanel extends BorderPane {
 	}
 	
 	
+	/**
+	 * Pomocná metoda pro vytvoření tlačítek
+	 */
 	public void createButtons() {
 
 		for (int i = 0; i < addButtons.length; i++) {
@@ -83,11 +104,15 @@ public class DragAndDropPanel extends BorderPane {
 		}
 	}
 
+	/**
+	 * Pomocná metoda pro přidání reakce na stisk tlačítka
+	 */
+	
 	public void createAction() {
 		addButtons[0].setOnAction(event -> control.showProjectForm());
 		addButtons[1].setOnAction(event -> {control.getMilestoneForm().show();control.getMilestoneForm().toFront();});
-		addButtons[2].setOnAction(event -> {control.getCPRForm().show(); control.getCPRForm().toFront();});
-		addButtons[3].setOnAction(event -> {control.getRoleForm().show(); control.getRoleForm().toFront();});
+		addButtons[2].setOnAction(event -> {control.getRoleForm().show(); control.getRoleForm().toFront();});
+		addButtons[3].setOnAction(event -> {control.getCPRForm().show(); control.getCPRForm().toFront();});
 		addButtons[4].setOnAction(event -> {control.getPriorityForm().show(); control.getPriorityForm().toFront();});
 		addButtons[5].setOnAction(event -> {control.getSeverityForm().show(); control.getSeverityForm().toFront();});
 		addButtons[6].setOnAction(event -> {control.getRelationForm().show(); control.getRelationForm().toFront();});
@@ -99,6 +124,8 @@ public class DragAndDropPanel extends BorderPane {
 				event -> {control.getConfTableForm().show(); control.getConfTableForm().toFront();});
 	}
 
+	
+	/*** Getrs and Setrs */
 	public DragAndDropItem getItems() {
 		return items;
 	}

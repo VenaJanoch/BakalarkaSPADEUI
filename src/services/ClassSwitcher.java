@@ -1,7 +1,12 @@
 package services;
-
+/**
+ * 
+ * @author Václav Janoch
+ *
+ */
 public class ClassSwitcher {
 
+	/** Globální proměnné třídy */
 	private Control control;
 
 	public ClassSwitcher(Control control) {
@@ -9,6 +14,12 @@ public class ClassSwitcher {
 
 	}
 
+	/**
+	 * Rozhodovací metoda pro mapování Role Class na Super Class
+	 * 
+	 * @param classIndex
+	 * @return Super Class index
+	 */
 	public int roleClassToSupperClass(int classIndex) {
 
 		if (classIndex == Constans.roleTypeManagementClass) {
@@ -34,6 +45,12 @@ public class ClassSwitcher {
 
 	}
 
+	/**
+	 * Rozhodovací metoda pro mapování Priority Class na Super Class
+	 * 
+	 * @param classIndex
+	 * @return Super Class index
+	 */
 	public int priorityClassToSupperClass(int classIndex) {
 
 		if (classIndex == Constans.priorityTypeNormalClass) {
@@ -58,6 +75,12 @@ public class ClassSwitcher {
 		}
 	}
 
+	/**
+	 * Rozhodovací metoda pro mapování Relation Class na Super Class
+	 * 
+	 * @param classIndex
+	 * @return Super Class index
+	 */
 	public int relationClassToSupperClass(int classIndex) {
 
 		if (classIndex == Constans.relationTypeGeneralClass) {
@@ -88,6 +111,12 @@ public class ClassSwitcher {
 		}
 	}
 
+	/**
+	 * Rozhodovací metoda pro mapování Resolution Class na Super Class
+	 * 
+	 * @param classIndex
+	 * @return Super Class index
+	 */
 	public int resolutionClassToSupperClass(int classIndex) {
 		if (classIndex <= Constans.resolutionTypeFinishedClass && classIndex > 0) {
 
@@ -102,6 +131,12 @@ public class ClassSwitcher {
 		}
 	}
 
+	/**
+	 * Rozhodovací metoda pro mapování Status Class na Super Class
+	 * 
+	 * @param classIndex
+	 * @return Super Class index
+	 */
 	public int statusClassToSupperClass(int classIndex) {
 		if (classIndex >= 1 && classIndex <= Constans.statusTypeOpenClass) {
 
@@ -115,16 +150,22 @@ public class ClassSwitcher {
 		}
 	}
 
+	/**
+	 * Rozhodovací metoda pro mapování Type Class na Super Class
+	 * 
+	 * @param classIndex
+	 * @return Super Class index
+	 */
 	public int typeClassToSupperClass(int classIndex) {
 		if (classIndex >= 1 && classIndex <= Constans.typeEditionClass) {
 
 			return Constans.typeEditionSuperClass;
 
-		}else if (classIndex == Constans.typeCreationClass) {
+		} else if (classIndex == Constans.typeCreationClass) {
 
 			return Constans.typeCreationSuperClass;
 
-		}else if (classIndex == 0) {
+		} else if (classIndex == 0) {
 
 			return -1;
 

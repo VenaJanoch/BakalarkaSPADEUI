@@ -131,8 +131,7 @@ public class ConfigurationForm extends BasicForm implements ISegmentForm {
 
 		createdLB = new Label("Created: ");
 		createdDP = new DatePicker();
-		createdDP.setValue(LocalDate.now());
-
+		
 		isReleaseLB = new Label("Release: ");
 		rbNo = new RadioButton("No");
 		rbNo.setToggleGroup(group);

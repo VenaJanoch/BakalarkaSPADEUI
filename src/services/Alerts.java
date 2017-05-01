@@ -22,20 +22,9 @@ import tables.TagTable;
 
 public class Alerts {
 
-	public Alerts() {
-
-	}
-
-	public static void showNoNameAlert() {
-
-		Alert alert = new Alert(AlertType.WARNING);
-		alert.setTitle("Insert error");
-		alert.setHeaderText("No name is provided!");
-		alert.setContentText("Please provide a name in corresponding filed!");
-		alert.showAndWait();
-
-	}
-
+	/**
+	 * Alert pro informování o špatně vyplněném EstimatedTime
+	 */
 	public static void showWrongEstimatedTimeAlert() {
 
 		Alert alert = new Alert(AlertType.ERROR);
@@ -46,6 +35,10 @@ public class Alerts {
 
 	}
 
+	/**
+	 * Alert s informací o chybě při validaci procesu
+	 * @param error část chybového hlášení
+	 */
 	public static void showValidationError(String error) {
 
 		Alert alert = new Alert(AlertType.ERROR);
@@ -57,6 +50,12 @@ public class Alerts {
 
 	}
 
+	/**
+	 * Alert s informací o nalezené chybě v procesu, při ukládání, 
+	 * Umožňuje výběr uložení s chybou nebo neuložení
+	 * @param error část chybového hlášení
+	 * @return boolean info zvolené volbě
+	 */
 	public static boolean showValidationErrorSave(String error) {
 
 		Alert alert = new Alert(AlertType.ERROR);
@@ -78,6 +77,9 @@ public class Alerts {
 
 	}
 
+	/**
+	 * Alert s informací o úspěšné validaci
+	 */
 	public static void showValidationOK() {
 
 		Alert alert = new Alert(AlertType.INFORMATION);
@@ -89,6 +91,9 @@ public class Alerts {
 
 	}
 
+	/**
+	 * Alert s informací o nevybrání, žádné položky z tabulky pro smazání
+	 */
 	public static void showNoItemsDeleteAlert() {
 		Alert alert = new Alert(AlertType.WARNING);
 		alert.setTitle("Deleting items");
@@ -97,6 +102,12 @@ public class Alerts {
 		alert.showAndWait();
 	}
 
+	/**
+	 * Alert s infomací o výběru prvků tabulky pro smazání a možností zrušení akce. 
+	 * @param table Tabulka s prvky
+	 * @param selection vybrané prvky
+	 * @return smazané prvky
+	 */
 	public static ObservableList<ClassTable> showDeleteItemAlert(TableView table, ObservableList selection) {
 		List<ClassTable> list = null;
 		Alert alert = new Alert(AlertType.CONFIRMATION);
@@ -118,6 +129,12 @@ public class Alerts {
 
 	}
 	
+	/**
+	 * Alert s infomací o výběru prvků tabulky Configurací pro smazání a možností zrušení akce. 
+	 * @param table Tabulka s prvky
+	 * @param selection vybrané prvky
+	 * @return smazané prvky
+	 */
 	public static ObservableList<ConfigTable> showDeleteItemConfigAlert(TableView<ConfigTable> table, ObservableList<ConfigTable> selection) {
 		List<ConfigTable> list = null;
 		Alert alert = new Alert(AlertType.CONFIRMATION);
@@ -139,6 +156,12 @@ public class Alerts {
 
 	}
 	
+	/**
+	 * Alert s infomací o výběru prvků z tabulky Criterii pro smazání a možností zrušení akce. 
+	 * @param table Tabulka s prvky
+	 * @param selection vybrané prvky
+	 * @return smazané prvky
+	 */
 	public static ObservableList<CriterionTable> showDeleteItemCriterionAlert(TableView<CriterionTable> table,
 			ObservableList<CriterionTable> selection) {
 		
@@ -162,6 +185,12 @@ public class Alerts {
 
 	}
 	
+	/**
+	 * Alert s infomací o výběru prvků z tabulky Milestone pro smazání a možností zrušení akce. 
+	 * @param table Tabulka s prvky
+	 * @param selection vybrané prvky
+	 * @return smazané prvky
+	 */
 	public static ObservableList<MilestoneTable> showDeleteItemMilestoneAlert(TableView<MilestoneTable> table,
 			ObservableList<MilestoneTable> selection) {
 		
@@ -185,6 +214,12 @@ public class Alerts {
 
 	}
 
+	/**
+	 * Alert s infomací o výběru prvků z tabulky CPR pro smazání a možností zrušení akce. 
+	 * @param table Tabulka s prvky
+	 * @param selection vybrané prvky
+	 * @return smazané prvky
+	 */
 	public static ObservableList<CPRTable> showDeleteItemCPRAlert(TableView<CPRTable> table,
 			ObservableList<CPRTable> selection) {
 		
@@ -208,6 +243,12 @@ public class Alerts {
 
 	}
 
+	/**
+	 * Alert s infomací o výběru prvků z tabulky Branch pro smazání a možností zrušení akce. 
+	 * @param table Tabulka s prvky
+	 * @param selection vybrané prvky
+	 * @return smazané prvky
+	 */
 	public static ObservableList<BranchTable> showDeleteItemBranchAlert(TableView<BranchTable> table,
 			ObservableList<BranchTable> selection) {
 
@@ -230,6 +271,12 @@ public class Alerts {
 		return selection;
 	}
 	
+	/**
+	 * Alert s infomací o výběru prvků z tabulky Role pro smazání a možností zrušení akce. 
+	 * @param table Tabulka s prvky
+	 * @param selection vybrané prvky
+	 * @return smazané prvky
+	 */
 	public static ObservableList<RoleTable> showDeleteItemRoleAlert(TableView<RoleTable> table,
 			ObservableList<RoleTable> selection) {
 
@@ -253,6 +300,12 @@ public class Alerts {
 		return selection;
 	}
 
+	/**
+	 * Alert s infomací o výběru prvků z tabulky Tag pro smazání a možností zrušení akce. 
+	 * @param table Tabulka s prvky
+	 * @param selection vybrané prvky
+	 * @return smazané prvky
+	 */
 	public static ObservableList<TagTable> showDeleteItemTagAlert(TableView<TagTable> table, ObservableList selection) {
 
 		List<TagTable> list = null;
@@ -274,15 +327,12 @@ public class Alerts {
 		return selection;
 	}
 
-	public static void showNoText(String name) {
-		Alert alert = new Alert(AlertType.WARNING);
-		alert.setTitle("Insert error");
-		alert.setHeaderText("No " + name + " is provided!");
-		alert.setContentText("Please provide a " + name + " in corresponding field or create new segment!");
-		alert.showAndWait();
-
-	}
-
+	/**
+	 * Alert s infomací o zavření formuláře bez uložení a možnostmi uložení formuláře, případně zrušení akce 
+	 * @param table Tabulka s prvky
+	 * @param selection vybrané prvky
+	 * @return smazané prvky
+	 */
 	public static int showSaveSegment() {
 		Alert alert = new Alert(AlertType.WARNING);
 		alert.setTitle("Closing without save");
@@ -306,6 +356,10 @@ public class Alerts {
 		
 	}
 
+	/**
+	 * Alert s infomací o ukončení aplikace s možností uložení procesu, přídně zrušením akce
+	 * @param control Intance třídy Control
+	 */
 	public static int showCloseApp(Control control) {
 		Alert alert = new Alert(AlertType.WARNING);
 		alert.setTitle("Closing APP");
@@ -329,15 +383,24 @@ public class Alerts {
 		return -1;
 	}
 
+	/**
+	 * Alert s informací o špatně vkládaném prvku na plátno
+	 * @param segment SegmentType
+	 * @param canvasType CanvasType
+	 */
 	public static void badCopyItem(SegmentType segment, CanvasType canvasType) {
 		Alert alert = new Alert(AlertType.ERROR);
 		alert.setTitle("Copy error");
 		alert.setHeaderText("Bad segment " + segment + " for this type canvas !");
-		alert.setContentText("Please paste item in corresponding segment!");
+		alert.setContentText("Please paste item in corresponding canvas!");
 		alert.showAndWait();
 		
 	}
 
+	/**
+	 * Alert s informací o pokusu propojení nevyplněného Work Unitu
+	 */
+	
 	public static void showNoWorkUnit() {
 		Alert alert = new Alert(AlertType.ERROR);
 		alert.setTitle("Link error");

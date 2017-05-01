@@ -1,8 +1,8 @@
 package services;
 
 public class IdentificatorCreater {
-
-	private static int linesID = -1;
+	/** Globální proměnné třídy **/
+	private int linesID = -1;
 	private int phaseID = -1;
 	private int iterationID = -1;
 	private int activityID = -1;
@@ -28,6 +28,10 @@ public class IdentificatorCreater {
 
 	private static int index;
 
+	/**
+	 * Metody pro inkrementaci počtu daného prvku
+	 */
+	
 	public int createRoleTypeID() {
 
 		roleTypeID++;
@@ -170,7 +174,7 @@ public class IdentificatorCreater {
 		setIndex(1);
 	}
 
-	public static int createLineID() {
+	public int createLineID() {
 
 		linesID++;
 

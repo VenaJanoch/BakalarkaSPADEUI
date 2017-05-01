@@ -39,8 +39,15 @@ import services.FormControl;
 import services.ManipulationControl;
 import services.SegmentType;
 
+/**
+ * Třída reprezentujcí kreslící plátno
+ * 
+ * @author Václav Janoch
+ *
+ */
 public class DragAndDropCanvas extends ScrollPane {
 
+	/** Globální proměnné třídy **/
 	private Scene mScene;
 	private Control control;
 	private BasicForm form;
@@ -53,6 +60,19 @@ public class DragAndDropCanvas extends ScrollPane {
 	private boolean arrow;
 	private boolean startArrow;
 
+	/**
+	 * Konstruktor třídy Zinicializuje Globální proměnné třídy a nastaví reakce
+	 * na detekci drag and drop
+	 * 
+	 * @param control
+	 *            Control
+	 * @param indexForm
+	 *            int
+	 * @param contexMenu
+	 *            ItemContexMenu
+	 * @param canvasType
+	 *            CanvasType
+	 */
 	public DragAndDropCanvas(Control control, int indexForm, ItemContexMenu contexMenu, CanvasType canvasType) {
 
 		super();
@@ -148,6 +168,10 @@ public class DragAndDropCanvas extends ScrollPane {
 
 	}
 
+	/**
+	 * Metoda rozhodující o aktuálním modu
+	 */
+
 	public boolean changeArrow() {
 
 		if (arrow) {
@@ -162,20 +186,35 @@ public class DragAndDropCanvas extends ScrollPane {
 
 	}
 
+	/**
+	 * Metoda pro reakci na klávesouvou zkratku pro vložení prvku
+	 */
+
 	private void pasteItem() {
 		control.getManipulation().pasteItem(this);
 	}
 
+	/**
+	 * Metoda pro reakci na klávesouvou zkratku pro kopírování prvku
+	 */
 	private void copyItem() {
 		CanvasItem item = control.getManipulation().getClicItem();
 		control.getManipulation().copyItem(item);
 	}
 
+	/**
+	 * Metoda pro reakci na klávesouvou zkratku pro vyjmutí prvku
+	 */
 	private void cutItem() {
 		CanvasItem item = control.getManipulation().getClicItem();
 		control.getManipulation().cutItem(item);
 	}
 
+	/**
+	 * Kontrolní metoda pro kontrolu dvojkliku
+	 * 
+	 * @param t
+	 */
 	public void setClicFromDragPoint(MouseEvent t) {
 
 		if (t.getButton().equals(MouseButton.SECONDARY)) {
@@ -186,6 +225,10 @@ public class DragAndDropCanvas extends ScrollPane {
 
 	}
 
+	/**
+	 * MouseEvent Handler pro reakci na stisknutí tlačítka myši a zavolání
+	 * kontrolní metody pro vyvolání kontextového okna
+	 */
 	EventHandler<MouseEvent> OnMousePressedEventHandler = new EventHandler<MouseEvent>() {
 
 		@Override
@@ -194,10 +237,15 @@ public class DragAndDropCanvas extends ScrollPane {
 		}
 	};
 
-	public void changePosition(double position) {
-		this.setLayoutY(position);
-	}
-
+	/**
+	 * Metoda pro přidání nového prvku na plátno
+	 * 
+	 * @param segment
+	 *            Sting
+	 * @param x
+	 * @param y
+	 * @return CanvasItem
+	 */
 	public CanvasItem addItem(String segment, double x, double y) {
 
 		SegmentType type = Control.findSegmentType(segment);
@@ -208,6 +256,15 @@ public class DragAndDropCanvas extends ScrollPane {
 
 	}
 
+	/**
+	 * Metoda pro přídání z kopírovaného prvku na plátno
+	 * 
+	 * @param segment
+	 *            SegmentType
+	 * @param x
+	 * @param y
+	 * @return CanvasItem
+	 */
 	public CanvasItem addCopyItem(SegmentType segment, double x, double y) {
 		if (FormControl.copyControl(segment, canvasType)) {
 
@@ -223,6 +280,9 @@ public class DragAndDropCanvas extends ScrollPane {
 
 	}
 
+	/**
+	 * Restartuje plátno. Vymaže všechny prvky plátna
+	 */
 	public void restart() {
 
 		setArrow(false);
@@ -231,6 +291,7 @@ public class DragAndDropCanvas extends ScrollPane {
 		canvas.getChildren().clear();
 	}
 
+	/** Getrs and Setrs **/
 	public Scene getMScene() {
 		return mScene;
 	}

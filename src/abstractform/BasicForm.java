@@ -43,8 +43,17 @@ import services.DeleteControl;
 import services.FormControl;
 import services.IdentificatorCreater;
 
+/**
+ * Absraktní třídy pro formuláře volané z kreslícího plátna
+ * 
+ * @author Václav Janoch
+ *
+ */
 public abstract class BasicForm extends Stage {
 
+	/**
+	 * Globální proměnné třídy
+	 */
 	private BorderPane mainPanel;
 	protected Scene scena;
 	private Alerts alerts;
@@ -85,7 +94,22 @@ public abstract class BasicForm extends Stage {
 	private String type;
 	private boolean isNew;
 	private int indexForm;
-	
+
+	/**
+	 * Konstruktor třídy pro formuláře s vlastním plátnem Zinicializuje globální
+	 * proměnné třídy
+	 * 
+	 * @param item
+	 *            CanvasItem
+	 * @param control
+	 *            Control
+	 * @param itemArray
+	 * @param indexForm
+	 * @param deleteControl
+	 *            DeleteControl
+	 * @param canvasType
+	 *            CanvasType
+	 */
 	public BasicForm(CanvasItem item, Control control, int[] itemArray, int indexForm, DeleteControl deleteControl,
 			CanvasType canvasType) {
 
@@ -109,6 +133,17 @@ public abstract class BasicForm extends Stage {
 
 	}
 
+	/**
+	 * Konstruktor třídy pro prvky bez plátna
+	 * 
+	 * @param item
+	 *            CanvasItem
+	 * @param control
+	 *            Control
+	 * @param deleteControl
+	 *            DeleteControl
+	 */
+
 	public BasicForm(CanvasItem item, Control control, DeleteControl deleteControl) {
 
 		super();
@@ -126,6 +161,12 @@ public abstract class BasicForm extends Stage {
 
 	}
 
+	/**
+	 * Konstruktor pro projektový formulář
+	 * 
+	 * @param control
+	 *            Control
+	 */
 	public BasicForm(Control control) {
 		super();
 		type = "Project";
@@ -142,6 +183,11 @@ public abstract class BasicForm extends Stage {
 
 	}
 
+	/**
+	 * Vytvoří scénu s formulářem
+	 * 
+	 * @return Scene
+	 */
 	private Scene creatSceneCanvas() {
 
 		scena = new Scene(createPanelCanvas());
@@ -149,6 +195,11 @@ public abstract class BasicForm extends Stage {
 		return scena;
 	}
 
+	/**
+	 * Vytvoří scénu pro formulář projektu
+	 * 
+	 * @return Scene
+	 */
 	private Scene creatSceneProject() {
 
 		scena = new Scene(creatPanelProject());
@@ -156,6 +207,11 @@ public abstract class BasicForm extends Stage {
 		return scena;
 	}
 
+	/**
+	 * Vytvoří rozložení prvků pro plátno ve formuláři
+	 * 
+	 * @return BorderPane
+	 */
 	private Parent createPanelCanvas() {
 		creatPanelProject();
 		dragBox.setTop(dgItem);
@@ -166,8 +222,13 @@ public abstract class BasicForm extends Stage {
 		return mainPanel;
 	}
 
+	/**
+	 * Vytvoří a rozloží základní prvky ve formuláři
+	 * 
+	 * @return BorderPane
+	 */
 	private Parent creatPanelProject() {
-		
+
 		mainPanel.setPadding(new Insets(5));
 		buttonBox = new HBox(5);
 		mainPanel.setMinSize(Constans.formWidth, Constans.formHeight);
@@ -178,18 +239,18 @@ public abstract class BasicForm extends Stage {
 		nameLB = new Label("Name: ");
 		nameTF = new TextField();
 		nameTF.setId("formName");
-		
+
 		submitButton = new Button("OK");
 		submitButton.setId("formSubmit");
 		nameLB.setAlignment(Pos.CENTER_RIGHT);
-		
+
 		formName = new Label();
 		formName.setAlignment(Pos.CENTER);
 		formName.setFont(Font.font(25));
 		formName.setId("formID");
 		mainPanel.setAlignment(formName, Pos.CENTER);
 		mainPanel.setTop(formName);
-		
+
 		HBox nameBox = new HBox(5);
 		nameBox.getChildren().addAll(nameLB, nameTF);
 
@@ -207,9 +268,14 @@ public abstract class BasicForm extends Stage {
 		return mainPanel;
 	}
 
+	/**
+	 * Pomocná metoda pro smazání prvku z plátna
+	 * 
+	 * @param i
+	 *            Identifikátory
+	 */
 	public void deleteItem(int[] i) {
-		// TODO Auto-generated method stub
-		System.out.println("BasicForm");
+
 	}
 
 	@Override
@@ -220,9 +286,6 @@ public abstract class BasicForm extends Stage {
 
 	/** Getrs and Setrs **/
 
-	
-	
-	
 	public BorderPane getMainPanel() {
 		return mainPanel;
 	}

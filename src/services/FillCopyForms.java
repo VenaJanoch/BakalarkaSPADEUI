@@ -47,6 +47,7 @@ import tables.TagTable;
 
 public class FillCopyForms {
 
+	/** Globální proměnné třídy **/
 	private Control control;
 
 	private ArrayList<BasicForm> forms;
@@ -57,8 +58,27 @@ public class FillCopyForms {
 	private FormControl formControl;
 	private int oldUnit;
 
+	/**
+	 * Konstruktor třídy Zinicializuje globální proměnné třídy
+	 * 
+	 * @param control
+	 *            instance třídy Control
+	 * @param lists
+	 *            instance třídy SegmentLists
+	 * @param project
+	 *            kořenový element
+	 * @param forms
+	 *            seznam formulářů
+	 * @param idCreator
+	 *            instance třídy IdentificatorCreater
+	 * @param deleteControl
+	 *            instance třídy DeleteControl
+	 * @param formControl
+	 *            instace třídy FormControl
+	 */
 	public FillCopyForms(Control control, SegmentLists lists, Project project, ArrayList<BasicForm> forms,
-			ObjectFactory objFac, IdentificatorCreater idCreator, DeleteControl deleteControl, FormControl formControl) {
+			ObjectFactory objFac, IdentificatorCreater idCreator, DeleteControl deleteControl,
+			FormControl formControl) {
 
 		this.control = control;
 		this.forms = forms;
@@ -69,6 +89,17 @@ public class FillCopyForms {
 		this.formControl = formControl;
 	}
 
+	/**
+	 * Vyplní data z kopírované Phase do nové Phase
+	 * 
+	 * @param form
+	 *            kořenový formulář
+	 * @param newIDs
+	 *            nové identifikátory
+	 * @param copyPhase
+	 * @param oldIDs
+	 * @return
+	 */
 	public Phase fillPhase(BasicForm form, int[] newIDs, Phase copyPhase, int[] oldIDs) {
 
 		Phase phase = (Phase) objF.createPhase();
@@ -105,6 +136,13 @@ public class FillCopyForms {
 		return IDs;
 	}
 
+	/**
+	 * Vyplní vytvoří nový Work unit v nově vytvářeném formuláři a přídá ho na
+	 * plátno
+	 * 
+	 * @param form
+	 * @param units
+	 */
 	public void fillWorkUnitFromCopy(BasicForm form, List<Integer> units) {
 
 		for (int i = 0; i < units.size(); i++) {
@@ -124,6 +162,16 @@ public class FillCopyForms {
 
 	}
 
+	/**
+	 * Vyplní data z kopírované Activity do nové Activity
+	 * 
+	 * @param form
+	 *            kořenový formulář
+	 * @param newIDs
+	 * @param copyActivity
+	 * @param oldIDs
+	 * @return
+	 */
 	public Activity fillActivity(BasicForm form, int[] newIDs, Activity copyActivity, int[] oldIDs) {
 
 		Activity activity = (Activity) objF.createActivity();
@@ -156,6 +204,15 @@ public class FillCopyForms {
 		return IDs;
 	}
 
+	/**
+	 * Vyplní data z kopírované Iteratio do nové Iteration
+	 * 
+	 * @param form
+	 * @param newIDs
+	 * @param oldIteration
+	 * @param oldIDs
+	 * @return
+	 */
 	public Iteration fillIteration(BasicForm form, int[] newIDs, Iteration oldIteration, int[] oldIDs) {
 
 		Iteration iteration = (Iteration) objF.createIteration();
@@ -188,6 +245,12 @@ public class FillCopyForms {
 		return IDs;
 	}
 
+	/**
+	 * Vyplní data z kopírovaného Work Unintu do nového Work Unitu
+	 * 
+	 * @param index
+	 * @return
+	 */
 	public int fillWorkUnit(int index) {
 
 		WorkUnit workUnit = (WorkUnit) objF.createWorkUnit();
@@ -212,6 +275,16 @@ public class FillCopyForms {
 
 	}
 
+	/**
+	 * Vytvoří formulář pro Work Unit spolu s novou instancí Work Unit a
+	 * nakopíruje data z formuláře
+	 * 
+	 * @param item
+	 *            CanvasItem
+	 * @param form
+	 * @param IDs
+	 * @return
+	 */
 	public int[] createCopyWorkUnit(CanvasItem item, BasicForm form, int[] IDs) {
 		int index = IdentificatorCreater.getIndex();
 		IDs[0] = index;
@@ -223,7 +296,6 @@ public class FillCopyForms {
 		WorkUnitForm unitForm = new WorkUnitForm(item, control, unit, deleteControl);
 
 		forms.add(index, copyFormWorkUnit(unit, unitForm, item));
-		// lists.getWorkUnitList().add(unit);
 		lists.getWorkUnitFormIndex().add(index);
 		form.getWorkUnitArray().add(IDs[2], IDs[1]);
 		index++;
@@ -231,6 +303,17 @@ public class FillCopyForms {
 		return IDs;
 	}
 
+	/**
+	 * Vytvoří nový formulář pro Work Unit spolu s novou instancí WorkUnit a
+	 * zavolá metodu pro vyplnění dat
+	 * 
+	 * @param item
+	 * @param form
+	 * @param oldUnit
+	 * @param IDs
+	 * @param oldIDs
+	 * @return
+	 */
 	public int[] createWorkUnit(CanvasItem item, BasicForm form, WorkUnit oldUnit, int[] IDs, int[] oldIDs) {
 		int index = IdentificatorCreater.getIndex();
 
@@ -243,7 +326,6 @@ public class FillCopyForms {
 		IDs[2] = form.getIdCreater().createWorkUnitID();
 		IDs[3] = form.getFormID();
 
-		// lists.getWorkUnitList().add(unit);
 		lists.getWorkUnitFormIndex().add(index);
 		form.getWorkUnitArray().add(IDs[2], IDs[1]);
 
@@ -252,6 +334,12 @@ public class FillCopyForms {
 		return IDs;
 	}
 
+	/**
+	 * Vyplní data z kopírované Change do nové
+	 * 
+	 * @param oldChange
+	 * @return change nová instance Change
+	 */
 	public Change fillChange(Change oldChange) {
 
 		Change change = (Change) objF.createChange();
@@ -266,6 +354,17 @@ public class FillCopyForms {
 
 	}
 
+	/**
+	 * Vytvoří formulář pro Change s polu s novou instancí Change, přidá je do
+	 * seznamů a nakopíruje data
+	 * 
+	 * @param item
+	 * @param form
+	 * @param oldChange
+	 * @param IDs
+	 * @param oldIDs
+	 * @return
+	 */
 	public int[] createChange(CanvasItem item, BasicForm form, Change oldChange, int[] IDs, int[] oldIDs) {
 		int index = IdentificatorCreater.getIndex();
 		Change change = fillChange(oldChange);
@@ -287,6 +386,12 @@ public class FillCopyForms {
 
 	}
 
+	/**
+	 * Vyplní data z kopírovanéh Artifact do nového
+	 * 
+	 * @param oldArtifact
+	 * @return Artifact nový Artifact s vyplněnými daty
+	 */
 	public Artifact fillArtifact(Artifact oldArtifact) {
 
 		Artifact artifact = objF.createArtifact();
@@ -303,6 +408,17 @@ public class FillCopyForms {
 		return artifact;
 	}
 
+	/**
+	 * Vytvoří formulář pro Artifact spolu s novou instancí Artifact, přídá je
+	 * do seznamů a zavolá metodu pro nakopírování dat
+	 * 
+	 * @param item
+	 * @param form
+	 * @param oldArtifact
+	 * @param IDs
+	 * @param oldIDs
+	 * @return
+	 */
 	public int[] createArtifact(CanvasItem item, BasicForm form, Artifact oldArtifact, int[] IDs, int[] oldIDs) {
 		int index = IdentificatorCreater.getIndex();
 		Artifact artifact = fillArtifact(oldArtifact);
@@ -321,6 +437,15 @@ public class FillCopyForms {
 		return IDs;
 	}
 
+	/**
+	 * Pomocná metoda pro kopírování dat z Phase do PhaseForm
+	 * 
+	 * @param phase
+	 *            instance Phase
+	 * @param phaseForm
+	 *            instance PhaseForm
+	 * @return PhaseForm
+	 */
 	public PhaseForm copyFormPhase(Phase phase, PhaseForm phaseForm) {
 
 		phaseForm.getDescriptionTF().setText(phase.getDescription());
@@ -329,16 +454,26 @@ public class FillCopyForms {
 		phaseForm.getDateDP().setValue(control.convertDateFromXML(phase.getEndDate()));
 		if (phase.getMilestoneIndex() != null) {
 			phaseForm.getMilestoneCB()
-					.setValue(control.getLists().getMilestoneObservable().get(phase.getMilestoneIndex()+1));
+					.setValue(control.getLists().getMilestoneObservable().get(phase.getMilestoneIndex() + 1));
 		}
 		if (phase.getConfiguration() != null) {
-			phaseForm.getConfigCB().setValue(control.getLists().getConfigObservable().get(phase.getConfiguration()+1));
+			phaseForm.getConfigCB()
+					.setValue(control.getLists().getConfigObservable().get(phase.getConfiguration() + 1));
 		}
 
 		phaseForm.setNew(false);
 		return phaseForm;
 	}
 
+	/**
+	 * Pomocná metoda pro nakopírování dat z Activity do ActivityForm
+	 * 
+	 * @param activity
+	 *            Activity
+	 * @param form
+	 *            ActivityForm
+	 * @return ActivityForm
+	 */
 	public ActivityForm copyFormActivity(Activity activity, ActivityForm form) {
 
 		form.getDescriptionTF().setText(activity.getDescription());
@@ -349,6 +484,15 @@ public class FillCopyForms {
 
 	}
 
+	/**
+	 * Pomocná metoda pro nakopírování dat z Iteration do IterationForm
+	 * 
+	 * @param iteration
+	 *            Iteration
+	 * @param form
+	 *            IterationForm
+	 * @return IterationForm
+	 */
 	public IterationForm copyFormIteration(Iteration iteration, IterationForm form) {
 
 		form.getDescriptionTF().setText(iteration.getDescription());
@@ -356,9 +500,9 @@ public class FillCopyForms {
 		form.setName(iteration.getName());
 
 		if (iteration.getConfiguration() != null) {
-			form.getConfigCB().setValue(control.getLists().getConfigObservable().get(iteration.getConfiguration()+1));
+			form.getConfigCB().setValue(control.getLists().getConfigObservable().get(iteration.getConfiguration() + 1));
 		}
-		
+
 		form.getDateDP().setValue(control.convertDateFromXML(iteration.getEndDate()));
 		form.getDate2DP().setValue(control.convertDateFromXML(iteration.getStartDate()));
 		form.setNew(false);
@@ -366,13 +510,24 @@ public class FillCopyForms {
 
 	}
 
+	/**
+	 * Pomocná metoda pro nakopírování dat z WorkUnit do WorkUnitForm a
+	 * nastavení rámečku
+	 * 
+	 * @param unit
+	 *            WorkUnit
+	 * @param form
+	 *            WorkUnitForm
+	 * @param item
+	 * @return WorkUnitForm
+	 */
 	public WorkUnitForm copyFormWorkUnit(WorkUnit unit, WorkUnitForm form, CanvasItem item) {
 
 		form.setName(unit.getName());
 		form.getNameTF().setText(unit.getName());
 		form.getDescriptionTF().setText(unit.getDescription());
 		formControl.workUnitFormControl(form, unit);
-		
+
 		if (!unit.isExist()) {
 			item.getSegmentInfo().setRectangleColor(Constans.nonExistRectangleBorderColor);
 		}
@@ -381,6 +536,15 @@ public class FillCopyForms {
 
 	}
 
+	/**
+	 * Pomocná metoda pro nakopírování data z Change do ChangeForm
+	 * 
+	 * @param change
+	 *            Change
+	 * @param changeForm
+	 *            ChangeForm
+	 * @return ChangeForm
+	 */
 	public ChangeForm copyFormChange(Change change, ChangeForm changeForm) {
 
 		changeForm.setName(change.getName());
@@ -397,6 +561,15 @@ public class FillCopyForms {
 		return changeForm;
 	}
 
+	/**
+	 * Pomocná metoda pro nakopírovaní dat z Artifact do ArtifactForm
+	 * 
+	 * @param artifact
+	 *            Artifact
+	 * @param artifactForm
+	 *            ArtifactForm
+	 * @return ArtifactForm
+	 */
 	public ArtifactForm copyFormArtifact(Artifact artifact, ArtifactForm artifactForm) {
 
 		artifactForm.setName(artifact.getName());
@@ -408,7 +581,7 @@ public class FillCopyForms {
 
 		if (artifact.getAuthorIndex() != null) {
 			String author = lists.getRoleList().get(artifact.getAuthorIndex()).getName();
-			artifactForm.getAuthorRoleCB().setValue(author);			
+			artifactForm.getAuthorRoleCB().setValue(author);
 		}
 
 		artifactForm.setNew(false);
@@ -420,6 +593,7 @@ public class FillCopyForms {
 		return artifactForm;
 	}
 
+	/** Getrs and Setrs **/
 	public IdentificatorCreater getIdCreater() {
 		return idCreater;
 	}

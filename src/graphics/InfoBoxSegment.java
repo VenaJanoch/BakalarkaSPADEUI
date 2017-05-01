@@ -7,8 +7,14 @@ import javafx.scene.text.Text;
 import services.Constans;
 import services.SegmentType;
 
+/**
+ * Třída definující ohraničení prvku plátna
+ * 
+ * @author Václav Janoch
+ *
+ */
 public class InfoBoxSegment extends Group {
-
+	/** Glolobální proměnné třídy **/
 	private Rectangle topRectangle;
 	private Rectangle botomRectangle;
 	private Text segmentName;
@@ -17,6 +23,17 @@ public class InfoBoxSegment extends Group {
 	private CanvasItem canItem;
 	private double height;
 
+	/**
+	 * Konstruktor třídy Zinicializuje globální proměnné třídy a přidá prvku do
+	 * panelu
+	 * 
+	 * @param canItem
+	 *            CanvasItem
+	 * @param type
+	 *            SegmentType
+	 * @param name
+	 *            {@link String}
+	 */
 	public InfoBoxSegment(CanvasItem canItem, SegmentType type, String name) {
 		super();
 		this.canItem = canItem;
@@ -37,20 +54,30 @@ public class InfoBoxSegment extends Group {
 		createBlock();
 
 	}
-	
-	public void setRectangleColor(Color color){
-		
+
+	/**
+	 * Metoda pro nastevní barvy vykreslených obdelníků
+	 * 
+	 * @param color
+	 *            Color
+	 */
+	public void setRectangleColor(Color color) {
+
 		topRectangle.setStroke(color);
 		botomRectangle.setStroke(color);
 	}
 
+	/**
+	 * Metoda pro nastavení pozice, barvy pozadí, rámečku a velikosti
+	 * vykresleným obdelníkům
+	 */
 	private void createBlock() {
 
 		setRectangleColor(Constans.rectangleBorderColor);
-		
+
 		topRectangle.setFill(Color.TRANSPARENT);
 		botomRectangle.setFill(Color.TRANSPARENT);
-		
+
 		topRectangle.setStrokeWidth(3);
 
 		botomRectangle.setStrokeWidth(3);
@@ -70,10 +97,16 @@ public class InfoBoxSegment extends Group {
 
 	}
 
+	/**
+	 * Nastaví jméno objektu a spočte z něho velikost spodní obdelníku
+	 * 
+	 * @param nameStr
+	 *            String
+	 */
 	public void setNameText(String nameStr) {
 
 		Text testname = new Text(nameStr);
-		
+
 		double width = testname.getLayoutBounds().getWidth();
 
 		name.setText(nameStr);
@@ -89,6 +122,13 @@ public class InfoBoxSegment extends Group {
 
 	}
 
+	/**
+	 * Pomocná metoda pro výpočet výšky spodního rámečku
+	 * 
+	 * @param width
+	 *            int
+	 * @return int výška rámečku
+	 */
 	private int countHeightBotomRectangle(int width) {
 
 		int row = width / (int) Constans.maxCanvasItemWidth;
@@ -96,6 +136,14 @@ public class InfoBoxSegment extends Group {
 		return row + 1;
 	}
 
+	/**
+	 * Přenastaví velikosti obdelníků a velikost CanvasItem
+	 * 
+	 * @param width
+	 *            double
+	 * @param height
+	 *            double
+	 */
 	public void repaintBox(double width, double height) {
 
 		length = width + 2 * Constans.offset;
@@ -103,7 +151,7 @@ public class InfoBoxSegment extends Group {
 		topRectangle.setWidth(length);
 		botomRectangle.setWidth(length);
 		botomRectangle.setHeight(height);
-		
+
 		canItem.setMaxHeight(height);
 		canItem.setMaxWidth(length);
 
@@ -142,6 +190,5 @@ public class InfoBoxSegment extends Group {
 	public void setHeight(double height) {
 		this.height = height;
 	}
-	
 
 }

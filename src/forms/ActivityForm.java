@@ -21,7 +21,6 @@ public class ActivityForm extends DescriptionBasicForm implements ISegmentForm {
 
 	private Activity activity;
 	
-
 	public ActivityForm(CanvasItem item, Control control, int[] itemArray, Activity activity, int indexForm, DeleteControl deleteControl) {
 
 		super(item, control, itemArray, indexForm, deleteControl, CanvasType.Activity);
@@ -78,7 +77,6 @@ public class ActivityForm extends DescriptionBasicForm implements ISegmentForm {
 
 	@Override
 	public void deleteItem(int iDs[]) {
-		System.out.println("Activity delete");
 		deleteControl.deleteActivity(iDs);
 		
 	}

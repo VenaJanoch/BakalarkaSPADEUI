@@ -54,6 +54,7 @@ import tables.TagTable;
 
 public class FillFormsXML {
 
+	/** Globální proměnné třídy	 */
 	private Control control;
 	private Project project;
 	private ArrayList<BasicForm> forms;
@@ -65,6 +66,20 @@ public class FillFormsXML {
 	private DeleteControl deleteControl;
 	private FormControl formControl;
 
+	
+	/**
+	 * Konstruktor třídy
+	 * Zinicializuje globální proměnné třídy
+	 * @param control instance třídy Control
+	 * @param lists instance třídy SegmentLists
+	 * @param project kořenový element
+	 * @param forms seznam formulářů
+	 * @param copyForms instance třídy CopyForm
+	 * @param idCreator instance třídy IdentificatorCreater
+	 * @param linkControl instance třídy LinkControl
+	 * @param deleteControl instance třídy DeleteControl
+	 * @param formControl instace třídy FormControl
+	 */
 	public FillFormsXML(Control control, SegmentLists lists, Project project, ArrayList<BasicForm> forms,
 			FillCopyForms copyForms, IdentificatorCreater idCreator, LinkControl linkControl,
 			DeleteControl deleteControl, FormControl formControl) {
@@ -81,6 +96,11 @@ public class FillFormsXML {
 
 	}
 
+	/**
+	 * Vyplní informace o projektu do formuláře.
+	 * Zavolá ostatní metody metody pro načtení procesu do paměti
+	 * @param form formulář projectu 
+	 */
 	public void fillProjectFromXML(ProjectForm form) {
 
 		form.setName(project.getName());
@@ -110,6 +130,11 @@ public class FillFormsXML {
 
 	}
 
+	/**
+	 * Rozhodne o zavolání metody pro vytvoření linků
+	 * @param links seznam spojení
+	 */
+	
 	public void createLinks(List<Link> links) {
 
 		for (int i = 0; i < links.size(); i++) {
@@ -125,6 +150,10 @@ public class FillFormsXML {
 
 	}
 
+	/**
+	 * Vytvoří propojení mezi objekty Work Unit
+	 * @param link link
+	 */
 	public void fillWorkUnitLinks(Link link) {
 
 		int leftI = link.getLeftUnitIndex();
@@ -141,7 +170,10 @@ public class FillFormsXML {
 		linkControl.ArrowManipulationWorkUnit(itemArtifact, true);
 
 	}
-
+	/**
+	 * Vytvoří spojení mezi elementy Change a Artifact
+	 * @param link link
+	 */
 	public void fillConfigLinks(Link link) {
 
 		int changeI = link.getChangeIndex();
@@ -157,6 +189,11 @@ public class FillFormsXML {
 		linkControl.ArrowManipulation(itemArtifact, true);
 	}
 
+	
+	/**
+	 * Vytvoří nový prvek Phase na plátně, zavolá metodu pro vytvoření a naplnění formuláře
+	 * @param form kořenový formulář
+	 */
 	public void fillPhasesFromXML(BasicForm form) {
 
 		for (int i = 0; i < project.getPhases().size(); i++) {
@@ -174,6 +211,18 @@ public class FillFormsXML {
 
 	}
 
+	/**
+	 * Vytvoří nový formulář pro Phase s identifikacemi a naplní daný formulář
+	 * daty z XML
+	 * 
+	 * @param item
+	 *            položka plátna
+	 * @param form
+	 *            kořenový formulář
+	 * @param IDs
+	 *            instance identifikaci o prvku
+	 * @return identifikátory
+	 */
 	public int[] createPhaseFormXML(CanvasItem item, BasicForm form, int[] IDs) {
 
 		int index = IdentificatorCreater.getIndex();
@@ -192,7 +241,10 @@ public class FillFormsXML {
 		return IDs;
 
 	}
-
+	/**
+	 * Vytvoří nový prvek Iteration na plátně, zavolá metodu pro vytvoření a naplnění formuláře
+	 * @param form kořenový formulář
+	 */
 	public void fillIterationFromXML(BasicForm form) {
 
 		for (int i = 0; i < project.getIterations().size(); i++) {
@@ -209,6 +261,13 @@ public class FillFormsXML {
 
 	}
 
+	/**
+	 * Vytvoří nový formulář pro Iteration s identifikacemi a naplní daný formulář daty z XML
+	 * @param item položka plátna
+	 * @param form kořenový formulář
+	 * @param IDs instance identifikaci o prvku
+	 * @return identifikátory
+	 */
 	public int[] createIterationFormXML(CanvasItem item, BasicForm form, int[] IDs) {
 		int index = IdentificatorCreater.getIndex();
 		IDs[0] = index;
@@ -228,6 +287,10 @@ public class FillFormsXML {
 
 	}
 
+	/**
+	 * Vytvoří nový prvek Activity na plátně, zavolá metodu pro vytvoření a naplnění formuláře
+	 * @param form kořenový formulář
+	 */
 	public void fillActivityFromXML(BasicForm form) {
 
 		for (int i = 0; i < project.getActivities().size(); i++) {
@@ -246,6 +309,14 @@ public class FillFormsXML {
 		}
 	}
 
+	
+	/**
+	 * Vytvoří nový formulář pro Activity s identifikacemi a naplní daný formulář daty z XML
+	 * @param item položka plátna
+	 * @param form kořenový formulář
+	 * @param IDs instance identifikaci o prvku
+	 * @return identifikátory
+	 */
 	public int[] createActivityFormXML(CanvasItem item, BasicForm form, int[] IDs) {
 		int index = IdentificatorCreater.getIndex();
 		IDs[0] = index;
@@ -263,7 +334,10 @@ public class FillFormsXML {
 		return IDs;
 
 	}
-
+	/**
+	 * Vytvoří nový prvek Work Unit na plátně, zavolá metodu pro vytvoření a naplnění formuláře
+	 * @param form kořenový formulář
+	 */
 	public void fillWorkUnitFromXML(BasicForm form, List<Integer> units) {
 
 		for (int i = 0; i < units.size(); i++) {
@@ -280,6 +354,13 @@ public class FillFormsXML {
 
 	}
 
+	/**
+	 * Vytvoří nový formulář pro Work Unit s identifikacemi a naplní daný formulář daty z XML
+	 * @param item položka plátna
+	 * @param form kořenový formulář
+	 * @param IDs instance identifikaci o prvku
+	 * @return identifikátory
+	 */
 	public int[] createWorkUnitFormXML(CanvasItem item, BasicForm form, int[] IDs) {
 		int index = IdentificatorCreater.getIndex();
 
@@ -303,6 +384,10 @@ public class FillFormsXML {
 		return IDs;
 	}
 
+	/**
+	 * Vytvoří nový prvek Configuration, zavolá metodu pro vytvoření a naplnění formuláře
+	 * @param form kořenový formulář
+	 */
 	public void fillConfigurationFromXML(BasicForm form, List<Configuration> configs) {
 
 		ObservableList<ConfigTable> data = FXCollections.observableArrayList();
@@ -330,7 +415,13 @@ public class FillFormsXML {
 		}
 
 	}
-
+	/**
+	 * Vytvoří nový formulář pro Configuration s identifikacemi a naplní daný formulář daty z XML
+	 * @param item položka plátna
+	 * @param form kořenový formulář
+	 * @param IDs instance identifikaci o prvku
+	 * @return identifikátory
+	 */
 	public int[] createConfigurationFormXML(CanvasItem item, BasicForm form, int[] IDs) {
 		int index = IdentificatorCreater.getIndex();
 		IDs[0] = index;
@@ -370,6 +461,11 @@ public class FillFormsXML {
 
 	}
 
+	/**
+	 * Vytvoří nové prvky Tag do příslušné tabulky
+	 * @param form kořenový formulář
+	 * @param tags tagy
+	 */
 	public void fillTagsFromXML(ConfigurationForm formc, List<String> tags) {
 
 		ObservableList<TagTable> data = FXCollections.observableArrayList();
@@ -383,6 +479,10 @@ public class FillFormsXML {
 
 	}
 
+	/**
+	 * Vytvoří nové prvky Role a vloží je do tabulky
+	 * @param roles seznam rolí pro přidání
+	 */
 	public void fillRoleFromXML(List<Role> roles) {
 		ObservableList<RoleTable> data = FXCollections.observableArrayList();
 
@@ -402,7 +502,10 @@ public class FillFormsXML {
 		control.getRoleForm().getTableTV().setItems(data);
 
 	}
-
+	/**
+	 * Vytvoří a vyplní nové výčtové typy Role Type a vloží je do tabulky
+	 * @param item seznam Role type pro přidání
+	 */
 	public void fillRoleTypeFromXML(List<RoleType> roles) {
 		ObservableList<ClassTable> data = FXCollections.observableArrayList();
 		for (int i = 0; i < roles.size(); i++) {
@@ -421,6 +524,10 @@ public class FillFormsXML {
 		control.getRoleForm().getRoleTForm().getTableTV().setItems(data);
 	}
 
+	/**
+	 * Vytvoří a vyplní nové prvky Branch a vloží je do tabulky
+	 * @param item seznam branch pro přidání
+	 */
 	public void fillBranchFromXML(List<Branch> item) {
 
 		ObservableList<BranchTable> data = FXCollections.observableArrayList();
@@ -443,6 +550,10 @@ public class FillFormsXML {
 		control.getBranchFrom().getTableTV().setItems(data);
 	}
 
+	/**
+	 * Vytvoří nový prvek Change na plátně, zavolá metodu pro vytvoření a naplnění formuláře
+	 * @param form kořenový formulář
+	 */
 	public void fillChangeFromXML(BasicForm form, List<Integer> changes, int formId) {
 
 		for (int i = 0; i < changes.size(); i++) {
@@ -463,6 +574,13 @@ public class FillFormsXML {
 
 	}
 
+	/**
+	 * Vytvoří nový formulář pro Change s identifikacemi a naplní daný formulář daty z XML
+	 * @param item položka plátna
+	 * @param form kořenový formulář
+	 * @param IDs instance identifikaci o prvku
+	 * @return identifikátory
+	 */
 	public int[] createChangeFormXML(CanvasItem item, BasicForm form, int[] IDs) {
 		int index = IdentificatorCreater.getIndex();
 		IDs[0] = index;
@@ -483,7 +601,10 @@ public class FillFormsXML {
 		return IDs;
 
 	}
-
+	/**
+	 * Vytvoří nový prvek Artifact na plátně, zavolá metodu pro vytvoření a naplnění formuláře
+	 * @param form kořenový formulář
+	 */
 	public void fillArtifactFromXML(BasicForm form, List<Integer> artifacts, int formId) {
 
 		for (int i = 0; i < artifacts.size(); i++) {
@@ -503,7 +624,13 @@ public class FillFormsXML {
 		}
 
 	}
-
+	/**
+	 * Vytvoří nový formulář pro Artifact s identifikacemi a naplní daný formulář daty z XML
+	 * @param item položka plátna
+	 * @param form kořenový formulář
+	 * @param IDs instance identifikaci o prvku
+	 * @return identifikátory
+	 */
 	public int[] createArtifactFormXML(CanvasItem item, BasicForm form, int[] IDs) {
 		int index = IdentificatorCreater.getIndex();
 		IDs[0] = index;
@@ -523,7 +650,10 @@ public class FillFormsXML {
 		return IDs;
 
 	}
-
+	/**
+	 * Vytvoří a vyplní nové prvky CPR a vloží je do tabulky
+	 * @param cprs seznam CPR pro přidání
+	 */
 	private void fillCPRObservabel(List<ConfigPersonRelation> cprs) {
 
 		ObservableList<CPRTable> data = FXCollections.observableArrayList();
@@ -535,7 +665,7 @@ public class FillFormsXML {
 
 			String classI = "";
 			if (cprs.get(i).getPersonIndex() != null) {
-				String role = lists.getRoleList().get(cprs.get(i).getPersonIndex()).getName();
+				classI = lists.getRoleObservable().get(cprs.get(i).getPersonIndex()+1);
 			}
 
 			data.add(new CPRTable(id, classI));
@@ -544,6 +674,10 @@ public class FillFormsXML {
 		control.getCPRForm().getTableTV().setItems(data);
 	}
 
+	/**
+	 * Vytvoří a vyplní nové výčtové typy Priority a vloží je do tabulky
+	 * @param item seznam priorit pro přidání
+	 */
 	private void fillPrioritybservabel(List<Priority> item) {
 
 		ObservableList<ClassTable> data = FXCollections.observableArrayList();
@@ -566,6 +700,10 @@ public class FillFormsXML {
 		control.getPriorityForm().getTableTV().setItems(data);
 	}
 
+	/**
+	 * Vytvoří a vyplní nové výčtové typy Work Unit Type a vloží je do tabulky
+	 * @param item seznam Type pro přidání
+	 */
 	private void fillTypeObservabel(List<Type> item) {
 
 		ObservableList<ClassTable> data = FXCollections.observableArrayList();
@@ -586,6 +724,10 @@ public class FillFormsXML {
 		control.getTypeForm().getTableTV().setItems(data);
 	}
 
+	/**
+	 * Vytvoří a vyplní nové výčtové typy Severity a vloží je do tabulky
+	 * @param item seznam Severit pro přidání
+	 */
 	private void fillSeveritybservabel(List<Severity> item) {
 
 		ObservableList<ClassTable> data = FXCollections.observableArrayList();
@@ -606,6 +748,10 @@ public class FillFormsXML {
 		control.getSeverityForm().getTableTV().setItems(data);
 	}
 
+	/**
+	 * Vytvoří a vyplnínové výčtové typy Relation a vloží je do tabulky
+	 * @param item seznam Relation pro přidání
+	 */
 	private void fillRelationbservabel(List<Relation> item) {
 
 		ObservableList<ClassTable> data = FXCollections.observableArrayList();
@@ -627,6 +773,10 @@ public class FillFormsXML {
 		control.getRelationForm().getTableTV().setItems(data);
 	}
 
+	/**
+	 * Vytvoří a vyplní nové výčtové typy Resolution a vloží je do tabulky
+	 * @param item seznam Resolution pro přidání
+	 */
 	private void fillResolutionbservabel(List<Resolution> item) {
 
 		ObservableList<ClassTable> data = FXCollections.observableArrayList();
@@ -647,6 +797,10 @@ public class FillFormsXML {
 		control.getResolutionForm().getTableTV().setItems(data);
 	}
 
+	/**
+	 * Vytvoří a vyplní nové výčtové typy Status a vloží je do tabulky
+	 * @param item seznam Status pro přidání
+	 */
 	private void fillStatusbservabel(List<Status> item) {
 
 		ObservableList<ClassTable> data = FXCollections.observableArrayList();
@@ -668,6 +822,10 @@ public class FillFormsXML {
 		control.getStatusForm().getTableTV().setItems(data);
 	}
 
+	/**
+	 * Vytvoří a vyplní nové elementy Milestone a vloží je do tabulky
+	 * @param item seznam Mileston pro přidání
+	 */
 	private void fillMilestoneObservabel(List<Milestone> milestones) {
 
 		ObservableList<MilestoneTable> data = FXCollections.observableArrayList();
@@ -688,6 +846,10 @@ public class FillFormsXML {
 		control.getMilestoneForm().getTableTV().setItems(data);
 	}
 
+	/**
+	 * Vytvoří jednotný string se jmény criterii přídávané do Mileston
+	 * @param item indexi Criterii pro přidání
+	 */
 	private String createCriterionsString(List<Integer> indexs) {
 
 		String tmp = "[ ";
@@ -700,6 +862,10 @@ public class FillFormsXML {
 		return tmp;
 	}
 
+	/**
+	 * Vytvoří  a vyplní nové elementy Criterion a vloží je do tabulky
+	 * @param item seznam priorit pro přidání
+	 */
 	private void fillCriterionObservabel(List<Criterion> criterions) {
 
 		ObservableList<CriterionTable> data = FXCollections.observableArrayList();

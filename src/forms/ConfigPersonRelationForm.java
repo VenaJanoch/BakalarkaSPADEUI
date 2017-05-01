@@ -176,6 +176,7 @@ public class ConfigPersonRelationForm extends TableBasicForm implements ISegment
 		getControl().getFillForms().fillCPR(idName,formControl.fillTextMapper(nameST), configIndex, roleIndex);
 	}
 
+	/** Getrs and Setrs ***/
 	public TableView<CPRTable> getTableTV() {
 		return tableTV;
 	}
