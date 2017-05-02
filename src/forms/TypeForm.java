@@ -26,20 +26,39 @@ import services.DeleteControl;
 import services.IdentificatorCreater;
 import tables.ClassTable;
 
+/**
+ * Třída představující tabulkový formulář pro výčtový typ Work Unit Type,
+ * odděděná od třídy TableClassBasicForm a implementující ISegmentTableForm
+ * 
+ * @author Václav Janoch
+ *
+ */
 public class TypeForm extends TableClassBasicForm implements ISegmentTableForm {
-
+	/**
+	 * Globální proměnné třídy
+	 */
 	private Control control;
 
 	private ComboBox<WorkUnitTypeClass> classTypeCB;
 	private ComboBox<WorkUnitTypeSuperClass> superClassTypeCB;
-	
+
+	/**
+	 * Konstruktor třídy Zinicializuje globální proměnné třídy Nastaví reakci na
+	 * potvrzovací tlačítko
+	 * 
+	 * @param control
+	 *            Control
+	 * @param deleteControl
+	 *            DeleteControl
+	 * @param idCreator
+	 *            IdentificatorCreater
+	 */
 	public TypeForm(Control control, DeleteControl deleteControl, IdentificatorCreater idCreator) {
 		super(control, deleteControl, idCreator);
 
 		this.control = control;
 		this.setTitle("Edit WorkUnit type");
 		createForm();
-		// getSubmitButton().setVisible();
 		getSubmitButton().setOnAction(event -> setActionSubmitButton());
 
 	}
@@ -103,6 +122,10 @@ public class TypeForm extends TableClassBasicForm implements ISegmentTableForm {
 		return getControlPane();
 	}
 
+	/**
+	 * ChangeListener pro určení indexu prvku z comboBoxu pro Class. Zavolá
+	 * metody pro mapování Class na Super Class
+	 */
 	ChangeListener<Number> classListener = new ChangeListener<Number>() {
 
 		@Override
@@ -122,6 +145,9 @@ public class TypeForm extends TableClassBasicForm implements ISegmentTableForm {
 		}
 	};
 
+	/**
+	 * ChangeListener pro určení indexu prvku z comboBoxu pro Super Class
+	 */
 	ChangeListener<Number> superListener = new ChangeListener<Number>() {
 
 		@Override
@@ -144,12 +170,12 @@ public class TypeForm extends TableClassBasicForm implements ISegmentTableForm {
 		}
 		String superST = WorkUnitTypeSuperClass.values()[superIndex].name();
 
-
 		ClassTable table = new ClassTable(idName, classST, superST);
 
 		getTableTV().getItems().add(table);
 		getTableTV().sort();
-		getControl().getFillForms().fillType(idName,formControl.fillTextMapper(nameST), formControl.fillTextMapper(classST), superST);
+		getControl().getFillForms().fillType(idName, formControl.fillTextMapper(nameST),
+				formControl.fillTextMapper(classST), superST);
 
 	}
 

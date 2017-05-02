@@ -24,8 +24,18 @@ import services.Control;
 import services.DeleteControl;
 import services.SegmentType;
 
+/**
+ * Třída představující formulář pro segment Iteration, odděděná od třídy
+ * Dete2DescBasicForm a implementující ISegmentForm
+ * 
+ * @author Václav Janoch
+ *
+ */
 public class IterationForm extends Date2DescBasicForm implements ISegmentForm {
 
+	/**
+	 * Globální proměnné třídy
+	 */
 	private Label configLB;
 
 	private ChoiceBox<String> configCB;
@@ -33,6 +43,21 @@ public class IterationForm extends Date2DescBasicForm implements ISegmentForm {
 	private int chooseConfigID;
 	private Iteration iteration;
 
+	/**
+	 * Konstruktor třídy Zinicializuje globální proměnné tříd Nastaví reakci na
+	 * uzavření formuláře
+	 * 
+	 * @param item
+	 *            CanvasItem
+	 * @param control
+	 *            Control
+	 * @param itemArray
+	 * @param iteration
+	 *            Iteration
+	 * @param indexForm
+	 * @param deleteControl
+	 *            DeleteControl
+	 */
 	public IterationForm(CanvasItem item, Control control, int[] itemArray, Iteration iteration, int indexForm,
 			DeleteControl deleteControl) {
 		super(item, control, itemArray, indexForm, deleteControl, CanvasType.Iteration);
@@ -75,8 +100,8 @@ public class IterationForm extends Date2DescBasicForm implements ISegmentForm {
 
 	@Override
 	public void setActionSubmitButton() {
-			closeForm();
-			close();
+		closeForm();
+		close();
 	}
 
 	@Override
@@ -84,7 +109,7 @@ public class IterationForm extends Date2DescBasicForm implements ISegmentForm {
 
 		configLB = new Label("Configuration: ");
 		configCB = new ChoiceBox<>(getControl().getLists().getConfigObservable());
-		
+
 		configCB.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
 
 			@Override
@@ -98,6 +123,9 @@ public class IterationForm extends Date2DescBasicForm implements ISegmentForm {
 		fillInfoPart();
 	}
 
+	/**
+	 * Pomocná metoda pro přidání prvků do GridPane
+	 */
 	private void fillInfoPart() {
 
 		getDateLB().setText("Start-Date");

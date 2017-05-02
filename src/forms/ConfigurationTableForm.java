@@ -36,12 +36,34 @@ import services.SegmentType;
 import tables.ConfigTable;
 import tables.MilestoneTable;
 
+/**
+ * Třída představující dvojitý formulář pro element Configuration, vytvoří
+ * tabulku s přehledem configurací a formulář pro vyplnění dat od configuraci
+ * odděděná od třídy Table2BasicForm a implementující ISegmentTableForm
+ * 
+ * @author Václav Janoch
+ *
+ */
 public class ConfigurationTableForm extends Table2BasicForm implements ISegmentTableForm {
+	/**
+	 * Globální proměnné třídy
+	 */
 
 	private TableView<ConfigTable> tableTV;
 	private BasicForm form;
 
 	private Label formName;
+
+	/**
+	 * Konstruktor třídy Zinicializuje globální proměnné tříd
+	 * 
+	 * @param control
+	 *            Control
+	 * @param deleteControl
+	 *            DeleteControl
+	 * @param idCreator
+	 *            IdentificatorCreater
+	 */
 
 	public ConfigurationTableForm(Control control, DeleteControl deleteControl, IdentificatorCreater idCreator) {
 		super(control, deleteControl, idCreator);
@@ -68,10 +90,15 @@ public class ConfigurationTableForm extends Table2BasicForm implements ISegmentT
 
 	}
 
+	/**
+	 * Pomocná metoda pro vytvoření ConfigForm
+	 * 
+	 * @return BasicForm
+	 */
 	public BasicForm createConfigItem() {
 
-		CanvasItem item = new CanvasItem(SegmentType.Configuration, "New", getControl(),
-				getControl().getForms().get(0), 0, 0, 0, getControl().getContexMenu(), getControl().getLinkControl(), getControl().getCanvas());
+		CanvasItem item = new CanvasItem(SegmentType.Configuration, "New", getControl(), getControl().getForms().get(0),
+				0, 0, 0, getControl().getContexMenu(), getControl().getLinkControl(), getControl().getCanvas());
 
 		form = getControl().getForms().get(item.getIDs()[0]);
 		form.getSubmitButton().setText("Add");
@@ -112,6 +139,10 @@ public class ConfigurationTableForm extends Table2BasicForm implements ISegmentT
 		return tableTV;
 	}
 
+	/**
+	 * EventHandler pro určení prvku z tabulky a zobrazní odpovídajícího
+	 * formuláře
+	 */
 	EventHandler<MouseEvent> OnMousePressedEventHandler = new EventHandler<MouseEvent>() {
 
 		@Override
@@ -155,7 +186,6 @@ public class ConfigurationTableForm extends Table2BasicForm implements ISegmentT
 
 	@Override
 	public void addItem() {
-		// TODO Auto-generated method stub
 
 	}
 

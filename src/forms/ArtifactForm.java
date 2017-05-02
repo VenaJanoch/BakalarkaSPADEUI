@@ -28,11 +28,19 @@ import services.Control;
 import services.DeleteControl;
 import services.SegmentType;
 
+/**
+ * Třída představující formulář pro segment Artifact, odděděná od třídy
+ * DeteDescBasicForm a implementující ISegmentForm
+ * 
+ * @author Václav Janoch
+ *
+ */
 public class ArtifactForm extends DateDescBasicForm implements ISegmentForm {
-
+	/**
+	 * Globální proměnné třídy
+	 */
 	private Label authorRoleLB;
 	private Label mineTypeLB;
-
 
 	private ComboBox<String> authorRoleCB;
 	private ComboBox<ArtifactClass> mineTypeCB;
@@ -43,19 +51,33 @@ public class ArtifactForm extends DateDescBasicForm implements ISegmentForm {
 
 	private Artifact artifact;
 	private Configuration conf;
-	
 
-	public ArtifactForm(CanvasItem item, Control control, Artifact artifact, DeleteControl deleteControl, Configuration conf) {
+	/**
+	 * Konstruktor třídy Zinicializuje globální proměnné tříd Nastaví velikost
+	 * okna a reakci na uzavření formuláře
+	 * 
+	 * @param item
+	 *            CanvasItem
+	 * @param control
+	 *            Control
+	 * @param artifact
+	 *            Artifact
+	 * @param deleteControl
+	 *            DeleteControl
+	 * @param conf
+	 *            Configuration
+	 */
+	public ArtifactForm(CanvasItem item, Control control, Artifact artifact, DeleteControl deleteControl,
+			Configuration conf) {
 		super(item, control, deleteControl);
 		this.artifact = artifact;
 		this.conf = conf;
 		artifact.setExist(true);
 		setNew(true);
-	
+
 		getMainPanel().setMinSize(Constans.littleformWidth, Constans.littleformHeight);
 		getMainPanel().setMaxSize(Constans.littleformWidth, Constans.littleformHeight);
 
-		
 		this.setOnCloseRequest(e -> {
 
 			e.consume();
@@ -82,34 +104,34 @@ public class ArtifactForm extends DateDescBasicForm implements ISegmentForm {
 		LocalDate createdDate = getDateDP().getValue();
 		String type = ArtifactClass.values()[typeIndex].name();
 		String desc = getDescriptionTF().getText();
-		
+
 		setName(actName);
 		getCanvasItem().setNameText(actName);
-		getControl().getFillForms().fillArtifact(artifact, IDs, desc, actName, createdDate, type,
-				authorIndex, x, y, typeIndex, isNew(), existRB.isSelected());
-		
+		getControl().getFillForms().fillArtifact(artifact, IDs, desc, actName, createdDate, type, authorIndex, x, y,
+				typeIndex, isNew(), existRB.isSelected());
+
 		if (!existRB.isSelected()) {
 			getCanvasItem().getSegmentInfo().setRectangleColor(Constans.nonExistRectangleBorderColor);
-		}else{
+		} else {
 			getCanvasItem().getSegmentInfo().setRectangleColor(Constans.rectangleBorderColor);
 		}
-		
+
 		setNew(false);
 
 	}
 
 	@Override
 	public void setActionSubmitButton() {
-		
-			closeForm();
-			close();
+
+		closeForm();
+		close();
 	}
 
 	@Override
 	public void createForm() {
-		
+
 		getDateLB().setText("Created: ");
-		
+
 		authorRoleLB = new Label("Author: ");
 		authorRoleCB = new ComboBox<String>(getControl().getLists().getRoleObservable());
 		authorRoleCB.setVisibleRowCount(5);
@@ -125,7 +147,9 @@ public class ArtifactForm extends DateDescBasicForm implements ISegmentForm {
 		fillInfoPart();
 	}
 
-
+	/**
+	 * ChangeListener pro určení indexu prvku z comboBoxu pro Role
+	 */
 	ChangeListener<Number> roleListenerAut = new ChangeListener<Number>() {
 
 		@Override
@@ -135,20 +159,24 @@ public class ArtifactForm extends DateDescBasicForm implements ISegmentForm {
 		}
 	};
 
+	/**
+	 * ChangeListener pro určení indexu prvku z comboBoxu pro Type
+	 */
 	ChangeListener<Number> typeListener = new ChangeListener<Number>() {
 
 		@Override
 		public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
 
-			
 			typeIndex = newValue.intValue();
 
 		}
 	};
 
+	/**
+	 * Pomocná metoda pro naplnění GridPane prvky
+	 */
 	private void fillInfoPart() {
 
-	
 		getInfoPart().add(authorRoleLB, 0, 3);
 		getInfoPart().setHalignment(authorRoleLB, HPos.RIGHT);
 		getInfoPart().add(authorRoleCB, 1, 3);
@@ -158,16 +186,15 @@ public class ArtifactForm extends DateDescBasicForm implements ISegmentForm {
 		getInfoPart().add(existRB, 1, 5);
 
 	}
-	
+
 	@Override
 	public void deleteItem(int iDs[]) {
-	
+
 		deleteControl.deleteArtifact(conf, iDs);
-		
+
 	}
 
 	/** Getrs and Setrs ***/
-
 
 	public ComboBox<String> getAuthorRoleCB() {
 		return authorRoleCB;
@@ -193,5 +220,4 @@ public class ArtifactForm extends DateDescBasicForm implements ISegmentForm {
 		this.existRB = existRB;
 	}
 
-	
 }

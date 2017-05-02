@@ -48,8 +48,19 @@ import services.IdentificatorCreater;
 import tables.MilestoneTable;
 import tables.RoleTable;
 
+/**
+ * Třída představující dvojitý formulář pro element Role, vytvoří tabulku s
+ * přehledem Rolí a tabulkový formulář pro Role-Type, odděděná od třídy
+ * Table2BasicForm a implementující ISegmentTableForm
+ * 
+ * @author Václav Janoch
+ *
+ */
 public class RoleForm extends Table2BasicForm implements ISegmentTableForm {
 
+	/**
+	 * Globální proměnné třídy
+	 */
 	private Label roleTypeLB;
 	private Label descriptionLB;
 
@@ -64,6 +75,17 @@ public class RoleForm extends Table2BasicForm implements ISegmentTableForm {
 
 	private DeleteControl deleteControl;
 
+	/**
+	 * Konstruktor třídy Zinicializuje globální proměnné třídy Nastaví reakci
+	 * potvrzovacímu tlačítku
+	 * 
+	 * @param control
+	 *            Control
+	 * @param deleteControl
+	 *            DeleteControl
+	 * @param idCreator
+	 *            IdentificatorCreater
+	 */
 	public RoleForm(Control control, DeleteControl deleteControl, IdentificatorCreater idCreator) {
 		super(control, deleteControl, idCreator);
 		this.control = control;
@@ -74,6 +96,7 @@ public class RoleForm extends Table2BasicForm implements ISegmentTableForm {
 
 	}
 
+	@Override
 	public void setActionSubmitButton() {
 		close();
 
@@ -169,11 +192,14 @@ public class RoleForm extends Table2BasicForm implements ISegmentTableForm {
 		return getControlPane();
 	}
 
+	/**
+	 * ChangeListener pro určení indexu prvku z comboBoxu pro Role-Type
+	 */
 	ChangeListener<Number> roleListener = new ChangeListener<Number>() {
 
 		@Override
 		public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-			
+
 			roleIndex = newValue.intValue();
 
 		}
@@ -189,7 +215,8 @@ public class RoleForm extends Table2BasicForm implements ISegmentTableForm {
 		RoleTable role = new RoleTable(idName, descritpST, typeST);
 		tableTV.getItems().add(role);
 		tableTV.sort();
-		getControl().getFillForms().fillRole(idName, formControl.fillTextMapper(descritpST), formControl.fillTextMapper(nameST), roleIndex);
+		getControl().getFillForms().fillRole(idName, formControl.fillTextMapper(descritpST),
+				formControl.fillTextMapper(nameST), roleIndex);
 
 	}
 

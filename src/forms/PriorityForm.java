@@ -23,9 +23,18 @@ import services.DeleteControl;
 import services.IdentificatorCreater;
 import tables.ClassTable;
 import java.util.List;
-
+/**
+ * Třída představující tabulkový formulář pro výčtový typ Priority, odděděná od třídy
+ * TableClassBasicForm a implementující ISegmentTableForm
+ * 
+ * @author Václav Janoch
+ *
+ */
 public class PriorityForm extends TableClassBasicForm implements ISegmentTableForm {
 
+	/**
+	 * Globální proměnné třídy
+	 */
 	private Control control;
 
 	private ChoiceBox<WorkUnitPriorityClass> classTypeCB;
@@ -34,13 +43,20 @@ public class PriorityForm extends TableClassBasicForm implements ISegmentTableFo
 	private Label classTypeLB;
 	private Label superClassTypeLB;
 
+	/**
+	 * Konstruktor třídy
+	 * Zinicializuje globální proměnné třídy
+	 * Nastaví reakci na potvrzovací tlačítko
+	 * @param control Control 
+	 * @param deleteControl DeleteControl
+	 * @param idCreator IdentificatorCreater
+	 */
 	public PriorityForm(Control control, DeleteControl deleteControl, IdentificatorCreater idCreator) {
 		super(control, deleteControl, idCreator);
 
 		this.control = control;
 		this.setTitle("Edit Priority");
 		createForm();
-		// getSubmitButton().setVisible();
 		getSubmitButton().setOnAction(event -> setActionSubmitButton());
 
 	}
@@ -109,6 +125,9 @@ public class PriorityForm extends TableClassBasicForm implements ISegmentTableFo
 		return getControlPane();
 	}
 
+	/**
+	 * ChangeListener pro určení indexu prvku z comboBoxu pro Class. Zavolá metody pro mapování Class na Super Class
+	 */
 	ChangeListener<Number> classListener = new ChangeListener<Number>() {
 
 		@Override
@@ -128,6 +147,9 @@ public class PriorityForm extends TableClassBasicForm implements ISegmentTableFo
 		}
 	};
 
+	/**
+	 * ChangeListener pro určení indexu prvku z comboBoxu pro Super Class
+	 */
 	ChangeListener<Number> superListener = new ChangeListener<Number>() {
 
 		@Override

@@ -40,16 +40,33 @@ import tables.ClassTable;
 import tables.CriterionTable;
 import tables.RoleTable;
 
+/**
+ * Třída představující tabulkový formulář pro výčtový typ Role-Type, odděděná od
+ * třídy TableClassBasicForm a implementující ISegmentTableForm
+ * 
+ * @author Václav Janoch
+ *
+ */
 public class RoleTypeForm extends TableClassBasicForm implements ISegmentTableForm {
-
+	/**
+	 * Globální proměnné třídy
+	 */
 	private Control control;
 
 	private ComboBox<RoleClass> roleClassTypeCB;
 	private ComboBox<RoleSuperClass> roleSuperClassTypeCB;
 
-	private Label roleClassTypeLB;
-	private Label roleSuperClassTypeLB;
-
+	/**
+	 * Konstruktor třídy Zinicializuje globální proměnné třídy Nastaví reakci na
+	 * potvrzovací tlačítko
+	 * 
+	 * @param control
+	 *            Control
+	 * @param deleteControl
+	 *            DeleteControl
+	 * @param idCreator
+	 *            IdentificatorCreater
+	 */
 	public RoleTypeForm(Control control, DeleteControl deleteControl, IdentificatorCreater idCreator) {
 		super(control, deleteControl, idCreator);
 
@@ -57,7 +74,6 @@ public class RoleTypeForm extends TableClassBasicForm implements ISegmentTableFo
 
 		createForm();
 		getSubmitButton().setVisible(false);
-		// getSubmitButton().setOnAction(event -> setActionSubmitButton());
 
 	}
 
@@ -102,17 +118,15 @@ public class RoleTypeForm extends TableClassBasicForm implements ISegmentTableFo
 	@Override
 	public GridPane createControlPane() {
 
-		roleClassTypeLB = new Label("Class: ");
 		roleClassTypeCB = new ComboBox<RoleClass>(FXCollections.observableArrayList(RoleClass.values()));
 		roleClassTypeCB.getSelectionModel().selectedIndexProperty().addListener(classListener);
 
-		roleSuperClassTypeLB = new Label("SuperClass: ");
 		roleSuperClassTypeCB = new ComboBox<RoleSuperClass>(FXCollections.observableArrayList(RoleSuperClass.values()));
 		roleSuperClassTypeCB.getSelectionModel().selectedIndexProperty().addListener(superListener);
 
 		roleClassTypeCB.setValue(RoleClass.UNASSIGNED);
 		roleSuperClassTypeCB.setValue(RoleSuperClass.UNASSIGNED);
-		
+
 		getControlPane().add(classLB, 2, 1);
 		getControlPane().add(roleClassTypeCB, 1, 1);
 		getControlPane().add(superLB, 4, 1);
@@ -124,6 +138,10 @@ public class RoleTypeForm extends TableClassBasicForm implements ISegmentTableFo
 		return getControlPane();
 	}
 
+	/**
+	 * ChangeListener pro určení indexu prvku z comboBoxu pro Class. Zavolá
+	 * metody pro mapování Class na Super Class
+	 */
 	ChangeListener<Number> classListener = new ChangeListener<Number>() {
 
 		@Override
@@ -141,7 +159,9 @@ public class RoleTypeForm extends TableClassBasicForm implements ISegmentTableFo
 			}
 		}
 	};
-
+	/**
+	 * ChangeListener pro určení indexu prvku z comboBoxu pro Super Class
+	 */
 	ChangeListener<Number> superListener = new ChangeListener<Number>() {
 
 		@Override
@@ -164,12 +184,12 @@ public class RoleTypeForm extends TableClassBasicForm implements ISegmentTableFo
 		}
 		String superST = RoleSuperClass.values()[superIndex].name();
 
-
 		ClassTable type = new ClassTable(idName, classST, superST);
 
 		getTableTV().getItems().add(type);
 		getTableTV().sort();
-		getControl().getFillForms().fillRoleType(idName, formControl.fillTextMapper(nameST), formControl.fillTextMapper(classST), superST);
+		getControl().getFillForms().fillRoleType(idName, formControl.fillTextMapper(nameST),
+				formControl.fillTextMapper(classST), superST);
 
 	}
 

@@ -33,8 +33,17 @@ import services.DeleteControl;
 import services.FormControl;
 import services.SegmentType;
 
+/**
+ * Třída představující formulář pro segment Phase, odděděná od třídy
+ * DeteDescBasicForm a implementující ISegmentForm
+ * 
+ * @author Václav Janoch
+ *
+ */
 public class PhaseForm extends DateDescBasicForm implements ISegmentForm {
-
+	/**
+	 * Globální proměnné třídy
+	 */
 	private Label configLB;
 	private Label milestoneLB;
 
@@ -44,6 +53,21 @@ public class PhaseForm extends DateDescBasicForm implements ISegmentForm {
 	private int configIndex;
 	private Phase phase;
 
+	/**
+	 * Konstruktor třídy Zinicializuje globální proměnné tříd Nastaví reakci na
+	 * uzavření okna formuláře
+	 * 
+	 * @param item
+	 *            CanvasItem
+	 * @param control
+	 *            Control
+	 * @param itemArray
+	 * @param phase
+	 *            Phase
+	 * @param indexForm
+	 * @param deleteControl
+	 *            DeleteControl
+	 */
 	public PhaseForm(CanvasItem item, Control control, int[] itemArray, Phase phase, int indexForm,
 			DeleteControl deleteControl) {
 		super(item, control, itemArray, indexForm, deleteControl, CanvasType.Phase);
@@ -88,7 +112,7 @@ public class PhaseForm extends DateDescBasicForm implements ISegmentForm {
 	@Override
 	public void setActionSubmitButton() {
 		closeForm();
-		close();		
+		close();
 	}
 
 	@Override
@@ -105,6 +129,9 @@ public class PhaseForm extends DateDescBasicForm implements ISegmentForm {
 		fillInfoPart();
 	}
 
+	/**
+	 * ChangeListener pro určení indexu prvku z comboBoxu pro Milestone
+	 */
 	ChangeListener<Number> milestoneListener = new ChangeListener<Number>() {
 
 		@Override
@@ -115,6 +142,9 @@ public class PhaseForm extends DateDescBasicForm implements ISegmentForm {
 		}
 	};
 
+	/**
+	 * ChangeListener pro určení indexu prvku z comboBoxu pro Configuration
+	 */
 	ChangeListener<Number> configListener = new ChangeListener<Number>() {
 
 		@Override
@@ -124,6 +154,10 @@ public class PhaseForm extends DateDescBasicForm implements ISegmentForm {
 
 		}
 	};
+
+	/**
+	 * Pomocná metoda pro vyplnění prvků do GridPane
+	 */
 
 	private void fillInfoPart() {
 
@@ -144,6 +178,9 @@ public class PhaseForm extends DateDescBasicForm implements ISegmentForm {
 
 	}
 
+	/**
+	 * Getrs and Setrs
+	 */
 	public ChoiceBox<String> getConfigCB() {
 		return configCB;
 	}

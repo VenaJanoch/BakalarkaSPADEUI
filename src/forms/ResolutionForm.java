@@ -27,24 +27,35 @@ import services.Control;
 import services.DeleteControl;
 import services.IdentificatorCreater;
 import tables.ClassTable;
-
+/**
+ * Třída představující tabulkový formulář pro výčtový typ Resolution, odděděná od třídy
+ * TableClassBasicForm a implementující ISegmentTableForm
+ * 
+ * @author Václav Janoch
+ *
+ */
 public class ResolutionForm extends TableClassBasicForm implements ISegmentTableForm {
-
+	/**
+	 * Globální proměnné třídy
+	 */
 	private Control control;
 
 	private ComboBox<WorkUnitResolutionClass> classTypeCB;
 	private ComboBox<WorkUnitResolutionsSuperClass> superClassTypeCB;
-
-	private Label classTypeLB;
-	private Label superClassTypeLB;
-
+	/**
+	 * Konstruktor třídy
+	 * Zinicializuje globální proměnné třídy
+	 * Nastaví reakci na potvrzovací tlačítko
+	 * @param control Control 
+	 * @param deleteControl DeleteControl
+	 * @param idCreator IdentificatorCreater
+	 */
 	public ResolutionForm(Control control, DeleteControl deleteControl, IdentificatorCreater idCreator) {
 		super(control, deleteControl, idCreator);
 
 		this.control = control;
 		this.setTitle("Edit Resolutions");
 		createForm();
-		// getSubmitButton().setVisible(false);
 		getSubmitButton().setOnAction(event -> setActionSubmitButton());
 
 	}
@@ -90,12 +101,10 @@ public class ResolutionForm extends TableClassBasicForm implements ISegmentTable
 	@Override
 	public GridPane createControlPane() {
 
-		classTypeLB = new Label("Class: ");
 		classTypeCB = new ComboBox<WorkUnitResolutionClass>(
 				FXCollections.observableArrayList(WorkUnitResolutionClass.values()));
 		classTypeCB.getSelectionModel().selectedIndexProperty().addListener(classListener);
 
-		superClassTypeLB = new Label("SuperClass: ");
 		superClassTypeCB = new ComboBox<WorkUnitResolutionsSuperClass>(
 				FXCollections.observableArrayList(WorkUnitResolutionsSuperClass.values()));
 		superClassTypeCB.getSelectionModel().selectedIndexProperty().addListener(superListener);
@@ -114,6 +123,9 @@ public class ResolutionForm extends TableClassBasicForm implements ISegmentTable
 		return getControlPane();
 	}
 
+	/**
+	 * ChangeListener pro určení indexu prvku z comboBoxu pro Class. Zavolá metody pro mapování Class na Super Class
+	 */
 	ChangeListener<Number> classListener = new ChangeListener<Number>() {
 
 		@Override
@@ -132,6 +144,9 @@ public class ResolutionForm extends TableClassBasicForm implements ISegmentTable
 		}
 	};
 
+	/**
+	 * ChangeListener pro určení indexu prvku z comboBoxu pro Super Class
+	 */
 	ChangeListener<Number> superListener = new ChangeListener<Number>() {
 
 		@Override

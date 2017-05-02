@@ -40,8 +40,18 @@ import tables.BranchTable;
 import tables.ClassTable;
 import tables.TagTable;
 
+/**
+ * Třída představující tabulkový formulář pro element Branch, odděděná od třídy
+ * TableBasicForm a implementující ISegmentTableForm
+ * 
+ * @author Václav Janoch
+ *
+ */
 public class BranchForm extends TableBasicForm implements ISegmentTableForm {
 
+	/**
+	 * Globální proměnné třídy
+	 */
 	private Label isMainLB;
 	private boolean isMain;
 
@@ -52,14 +62,25 @@ public class BranchForm extends TableBasicForm implements ISegmentTableForm {
 
 	private ComboBox<String> branchesCB;
 	private TableView<BranchTable> tableTV;
-	
+
 	private String main = "TRUE";
 
 	private boolean newBranch;
 
+	/**
+	 * Konstruktor třídy Zinicializuje globální proměnné tříd Nastaví velikost
+	 * formuláře
+	 * 
+	 * @param control
+	 *            Control
+	 * @param deleteControl
+	 *            DeleteControl
+	 * @param idCreator
+	 *            IdentificatorCreater
+	 */
 	public BranchForm(Control control, DeleteControl deleteControl, IdentificatorCreater idCreator) {
 		super(control, deleteControl, idCreator);
-		
+
 		getMainPanel().setMinSize(Constans.littleformWidth, Constans.littleformHeight);
 		getMainPanel().setMaxSize(Constans.littleformWidth, Constans.littleformHeight);
 
@@ -80,7 +101,6 @@ public class BranchForm extends TableBasicForm implements ISegmentTableForm {
 		getMainPanel().setBottom(createControlPane());
 	}
 
-	
 	@Override
 	public Node getTable() {
 		tableTV = new TableView<BranchTable>();
@@ -115,7 +135,7 @@ public class BranchForm extends TableBasicForm implements ISegmentTableForm {
 	public void deleteSelected(KeyEvent event) {
 		ObservableList<BranchTable> selection = FXCollections
 				.observableArrayList(tableTV.getSelectionModel().getSelectedItems());
-		
+
 		ObservableList<BranchTable> list = null;
 
 		if (event.getCode() == KeyCode.DELETE) {
@@ -144,7 +164,7 @@ public class BranchForm extends TableBasicForm implements ISegmentTableForm {
 		rbNo = new RadioButton("No");
 		rbNo.setToggleGroup(group);
 		rbNo.setId("NoRB");
-	
+
 		group.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
 
 			@Override

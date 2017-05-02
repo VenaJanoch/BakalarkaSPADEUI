@@ -40,18 +40,37 @@ import services.OrderCell;
 import tables.ClassTable;
 import tables.TagTable;
 
+/**
+ * Třída představující tabulkový formulář pro element Tag, odděděná od třídy
+ * TableBasicForm a implementující ISegmentTableForm
+ * 
+ * @author Václav Janoch
+ *
+ */
 public class TagForm extends TableBasicForm implements ISegmentTableForm {
-
+	/**
+	 * Globální proměnné třídy
+	 */
 	private Control control;
 	private TableView<TagTable> tableTV;
 	private TextField tagTF;
 	private Configuration config;
 
+	/**
+	 * Konstruktor třídy. Zinicializuje globální proměnné tříd Nastaví velikost
+	 * formuláře
+	 * 
+	 * @param control
+	 *            Control
+	 * @param deleteControl
+	 *            DeleteControl
+	 * @param idCreator
+	 *            IdentificatorCreater
+	 */
 	public TagForm(Configuration configuration, Control control, DeleteControl deleteControl,
 			IdentificatorCreater idCreator) {
 
 		super(control, deleteControl, idCreator);
-		// this.confIDs = confIDs;
 		this.control = control;
 		this.config = configuration;
 		this.setTitle("Edit Tags");
@@ -158,6 +177,7 @@ public class TagForm extends TableBasicForm implements ISegmentTableForm {
 
 	}
 
+	/*** Getrs and Setrs */
 	public TableView<TagTable> getTableTV() {
 		return tableTV;
 	}

@@ -40,23 +40,42 @@ import tables.ClassTable;
 import tables.CriterionTable;
 import tables.MilestoneTable;
 
+/**
+ * Třída představující tabulkový formulář pro element Criterion, odděděná od
+ * třídy TableBasicForm a implementující ISegmentTableForm
+ * 
+ * @author Václav Janoch
+ *
+ */
 public class CriterionForm extends TableBasicForm implements ISegmentTableForm {
-
+	/**
+	 * Globální proměnné třídy
+	 */
 	private Label descriptionLB;
 	private TextField descriptionTF;
 	private TableView<CriterionTable> tableTV;
 	private Control control;
 
-
+	/**
+	 * Konstruktor třídy Zinicializuje globální proměnné tříd
+	 * 
+	 * @param control
+	 *            Control
+	 * @param deleteControl
+	 *            DeleteControl
+	 * @param idCreator
+	 *            IdentificatorCreater
+	 */
 	public CriterionForm(Control control, DeleteControl deleteControl, IdentificatorCreater idCreator) {
 		super(control, deleteControl, idCreator);
 		this.control = control;
-		
+
 		getSubmitButton().setVisible(false);
 		createForm();
 
 	}
 
+	@Override
 	public void createForm() {
 
 		getFormName().setText("Criterion Form");
@@ -124,13 +143,11 @@ public class CriterionForm extends TableBasicForm implements ISegmentTableForm {
 	@Override
 	public GridPane createControlPane() {
 
-		
 		descriptionLB = new Label("Description: ");
 		descriptionTF = new TextField();
 
 		add.setOnAction(event -> addItem());
 
-		
 		controlPane.add(descriptionLB, 2, 0);
 		controlPane.add(descriptionTF, 3, 0);
 		controlPane.add(add, 4, 0);
@@ -153,7 +170,8 @@ public class CriterionForm extends TableBasicForm implements ISegmentTableForm {
 		CriterionTable criterion = new CriterionTable(idName, descriptionST);
 		tableTV.getItems().add(criterion);
 		tableTV.sort();
-		control.getFillForms().fillCriterion(idName,formControl.fillTextMapper(nameST), formControl.fillTextMapper(descriptionST));
+		control.getFillForms().fillCriterion(idName, formControl.fillTextMapper(nameST),
+				formControl.fillTextMapper(descriptionST));
 	}
 
 	public TableView<CriterionTable> getTableTV() {

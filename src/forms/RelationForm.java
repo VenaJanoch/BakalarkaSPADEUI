@@ -28,17 +28,30 @@ import services.Control;
 import services.DeleteControl;
 import services.IdentificatorCreater;
 import tables.ClassTable;
-
+/**
+ * Třída představující tabulkový formulář pro výčtový typ Relation, odděděná od třídy
+ * TableClassBasicForm a implementující ISegmentTableForm
+ * 
+ * @author Václav Janoch
+ *
+ */
 public class RelationForm extends TableClassBasicForm implements ISegmentTableForm {
-
+	/**
+	 * Globální proměnné třídy
+	 */
 	private Control control;
 
 	private ComboBox<WorkUnitRelationClass> classTypeCB;
 	private ComboBox<WorkUnitRelationSuperClass> superClassTypeCB;
 
-	private Label classTypeLB;
-	private Label superClassTypeLB;
-
+	/**
+	 * Konstruktor třídy
+	 * Zinicializuje globální proměnné třídy
+	 * Nastaví reakci na potvrzovací tlačítko
+	 * @param control Control 
+	 * @param deleteControl DeleteControl
+	 * @param idCreator IdentificatorCreater
+	 */
 	public RelationForm(Control control, DeleteControl deleteControl, IdentificatorCreater idCreator) {
 		super(control, deleteControl, idCreator);
 
@@ -46,7 +59,6 @@ public class RelationForm extends TableClassBasicForm implements ISegmentTableFo
 		this.setTitle("Edit Relations");
 
 		createForm();
-		// getSubmitButton().setVisible(false);
 		getSubmitButton().setOnAction(event -> setActionSubmitButton());
 
 	}
@@ -91,12 +103,10 @@ public class RelationForm extends TableClassBasicForm implements ISegmentTableFo
 	@Override
 	public GridPane createControlPane() {
 
-		classTypeLB = new Label("Class: ");
 		classTypeCB = new ComboBox<WorkUnitRelationClass>(
 				FXCollections.observableArrayList(WorkUnitRelationClass.values()));
 		classTypeCB.getSelectionModel().selectedIndexProperty().addListener(classListener);
 
-		superClassTypeLB = new Label("SuperClass: ");
 		superClassTypeCB = new ComboBox<WorkUnitRelationSuperClass>(
 				FXCollections.observableArrayList(WorkUnitRelationSuperClass.values()));
 		superClassTypeCB.getSelectionModel().selectedIndexProperty().addListener(superListener);
@@ -115,6 +125,9 @@ public class RelationForm extends TableClassBasicForm implements ISegmentTableFo
 		return getControlPane();
 	}
 
+	/**
+	 * ChangeListener pro určení indexu prvku z comboBoxu pro Class. Zavolá metody pro mapování Class na Super Class
+	 */
 	ChangeListener<Number> classListener = new ChangeListener<Number>() {
 
 		@Override
@@ -134,6 +147,9 @@ public class RelationForm extends TableClassBasicForm implements ISegmentTableFo
 		}
 	};
 
+	/**
+	 * ChangeListener pro určení indexu prvku z comboBoxu pro Super Class
+	 */
 	ChangeListener<Number> superListener = new ChangeListener<Number>() {
 
 		@Override

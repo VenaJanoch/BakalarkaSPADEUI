@@ -34,8 +34,18 @@ import services.Control;
 import services.DeleteControl;
 import services.SegmentType;
 
+/**
+ * Třída představující formulář pro element Work Unit, odděděná od třídy
+ * DescriptionBasicForm a implementující ISegmentForm
+ * 
+ * @author Václav Janoch
+ *
+ */
 public class WorkUnitForm extends DescriptionBasicForm implements ISegmentForm {
 
+	/**
+	 * Globální proměnné třídy
+	 */
 	private Label estimatedTimeLB;
 	private Label priorityLB;
 	private Label severityLB;
@@ -45,7 +55,7 @@ public class WorkUnitForm extends DescriptionBasicForm implements ISegmentForm {
 	private Label typeLB;
 	private Label asigneeRoleLB;
 	private Label authorRoleLB;
-		
+
 	private TextField estimatedTimeTF;
 	private RadioButton existRB;
 	private ComboBox<String> priorityCB;
@@ -64,13 +74,29 @@ public class WorkUnitForm extends DescriptionBasicForm implements ISegmentForm {
 	private int authorIndex;
 	private int resolutionIndex;
 	private int statusIndex;
-	
+
 	private WorkUnit unit;
 
+	/**
+	 * Konstruktor třídy. Zinicializuje globální proměnné tříd Nastaví velikost
+	 * okna a reakci na uzavření formuláře
+	 * 
+	 * @param item
+	 *            CanvasItem
+	 * @param control
+	 *            Control
+	 * @param unit
+	 *            WorkUnit
+	 * 
+	 * @param deleteControl
+	 *            DeleteControl
+	 * @param conf
+	 *            Configuration
+	 */
 	public WorkUnitForm(CanvasItem item, Control control, WorkUnit unit, DeleteControl deleteControl) {
 		super(item, control, deleteControl);
 		this.unit = unit;
-		
+
 		getMainPanel().setMinSize(Constans.workUnitformWidth, Constans.workUnitformHeight);
 		getMainPanel().setMaxSize(Constans.workUnitformWidth, Constans.workUnitformHeight);
 		setNew(true);
@@ -107,10 +133,10 @@ public class WorkUnitForm extends DescriptionBasicForm implements ISegmentForm {
 		getControl().getFillForms().fillWorkUnit(unit, IDs, getDescriptionTF().getText(), actName, assigneIndex,
 				authorIndex, category, x, y, priorityIndex, severityIndex, typeIndex, resolutionIndex, statusIndex,
 				estimatedTimeTF.getText(), isNew(), existRB.isSelected());
-		
+
 		if (!existRB.isSelected()) {
 			getCanvasItem().getSegmentInfo().setRectangleColor(Constans.nonExistRectangleBorderColor);
-		}else{
+		} else {
 			getCanvasItem().getSegmentInfo().setRectangleColor(Constans.rectangleBorderColor);
 		}
 		setNew(false);
@@ -119,8 +145,8 @@ public class WorkUnitForm extends DescriptionBasicForm implements ISegmentForm {
 
 	@Override
 	public void setActionSubmitButton() {
-			closeForm();
-			close();
+		closeForm();
+		close();
 
 	}
 
@@ -171,10 +197,13 @@ public class WorkUnitForm extends DescriptionBasicForm implements ISegmentForm {
 
 		existRB = new RadioButton("Exist");
 		existRB.setSelected(true);
-		
+
 		fillInfoPart();
 	}
 
+	/**
+	 * ChangeListener pro určení indexu prvku z comboBoxu pro Work Unit - Type
+	 */
 	ChangeListener<Number> typeListener = new ChangeListener<Number>() {
 
 		@Override
@@ -184,7 +213,9 @@ public class WorkUnitForm extends DescriptionBasicForm implements ISegmentForm {
 
 		}
 	};
-
+	/**
+	 * ChangeListener pro určení indexu prvku z comboBoxu pro Resolution
+	 */
 	ChangeListener<Number> resolutionListener = new ChangeListener<Number>() {
 
 		@Override
@@ -195,6 +226,9 @@ public class WorkUnitForm extends DescriptionBasicForm implements ISegmentForm {
 		}
 	};
 
+	/**
+	 * ChangeListener pro určení indexu prvku z comboBoxu pro Status
+	 */
 	ChangeListener<Number> statusListener = new ChangeListener<Number>() {
 
 		@Override
@@ -204,7 +238,9 @@ public class WorkUnitForm extends DescriptionBasicForm implements ISegmentForm {
 
 		}
 	};
-
+	/**
+	 * ChangeListener pro určení indexu prvku z comboBoxu pro Role-Assiggne
+	 */
 	ChangeListener<Number> roleListenerAsig = new ChangeListener<Number>() {
 
 		@Override
@@ -215,6 +251,9 @@ public class WorkUnitForm extends DescriptionBasicForm implements ISegmentForm {
 		}
 	};
 
+	/**
+	 * ChangeListener pro určení indexu prvku z comboBoxu pro Role-Author
+	 */
 	ChangeListener<Number> roleListenerAut = new ChangeListener<Number>() {
 
 		@Override
@@ -223,7 +262,9 @@ public class WorkUnitForm extends DescriptionBasicForm implements ISegmentForm {
 
 		}
 	};
-
+	/**
+	 * ChangeListener pro určení indexu prvku z comboBoxu pro Priority
+	 */
 	ChangeListener<Number> priorityListener = new ChangeListener<Number>() {
 
 		@Override
@@ -233,7 +274,9 @@ public class WorkUnitForm extends DescriptionBasicForm implements ISegmentForm {
 
 		}
 	};
-
+	/**
+	 * ChangeListener pro určení indexu prvku z comboBoxu pro Severity
+	 */
 	ChangeListener<Number> severityListener = new ChangeListener<Number>() {
 
 		@Override
@@ -280,19 +323,18 @@ public class WorkUnitForm extends DescriptionBasicForm implements ISegmentForm {
 		getInfoPart().add(authorRoleLB, 0, 10);
 		getInfoPart().setHalignment(authorRoleLB, HPos.RIGHT);
 		getInfoPart().add(authorRoleCB, 1, 10);
-		
 
 		getInfoPart().add(existRB, 1, 11);
 
 	}
 
-	
 	@Override
 	public void deleteItem(int iDs[]) {
-	
+
 		deleteControl.deleteWorkUnit(iDs);
-		
+
 	}
+
 	/**** Gets and Setrs ***/
 
 	public TextField getEstimatedTimeTF() {
@@ -374,7 +416,5 @@ public class WorkUnitForm extends DescriptionBasicForm implements ISegmentForm {
 	public void setExistRB(RadioButton existRB) {
 		this.existRB = existRB;
 	}
-	
-	
 
 }

@@ -36,8 +36,18 @@ import services.DeleteControl;
 import services.IdentificatorCreater;
 import services.SegmentType;
 
+/**
+ * Třída představující formulář pro element Configuration, odděděná od třídy
+ * BasicForm a implementující ISegmentForm
+ * 
+ * @author Václav Janoch
+ *
+ */
 public class ConfigurationForm extends BasicForm implements ISegmentForm {
 
+	/**
+	 * Globální proměnné třídy
+	 */
 	private boolean isRelease;
 
 	private Button addTag;
@@ -67,6 +77,23 @@ public class ConfigurationForm extends BasicForm implements ISegmentForm {
 	private Configuration configuration;
 	private TagForm tagForm;
 
+	/**
+	 * Konstruktor třídy Zinicializuje globální proměnné tříd Nastaví reakci na
+	 * uzavření okna
+	 * 
+	 * @param item
+	 *            CanvasItem
+	 * @param control
+	 *            Control
+	 * @param itemArray
+	 * @param conf
+	 *            Configuration
+	 * @param indexForm
+	 * @param deleteControl
+	 *            DeleteControl
+	 * @param idCreater
+	 *            IdentificatorCreater
+	 */
 	public ConfigurationForm(CanvasItem item, Control control, int[] itemArray, Configuration conf, int indexForm,
 			DeleteControl deleteControl, IdentificatorCreater idCreater) {
 		super(item, control, itemArray, indexForm, deleteControl, CanvasType.Configuration);
@@ -122,8 +149,8 @@ public class ConfigurationForm extends BasicForm implements ISegmentForm {
 	@Override
 	public void setActionSubmitButton() {
 
-			closeForm();
-			close();
+		closeForm();
+		close();
 	}
 
 	@Override
@@ -131,7 +158,7 @@ public class ConfigurationForm extends BasicForm implements ISegmentForm {
 
 		createdLB = new Label("Created: ");
 		createdDP = new DatePicker();
-		
+
 		isReleaseLB = new Label("Release: ");
 		rbNo = new RadioButton("No");
 		rbNo.setToggleGroup(group);
@@ -143,17 +170,17 @@ public class ConfigurationForm extends BasicForm implements ISegmentForm {
 		authorRoleCB = new ComboBox<String>(getControl().getLists().getRoleObservable());
 		authorRoleCB.setVisibleRowCount(5);
 		authorRoleCB.getSelectionModel().selectedIndexProperty().addListener(roleListenerAut);
-		
+
 		cprLB = new Label("Conf-Person: ");
 		cprCB = new CheckComboBox<String>(getControl().getLists().getCPRObservable());
 		cprCB.getCheckModel().getCheckedItems().addListener(cprListener);
 		cprCB.setMaxWidth(Constans.checkComboBox);
-		
+
 		branchLB = new Label("Branches");
 		branchCB = new CheckComboBox<String>(getControl().getLists().getBranchObservable());
 		branchCB.setMaxWidth(Constans.checkComboBox);
 		branchCB.getCheckModel().getCheckedItems().addListener(new ListChangeListener<String>() {
-		
+
 			public void onChanged(ListChangeListener.Change<? extends String> c) {
 				branchIndex.addAll(branchCB.getCheckModel().getCheckedIndices());
 				branchArray = branchCB.getCheckModel().getCheckedItems();
@@ -167,6 +194,9 @@ public class ConfigurationForm extends BasicForm implements ISegmentForm {
 		fillInfoPart();
 	}
 
+	/**
+	 * Pomocná metoda pro nastavení prvků do GridPane
+	 */
 	private void fillInfoPart() {
 
 		getInfoPart().add(createdLB, 0, 1);
@@ -209,6 +239,9 @@ public class ConfigurationForm extends BasicForm implements ISegmentForm {
 
 	}
 
+	/**
+	 * ChangeListener pro určení indexu prvku z comboBoxu pro Role
+	 */
 	ChangeListener<Number> roleListenerAut = new ChangeListener<Number>() {
 
 		@Override
@@ -218,6 +251,9 @@ public class ConfigurationForm extends BasicForm implements ISegmentForm {
 		}
 	};
 
+	/**
+	 * ChangeListener pro určení indexů prvků z CheckComboBoxu pro CPR
+	 */
 	ListChangeListener<String> cprListener = new ListChangeListener<String>() {
 
 		public void onChanged(ListChangeListener.Change<? extends String> c) {

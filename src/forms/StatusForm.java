@@ -29,17 +29,33 @@ import services.DeleteControl;
 import services.IdentificatorCreater;
 import tables.ClassTable;
 
+/**
+ * Třída představující tabulkový formulář pro výčtový typ Status, odděděná od
+ * třídy TableClassBasicForm a implementující ISegmentTableForm
+ * 
+ * @author Václav Janoch
+ *
+ */
 public class StatusForm extends TableClassBasicForm implements ISegmentTableForm {
-
+	/**
+	 * Globální proměnné třídy
+	 */
 	private Control control;
 
 	private ComboBox<WorkUnitStatusClass> classTypeCB;
 	private ComboBox<WorkUnitStatusSuperClass> superClassTypeCB;
 
-	private Label classTypeLB;
-	private Label superClassTypeLB;
-
-	
+	/**
+	 * Konstruktor třídy Zinicializuje globální proměnné třídy Nastaví reakci na
+	 * potvrzovací tlačítko
+	 * 
+	 * @param control
+	 *            Control
+	 * @param deleteControl
+	 *            DeleteControl
+	 * @param idCreator
+	 *            IdentificatorCreater
+	 */
 	public StatusForm(Control control, DeleteControl deleteControl, IdentificatorCreater idCreator) {
 		super(control, deleteControl, idCreator);
 
@@ -91,17 +107,17 @@ public class StatusForm extends TableClassBasicForm implements ISegmentTableForm
 	@Override
 	public GridPane createControlPane() {
 
-				classTypeCB = new ComboBox<WorkUnitStatusClass>(
+		classTypeCB = new ComboBox<WorkUnitStatusClass>(
 				FXCollections.observableArrayList(WorkUnitStatusClass.values()));
 		classTypeCB.getSelectionModel().selectedIndexProperty().addListener(classListener);
 
-				superClassTypeCB = new ComboBox<WorkUnitStatusSuperClass>(
+		superClassTypeCB = new ComboBox<WorkUnitStatusSuperClass>(
 				FXCollections.observableArrayList(WorkUnitStatusSuperClass.values()));
 		superClassTypeCB.getSelectionModel().selectedIndexProperty().addListener(superListener);
 
 		classTypeCB.setValue(WorkUnitStatusClass.UNASSIGNED);
 		superClassTypeCB.setValue(WorkUnitStatusSuperClass.UNASSIGNED);
-		
+
 		getControlPane().add(classLB, 2, 0);
 		getControlPane().add(classTypeCB, 3, 0);
 		getControlPane().add(superLB, 4, 0);
@@ -113,13 +129,17 @@ public class StatusForm extends TableClassBasicForm implements ISegmentTableForm
 		return getControlPane();
 	}
 
+	/**
+	 * ChangeListener pro určení indexu prvku z comboBoxu pro Class. Zavolá
+	 * metody pro mapování Class na Super Class
+	 */
 	ChangeListener<Number> classListener = new ChangeListener<Number>() {
 
 		@Override
 		public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
 
 			classIndex = newValue.intValue();
-			
+
 			superIndex = getSwitcher().statusClassToSupperClass(classIndex);
 			if (superIndex == -1) {
 				superClassTypeCB.setDisable(false);
@@ -132,13 +152,15 @@ public class StatusForm extends TableClassBasicForm implements ISegmentTableForm
 		}
 	};
 
+	/**
+	 * ChangeListener pro určení indexu prvku z comboBoxu pro Super Class
+	 */
 	ChangeListener<Number> superListener = new ChangeListener<Number>() {
 
 		@Override
 		public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
 
 			superIndex = newValue.intValue();
-			
 
 		}
 	};
@@ -160,7 +182,8 @@ public class StatusForm extends TableClassBasicForm implements ISegmentTableForm
 
 		getTableTV().getItems().add(table);
 		getTableTV().sort();
-		getControl().getFillForms().fillStatusType(idName,formControl.fillTextMapper(nameST), formControl.fillTextMapper(classST), superST);
+		getControl().getFillForms().fillStatusType(idName, formControl.fillTextMapper(nameST),
+				formControl.fillTextMapper(classST), superST);
 
 	}
 

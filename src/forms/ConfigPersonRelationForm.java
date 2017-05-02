@@ -36,13 +36,20 @@ import tables.CPRTable;
 import tables.ClassTable;
 import tables.CriterionTable;
 import tables.MilestoneTable;
-
+/**
+ * Třída představující tabulkový formulář pro element Configuration-Person-Relatio, odděděná od třídy
+ * TableBasicForm a implementující ISegmentTableForm
+ * 
+ * @author Václav Janoch
+ *
+ */
 public class ConfigPersonRelationForm extends TableBasicForm implements ISegmentTableForm {
 
-	private Label configurationLB;
+	/**
+	 * Globální proměnné třídy
+	 */
 	private Label personRoleLB;
 
-	private ComboBox<String> configurationCB;
 	private ComboBox<String> personCB;
 
 	private TableView<CPRTable> tableTV;
@@ -50,6 +57,15 @@ public class ConfigPersonRelationForm extends TableBasicForm implements ISegment
 	private int roleIndex;
 	private int configIndex;
 
+	/**
+	 * Konstruktor třídy
+	 * Zinicializuje globální proměnné tříd
+	 * Nastaví vlastnost pro tlačítko OK
+	 * @param control
+	 * @param deleteControl
+	 * @param idCreator
+	 */
+	
 	public ConfigPersonRelationForm(Control control, DeleteControl deleteControl, IdentificatorCreater idCreator) {
 		super(control, deleteControl, idCreator);
 
@@ -141,7 +157,9 @@ public class ConfigPersonRelationForm extends TableBasicForm implements ISegment
 
 		return getControlPane();
 	}
-
+	/**
+	 * ChangeListener pro určení indexu prvku z comboBoxu pro Role
+	 */
 	ChangeListener<Number> roleListener = new ChangeListener<Number>() {
 
 		@Override
@@ -152,15 +170,6 @@ public class ConfigPersonRelationForm extends TableBasicForm implements ISegment
 		}
 	};
 
-	ChangeListener<Number> configListener = new ChangeListener<Number>() {
-
-		@Override
-		public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-
-			configIndex = newValue.intValue();
-
-		}
-	};
 
 	@Override
 	public void addItem() {

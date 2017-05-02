@@ -27,8 +27,26 @@ import services.Constans;
 import services.Control;
 import services.SegmentType;
 
+/**
+ * Třída představující formulář pro kořenový Element Project, odděděná od třídy
+ * Dete2DescBasicForm a implementující ISegmentForm
+ * 
+ * @author Václav Janoch
+ *
+ */
 public class ProjectForm extends Date2DescBasicForm implements ISegmentForm {
 
+	/**
+	 * Konstruktor třídy Nastaví velikost okna, reakci na uzavření okna
+	 * formuláře a zinicializuje globální proměnné tříd
+	 * 
+	 * @param control
+	 *            Control
+	 * @param project
+	 *            Project
+	 * @param canvas
+	 *            DragAndDropCanvas
+	 */
 	public ProjectForm(Control control, Project project, DragAndDropCanvas canvas) {
 		super(control);
 
@@ -44,7 +62,7 @@ public class ProjectForm extends Date2DescBasicForm implements ISegmentForm {
 
 		setCanvasItem(new CanvasItem(SegmentType.Project, "", control, this, 0, 0, 0, control.getContexMenu(),
 				control.getLinkControl(), control.getCanvas()));
-		
+
 		this.setOnCloseRequest(e -> {
 
 			e.consume();
@@ -87,7 +105,5 @@ public class ProjectForm extends Date2DescBasicForm implements ISegmentForm {
 		getDate2LB().setText("End-Date");
 
 	}
-
-	/*** Getrs and setrs ***/
 
 }

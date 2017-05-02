@@ -52,8 +52,19 @@ import tables.ClassTable;
 import tables.MilestoneTable;
 import tables.TagTable;
 
+/**
+ * Třída představující dvojitý formulář pro element Milestone, vytvoří tabulku s
+ * přehledem Milestonů a tabulkový formulář pro Criterion, odděděná od třídy
+ * Table2BasicForm a implementující ISegmentTableForm
+ * 
+ * @author Václav Janoch
+ *
+ */
 public class MilestoneForm extends Table2BasicForm implements ISegmentTableForm {
 
+	/**
+	 * Globální proměnné třídy
+	 */
 	private Label criteriaLB;
 	private Label formName;
 
@@ -65,6 +76,16 @@ public class MilestoneForm extends Table2BasicForm implements ISegmentTableForm 
 	private ObservableList<String> criterionArray;
 	private ObservableList<Integer> criterionIndex;
 
+	/**
+	 * Konstruktor třídy Zinicializuje globální proměnné třídy
+	 * 
+	 * @param control
+	 *            Control
+	 * @param deleteControl
+	 *            DeleteControl
+	 * @param idCreator
+	 *            IdentificatorCreater
+	 */
 	public MilestoneForm(Control control, DeleteControl deleteControl, IdentificatorCreater idCreator) {
 
 		super(control, deleteControl, idCreator);
