@@ -41,7 +41,6 @@ public class SegmentLists {
 	private List<Role> roleList;
 	private ArrayList<Integer> roleFormIndex;
 
-	// private ObservableList<String> changeObservable;
 	private List<Change> changeList;
 	private ArrayList<Integer> changeFormIndex;
 
@@ -107,7 +106,7 @@ public class SegmentLists {
 	}
 
 	/**
-	 * Umožňí vymazání seznamů
+	 * Umozni vymazání seznamů
 	 * 
 	 * @param project
 	 *            Kořenový element

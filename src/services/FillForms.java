@@ -307,12 +307,17 @@ public class FillForms {
 	 */
 	public void fillWorkUnit(WorkUnit workUnit, int[] ID, String description, String name, int authorIndex,
 			int assigneIndex, String category, int x, int y, int priorityIndex, int severityIndex, int typeIndex,
-			int resolutionIndex, int statusIndex, String estimate, boolean isNew, boolean isExist) {
+			int resolutionIndex, int statusIndex, double estimated, boolean isNew, boolean isExist) {
 
 		workUnit.setDescription(formControl.fillTextMapper(description));
 		workUnit.setName(formControl.fillTextMapper(name));
-		formControl.workUnitControl(workUnit, estimate, priorityIndex, severityIndex, typeIndex, resolutionIndex,
-				statusIndex, authorIndex, assigneIndex);
+		if (estimated == -1.0) {
+			workUnit.setEstimatedTime(null);
+		} else {
+			workUnit.setEstimatedTime(estimated);
+		}
+		formControl.workUnitControl(workUnit, priorityIndex, severityIndex, typeIndex, resolutionIndex, statusIndex,
+				authorIndex, assigneIndex);
 
 		workUnit.setExist(isExist);
 

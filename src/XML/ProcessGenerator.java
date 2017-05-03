@@ -13,6 +13,7 @@ import javax.xml.bind.JAXBElement;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.MarshalException;
 import javax.xml.bind.Marshaller;
+import javax.xml.bind.UnmarshalException;
 import javax.xml.bind.Unmarshaller;
 import javax.xml.validation.Validator;
 
@@ -51,14 +52,13 @@ public class ProcessGenerator {
 			marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
 			marshaller.setProperty(Marshaller.JAXB_NO_NAMESPACE_SCHEMA_LOCATION, Constans.XSDNAME);
 
-			unMarshaller = jc.createUnmarshaller();
-
 			marshallerVal = jc.createMarshaller();
 			marshallerVal.setProperty(Marshaller.JAXB_ENCODING, "UTF8");
 			marshallerVal.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
 			marshallerVal.setProperty(Marshaller.JAXB_NO_NAMESPACE_SCHEMA_LOCATION, Constans.XSDNAME);
 			marshallerVal.setSchema(validator.getSchemaXSD());
 
+			unMarshaller = jc.createUnmarshaller();
 			unMarshallerVal = jc.createUnmarshaller();
 
 		} catch (JAXBException e) {
@@ -94,6 +94,10 @@ public class ProcessGenerator {
 			e.printStackTrace();
 		}
 		Alerts.showValidationOK();
+	}
+
+	public void validateUnMarshall() {
+
 	}
 
 	/**
@@ -147,7 +151,6 @@ public class ProcessGenerator {
 		try {
 			marshaller.marshal(rootElement, new FileOutputStream(file));
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (JAXBException e) {
 			// TODO Auto-generated catch block
@@ -168,9 +171,16 @@ public class ProcessGenerator {
 		JAXBElement element = null;
 
 		try {
-			element = (JAXBElement) unMarshaller.unmarshal(file);
+			element = (JAXBElement) unMarshallerVal.unmarshal(file);
 			validator.validatePrecess(element);
 
+		} catch (UnmarshalException e) {
+
+			StringWriter errors = new StringWriter();
+			e.printStackTrace(new PrintWriter(errors));
+			Alerts.showValidationError(errors.toString().substring(0, 300) + " ....");
+			validator.validatePrecess(rootElement);
+			return null;
 		} catch (JAXBException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

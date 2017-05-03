@@ -76,6 +76,7 @@ public class WorkUnitForm extends DescriptionBasicForm implements ISegmentForm {
 	private int statusIndex;
 
 	private WorkUnit unit;
+	private Double estimated;
 
 	/**
 	 * Konstruktor třídy. Zinicializuje globální proměnné tříd Nastaví velikost
@@ -132,7 +133,7 @@ public class WorkUnitForm extends DescriptionBasicForm implements ISegmentForm {
 		setName(actName);
 		getControl().getFillForms().fillWorkUnit(unit, IDs, getDescriptionTF().getText(), actName, assigneIndex,
 				authorIndex, category, x, y, priorityIndex, severityIndex, typeIndex, resolutionIndex, statusIndex,
-				estimatedTimeTF.getText(), isNew(), existRB.isSelected());
+				estimated, isNew(), existRB.isSelected());
 
 		if (!existRB.isSelected()) {
 			getCanvasItem().getSegmentInfo().setRectangleColor(Constans.nonExistRectangleBorderColor);
@@ -145,8 +146,18 @@ public class WorkUnitForm extends DescriptionBasicForm implements ISegmentForm {
 
 	@Override
 	public void setActionSubmitButton() {
-		closeForm();
-		close();
+		estimated = -1.0;
+		try {
+			if (!estimatedTimeTF.getText().equals("")) {
+				estimated = Double.parseDouble(estimatedTimeTF.getText());
+			}
+
+			closeForm();
+			close();
+		} catch (NumberFormatException e) {
+			Alerts.showWrongEstimatedTimeAlert();
+
+		}
 
 	}
 

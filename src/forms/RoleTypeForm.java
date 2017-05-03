@@ -127,7 +127,7 @@ public class RoleTypeForm extends TableClassBasicForm implements ISegmentTableFo
 		roleClassTypeCB.setValue(RoleClass.UNASSIGNED);
 		roleSuperClassTypeCB.setValue(RoleSuperClass.UNASSIGNED);
 
-		getControlPane().add(classLB, 2, 1);
+		getControlPane().add(classLB, 0, 1);
 		getControlPane().add(roleClassTypeCB, 1, 1);
 		getControlPane().add(superLB, 4, 1);
 		getControlPane().add(roleSuperClassTypeCB, 3, 1);

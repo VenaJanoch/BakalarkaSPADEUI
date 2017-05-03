@@ -90,14 +90,14 @@ public class WorkUnitLink extends NodeLink {
 	/**
 	 * Metoda pro smazání spojnice mezi Work Units, vymazání spojení z datových struktur
 	 */
-	protected void deleteArrow() {
+	public void deleteArrow() {
 		this.setVisible(false);
 		relationCB.setVisible(false);
 		relationCB = null;
 		polygon.setVisible(false);
 		polygon = null;
 		getBackgroundPolygon().setVisible(false);
-		setBackgroundPolygon(null);
+		//setBackgroundPolygon(null);
 		linkControl.deleteWorkUnitArrow(id, startIDs[1], endIDs[1]);
 	}
 
@@ -105,14 +105,20 @@ public class WorkUnitLink extends NodeLink {
 	 * Metoda kontrolující dvojklik na spojnici
 	 */
 	protected void pressedDeleteArrow(MouseEvent t) {
+		
 		control.getManipulation().setLink(this);
+		control.getManipulation().setClicItem(null);
+		
+		getBackgroundPolygon().setStroke(Color.BLACK);
+		getBackgroundPolygon().getStrokeDashArray().add(2d);
+		
 		if (t.getButton().equals(MouseButton.PRIMARY)) {
 			if (t.getClickCount() == 2) {
 				deleteArrow();
 			}
 
 		}else{
-		getBackgroundPolygon().setVisible(true);
+		
 		}
 
 	}

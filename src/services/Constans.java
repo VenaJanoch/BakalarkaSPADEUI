@@ -142,7 +142,7 @@ public class Constans {
 	 * Konstanty pro nastavení velikosti šipky
 	 */
 	public static final double ArrowRadius = 10;
-	public static final double polygonHeight = 5;
+	public static final double polygonHeight = 10;
 	public static final double checkComboBox = 50;
 
 	/**

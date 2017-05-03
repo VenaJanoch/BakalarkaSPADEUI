@@ -124,10 +124,9 @@ public class NodeLink extends Line {
 	 * Metoda pro smazání spojice mezi prvky a zavolání metody pro smazání
 	 * spojení z datových struktur
 	 */
-	protected void deleteArrow() {
+	public void deleteArrow() {
 		this.setVisible(false);
 		backgroundPolygon.setVisible(false);
-		backgroundPolygon = null;
 		linkControl.deleteArrow(id, startIDs[1], endIDs[1]);
 
 	}
@@ -139,7 +138,9 @@ public class NodeLink extends Line {
 	 *            MouseEvent
 	 */
 	protected void pressedDeleteArrow(MouseEvent t) {
+		
 		control.getManipulation().setLink(this);
+		control.getManipulation().setClicItem(null);
 		if (t.getButton().equals(MouseButton.PRIMARY)) {
 			if (t.getClickCount() == 2) {
 				deleteArrow();

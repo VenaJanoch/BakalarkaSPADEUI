@@ -18,7 +18,7 @@ import services.FormControl;
 import services.IdentificatorCreater;
 
 /**
- * Třída umožňující vytvoření tabulkového formuláře
+ * Třída umoznující vytvoření tabulkového formuláře
  * 
  * @author Václav Janoch
  *

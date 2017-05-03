@@ -59,9 +59,12 @@ public class FormControl {
 	}
 
 	/**
-	 * Umožňuje kontrolu vkládaného prvku do plátna
-	 * @param itemType vkládaný CanvasItem
-	 * @param canvasType Typ plátna pro přidání
+	 * Umoznuje kontrolu vkládaného prvku do plátna
+	 * 
+	 * @param itemType
+	 *            vkládaný CanvasItem
+	 * @param canvasType
+	 *            Typ plátna pro přidání
 	 * @return uspěšné\neúspěšné přídání do plátna
 	 */
 	public static boolean copyControl(SegmentType itemType, CanvasType canvasType) {
@@ -87,8 +90,10 @@ public class FormControl {
 		return false;
 
 	}
+
 	/**
 	 * Kontrola vyplněných hodnot Phase
+	 * 
 	 * @param phase
 	 * @param milestone
 	 * @param config
@@ -107,8 +112,8 @@ public class FormControl {
 	/**
 	 * Kontrola vyplněných hodnot Artifact
 	 * 
-	**/
-	
+	 **/
+
 	public void artifactControl(Artifact artifact, int index) {
 		if (index != 0) {
 			artifact.setAuthorIndex(index - 1);
@@ -118,16 +123,17 @@ public class FormControl {
 	/**
 	 * Kontrola vyplněných hodnot Configuration
 	 * 
-	**/
+	 **/
 	public void configControl(Configuration conf, int index) {
 		if (index != 0) {
 			conf.setAuthorIndex(index - 1);
 		}
 	}
+
 	/**
 	 * Kontrola vyplněných hodnot Iteration
 	 * 
-	**/
+	 **/
 	public void iterationControl(Iteration iteration, int index) {
 
 		if (index != 0) {
@@ -138,21 +144,10 @@ public class FormControl {
 	/**
 	 * Kontrola vyplněných hodnot Work Unit
 	 * 
-	**/
-	public boolean workUnitControl(WorkUnit workUnit, String estimate, int priority, int severity, int type,
-			int resolution, int status, int author, int assignee) {
+	 **/
+	public boolean workUnitControl(WorkUnit workUnit, int priority, int severity, int type, int resolution, int status,
+			int author, int assignee) {
 
-		double estimated = 0;
-		try {
-			if (!estimate.equals("")) {
-				estimated = Double.parseDouble(estimate);
-			}
-
-		} catch (NumberFormatException e) {
-			Alerts.showWrongEstimatedTimeAlert();
-			return false;
-		}
-		workUnit.setEstimatedTime(estimated);
 		if (priority != 0) {
 			workUnit.setPriorityIndex(priority - 1);
 		} else if (severity != 0) {
@@ -176,7 +171,7 @@ public class FormControl {
 	/**
 	 * Kontrola vyplněných hodnot formuláře WorkUnit
 	 * 
-	**/
+	 **/
 	public void workUnitFormControl(WorkUnitForm form, WorkUnit unit) {
 		if (unit.getPriorityIndex() != null) {
 			form.getPriorityCB().setValue(lists.getPriorityObservable().get(unit.getPriorityIndex() + 1));
@@ -201,8 +196,12 @@ public class FormControl {
 			String assignee = lists.getRoleList().get(unit.getAssigneeIndex() + 1).getName();
 			form.getAsigneeRoleCB().setValue(assignee);
 		}
+		if (unit.getEstimatedTime() == null) {
+			form.getEstimatedTimeTF().setText("");
+		} else {
+			form.getEstimatedTimeTF().setText(String.valueOf(unit.getEstimatedTime()));
+		}
 
-		form.getEstimatedTimeTF().setText(String.valueOf(unit.getEstimatedTime()));
 		form.getExistRB().setSelected(unit.isExist());
 
 	}

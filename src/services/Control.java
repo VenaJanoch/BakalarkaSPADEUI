@@ -84,6 +84,7 @@ public class Control {
 	private ConfigurationTableForm confTableForm;
 	private TypeForm typeForm;
 	private MainWindow mainWindow;
+	private boolean save = false;
 
 	/**
 	 * Konstruktor třídy Zinicializuje Globální proměnné třídy
@@ -410,8 +411,10 @@ public class Control {
 	public void saveFile() {
 
 		if (file == null || firstSave) {
+
 			saveAsFile();
 			firstSave = false;
+			save = true;
 		} else {
 			procesGener.saveProcess(file, project);
 
@@ -425,13 +428,18 @@ public class Control {
 	 */
 
 	public void saveAsFile() {
-		fileChooser.setTitle("Save Process");
+		if (!save) {
+			fileChooser.setTitle("Save Process");
 
-		file = fileChooser.showSaveDialog(new Stage());
+			file = fileChooser.showSaveDialog(new Stage());
 
-		if (file != null) {
-			procesGener.saveProcess(file, project);
+			if (file != null) {
+				procesGener.saveProcess(file, project);
+			}
+		} else {
+			save = false;
 		}
+
 	}
 
 	/**
@@ -455,28 +463,30 @@ public class Control {
 	 * @param file
 	 */
 	public void openFile(File file) {
-		restartControl();
-		project = procesGener.readProcess(file);
+		Project tmpProject = procesGener.readProcess(file);
+		if (tmpProject != null) {
 
-		ProjectForm form = new ProjectForm(this, project, canvas);
-		forms.add(0, form);
+			restartControl();
+			project = tmpProject;
+			ProjectForm form = new ProjectForm(this, project, canvas);
+			forms.add(0, form);
 
-		lists.restartLists(project);
+			lists.restartLists(project);
 
-		linkControl = new LinkControl(this, lists, objF, idCreater);
-		linkControl.restart();
-		deleteControl = new DeleteControl(this, lists, project);
+			linkControl = new LinkControl(this, lists, objF, idCreater);
+			linkControl.restart();
+			deleteControl = new DeleteControl(this, lists, project);
 
-		fillForms = new FillForms(this, lists, project, forms, objF, idCreater, deleteControl, formControl);
-		fillCopy = new FillCopyForms(this, getLists(), project, forms, objF, idCreater, deleteControl, formControl);
-		manipulation.restart(fillCopy, project, deleteControl, forms);
+			fillForms = new FillForms(this, lists, project, forms, objF, idCreater, deleteControl, formControl);
+			fillCopy = new FillCopyForms(this, getLists(), project, forms, objF, idCreater, deleteControl, formControl);
+			manipulation.restart(fillCopy, project, deleteControl, forms);
 
-		fillFormsXML = new FillFormsXML(this, lists, project, forms, fillCopy, idCreater, linkControl, deleteControl,
-				formControl);
-		fillFormsXML.fillProjectFromXML(form);
+			fillFormsXML = new FillFormsXML(this, lists, project, forms, fillCopy, idCreater, linkControl,
+					deleteControl, formControl);
+			fillFormsXML.fillProjectFromXML(form);
 
-		parseProject();
-
+			parseProject();
+		}
 	}
 
 	/**

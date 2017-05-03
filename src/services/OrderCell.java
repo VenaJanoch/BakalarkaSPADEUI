@@ -4,10 +4,12 @@ import javafx.scene.control.TableCell;
 import tables.TagTable;
 
 /**
+ * Bunka umoznujici vypis poradi prvku
  * 
- * Buňka umožnující výpis pořadí v tabulce
+ * @author Václav Janoch
  *
  */
+
 public class OrderCell extends TableCell<TagTable, Integer> {
 	public void updateItem(Integer value, boolean empty) {
 		super.updateItem(value, empty);

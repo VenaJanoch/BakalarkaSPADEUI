@@ -110,8 +110,14 @@ public class DragAndDropCanvas extends ScrollPane {
 				} else if (Constans.controlX.match(event)) {
 					cutItem();
 				} else if (event.getCode() == KeyCode.DELETE) {
+					if(control.getManipulation().getClicItem() != null){
 					CanvasItem item = control.getManipulation().getClicItem();
 					control.getManipulation().deleteItem(item);
+					}else if(control.getManipulation().getLink() != null){
+						control.getManipulation().getLink().deleteArrow();
+						
+					}
+					
 				} else if (event.getCode() == KeyCode.ESCAPE) {
 					if (control.getManipulation().getLink() != null) {
 						control.getManipulation().getLink().getBackgroundPolygon().setStroke(Color.TRANSPARENT);

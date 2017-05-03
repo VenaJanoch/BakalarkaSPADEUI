@@ -37,7 +37,9 @@ public class Alerts {
 
 	/**
 	 * Alert s informací o chybě při validaci procesu
-	 * @param error část chybového hlášení
+	 * 
+	 * @param error
+	 *            část chybového hlášení
 	 */
 	public static void showValidationError(String error) {
 
@@ -51,9 +53,11 @@ public class Alerts {
 	}
 
 	/**
-	 * Alert s informací o nalezené chybě v procesu, při ukládání, 
-	 * Umožňuje výběr uložení s chybou nebo neuložení
-	 * @param error část chybového hlášení
+	 * Alert s informací o nalezené chybě v procesu, při ukládání, Umoznuje
+	 * vyber ulozeni s chybou nebo neulození
+	 * 
+	 * @param error
+	 *            část chybového hlášení
 	 * @return boolean info zvolené volbě
 	 */
 	public static boolean showValidationErrorSave(String error) {
@@ -103,9 +107,13 @@ public class Alerts {
 	}
 
 	/**
-	 * Alert s infomací o výběru prvků tabulky pro smazání a možností zrušení akce. 
-	 * @param table Tabulka s prvky
-	 * @param selection vybrané prvky
+	 * Alert s infomací o výběru prvků tabulky pro smazání a možností zrušení
+	 * akce.
+	 * 
+	 * @param table
+	 *            Tabulka s prvky
+	 * @param selection
+	 *            vybrané prvky
 	 * @return smazané prvky
 	 */
 	public static ObservableList<ClassTable> showDeleteItemAlert(TableView table, ObservableList selection) {
@@ -121,21 +129,26 @@ public class Alerts {
 			list = table.getSelectionModel().getSelectedItems();
 
 			table.getItems().removeAll(selection);
-		
+
 			table.getSelectionModel().clearSelection();
 		}
 
 		return selection;
 
 	}
-	
+
 	/**
-	 * Alert s infomací o výběru prvků tabulky Configurací pro smazání a možností zrušení akce. 
-	 * @param table Tabulka s prvky
-	 * @param selection vybrané prvky
+	 * Alert s infomací o výběru prvků tabulky Configurací pro smazání a
+	 * možností zrušení akce.
+	 * 
+	 * @param table
+	 *            Tabulka s prvky
+	 * @param selection
+	 *            vybrané prvky
 	 * @return smazané prvky
 	 */
-	public static ObservableList<ConfigTable> showDeleteItemConfigAlert(TableView<ConfigTable> table, ObservableList<ConfigTable> selection) {
+	public static ObservableList<ConfigTable> showDeleteItemConfigAlert(TableView<ConfigTable> table,
+			ObservableList<ConfigTable> selection) {
 		List<ConfigTable> list = null;
 		Alert alert = new Alert(AlertType.CONFIRMATION);
 		alert.setTitle("Deleting selection");
@@ -148,23 +161,27 @@ public class Alerts {
 			list = table.getSelectionModel().getSelectedItems();
 
 			table.getItems().removeAll(selection);
-		
+
 			table.getSelectionModel().clearSelection();
 		}
 
 		return selection;
 
 	}
-	
+
 	/**
-	 * Alert s infomací o výběru prvků z tabulky Criterii pro smazání a možností zrušení akce. 
-	 * @param table Tabulka s prvky
-	 * @param selection vybrané prvky
+	 * Alert s infomací o výběru prvků z tabulky Criterii pro smazání a možností
+	 * zrušení akce.
+	 * 
+	 * @param table
+	 *            Tabulka s prvky
+	 * @param selection
+	 *            vybrané prvky
 	 * @return smazané prvky
 	 */
 	public static ObservableList<CriterionTable> showDeleteItemCriterionAlert(TableView<CriterionTable> table,
 			ObservableList<CriterionTable> selection) {
-		
+
 		List<CriterionTable> list = null;
 		Alert alert = new Alert(AlertType.CONFIRMATION);
 		alert.setTitle("Deleting selection");
@@ -177,23 +194,27 @@ public class Alerts {
 			list = table.getSelectionModel().getSelectedItems();
 
 			table.getItems().removeAll(selection);
-	
+
 			table.getSelectionModel().clearSelection();
 		}
 
 		return selection;
 
 	}
-	
+
 	/**
-	 * Alert s infomací o výběru prvků z tabulky Milestone pro smazání a možností zrušení akce. 
-	 * @param table Tabulka s prvky
-	 * @param selection vybrané prvky
+	 * Alert s infomací o výběru prvků z tabulky Milestone pro smazání a
+	 * možností zrušení akce.
+	 * 
+	 * @param table
+	 *            Tabulka s prvky
+	 * @param selection
+	 *            vybrané prvky
 	 * @return smazané prvky
 	 */
 	public static ObservableList<MilestoneTable> showDeleteItemMilestoneAlert(TableView<MilestoneTable> table,
 			ObservableList<MilestoneTable> selection) {
-		
+
 		List<MilestoneTable> list = null;
 		Alert alert = new Alert(AlertType.CONFIRMATION);
 		alert.setTitle("Deleting selection");
@@ -206,7 +227,7 @@ public class Alerts {
 			list = table.getSelectionModel().getSelectedItems();
 
 			table.getItems().removeAll(selection);
-	
+
 			table.getSelectionModel().clearSelection();
 		}
 
@@ -215,14 +236,18 @@ public class Alerts {
 	}
 
 	/**
-	 * Alert s infomací o výběru prvků z tabulky CPR pro smazání a možností zrušení akce. 
-	 * @param table Tabulka s prvky
-	 * @param selection vybrané prvky
+	 * Alert s infomací o výběru prvků z tabulky CPR pro smazání a možností
+	 * zrušení akce.
+	 * 
+	 * @param table
+	 *            Tabulka s prvky
+	 * @param selection
+	 *            vybrané prvky
 	 * @return smazané prvky
 	 */
 	public static ObservableList<CPRTable> showDeleteItemCPRAlert(TableView<CPRTable> table,
 			ObservableList<CPRTable> selection) {
-		
+
 		List<CPRTable> list = null;
 		Alert alert = new Alert(AlertType.CONFIRMATION);
 		alert.setTitle("Deleting selection");
@@ -235,7 +260,7 @@ public class Alerts {
 			list = table.getSelectionModel().getSelectedItems();
 
 			table.getItems().removeAll(selection);
-		
+
 			table.getSelectionModel().clearSelection();
 		}
 
@@ -244,9 +269,13 @@ public class Alerts {
 	}
 
 	/**
-	 * Alert s infomací o výběru prvků z tabulky Branch pro smazání a možností zrušení akce. 
-	 * @param table Tabulka s prvky
-	 * @param selection vybrané prvky
+	 * Alert s infomací o výběru prvků z tabulky Branch pro smazání a možností
+	 * zrušení akce.
+	 * 
+	 * @param table
+	 *            Tabulka s prvky
+	 * @param selection
+	 *            vybrané prvky
 	 * @return smazané prvky
 	 */
 	public static ObservableList<BranchTable> showDeleteItemBranchAlert(TableView<BranchTable> table,
@@ -264,24 +293,28 @@ public class Alerts {
 			list = table.getSelectionModel().getSelectedItems();
 
 			table.getItems().removeAll(selection);
-		
+
 			table.getSelectionModel().clearSelection();
 		}
 
 		return selection;
 	}
-	
+
 	/**
-	 * Alert s infomací o výběru prvků z tabulky Role pro smazání a možností zrušení akce. 
-	 * @param table Tabulka s prvky
-	 * @param selection vybrané prvky
+	 * Alert s infomací o výběru prvků z tabulky Role pro smazání a možností
+	 * zrušení akce.
+	 * 
+	 * @param table
+	 *            Tabulka s prvky
+	 * @param selection
+	 *            vybrané prvky
 	 * @return smazané prvky
 	 */
 	public static ObservableList<RoleTable> showDeleteItemRoleAlert(TableView<RoleTable> table,
 			ObservableList<RoleTable> selection) {
 
 		List<RoleTable> list = null;
-		
+
 		Alert alert = new Alert(AlertType.CONFIRMATION);
 		alert.setTitle("Deleting selection");
 		alert.setHeaderText("Do you want to delete selected elements?");
@@ -293,7 +326,7 @@ public class Alerts {
 			list = table.getSelectionModel().getSelectedItems();
 
 			table.getItems().removeAll(selection);
-		
+
 			table.getSelectionModel().clearSelection();
 		}
 
@@ -301,9 +334,13 @@ public class Alerts {
 	}
 
 	/**
-	 * Alert s infomací o výběru prvků z tabulky Tag pro smazání a možností zrušení akce. 
-	 * @param table Tabulka s prvky
-	 * @param selection vybrané prvky
+	 * Alert s infomací o výběru prvků z tabulky Tag pro smazání a možností
+	 * zrušení akce.
+	 * 
+	 * @param table
+	 *            Tabulka s prvky
+	 * @param selection
+	 *            vybrané prvky
 	 * @return smazané prvky
 	 */
 	public static ObservableList<TagTable> showDeleteItemTagAlert(TableView<TagTable> table, ObservableList selection) {
@@ -320,7 +357,7 @@ public class Alerts {
 			list = table.getSelectionModel().getSelectedItems();
 
 			table.getItems().removeAll(selection);
-			
+
 			table.getSelectionModel().clearSelection();
 		}
 
@@ -328,16 +365,20 @@ public class Alerts {
 	}
 
 	/**
-	 * Alert s infomací o zavření formuláře bez uložení a možnostmi uložení formuláře, případně zrušení akce 
-	 * @param table Tabulka s prvky
-	 * @param selection vybrané prvky
+	 * Alert s infomací o zavření formuláře bez uložení a možnostmi uložení
+	 * formuláře, případně zrušení akce
+	 * 
+	 * @param table
+	 *            Tabulka s prvky
+	 * @param selection
+	 *            vybrané prvky
 	 * @return smazané prvky
 	 */
 	public static int showSaveSegment() {
 		Alert alert = new Alert(AlertType.WARNING);
 		alert.setTitle("Closing without save");
 		alert.setHeaderText("Segment did not save!");
-		
+
 		ButtonType buttonSave = new ButtonType("Save");
 		ButtonType buttonOK = new ButtonType("OK", ButtonData.OK_DONE);
 		ButtonType buttonTypeCancel = new ButtonType("Cancel", ButtonData.CANCEL_CLOSE);
@@ -345,20 +386,23 @@ public class Alerts {
 		alert.getButtonTypes().setAll(buttonSave, buttonOK, buttonTypeCancel);
 
 		Optional<ButtonType> result = alert.showAndWait();
-		
+
 		if (result.get() == buttonSave) {
 			return 1;
-		}else if (result.get() == buttonOK) {
+		} else if (result.get() == buttonOK) {
 			return 0;
-		} 
-		
+		}
+
 		return -1;
-		
+
 	}
 
 	/**
-	 * Alert s infomací o ukončení aplikace s možností uložení procesu, přídně zrušením akce
-	 * @param control Intance třídy Control
+	 * Alert s infomací o ukončení aplikace s možností uložení procesu, přídně
+	 * zrušením akce
+	 * 
+	 * @param control
+	 *            Intance třídy Control
 	 */
 	public static int showCloseApp(Control control) {
 		Alert alert = new Alert(AlertType.WARNING);
@@ -372,21 +416,24 @@ public class Alerts {
 
 		alert.getButtonTypes().setAll(buttonTypeOne, buttonOK, buttonTypeCancel);
 		Optional<ButtonType> result = alert.showAndWait();
-		
+
 		if (result.get() == buttonTypeOne) {
 			control.saveFile();
 			return 0;
-		}else if(result.get() == buttonOK){
+		} else if (result.get() == buttonOK) {
 			return 1;
 		}
-		
+
 		return -1;
 	}
 
 	/**
 	 * Alert s informací o špatně vkládaném prvku na plátno
-	 * @param segment SegmentType
-	 * @param canvasType CanvasType
+	 * 
+	 * @param segment
+	 *            SegmentType
+	 * @param canvasType
+	 *            CanvasType
 	 */
 	public static void badCopyItem(SegmentType segment, CanvasType canvasType) {
 		Alert alert = new Alert(AlertType.ERROR);
@@ -394,22 +441,20 @@ public class Alerts {
 		alert.setHeaderText("Bad segment " + segment + " for this type canvas !");
 		alert.setContentText("Please paste item in corresponding canvas!");
 		alert.showAndWait();
-		
+
 	}
 
 	/**
 	 * Alert s informací o pokusu propojení nevyplněného Work Unitu
 	 */
-	
+
 	public static void showNoWorkUnit() {
 		Alert alert = new Alert(AlertType.ERROR);
 		alert.setTitle("Link error");
 		alert.setHeaderText("Uncomplete Workunit segment !");
 		alert.setContentText("Please fill this item!");
 		alert.showAndWait();
-		
-	}
 
-	
+	}
 
 }

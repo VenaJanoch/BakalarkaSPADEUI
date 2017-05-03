@@ -165,6 +165,7 @@ public class CanvasItem extends AnchorPane {
 	 */
 	public void setClicFromDragPoint(MouseEvent t) {
 		manipulation.setClicItem(this);
+		manipulation.setLink(null);
 		if (t.getButton().equals(MouseButton.PRIMARY)) {
 
 			if (dgCanvas.isArrow()) {
