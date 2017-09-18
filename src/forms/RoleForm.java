@@ -216,7 +216,7 @@ public class RoleForm extends Table2BasicForm implements ISegmentTableForm {
 		tableTV.getItems().add(role);
 		tableTV.sort();
 		getControl().getFillForms().fillRole(idName, formControl.fillTextMapper(descritpST),
-				formControl.fillTextMapper(nameST), roleIndex);
+				formControl.fillTextMapper(nameST), roleIndex, Control.objF, false);
 
 	}
 

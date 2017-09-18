@@ -171,7 +171,7 @@ public class CriterionForm extends TableBasicForm implements ISegmentTableForm {
 		tableTV.getItems().add(criterion);
 		tableTV.sort();
 		control.getFillForms().fillCriterion(idName, formControl.fillTextMapper(nameST),
-				formControl.fillTextMapper(descriptionST));
+				formControl.fillTextMapper(descriptionST), Control.objF, false);
 	}
 
 	public TableView<CriterionTable> getTableTV() {

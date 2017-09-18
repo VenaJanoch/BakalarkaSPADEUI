@@ -6,7 +6,7 @@ package interfaces;
  *
  */
 public interface ISegmentForm {
-
+	
 	/**
 	 * Metoda pro nastavení reakce na zavření formuláře
 	 */

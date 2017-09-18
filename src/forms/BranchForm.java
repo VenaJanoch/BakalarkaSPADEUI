@@ -1,6 +1,7 @@
 package forms;
 
 import SPADEPAC.Branch;
+import SPADEPAC.ObjectFactory;
 import abstractform.BasicForm;
 import abstractform.TableBasicForm;
 import graphics.CanvasItem;
@@ -203,7 +204,7 @@ public class BranchForm extends TableBasicForm implements ISegmentTableForm {
 		tableTV.getItems().add(tag);
 		tableTV.sort();
 
-		getControl().getFillForms().fillBranch(formControl.fillTextMapper(nameST), idName, isMain);
+		getControl().getFillForms().fillBranch(formControl.fillTextMapper(nameST), idName, isMain, new ObjectFactory(), false);
 	}
 
 	/*** Getrs and Setrs ***/

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import SPADEPAC.Configuration;
+import SPADEPAC.ObjectFactory;
 import SPADEPAC.Phase;
 import SPADEPAC.WorkUnit;
 import abstractform.BasicForm;
@@ -88,10 +89,10 @@ public class PhaseForm extends DateDescBasicForm implements ISegmentForm {
 		createForm();
 
 	}
-
+	
 	@Override
 	public void closeForm() {
-
+		
 		String actName = getNameTF().getText();
 		BasicForm form = getCanvasItem().getForm();
 		int[] IDs = getCanvasItem().getIDs();
@@ -103,7 +104,7 @@ public class PhaseForm extends DateDescBasicForm implements ISegmentForm {
 		setName(actName);
 		getCanvasItem().setNameText(actName);
 		getCanvasItem().getFillForms().fillPhase(phase, IDs, desc, actName, endDateL, configIndex, milestoneIndex, x, y,
-				isNew());
+				isNew(), new ObjectFactory());
 
 		setNew(false);
 

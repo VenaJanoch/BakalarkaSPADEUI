@@ -179,7 +179,7 @@ public class SeverityForm extends TableClassBasicForm implements ISegmentTableFo
 		getTableTV().getItems().add(table);
 		getTableTV().sort();
 		getControl().getFillForms().fillSeverityType(idName, formControl.fillTextMapper(nameST),
-				formControl.fillTextMapper(classST), superST);
+				formControl.fillTextMapper(classST), superST, Control.objF, false);
 
 	}
 

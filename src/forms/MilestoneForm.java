@@ -208,7 +208,7 @@ public class MilestoneForm extends Table2BasicForm implements ISegmentTableForm 
 		MilestoneTable milestone = new MilestoneTable(idName, criterion);
 		tableTV.getItems().add(milestone);
 		tableTV.sort();
-		getControl().getFillForms().fillMilestone(idName, formControl.fillTextMapper(nameST), criterionIndex);
+		getControl().getFillForms().fillMilestone(idName, formControl.fillTextMapper(nameST), criterionIndex, Control.objF, false);
 		criteriaCB.getCheckModel().clearChecks();
 
 	}

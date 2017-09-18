@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import SPADEPAC.Artifact;
 import SPADEPAC.ArtifactClass;
 import SPADEPAC.Configuration;
+import SPADEPAC.ObjectFactory;
 import abstractform.BasicForm;
 import abstractform.DateDescBasicForm;
 import graphics.CanvasItem;
@@ -108,7 +109,7 @@ public class ArtifactForm extends DateDescBasicForm implements ISegmentForm {
 		setName(actName);
 		getCanvasItem().setNameText(actName);
 		getControl().getFillForms().fillArtifact(artifact, IDs, desc, actName, createdDate, type, authorIndex, x, y,
-				typeIndex, isNew(), existRB.isSelected());
+				typeIndex, isNew(), existRB.isSelected(), new ObjectFactory());
 
 		if (!existRB.isSelected()) {
 			getCanvasItem().getSegmentInfo().setRectangleColor(Constans.nonExistRectangleBorderColor);

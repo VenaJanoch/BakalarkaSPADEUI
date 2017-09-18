@@ -58,7 +58,7 @@ public class Control {
 
 	private ProcessGenerator procesGener;
 	private IdentificatorCreater idCreater;
-	private ObjectFactory objF;
+	public static ObjectFactory objF;
 	private Project project;
 
 	private FormControl formControl;
@@ -520,7 +520,7 @@ public class Control {
 	 *            LocalDate
 	 * @return XMLGregorianCalendar
 	 */
-	public XMLGregorianCalendar convertDate(LocalDate Ldate) {
+	public static XMLGregorianCalendar convertDate(LocalDate Ldate) {
 
 		if (Ldate == null) {
 			return null;
@@ -717,5 +717,9 @@ public class Control {
 	public void setClose(boolean isClose) {
 		this.isClose = isClose;
 	}
+
+
+	
+	
 
 }

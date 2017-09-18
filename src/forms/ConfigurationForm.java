@@ -7,6 +7,7 @@ import java.util.List;
 import org.controlsfx.control.CheckComboBox;
 
 import SPADEPAC.Configuration;
+import SPADEPAC.ObjectFactory;
 import abstractform.BasicForm;
 import graphics.CanvasItem;
 import graphics.InfoBoxSegment;
@@ -139,7 +140,7 @@ public class ConfigurationForm extends BasicForm implements ISegmentForm {
 		getCanvasItem().setNameText(actName);
 
 		getControl().getFillForms().fillConfiguration(configuration, IDs, isRelease, createDate, actName, authorIndex,
-				isNew, getCanvasItem());
+				isNew, getCanvasItem(), false);
 
 		getSubmitButton().setText("Save");
 

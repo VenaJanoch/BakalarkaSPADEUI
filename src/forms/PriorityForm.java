@@ -1,5 +1,6 @@
 package forms;
 
+import SPADEPAC.ObjectFactory;
 import SPADEPAC.WorkUnitPriorityClass;
 import SPADEPAC.WorkUnitPrioritySuperClass;
 import SPADEPAC.WorkUnitTypeClass;
@@ -177,7 +178,7 @@ public class PriorityForm extends TableClassBasicForm implements ISegmentTableFo
 
 		getTableTV().getItems().add(table);
 		getTableTV().sort();
-		getControl().getFillForms().fillPriorityType(idName,formControl.fillTextMapper(nameST), formControl.fillTextMapper(classST), superST);
+		getControl().getFillForms().fillPriorityType(idName,formControl.fillTextMapper(nameST), formControl.fillTextMapper(classST), superST, new ObjectFactory(),false);
 
 	}
 

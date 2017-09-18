@@ -189,7 +189,7 @@ public class RoleTypeForm extends TableClassBasicForm implements ISegmentTableFo
 		getTableTV().getItems().add(type);
 		getTableTV().sort();
 		getControl().getFillForms().fillRoleType(idName, formControl.fillTextMapper(nameST),
-				formControl.fillTextMapper(classST), superST);
+				formControl.fillTextMapper(classST), superST, Control.objF, false);
 
 	}
 

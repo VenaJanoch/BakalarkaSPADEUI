@@ -2,6 +2,7 @@ package services;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Queue;
 
 import SPADEPAC.Activity;
 import SPADEPAC.Artifact;
@@ -41,15 +42,15 @@ import tables.TagTable;
 public class FillForms {
 
 	/** Globální proměnné třídy */
-	private Control control;
+	private static Control control;
 	private Project project;
 	private ArrayList<BasicForm> forms;
-	private ObjectFactory objF;
-	private SegmentLists lists;
+	private static ObjectFactory objF;
+	private static SegmentLists lists;
 
 	private IdentificatorCreater idCreater;
 	private DeleteControl deleteControl;
-	private FormControl formControl;
+	private static FormControl formControl;
 
 	/**
 	 * Konstruktor třídy Zinicializuje globální proměnné třídy
@@ -114,8 +115,8 @@ public class FillForms {
 	 * @param y
 	 * @param isNew
 	 */
-	public void fillPhase(Phase phase, int[] ID, String description, String name, LocalDate endDate, int confIndex,
-			int milestoneIndex, int x, int y, boolean isNew) {
+	public static void fillPhase(Phase phase, int[] ID, String description, String name, LocalDate endDate,
+			int confIndex, int milestoneIndex, int x, int y, boolean isNew, ObjectFactory objF) {
 
 		phase.setDescription(formControl.fillTextMapper(description));
 		phase.setName(formControl.fillTextMapper(name));
@@ -177,8 +178,8 @@ public class FillForms {
 	 * @param y
 	 * @param isNew
 	 */
-	public void fillActivity(Activity activity, int[] ID, String description, String name, int x, int y,
-			boolean isNew) {
+	public static void fillActivity(Activity activity, int[] ID, String description, String name, int x, int y,
+			boolean isNew, ObjectFactory objF) {
 
 		activity.setDescription(formControl.fillTextMapper(description));
 		activity.setName(formControl.fillTextMapper(name));
@@ -222,7 +223,7 @@ public class FillForms {
 	}
 
 	/**
-	 * Vyplní informace z formuláře Iteration do datových struktru pro Iteration
+	 * Vyplní informace z formuláře do datových struktru pro Iteration
 	 * 
 	 * @param iteration
 	 *            instance Iteration
@@ -237,8 +238,8 @@ public class FillForms {
 	 * @param y
 	 * @param isNew
 	 */
-	public void fillIteration(Iteration iteration, int[] ID, String description, String name, LocalDate startDate,
-			LocalDate endDate, int confIndex, int x, int y, boolean isNew) {
+	public static void fillIteration(Iteration iteration, int[] ID, String description, String name,
+			LocalDate startDate, LocalDate endDate, int confIndex, int x, int y, boolean isNew, ObjectFactory objF) {
 
 		iteration.setDescription(formControl.fillTextMapper(description));
 		iteration.setName(formControl.fillTextMapper(name));
@@ -305,9 +306,9 @@ public class FillForms {
 	 * @param isNew
 	 * @param isExist
 	 */
-	public void fillWorkUnit(WorkUnit workUnit, int[] ID, String description, String name, int authorIndex,
+	public static void fillWorkUnit(WorkUnit workUnit, int[] ID, String description, String name, int authorIndex,
 			int assigneIndex, String category, int x, int y, int priorityIndex, int severityIndex, int typeIndex,
-			int resolutionIndex, int statusIndex, double estimated, boolean isNew, boolean isExist) {
+			int resolutionIndex, int statusIndex, double estimated, boolean isNew, boolean isExist, ObjectFactory objF) {
 
 		workUnit.setDescription(formControl.fillTextMapper(description));
 		workUnit.setName(formControl.fillTextMapper(name));
@@ -374,7 +375,8 @@ public class FillForms {
 	 * @param indexs
 	 *            indexi s criterii
 	 */
-	public void fillMilestone(String id, String name, ObservableList<Integer> indexs) {
+	public static Milestone fillMilestone(String id, String name, ObservableList<Integer> indexs, ObjectFactory objF,
+			boolean test) {
 
 		Milestone milestone = (Milestone) objF.createMilestone();
 		milestone.setName(formControl.fillTextMapper(name));
@@ -384,8 +386,12 @@ public class FillForms {
 			}
 
 		}
-		control.getLists().getMilestoneList().add(milestone);
-		control.getLists().getMilestoneObservable().add(id);
+
+		if (!test) {
+			control.getLists().getMilestoneList().add(milestone);
+			control.getLists().getMilestoneObservable().add(id);
+		}
+		return milestone;
 
 	}
 
@@ -396,16 +402,21 @@ public class FillForms {
 	 *            identifikátor pro výběrové seznamy
 	 * @param name
 	 * @param description
+	 * @return
 	 */
-	public void fillCriterion(String id, String name, String description) {
+	public static Criterion fillCriterion(String id, String name, String description, ObjectFactory objF,
+			boolean test) {
 
 		Criterion criterion = objF.createCriterion();
 		criterion.setDescription(formControl.fillTextMapper(description));
 		criterion.setName(formControl.fillTextMapper(name));
 
-		control.getLists().getCriterionList().add(criterion);
-		control.getLists().getCriterionObservable().add(id);
+		if (!test) {
+			control.getLists().getCriterionList().add(criterion);
+			control.getLists().getCriterionObservable().add(id);
+		}
 
+		return criterion;
 	}
 
 	/**
@@ -416,7 +427,8 @@ public class FillForms {
 	 * @param conf
 	 * @param role
 	 */
-	public void fillCPR(String id, String name, int conf, int role) {
+	public static ConfigPersonRelation fillCPR(String id, String name, int conf, int role, ObjectFactory objF,
+			boolean test) {
 
 		ConfigPersonRelation cpr = objF.createConfigPersonRelation();
 		cpr.setName(formControl.fillTextMapper(name));
@@ -427,8 +439,13 @@ public class FillForms {
 			cpr.setPersonIndex(role - 1);
 		}
 
-		control.getLists().getCPRList().add(cpr);
-		control.getLists().getCPRObservable().add(id);
+		if (!test) {
+			control.getLists().getCPRList().add(cpr);
+			control.getLists().getCPRObservable().add(id);
+
+		}
+
+		return cpr;
 
 	}
 
@@ -446,8 +463,8 @@ public class FillForms {
 	 * @param isNew
 	 * @param item
 	 */
-	public void fillConfiguration(Configuration conf, int[] IDs, boolean isRelase, LocalDate Ldate, String name,
-			int roleIndex, boolean isNew, CanvasItem item) {
+	public static void fillConfiguration(Configuration conf, int[] IDs, boolean isRelase, LocalDate Ldate, String name,
+			int roleIndex, boolean isNew, CanvasItem item, boolean test) {
 
 		Configuration config = conf;
 		config.setIsRelease(isRelase);
@@ -470,7 +487,7 @@ public class FillForms {
 			control.getConfTableForm().getTableTV().getItems().add(configTab);
 			control.getConfTableForm().getTableTV().sort();
 			control.getConfTableForm().createConfigItem();
-		} else {
+		} else if (!test) {
 
 			ConfigTable configTab = control.getConfTableForm().getTableTV().getItems().get(IDs[1]);
 			configTab.setName(item.getID() + "_" + name);
@@ -514,16 +531,19 @@ public class FillForms {
 	 *            identifikace pro výběrové seznamy
 	 * @param isMain
 	 */
-	public void fillBranch(String name, String id, boolean isMain) {
+	public static Branch fillBranch(String name, String id, boolean isMain, ObjectFactory objF, boolean test) {
 
 		Branch branch = (Branch) objF.createBranch();
 
 		branch.setIsMain(isMain);
 		branch.setName(formControl.fillTextMapper(name));
 
-		control.getLists().getBranchList().add(branch);
-		control.getLists().getBranchObservable().add(id);
+		if (!test) {
+			control.getLists().getBranchList().add(branch);
+			control.getLists().getBranchObservable().add(id);
+		}
 
+		return branch;
 	}
 
 	/**
@@ -540,8 +560,8 @@ public class FillForms {
 	 * @param y
 	 * @param isExist
 	 */
-	public void fillChange(Change change, int[] IDs, String description, String name, boolean isNew, int x, int y,
-			boolean isExist) {
+	public static void fillChange(Change change, int[] IDs, String description, String name, boolean isNew, int x,
+			int y, boolean isExist, ObjectFactory objF) {
 
 		change.setName(formControl.fillTextMapper(name));
 		change.setDescriptoin(formControl.fillTextMapper(description));
@@ -598,8 +618,9 @@ public class FillForms {
 	 * @param isNew
 	 * @param isExist
 	 */
-	public void fillArtifact(Artifact artifact, int[] IDs, String description, String name, LocalDate Ldate,
-			String type, int roleIndex, int x, int y, int typeIndex, boolean isNew, boolean isExist) {
+	public static void fillArtifact(Artifact artifact, int[] IDs, String description, String name, LocalDate Ldate,
+			String type, int roleIndex, int x, int y, int typeIndex, boolean isNew, boolean isExist,
+			ObjectFactory objF) {
 
 		artifact.setName(formControl.fillTextMapper(name));
 		artifact.setDescriptoin(formControl.fillTextMapper(description));
@@ -650,7 +671,8 @@ public class FillForms {
 	 * @param name
 	 * @param type
 	 */
-	public void fillRole(String id, String description, String name, int type) {
+	public static Role fillRole(String id, String description, String name, int type, ObjectFactory objF,
+			boolean test) {
 
 		Role role = objF.createRole();
 		role.setName(formControl.fillTextMapper(name));
@@ -659,8 +681,13 @@ public class FillForms {
 			role.setType(type - 1);
 		}
 
-		lists.getRoleObservable().add(id);
-		lists.getRoleList().add(role);
+		if (!test) {
+			lists.getRoleObservable().add(id);
+			lists.getRoleList().add(role);
+		}
+
+		return role;
+
 	}
 
 	/**
@@ -672,16 +699,19 @@ public class FillForms {
 	 * @param classST
 	 * @param superST
 	 */
-	public void fillRoleType(String id, String nameST, String classST, String superST) {
+	public static RoleType fillRoleType(String id, String nameST, String classST, String superST, ObjectFactory objF,
+			boolean test) {
 
 		RoleType type = objF.createRoleType();
 		type.setName(formControl.fillTextMapper(nameST));
 		type.setRoleClass(formControl.fillTextMapper(classST));
 		type.setRoleSuperClass(formControl.fillTextMapper(superST));
 
-		lists.getRoleTypeObservable().add(id);
-		lists.getRoleTypeList().add(type);
-
+		if (!test) {
+			lists.getRoleTypeObservable().add(id);
+			lists.getRoleTypeList().add(type);
+		}
+		return type;
 	}
 
 	/**
@@ -711,7 +741,8 @@ public class FillForms {
 	 * @param classST
 	 * @param superST
 	 */
-	public void fillPriorityType(String id, String nameST, String classST, String superST) {
+	public static Priority fillPriorityType(String id, String nameST, String classST, String superST,
+			ObjectFactory objF, boolean test) {
 
 		Priority priority = objF.createPriority();
 
@@ -719,9 +750,12 @@ public class FillForms {
 		priority.setPriorityClass(formControl.fillTextMapper(classST));
 		priority.setPrioritySuperClass(formControl.fillTextMapper(superST));
 
-		lists.getPriorityObservable().add(id);
-		lists.getPriorityTypeList().add(priority);
+		if (!test) {
+			lists.getPriorityObservable().add(id);
+			lists.getPriorityTypeList().add(priority);
+		}
 
+		return priority;
 	}
 
 	/**
@@ -733,16 +767,19 @@ public class FillForms {
 	 * @param classST
 	 * @param superST
 	 */
-	public void fillSeverityType(String id, String nameST, String classST, String superST) {
+	public static Severity fillSeverityType(String id, String nameST, String classST, String superST,
+			ObjectFactory objF, boolean test) {
 		Severity severity = objF.createSeverity();
 
 		severity.setName(formControl.fillTextMapper(nameST));
 		severity.setSeverityClass(formControl.fillTextMapper(classST));
 		severity.setSeveritySuperClass(formControl.fillTextMapper(superST));
+		if (!test) {
+			lists.getSeverityTypeObservable().add(id);
+			lists.getSeverityTypeList().add(severity);
+		}
 
-		lists.getSeverityTypeObservable().add(id);
-		lists.getSeverityTypeList().add(severity);
-
+		return severity;
 	}
 
 	/**
@@ -754,15 +791,20 @@ public class FillForms {
 	 * @param classST
 	 * @param superST
 	 */
-	public void fillRelationType(String id, String nameST, String classST, String superST) {
+	public static Relation fillRelationType(String id, String nameST, String classST, String superST,
+			ObjectFactory objF, boolean test) {
 
 		Relation relation = objF.createRelation();
 		relation.setName(formControl.fillTextMapper(nameST));
 		relation.setRelationClass(formControl.fillTextMapper(classST));
 		relation.setRelationSuperClass(formControl.fillTextMapper(superST));
 
-		lists.getRelationTypeList().add(relation);
-		lists.getRelationTypeObservable().add(id);
+		if (!test) {
+			lists.getRelationTypeList().add(relation);
+			lists.getRelationTypeObservable().add(id);
+		}
+
+		return relation;
 
 	}
 
@@ -775,16 +817,19 @@ public class FillForms {
 	 * @param classST
 	 * @param superST
 	 */
-	public void fillResolutionType(String id, String nameST, String classST, String superST) {
+	public static Resolution fillResolutionType(String id, String nameST, String classST, String superST,
+			ObjectFactory objF, boolean test) {
 
 		Resolution resolution = objF.createResolution();
 		resolution.setName(formControl.fillTextMapper(nameST));
 		resolution.setResolutionClass(formControl.fillTextMapper(classST));
 		resolution.setResolutionSuperClass(formControl.fillTextMapper(superST));
 
-		lists.getResolutionTypeList().add(resolution);
-		lists.getResolutionTypeObservable().add(id);
-
+		if (!test) {
+			lists.getResolutionTypeList().add(resolution);
+			lists.getResolutionTypeObservable().add(id);
+		}
+		return resolution;
 	}
 
 	/**
@@ -796,16 +841,20 @@ public class FillForms {
 	 * @param classST
 	 * @param superST
 	 */
-	public void fillStatusType(String id, String nameST, String classST, String superST) {
+	public static Status fillStatusType(String id, String nameST, String classST, String superST, ObjectFactory objF,
+			boolean test) {
 
 		Status status = objF.createStatus();
 		status.setName(formControl.fillTextMapper(nameST));
 		status.setStatusClass(formControl.fillTextMapper(classST));
 		status.setStatusSuperClass(formControl.fillTextMapper(superST));
 
-		lists.getStatusTypeList().add(status);
-		lists.getStatusTypeObservable().add(id);
+		if (!test) {
+			lists.getStatusTypeList().add(status);
+			lists.getStatusTypeObservable().add(id);
+		}
 
+		return status;
 	}
 
 	/**
@@ -817,16 +866,19 @@ public class FillForms {
 	 * @param classST
 	 * @param superST
 	 */
-	public void fillType(String id, String nameST, String classST, String superST) {
+	public static Type fillType(String id, String nameST, String classST, String superST, ObjectFactory objF, boolean test) {
 
 		Type type = objF.createType();
 		type.setName(formControl.fillTextMapper(nameST));
 		type.setTypeClass(formControl.fillTextMapper(classST));
 		type.setTypeSuperClass(formControl.fillTextMapper(superST));
 
+		if(!test){
 		lists.getTypeList().add(type);
 		lists.getTypeObservable().add(id);
-
+		}
+		
+		return type;
 	}
 
 }

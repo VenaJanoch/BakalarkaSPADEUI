@@ -94,7 +94,7 @@ public class IterationForm extends Date2DescBasicForm implements ISegmentForm {
 		setName(actName);
 		getCanvasItem().setNameText(actName);
 		getControl().getFillForms().fillIteration(iteration, IDs, desc, actName, startDate, endDate, chooseConfigID, x,
-				y, isNew());
+				y, isNew(), Control.objF);
 		setNew(false);
 	}
 

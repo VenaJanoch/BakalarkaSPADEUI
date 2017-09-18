@@ -100,7 +100,7 @@ public class ChangeForm extends DescriptionBasicForm implements ISegmentForm {
 		setName(actName);
 		getCanvasItem().setNameText(actName);
 		getControl().getFillForms().fillChange(change, IDs, getDescriptionTF().getText(), actName, newChange, x, y,
-				existRB.isSelected());
+				existRB.isSelected(), Control.objF);
 
 		if (!existRB.isSelected()) {
 			getCanvasItem().getSegmentInfo().setRectangleColor(Constans.nonExistRectangleBorderColor);

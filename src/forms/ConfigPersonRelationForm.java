@@ -1,5 +1,6 @@
 package forms;
 
+import SPADEPAC.ObjectFactory;
 import abstractform.BasicForm;
 import abstractform.TableBasicForm;
 import graphics.CanvasItem;
@@ -182,7 +183,7 @@ public class ConfigPersonRelationForm extends TableBasicForm implements ISegment
 		CPRTable cpr = new CPRTable(idName, roleST);
 		tableTV.getItems().add(cpr);
 		tableTV.sort();
-		getControl().getFillForms().fillCPR(idName,formControl.fillTextMapper(nameST), configIndex, roleIndex);
+		getControl().getFillForms().fillCPR(idName,formControl.fillTextMapper(nameST), configIndex, roleIndex, new ObjectFactory(), false);
 	}
 
 	/** Getrs and Setrs ***/

@@ -1,6 +1,7 @@
 package forms;
 
 import SPADEPAC.Activity;
+import SPADEPAC.ObjectFactory;
 import abstractform.BasicForm;
 import abstractform.DescriptionBasicForm;
 import graphics.CanvasItem;
@@ -77,7 +78,7 @@ public class ActivityForm extends DescriptionBasicForm implements ISegmentForm {
 		String desc = getDescriptionTF().getText();
 		getCanvasItem().setNameText(actName);
 		setName(actName);
-		getControl().getFillForms().fillActivity(activity, IDs, desc, actName, x, y, isNew());
+		getControl().getFillForms().fillActivity(activity, IDs, desc, actName, x, y, isNew(), new ObjectFactory());
 		setNew(false);
 
 	}

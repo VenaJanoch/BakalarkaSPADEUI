@@ -76,6 +76,11 @@ public class CanvasItem extends AnchorPane {
 	private BasicForm form;
 	private LinkControl linkControl;
 
+	
+	public CanvasItem(){
+		
+	}
+	
 	/**
 	 * Konstruktor třídy. Zinicializuje globální proměnné třídy. Získá
 	 * identifikátory formuláře a objektu v seznamech. Vytvoří zobrazované ID

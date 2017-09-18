@@ -43,12 +43,7 @@ public class Alerts {
 	 */
 	public static void showValidationError(String error) {
 
-		Alert alert = new Alert(AlertType.ERROR);
-		alert.setTitle("Validation error");
-		alert.setHeaderText("Validation error!");
-		alert.setContentText("Validation massage: " + error);
-
-		alert.showAndWait();
+			
 
 	}
 

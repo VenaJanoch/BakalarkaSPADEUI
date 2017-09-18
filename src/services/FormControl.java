@@ -30,8 +30,9 @@ public class FormControl {
 	 *            text
 	 * @return vysledný řetězec
 	 */
-	public String fillTextMapper(String text) {
+	public static String fillTextMapper(String text) {
 
+		
 		if (text == null || text.equals("")) {
 			return null;
 		}
@@ -98,13 +99,15 @@ public class FormControl {
 	 * @param milestone
 	 * @param config
 	 */
-	public void phaseControl(Phase phase, int milestone, int config) {
+	public static void phaseControl(Phase phase, int milestone, int config) {
 
 		if (config != 0) {
 			phase.setConfiguration(config - 1);
-		} else if (milestone != 0) {
-			phase.setMilestoneIndex(milestone - 1);
-			;
+		} 
+	
+		if (milestone != 0) {
+			phase.setMilestoneIndex(milestone - 1);			
+			
 		}
 
 	}
@@ -114,7 +117,7 @@ public class FormControl {
 	 * 
 	 **/
 
-	public void artifactControl(Artifact artifact, int index) {
+	public static void artifactControl(Artifact artifact, int index) {
 		if (index != 0) {
 			artifact.setAuthorIndex(index - 1);
 		}
@@ -124,7 +127,7 @@ public class FormControl {
 	 * Kontrola vyplněných hodnot Configuration
 	 * 
 	 **/
-	public void configControl(Configuration conf, int index) {
+	public static void configControl(Configuration conf, int index) {
 		if (index != 0) {
 			conf.setAuthorIndex(index - 1);
 		}
@@ -134,7 +137,7 @@ public class FormControl {
 	 * Kontrola vyplněných hodnot Iteration
 	 * 
 	 **/
-	public void iterationControl(Iteration iteration, int index) {
+	public static void iterationControl(Iteration iteration, int index) {
 
 		if (index != 0) {
 			iteration.setConfiguration(index - 1);
@@ -145,7 +148,7 @@ public class FormControl {
 	 * Kontrola vyplněných hodnot Work Unit
 	 * 
 	 **/
-	public boolean workUnitControl(WorkUnit workUnit, int priority, int severity, int type, int resolution, int status,
+	public static boolean workUnitControl(WorkUnit workUnit, int priority, int severity, int type, int resolution, int status,
 			int author, int assignee) {
 
 		if (priority != 0) {
