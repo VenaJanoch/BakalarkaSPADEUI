@@ -9,19 +9,6 @@ import forms.WorkUnitForm;
 
 public class FormControl {
 
-	/** Globální proměnné třídy **/
-	private SegmentLists lists;
-
-	/**
-	 * Konstruktor třídy
-	 * 
-	 * @param lists
-	 *            instance třídy SegmentLists
-	 */
-	public FormControl(SegmentLists lists) {
-		this.lists = lists;
-	}
-
 	/**
 	 * Metoda sloužící k namapování prázdného nebo neexistujícího prvku na
 	 * prázdný element
@@ -176,6 +163,17 @@ public class FormControl {
 	 * 
 	 **/
 	public void workUnitFormControl(WorkUnitForm form, WorkUnit unit) {
+
+		//TODO: Volat manipulaci s daty v jednom z modelu (Nejspise DataManipulator)
+
+	try {
+		Integer.parseInt("a");
+	}catch (Exception e ){
+		e.printStackTrace();
+		System.out.println("Dodelat");
+	}
+
+		/*
 		if (unit.getPriorityIndex() != null) {
 			form.getPriorityCB().setValue(lists.getPriorityObservable().get(unit.getPriorityIndex() + 1));
 		}
@@ -205,7 +203,7 @@ public class FormControl {
 			form.getEstimatedTimeTF().setText(String.valueOf(unit.getEstimatedTime()));
 		}
 
-		form.getExistRB().setSelected(unit.isExist());
+		form.getExistRB().setSelected(unit.isExist());*/
 
 	}
 

@@ -1,21 +1,9 @@
 package services;
 
-import java.io.File;
-import java.time.Instant;
-import java.time.LocalDate;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.GregorianCalendar;
-
-import javax.xml.datatype.DatatypeConfigurationException;
-import javax.xml.datatype.DatatypeFactory;
-import javax.xml.datatype.XMLGregorianCalendar;
 
 import SPADEPAC.ObjectFactory;
 import SPADEPAC.Project;
-import XML.ProcessGenerator;
 import abstractform.BasicForm;
 import forms.BranchForm;
 import forms.ConfigPersonRelationForm;
@@ -33,20 +21,20 @@ import graphics.CanvasItem;
 import graphics.DragAndDropCanvas;
 import graphics.ItemContexMenu;
 import graphics.MainWindow;
-import graphics.NodeLink;
-import graphics.WorkUnitLink;
 import javafx.geometry.Point2D;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.shape.Line;
-import javafx.stage.FileChooser;
-import javafx.stage.Stage;
+import model.IdentificatorCreater;
 
 public class Control {
 	/** Globální proměnné třídy **/
-	private FileChooser fileChooser;
-	private File file;
-	private boolean firstSave;
-	private boolean isClose;
+
+
+	private BasicForm form;
+	private ItemContexMenu contexMenu;
+
+	private int indexForm;
+	private boolean arrow;
+	private boolean startArrow;
+
 
 	private DragAndDropCanvas canvas;
 	private ArrayList<BasicForm> forms;
@@ -55,21 +43,16 @@ public class Control {
 
 	private LinkControl linkControl;
 	private DeleteControl deleteControl;
-
-	private ProcessGenerator procesGener;
 	private IdentificatorCreater idCreater;
-	public static ObjectFactory objF;
-	private Project project;
 
 	private FormControl formControl;
+
 	private FillFormsXML fillFormsXML;
 	private FillForms fillForms;
 	private FillCopyForms fillCopy;
 
 	private ManipulationControl manipulation;
-	private ItemContexMenu contexMenu;
 
-	private SegmentLists lists;
 
 	/** Proměnné tabulkových formulářů */
 	private MilestoneForm milestoneForm;
@@ -83,31 +66,24 @@ public class Control {
 	private BranchForm branchFrom;
 	private ConfigurationTableForm confTableForm;
 	private TypeForm typeForm;
-	private MainWindow mainWindow;
-	private boolean save = false;
+
 
 	/**
 	 * Konstruktor třídy Zinicializuje Globální proměnné třídy
 	 * 
-	 * @param mainWindow
-	 *            MainWindow
 	 */
-	public Control(MainWindow mainWindow) {
+	public Control() {
 
-		this.mainWindow = mainWindow;
-		procesGener = new ProcessGenerator();
-		objF = new ObjectFactory();
-		project = (Project) objF.createProject();
-		configureFileChooser();
+
 		classSwitcher = new ClassSwitcher(this);
 
 		setForms(new ArrayList<>());
 
-		ProjectForm form111 = new ProjectForm(this, project, canvas);
+		ProjectForm form111 = new ProjectForm();
 		getForms().add(0, form111);
 
-		lists = new SegmentLists(this, project);
-		formControl = new FormControl(lists);
+
+		formControl = new FormControl(); // Prendat jinam nemuze byt v modelu
 
 		idCreater = new IdentificatorCreater();
 		linkControl = new LinkControl(this, lists, objF, idCreater);
@@ -132,8 +108,17 @@ public class Control {
 		setConfTableForm(new ConfigurationTableForm(this, deleteControl, idCreater));
 		typeForm = new TypeForm(this, deleteControl, idCreater);
 
-		firstSave = true;
 
+
+	}
+
+	public CanvasItem createCanvasItem(){
+		//Todo Nastavit canvasItem Do Listu vytvorit item se vsim potrebnym;
+
+		CanvasItem ci = new CanvasItem(); //new CanvasItem(type, "New", control, control.getForms().get(indexForm), 0, x, y, contexMenu,
+		//control.getLinkControl(), this);
+
+		return ci;
 	}
 
 	/**
@@ -185,7 +170,7 @@ public class Control {
 	 */
 	public void restartControl() {
 
-		procesGener = new ProcessGenerator();
+	//	procesGener = new ProcessGenerator();
 		objF = new ObjectFactory();
 
 		idCreater = new IdentificatorCreater();
@@ -194,21 +179,13 @@ public class Control {
 
 		canvas.restart();
 
-		configureFileChooser();
+	//	configureFileChooser();
 
-		firstSave = true;
+	//	firstSave = true;
 
 	}
 
-	/**
-	 * Metoda pro konfiguraci FileChooseru
-	 */
-	private void configureFileChooser() {
 
-		fileChooser = new FileChooser();
-		fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
-		fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("XML", "*.xml"));
-	}
 
 	/**
 	 * Vypočte polohu šipky ukazující směr propojení Work Unit
@@ -404,175 +381,10 @@ public class Control {
 		}
 	}
 
-	/**
-	 * Rozhodne o vyvolání okna pro uložení nebo automatickém uložení do již
-	 * zvoleného souboru
-	 */
-	public void saveFile() {
 
-		if (file == null || firstSave) {
-
-			saveAsFile();
-			firstSave = false;
-			save = true;
-		} else {
-			procesGener.saveProcess(file, project);
-
-		}
-
-	}
-
-	/**
-	 * Umožní zobrazení systémového okna pro výběr souboru k uložení. Načte
-	 * soubor do globální proměnné file pro další polužití
-	 */
-
-	public void saveAsFile() {
-		if (!save) {
-			fileChooser.setTitle("Save Process");
-
-			file = fileChooser.showSaveDialog(new Stage());
-
-			if (file != null) {
-				procesGener.saveProcess(file, project);
-			}
-		} else {
-			save = false;
-		}
-
-	}
-
-	/**
-	 * Umožní zobrazneí systémového okna pro výběr souboru k načtení XML souboru
-	 * s procesem Zavolá metody pro restartování datových struktur
-	 */
-	public void openFile() {
-
-		fileChooser.setTitle("Open Process");
-
-		file = fileChooser.showOpenDialog(new Stage());
-		if (file != null) {
-			mainWindow.openFile(file);
-		}
-
-	}
-
-	/**
-	 * Vytvoří nové instance s potřebnými třídamy a restartuje třídu Control
-	 * 
-	 * @param file
-	 */
-	public void openFile(File file) {
-		Project tmpProject = procesGener.readProcess(file);
-		if (tmpProject != null) {
-
-			restartControl();
-			project = tmpProject;
-			ProjectForm form = new ProjectForm(this, project, canvas);
-			forms.add(0, form);
-
-			lists.restartLists(project);
-
-			linkControl = new LinkControl(this, lists, objF, idCreater);
-			linkControl.restart();
-			deleteControl = new DeleteControl(this, lists, project);
-
-			fillForms = new FillForms(this, lists, project, forms, objF, idCreater, deleteControl, formControl);
-			fillCopy = new FillCopyForms(this, getLists(), project, forms, objF, idCreater, deleteControl, formControl);
-			manipulation.restart(fillCopy, project, deleteControl, forms);
-
-			fillFormsXML = new FillFormsXML(this, lists, project, forms, fillCopy, idCreater, linkControl,
-					deleteControl, formControl);
-			fillFormsXML.fillProjectFromXML(form);
-
-			parseProject();
-		}
-	}
-
-	/**
-	 * Pomocná metoda pro validaci souboru
-	 */
-
-	public void validate() {
-
-		procesGener.validate(project);
-
-	}
-
-	/**
-	 * Pomocná metoda pro zpracování segmentů procesu
-	 */
-
-	private void parseProject() {
-
-		fillFormsXML.fillPhasesFromXML(forms.get(0));
-		fillFormsXML.fillIterationFromXML(forms.get(0));
-		fillFormsXML.fillActivityFromXML(forms.get(0));
-		fillFormsXML.fillWorkUnitFromXML(forms.get(0), project.getWorkUnitIndexs());
-		fillFormsXML.createLinks(project.getLinks());
-	}
-
-	/**
-	 * Umožní převedení data ve formátu LocalDate do formátu
-	 * XMLGregorianCalendar pro uložení do XML
-	 * 
-	 * @param Ldate
-	 *            LocalDate
-	 * @return XMLGregorianCalendar
-	 */
-	public static XMLGregorianCalendar convertDate(LocalDate Ldate) {
-
-		if (Ldate == null) {
-			return null;
-		}
-
-		Instant instant = Instant.from(Ldate.atStartOfDay(ZoneId.systemDefault()));
-		Date date = Date.from(instant);
-		GregorianCalendar c = new GregorianCalendar();
-
-		XMLGregorianCalendar dateXML = null;
-		try {
-
-			c.setTime(date);
-			dateXML = DatatypeFactory.newInstance().newXMLGregorianCalendar(c);
-
-		} catch (DatatypeConfigurationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return dateXML;
-	}
-
-	/**
-	 * Umožní převedení data ve formátu XMLGregorianCalendar uloženého v XML do
-	 * formátu LocalDate
-	 * 
-	 * @param xmlDate
-	 *            XMLGregorianCalendar
-	 * @return LocalDate
-	 */
-	public LocalDate convertDateFromXML(XMLGregorianCalendar xmlDate) {
-
-		if (xmlDate == null) {
-			return null;
-		}
-
-		Date date = xmlDate.toGregorianCalendar().getTime();
-		Instant instant = date.toInstant();
-		ZonedDateTime zdt = instant.atZone(ZoneId.systemDefault());
-		LocalDate localDate = zdt.toLocalDate();
-		return localDate;
-	}
 
 	/** Getrs and Setrs ***/
 
-	public SegmentLists getLists() {
-		return lists;
-	}
-
-	public void setLists(SegmentLists lists) {
-		this.lists = lists;
-	}
 
 	public ArrayList<BasicForm> getForms() {
 		return forms;
@@ -670,14 +482,6 @@ public class Control {
 		this.typeForm = typeForm;
 	}
 
-	public Project getProject() {
-		return project;
-	}
-
-	public void setProject(Project project) {
-		this.project = project;
-	}
-
 	public ManipulationControl getManipulation() {
 		return manipulation;
 	}
@@ -688,10 +492,6 @@ public class Control {
 
 	public ItemContexMenu getContexMenu() {
 		return contexMenu;
-	}
-
-	public void setContexMenu(ItemContexMenu contexMenu) {
-		this.contexMenu = contexMenu;
 	}
 
 	public LinkControl getLinkControl() {
@@ -710,13 +510,7 @@ public class Control {
 		this.fillCopy = fillCopy;
 	}
 
-	public boolean isClose() {
-		return isClose;
-	}
 
-	public void setClose(boolean isClose) {
-		this.isClose = isClose;
-	}
 
 
 	

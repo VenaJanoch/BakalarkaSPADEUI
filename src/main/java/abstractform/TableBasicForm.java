@@ -15,7 +15,7 @@ import services.Constans;
 import services.Control;
 import services.DeleteControl;
 import services.FormControl;
-import services.IdentificatorCreater;
+import model.IdentificatorCreater;
 
 /**
  * Třída umoznující vytvoření tabulkového formuláře

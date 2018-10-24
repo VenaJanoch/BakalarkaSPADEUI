@@ -1,6 +1,5 @@
 package abstractform;
 
-import interfaces.ISegmentTableForm;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
@@ -12,12 +11,11 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
-import services.Alerts;
 import services.Constans;
 import services.Control;
 import services.DeleteControl;
 import services.FormControl;
-import services.IdentificatorCreater;
+import model.IdentificatorCreater;
 
 /**
  * Třída umožnující zobrazení dvou formulářů v jednom okně

@@ -1,44 +1,23 @@
 package forms;
 
-import java.util.List;
-
-import javax.management.relation.RoleStatus;
-
 import SPADEPAC.RoleClass;
 import SPADEPAC.RoleSuperClass;
-import SPADEPAC.WorkUnitPrioritySuperClass;
-import SPADEPAC.WorkUnitTypeClass;
-import SPADEPAC.WorkUnitTypeSuperClass;
-import abstractform.TableBasicForm;
 import abstractform.TableClassBasicForm;
 import interfaces.ISegmentTableForm;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.geometry.Insets;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.SelectionMode;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
-import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import services.Alerts;
-import services.ClassSwitcher;
 import services.Control;
 import services.DeleteControl;
-import services.IdentificatorCreater;
+import model.IdentificatorCreater;
 import tables.ClassTable;
-import tables.CriterionTable;
-import tables.RoleTable;
 
 /**
  * Třída představující tabulkový formulář pro výčtový typ Role-Type, odděděná od

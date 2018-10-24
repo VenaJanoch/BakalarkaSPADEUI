@@ -2,37 +2,18 @@ package forms;
 
 import org.controlsfx.control.CheckComboBox;
 
-import SPADEPAC.Configuration;
-import SPADEPAC.Milestone;
-import abstractform.BasicForm;
 import abstractform.Table2BasicForm;
-import abstractform.TableBasicForm;
-import graphics.CanvasItem;
-import graphics.InfoBoxSegment;
-import interfaces.ISegmentForm;
 import interfaces.ISegmentTableForm;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
-import javafx.event.EventHandler;
-import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
-import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.input.KeyCode;
@@ -40,17 +21,12 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
-import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
 import services.Alerts;
 import services.Constans;
 import services.Control;
 import services.DeleteControl;
-import services.FillForms;
-import services.IdentificatorCreater;
-import tables.ClassTable;
+import model.IdentificatorCreater;
 import tables.MilestoneTable;
-import tables.TagTable;
 
 /**
  * Třída představující dvojitý formulář pro element Milestone, vytvoří tabulku s

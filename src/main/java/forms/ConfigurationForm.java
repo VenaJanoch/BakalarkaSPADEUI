@@ -7,10 +7,8 @@ import java.util.List;
 import org.controlsfx.control.CheckComboBox;
 
 import SPADEPAC.Configuration;
-import SPADEPAC.ObjectFactory;
 import abstractform.BasicForm;
 import graphics.CanvasItem;
-import graphics.InfoBoxSegment;
 import interfaces.ISegmentForm;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -18,24 +16,20 @@ import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.geometry.HPos;
-import javafx.scene.Cursor;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
-import javafx.scene.control.TextField;
 import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleGroup;
-import javafx.scene.shape.Line;
 import javafx.stage.WindowEvent;
 import services.Alerts;
 import services.CanvasType;
 import services.Constans;
 import services.Control;
 import services.DeleteControl;
-import services.IdentificatorCreater;
-import services.SegmentType;
+import model.IdentificatorCreater;
 
 /**
  * Třída představující formulář pro element Configuration, odděděná od třídy

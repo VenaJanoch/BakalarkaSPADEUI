@@ -18,10 +18,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import run.Main;
-import services.Alerts;
-import services.CanvasType;
-import services.Constans;
-import services.Control;
+import services.*;
 
 /**
  * Třída s hlavní layoutem aplikace
@@ -32,39 +29,30 @@ import services.Control;
 public class MainWindow extends Stage {
 	/** Globální proměnné třídy **/
 	private Scene scena;
-	private Control control;
+
 	private BorderPane mainPanel;
 	private DragAndDropCanvas dragCanvas;
 	private MenuPanel menu;
 	private DragAndDropPanel dragAndDrop;
-	private Main main;
-	private File file;
 
+
+	private Control control;
+	private WindowController windowController;
 	/**
 	 * Konstruktor třídy Nastaví reakci na uzavírání aplikace
 	 * 
-	 * @param main
+	 * @param
 	 */
-	public MainWindow(Main main) {
+	public MainWindow(WindowController windowController) {
 		super();
-		this.main = main;
-		this.setTitle("SPADe Process Editor");
+		this.windowController = windowController;
 
-		main.getPrimaryStage().setOnCloseRequest(event -> {
-			event.consume();
+		this.setTitle(Constans.mainWindowTitle);
 
-			if (!control.isClose()) {
-				int result = Alerts.showCloseApp(control);
-
-				if (result != -1) {
-					Platform.exit();
-				}
-
-			}
-
-		});
+		windowController.closeProjectWindow();
 
 		this.setScene(creatScene());
+		windowController.setSceneToPrimaryStage(scena, this.getTitle());
 	}
 
 	/**
@@ -104,35 +92,6 @@ public class MainWindow extends Stage {
 		mainPanel.setCenter(dragCanvas);
 
 		return mainPanel;
-	}
-
-	/**
-	 * Pomocná metoda pro vytvoření nového projektu
-	 */
-	public void newItem() {
-		this.setScene(creatScene());
-		main.getPrimaryStage().setScene(getScene());
-	}
-
-	/**
-	 * Pomocná metoda pro načtení již vytvořeného projektu
-	 * 
-	 * @param file
-	 *            File
-	 */
-	public void openFile(File file) {
-		this.file = file;
-		newItem();
-		control.openFile(this.file);
-	}
-
-	/** Getrs and Setrs */
-	public File getFile() {
-		return file;
-	}
-
-	public void setFile(File file) {
-		this.file = file;
 	}
 
 }

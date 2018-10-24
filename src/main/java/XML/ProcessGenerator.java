@@ -17,6 +17,7 @@ import javax.xml.bind.UnmarshalException;
 import javax.xml.bind.Unmarshaller;
 import javax.xml.validation.Validator;
 
+import model.DataManipulator;
 import org.xml.sax.SAXException;
 
 import SPADEPAC.ObjectFactory;
@@ -35,12 +36,12 @@ public class ProcessGenerator {
 	private Marshaller marshaller;
 	private Unmarshaller unMarshaller;
 	private ProcessValidator validator;
-
+	private DataManipulator dataManipulator;
 	/**
 	 * Konstruktor třídy Vytvoří inicializaci globálních proměnných
 	 */
-	public ProcessGenerator() {
-
+	public ProcessGenerator(DataManipulator dataManipulator) {
+		this.dataManipulator = dataManipulator;
 		try {
 
 			jc = JAXBContext.newInstance(Constans.LIBRARY);
@@ -72,9 +73,7 @@ public class ProcessGenerator {
 	 * Umožní zvalidování processu v paměti předaného pomocí kořenového elemetnu
 	 * project
 	 * 
-	 * @param project
-	 *            instance třídy Project - Kořenový element
-	 */
+	 **/
 	public void validate(Project project) {
 		rootElement = of.createPoject(project);
 		try {
@@ -105,11 +104,10 @@ public class ProcessGenerator {
 	 * 
 	 * @param file
 	 *            jméno souboru pro XML
-	 * @param project
-	 *            kořenový element
+
 	 */
 
-	public void saveProcess(File file, Project project) {
+	public void saveProcess(File file,Project project) {
 
 		rootElement = of.createPoject(project);
 		try {
@@ -141,8 +139,6 @@ public class ProcessGenerator {
 	 * 
 	 * @param file
 	 *            jméno souboru pro XML
-	 * @param project
-	 *            kořenový element
 	 */
 
 	private void saveWithOutValidation(File file, Project project) {

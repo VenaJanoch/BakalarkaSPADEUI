@@ -5,7 +5,6 @@ import java.util.List;
 
 import SPADEPAC.Activity;
 import SPADEPAC.Artifact;
-import SPADEPAC.ArtifactClass;
 import SPADEPAC.Branch;
 import SPADEPAC.Change;
 import SPADEPAC.ConfigPersonRelation;
@@ -25,24 +24,19 @@ import SPADEPAC.Severity;
 import SPADEPAC.Status;
 import SPADEPAC.Type;
 import SPADEPAC.WorkUnit;
-import SPADEPAC.WorkUnitPriorityClass;
-import SPADEPAC.WorkUnitSeverityClass;
-import SPADEPAC.WorkUnitTypeClass;
 import abstractform.BasicForm;
 import forms.ActivityForm;
 import forms.ArtifactForm;
-import forms.BranchForm;
 import forms.ChangeForm;
 import forms.ConfigurationForm;
 import forms.IterationForm;
 import forms.PhaseForm;
 import forms.ProjectForm;
-import forms.RoleForm;
-import forms.TagForm;
 import forms.WorkUnitForm;
 import graphics.CanvasItem;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import model.IdentificatorCreater;
 import tables.BranchTable;
 import tables.CPRTable;
 import tables.ClassTable;
@@ -59,7 +53,7 @@ public class FillFormsXML {
 	private Project project;
 	private ArrayList<BasicForm> forms;
 
-	private IdentificatorCreater idCreater;
+	private model.IdentificatorCreater idCreater;
 	private SegmentLists lists;
 	private FillCopyForms copyForms;
 	private LinkControl linkControl;
@@ -89,8 +83,8 @@ public class FillFormsXML {
 	 *            instace třídy FormControl
 	 */
 	public FillFormsXML(Control control, SegmentLists lists, Project project, ArrayList<BasicForm> forms,
-			FillCopyForms copyForms, IdentificatorCreater idCreator, LinkControl linkControl,
-			DeleteControl deleteControl, FormControl formControl) {
+                        FillCopyForms copyForms, model.IdentificatorCreater idCreator, LinkControl linkControl,
+                        DeleteControl deleteControl, FormControl formControl) {
 
 		this.control = control;
 		this.project = project;
@@ -244,7 +238,7 @@ public class FillFormsXML {
 	 */
 	public int[] createPhaseFormXML(CanvasItem item, BasicForm form, int[] IDs) {
 
-		int index = IdentificatorCreater.getIndex();
+		int index = model.IdentificatorCreater.getIndex();
 		IDs[0] = index;
 		IDs[1] = idCreater.createPhaseID();
 		IDs[3] = form.getCanvasItem().getIDs()[0];
@@ -255,7 +249,7 @@ public class FillFormsXML {
 		copyForms.copyFormPhase(phase, phaseForm);
 
 		index++;
-		IdentificatorCreater.setIndex(index);
+		model.IdentificatorCreater.setIndex(index);
 		forms.add(IDs[0], phaseForm);
 		return IDs;
 
@@ -297,7 +291,7 @@ public class FillFormsXML {
 	 * @return identifikátory
 	 */
 	public int[] createIterationFormXML(CanvasItem item, BasicForm form, int[] IDs) {
-		int index = IdentificatorCreater.getIndex();
+		int index = model.IdentificatorCreater.getIndex();
 		IDs[0] = index;
 		IDs[1] = idCreater.createIterationID();
 		IDs[3] = form.getCanvasItem().getIDs()[0];
@@ -308,7 +302,7 @@ public class FillFormsXML {
 		copyForms.copyFormIteration(iteration, iterationForm);
 
 		index++;
-		IdentificatorCreater.setIndex(index);
+		model.IdentificatorCreater.setIndex(index);
 
 		forms.add(IDs[0], iterationForm);
 		return IDs;
@@ -353,7 +347,7 @@ public class FillFormsXML {
 	 * @return identifikátory
 	 */
 	public int[] createActivityFormXML(CanvasItem item, BasicForm form, int[] IDs) {
-		int index = IdentificatorCreater.getIndex();
+		int index = model.IdentificatorCreater.getIndex();
 		IDs[0] = index;
 		IDs[1] = idCreater.createActivityID();
 		IDs[3] = form.getCanvasItem().getIDs()[0];
@@ -365,7 +359,7 @@ public class FillFormsXML {
 
 		forms.add(index, activityForm);
 		index++;
-		IdentificatorCreater.setIndex(index);
+		model.IdentificatorCreater.setIndex(index);
 		return IDs;
 
 	}
@@ -406,7 +400,7 @@ public class FillFormsXML {
 	 * @return identifikátory
 	 */
 	public int[] createWorkUnitFormXML(CanvasItem item, BasicForm form, int[] IDs) {
-		int index = IdentificatorCreater.getIndex();
+		int index = model.IdentificatorCreater.getIndex();
 
 		IDs[0] = index;
 		IDs[1] = idCreater.createWorkUnitID();
@@ -422,7 +416,7 @@ public class FillFormsXML {
 		copyForms.copyFormWorkUnit(unit, workUnitForm, item);
 
 		index++;
-		IdentificatorCreater.setIndex(index);
+		model.IdentificatorCreater.setIndex(index);
 		forms.add(IDs[0], workUnitForm);
 		lists.getWorkUnitFormIndex().add(tmpIndex, IDs[0]);
 		return IDs;
@@ -476,7 +470,7 @@ public class FillFormsXML {
 	 * @return identifikátory
 	 */
 	public int[] createConfigurationFormXML(CanvasItem item, BasicForm form, int[] IDs) {
-		int index = IdentificatorCreater.getIndex();
+		int index = model.IdentificatorCreater.getIndex();
 		IDs[0] = index;
 		IDs[1] = idCreater.createConfigurationID();
 		IDs[3] = form.getCanvasItem().getIDs()[0];
@@ -505,7 +499,7 @@ public class FillFormsXML {
 		forms.add(index, configForm);
 
 		index++;
-		IdentificatorCreater.setIndex(index);
+		model.IdentificatorCreater.setIndex(index);
 
 		fillChangeFromXML(configForm, conf.getChangesIndexs(), IDs[0]);
 		fillTagsFromXML(configForm, conf.getTags());
@@ -653,7 +647,7 @@ public class FillFormsXML {
 	 * @return identifikátory
 	 */
 	public int[] createChangeFormXML(CanvasItem item, BasicForm form, int[] IDs) {
-		int index = IdentificatorCreater.getIndex();
+		int index = model.IdentificatorCreater.getIndex();
 		IDs[0] = index;
 		IDs[1] = idCreater.createChangeID();
 		IDs[2] = form.getIdCreater().createChangeID();
@@ -668,7 +662,7 @@ public class FillFormsXML {
 		forms.add(index, changeForm);
 		lists.getChangeFormIndex().add(index1, index);
 		index++;
-		IdentificatorCreater.setIndex(index);
+		model.IdentificatorCreater.setIndex(index);
 		return IDs;
 
 	}
@@ -713,7 +707,7 @@ public class FillFormsXML {
 	 * @return identifikátory
 	 */
 	public int[] createArtifactFormXML(CanvasItem item, BasicForm form, int[] IDs) {
-		int index = IdentificatorCreater.getIndex();
+		int index = model.IdentificatorCreater.getIndex();
 		IDs[0] = index;
 		IDs[1] = idCreater.createArtifactID();
 		IDs[2] = form.getIdCreater().createArtifactID();
@@ -727,7 +721,7 @@ public class FillFormsXML {
 		forms.add(index, artifactForm);
 		control.getLists().getArtifactFormIndex().add(index1, index);
 		index++;
-		IdentificatorCreater.setIndex(index);
+		model.IdentificatorCreater.setIndex(index);
 		return IDs;
 
 	}
@@ -986,7 +980,7 @@ public class FillFormsXML {
 
 	/*** Getrs and Setrs ****/
 
-	public IdentificatorCreater getIdCreater() {
+	public model.IdentificatorCreater getIdCreater() {
 		return idCreater;
 	}
 

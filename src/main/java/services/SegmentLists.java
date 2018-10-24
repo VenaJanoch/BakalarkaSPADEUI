@@ -85,21 +85,17 @@ public class SegmentLists {
 
 	private List<Link> linksList;
 
-	private Control control;
 	private Project project;
 
 	/**
 	 * Konstruktor třídy Zinicializuje globální proměnné a zavolá metodu pro
 	 * vytvoření seznamů
-	 * 
-	 * @param control
-	 *            instanace třídy Control
+	 *
 	 * @param project
 	 *            Instance kořenové třídy
 	 */
-	public SegmentLists(Control control, Project project) {
+	public SegmentLists(Project project) {
 
-		this.control = control;
 		this.project = project;
 		createLists();
 

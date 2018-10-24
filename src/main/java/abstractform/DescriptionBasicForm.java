@@ -1,17 +1,12 @@
 package abstractform;
 
 import graphics.CanvasItem;
-import graphics.DragAndDropCanvas;
-import graphics.DragAndDropItem;
 import javafx.geometry.HPos;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.BorderPane;
-import services.Alerts;
 import services.CanvasType;
 import services.Control;
 import services.DeleteControl;
-import services.IdentificatorCreater;
 
 /**
  * Třída odděděná ze třídy BasicForm přidávající vstupní pole pro Description

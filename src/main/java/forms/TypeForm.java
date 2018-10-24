@@ -1,10 +1,5 @@
 package forms;
 
-import java.util.List;
-
-import SPADEPAC.WorkUnitPriorityClass;
-import SPADEPAC.WorkUnitPrioritySuperClass;
-import SPADEPAC.WorkUnitStatusSuperClass;
 import SPADEPAC.WorkUnitTypeClass;
 import SPADEPAC.WorkUnitTypeSuperClass;
 import abstractform.TableClassBasicForm;
@@ -15,15 +10,13 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
 import services.Alerts;
-import services.Constans;
 import services.Control;
 import services.DeleteControl;
-import services.IdentificatorCreater;
+import model.IdentificatorCreater;
 import tables.ClassTable;
 
 /**

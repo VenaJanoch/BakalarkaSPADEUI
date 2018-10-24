@@ -1,19 +1,12 @@
 package forms;
 
-import SPADEPAC.Branch;
 import SPADEPAC.ObjectFactory;
-import abstractform.BasicForm;
 import abstractform.TableBasicForm;
-import graphics.CanvasItem;
-import graphics.InfoBoxSegment;
-import interfaces.ISegmentForm;
 import interfaces.ISegmentTableForm;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.EventHandler;
-import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.ComboBox;
@@ -22,7 +15,6 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
 import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -31,15 +23,12 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
-import javafx.stage.WindowEvent;
 import services.Alerts;
 import services.Constans;
 import services.Control;
 import services.DeleteControl;
-import services.IdentificatorCreater;
+import model.IdentificatorCreater;
 import tables.BranchTable;
-import tables.ClassTable;
-import tables.TagTable;
 
 /**
  * Třída představující tabulkový formulář pro element Branch, odděděná od třídy

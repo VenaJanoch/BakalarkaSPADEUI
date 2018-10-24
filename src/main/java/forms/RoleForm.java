@@ -1,30 +1,15 @@
 package forms;
 
-import java.time.LocalDate;
-
-import SPADEPAC.Role;
-import SPADEPAC.RoleClass;
-import SPADEPAC.WorkUnitPriorityClass;
-import SPADEPAC.WorkUnitSeverityClass;
-import abstractform.BasicForm;
-import abstractform.DescriptionBasicForm;
 import abstractform.Table2BasicForm;
-import abstractform.TableBasicForm;
-import graphics.CanvasItem;
-import graphics.InfoBoxSegment;
-import interfaces.ISegmentForm;
 import interfaces.ISegmentTableForm;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.EventHandler;
-import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
@@ -37,15 +22,12 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
-import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
 import services.Alerts;
 import services.ClassSwitcher;
 import services.Constans;
 import services.Control;
 import services.DeleteControl;
-import services.IdentificatorCreater;
-import tables.MilestoneTable;
+import model.IdentificatorCreater;
 import tables.RoleTable;
 
 /**

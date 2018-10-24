@@ -14,27 +14,21 @@ import javafx.scene.control.Label;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.SplitPane;
 import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
-import javafx.scene.input.DragEvent;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.input.TouchEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
-import javafx.util.Callback;
 import services.Alerts;
-import services.Constans;
 import services.Control;
 import services.DeleteControl;
-import services.IdentificatorCreater;
+import model.IdentificatorCreater;
 import services.SegmentType;
 import tables.ConfigTable;
-import tables.MilestoneTable;
 
 /**
  * Třída představující dvojitý formulář pro element Configuration, vytvoří

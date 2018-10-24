@@ -11,6 +11,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonBar.ButtonData;
 import java.util.List;
 
+import model.FileManipulator;
 import tables.BranchTable;
 import tables.CPRTable;
 import tables.ClassTable;
@@ -21,6 +22,11 @@ import tables.RoleTable;
 import tables.TagTable;
 
 public class Alerts {
+
+	FileManipulator fileManipulator;
+	public Alerts(FileManipulator fileManipulator){
+		this.fileManipulator = fileManipulator;
+	}
 
 	/**
 	 * Alert pro informování o špatně vyplněném EstimatedTime
@@ -363,10 +369,7 @@ public class Alerts {
 	 * Alert s infomací o zavření formuláře bez uložení a možnostmi uložení
 	 * formuláře, případně zrušení akce
 	 * 
-	 * @param table
-	 *            Tabulka s prvky
-	 * @param selection
-	 *            vybrané prvky
+
 	 * @return smazané prvky
 	 */
 	public static int showSaveSegment() {
@@ -395,11 +398,9 @@ public class Alerts {
 	/**
 	 * Alert s infomací o ukončení aplikace s možností uložení procesu, přídně
 	 * zrušením akce
-	 * 
-	 * @param control
-	 *            Intance třídy Control
+	 *
 	 */
-	public static int showCloseApp(Control control) {
+	public int showCloseApp() {
 		Alert alert = new Alert(AlertType.WARNING);
 		alert.setTitle("Closing APP");
 		alert.setHeaderText("You closing a program");
@@ -413,7 +414,7 @@ public class Alerts {
 		Optional<ButtonType> result = alert.showAndWait();
 
 		if (result.get() == buttonTypeOne) {
-			control.saveFile();
+			fileManipulator.saveFile();
 			return 0;
 		} else if (result.get() == buttonOK) {
 			return 1;

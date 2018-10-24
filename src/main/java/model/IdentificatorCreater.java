@@ -1,4 +1,4 @@
-package services;
+package model;
 
 public class IdentificatorCreater {
 	/** Globální proměnné třídy **/

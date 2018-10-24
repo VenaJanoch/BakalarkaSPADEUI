@@ -8,6 +8,7 @@ import graphics.CanvasItem;
 import graphics.NodeLink;
 import graphics.WorkUnitLink;
 import javafx.geometry.Point2D;
+import model.IdentificatorCreater;
 
 public class LinkControl {
 
@@ -19,7 +20,7 @@ public class LinkControl {
 	private SegmentLists lists;
 	private int id;
 	private ObjectFactory objF;
-	private IdentificatorCreater idCreator;
+	private model.IdentificatorCreater idCreator;
 
 	/**
 	 * Konstruktor třídy Zinicializuje globální proměnné třídy

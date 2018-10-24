@@ -8,6 +8,10 @@ import javafx.scene.paint.Paint;
 
 public class Constans {
 
+
+	public static final String mainWindowTitle = "SPADe Process Editor";
+	public static final String fileChooserTitle = "Open Process";
+
 	/**
 	 * Konstanty pro nastavení velikosti oken
 	 */
@@ -168,5 +172,6 @@ public class Constans {
 	public static final KeyCodeCombination controlX = new KeyCodeCombination(KeyCode.X, KeyCombination.CONTROL_ANY);
 	public static final KeyCode delete = KeyCode.DELETE;
 	public static final String linkPicture = "link.svn";
+
 
 }

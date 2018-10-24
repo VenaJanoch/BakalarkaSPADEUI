@@ -2,7 +2,6 @@ package services;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Queue;
 
 import SPADEPAC.Activity;
 import SPADEPAC.Artifact;
@@ -36,6 +35,7 @@ import forms.PhaseForm;
 import forms.WorkUnitForm;
 import graphics.CanvasItem;
 import javafx.collections.ObservableList;
+import model.IdentificatorCreater;
 import tables.ConfigTable;
 import tables.TagTable;
 
