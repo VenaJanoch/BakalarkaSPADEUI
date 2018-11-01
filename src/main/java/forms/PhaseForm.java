@@ -1,38 +1,22 @@
 package forms;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 
-import SPADEPAC.Configuration;
 import SPADEPAC.ObjectFactory;
 import SPADEPAC.Phase;
-import SPADEPAC.WorkUnit;
 import abstractform.BasicForm;
 import abstractform.DateDescBasicForm;
 import graphics.CanvasItem;
-import graphics.DragAndDropCanvas;
-import graphics.DragAndDropItem;
-import graphics.InfoBoxSegment;
 import interfaces.ISegmentForm;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.event.EventHandler;
 import javafx.geometry.HPos;
-import javafx.geometry.Pos;
-import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
-import javafx.scene.layout.HBox;
-import javafx.stage.WindowEvent;
 import services.Alerts;
 import services.CanvasType;
 import services.Control;
 import services.DeleteControl;
-import services.FormControl;
-import services.SegmentType;
 
 /**
  * Třída představující formulář pro segment Phase, odděděná od třídy

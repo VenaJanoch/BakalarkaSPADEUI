@@ -39,6 +39,8 @@ import model.IdentificatorCreater;
 import tables.ConfigTable;
 import tables.TagTable;
 
+import javax.xml.datatype.XMLGregorianCalendar;
+
 public class FillForms {
 
 	/** Globální proměnné třídy */
@@ -91,12 +93,12 @@ public class FillForms {
 	 * @param endDate
 	 *            data z kalendaře
 	 */
-	public void fillProject(String description, String name, LocalDate startDate, LocalDate endDate) {
+	public void fillProject(String description, String name, XMLGregorianCalendar startDate, XMLGregorianCalendar endDate) {
 
 		project.setDescription(formControl.fillTextMapper(description));
 		project.setName(formControl.fillTextMapper(name));
-		project.setEndDate(control.convertDate(endDate));
-		project.setStartDate(control.convertDate(startDate));
+		project.setEndDate(startDate);
+		project.setStartDate(startDate);
 	}
 
 	/**
@@ -115,12 +117,12 @@ public class FillForms {
 	 * @param y
 	 * @param isNew
 	 */
-	public static void fillPhase(Phase phase, int[] ID, String description, String name, LocalDate endDate,
+	public static void fillPhase(Phase phase, int[] ID, String description, String name, XMLGregorianCalendar endDate,
 			int confIndex, int milestoneIndex, int x, int y, boolean isNew, ObjectFactory objF) {
 
 		phase.setDescription(formControl.fillTextMapper(description));
 		phase.setName(formControl.fillTextMapper(name));
-		phase.setEndDate(control.convertDate(endDate));
+		phase.setEndDate(endDate);
 		Coordinates coord = objF.createCoordinates();
 		coord.setXCoordinate(x);
 		coord.setYCoordinate(y);
@@ -153,10 +155,6 @@ public class FillForms {
 
 		Phase phase = (Phase) objF.createPhase();
 		Coordinates coord = objF.createCoordinates();
-
-		forms.add(index, new PhaseForm(item, control, Constans.phaseDragTextIndexs, phase, index, deleteControl));
-		IDs[0] = index;
-		IDs[1] = idCreater.createPhaseID();
 
 		IDs[3] = form.getCanvasItem().getIDs()[0];
 		form.getPhaseArray().add(IDs[1], null);

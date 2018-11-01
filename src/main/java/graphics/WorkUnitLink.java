@@ -1,22 +1,16 @@
 package graphics;
 
-import SPADEPAC.ArtifactClass;
 import SPADEPAC.WorkUnit;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.collections.FXCollections;
 import javafx.event.EventHandler;
 import javafx.geometry.Point2D;
-import javafx.scene.control.ComboBox;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
-import services.Alerts;
 import services.Constans;
 import services.Control;
-import services.LinkControl;
+import Controllers.LinkControl;
 import services.SegmentType;
 
 /**
@@ -55,7 +49,7 @@ public class WorkUnitLink extends NodeLink {
 	
 	public void setArrowAndBox(Point2D endPointL) {
 
-		setEnd(endPointL, Constans.ArrowRadius);
+		setEndPoint(endPointL, Constans.ArrowRadius);
 
 		Point2D center = control.calculateCenter(startPoint, endPoint);
 

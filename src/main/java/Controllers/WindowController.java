@@ -1,10 +1,13 @@
-package services;
+package Controllers;
 
 import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import model.DataManipulator;
 import model.FileManipulator;
+import services.Alerts;
 
+import javax.xml.crypto.Data;
 import java.io.File;
 
 public class WindowController {
@@ -13,12 +16,14 @@ public class WindowController {
     private Stage primaryStage;
     private boolean isClose;
     private FileManipulator fileManipulator;
+    private DataManipulator dataManipulator;
     private Alerts alerts;
 
 
-    public WindowController(Stage primaryStage, FileManipulator fileManipulator, Alerts alerts){
+    public WindowController(Stage primaryStage, FileManipulator fileManipulator, DataManipulator dataManipulator, Alerts alerts){
         this.primaryStage = primaryStage;
         this.fileManipulator = fileManipulator;
+        this.dataManipulator = dataManipulator;
         this.alerts = alerts;
     }
 
@@ -29,16 +34,27 @@ public class WindowController {
 
     }
 
-
-    /********* Getrs and Setrs *************/
-    public Stage getPrimaryStage() {
-        return primaryStage;
+    public void saveItemAction(){
+            fileManipulator.saveFile();
     }
 
-    public void setPrimaryStage(Stage primaryStage) {
-        this.primaryStage = primaryStage;
+    public void saveItemAsAction(){
+            fileManipulator.saveAsFile();
     }
 
+    public void openProccesXMLAction() {
+
+        fileManipulator.loadFile();
+    }
+
+    public void createNewProcessAction() {
+
+        //Todo obsluha udalosti
+    }
+
+    public void validationAction() {
+        dataManipulator.validate();
+    }
 
     public void closeProjectWindow() {
 
@@ -58,6 +74,15 @@ public class WindowController {
     }
 
 
+    /********* Getrs and Setrs *************/
+    public Stage getPrimaryStage() {
+        return primaryStage;
+    }
+
+    public void setPrimaryStage(Stage primaryStage) {
+        this.primaryStage = primaryStage;
+    }
+
     public boolean isClose() {
         return isClose;
     }
@@ -65,4 +90,5 @@ public class WindowController {
     public void setClose(boolean isClose) {
         this.isClose = isClose;
     }
+
 }

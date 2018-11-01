@@ -99,7 +99,6 @@ public class FileManipulator {
 
             return true;
         }
-
         return false;
     }
 

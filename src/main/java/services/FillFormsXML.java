@@ -3,6 +3,7 @@ package services;
 import java.util.ArrayList;
 import java.util.List;
 
+import Controllers.LinkControl;
 import SPADEPAC.Activity;
 import SPADEPAC.Artifact;
 import SPADEPAC.Branch;
@@ -56,7 +57,7 @@ public class FillFormsXML {
 	private model.IdentificatorCreater idCreater;
 	private SegmentLists lists;
 	private FillCopyForms copyForms;
-	private LinkControl linkControl;
+	private Controllers.LinkControl linkControl;
 	private DeleteControl deleteControl;
 	private FormControl formControl;
 

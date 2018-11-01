@@ -1,16 +1,10 @@
 package abstractform;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import Controllers.FormController;
-import SPADEPAC.Activity;
-import SPADEPAC.Configuration;
-import SPADEPAC.Iteration;
-import SPADEPAC.Phase;
-import graphics.CanvasItem;
 import graphics.DragAndDropCanvas;
-import graphics.DragAndDropItem;
+import graphics.DragAndDropItemPanel;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -24,13 +18,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
-import services.Alerts;
-import services.CanvasType;
 import services.Constans;
-import services.Control;
-import services.DeleteControl;
-import services.FormControl;
-import model.IdentificatorCreater;
 
 /**
  * Absraktní třídy pro formuláře volané z kreslícího plátna
@@ -59,7 +47,7 @@ public abstract class BasicForm extends Stage {
 //	private CanvasItem item;
 //	private Control control;
 //	private int[] itemArray;
-	private DragAndDropItem dgItem;
+	private DragAndDropItemPanel dgItem;
 	private DragAndDropCanvas canvas;
 	private BorderPane dragBox;
 
@@ -89,7 +77,7 @@ public abstract class BasicForm extends Stage {
 	 * Konstruktor třídy pro formuláře s vlastním plátnem Zinicializuje globální
 	 * proměnné třídy
 	 */
-	public BasicForm(FormController formController) {
+	public BasicForm(FormController formController, DragAndDropCanvas canvas, DragAndDropItemPanel dgItem, String name) {
 		super();
 		this.formController = formController;
 
@@ -101,9 +89,9 @@ public abstract class BasicForm extends Stage {
 	//	this.alerts = new Alerts();
 	//	this.indexForm = indexForm;
 	//	this.setIdCreater(new IdentificatorCreater());
-		this.setTitle("Edit " + item.getType().name() + " Form");
-		this.canvas = new DragAndDropCanvas(formController.canvasType);
-		this.dgItem = new DragAndDropItem(control, itemArray, this);
+		this.setTitle("Edit " + name + " Form");
+		this.canvas = canvas;
+		this.dgItem = dgItem;
 		this.dragBox = new BorderPane();
 	//	this.setFormControl(new FormControl());
 		mainPanel = new BorderPane();
@@ -114,16 +102,10 @@ public abstract class BasicForm extends Stage {
 
 	/**
 	 * Konstruktor třídy pro prvky bez plátna
-	 * 
-	 * @param item
-	 *            CanvasItem
-	 * @param control
-	 *            Control
-	 * @param deleteControl
-	 *            DeleteControl
+	 *
 	 */
 
-	public BasicForm(CanvasItem item, DeleteControl deleteControl) {
+	public BasicForm(FormController formController, String name) {
 
 		super();
 	//	type = item.getType().name();
@@ -131,11 +113,10 @@ public abstract class BasicForm extends Stage {
 	//	this.control = control;
 	//	this.item = item;
 	//	this.alerts = new Alerts();
-		this.setIdCreater(new IdentificatorCreater());
-		this.setTitle("Edit " + item.getType().name());
+	//	this.setIdCreater(new IdentificatorCreater());
+		this.setTitle("Edit " + name);
 		mainPanel = new BorderPane();
-		this.setFormControl(new FormControl());
-
+		this.formController = formController;
 		this.setScene(creatSceneProject());
 
 	}
@@ -144,15 +125,15 @@ public abstract class BasicForm extends Stage {
 	 * Konstruktor pro projektový formulář
 	 *
 	 */
-	public BasicForm() {
+	public BasicForm(FormController formController) {
 		super();
 		//type = "Project";
 		//this.control = control;
 		//this.alerts = new Alerts();
 		//this.indexForm = 0;
+
 		this.setTitle("Edit Project");
-		this.setIdCreater(new IdentificatorCreater());
-		this.setFormControl(new FormControl());
+		this.formController = formController;
 
 		mainPanel = new BorderPane();
 
@@ -245,15 +226,8 @@ public abstract class BasicForm extends Stage {
 		return mainPanel;
 	}
 
-	/**
-	 * Pomocná metoda pro smazání prvku z plátna
-	 * 
-	 * @param i
-	 *            Identifikátory
-	 */
-	public void deleteItem(int[] i) {
 
-	}
+	abstract void createForm();
 
 	/** Getrs and Setrs **/
 
@@ -327,20 +301,4 @@ public abstract class BasicForm extends Stage {
 	}
 
 
-	/*public boolean isNew() {
-		return isNew;
-	}
-
-	public void setNew(boolean isNew) {
-		this.isNew = isNew;
-	}
-
-	public int getFormID() {
-		return indexForm;
-	}
-
-	public void setFormID(int formID) {
-		this.indexForm = formID;
-	}
-*/
 }

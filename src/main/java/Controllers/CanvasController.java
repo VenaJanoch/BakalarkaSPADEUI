@@ -2,24 +2,41 @@ package Controllers;
 
 import graphics.CanvasItem;
 import graphics.DragAndDropCanvas;
-import javafx.event.Event;
+import graphics.ItemContexMenu;
+import graphics.NodeLink;
 import javafx.event.EventHandler;
+import javafx.scene.Cursor;
+import javafx.scene.control.ToggleButton;
 import javafx.scene.input.*;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Polygon;
 import services.*;
 
-import java.awt.dnd.DragSourceDropEvent;
 
 public class CanvasController {
 
-    private Control control;
+  //  private Control control;
     private DragAndDropCanvas canvas;
     private boolean arrow;
     private boolean startArrow;
 
-    public CanvasController(Control control, DragAndDropCanvas canvas) {
-        this.control = control;
-        this.canvas = canvas;
+    private ToggleButton linkButton;
+    private CanvasItemController canvasItemController;
+    private ItemContexMenu itemContexMenu;
+    private ManipulationController manipulationController;
+    private FormController formController;
+
+    private CanvasType canvasType;
+
+    public CanvasController(CanvasType canvasType, ApplicationController applicationController) { // todo je potreba canvasType? Smazat
+
+        this.canvas = new DragAndDropCanvas(this);
+        this.canvasType = canvasType;
+        this.canvas.setOnKeyPressed(event -> pressESCAction());
+        this.canvasItemController = applicationController.getCanvasItemController();
+        this.manipulationController = applicationController.getManipulationController();
+        this.itemContexMenu = new ItemContexMenu(manipulationController,this,canvas);
+        this.formController = applicationController.getFormController();
     }
 
 
@@ -31,30 +48,48 @@ public class CanvasController {
         } else if (Constans.controlX.match(event)) {
             cutItem();
         } else if (event.getCode() == KeyCode.DELETE) {
-            if (control.getManipulation().getClicItem() != null) {
-                CanvasItem item = control.getManipulation().getClicItem();
-                control.getManipulation().deleteItem(item);
-            } else if (control.getManipulation().getLink() != null) {
-                control.getManipulation().getLink().deleteArrow();
 
+            if (manipulationController.getChooseCanvasItem() != null) {
+                manipulationController.deleteItem(this);
             }
 
         } else if (event.getCode() == KeyCode.ESCAPE) {
-            if (control.getManipulation().getLink() != null) {
-                control.getManipulation().getLink().getBackgroundPolygon().setStroke(Color.TRANSPARENT);
+            if (manipulationController.getLink() != null) {
+               manipulationController.getLink().getBackgroundPolygon().setStroke(Color.TRANSPARENT);
             }
         }
 
     }
 
+    public void addLinkToCanvas(NodeLink link){
+        canvas.getCanvas().getChildren().add(link);
+    }
 
-    public CanvasItem addItem(String segment, double x, double y) {
+    public void addPolygonToCanvas(Polygon backgroundPlygon){
+        canvas.getCanvas().getChildren().add(backgroundPlygon);
+    }
+
+    public CanvasItem addCanvasItemFromPanel(String segment, double x, double y) {
 
         SegmentType type = Control.findSegmentType(segment);
-        CanvasItem item = control.createCanvasItem();
+        int formIndex = getFormIndexFromNewForm(type);
+        // todo SegmentIdentificator
+        CanvasItem item = canvasItemController.createCanvasItem(type,"d",formIndex,"New", x, y, this);
         canvas.getCanvas().getChildren().add(item);
         return item;
 
+    }
+
+    private int getFormIndexFromNewForm(SegmentType segmentType){
+
+        return formController.createNewForm(segmentType);
+    }
+
+    public void addCopyCanvasItemToCanvas(SegmentType segmentType, double x, double y) {
+
+        int formIndex = getFormIndexFromNewForm(segmentType);
+        CanvasItem item = canvasItemController.createCanvasItem(segmentType,"d",formIndex,"New", x, y, this);
+        canvas.getCanvas().getChildren().add(item);
     }
 
     public void dragAndDrop(DragEvent event) {
@@ -63,7 +98,7 @@ public class CanvasController {
 
         if (db.hasString()) {
 
-            addItem(db.getString(), event.getSceneX(), event.getSceneY());
+            addCanvasItemFromPanel(db.getString(), event.getSceneX(), event.getSceneY());
             success = true;
         }
 
@@ -79,60 +114,25 @@ public class CanvasController {
     }
 
     /**
-     * Metoda pro přídání z kopírovaného prvku na plátno
-     *
-     * @param segment SegmentType
-     * @param x
-     * @param y
-     * @return CanvasItem
-     */
-    public CanvasItem addCopyItem(SegmentType segment, CanvasType canvasType, double x, double y) {
-        if (FormControl.copyControl(segment, canvasType)) {
-
-            CanvasItem item = control.createCanvasItem(); // CanvasItem(segment, "New", control, control.getForms().get(indexForm), 2, x, y,contexMenu, control.getLinkControl(), this);
-            canvas.getCanvas().getChildren().add(item);
-            return item;
-        } else {
-
-            Alerts.badCopyItem(segment, canvasType);
-        }
-        return null;
-
-    }
-
-    /**
-     * Restartuje plátno. Vymaže všechny prvky plátna
-     */
-    public void restart() {
-
-        arrow = false;
-        startArrow = false;
-        canvas.getCanvas().getChildren().clear();
-    }
-
-
-    /**
      * Metoda pro reakci na klávesouvou zkratku pro vložení prvku
      */
 
     private void pasteItem() {
-        control.getManipulation().pasteItem(canvas);
+        manipulationController.pasteItem(this);
     }
 
     /**
      * Metoda pro reakci na klávesouvou zkratku pro kopírování prvku
      */
     private void copyItem() {
-        CanvasItem item = control.getManipulation().getClicItem();
-        control.getManipulation().copyItem(item);
+        manipulationController.copyItem(this);
     }
 
     /**
      * Metoda pro reakci na klávesouvou zkratku pro vyjmutí prvku
      */
     private void cutItem() {
-        CanvasItem item = control.getManipulation().getClicItem();
-        control.getManipulation().cutItem(item);
+        manipulationController.cutItem(this);
     }
 
     /**
@@ -162,9 +162,11 @@ public class CanvasController {
     public void setClicFromDragPoint(MouseEvent t) {
 
         if (t.getButton().equals(MouseButton.SECONDARY)) {
-            control.getContexMenu().setDgCanvas(canvas);
 
-            control.getContexMenu().show(canvas.getCanvas(), t.getScreenX(), t.getScreenY());
+            manipulationController.setChooseCanvas(canvas);
+            itemContexMenu.show(canvas.getCanvas(), t.getScreenX(), t.getScreenY());
+        }else {
+            manipulationController.controlCopyItem();
         }
 
     }
@@ -185,14 +187,58 @@ public class CanvasController {
         return OnMousePressedEventHandler;
     }
 
-    /**
-     * Metoda pro přidání nového prvku na plátno
-     *
-     * @param segment
-     *            Sting
-     * @param x
-     * @param y
-     * @return CanvasItem
-     */
+    public void pressESCAction() {
+        arrow = false;
+        startArrow = false;
+        canvas.setCursor(Cursor.DEFAULT);
+        linkButton.setSelected(false);
+    }
 
+    public void setCursorToCanvas(Cursor cursor) {
+        canvas.setCursor(cursor);
+    }
+
+    public void getItemContexMenu(CanvasItem canvasItem, MouseEvent t) {
+        manipulationController.setChooseCanvasItem(canvasItem);
+        itemContexMenu.show(canvas, t.getScreenX(), t.getScreenY());
+    }
+
+
+
+   /** Getrs and Setrs **/
+
+    public ToggleButton getLinkButton() {
+        return linkButton;
+    }
+
+    public void setLinkButton(ToggleButton linkButton) {
+        this.linkButton = linkButton;
+    }
+
+    public boolean isArrow() {
+        return arrow;
+    }
+
+    public void setArrow(boolean arrow) {
+        this.arrow = arrow;
+    }
+
+    public boolean isStartArrow() {
+        return startArrow;
+    }
+
+    public void setStartArrow(boolean startArrow) {
+        this.startArrow = startArrow;
+    }
+
+    public CanvasType getCanvasType() {
+        return canvasType;
+    }
+
+    public DragAndDropCanvas getCanvas() {
+        return canvas;
+    }
 }
+
+
+

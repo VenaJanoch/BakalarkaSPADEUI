@@ -1,37 +1,12 @@
 package graphics;
 
-import java.io.IOException;
-import java.util.UUID;
-
-import SPADEPAC.Artifact;
-import SPADEPAC.Change;
-import javafx.beans.binding.Binding;
-import javafx.beans.binding.Bindings;
-import javafx.beans.binding.DoubleBinding;
-import javafx.beans.binding.When;
-import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.SimpleDoubleProperty;
-import javafx.event.EventHandler;
-import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.geometry.Insets;
+import Controllers.LinkController;
 import javafx.geometry.Point2D;
-import javafx.scene.Group;
-import javafx.scene.control.TextField;
-import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.CornerRadii;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.CubicCurve;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Polygon;
-import javafx.scene.text.Font;
-import services.Control;
-import services.LinkControl;
-import services.SegmentType;
+import Controllers.LinkControl;
 
 /**
  * /** Třída vykreslující spojení mezi Change a Artifact
@@ -40,68 +15,57 @@ import services.SegmentType;
  *
  */
 
-public class NodeLink extends Line {
+public abstract class NodeLink extends Line {
 
 	/*** Globální proměnné třídy */
 	protected int[] startIDs;
 	protected int[] endIDs;
-	protected int id;
-	protected Control control;
+	//protected Control control;
 	protected Point2D startPoint;
 	protected Point2D endPoint;
 	protected LineComboBox relationCB;
 	protected Polygon polygon;
 	private Polygon backgroundPolygon;
-	private SegmentType type;
+//	private SegmentType type;
 	protected LinkControl linkControl;
-	protected AnchorPane canvas;
+	private LinkController linkController;
+
 
 	/**
 	 * Konstruktor třídy Zinicizalizuje globální proměnné třídy
 	 * 
 	 * @param ID
 	 *            Identifikace spojnice
-	 * @param control
-	 *            instance třídy Control
-	 * @param type
 	 *            SegmentType
 	 * @param linkControl
 	 *            LinkControl
-	 * @param canvas
-	 *            Canvas
 	 */
-	public NodeLink(int ID, Control control, SegmentType type, LinkControl linkControl, AnchorPane canvas) {
+	public NodeLink(int ID, LinkControl linkControl) {
 		super();
-
-		this.type = type;
-		this.canvas = canvas;
-		this.control = control;
-		this.id = ID;
+		this.linkController = new LinkController(ID);
+		//this.type = type;
+//		this.canvas = canvas;
+	//	this.control = control;
+	//	this.id = ID;
 		this.setVisible(false);
 		this.linkControl = linkControl;
 		setId(Integer.toString(ID));
 
 		endPoint = new Point2D(0, 0);
 		backgroundPolygon = new Polygon();
-		backgroundPolygon.setOnMouseClicked(polygonMouseEvent);
-		backgroundPolygon.setFill(Color.TRANSPARENT);
-		canvas.getChildren().add(backgroundPolygon);
-	}
-
-	/**
-	 * MouseEvent Handler pro reakci na kliknutí do okolí spojnice a zvýraznění
-	 * oblasti šipky a zavolání kontroly smazání šipky
-	 */
-	EventHandler<MouseEvent> polygonMouseEvent = new EventHandler<MouseEvent>() {
-
-		@Override
-		public void handle(MouseEvent t) {
+		backgroundPolygon.setOnMouseClicked(event -> {
 			backgroundPolygon.setStroke(Color.BLACK);
 			backgroundPolygon.getStrokeDashArray().add(2d);
+		});
+		backgroundPolygon.setFill(Color.TRANSPARENT);
+	//	canvas.getChildren().add(backgroundPolygon);
+	}
 
-			pressedDeleteArrow(t);
-		}
-	};
+
+	abstract void pressedDeleteArrow(MouseEvent t);
+
+	abstract void deleteArrow();
+
 
 	/**
 	 * Metoda pro nastavení počáteční polohy spojnice
@@ -109,46 +73,17 @@ public class NodeLink extends Line {
 	 * @param startPoint
 	 *            Point2D počáteční bod
 	 */
-	public void setStart(Point2D startPoint) {
+	public void setStartPoint(Point2D startPoint) {
 		this.startPoint = startPoint;
 
 		this.setStartX(startPoint.getX());
 		this.setStartY(startPoint.getY());
 		if (endPoint != null) {
 			backgroundPolygon.getPoints().clear();
-			backgroundPolygon.getPoints().addAll(control.countBackgroundPlygon(startPoint, endPoint));
+			backgroundPolygon.getPoints().addAll(linkController.countBackgroundPlygon(startPoint, endPoint));
 		}
 	}
 
-	/**
-	 * Metoda pro smazání spojice mezi prvky a zavolání metody pro smazání
-	 * spojení z datových struktur
-	 */
-	public void deleteArrow() {
-		this.setVisible(false);
-		backgroundPolygon.setVisible(false);
-		linkControl.deleteArrow(id, startIDs[1], endIDs[1]);
-
-	}
-
-	/**
-	 * Kontrolní metoda pro reakci na dvojklik do okolí spojnice
-	 * 
-	 * @param t
-	 *            MouseEvent
-	 */
-	protected void pressedDeleteArrow(MouseEvent t) {
-		
-		control.getManipulation().setLink(this);
-		control.getManipulation().setClicItem(null);
-		if (t.getButton().equals(MouseButton.PRIMARY)) {
-			if (t.getClickCount() == 2) {
-				deleteArrow();
-			}
-
-		}
-
-	}
 
 	/**
 	 * Metoda pro nastavení koncového bodu spojnice, spočtení velikosti
@@ -156,7 +91,7 @@ public class NodeLink extends Line {
 	 * 
 	 * @param endPoint
 	 */
-	public void setEnd(Point2D endPoint) {
+	public void setEndPoint(Point2D endPoint) {
 
 		this.endPoint = endPoint;
 
@@ -164,7 +99,7 @@ public class NodeLink extends Line {
 		this.setEndY(endPoint.getY());
 		this.setVisible(true);
 		backgroundPolygon.getPoints().clear();
-		backgroundPolygon.getPoints().addAll(control.countBackgroundPlygon(startPoint, endPoint));
+		backgroundPolygon.getPoints().addAll(linkController.countBackgroundPlygon(startPoint, endPoint));
 		backgroundPolygon.setVisible(true);
 
 	}
@@ -176,7 +111,7 @@ public class NodeLink extends Line {
 	 * @param endPoint
 	 * @param offset
 	 */
-	public void setEnd(Point2D endPoint, double offset) {
+	public void setEndPoint(Point2D endPoint, double offset) {
 
 		this.endPoint = endPoint;
 

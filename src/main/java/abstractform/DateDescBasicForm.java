@@ -2,6 +2,7 @@ package abstractform;
 
 import java.time.LocalDate;
 
+import Controllers.FormController;
 import graphics.CanvasItem;
 import javafx.geometry.HPos;
 import javafx.scene.control.DatePicker;
@@ -22,33 +23,18 @@ public class DateDescBasicForm extends DescriptionBasicForm {
 
 	/**
 	 * Konstruktor třídy
-	 * @param item
-	 * @param control
-	 * @param itemArray
-	 * @param indexForm
 	 */
-	public DateDescBasicForm(CanvasItem item, Control control, int[] itemArray, int indexForm, DeleteControl deleteControl, CanvasType canvasType) {
+	public DateDescBasicForm(FormController formController, String name) {
 
-		super(item, control, itemArray, indexForm, deleteControl, canvasType);
+		super(formController, name);
 		fillForm();
 	}
 
 	/**
 	 * Přetížený konstruktor třídy
-	 * @param item CanvasItem
-	 * @param control Control 
 	 */
-	public DateDescBasicForm(CanvasItem item, Control control, DeleteControl deleteControl) {
-		super(item, control, deleteControl);
-		fillForm();
-	}
-
-	/**
-	 * Přetížený konstruktor třídy
-	 * @param control Control
-	 */
-	public DateDescBasicForm(Control control) {
-		super(control);
+	public DateDescBasicForm(FormController formController) {
+		super(formController);
 		fillForm();
 	}
 

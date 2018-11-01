@@ -1,24 +1,20 @@
 package graphics;
 
 import javafx.application.Platform;
-import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
-import javafx.scene.control.CheckMenuItem;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
-import javafx.scene.control.RadioMenuItem;
 import javafx.scene.control.SeparatorMenuItem;
-import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
-import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import services.Alerts;
 import services.Constans;
-import services.Control;
+import Controllers.WindowController;
+
 /**
  * Třídy definující hlavní menu aplikace
  * @author Václav Janoch
@@ -30,19 +26,15 @@ public class MenuPanel extends VBox {
 	 * Globální proměnné třídy
 	 */
 	
-	Control control;
-	MainWindow mainWindow;
+	private WindowController windowController;
 
 	/**
 	 * Konstruktor třídy
 	 * Zinicializuje globální proměnné třídy
-	 * @param control Control
-	 * @param mainWindow MainWindow
 	 */
-	public MenuPanel(Control control, MainWindow mainWindow) {
+	public MenuPanel(WindowController windowController) {
 		super();
-		this.control = control;
-		this.mainWindow = mainWindow;
+
 		this.setBackground(new Background(new BackgroundFill(Color.BLUE, CornerRadii.EMPTY, Insets.EMPTY)));
 		this.setMinWidth(Constans.width);
 		createMenu();
@@ -74,31 +66,24 @@ public class MenuPanel extends VBox {
 		fileMenu.getItems().addAll(newItem, new SeparatorMenuItem(), openItem, new SeparatorMenuItem(), saveItem,
 				saveAsItem, new SeparatorMenuItem(), validationItem, new SeparatorMenuItem(), exitItem);
 
-		exitItem.setOnAction(event -> {
-			event.consume();
+		exitItem.setOnAction(event -> {	windowController.closeProjectWindow();
+			/*event.consume();
 			int result = Alerts.showCloseApp(control);
 
 			if (result != -1) {
 				control.setClose(true);
 				Platform.exit();
-			}
+			}*/ //Todo Zkusit tuhle funkcnost
 
 		});
-		saveItem.setOnAction(event -> control.saveFile());
-		saveAsItem.setOnAction(event -> control.saveAsFile());
-		openItem.setOnAction(event -> openFile());
-		newItem.setOnAction(event -> mainWindow.newItem());
-		validationItem.setOnAction(event -> control.validate());
+		saveItem.setOnAction(event -> windowController.saveItemAction());// control.saveFile());
+		saveAsItem.setOnAction(event -> windowController.saveItemAsAction()); //.saveAsFile());
+		openItem.setOnAction(event -> windowController.openProccesXMLAction()); //.openFile());
+		newItem.setOnAction(event -> windowController.createNewProcessAction()); //.newItem());
+		validationItem.setOnAction(event -> windowController.validationAction()); //.validate());
 		menuMB.getMenus().addAll(fileMenu);
 
 		this.getChildren().add(menuMB);
-	}
-
-	/**
-	 * Pomocná metoda pro otevření procesu z XML
-	 */
-	private void openFile() {
-		control.openFile();
 	}
 
 }

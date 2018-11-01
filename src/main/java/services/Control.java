@@ -2,8 +2,9 @@ package services;
 
 import java.util.ArrayList;
 
+import Controllers.LinkControl;
+import Controllers.ManipulationController;
 import SPADEPAC.ObjectFactory;
-import SPADEPAC.Project;
 import abstractform.BasicForm;
 import forms.BranchForm;
 import forms.ConfigPersonRelationForm;
@@ -20,24 +21,16 @@ import forms.TypeForm;
 import graphics.CanvasItem;
 import graphics.DragAndDropCanvas;
 import graphics.ItemContexMenu;
-import graphics.MainWindow;
 import javafx.geometry.Point2D;
 import model.IdentificatorCreater;
 
 public class Control {
-	/** Globální proměnné třídy **/
 
-
-	private BasicForm form;
 	private ItemContexMenu contexMenu;
 
 	private int indexForm;
-	private boolean arrow;
-	private boolean startArrow;
-
 
 	private DragAndDropCanvas canvas;
-	private ArrayList<BasicForm> forms;
 
 	private ClassSwitcher classSwitcher;
 
@@ -51,22 +44,7 @@ public class Control {
 	private FillForms fillForms;
 	private FillCopyForms fillCopy;
 
-	private ManipulationControl manipulation;
-
-
-	/** Proměnné tabulkových formulářů */
-	private MilestoneForm milestoneForm;
-	private ConfigPersonRelationForm CPRForm;
-	private RoleForm roleForm;
-	private PriorityForm priorityForm;
-	private SeverityForm severityForm;
-	private RelationForm relationForm;
-	private ResolutionForm resolutionForm;
-	private StatusForm statusForm;
-	private BranchForm branchFrom;
-	private ConfigurationTableForm confTableForm;
-	private TypeForm typeForm;
-
+	private ManipulationController manipulation;
 
 	/**
 	 * Konstruktor třídy Zinicializuje Globální proměnné třídy
@@ -93,77 +71,18 @@ public class Control {
 		fillFormsXML = new FillFormsXML(this, lists, project, forms, fillCopy, idCreater, linkControl, deleteControl,
 				formControl);
 		fillCopy = new FillCopyForms(this, getLists(), project, forms, objF, idCreater, deleteControl, formControl);
-		manipulation = new ManipulationControl(this, fillCopy, project, lists, deleteControl, forms);
+		manipulation = new ManipulationController(this, fillCopy, project, lists, deleteControl, forms);
 		contexMenu = new ItemContexMenu(this, manipulation, canvas);
 
-		milestoneForm = new MilestoneForm(this, deleteControl, idCreater);
-		CPRForm = new ConfigPersonRelationForm(this, deleteControl, idCreater);
-		roleForm = new RoleForm(this, deleteControl, idCreater);
-		priorityForm = new PriorityForm(this, deleteControl, idCreater);
-		severityForm = new SeverityForm(this, deleteControl, idCreater);
-		relationForm = new RelationForm(this, deleteControl, idCreater);
-		resolutionForm = new ResolutionForm(this, deleteControl, idCreater);
-		statusForm = new StatusForm(this, deleteControl, idCreater);
-		branchFrom = new BranchForm(this, deleteControl, idCreater);
-		setConfTableForm(new ConfigurationTableForm(this, deleteControl, idCreater));
-		typeForm = new TypeForm(this, deleteControl, idCreater);
-
-
-
 	}
 
-	public CanvasItem createCanvasItem(){
-		//Todo Nastavit canvasItem Do Listu vytvorit item se vsim potrebnym;
-
-		CanvasItem ci = new CanvasItem(); //new CanvasItem(type, "New", control, control.getForms().get(indexForm), 0, x, y, contexMenu,
-		//control.getLinkControl(), this);
-
-		return ci;
-	}
 
 	/**
 	 * Pomocná metoda pro zviditelnění formuláře pro Project
 	 */
-	public void showProjectForm() {
 
-		forms.get(0).show();
-		forms.get(0).toFront();
-	}
 
-	/**
-	 * Slouží ke kontorle pozice prvku na plátně, při přejetí hranic plátna je
-	 * prvek vrácen na okraj plátna
-	 * 
-	 * @param x
-	 *            souřadnice prvku
-	 * @param y
-	 *            souřadnice prvku
-	 * @return Point2D zkontrolovaná poloha
-	 */
-	public Point2D canvasItemPositionControl(double x, double y) {
 
-		Point2D point = new Point2D(x, y);
-
-		if (y <= 0) {
-			point = new Point2D(x, 0);
-		}
-
-		if (x <= 0) {
-
-			point = new Point2D(0, y);
-		}
-
-		if (x >= Constans.canvasMaxWidth) {
-			point = new Point2D(Constans.canvasMaxWidth - Constans.offset, y);
-		}
-
-		if (y >= Constans.canvasMaxHeight) {
-			point = new Point2D(x, Constans.canvasMaxHeight - Constans.offset);
-		}
-
-		return point;
-
-	}
 
 	/**
 	 * Vymazání seznamů a znovu inicializování proměnných
@@ -240,28 +159,7 @@ public class Control {
 		return point;
 	}
 
-	/**
-	 * Vypočte souřadnice pro zvýraznění spojnice při kliku na ni
-	 * 
-	 * @param startPoint
-	 *            počáteční bod
-	 * @param endPoint
-	 *            koncový bod
-	 * @return body pro vykreslení zvýraznění
-	 */
-	public Double[] countBackgroundPlygon(Point2D startPoint, Point2D endPoint) {
 
-		Double[] points = new Double[8];
-		points[0] = startPoint.getX();
-		points[1] = startPoint.getY() + Constans.polygonHeight;
-		points[2] = startPoint.getX();
-		points[3] = startPoint.getY() - Constans.polygonHeight;
-		points[4] = endPoint.getX();
-		points[5] = endPoint.getY() - Constans.polygonHeight;
-		points[6] = endPoint.getX();
-		points[7] = endPoint.getY() + Constans.polygonHeight;
-		return points;
-	}
 
 	/**
 	 * Pomocná metoda pro určení výčtového typu SegmentType pomocí Stringu
@@ -284,50 +182,6 @@ public class Control {
 
 	}
 
-	/**
-	 * Metoda pro určení metody pro vytvoření konkrétního segmentu nebo elementu
-	 * 
-	 * @param item
-	 *            CavasItem
-	 * @param form
-	 *            kořenový formulář
-	 * @return identifikátory objektu pro CanvasItem
-	 */
-	public int[] createForm(CanvasItem item, BasicForm form) {
-		SegmentType sType = item.getType();
-		int[] IDs = new int[4];
-
-		switch (sType) {
-		case Phase:
-
-			return fillForms.createPhase(item, form, IDs);
-
-		case Iteration:
-
-			return fillForms.createIteration(item, form, IDs);
-
-		case Activity:
-
-			return fillForms.createActivity(item, form, IDs);
-
-		case WorkUnit:
-			return fillForms.createWorkUnit(item, form, IDs);
-
-		case Configuration:
-
-			return fillForms.createConfigruration(item, form, IDs);
-		case Change:
-			return fillForms.createChange(item, form, IDs);
-
-		case Artifact:
-			return fillForms.createArtifact(item, form, IDs);
-		case Project:
-			IDs[0] = 0;
-			return IDs;
-		default:
-			return IDs;
-		}
-	}
 
 	/**
 	 * Metoda pro určení metody pro vytvoření a nakopírování dat z konkrétního
@@ -482,11 +336,11 @@ public class Control {
 		this.typeForm = typeForm;
 	}
 
-	public ManipulationControl getManipulation() {
+	public ManipulationController getManipulation() {
 		return manipulation;
 	}
 
-	public void setManipulation(ManipulationControl manipulation) {
+	public void setManipulation(ManipulationController manipulation) {
 		this.manipulation = manipulation;
 	}
 

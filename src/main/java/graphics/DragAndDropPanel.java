@@ -1,10 +1,11 @@
 package graphics;
 
+import Controllers.CanvasController;
+import Controllers.FormController;
+import Controllers.WindowController;
 import abstractform.BasicForm;
-import forms.ProjectForm;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Cursor;
 import javafx.scene.control.Button;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
@@ -12,10 +13,8 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Line;
 import services.Constans;
-import services.Control;
-import services.SegmentType;
+
 /**
  * Třída tvořící panel tlačítek 
  * @author Václav Janoch
@@ -26,28 +25,33 @@ public class DragAndDropPanel extends BorderPane {
 	/**
 	 * Globální proměnné třídy
 	 */
-	private DragAndDropItem items;
+	private DragAndDropItemPanel items;
 	private Button[] addButtons;
 	private HBox buttonBox;
-	private Control control;
+
+	private FormController formController;
+	private WindowController windowController;
+	private CanvasController canvasController;
 
 	/**
 	 * Konstruktor třídy
 	 * Zinicializuje globální proměnné třídy
-	 * 
-	 * @param control
+	 *
 	 */
 	
-	public DragAndDropPanel(Control control) {
+	public DragAndDropPanel(FormController formController, WindowController windowController, CanvasController canvasController) {
 
 		super();
+		this.formController = formController;
+		this.windowController = windowController;
+		this.canvasController = canvasController;
+
 		this.setPrefWidth(Constans.width);
-		this.control = control;
 		this.buttonBox = new HBox(5);
 		this.setPadding(new Insets(10));
 		this.setBackground(new Background(new BackgroundFill(Color.BROWN, CornerRadii.EMPTY, Insets.EMPTY)));
 		this.setId("panelTable");
-		items = new DragAndDropItem(control, Constans.projectDragTextIndexs);
+		items = new DragAndDropItemPanel(canvasController, Constans.projectDragTextIndexs);
 		this.setAlignment(items, Pos.BOTTOM_LEFT);
 
 		addButtons = new Button[Constans.addButtonCount];
@@ -64,20 +68,19 @@ public class DragAndDropPanel extends BorderPane {
 	}
 
 	/**
-	 * Přetížený konstruktor třídy využívají kořenový formulář do kterého se přidá 
-	 * @param control Control 
-	 * @param form BasicForm 
-	 * @param i int
+	 * Přetížený konstruktor třídy využívají kořenový formulář do kterého se přidá
+	 * @param form BasicForm
 	 */
-	public DragAndDropPanel(Control control, BasicForm form, int i) {
-
+	public DragAndDropPanel(FormController formController, WindowController windowController, BasicForm form) {
+	//todo Asi zrusit protoze je k nicemu :D
 		super();
-		this.control = control;
+		this.formController = formController;
+		this.windowController = windowController;
 		this.buttonBox = new HBox(5);
 		this.setPadding(new Insets(10));
 		this.setBackground(new Background(new BackgroundFill(Color.BROWN, CornerRadii.EMPTY, Insets.EMPTY)));
 
-		items = new DragAndDropItem(control, Constans.projectDragTextIndexs, form);
+		items = new DragAndDropItemPanel(canvasController, Constans.projectDragTextIndexs);
 		this.setAlignment(items, Pos.BOTTOM_LEFT);
 
 		addButtons = new Button[Constans.addButtonCount];
@@ -109,28 +112,27 @@ public class DragAndDropPanel extends BorderPane {
 	 */
 	
 	public void createAction() {
-		addButtons[0].setOnAction(event -> control.showProjectForm());
-		addButtons[1].setOnAction(event -> {control.getMilestoneForm().show();control.getMilestoneForm().toFront();});
-		addButtons[2].setOnAction(event -> {control.getRoleForm().show(); control.getRoleForm().toFront();});
-		addButtons[3].setOnAction(event -> {control.getCPRForm().show(); control.getCPRForm().toFront();});
-		addButtons[4].setOnAction(event -> {control.getPriorityForm().show(); control.getPriorityForm().toFront();});
-		addButtons[5].setOnAction(event -> {control.getSeverityForm().show(); control.getSeverityForm().toFront();});
-		addButtons[6].setOnAction(event -> {control.getRelationForm().show(); control.getRelationForm().toFront();});
-		addButtons[7].setOnAction(event -> {control.getResolutionForm().show(); control.getResolutionForm().toFront();});
-		addButtons[8].setOnAction(event -> {control.getStatusForm().show(); control.getStatusForm().toFront();});
-		addButtons[9].setOnAction(event -> {control.getTypeForm().show(); control.getTypeForm().toFront();});
-		addButtons[10].setOnAction(event ->{control.getBranchFrom().show(); control.getBranchFrom().toFront();});
-		addButtons[11].setOnAction(
-				event -> {control.getConfTableForm().show(); control.getConfTableForm().toFront();});
+		addButtons[0].setOnAction(event -> formController.showProjectForm());
+		addButtons[1].setOnAction(event -> {formController.showMilestoneFormAction();});
+		addButtons[2].setOnAction(event -> {formController.showRoleFormAction();});
+		addButtons[3].setOnAction(event -> {formController.showCPRFormAction();});
+		addButtons[4].setOnAction(event -> {formController.showPriorityFormAction();});
+		addButtons[5].setOnAction(event -> {formController.showSeverityFormAction();});
+		addButtons[6].setOnAction(event -> {formController.showRealtionFormAction();});
+		addButtons[7].setOnAction(event -> {formController.showResolutionFormAction();});
+		addButtons[8].setOnAction(event -> {formController.showStatusFormAction();});
+		addButtons[9].setOnAction(event -> {formController.showTypeFormAction();});
+		addButtons[10].setOnAction(event ->{formController.showBranchFormAction();});
+		addButtons[11].setOnAction(	event ->{formController.showConfTableFromAction();});
 	}
 
 	
 	/*** Getrs and Setrs */
-	public DragAndDropItem getItems() {
+	public DragAndDropItemPanel getItems() {
 		return items;
 	}
 
-	public void setItems(DragAndDropItem items) {
+	public void setItems(DragAndDropItemPanel items) {
 		this.items = items;
 	}
 

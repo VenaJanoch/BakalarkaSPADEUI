@@ -1,5 +1,6 @@
 package model;
 
+import Controllers.LinkControl;
 import SPADEPAC.ObjectFactory;
 import SPADEPAC.Project;
 import XML.ProcessGenerator;
@@ -73,7 +74,7 @@ public class DataManipulator {
      * Pomocná metoda pro validaci souboru
      */
 
-    public void validate(Project project) {
+    public void validate() {
 
         procesGener.validate(project);
 

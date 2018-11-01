@@ -1,19 +1,11 @@
 package graphics;
 
-import javafx.application.Platform;
-import javafx.geometry.Insets;
+import Controllers.CanvasController;
 import javafx.scene.control.ContextMenu;
-import javafx.scene.control.Menu;
-import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SeparatorMenuItem;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.CornerRadii;
-import javafx.scene.paint.Color;
 import services.Constans;
-import services.Control;
-import services.ManipulationControl;
+import Controllers.ManipulationController;
 
 /**
  * Třída definující kontextové menu pro prvku plátna odděděná od třídy
@@ -25,11 +17,8 @@ import services.ManipulationControl;
 public class ItemContexMenu extends ContextMenu {
 
 	/** Globální proměnné třídy */
-	private Control control;
-	private ManipulationControl manipulation;
-	private MainWindow mainWindow;
-	private CanvasItem item;
-	private DragAndDropCanvas dgCanvas;
+	private ManipulationController manipulation;
+	private CanvasController canvasController;
 	private MenuItem copyItem;
 	private MenuItem pasteItem;
 	private MenuItem deleteItem;
@@ -37,20 +26,16 @@ public class ItemContexMenu extends ContextMenu {
 
 	/**
 	 * Konstruktor třídy Zinicializuje globální proměnné třídy
-	 * 
-	 * @param control
-	 *            Control
+	 *
 	 * @param manipulation
-	 *            ManipulationControl
+	 *            ManipulationController
 	 * @param dgCanvas
 	 *            DragAndDropCanvas
 	 */
-	public ItemContexMenu(Control control, ManipulationControl manipulation, DragAndDropCanvas dgCanvas) {
+	public ItemContexMenu(ManipulationController manipulation, CanvasController canvasController, DragAndDropCanvas dgCanvas) {
 		super();
-		this.control = control;
 		this.manipulation = manipulation;
-		this.dgCanvas = dgCanvas;
-
+		this.canvasController = canvasController;
 		createMenu();
 
 	}
@@ -70,42 +55,21 @@ public class ItemContexMenu extends ContextMenu {
 
 		this.getItems().addAll(copyItem, new SeparatorMenuItem(), cutItem, new SeparatorMenuItem(), pasteItem,
 				new SeparatorMenuItem(), deleteItem);
-
+		setActions();
 	}
 
 	/**
 	 * Pomocná metoda pro nastavení reakce na stisk položky v menu
-	 * 
-	 * @param item
-	 *            CanvasItem
+	 *
 	 */
-	public void setActions(CanvasItem item) {
+	public void setActions() {
 
-		copyItem.setOnAction(event -> manipulation.copyItem(item));
-		deleteItem.setOnAction(event -> manipulation.deleteItem(item));
-		cutItem.setOnAction(event -> manipulation.cutItem(item));
+		copyItem.setOnAction(event -> manipulation.copyItem(canvasController));
+		deleteItem.setOnAction(event -> manipulation.deleteItem(canvasController));
+		cutItem.setOnAction(event -> manipulation.cutItem(canvasController));
 	}
 
 	/** Getrs and Setrs **/
-	public DragAndDropCanvas getDgCanvas() {
-		return dgCanvas;
-	}
-
-	public void setDgCanvas(DragAndDropCanvas dgCanvas) {
-		this.dgCanvas = dgCanvas;
-
-		pasteItem.setOnAction(event -> manipulation.pasteItem(dgCanvas));
-	}
-
-	public CanvasItem getItem() {
-		return item;
-	}
-
-	public void setItem(CanvasItem item) {
-		this.item = item;
-		this.setActions(item);
-
-	}
 
 	public MenuItem getCopyItem() {
 		return copyItem;

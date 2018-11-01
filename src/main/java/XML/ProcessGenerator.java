@@ -36,12 +36,10 @@ public class ProcessGenerator {
 	private Marshaller marshaller;
 	private Unmarshaller unMarshaller;
 	private ProcessValidator validator;
-	private DataManipulator dataManipulator;
 	/**
 	 * Konstruktor třídy Vytvoří inicializaci globálních proměnných
 	 */
-	public ProcessGenerator(DataManipulator dataManipulator) {
-		this.dataManipulator = dataManipulator;
+	public ProcessGenerator() {
 		try {
 
 			jc = JAXBContext.newInstance(Constans.LIBRARY);

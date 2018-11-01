@@ -5,6 +5,7 @@ package abstractform;
 
 import java.time.LocalDate;
 
+import Controllers.FormController;
 import graphics.CanvasItem;
 import javafx.geometry.HPos;
 import javafx.scene.control.DatePicker;
@@ -25,35 +26,22 @@ public class Date2DescBasicForm extends DateDescBasicForm {
 
 	/**
 	 * Konstruktor Třídy
-	 * @param item
-	 * @param control
-	 * @param itemArray
-	 * @param indexForm
 	 */
-	public Date2DescBasicForm(CanvasItem item, Control control, int[] itemArray, int indexForm, DeleteControl deleteControl, CanvasType canvasType) {
+	public Date2DescBasicForm(FormController formController, String name) {
 
-		super(item, control, itemArray, indexForm, deleteControl, canvasType);
+		super(formController, name);
 		fillForm();
 	}
 
 	/**
 	 * Přetížený konstruktor
-	 * @param item
-	 * @param control
 	 */
-	public Date2DescBasicForm(CanvasItem item, Control control, DeleteControl deleteControl) {
-		super(item, control, deleteControl);
+	public Date2DescBasicForm(FormController formController) {
+
+		super(formController);
 		fillForm();
 	}
 
-	/**
-	 * Přetížený konstruktor
-	 * @param control
-	 */
-	public Date2DescBasicForm(Control control) {
-		super(control);
-		fillForm();
-	}
 
 	/**
 	 * Vytvoří vstupní pole pro druhý Date a přidá ho do GridPane

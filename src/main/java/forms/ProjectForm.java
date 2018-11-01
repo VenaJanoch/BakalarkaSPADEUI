@@ -6,6 +6,7 @@ import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
 
+import Controllers.FormController;
 import SPADEPAC.Activity;
 import SPADEPAC.Iteration;
 import SPADEPAC.Phase;
@@ -34,34 +35,27 @@ import services.SegmentType;
  * @author Václav Janoch
  *
  */
-public class ProjectForm extends Date2DescBasicForm implements ISegmentForm {
+public class ProjectForm extends Date2DescBasicForm {
 
 	/**
 	 * Konstruktor třídy Nastaví velikost okna, reakci na uzavření okna
 	 * formuláře a zinicializuje globální proměnné tříd
 	 * 
-	 * @param control
-	 *            Control
-	 * @param project
+
 	 *            Project
 	 * @param canvas
 	 *            DragAndDropCanvas
 	 */
-	public ProjectForm(Control control, Project project, DragAndDropCanvas canvas) {
-		super(control);
-
-		setPhaseArray(project.getPhases());
-		setIterationArray(project.getIterations());
-		setActivityArray(project.getActivities());
-		setWorkUnitArray(project.getWorkUnitIndexs());
+	public ProjectForm(DragAndDropCanvas canvas, FormController formController) {
+		super(formController);
 
 		setCanvas(canvas);
 
 		getMainPanel().setMinSize(Constans.littleformWidth, Constans.littleformHeight);
 		getMainPanel().setMaxSize(Constans.littleformWidth, Constans.littleformHeight);
 
-		setCanvasItem(new CanvasItem(SegmentType.Project, "", control, this, 0, 0, 0, control.getContexMenu(),
-				control.getLinkControl(), control.getCanvas()));
+	//	setCanvasItem(new CanvasItem(SegmentType.Project, "", control, this, 0, 0, 0, control.getContexMenu(),
+	//			control.getLinkControl(), control.getChooseCanvas()));
 
 		this.setOnCloseRequest(e -> {
 
@@ -86,9 +80,9 @@ public class ProjectForm extends Date2DescBasicForm implements ISegmentForm {
 		LocalDate endDate = getDate2DP().getValue();
 		LocalDate startDate = getDateDP().getValue();
 		String desc = getDescriptionTF().getText();
-		setName(actName);
+		//setName(actName);
 
-		getControl().getFillForms().fillProject(desc, actName, startDate, endDate);
+		//getControl().getFillForms().fillProject(desc, actName, startDate, endDate);
 
 	}
 
@@ -103,6 +97,11 @@ public class ProjectForm extends Date2DescBasicForm implements ISegmentForm {
 
 		getDateLB().setText("Start-Date");
 		getDate2LB().setText("End-Date");
+
+	}
+
+	@Override
+	public void deleteItem(int[] IDs) {
 
 	}
 

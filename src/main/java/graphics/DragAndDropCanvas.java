@@ -32,27 +32,26 @@ public class DragAndDropCanvas extends ScrollPane {
 	private AnchorPane canvas;
 	private ItemContexMenu contexMenu;
 
-	private CanvasType canvasType;
+//	private CanvasType canvasType;
 	private CanvasController canvasController;
+//	private boolean Arrow;
+//	private boolean StartArrow;
 //	private BasicForm form;
 //	private int indexForm;
+
 
 
 	/**
 	 * Konstruktor třídy Zinicializuje Globální proměnné třídy a nastaví reakce
 	 * na detekci drag and drop
 	 * 
-	 * @param contexMenu
+	 * @param canvasController
 	 *            ItemContexMenu
-	 * @param canvasType
-	 *            CanvasType
 	 */
-	public DragAndDropCanvas(CanvasType canvasType, CanvasController canvasController) {
+	public DragAndDropCanvas(CanvasController canvasController) {
 
 		super();
 		this.canvasController = canvasController;
-		this.contexMenu = contexMenu;
-		this.canvasType = canvasType;
 
 		this.canvas = new AnchorPane();
 
@@ -70,14 +69,9 @@ public class DragAndDropCanvas extends ScrollPane {
 
 		canvas.setOnMouseClicked(canvasController.getOnMousePressedHandler());
 
-		this.addEventHandler(KeyEvent.KEY_RELEASED, new EventHandler<KeyEvent>() {
-
-			@Override
-			public void handle(KeyEvent event) {
+		this.addEventHandler(KeyEvent.KEY_RELEASED, event -> {
 				canvasController.keyPressAction(event);
-			}
-
-		});
+			});
 
 		canvas.setOnDragOver(event -> {
 				canvasController.dragAndOver(event);
@@ -119,14 +113,6 @@ public class DragAndDropCanvas extends ScrollPane {
 
 	public void setCanvas(AnchorPane canvas) {
 		this.canvas = canvas;
-	}
-
-	public CanvasType getCanvasType() {
-		return canvasType;
-	}
-
-	public void setCanvasType(CanvasType canvasType) {
-		this.canvasType = canvasType;
 	}
 
 }
