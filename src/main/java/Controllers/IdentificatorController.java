@@ -12,4 +12,17 @@ public class IdentificatorController {
     }
 
 
+    public int createLineID() {
+        return  idCreator.createLineID();
+    }
+
+    public int getChangeIndex(int formIndex){
+
+        return idCreator.getChangeIndexMaper().get(formIndex);
+    }
+
+    public  Integer getArtifactIndex(int formIndex){
+        return  idCreator.getArtifactIndexMaper().get(formIndex);
+    }
+
 }

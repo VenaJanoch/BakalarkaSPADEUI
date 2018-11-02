@@ -105,62 +105,6 @@ public class Control {
 	}
 
 
-
-	/**
-	 * Vypočte polohu šipky ukazující směr propojení Work Unit
-	 * 
-	 * @param endPoint
-	 * @return Double body s polohou
-	 */
-	public Double[] calculateArrowPosition(Point2D endPoint) {
-
-		double x = endPoint.getX() - Constans.ArrowRadius;
-		double yUP = endPoint.getY() + Constans.ArrowRadius;
-		double yDW = endPoint.getY() - Constans.ArrowRadius;
-
-		Double[] position = new Double[] { endPoint.getX(), endPoint.getY(), x, yUP, x, yDW };
-		return position;
-
-	}
-
-	/**
-	 * Vypočte střed spojovací čáry pro vložení boxu s výběrem relace
-	 * 
-	 * @param startPoint
-	 *            startovní bod spojnice
-	 * @param endPoint
-	 *            koncový bod spojnice
-	 * @return Point2D bod pro box
-	 */
-	public Point2D calculateCenter(Point2D startPoint, Point2D endPoint) {
-
-		Point2D point = null;
-		double x = Math.abs((startPoint.getX() - endPoint.getX()) / 2);
-		double y = Math.abs((startPoint.getY() - endPoint.getY()) / 2) + Constans.relationCBOffset;
-
-		if (startPoint.getY() <= endPoint.getY()) {
-
-			if (startPoint.getX() <= endPoint.getX()) {
-				point = new Point2D(startPoint.getX() + x, startPoint.getY() + y);
-			} else {
-				point = new Point2D(startPoint.getX() - x, startPoint.getY() + y);
-			}
-
-		} else {
-
-			if (startPoint.getX() <= endPoint.getX()) {
-
-				point = new Point2D(startPoint.getX() + x, startPoint.getY() - y);
-			} else {
-				point = new Point2D(startPoint.getX() - x, startPoint.getY() - y);
-			}
-		}
-
-		return point;
-	}
-
-
-
 	/**
 	 * Pomocná metoda pro určení výčtového typu SegmentType pomocí Stringu
 	 * 

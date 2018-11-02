@@ -1,17 +1,16 @@
 package graphics;
 
+import Controllers.CanvasController;
+import Controllers.ListController;
 import SPADEPAC.WorkUnit;
 import javafx.event.EventHandler;
 import javafx.geometry.Point2D;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
 import services.Constans;
-import services.Control;
 import Controllers.LinkControl;
-import services.SegmentType;
 
 /**
  * Třída vykreslující spojení mezi WorkUnity odděděná od třídy NodeLink
@@ -19,26 +18,28 @@ import services.SegmentType;
  *
  */
 public class WorkUnitLink extends NodeLink {
-	
+
+
+	private LineComboBox relationCB;
+	private Polygon polygon;
+
 	/**
 	 * Konstruktor třídy
 	 * Naplní globálí proměné rodičovské třídy
 	 * @param ID
-	 * @param control
-	 * @param canvas
 	 * @param linkControl
 	 */
 	
-	public WorkUnitLink(int ID, Control control, AnchorPane canvas, LinkControl linkControl) {
-		super(ID, control, SegmentType.WorkUnit, linkControl, canvas);
+	public WorkUnitLink(int ID, LinkControl linkControl, ListController listController, CanvasController canvasController) {
+		super(ID, linkControl);
 
-		relationCB = new LineComboBox(control);
+		relationCB = new LineComboBox(listController);
 		polygon = new Polygon();
 
 		relationCB.setVisible(false);
 		polygon.setVisible(false);
 
-		canvas.getChildren().addAll(relationCB, polygon);
+		canvasController.addRelationCBToCanvas(relationCB, polygon);
 
 	}
 
@@ -51,19 +52,12 @@ public class WorkUnitLink extends NodeLink {
 
 		setEndPoint(endPointL, Constans.ArrowRadius);
 
-		Point2D center = control.calculateCenter(startPoint, endPoint);
+		Point2D center = linkController.calculateCenter(startPoint, endPoint);
 
 		relationCB.setTranslateX(center.getX());
 		relationCB.setTranslateY(center.getY());
 
-		WorkUnit left = control.getLists().getWorkUnitList().get(getStartIDs()[1]);
-		WorkUnit right = control.getLists().getWorkUnitList().get(getEndIDs()[1]);
-		relationCB.setLeftUnit(left);
-		relationCB.setRightUnit(right);
-		relationCB.setStartIDs(startIDs);
-		relationCB.setEndIDs(endIDs);
-
-		polygon.getPoints().addAll(control.calculateArrowPosition(endPoint));
+		polygon.getPoints().addAll(linkController.calculateArrowPosition(endPoint));
 
 		relationCB.setVisible(true);
 
@@ -92,7 +86,7 @@ public class WorkUnitLink extends NodeLink {
 		polygon = null;
 		getBackgroundPolygon().setVisible(false);
 		//setBackgroundPolygon(null);
-		linkControl.deleteWorkUnitArrow(id, startIDs[1], endIDs[1]);
+		linkControl.deleteWorkUnitArrow(linkController);
 	}
 
 	/**
@@ -100,9 +94,9 @@ public class WorkUnitLink extends NodeLink {
 	 */
 	protected void pressedDeleteArrow(MouseEvent t) {
 		
-		control.getManipulation().setLink(this);
-		control.getManipulation().setClicItem(null);
-		
+	//	control.getManipulation().setLink(this);
+	//	control.getManipulation().setClicItem(null);
+
 		getBackgroundPolygon().setStroke(Color.BLACK);
 		getBackgroundPolygon().getStrokeDashArray().add(2d);
 		

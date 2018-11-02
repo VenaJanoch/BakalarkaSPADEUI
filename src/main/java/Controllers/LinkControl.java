@@ -4,41 +4,38 @@ import java.util.ArrayList;
 import java.util.List;
 
 import SPADEPAC.Link;
-import SPADEPAC.ObjectFactory;
 import graphics.CanvasItem;
 import graphics.ChangeArtifactLink;
 import graphics.NodeLink;
 import graphics.WorkUnitLink;
 import javafx.geometry.Point2D;
-import model.IdentificatorCreater;
 import services.*;
 
 public class LinkControl {
 
 	/** Globální proměnné třídy */
-	private ArrayList<NodeLink> arrows;
-	private NodeLink link;
-	private WorkUnitLink wLink;
+
 	private Control control;
 	private SegmentLists lists;
 	private int id;
+
+	private int startSegmentId = -1;
+	private int endSegmentId = -1;
+
 	private IdentificatorController identificatorController;
 	private FormController formController;
+	private ListController listController;
 
 	/**
 	 * Konstruktor třídy Zinicializuje globální proměnné třídy
 	 *
 	 */
-	public LinkControl(FormController formController, IdentificatorController identificatorController) {
+	public LinkControl(FormController formController, IdentificatorController identificatorController, ListController listController) {
 		this.setArrows(new ArrayList<>());
-		this.control = control;
-		this.lists = lists;
+		this.listController = listController;
 
 	}
 	
-	public void restart(){
-		arrows.clear();
-	}
 
 	/**
 	 * Rozhodne o propojení Change a Artifact Vytvoří instanci třídy NodeLink a
@@ -47,24 +44,19 @@ public class LinkControl {
 	 * @param isSave
 	 *            informace o uložení a ochrana před vytvořením dvojího spojení
 	 */
-	public void ArrowManipulation(boolean isSave, boolean startArrow) {
+	public void ArrowManipulation(boolean isSave, boolean startArrow, CanvasController canvasController, int segmentIdAct, double x, double y, double width, double height) {
 
 		if (!startArrow) {
 			try {
-				if (isFormfillControl(item)) {
-
-					id = idCreator.createLineID();
-					link = new ChangeArtifactLink(id, control, SegmentType.Configuration, this);
-
-					sortSegmentConf(item);
-					item.getCanvas().getChildren().add(link);
-					getArrows().add(id, link);
-					link.setStartPoint(new Point2D(item.getTranslateX() + (item.getWidth()),
-							item.getTranslateY() + (item.getHeight() / 2)));
-
-					item.registerStartLink(id);
-
-					item.getDgCanvas().setStartArrow(true);
+				if (isFormfillControl(segmentIdAct)) {
+					createLink(canvasController, segmentIdAct, x, y, width, height);
+					// Na vic nevim kam s tim
+					//WorkUnit left = control.getLists().getWorkUnitList().get(getStartIDs()[1]);
+					//WorkUnit right = control.getLists().getWorkUnitList().get(getEndIDs()[1]);
+					//relationCB.setLeftUnit(left);
+					//relationCB.setRightUnit(right);
+					//	relationCB.setStartIDs(startIDs);
+					//	relationCB.setEndIDs(endIDs);
 				} else {
 					Alerts.showNoWorkUnit();
 				}
@@ -76,16 +68,16 @@ public class LinkControl {
 
 		} else {
 			try {
-				if (segmentControl(item)) {
+				if (segmentControl(segmentIdAct)) {
 
-					sortSegmentConf(item);
+					link.setEndPoint(new Point2D(x, y + (height / 2)));
+					canvasController.setStartArrow(false);
 
-					link.setEndPoint(new Point2D(item.getTranslateX(), item.getTranslateY() + (item.getHeight() / 2)));
-					item.registerEndLink(id);
-					item.getDgCanvas().setStartArrow(false);
 					if (!isSave) {
-						setChangeArtifactRelation(link);
+						formController.createChangeArtifactRelation(startSegmentId, endSegmentId);
 					}
+
+					endSegmentId = segmentIdAct;
 				}
 
 			} catch (Exception e) {
@@ -96,27 +88,35 @@ public class LinkControl {
 
 	}
 
+	private void createLink(CanvasController canvasController, int startSegmentIdAct, double x, double y, double width, double height) {
+
+		int id = identificatorController.createLineID();
+		ChangeArtifactLink link = new ChangeArtifactLink(id,this);
+
+		//sortSegmentConf(item);
+		//item.getCanvas().getChildren().add(link);
+
+		canvasController.addLinkToCanvas(link);
+		listController.addLinkToList(link);
+
+		link.setStartPoint(new Point2D(x + (width), y + (height / 2)));
+
+		//item.registerStartLink(id);
+
+		canvasController.setStartArrow(true);
+		startSegmentId = startSegmentIdAct;
+
+	}
+
 	/**
 	 * Kontrola vyplněného formuláře
-	 * 
-	 * @param item
-	 *            instance třídy CanvasItem
+	 *
 	 * @return true pokud je kontrola v pořadku v opačném případě false
 	 */
 
-	private boolean isFormfillControl(CanvasItem item) {
+	private boolean isFormfillControl(int formIdentificator) {
 
-		if (item.getType() == SegmentType.Change) {
-			if (lists.getChangeList().get(item.getIDs()[1]) == null) {
-				return false;
-			}
-		} else {
-			if (lists.getArtifactList().get(item.getIDs()[1]) == null) {
-				return false;
-			}
-
-		}
-		return true;
+		return formController.isFormFill(formIdentificator);
 	}
 
 	/**
@@ -126,10 +126,10 @@ public class LinkControl {
 	 *            CanvasItem
 	 * @return rozhodnuti o pridani prvku
 	 */
-	private boolean segmentControl(CanvasItem item) {
-		if (isFormfillControl(item)) {
+	private boolean segmentControl(int segmentIdAct) {
+		if (isFormfillControl(segmentIdAct)) {
 
-			if (link.getStartIDs() == null && item.getType() == SegmentType.Change) {
+			if (startSegmentId == -1 && item.getType() == SegmentType.Change) {
 				return true;
 			} else if (link.getEndIDs() == null && item.getType() == SegmentType.Artifact) {
 				return true;
@@ -240,13 +240,12 @@ public class LinkControl {
 	/**
 	 * Smaže spojnici ze seznamu a odmaže spojení z Work Unit a Work Unit
 	 */
-	public void deleteWorkUnitArrow(int arrowId, int leftID, int rightID) {
+	public void deleteWorkUnitArrow(LinkController linkController) {
 
-		arrows.remove(arrowId);
-		arrows.add(arrowId, null);
+		arrows.remove(linkController.getLinkId());
+		arrows.add(linkController.getLinkId(), null);
 
-		lists.getWorkUnitList().get(leftID).setRightUnitIndex(-1);
-		lists.getWorkUnitList().get(rightID).setLeftUnitIndex(-1);
+		listController.removeWorkUnitRelation(linkController.getStartItemId(), linkController.getEndItemId());
 	}
 
 	/**
@@ -255,19 +254,11 @@ public class LinkControl {
 	 **/
 	public void setChangeArtifactRelation(NodeLink link) {
 
-		int changeIndex = link.getStartIDs()[1];
+		//int changeIndex = link.getStartIDs()[1];
 
-		int artifactIndex = link.getEndIDs()[1];
-		Link linkP = objF.createLink();
+		//int artifactIndex = link.getEndIDs()[1];
 
-		linkP.setType("Config");
-		linkP.setArtifactIndex(artifactIndex);
-		linkP.setChangeIndex(changeIndex);
 
-		lists.getLinksList().add(linkP);
-
-		lists.getChangeList().get(changeIndex).getArtifactIndex().add(artifactIndex);
-		lists.getArtifactList().get(artifactIndex).getChangeIndex().add(changeIndex);
 
 	}
 
@@ -296,7 +287,7 @@ public class LinkControl {
 
 	/**
 	 * Rozhodnutí typu prvku pro spojení
-	 **/
+
 	private void sortSegmentConf(CanvasItem item) {
 
 		if (item.getType() == SegmentType.Change) {
@@ -306,7 +297,7 @@ public class LinkControl {
 		}
 
 	}
-
+	 **/
 	/**
 	 * Geters and Setrs
 	 **/
@@ -376,6 +367,12 @@ public class LinkControl {
 
 			}
 		}
+
+	}
+
+	public void setRelationBetweenWorkUnits(int leftUnitId, int RightUnitId){
+
+		// todo zavolat metodu z modelu pro pridani relace
 
 	}
 

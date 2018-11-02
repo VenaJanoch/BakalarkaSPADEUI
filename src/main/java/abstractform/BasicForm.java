@@ -69,7 +69,7 @@ public abstract class BasicForm extends Stage {
 
 //	private IdentificatorCreater idCreater;
 //	private String type;
-//	private boolean isNew;
+	protected boolean isSave;
 //	private int indexForm;
 
 	private FormController formController;
@@ -99,6 +99,8 @@ public abstract class BasicForm extends Stage {
 		this.setScene(creatSceneCanvas());
 
 	}
+
+	public abstract boolean isSave();
 
 	/**
 	 * Konstruktor třídy pro prvky bez plátna
@@ -299,6 +301,5 @@ public abstract class BasicForm extends Stage {
 	public void setDragBox(BorderPane dragBox) {
 		this.dragBox = dragBox;
 	}
-
 
 }

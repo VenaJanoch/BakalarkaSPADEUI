@@ -1,9 +1,6 @@
 package Controllers;
 
-import graphics.CanvasItem;
-import graphics.DragAndDropCanvas;
-import graphics.ItemContexMenu;
-import graphics.NodeLink;
+import graphics.*;
 import javafx.event.EventHandler;
 import javafx.scene.Cursor;
 import javafx.scene.control.ToggleButton;
@@ -203,6 +200,11 @@ public class CanvasController {
         itemContexMenu.show(canvas, t.getScreenX(), t.getScreenY());
     }
 
+    public void addRelationCBToCanvas(LineComboBox relationCB, Polygon polygon) {
+
+        canvas.getCanvas().getChildren().addAll(relationCB, polygon);
+    }
+
 
 
    /** Getrs and Setrs **/
@@ -238,6 +240,8 @@ public class CanvasController {
     public DragAndDropCanvas getCanvas() {
         return canvas;
     }
+
+
 }
 
 

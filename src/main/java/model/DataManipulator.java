@@ -1,6 +1,7 @@
 package model;
 
 import Controllers.LinkControl;
+import SPADEPAC.Link;
 import SPADEPAC.ObjectFactory;
 import SPADEPAC.Project;
 import XML.ProcessGenerator;
@@ -145,5 +146,19 @@ public class DataManipulator {
 
     public Project getProject() {
         return project;
+    }
+
+    public void createChangeArtifactRelation(int artifactIndex, int changeIndex) {
+
+        Link linkP = objF.createLink();
+
+        linkP.setType("Config");
+        linkP.setArtifactIndex(artifactIndex);
+        linkP.setChangeIndex(changeIndex);
+
+        lists.getLinksList().add(linkP);
+
+        lists.getChangeList().get(changeIndex).getArtifactIndex().add(artifactIndex);
+        lists.getArtifactList().get(artifactIndex).getChangeIndex().add(changeIndex);
     }
 }

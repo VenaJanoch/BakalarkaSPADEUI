@@ -1,5 +1,8 @@
 package model;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class IdentificatorCreater {
 	/** Globální proměnné třídy **/
 	private int linesID = -1;
@@ -27,6 +30,9 @@ public class IdentificatorCreater {
 	private int roleTypeID = -1;
 
 	private static int index;
+
+	private Map<Integer, Integer> changeIndexMaper = new HashMap<>();
+	private Map<Integer, Integer> artifactIndexMaper = new HashMap<>();
 
 	/**
 	 * Metody pro inkrementaci počtu daného prvku
@@ -139,11 +145,15 @@ public class IdentificatorCreater {
 
 	public int createChangeID() {
 		changeID++;
+		changeIndexMaper.put(index,changeID);
+		index++;
 		return changeID;
 	}
 
 	public int createArtifactID() {
 		artifactID++;
+		artifactIndexMaper.put(index,activityID);
+		index++;
 		return artifactID;
 	}
 
@@ -182,4 +192,11 @@ public class IdentificatorCreater {
 
 	}
 
+	public Map<Integer, Integer> getChangeIndexMaper() {
+		return changeIndexMaper;
+	}
+
+	public Map<Integer, Integer> getArtifactIndexMaper() {
+		return artifactIndexMaper;
+	}
 }

@@ -24,6 +24,7 @@ import SPADEPAC.WorkUnit;
 import forms.ConfigPersonRelationForm;
 import forms.MilestoneForm;
 import forms.RoleForm;
+import graphics.NodeLink;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -84,6 +85,8 @@ public class SegmentLists {
 	private ArrayList<Integer> workUnitFormIndex;
 
 	private List<Link> linksList;
+
+	private ArrayList<NodeLink> arrows;
 
 	private Project project;
 
@@ -259,9 +262,17 @@ public class SegmentLists {
 		typeList = project.getTypes();
 		typeObservable = FXCollections.observableArrayList();
 		typeObservable.add("");
+
+		arrows = new ArrayList<>();
+	}
+
+	public ArrayList<NodeLink> getArrows() {
+		return arrows;
 	}
 
 	/** Getrs and Setrs **/
+
+
 
 	public ObservableList<String> getConfigObservable() {
 		return configObservable;
@@ -575,4 +586,6 @@ public class SegmentLists {
 		this.workUnitFormIndex = workUnitFormIndex;
 	}
 
+    public void removeWorkUnitRelation(int startItemId, int endItemId) {
+    }
 }

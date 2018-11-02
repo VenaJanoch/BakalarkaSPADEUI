@@ -6,6 +6,7 @@ import forms.*;
 import graphics.CanvasItem;
 import model.DataManipulator;
 import services.CanvasType;
+import services.Constans;
 import services.Control;
 import services.SegmentType;
 
@@ -27,9 +28,10 @@ public class FormController {
     private StatusForm statusForm;
     private BranchForm branchFrom;
     private ConfigurationTableForm confTableForm;
+    private  IdentificatorController identificatorController;
 
 
-    public FormController() {
+    public FormController(IdentificatorController identificatorController) {
 
         milestoneForm = new MilestoneForm(this, deleteControl, idCreater);
         CPRForm = new ConfigPersonRelationForm(this, deleteControl, idCreater);
@@ -42,6 +44,8 @@ public class FormController {
         branchFrom = new BranchForm(this, deleteControl, idCreater);
         confTableForm = new ConfigurationTableForm(this, deleteControl, idCreater);
         typeForm = new TypeForm(this, deleteControl, idCreater);
+
+        this.identificatorController = identificatorController;
 
     }
 
@@ -238,6 +242,40 @@ public class FormController {
 
         forms.get(formIdentificator).show();
         forms.get(formIdentificator).toFront();
+
+    }
+
+    public boolean isFormFill(int formIdentificator) {
+       return forms.get(formIdentificator).isSave();
+    }
+
+    public void createChangeArtifactRelation(int startId, int endId) {
+
+        Integer artifactStartIndex = identificatorController.getArtifactIndex(startId);
+        Integer artifactEndIndex = identificatorController.getArtifactIndex(endId);
+
+        Integer changeStartIndex = identificatorController.getChangeIndex(startId);
+        Integer changeEndIndex = identificatorController.getChangeIndex(endId);
+
+        int artifactIndex;
+        int changeIndex;
+
+        if( artifactStartIndex != null){
+            artifactIndex = artifactStartIndex;
+        }else{
+            artifactIndex = artifactEndIndex;
+        }
+
+        if(changeStartIndex != null){
+            changeIndex = changeStartIndex;
+        }else {
+            changeIndex = changeEndIndex;
+        }
+
+        dataManipulator.createChangeArtifactRelation(artifactIndex,changeIndex);
+    }
+
+    public int getArtefactSegmentId(){
 
     }
 }
