@@ -9,6 +9,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
 import services.*;
 
+import java.util.ArrayList;
+
 
 public class CanvasController {
 
@@ -24,6 +26,8 @@ public class CanvasController {
     private FormController formController;
 
     private CanvasType canvasType;
+
+    private ArrayList<Integer> listOfItemOnCanvas = new ArrayList();
 
     public CanvasController(CanvasType canvasType, ApplicationController applicationController) { // todo je potreba canvasType? Smazat
 
@@ -47,7 +51,7 @@ public class CanvasController {
         } else if (event.getCode() == KeyCode.DELETE) {
 
             if (manipulationController.getChooseCanvasItem() != null) {
-                manipulationController.deleteItem(this);
+                manipulationController.deleteItem(canvasItemController);
             }
 
         } else if (event.getCode() == KeyCode.ESCAPE) {
@@ -73,6 +77,7 @@ public class CanvasController {
         // todo SegmentIdentificator
         CanvasItem item = canvasItemController.createCanvasItem(type,"d",formIndex,"New", x, y, this);
         canvas.getCanvas().getChildren().add(item);
+        listOfItemOnCanvas.add(formIndex);
         return item;
 
     }
@@ -115,7 +120,7 @@ public class CanvasController {
      */
 
     private void pasteItem() {
-        manipulationController.pasteItem(this);
+        manipulationController.pasteItem(this, canvasItemController);
     }
 
     /**
@@ -129,7 +134,7 @@ public class CanvasController {
      * Metoda pro reakci na klávesouvou zkratku pro vyjmutí prvku
      */
     private void cutItem() {
-        manipulationController.cutItem(this);
+        manipulationController.cutItem(this, canvasItemController);
     }
 
     /**
@@ -205,9 +210,11 @@ public class CanvasController {
         canvas.getCanvas().getChildren().addAll(relationCB, polygon);
     }
 
+    /** Getrs and Setrs **/
 
-
-   /** Getrs and Setrs **/
+    public ArrayList<Integer> getListOfItemOnCanvas() {
+        return listOfItemOnCanvas;
+    }
 
     public ToggleButton getLinkButton() {
         return linkButton;

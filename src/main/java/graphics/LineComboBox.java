@@ -1,12 +1,9 @@
 package graphics;
 
-import Controllers.ListController;
-import SPADEPAC.Relation;
-import SPADEPAC.WorkUnit;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.ObservableList;
 import javafx.scene.control.ComboBox;
-import services.Control;
 
 /**
  * Třída definující box pro výběr relace mezi dvěma Work Unit. Odděděná od třídy
@@ -20,8 +17,8 @@ public class LineComboBox extends ComboBox<String> {
 	/** Globální proměnné třídy */
 	private int relationIndex;
 
-	public LineComboBox(ListController listController) {
-		super(listController.getRelationTypeObservable());
+	public LineComboBox(ObservableList<String> relationTypeObservable) {
+		super(relationTypeObservable);
 
 		this.getSelectionModel().selectedIndexProperty().addListener(relationListener);
 		this.setVisibleRowCount(5);

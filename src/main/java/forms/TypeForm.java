@@ -1,5 +1,6 @@
 package forms;
 
+import Controllers.FormController;
 import SPADEPAC.WorkUnitTypeClass;
 import SPADEPAC.WorkUnitTypeSuperClass;
 import abstractform.TableClassBasicForm;
@@ -38,16 +39,10 @@ public class TypeForm extends TableClassBasicForm implements ISegmentTableForm {
 	/**
 	 * Konstruktor třídy Zinicializuje globální proměnné třídy Nastaví reakci na
 	 * potvrzovací tlačítko
-	 * 
-	 * @param control
-	 *            Control
-	 * @param deleteControl
-	 *            DeleteControl
-	 * @param idCreator
-	 *            IdentificatorCreater
+	 *
 	 */
-	public TypeForm(Control control, DeleteControl deleteControl, IdentificatorCreater idCreator) {
-		super(control, deleteControl, idCreator);
+	public TypeForm(FormController formController, String name) {
+		super(formController, name);
 
 		this.control = control;
 		this.setTitle("Edit WorkUnit type");
@@ -168,7 +163,7 @@ public class TypeForm extends TableClassBasicForm implements ISegmentTableForm {
 		getTableTV().getItems().add(table);
 		getTableTV().sort();
 		getControl().getFillForms().fillType(idName, formControl.fillTextMapper(nameST),
-				formControl.fillTextMapper(classST), superST, Control.objF, false);
+				formControl.fillTextMapper(classST), superST, false);
 
 	}
 

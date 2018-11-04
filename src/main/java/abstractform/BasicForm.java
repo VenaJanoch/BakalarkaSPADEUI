@@ -2,6 +2,7 @@ package abstractform;
 
 import java.util.ArrayList;
 
+import Controllers.CanvasController;
 import Controllers.FormController;
 import graphics.DragAndDropCanvas;
 import graphics.DragAndDropItemPanel;
@@ -44,64 +45,36 @@ public abstract class BasicForm extends Stage {
 	private GridPane infoPart;
 	private HBox buttonBox;
 
-//	private CanvasItem item;
-//	private Control control;
-//	private int[] itemArray;
 	private DragAndDropItemPanel dgItem;
 	private DragAndDropCanvas canvas;
 	private BorderPane dragBox;
 
-//	private FormControl formControl;
-//	protected DeleteControl deleteControl;
-//	private List<Phase> phaseArray;
-//	private List<Iteration> iterationArray;
-//	private List<Activity> activityArray;
-//	private List<Integer> workUnitArray;
-//	private List<Integer> milestoneArray;
-//	private List<Integer> criterionnArray;
-//	private Configuration configArray;
-//	private List<Integer> branchArray;
-//	private List<Integer> changeArray;
-//	private List<Integer> artifactArray;
-//	private List<Integer> roleArray;
-//	private List<String> TagArray;
-//	private List<Integer> confPRArray;
 
-//	private IdentificatorCreater idCreater;
-//	private String type;
 	protected boolean isSave;
-//	private int indexForm;
+	protected int indexForm;
 
-	private FormController formController;
+	protected FormController formController;
+	protected CanvasController  canvasController;
 	/**
 	 * Konstruktor třídy pro formuláře s vlastním plátnem Zinicializuje globální
 	 * proměnné třídy
 	 */
-	public BasicForm(FormController formController, DragAndDropCanvas canvas, DragAndDropItemPanel dgItem, String name) {
+	public BasicForm(FormController formController, CanvasController canvasController, DragAndDropItemPanel dgItem, String name) {
 		super();
 		this.formController = formController;
 
-	//	type = item.getType().name();
-	//	this.deleteControl = deleteControl;
-	//	this.control = control;
-	//	this.item = item;
-	//	this.itemArray = itemArray;
-	//	this.alerts = new Alerts();
-	//	this.indexForm = indexForm;
-	//	this.setIdCreater(new IdentificatorCreater());
 		this.setTitle("Edit " + name + " Form");
-		this.canvas = canvas;
+		this.canvasController = canvasController;
+		this.canvas = canvasController.getCanvas();
 		this.dgItem = dgItem;
 		this.dragBox = new BorderPane();
-	//	this.setFormControl(new FormControl());
 		mainPanel = new BorderPane();
 
 		this.setScene(creatSceneCanvas());
 
 	}
 
-	public abstract boolean isSave();
-
+	abstract void createForm();
 	/**
 	 * Konstruktor třídy pro prvky bez plátna
 	 *
@@ -110,12 +83,6 @@ public abstract class BasicForm extends Stage {
 	public BasicForm(FormController formController, String name) {
 
 		super();
-	//	type = item.getType().name();
-	//	this.deleteControl = deleteControl;
-	//	this.control = control;
-	//	this.item = item;
-	//	this.alerts = new Alerts();
-	//	this.setIdCreater(new IdentificatorCreater());
 		this.setTitle("Edit " + name);
 		mainPanel = new BorderPane();
 		this.formController = formController;
@@ -123,25 +90,6 @@ public abstract class BasicForm extends Stage {
 
 	}
 
-	/**
-	 * Konstruktor pro projektový formulář
-	 *
-	 */
-	public BasicForm(FormController formController) {
-		super();
-		//type = "Project";
-		//this.control = control;
-		//this.alerts = new Alerts();
-		//this.indexForm = 0;
-
-		this.setTitle("Edit Project");
-		this.formController = formController;
-
-		mainPanel = new BorderPane();
-
-		this.setScene(creatSceneProject());
-
-	}
 
 	/**
 	 * Vytvoří scénu s formulářem
@@ -228,11 +176,11 @@ public abstract class BasicForm extends Stage {
 		return mainPanel;
 	}
 
-
-	abstract void createForm();
-
 	/** Getrs and Setrs **/
 
+	public boolean isSave() {
+		return isSave;
+	}
 	public BorderPane getMainPanel() {
 		return mainPanel;
 	}
@@ -301,5 +249,4 @@ public abstract class BasicForm extends Stage {
 	public void setDragBox(BorderPane dragBox) {
 		this.dragBox = dragBox;
 	}
-
 }

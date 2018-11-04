@@ -1,7 +1,10 @@
 package abstractform;
 
+import Controllers.CanvasController;
 import Controllers.FormController;
 import graphics.CanvasItem;
+import graphics.DragAndDropCanvas;
+import graphics.DragAndDropItemPanel;
 import javafx.geometry.HPos;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -22,38 +25,36 @@ public class DescriptionBasicForm extends BasicForm {
 	private Label descriptionLB;
 	private TextField descriptionTF;
 
+
 	/**
 	 * Konstruktor třídy
 	 *
 	 */
-	public DescriptionBasicForm(FormController formController, String name) {
+	public DescriptionBasicForm(FormController formController, CanvasController canvasController, DragAndDropItemPanel dgItem, String name) {
 
-		super(formController, name);
-		fillForm();
+		super(formController, canvasController, dgItem, name);
+		createForm();
 	}
 
 	/**
 	 * Přetížený konstruktor třídy
 	 */
-	public DescriptionBasicForm(FormController formController) {
+	public DescriptionBasicForm(FormController formController, String name) {
 
-		super(formController);
-		fillForm();
+		super(formController, name);
+		createForm();
 	}
 
-	/**
-	 * Vytvoří vstupní pole pro Description a přidá ho do GridPane
-	 */
-	private void fillForm() {
+	@Override
+	void createForm() {
 		descriptionLB = new Label("Description: ");
 		descriptionTF = new TextField();
 		descriptionTF.setId("formDesc");
 		getInfoPart().add(descriptionLB, 0, 1);
 		getInfoPart().setHalignment(descriptionLB, HPos.RIGHT);
 		getInfoPart().add(descriptionTF, 1, 1);
-
 	}
-
+	
 	/**
 	 * Getrs and Setrs
 	 */

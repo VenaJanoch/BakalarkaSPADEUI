@@ -2,10 +2,13 @@ package forms;
 
 import java.time.LocalDate;
 
+import Controllers.FormController;
 import SPADEPAC.Iteration;
 import abstractform.BasicForm;
 import abstractform.Date2DescBasicForm;
 import graphics.CanvasItem;
+import graphics.DragAndDropCanvas;
+import graphics.DragAndDropItemPanel;
 import graphics.InfoBoxSegment;
 import interfaces.ISegmentForm;
 import javafx.beans.value.ChangeListener;
@@ -41,29 +44,16 @@ public class IterationForm extends Date2DescBasicForm implements ISegmentForm {
 	private ChoiceBox<String> configCB;
 
 	private int chooseConfigID;
-	private Iteration iteration;
 
 	/**
 	 * Konstruktor třídy Zinicializuje globální proměnné tříd Nastaví reakci na
 	 * uzavření formuláře
-	 * 
-	 * @param item
-	 *            CanvasItem
-	 * @param control
-	 *            Control
-	 * @param itemArray
-	 * @param iteration
-	 *            Iteration
 	 * @param indexForm
-	 * @param deleteControl
 	 *            DeleteControl
 	 */
-	public IterationForm(CanvasItem item, Control control, int[] itemArray, Iteration iteration, int indexForm,
-			DeleteControl deleteControl) {
-		super(item, control, itemArray, indexForm, deleteControl, CanvasType.Iteration);
-		setWorkUnitArray(iteration.getWorkUnits());
-		this.iteration = iteration;
-		setNew(true);
+	public IterationForm(FormController formController, DragAndDropCanvas canvas, DragAndDropItemPanel dgItemPanel, String name, int indexForm) {
+
+		super(formController,canvas, dgItemPanel, name);
 		this.setOnCloseRequest(e -> {
 
 			e.consume();
@@ -84,31 +74,25 @@ public class IterationForm extends Date2DescBasicForm implements ISegmentForm {
 	public void closeForm() {
 
 		String actName = getNameTF().getText();
-		BasicForm form = getCanvasItem().getForm();
-		int[] IDs = getCanvasItem().getIDs();
-		int x = (int) getCanvasItem().getTranslateX();
-		int y = (int) getCanvasItem().getTranslateY();
 		LocalDate startDate = getDateDP().getValue();
 		LocalDate endDate = getDate2DP().getValue();
 		String desc = getDescriptionTF().getText();
-		setName(actName);
-		getCanvasItem().setNameText(actName);
-		getControl().getFillForms().fillIteration(iteration, IDs, desc, actName, startDate, endDate, chooseConfigID, x,
-				y, isNew(), Control.objF);
-		setNew(false);
+		isSave = formController.saveDataFromIterationForm(actName, startDate,endDate,desc, chooseConfigID, canvasController.getListOfItemOnCanvas(), indexForm);
 	}
 
 	@Override
 	public void setActionSubmitButton() {
 		closeForm();
-		close();
+		if (isSave){
+			close();
+		}
 	}
 
 	@Override
 	public void createForm() {
 
 		configLB = new Label("Configuration: ");
-		configCB = new ChoiceBox<>(getControl().getLists().getConfigObservable());
+		configCB = new ChoiceBox<>();
 
 		configCB.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
 
@@ -138,9 +122,9 @@ public class IterationForm extends Date2DescBasicForm implements ISegmentForm {
 	}
 
 	@Override
-	public void deleteItem(int iDs[]) {
+	public void deleteItem() {
 
-		deleteControl.deleteIteration(iDs);
+		formController.deleteIteration();
 
 	}
 

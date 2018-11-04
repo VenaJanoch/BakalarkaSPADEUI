@@ -3,25 +3,27 @@ package Controllers;
 import javafx.stage.Stage;
 import model.DataManipulator;
 import model.FileManipulator;
+import model.IdentificatorCreater;
 import services.Alerts;
+import services.SegmentLists;
 
 public class ApplicationController {
 
     CanvasItemController canvasItemController;
     FormController formController;
-    IdentificatorController identificatorController;
     LinkControl linkControl;
     WindowController windowController;
     ManipulationController manipulationController;
 
-    public ApplicationController(Stage primaryStage, FileManipulator fileManipulator, DataManipulator dataManipulator, Alerts alerts){
+    public ApplicationController(Stage primaryStage, FileManipulator fileManipulator, DataManipulator dataManipulator, Alerts alerts,
+                                 IdentificatorCreater identificatorCreater, SegmentLists segmentLists){
 
-        this.identificatorController = new IdentificatorController();
-        this.formController = new FormController();
-        this.linkControl = new LinkControl(formController, identificatorController);
-        this.canvasItemController = new CanvasItemController(linkControl, formController);
+        this.formController = new FormController(identificatorCreater, dataManipulator);
+        this.manipulationController = new ManipulationController(formController);
+        this.linkControl = new LinkControl(formController, identificatorCreater, segmentLists);
+        this.canvasItemController = new CanvasItemController(linkControl, formController, manipulationController);
         this.windowController = new WindowController(primaryStage,fileManipulator,dataManipulator,alerts);
-        this.manipulationController = new ManipulationController(formController, canvasItemController);
+
     }
 
     /** Getrs and Setrs **/
@@ -31,10 +33,6 @@ public class ApplicationController {
 
     public FormController getFormController() {
         return formController;
-    }
-
-    public IdentificatorController getIdentificatorController() {
-        return identificatorController;
     }
 
     public LinkControl getLinkControl() {

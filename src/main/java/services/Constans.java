@@ -173,5 +173,16 @@ public class Constans {
 	public static final KeyCode delete = KeyCode.DELETE;
 	public static final String linkPicture = "link.svn";
 
-
+	public static final int projectFormIndex = 0;
+	public static final int milestoneFormIndex = 1;
+	public static final int roleFormIndex = 2;
+	public static final int cprFormIndex = 3;
+	public static final int priorityFormIndex = 4;
+	public static final int severityFormIndex = 5;
+	public static final int relationFormIndex = 6;
+	public static final int resolutionormIndex = 7;
+	public static final int statusFormIndex = 8;
+	public static final int wuTypeFormIndex = 9;
+	public static final int branchIndex = 10;
+	public static final int configurationFormIndex = 11;
 }

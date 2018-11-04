@@ -2,11 +2,15 @@ package forms;
 
 import java.time.LocalDate;
 
+import Controllers.CanvasController;
+import Controllers.FormController;
 import SPADEPAC.ObjectFactory;
 import SPADEPAC.Phase;
 import abstractform.BasicForm;
 import abstractform.DateDescBasicForm;
 import graphics.CanvasItem;
+import graphics.DragAndDropCanvas;
+import graphics.DragAndDropItemPanel;
 import interfaces.ISegmentForm;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -36,31 +40,19 @@ public class PhaseForm extends DateDescBasicForm implements ISegmentForm {
 	private ChoiceBox<String> milestoneCB;
 	private int milestoneIndex;
 	private int configIndex;
-	private Phase phase;
+	//private Phase phase;
 
 	/**
 	 * Konstruktor třídy Zinicializuje globální proměnné tříd Nastaví reakci na
 	 * uzavření okna formuláře
-	 * 
-	 * @param item
-	 *            CanvasItem
-	 * @param control
-	 *            Control
-	 * @param itemArray
-	 * @param phase
-	 *            Phase
+	 *
 	 * @param indexForm
-	 * @param deleteControl
-	 *            DeleteControl
 	 */
-	public PhaseForm(CanvasItem item, Control control, int[] itemArray, Phase phase, int indexForm,
-			DeleteControl deleteControl) {
-		super(item, control, itemArray, indexForm, deleteControl, CanvasType.Phase);
-		this.phase = phase;
-		setNew(true);
-		setWorkUnitArray(phase.getWorkUnits());
-		this.setOnCloseRequest(e -> {
+	public PhaseForm(FormController formController,CanvasController canvasController, DragAndDropItemPanel dgItemPanel, String name, int indexForm) {
 
+		super(formController,canvasController, dgItemPanel, name);
+		this. indexForm = indexForm;
+		this.setOnCloseRequest(e -> {
 			e.consume();
 			int result = Alerts.showSaveSegment();
 			if (result == 1) {
@@ -76,28 +68,22 @@ public class PhaseForm extends DateDescBasicForm implements ISegmentForm {
 	
 	@Override
 	public void closeForm() {
-		
+
 		String actName = getNameTF().getText();
-		BasicForm form = getCanvasItem().getForm();
-		int[] IDs = getCanvasItem().getIDs();
-		int x = (int) getCanvasItem().getTranslateX();
-		int y = (int) getCanvasItem().getTranslateY();
 		LocalDate endDateL = getDateDP().getValue();
 		String desc = getDescriptionTF().getText();
 
-		setName(actName);
-		getCanvasItem().setNameText(actName);
-		getCanvasItem().getFillForms().fillPhase(phase, IDs, desc, actName, endDateL, configIndex, milestoneIndex, x, y,
-				isNew(), new ObjectFactory());
-
-		setNew(false);
+		isSave = formController.saveDataFromPhaseForm(actName, endDateL, desc, configIndex, milestoneIndex, canvasController.getListOfItemOnCanvas(), indexForm);
 
 	}
 
 	@Override
 	public void setActionSubmitButton() {
 		closeForm();
-		close();
+		if(isSave){
+			close();
+		}
+
 	}
 
 	@Override
@@ -105,11 +91,12 @@ public class PhaseForm extends DateDescBasicForm implements ISegmentForm {
 		getDateLB().setText("End Date: ");
 
 		configLB = new Label("Configuration: ");
-		configCB = new ChoiceBox<>(getControl().getLists().getConfigObservable());
+		configCB = new ChoiceBox<>();
+
 		configCB.getSelectionModel().selectedIndexProperty().addListener(configListener);
 
 		milestoneLB = new Label("Milestone: ");
-		milestoneCB = new ChoiceBox<>(getControl().getLists().getMilestoneObservable());
+		milestoneCB = new ChoiceBox<>();
 		milestoneCB.getSelectionModel().selectedIndexProperty().addListener(milestoneListener);
 		fillInfoPart();
 	}
@@ -157,9 +144,9 @@ public class PhaseForm extends DateDescBasicForm implements ISegmentForm {
 	}
 
 	@Override
-	public void deleteItem(int iDs[]) {
+	public void deleteItem() {
 
-		deleteControl.deletePhase(iDs);
+		formController.deletePhaseForm(indexForm);
 
 	}
 

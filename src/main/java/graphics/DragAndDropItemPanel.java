@@ -28,9 +28,7 @@ public class DragAndDropItemPanel extends HBox {
 	private DragSegmentButton[] dragSegmnets;
 	private ToggleButton linkButton;
 	private int[] itemArray;
-	private BasicForm form;
 	private CanvasController canvasController;
-	private WindowController windowController;
 
 	/**
 	 * Konstruktor třídy Zinicializuje globální proměnné třídy

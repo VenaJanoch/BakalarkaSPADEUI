@@ -1,5 +1,6 @@
 package forms;
 
+import Controllers.FormController;
 import SPADEPAC.WorkUnitStatusClass;
 import SPADEPAC.WorkUnitStatusSuperClass;
 import abstractform.TableClassBasicForm;
@@ -38,16 +39,10 @@ public class StatusForm extends TableClassBasicForm implements ISegmentTableForm
 	/**
 	 * Konstruktor třídy Zinicializuje globální proměnné třídy Nastaví reakci na
 	 * potvrzovací tlačítko
-	 * 
-	 * @param control
-	 *            Control
-	 * @param deleteControl
-	 *            DeleteControl
-	 * @param idCreator
-	 *            IdentificatorCreater
+	 *
 	 */
-	public StatusForm(Control control, DeleteControl deleteControl, IdentificatorCreater idCreator) {
-		super(control, deleteControl, idCreator);
+	public StatusForm(FormController formController, String name) {
+		super(formController, name);
 
 		this.control = control;
 		this.setTitle("Edit Status");
@@ -173,7 +168,7 @@ public class StatusForm extends TableClassBasicForm implements ISegmentTableForm
 		getTableTV().getItems().add(table);
 		getTableTV().sort();
 		getControl().getFillForms().fillStatusType(idName, formControl.fillTextMapper(nameST),
-				formControl.fillTextMapper(classST), superST, Control.objF, false);
+				formControl.fillTextMapper(classST), superST, false);
 
 	}
 

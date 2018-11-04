@@ -25,7 +25,7 @@ public interface ISegmentForm {
 	/**
 	 * Metoda pro nastavení reakce smazání prvku z plátna
 	 */
-	public void deleteItem(int[] IDs);
+	public void deleteItem();
 	
 	
 	

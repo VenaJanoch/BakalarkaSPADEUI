@@ -25,20 +25,18 @@ public class ManipulationController {
 	private NodeLink link;;
 
 	private FormController formController;
-	private CanvasItemController canvasItemController;
 
 	/**
 	 * Konstruktor třídy Zinicializuje globální proměnné třídy
 	 *            instance třídy control
 	 */
-	public ManipulationController(FormController formController, CanvasItemController canvasItemController ) {
+	public ManipulationController(FormController formController) {
 		//this.copyForms = copyForms;
 		//this.control = control;
 		//this.project = project;
 		//this.lists = lists;
 		//this.deleteControl = deleteControl;
 		this.formController = formController;
-		this.canvasItemController = canvasItemController;
 		//this.forms = forms;
 		isCut = false;
 	}
@@ -66,11 +64,11 @@ public class ManipulationController {
 	 * 
 
 	 */
-	public void cutItem(CanvasController canvasController) {
+	public void cutItem(CanvasController canvasController, CanvasItemController canvasItemController) {
 
 		if (chooseCanvasItem != null) {
 			copyItem(canvasController);
-			deleteItem(canvasController);
+			deleteItem(canvasItemController);
 		}
 	}
 
@@ -78,7 +76,7 @@ public class ManipulationController {
 	 * Smaže prvek ze seznamů a zneviditelní na plátně
 	 *
 	 */
-	public void deleteItem(CanvasController canvasController) {
+	public void deleteItem(CanvasItemController canvasItemController) {
 		if (chooseCanvasItem != null) {
 			canvasItemController.deleteItem(chooseCanvasItem);
 			int index = chooseCanvasItem.getFormIdentificator();
@@ -92,7 +90,7 @@ public class ManipulationController {
 	 * Vloží nový pvek na plátno
 	 *
 	 */
-	public void pasteItem(CanvasController canvasController) {
+	public void pasteItem(CanvasController canvasController, CanvasItemController canvasItemController) {
 		SegmentType segmentType = canvasItemController.getSegmentType(chooseCanvasItem);
 		CanvasType canvasType  = canvasController.getCanvasType();
 

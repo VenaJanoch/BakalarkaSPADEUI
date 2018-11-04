@@ -1,5 +1,6 @@
 package forms;
 
+import Controllers.FormController;
 import SPADEPAC.ObjectFactory;
 import abstractform.TableBasicForm;
 import interfaces.ISegmentTableForm;
@@ -60,16 +61,10 @@ public class BranchForm extends TableBasicForm implements ISegmentTableForm {
 	/**
 	 * Konstruktor třídy Zinicializuje globální proměnné tříd Nastaví velikost
 	 * formuláře
-	 * 
-	 * @param control
-	 *            Control
-	 * @param deleteControl
-	 *            DeleteControl
-	 * @param idCreator
-	 *            IdentificatorCreater
+	 *
 	 */
-	public BranchForm(Control control, DeleteControl deleteControl, IdentificatorCreater idCreator) {
-		super(control, deleteControl, idCreator);
+	public BranchForm(FormController formController, String name) {
+		super(formController, name);
 
 		getMainPanel().setMinSize(Constans.littleformWidth, Constans.littleformHeight);
 		getMainPanel().setMaxSize(Constans.littleformWidth, Constans.littleformHeight);
@@ -193,7 +188,7 @@ public class BranchForm extends TableBasicForm implements ISegmentTableForm {
 		tableTV.getItems().add(tag);
 		tableTV.sort();
 
-		getControl().getFillForms().fillBranch(formControl.fillTextMapper(nameST), idName, isMain, new ObjectFactory(), false);
+		getControl().getFillForms().fillBranch(formControl.fillTextMapper(nameST), idName, isMain, false);
 	}
 
 	/*** Getrs and Setrs ***/

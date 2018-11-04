@@ -1,5 +1,6 @@
 package forms;
 
+import Controllers.FormController;
 import abstractform.BasicForm;
 import abstractform.Table2BasicForm;
 import graphics.CanvasItem;
@@ -50,17 +51,11 @@ public class ConfigurationTableForm extends Table2BasicForm implements ISegmentT
 
 	/**
 	 * Konstruktor třídy Zinicializuje globální proměnné tříd
-	 * 
-	 * @param control
-	 *            Control
-	 * @param deleteControl
-	 *            DeleteControl
-	 * @param idCreator
-	 *            IdentificatorCreater
+	 *
 	 */
 
-	public ConfigurationTableForm(Control control, DeleteControl deleteControl, IdentificatorCreater idCreator) {
-		super(control, deleteControl, idCreator);
+	public ConfigurationTableForm(FormController formController, String name) {
+		super(formController, name);
 
 		createForm();
 		getSubmitBT().setOnAction(event -> setActionSubmitButton());
@@ -91,10 +86,10 @@ public class ConfigurationTableForm extends Table2BasicForm implements ISegmentT
 	 */
 	public BasicForm createConfigItem() {
 
-		CanvasItem item = new CanvasItem(SegmentType.Configuration, "New", getControl(), getControl().getForms().get(0),
-				0, 0, 0, getControl().getContexMenu(), getControl().getLinkControl(), getControl().getCanvas());
-
-		form = getControl().getForms().get(item.getIDs()[0]);
+		//CanvasItem item = new CanvasItem(SegmentType.Configuration, "New", getControl(), getControl().getForms().get(0),
+		//		0, 0, 0, getControl().getContexMenu(), getControl().getLinkControl(), getControl().getCanvas());
+//TODO Opravit nevim co to je
+		//form = getControl().getForms().get(item.getIDs()[0]);
 		form.getSubmitButton().setText("Add");
 		getMainPanel().setCenter(form.getMainPanel());
 

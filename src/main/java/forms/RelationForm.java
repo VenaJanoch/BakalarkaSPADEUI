@@ -1,5 +1,6 @@
 package forms;
 
+import Controllers.FormController;
 import SPADEPAC.WorkUnitRelationClass;
 import SPADEPAC.WorkUnitRelationSuperClass;
 import abstractform.TableClassBasicForm;
@@ -38,12 +39,9 @@ public class RelationForm extends TableClassBasicForm implements ISegmentTableFo
 	 * Konstruktor třídy
 	 * Zinicializuje globální proměnné třídy
 	 * Nastaví reakci na potvrzovací tlačítko
-	 * @param control Control 
-	 * @param deleteControl DeleteControl
-	 * @param idCreator IdentificatorCreater
 	 */
-	public RelationForm(Control control, DeleteControl deleteControl, IdentificatorCreater idCreator) {
-		super(control, deleteControl, idCreator);
+	public RelationForm(FormController formController, String name) {
+		super(formController, name);
 
 		this.control = control;
 		this.setTitle("Edit Relations");
@@ -167,7 +165,7 @@ public class RelationForm extends TableClassBasicForm implements ISegmentTableFo
 
 		getTableTV().getItems().add(table);
 		getTableTV().sort();
-		getControl().getFillForms().fillRelationType(idName,formControl.fillTextMapper(nameST), formControl.fillTextMapper(classST), superST, Control.objF, false);
+		getControl().getFillForms().fillRelationType(idName,formControl.fillTextMapper(nameST), formControl.fillTextMapper(classST), superST, false);
 
 	}
 

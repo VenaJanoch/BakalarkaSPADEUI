@@ -2,6 +2,7 @@ package model;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.Supplier;
 
 public class IdentificatorCreater {
 	/** Globální proměnné třídy **/
@@ -33,6 +34,9 @@ public class IdentificatorCreater {
 
 	private Map<Integer, Integer> changeIndexMaper = new HashMap<>();
 	private Map<Integer, Integer> artifactIndexMaper = new HashMap<>();
+	private Map<Integer, Integer> workUnitIndexMaper = new HashMap<>();
+	private Map<Integer, Integer> phaseIndexMaper = new HashMap<>();
+	private Map<Integer, Integer> iterationIndexMaper = new HashMap<>();
 
 	/**
 	 * Metody pro inkrementaci počtu daného prvku
@@ -97,16 +101,18 @@ public class IdentificatorCreater {
 	public int createPhaseID() {
 
 		phaseID++;
-
-		return phaseID;
+		phaseIndexMaper.put(index, phaseID);
+		index ++;
+		return index;
 
 	}
 
 	public int createIterationID() {
 
 		iterationID++;
-
-		return iterationID;
+		iterationIndexMaper.put(index, iterationID);
+		index++;
+		return index;
 	}
 
 	public int createActivityID() {
@@ -119,7 +125,8 @@ public class IdentificatorCreater {
 	public int createWorkUnitID() {
 
 		workUnitID++;
-
+		workUnitIndexMaper.put(index, workUnitID);
+		index++;
 		return workUnitID;
 	}
 
@@ -172,6 +179,29 @@ public class IdentificatorCreater {
 		return tagID;
 	}
 
+	public int getChangeIndex(int formIndex){
+
+		return getChangeIndexMaper().get(formIndex);
+	}
+
+	public  Integer getArtifactIndex(int formIndex){
+		return  getArtifactIndexMaper().get(formIndex);
+	}
+
+	public Integer getWorkUnitIndex(int startSegmentId) {
+		return  getWorkUnitIndexMaper().get(startSegmentId);
+	}
+
+	public Integer getPhaseIndex(int formIndex){
+		return  phaseIndexMaper.get(formIndex);
+	}
+
+	public Integer getIterationIndex(int formIdentificator) {
+		return  iterationIndexMaper.get(formIdentificator);
+	}
+
+
+
 	public static int getIndex() {
 		return index;
 	}
@@ -195,8 +225,13 @@ public class IdentificatorCreater {
 	public Map<Integer, Integer> getChangeIndexMaper() {
 		return changeIndexMaper;
 	}
-
 	public Map<Integer, Integer> getArtifactIndexMaper() {
 		return artifactIndexMaper;
 	}
+
+	public Map<Integer, Integer> getWorkUnitIndexMaper() {
+		return  workUnitIndexMaper;
+	}
+
+
 }

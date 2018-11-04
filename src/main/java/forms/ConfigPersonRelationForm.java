@@ -1,5 +1,6 @@
 package forms;
 
+import Controllers.FormController;
 import SPADEPAC.ObjectFactory;
 import abstractform.TableBasicForm;
 import interfaces.ISegmentTableForm;
@@ -51,13 +52,11 @@ public class ConfigPersonRelationForm extends TableBasicForm implements ISegment
 	 * Konstruktor třídy
 	 * Zinicializuje globální proměnné tříd
 	 * Nastaví vlastnost pro tlačítko OK
-	 * @param control
-	 * @param deleteControl
-	 * @param idCreator
+	 *
 	 */
 	
-	public ConfigPersonRelationForm(Control control, DeleteControl deleteControl, IdentificatorCreater idCreator) {
-		super(control, deleteControl, idCreator);
+	public ConfigPersonRelationForm(FormController formController, String name) {
+		super(formController, name);
 
 		createForm();
 		getSubmitButton().setOnAction(event -> setActionSubmitButton());
@@ -134,7 +133,7 @@ public class ConfigPersonRelationForm extends TableBasicForm implements ISegment
 	public GridPane createControlPane() {
 
 		personRoleLB = new Label("Person-Role: ");
-		personCB = new ComboBox<String>(getControl().getLists().getRoleObservable());
+		personCB = new ComboBox<String>(formController.getRoleObservable());
 		personCB.setVisibleRowCount(5);
 		personCB.getSelectionModel().selectedIndexProperty().addListener(roleListener);
 		personCB.setId("personCB");
@@ -164,10 +163,8 @@ public class ConfigPersonRelationForm extends TableBasicForm implements ISegment
 	@Override
 	public void addItem() {
 		String nameST = getNameTF().getText();
-		String roleST = getControl().getLists().getRoleObservable().get(roleIndex);
+		String roleST = formController.getRoleObservable().get(roleIndex);
 		String idName = idCreator.createCPRID() + "_" + nameST;
-
-		
 
 		CPRTable cpr = new CPRTable(idName, roleST);
 		tableTV.getItems().add(cpr);

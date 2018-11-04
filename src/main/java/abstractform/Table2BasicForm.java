@@ -1,5 +1,6 @@
 package abstractform;
 
+import Controllers.FormController;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
@@ -24,7 +25,7 @@ import model.IdentificatorCreater;
  *
  */
 
-public class Table2BasicForm extends Stage {
+public class Table2BasicForm extends BasicForm {
 	/**
 	 * Globální proměnné třídy
 	 */
@@ -44,20 +45,19 @@ public class Table2BasicForm extends Stage {
 
 	/**
 	 * Konstruktor třídy Zinicializuje globální proměnné třídy
-	 * 
-	 * @param control
-	 *            Control
-	 * @param deleteControl
-	 *            DeleteControl
-	 * @param idCreator
-	 *            IdentificatorCreater
+	 *
 	 */
-	public Table2BasicForm(Control control, DeleteControl deleteControl, IdentificatorCreater idCreator) {
-		this.control = control;
-		this.idCreator = idCreator;
+	public Table2BasicForm(FormController formController, String name) {
+
+		super(formController, name);
 		this.setScene(creatScene());
 		this.deleteControl = deleteControl;
-		this.formControl = new FormControl(control.getLists());
+
+	}
+
+
+	@Override
+	void createForm() {
 
 	}
 

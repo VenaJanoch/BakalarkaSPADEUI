@@ -1,5 +1,6 @@
 package forms;
 
+import Controllers.FormController;
 import abstractform.Table2BasicForm;
 import interfaces.ISegmentTableForm;
 import javafx.beans.value.ChangeListener;
@@ -60,16 +61,10 @@ public class RoleForm extends Table2BasicForm implements ISegmentTableForm {
 	/**
 	 * Konstruktor třídy Zinicializuje globální proměnné třídy Nastaví reakci
 	 * potvrzovacímu tlačítku
-	 * 
-	 * @param control
-	 *            Control
-	 * @param deleteControl
-	 *            DeleteControl
-	 * @param idCreator
-	 *            IdentificatorCreater
+	 *
 	 */
-	public RoleForm(Control control, DeleteControl deleteControl, IdentificatorCreater idCreator) {
-		super(control, deleteControl, idCreator);
+	public RoleForm(FormController formController, String name) {
+		super(formController, name);
 		this.control = control;
 		this.roleIndex = 0;
 		this.deleteControl = deleteControl;
@@ -157,7 +152,7 @@ public class RoleForm extends Table2BasicForm implements ISegmentTableForm {
 	public GridPane createControlPane() {
 
 		roleTypeLB = new Label("Type: ");
-		roleTypeCB = new ChoiceBox<>(getControl().getLists().getRoleTypeObservable());
+		roleTypeCB = new ChoiceBox<>(formController.getRoleTypeObservable());
 		roleTypeCB.getSelectionModel().selectedIndexProperty().addListener(roleListener);
 		roleTypeCB.setMaxWidth(Constans.checkComboBox);
 		descriptionLB = new Label("Description: ");
@@ -198,7 +193,7 @@ public class RoleForm extends Table2BasicForm implements ISegmentTableForm {
 		tableTV.getItems().add(role);
 		tableTV.sort();
 		getControl().getFillForms().fillRole(idName, formControl.fillTextMapper(descritpST),
-				formControl.fillTextMapper(nameST), roleIndex, Control.objF, false);
+				formControl.fillTextMapper(nameST), roleIndex, false);
 
 	}
 

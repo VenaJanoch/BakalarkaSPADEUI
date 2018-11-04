@@ -373,7 +373,7 @@ public class FillForms {
 	 * @param indexs
 	 *            indexi s criterii
 	 */
-	public static Milestone fillMilestone(String id, String name, ObservableList<Integer> indexs, ObjectFactory objF,
+	public static Milestone fillMilestone(String id, String name, ObservableList<Integer> indexs,
 			boolean test) {
 
 		Milestone milestone = (Milestone) objF.createMilestone();
@@ -529,7 +529,7 @@ public class FillForms {
 	 *            identifikace pro výběrové seznamy
 	 * @param isMain
 	 */
-	public static Branch fillBranch(String name, String id, boolean isMain, ObjectFactory objF, boolean test) {
+	public static Branch fillBranch(String name, String id, boolean isMain,  boolean test) {
 
 		Branch branch = (Branch) objF.createBranch();
 
@@ -669,7 +669,7 @@ public class FillForms {
 	 * @param name
 	 * @param type
 	 */
-	public static Role fillRole(String id, String description, String name, int type, ObjectFactory objF,
+	public static Role fillRole(String id, String description, String name, int type,
 			boolean test) {
 
 		Role role = objF.createRole();
@@ -765,8 +765,7 @@ public class FillForms {
 	 * @param classST
 	 * @param superST
 	 */
-	public static Severity fillSeverityType(String id, String nameST, String classST, String superST,
-			ObjectFactory objF, boolean test) {
+	public static Severity fillSeverityType(String id, String nameST, String classST, String superST, boolean test) {
 		Severity severity = objF.createSeverity();
 
 		severity.setName(formControl.fillTextMapper(nameST));
@@ -790,7 +789,7 @@ public class FillForms {
 	 * @param superST
 	 */
 	public static Relation fillRelationType(String id, String nameST, String classST, String superST,
-			ObjectFactory objF, boolean test) {
+			 boolean test) {
 
 		Relation relation = objF.createRelation();
 		relation.setName(formControl.fillTextMapper(nameST));
@@ -816,7 +815,7 @@ public class FillForms {
 	 * @param superST
 	 */
 	public static Resolution fillResolutionType(String id, String nameST, String classST, String superST,
-			ObjectFactory objF, boolean test) {
+			 boolean test) {
 
 		Resolution resolution = objF.createResolution();
 		resolution.setName(formControl.fillTextMapper(nameST));
@@ -839,8 +838,7 @@ public class FillForms {
 	 * @param classST
 	 * @param superST
 	 */
-	public static Status fillStatusType(String id, String nameST, String classST, String superST, ObjectFactory objF,
-			boolean test) {
+	public static Status fillStatusType(String id, String nameST, String classST, String superST, boolean test) {
 
 		Status status = objF.createStatus();
 		status.setName(formControl.fillTextMapper(nameST));
@@ -864,7 +862,7 @@ public class FillForms {
 	 * @param classST
 	 * @param superST
 	 */
-	public static Type fillType(String id, String nameST, String classST, String superST, ObjectFactory objF, boolean test) {
+	public static Type fillType(String id, String nameST, String classST, String superST, boolean test) {
 
 		Type type = objF.createType();
 		type.setName(formControl.fillTextMapper(nameST));

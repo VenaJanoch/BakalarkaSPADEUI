@@ -35,21 +35,16 @@ import services.SegmentType;
  * @author Václav Janoch
  *
  */
-public class ProjectForm extends Date2DescBasicForm {
+public class ProjectForm extends Date2DescBasicForm implements  ISegmentForm{
 
 	/**
 	 * Konstruktor třídy Nastaví velikost okna, reakci na uzavření okna
 	 * formuláře a zinicializuje globální proměnné tříd
-	 * 
-
+	 *
 	 *            Project
-	 * @param canvas
-	 *            DragAndDropCanvas
 	 */
-	public ProjectForm(DragAndDropCanvas canvas, FormController formController) {
-		super(formController);
-
-		setCanvas(canvas);
+	public ProjectForm(FormController formController, String name) {
+		super(formController, name);
 
 		getMainPanel().setMinSize(Constans.littleformWidth, Constans.littleformHeight);
 		getMainPanel().setMaxSize(Constans.littleformWidth, Constans.littleformHeight);

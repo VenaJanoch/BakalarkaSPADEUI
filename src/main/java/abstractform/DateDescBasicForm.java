@@ -2,8 +2,12 @@ package abstractform;
 
 import java.time.LocalDate;
 
+import Controllers.CanvasController;
 import Controllers.FormController;
 import graphics.CanvasItem;
+import graphics.DragAndDropCanvas;
+import graphics.DragAndDropItem;
+import graphics.DragAndDropItemPanel;
 import javafx.geometry.HPos;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
@@ -24,34 +28,21 @@ public class DateDescBasicForm extends DescriptionBasicForm {
 	/**
 	 * Konstruktor třídy
 	 */
-	public DateDescBasicForm(FormController formController, String name) {
+	public DateDescBasicForm(FormController formController, CanvasController canvasController, DragAndDropItemPanel dgItemPanel, String name) {
 
-		super(formController, name);
-		fillForm();
+		super(formController, canvasController, dgItemPanel, name);
+		createForm();
 	}
 
 	/**
 	 * Přetížený konstruktor třídy
 	 */
-	public DateDescBasicForm(FormController formController) {
-		super(formController);
-		fillForm();
+	public DateDescBasicForm(FormController formController, String name) {
+		super(formController, name);
+		createForm();
 	}
 
-	/**
-	 * Vytvoří vstupní pole pro Date a přidá ho do GridPane
-	 */
-	private void fillForm() {
 
-		dateLB = new Label("Created: ");
-		dateDP = new DatePicker();
-		dateDP.setId("DP1");
-
-		getInfoPart().add(dateLB, 0, 2);
-		getInfoPart().setHalignment(dateLB, HPos.RIGHT);
-		getInfoPart().add(dateDP, 1, 2);
-
-	}
 
 	
 	/** Getrs and Setrs **/

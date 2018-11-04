@@ -17,7 +17,7 @@ public class FormControl {
 	 *            text
 	 * @return vysledný řetězec
 	 */
-	public static String fillTextMapper(String text) {
+	public String fillTextMapper(String text) {
 
 		
 		if (text == null || text.equals("")) {
@@ -81,22 +81,22 @@ public class FormControl {
 
 	/**
 	 * Kontrola vyplněných hodnot Phase
-	 * 
-	 * @param phase
 	 * @param milestone
 	 * @param config
 	 */
-	public static void phaseControl(Phase phase, int milestone, int config) {
+	public int[] phaseControl(int milestone, int config) {
+
+		int[] indexs = new int[2];
 
 		if (config != 0) {
-			phase.setConfiguration(config - 1);
+			indexs[0] = config - 1;
 		} 
 	
 		if (milestone != 0) {
-			phase.setMilestoneIndex(milestone - 1);			
-			
+			indexs[1] = milestone - 1;
 		}
 
+		return indexs;
 	}
 
 	/**
@@ -124,11 +124,13 @@ public class FormControl {
 	 * Kontrola vyplněných hodnot Iteration
 	 * 
 	 **/
-	public static void iterationControl(Iteration iteration, int index) {
+	public Integer iterationControl(int index) {
 
 		if (index != 0) {
-			iteration.setConfiguration(index - 1);
+			return (index - 1);
 		}
+
+		return index;
 	}
 
 	/**

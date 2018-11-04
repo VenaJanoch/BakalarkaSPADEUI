@@ -1,5 +1,6 @@
 package forms;
 
+import Controllers.FormController;
 import SPADEPAC.WorkUnitSeverityClass;
 import SPADEPAC.WorkUnitSeveritySuperClass;
 import abstractform.TableClassBasicForm;
@@ -38,16 +39,10 @@ public class SeverityForm extends TableClassBasicForm implements ISegmentTableFo
 	/**
 	 * Konstruktor třídy Zinicializuje globální proměnné třídy Nastaví reakci na
 	 * potvrzovací tlačítko
-	 * 
-	 * @param control
-	 *            Control
-	 * @param deleteControl
-	 *            DeleteControl
-	 * @param idCreator
-	 *            IdentificatorCreater
+	 *
 	 */
-	public SeverityForm(Control control, DeleteControl deleteControl, IdentificatorCreater idCreator) {
-		super(control, deleteControl, idCreator);
+	public SeverityForm(FormController formController, String name) {
+		super(formController, name);
 
 		this.control = control;
 		this.setTitle("Edit Severities");
@@ -172,7 +167,7 @@ public class SeverityForm extends TableClassBasicForm implements ISegmentTableFo
 		getTableTV().getItems().add(table);
 		getTableTV().sort();
 		getControl().getFillForms().fillSeverityType(idName, formControl.fillTextMapper(nameST),
-				formControl.fillTextMapper(classST), superST, Control.objF, false);
+				formControl.fillTextMapper(classST), superST, false);
 
 	}
 

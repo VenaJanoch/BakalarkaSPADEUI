@@ -1,8 +1,7 @@
 package graphics;
 
 import Controllers.CanvasController;
-import Controllers.ListController;
-import SPADEPAC.WorkUnit;
+import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.geometry.Point2D;
 import javafx.scene.input.MouseButton;
@@ -30,10 +29,10 @@ public class WorkUnitLink extends NodeLink {
 	 * @param linkControl
 	 */
 	
-	public WorkUnitLink(int ID, LinkControl linkControl, ListController listController, CanvasController canvasController) {
+	public WorkUnitLink(int ID, LinkControl linkControl, CanvasController canvasController, ObservableList<String> relationTypeList) {
 		super(ID, linkControl);
 
-		relationCB = new LineComboBox(listController);
+		relationCB = new LineComboBox(relationTypeList);
 		polygon = new Polygon();
 
 		relationCB.setVisible(false);
@@ -111,4 +110,16 @@ public class WorkUnitLink extends NodeLink {
 
 	}
 
+	public void repaintEndPolygon(double x, double y){
+		setEndPoint(new Point2D(x, y), Constans.ArrowRadius);
+		polygon.getPoints().clear();
+		polygon.getPoints().addAll(linkController.calculateArrowPosition(endPoint));
+	}
+
+	public void repaintComboBox() {
+
+		Point2D center = linkController.calculateCenter(startPoint,endPoint);
+		relationCB.setTranslateX(center.getX());
+		relationCB.setTranslateY(center.getY());
+	}
 }

@@ -1,5 +1,6 @@
 package forms;
 
+import Controllers.FormController;
 import SPADEPAC.ObjectFactory;
 import SPADEPAC.WorkUnitPriorityClass;
 import SPADEPAC.WorkUnitPrioritySuperClass;
@@ -45,12 +46,9 @@ public class PriorityForm extends TableClassBasicForm implements ISegmentTableFo
 	 * Konstruktor třídy
 	 * Zinicializuje globální proměnné třídy
 	 * Nastaví reakci na potvrzovací tlačítko
-	 * @param control Control 
-	 * @param deleteControl DeleteControl
-	 * @param idCreator IdentificatorCreater
 	 */
-	public PriorityForm(Control control, DeleteControl deleteControl, IdentificatorCreater idCreator) {
-		super(control, deleteControl, idCreator);
+	public PriorityForm(FormController formController, String name) {
+		super(formController, name);
 
 		this.control = control;
 		this.setTitle("Edit Priority");

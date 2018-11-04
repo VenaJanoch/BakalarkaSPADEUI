@@ -1,39 +1,39 @@
 package Controllers;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import SPADEPAC.Link;
-import graphics.CanvasItem;
 import graphics.ChangeArtifactLink;
 import graphics.NodeLink;
 import graphics.WorkUnitLink;
 import javafx.geometry.Point2D;
+import model.IdentificatorCreater;
 import services.*;
 
 public class LinkControl {
 
 	/** Globální proměnné třídy */
 
-	private Control control;
 	private SegmentLists lists;
 	private int id;
+
+	private ChangeArtifactLink changeArtifactLink;
+	private WorkUnitLink workUnitLink;
 
 	private int startSegmentId = -1;
 	private int endSegmentId = -1;
 
-	private IdentificatorController identificatorController;
+	private IdentificatorCreater identificatorCreater;
 	private FormController formController;
-	private ListController listController;
+	private SegmentLists segmentLists;
 
 	/**
 	 * Konstruktor třídy Zinicializuje globální proměnné třídy
 	 *
 	 */
-	public LinkControl(FormController formController, IdentificatorController identificatorController, ListController listController) {
-		this.setArrows(new ArrayList<>());
-		this.listController = listController;
-
+	public LinkControl(FormController formController, IdentificatorCreater identificatorCreater, SegmentLists segmentLists) {
+		this.segmentLists = segmentLists;
+		this.identificatorCreater = identificatorCreater;
+		this.formController = formController;
 	}
 	
 
@@ -44,19 +44,27 @@ public class LinkControl {
 	 * @param isSave
 	 *            informace o uložení a ochrana před vytvořením dvojího spojení
 	 */
-	public void ArrowManipulation(boolean isSave, boolean startArrow, CanvasController canvasController, int segmentIdAct, double x, double y, double width, double height) {
+	public void ArrowManipulation(boolean isSave, boolean startArrow, CanvasController canvasController, int segmentIdAct, SegmentType segmentType,
+								  double x, double y, double width, double height) {
 
 		if (!startArrow) {
 			try {
 				if (isFormfillControl(segmentIdAct)) {
-					createLink(canvasController, segmentIdAct, x, y, width, height);
-					// Na vic nevim kam s tim
-					//WorkUnit left = control.getLists().getWorkUnitList().get(getStartIDs()[1]);
-					//WorkUnit right = control.getLists().getWorkUnitList().get(getEndIDs()[1]);
-					//relationCB.setLeftUnit(left);
-					//relationCB.setRightUnit(right);
-					//	relationCB.setStartIDs(startIDs);
-					//	relationCB.setEndIDs(endIDs);
+					if(segmentControl(segmentIdAct, segmentType)){
+						changeArtifactLink = createChangeArtifactLink(canvasController, segmentIdAct, x, y, width, height);
+						// Na vic nevim kam s tim
+						//WorkUnit left = control.getLists().getWorkUnitList().get(getStartIDs()[1]);
+						//WorkUnit right = control.getLists().getWorkUnitList().get(getEndIDs()[1]);
+						//relationCB.setLeftUnit(left);
+						//relationCB.setRightUnit(right);
+						//	relationCB.setStartIDs(startIDs);
+						//	relationCB.setEndIDs(endIDs);
+
+					}else if(segmentType == SegmentType.WorkUnit){
+
+						workUnitLink = createWorkUnitLink(canvasController, segmentIdAct, x, y, width, height);
+					}
+
 				} else {
 					Alerts.showNoWorkUnit();
 				}
@@ -68,19 +76,26 @@ public class LinkControl {
 
 		} else {
 			try {
-				if (segmentControl(segmentIdAct)) {
-
-					link.setEndPoint(new Point2D(x, y + (height / 2)));
+				if (segmentControl(segmentIdAct, segmentType)) {
+					endSegmentId = segmentIdAct;
+					changeArtifactLink.setEndPoint(new Point2D(x, y + (height / 2)));
 					canvasController.setStartArrow(false);
-
 					if (!isSave) {
 						formController.createChangeArtifactRelation(startSegmentId, endSegmentId);
 					}
-
+				}else if (segmentWorkUnitControl(segmentIdAct)) {
 					endSegmentId = segmentIdAct;
-				}
+					workUnitLink.setArrowAndBox(
+							new Point2D(x, y + (height / 2)));
+					canvasController.setStartArrow(false);
+					if (!isSave) {
+						formController.createWorkUnitRelation(startSegmentId, endSegmentId);
 
-			} catch (Exception e) {
+						setWorkUnitRelation(workUnitLink);
+					}
+
+			}
+			}catch (Exception e) {
 				Alerts.showNoWorkUnit();
 			}
 
@@ -88,23 +103,36 @@ public class LinkControl {
 
 	}
 
-	private void createLink(CanvasController canvasController, int startSegmentIdAct, double x, double y, double width, double height) {
+	private WorkUnitLink createWorkUnitLink(CanvasController canvasController, int segmentIdAct, double x, double y, double width, double height) {
 
-		int id = identificatorController.createLineID();
+		id = identificatorCreater.createLineID();
+		WorkUnitLink workUnitLink = new WorkUnitLink(id, this, canvasController, segmentLists.getRelationTypeObservable());
+		canvasController.addLinkToCanvas(workUnitLink);
+
+		segmentLists.addLinkToList(workUnitLink);
+
+		workUnitLink.setStartPoint(new Point2D(x + (width), y + (height / 2)));
+
+		canvasController.setStartArrow(true);
+		startSegmentId = segmentIdAct;
+
+		return  workUnitLink;
+	}
+
+	private ChangeArtifactLink createChangeArtifactLink(CanvasController canvasController, int startSegmentIdAct, double x, double y, double width, double height) {
+
+		int id = identificatorCreater.createLineID();
 		ChangeArtifactLink link = new ChangeArtifactLink(id,this);
 
-		//sortSegmentConf(item);
-		//item.getCanvas().getChildren().add(link);
-
 		canvasController.addLinkToCanvas(link);
-		listController.addLinkToList(link);
+		segmentLists.addLinkToList(link);
 
 		link.setStartPoint(new Point2D(x + (width), y + (height / 2)));
 
-		//item.registerStartLink(id);
-
 		canvasController.setStartArrow(true);
 		startSegmentId = startSegmentIdAct;
+
+		return link;
 
 	}
 
@@ -121,17 +149,15 @@ public class LinkControl {
 
 	/**
 	 * Rozhodne o zvoleném elementu přidá jeho IDs do Linku
-	 * 
-	 * @param item
-	 *            CanvasItem
+	 *
 	 * @return rozhodnuti o pridani prvku
 	 */
-	private boolean segmentControl(int segmentIdAct) {
+	private boolean segmentControl(int segmentIdAct, SegmentType segmentType) {
 		if (isFormfillControl(segmentIdAct)) {
 
-			if (startSegmentId == -1 && item.getType() == SegmentType.Change) {
+			if (startSegmentId == -1 && segmentType == SegmentType.Change) {
 				return true;
-			} else if (link.getEndIDs() == null && item.getType() == SegmentType.Artifact) {
+			} else if (endSegmentId == -1 && segmentType == SegmentType.Artifact) {
 				return true;
 			}
 		} else {
@@ -140,85 +166,19 @@ public class LinkControl {
 
 		return false;
 	}
-
-	/**
-	 * Rozhodne o propojení Work Unit a Work Unit Vytvoří instanci třídy
-	 * WorkUnitLink a přídá ji do seznamu. Rozhodne o počátečním a koncovém
-	 * prvku
-	 * 
-	 * @param item
-	 *            instance třídy CanvasItem
-	 * @param isSave
-	 *            informace o uložení a ochrana před vytvořením dvojího spojení
-	 */
-	public void ArrowManipulationWorkUnit(CanvasItem item, boolean isSave) {
-
-		if (!item.getDgCanvas().isStartArrow()) {
-			try {
-
-				if (control.getLists().getWorkUnitList().get(item.getIDs()[1]) != null) {
-
-					id = idCreator.createLineID();
-					wLink = new WorkUnitLink(id, control, item.getCanvas(), this);
-
-					wLink.setStartIDs(item.getIDs());
-					item.getCanvas().getChildren().add(wLink);
-
-					getArrows().add(id, wLink);
-
-					wLink.setStartPoint(new Point2D(item.getTranslateX() + (item.getWidth()),
-							item.getTranslateY() + (item.getHeight() / 2)));
-
-					item.registerStartLink(id);
-
-					item.getDgCanvas().setStartArrow(true);
-				} else {
-					Alerts.showNoWorkUnit();
-				}
-
-			} catch (Exception e) {
-				e.printStackTrace();
-				Alerts.showNoWorkUnit();
-			}
-
-		} else {
-
-			try {
-				if (segmentWorkUnitControl(item)) {
-
-					wLink.setEndIDs(item.getIDs());
-					wLink.setArrowAndBox(
-							new Point2D(item.getTranslateX(), item.getTranslateY() + (item.getHeight() / 2)));
-					item.registerEndLink(id);
-					item.getDgCanvas().setStartArrow(false);
-
-					if (!isSave) {
-						setWorkUnitRelation(wLink);
-					}
-
-				}
-
-			} catch (Exception e) {
-				Alerts.showNoWorkUnit();
-			}
-
-		}
-
-	}
-
 	/**
 	 * Kontrola o vyplnění formuláře daného Work Unit
 	 **/
 
-	private boolean segmentWorkUnitControl(CanvasItem item) {
-		if (lists.getWorkUnitList().get(item.getIDs()[1]) != null) {
+	private boolean segmentWorkUnitControl(int segmentId) {
+		//if (lists.getWorkUnitList().get(item.getIDs()[1]) != null) {
 
-			if (item.getIDs()[1] != wLink.getStartIDs()[1]) {
+			if (startSegmentId != segmentId) {
 				return true;
 			}
-		} else {
-			Alerts.showNoWorkUnit();
-		}
+		//} else {
+		//	Alerts.showNoWorkUnit();
+		//}
 
 		return false;
 	}
@@ -229,8 +189,7 @@ public class LinkControl {
 
 	public void deleteArrow(int arrowId, int changeID, int artifactID) {
 
-		arrows.remove(arrowId);
-		arrows.add(arrowId, null);
+		segmentLists.removeArrow(arrowId);
 
 		lists.getArtifactList().get(artifactID).getChangeIndex().remove(0);
 		lists.getChangeList().get(changeID).getArtifactIndex().remove(0);
@@ -242,10 +201,8 @@ public class LinkControl {
 	 */
 	public void deleteWorkUnitArrow(LinkController linkController) {
 
-		arrows.remove(linkController.getLinkId());
-		arrows.add(linkController.getLinkId(), null);
-
-		listController.removeWorkUnitRelation(linkController.getStartItemId(), linkController.getEndItemId());
+		segmentLists.removeArrow(linkController.getLinkId());
+		segmentLists.removeWorkUnitRelation(linkController.getStartItemId(), linkController.getEndItemId());
 	}
 
 	/**
@@ -268,112 +225,45 @@ public class LinkControl {
 	 **/
 	public void setWorkUnitRelation(NodeLink link) {
 
-		int leftIndex = link.getStartIDs()[1];
-
-		int rightIndex = link.getEndIDs()[1];
-		Link linkP = objF.createLink();
-
-		linkP.setType("WorkUnit");
-		linkP.setLeftUnitIndex(leftIndex);
-		linkP.setRightUnitIndex(rightIndex);
-
-		lists.getLinksList().add(linkP);
-
-		lists.getWorkUnitList().get(leftIndex).setRightUnitIndex(rightIndex);
-		;
-		lists.getWorkUnitList().get(rightIndex).setLeftUnitIndex(leftIndex);
-
-	}
-
-	/**
-	 * Rozhodnutí typu prvku pro spojení
-
-	private void sortSegmentConf(CanvasItem item) {
-
-		if (item.getType() == SegmentType.Change) {
-			link.setStartIDs(item.getIDs());
-		} else {
-			link.setEndIDs(item.getIDs());
-		}
-
-	}
-	 **/
-	/**
-	 * Geters and Setrs
-	 **/
-	public ArrayList<NodeLink> getArrows() {
-		return arrows;
-	}
-
-	public void setArrows(ArrayList<NodeLink> arrows) {
-		this.arrows = arrows;
 	}
 
 	public void deleteLinks(List<Integer> mStartLinkIds, List<Integer> mEndLinkIds) {
 
 		for (int i = 0; i < mStartLinkIds.size(); i++) {
-			if (arrows.get(mStartLinkIds.get(i)) != null) {
-				arrows.get(mStartLinkIds.get(i)).deleteArrow();
+			segmentLists.removeArrow(mStartLinkIds.get(i));
 			}
-		}
 
 		for (int i = 0; i < mEndLinkIds.size(); i++) {
-			if (arrows.get(mEndLinkIds.get(i)) != null) {
-				arrows.get(mEndLinkIds.get(i)).deleteArrow();
-			}
+			segmentLists.removeArrow(mEndLinkIds.get(i));
 		}
-
 	}
 
 	public void repaintArrow(SegmentType segmentType, List<Integer> mStartLinkIds, List<Integer> mEndLinkIds,
 							 double translateX, double translateY, double width, double height) {
 
+		double newWidth = translateX + width;
+		double newHeight = translateY + (height / 2);
 
 		for (int i = 0; i < mStartLinkIds.size(); i++) {
-			if (arrows.get(mStartLinkIds.get(i)) != null) {
 
-				int arrowIndex = mStartLinkIds.get(i);
+			int index = mStartLinkIds.get(i);
+			segmentLists.repaintArrowStartPoint(index, newWidth, newHeight);
 
-				double newWidth = translateX + width;
-				double newHeight = translateY + (height / 2);
-
-				NodeLink link = arrows.get(arrowIndex);
-
-				link.setStartPoint(new Point2D(newWidth, newHeight));
-
-				if (segmentType == SegmentType.WorkUnit) {
-					Point2D center = control.calculateCenter(link.startPoint, link.endPoint);
-					link.relationCB.setTranslateX(center.getX());
-					link.relationCB.setTranslateY(center.getY());
-				}
+			if (segmentType == SegmentType.WorkUnit) {
+				segmentLists.repaintWorkUnitComboBox(index);
 			}
 		}
 
 		for (int i = 0; i < mEndLinkIds.size(); i++) {
-			if (arrows.get(mEndLinkIds.get(i)) != null) {
-				NodeLink link = arrows.get(mEndLinkIds.get(i));
 
-				link.setEndPoint(new Point2D(translateX, translateY + (height / 2)));
+			int index = mStartLinkIds.get(i);
+			segmentLists.repaintArrowEndPoint(index, translateX, translateY + (height / 2));
 
-				if (segmentType == SegmentType.WorkUnit) {
-					link.setEndPoint(new Point2D(translateX, translateY + (height / 2)),
-							Constans.ArrowRadius);
-					Point2D center = control.calculateCenter(link.startPoint, link.endPoint);
-					link.relationCB.setTranslateX(center.getX());
-					link.relationCB.setTranslateY(center.getY());
-					link.polygon.getPoints().clear();
-					link.polygon.getPoints().addAll(control.calculateArrowPosition(link.endPoint));
-				}
-
+			if (segmentType == SegmentType.WorkUnit) {
+					segmentLists.repaintWorkUnitComboBox(index);
+					segmentLists.repaintWorkUnitRelationEndPoint(index, translateX, translateY + (height / 2));
 			}
+
 		}
-
 	}
-
-	public void setRelationBetweenWorkUnits(int leftUnitId, int RightUnitId){
-
-		// todo zavolat metodu z modelu pro pridani relace
-
-	}
-
 }

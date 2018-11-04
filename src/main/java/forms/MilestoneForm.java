@@ -1,5 +1,6 @@
 package forms;
 
+import Controllers.FormController;
 import org.controlsfx.control.CheckComboBox;
 
 import abstractform.Table2BasicForm;
@@ -54,18 +55,13 @@ public class MilestoneForm extends Table2BasicForm implements ISegmentTableForm 
 
 	/**
 	 * Konstruktor třídy Zinicializuje globální proměnné třídy
-	 * 
-	 * @param control
-	 *            Control
-	 * @param deleteControl
-	 *            DeleteControl
-	 * @param idCreator
-	 *            IdentificatorCreater
+	 *
+	 *
 	 */
-	public MilestoneForm(Control control, DeleteControl deleteControl, IdentificatorCreater idCreator) {
+	public MilestoneForm(FormController formController, String name) {
 
-		super(control, deleteControl, idCreator);
-		this.setTitle("Edit Milestone");
+		super(formController, name);
+		//this.setTitle("Edit Milestone");
 		createForm();
 		getSubmitBT().setOnAction(event -> setActionSubmitButton());
 
@@ -151,7 +147,7 @@ public class MilestoneForm extends Table2BasicForm implements ISegmentTableForm 
 	public GridPane createControlPane() {
 
 		criteriaLB = new Label("Criteria: ");
-		criteriaCB = new CheckComboBox<String>(getControl().getLists().getCriterionObservable());
+		criteriaCB = new CheckComboBox<String>(formController.getCriterionObservable());
 		criteriaCB.setMaxWidth(Constans.checkComboBox);
 		criteriaCB.getCheckModel().getCheckedItems().addListener(new ListChangeListener<String>() {
 
@@ -184,7 +180,7 @@ public class MilestoneForm extends Table2BasicForm implements ISegmentTableForm 
 		MilestoneTable milestone = new MilestoneTable(idName, criterion);
 		tableTV.getItems().add(milestone);
 		tableTV.sort();
-		getControl().getFillForms().fillMilestone(idName, formControl.fillTextMapper(nameST), criterionIndex, Control.objF, false);
+		getControl().getFillForms().fillMilestone(idName, formControl.fillTextMapper(nameST), criterionIndex, false);
 		criteriaCB.getCheckModel().clearChecks();
 
 	}

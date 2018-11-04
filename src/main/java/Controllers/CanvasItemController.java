@@ -16,12 +16,8 @@ import java.util.Map;
 
 public class CanvasItemController {
 
-
-//    private Control control;
-//    private FillFormsXML fillFormsXML;
-//    private FillForms fillForms;
-//    private FillCopyForms fillCopy;
     private ManipulationController manipulation;
+
 
     private Map<Integer, List<Integer>> startLinkIdMap;
     private Map<Integer, List<Integer>> endLinkIdMap;
@@ -38,26 +34,22 @@ public class CanvasItemController {
     private FormController formController;
 
 
-    public CanvasItemController(LinkControl linkControl, FormController formController){
+    public CanvasItemController(LinkControl linkControl, FormController formController, ManipulationController manipulationController) {
 
-       // this.setFillForms(control.getFillForms());
-       // this.setFillFormsXML(control.getFillFormsXML());
-        //      this.fillCopy = control.getFillCopy();
-    //    this.manipulation = control.getManipulation();
+        this.manipulation = manipulationController;
         this.linkControl = linkControl;
         this.startLinkIdMap = new HashMap<>();
         this.endLinkIdMap = new HashMap<>();
         this.formController = formController;
     }
 
-    public CanvasItem createCanvasItem(SegmentType type, String segmentIdentificator, int formIndex, String name, double x, double y, CanvasController canvasController ){
+    public CanvasItem createCanvasItem(SegmentType type, String segmentIdentificator, int formIndex, String name, double x, double y, CanvasController canvasController) {
 
         startLinkIdMap.put(formIndex, new ArrayList<>());
         endLinkIdMap.put(formIndex, new ArrayList<>());
 
-        CanvasItem item = new CanvasItem(type, segmentIdentificator,formIndex, name,0, x, y
-                                        ,canvasController, this);
-
+        CanvasItem item = new CanvasItem(type, segmentIdentificator, formIndex, name, 0, x, y, canvasController, this);
+        formController.addCanvasItemToList(formIndex, item);
         return item;
     }
 
@@ -95,14 +87,8 @@ public class CanvasItemController {
 
             if (canvasController.isArrow()) {
 
-                if (type == SegmentType.WorkUnit) {
-
-                    linkControl.ArrowManipulationWorkUnit(item, false);
-                } else if (type == SegmentType.Artifact || type == SegmentType.Change) {
-
-                    linkControl.ArrowManipulation(false, false);
-                }
-
+                linkControl.ArrowManipulation(false, canvasController.isStartArrow(), canvasController, item.getFormIdentificator(), type, item.getTranslateX(),
+                        item.getOrgTranslateY(), item.getWidth(), item.getHeight());
             } else {
 
                 if (t.getClickCount() == 2) {
@@ -124,37 +110,35 @@ public class CanvasItemController {
 
     }
 
-   /** public void connectItemWithForm(int isCreated){
+    /** public void connectItemWithForm(int isCreated){
 
-        if (isCreated == 0) {
-            IDs = control.createForm(this, rootForm);
-        } else if (isCreated == 1) {
-            IDs = control.createFormFromXML(this, rootForm);
-        } else if (isCreated == 2) {
-            IDs = manipulation.createCopyForm(this, rootForm);
-        } else {
-            IDs = manipulation.createCopyWorkUnitForm(this, rootForm);
-        }
-        idForm = IDs[0];
-        ID = type.name() + "_" + String.format("%03d", IDs[1]);
-        if (IDs[0] != 0) {
-            String title = control.getForms().get(IDs[0]).getTitle();
-            control.getForms().get(IDs[0]).getFormName().setText(title + " " + ID);
+     if (isCreated == 0) {
+     IDs = control.createForm(this, rootForm);
+     } else if (isCreated == 1) {
+     IDs = control.createFormFromXML(this, rootForm);
+     } else if (isCreated == 2) {
+     IDs = manipulation.createCopyForm(this, rootForm);
+     } else {
+     IDs = manipulation.createCopyWorkUnitForm(this, rootForm);
+     }
+     idForm = IDs[0];
+     ID = type.name() + "_" + String.format("%03d", IDs[1]);
+     if (IDs[0] != 0) {
+     String title = control.getForms().get(IDs[0]).getTitle();
+     control.getForms().get(IDs[0]).getFormName().setText(title + " " + ID);
 
-        }
+     }
 
 
-    }**/
+     }**/
 
 
     /**
      * Slouží ke kontorle pozice prvku na plátně, při přejetí hranic plátna je
      * prvek vrácen na okraj plátna
      *
-     * @param x
-     *            souřadnice prvku
-     * @param y
-     *            souřadnice prvku
+     * @param x souřadnice prvku
+     * @param y souřadnice prvku
      * @return Point2D zkontrolovaná poloha
      */
     public Point2D canvasItemPositionControl(double x, double y) {
@@ -193,7 +177,7 @@ public class CanvasItemController {
     /**
      * Překreslí spojnici mezi prvky po přesunu počátečního prvku
      */
-    public void repaintArrows(SegmentType segmentType,int itemIdentificator, double translateX, double translateY, double width, double height) {
+    public void repaintArrows(SegmentType segmentType, int itemIdentificator, double translateX, double translateY, double width, double height) {
         linkControl.repaintArrow(segmentType, startLinkIdMap.get(itemIdentificator), endLinkIdMap.get(itemIdentificator), translateX, translateY, width, height);
 
     }
@@ -203,6 +187,8 @@ public class CanvasItemController {
         chooseCanvasItem.setVisible(false);
         int id = chooseCanvasItem.getFormIdentificator();
         linkControl.deleteLinks(startLinkIdMap.get(id), endLinkIdMap.get(id));
+        formController.removeCanvasItemFromList(id);
+
     }
 
     public SegmentType getSegmentType(CanvasItem chooseCanvasItem) {

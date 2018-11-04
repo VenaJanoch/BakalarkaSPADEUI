@@ -24,9 +24,12 @@ import SPADEPAC.WorkUnit;
 import forms.ConfigPersonRelationForm;
 import forms.MilestoneForm;
 import forms.RoleForm;
+import graphics.ChangeArtifactLink;
 import graphics.NodeLink;
+import graphics.WorkUnitLink;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.geometry.Point2D;
 
 public class SegmentLists {
 	/** Globální proměnné třídy **/
@@ -269,6 +272,64 @@ public class SegmentLists {
 	public ArrayList<NodeLink> getArrows() {
 		return arrows;
 	}
+
+
+
+	public void removeWorkUnitRelation(int startItemId, int endItemId) {
+
+		workUnitList.get(startItemId).setRelationIndex(null);
+		workUnitList.get(endItemId).setRelationIndex(null);
+
+	}
+
+	public void addLinkToList(WorkUnitLink wuLink){
+		getArrows().add(wuLink);
+
+	}
+
+	public void addLinkToList(ChangeArtifactLink caLink){
+		getArrows().add(caLink);
+
+	}
+
+	public void removeArrow(int linkId) {
+
+		if (getArrows().get(linkId) != null) {
+			getArrows().remove(linkId);
+			getArrows().add(linkId, null);
+		}
+
+	}
+
+	public void repaintArrowStartPoint(int linkId, double newWidth, double newHeight) {
+
+		NodeLink link = getArrows().get(linkId);
+		if (link != null) {
+			link.setStartPoint(new Point2D(newWidth, newHeight));
+		}
+	}
+
+	public void repaintArrowEndPoint(int linkId, double newWidth, double newHeight) {
+
+		NodeLink link = getArrows().get(linkId);
+		if (link != null) {
+			link.setEndPoint(new Point2D(newWidth, newHeight));
+		}
+	}
+
+	public void repaintWorkUnitComboBox(int linkId) {
+
+		WorkUnitLink link = (WorkUnitLink)getArrows().get(linkId);
+		link.repaintComboBox();
+	}
+
+	public void repaintWorkUnitRelationEndPoint(int linkId, double x, double y) {
+
+		WorkUnitLink link = (WorkUnitLink)getArrows().get(linkId);
+		link.repaintEndPolygon(x, y);
+
+	}
+
 
 	/** Getrs and Setrs **/
 
@@ -586,6 +647,4 @@ public class SegmentLists {
 		this.workUnitFormIndex = workUnitFormIndex;
 	}
 
-    public void removeWorkUnitRelation(int startItemId, int endItemId) {
-    }
 }
