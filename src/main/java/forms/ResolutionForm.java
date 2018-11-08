@@ -163,7 +163,7 @@ public class ResolutionForm extends TableClassBasicForm implements ISegmentTable
 
 		getTableTV().getItems().add(table);
 		getTableTV().sort();
-		getControl().getFillForms().fillResolutionType(idName, formControl.fillTextMapper(nameST), formControl.fillTextMapper(classST), superST, false);
+	//	getControl().getFillForms().fillResolutionType(idName, formControl.fillTextMapper(nameST), formControl.fillTextMapper(classST), superST, false);
 
 	}
 

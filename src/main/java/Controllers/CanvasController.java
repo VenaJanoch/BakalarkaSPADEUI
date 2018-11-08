@@ -10,6 +10,8 @@ import javafx.scene.shape.Polygon;
 import services.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class CanvasController {
@@ -27,7 +29,7 @@ public class CanvasController {
 
     private CanvasType canvasType;
 
-    private ArrayList<Integer> listOfItemOnCanvas = new ArrayList();
+    private Map<Integer, CanvasItem> listOfItemOnCanvas = new HashMap<>();
 
     public CanvasController(CanvasType canvasType, ApplicationController applicationController) { // todo je potreba canvasType? Smazat
 
@@ -36,7 +38,7 @@ public class CanvasController {
         this.canvas.setOnKeyPressed(event -> pressESCAction());
         this.canvasItemController = applicationController.getCanvasItemController();
         this.manipulationController = applicationController.getManipulationController();
-        this.itemContexMenu = new ItemContexMenu(manipulationController,this,canvas);
+        this.itemContexMenu = new ItemContexMenu(manipulationController,this,canvasItemController);
         this.formController = applicationController.getFormController();
     }
 
@@ -73,23 +75,34 @@ public class CanvasController {
     public CanvasItem addCanvasItemFromPanel(String segment, double x, double y) {
 
         SegmentType type = Control.findSegmentType(segment);
-        int formIndex = getFormIndexFromNewForm(type);
+
+        int formIndex = getFormIndexFromNewForm(type, canvasType);
+        String segmentId = createSegmentId(type, formIndex);
         // todo SegmentIdentificator
-        CanvasItem item = canvasItemController.createCanvasItem(type,"d",formIndex,"New", x, y, this);
+        CanvasItem item = canvasItemController.createCanvasItem(type,segmentId,formIndex,"New", x, y, this);
         canvas.getCanvas().getChildren().add(item);
-        listOfItemOnCanvas.add(formIndex);
+        listOfItemOnCanvas.put(formIndex, item);
         return item;
 
     }
 
-    private int getFormIndexFromNewForm(SegmentType segmentType){
+    private String createSegmentId(SegmentType type, int formIndex) {
 
-        return formController.createNewForm(segmentType);
+        int id = formController.getSegmetIdFromFromId(type,formIndex);
+        String number = String.format("%03d", id);
+
+        return type.name() +  "_" +  number;
+
+    }
+
+    private int getFormIndexFromNewForm(SegmentType segmentType, CanvasType  canvasType){
+
+        return formController.createNewForm(segmentType, canvasType);
     }
 
     public void addCopyCanvasItemToCanvas(SegmentType segmentType, double x, double y) {
 
-        int formIndex = getFormIndexFromNewForm(segmentType);
+        int formIndex = getFormIndexFromNewForm(segmentType, canvasType);
         CanvasItem item = canvasItemController.createCanvasItem(segmentType,"d",formIndex,"New", x, y, this);
         canvas.getCanvas().getChildren().add(item);
     }
@@ -212,7 +225,7 @@ public class CanvasController {
 
     /** Getrs and Setrs **/
 
-    public ArrayList<Integer> getListOfItemOnCanvas() {
+    public Map<Integer, CanvasItem> getListOfItemOnCanvas() {
         return listOfItemOnCanvas;
     }
 

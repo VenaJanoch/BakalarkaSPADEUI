@@ -23,11 +23,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
-import services.Alerts;
-import services.ClassSwitcher;
-import services.Constans;
-import services.Control;
-import services.DeleteControl;
+import services.*;
 import model.IdentificatorCreater;
 import tables.RoleTable;
 
@@ -91,7 +87,7 @@ public class RoleForm extends Table2BasicForm implements ISegmentTableForm {
 		getInternalPanel().setCenter(getTable());
 		getInternalPanel().setBottom(createControlPane());
 
-		roleTForm = new RoleTypeForm(control, deleteControl, idCreator);
+		roleTForm = new RoleTypeForm(formController,"RoleType"); // Todo udelat segment type pro role type
 		getMainPanel().setCenter(getInternalPanel());
 		getMainPanel().setRight(roleTForm.getMainPanel());
 
@@ -192,8 +188,8 @@ public class RoleForm extends Table2BasicForm implements ISegmentTableForm {
 		RoleTable role = new RoleTable(idName, descritpST, typeST);
 		tableTV.getItems().add(role);
 		tableTV.sort();
-		getControl().getFillForms().fillRole(idName, formControl.fillTextMapper(descritpST),
-				formControl.fillTextMapper(nameST), roleIndex, false);
+		//getControl().getFillForms().fillRole(idName, formControl.fillTextMapper(descritpST),
+		//		formControl.fillTextMapper(nameST), roleIndex, false);
 
 	}
 

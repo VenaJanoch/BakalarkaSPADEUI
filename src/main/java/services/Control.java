@@ -28,10 +28,6 @@ public class Control {
 
 	private ItemContexMenu contexMenu;
 
-	private int indexForm;
-
-	private DragAndDropCanvas canvas;
-
 	private ClassSwitcher classSwitcher;
 
 	private LinkControl linkControl;
@@ -55,24 +51,16 @@ public class Control {
 
 		classSwitcher = new ClassSwitcher(this);
 
-		setForms(new ArrayList<>());
-
-		ProjectForm form111 = new ProjectForm();
-		getForms().add(0, form111);
-
-
 		formControl = new FormControl(); // Prendat jinam nemuze byt v modelu
 
 		idCreater = new IdentificatorCreater();
-		linkControl = new LinkControl(this, lists, objF, idCreater);
-		deleteControl = new DeleteControl(this, lists, project);
 
-		fillForms = new FillForms(this, lists, project, forms, objF, idCreater, deleteControl, formControl);
-		fillFormsXML = new FillFormsXML(this, lists, project, forms, fillCopy, idCreater, linkControl, deleteControl,
-				formControl);
-		fillCopy = new FillCopyForms(this, getLists(), project, forms, objF, idCreater, deleteControl, formControl);
-		manipulation = new ManipulationController(this, fillCopy, project, lists, deleteControl, forms);
-		contexMenu = new ItemContexMenu(this, manipulation, canvas);
+		//fillForms = new FillForms(this, lists, project, forms, objF, idCreater, deleteControl, formControl);
+		//fillFormsXML = new FillFormsXML(this, lists, project, forms, fillCopy, idCreater, linkControl, deleteControl,
+	//			formControl);
+	//	fillCopy = new FillCopyForms(this, getLists(), project, forms, objF, idCreater, deleteControl, formControl);
+	//	manipulation = new ManipulationController(this, fillCopy, project, lists, deleteControl, forms);
+	//	contexMenu = new ItemContexMenu(this, manipulation, canvas);
 
 	}
 
@@ -84,25 +72,7 @@ public class Control {
 
 
 
-	/**
-	 * Vymazání seznamů a znovu inicializování proměnných
-	 */
-	public void restartControl() {
 
-	//	procesGener = new ProcessGenerator();
-		objF = new ObjectFactory();
-
-		idCreater = new IdentificatorCreater();
-
-		forms.clear();
-
-		canvas.restart();
-
-	//	configureFileChooser();
-
-	//	firstSave = true;
-
-	}
 
 
 	/**
@@ -137,7 +107,7 @@ public class Control {
 	 *            kořenový formulář
 	 * @return identifikátory objektu pro CanvasItem
 	 */
-	public int[] createFormFromXML(CanvasItem item, BasicForm form) {
+	/*public int[] createFormFromXML(CanvasItem item, BasicForm form) {
 		SegmentType sType = item.getType();
 
 		int[] IDs = new int[4];
@@ -177,137 +147,11 @@ public class Control {
 		default:
 			return IDs;
 		}
-	}
+	}*/
 
 
 
 	/** Getrs and Setrs ***/
-
-
-	public ArrayList<BasicForm> getForms() {
-		return forms;
-	}
-
-	public void setForms(ArrayList<BasicForm> forms) {
-		this.forms = forms;
-	}
-
-	public DragAndDropCanvas getCanvas() {
-		return canvas;
-	}
-
-	public void setCanvas(DragAndDropCanvas canvas) {
-		this.canvas = canvas;
-	}
-
-	public FillFormsXML getFillFormsXML() {
-		return fillFormsXML;
-	}
-
-	public void setFillFormsXML(FillFormsXML fillFormsXML) {
-		this.fillFormsXML = fillFormsXML;
-	}
-
-	public FillForms getFillForms() {
-		return fillForms;
-	}
-
-	public void setFillForms(FillForms fillForms) {
-		this.fillForms = fillForms;
-	}
-
-	public MilestoneForm getMilestoneForm() {
-		return milestoneForm;
-	}
-
-	public void setMilestoneForm(MilestoneForm milestoneForm) {
-		this.milestoneForm = milestoneForm;
-	}
-
-	public ConfigPersonRelationForm getCPRForm() {
-		return CPRForm;
-	}
-
-	public void setCPRForm(ConfigPersonRelationForm cPRForm) {
-		CPRForm = cPRForm;
-	}
-
-	public RoleForm getRoleForm() {
-		return roleForm;
-	}
-
-	public PriorityForm getPriorityForm() {
-		return priorityForm;
-	}
-
-	public SeverityForm getSeverityForm() {
-		return severityForm;
-	}
-
-	public RelationForm getRelationForm() {
-		return relationForm;
-	}
-
-	public ResolutionForm getResolutionForm() {
-		return resolutionForm;
-	}
-
-	public StatusForm getStatusForm() {
-		return statusForm;
-	}
-
-	public BranchForm getBranchFrom() {
-		return branchFrom;
-	}
-
-	public void setBranchFrom(BranchForm branchFrom) {
-		this.branchFrom = branchFrom;
-	}
-
-	public ConfigurationTableForm getConfTableForm() {
-		return confTableForm;
-	}
-
-	public void setConfTableForm(ConfigurationTableForm confTableForm) {
-		this.confTableForm = confTableForm;
-	}
-
-	public TypeForm getTypeForm() {
-		return typeForm;
-	}
-
-	public void setTypeForm(TypeForm typeForm) {
-		this.typeForm = typeForm;
-	}
-
-	public ManipulationController getManipulation() {
-		return manipulation;
-	}
-
-	public void setManipulation(ManipulationController manipulation) {
-		this.manipulation = manipulation;
-	}
-
-	public ItemContexMenu getContexMenu() {
-		return contexMenu;
-	}
-
-	public LinkControl getLinkControl() {
-		return linkControl;
-	}
-
-	public void setLinkControl(LinkControl linkControl) {
-		this.linkControl = linkControl;
-	}
-
-	public FillCopyForms getFillCopy() {
-		return fillCopy;
-	}
-
-	public void setFillCopy(FillCopyForms fillCopy) {
-		this.fillCopy = fillCopy;
-	}
-
 
 
 

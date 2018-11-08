@@ -169,7 +169,7 @@ public class ConfigPersonRelationForm extends TableBasicForm implements ISegment
 		CPRTable cpr = new CPRTable(idName, roleST);
 		tableTV.getItems().add(cpr);
 		tableTV.sort();
-		getControl().getFillForms().fillCPR(idName,formControl.fillTextMapper(nameST), configIndex, roleIndex, new ObjectFactory(), false);
+	//	getControl().getFillForms().fillCPR(idName,formControl.fillTextMapper(nameST), configIndex, roleIndex, new ObjectFactory(), false);
 	}
 
 	/** Getrs and Setrs ***/

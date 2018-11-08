@@ -1,5 +1,6 @@
 package forms;
 
+import Controllers.FormController;
 import abstractform.TableBasicForm;
 import interfaces.ISegmentTableForm;
 import javafx.collections.FXCollections;
@@ -42,16 +43,12 @@ public class CriterionForm extends TableBasicForm implements ISegmentTableForm {
 
 	/**
 	 * Konstruktor třídy Zinicializuje globální proměnné tříd
-	 * 
-	 * @param control
-	 *            Control
-	 * @param deleteControl
-	 *            DeleteControl
-	 * @param idCreator
-	 *            IdentificatorCreater
+	 *
+	 *
 	 */
-	public CriterionForm(Control control, DeleteControl deleteControl, IdentificatorCreater idCreator) {
-		super(control, deleteControl, idCreator);
+
+	 public CriterionForm(FormController formController, String name) {
+		super(formController, name);
 		this.control = control;
 
 		getSubmitButton().setVisible(false);
@@ -154,8 +151,8 @@ public class CriterionForm extends TableBasicForm implements ISegmentTableForm {
 		CriterionTable criterion = new CriterionTable(idName, descriptionST);
 		tableTV.getItems().add(criterion);
 		tableTV.sort();
-		control.getFillForms().fillCriterion(idName, formControl.fillTextMapper(nameST),
-				formControl.fillTextMapper(descriptionST), Control.objF, false);
+		//control.getFillForms().fillCriterion(idName, formControl.fillTextMapper(nameST),
+		//		formControl.fillTextMapper(descriptionST), Control.objF, false);
 	}
 
 	public TableView<CriterionTable> getTableTV() {

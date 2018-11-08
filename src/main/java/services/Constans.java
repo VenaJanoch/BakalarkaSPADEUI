@@ -30,8 +30,8 @@ public class Constans {
 	public static final int milestoneFormWidth = 1100;
 	public static final int milestoneFormHeight = 750;
 
-	public static final double minCanvasItemWidth = 100;
-	public static final double maxCanvasItemWidth = 100;
+	public static final double minCanvasItemWidth = 120;
+	public static final double maxCanvasItemWidth = 120;
 
 	/**
 	 * Konstanta pro nastavení počtu segmentů a elementů

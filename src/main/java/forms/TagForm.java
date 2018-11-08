@@ -1,5 +1,6 @@
 package forms;
 
+import Controllers.FormController;
 import SPADEPAC.Configuration;
 import abstractform.TableBasicForm;
 import interfaces.ISegmentTableForm;
@@ -35,28 +36,16 @@ public class TagForm extends TableBasicForm implements ISegmentTableForm {
 	/**
 	 * Globální proměnné třídy
 	 */
-	private Control control;
 	private TableView<TagTable> tableTV;
 	private TextField tagTF;
-	private Configuration config;
 
 	/**
 	 * Konstruktor třídy. Zinicializuje globální proměnné tříd Nastaví velikost
 	 * formuláře
-	 * 
-	 * @param control
-	 *            Control
-	 * @param deleteControl
-	 *            DeleteControl
-	 * @param idCreator
-	 *            IdentificatorCreater
 	 */
-	public TagForm(Configuration configuration, Control control, DeleteControl deleteControl,
-			IdentificatorCreater idCreator) {
+	public TagForm(FormController formController, String name) {
 
-		super(control, deleteControl, idCreator);
-		this.control = control;
-		this.config = configuration;
+		super(formController, name);
 		this.setTitle("Edit Tags");
 		createForm();
 
@@ -109,7 +98,7 @@ public class TagForm extends TableBasicForm implements ISegmentTableForm {
 			} else {
 				list = Alerts.showDeleteItemTagAlert(getTableTV(), selection);
 				if (list != null) {
-					deleteControl.deleteTag(config, list);
+					// deleteControl.deleteTag(config, list); todo controller pro tabulkove formular
 				}
 
 			}
@@ -137,7 +126,7 @@ public class TagForm extends TableBasicForm implements ISegmentTableForm {
 		String idName = idCreator.createTagID() + "_" + tagST;
 
 		TagTable tag = new TagTable(idName);
-		config.getTags().add(formControl.fillTextMapper(tagST));
+	//	config.getTags().add(formControl.fillTextMapper(tagST));
 		tableTV.getItems().add(tag);
 		tableTV.sort();
 

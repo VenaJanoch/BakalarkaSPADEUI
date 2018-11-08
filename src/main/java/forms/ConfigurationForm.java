@@ -4,6 +4,11 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import Controllers.CanvasController;
+import Controllers.FormController;
+import abstractform.DateBasicForm;
+import forms.TagForm;
+import graphics.DragAndDropItemPanel;
 import org.controlsfx.control.CheckComboBox;
 
 import SPADEPAC.Configuration;
@@ -34,293 +39,258 @@ import model.IdentificatorCreater;
 /**
  * Třída představující formulář pro element Configuration, odděděná od třídy
  * BasicForm a implementující ISegmentForm
- * 
- * @author Václav Janoch
  *
+ * @author Václav Janoch
  */
-public class ConfigurationForm extends BasicForm implements ISegmentForm {
-
-	/**
-	 * Globální proměnné třídy
-	 */
-	private boolean isRelease;
-
-	private Button addTag;
-	private boolean isNew;
-
-	final ToggleGroup group = new ToggleGroup();
-
-	private Label createdLB;
-	private Label isReleaseLB;
-	private Label authorRoleLB;
-	private Label cprLB;
-	private Label branchLB;
-
-	private RadioButton rbYes;
-	private RadioButton rbNo;
-	private DatePicker createdDP;
-	private CheckComboBox<String> branchCB;
-	private ComboBox<String> authorRoleCB;
-	private CheckComboBox<String> cprCB;
-
-	private int authorIndex;
-
-	private ObservableList<String> branchArray;
-	private List<Integer> branchIndex;
-	private List<Integer> cprIndex;
-
-	private Configuration configuration;
-	private TagForm tagForm;
-
-	/**
-	 * Konstruktor třídy Zinicializuje globální proměnné tříd Nastaví reakci na
-	 * uzavření okna
-	 * 
-	 * @param item
-	 *            CanvasItem
-	 * @param control
-	 *            Control
-	 * @param itemArray
-	 * @param conf
-	 *            Configuration
-	 * @param indexForm
-	 * @param deleteControl
-	 *            DeleteControl
-	 * @param idCreater
-	 *            IdentificatorCreater
-	 */
-	public ConfigurationForm(CanvasItem item, Control control, int[] itemArray, Configuration conf, int indexForm,
-			DeleteControl deleteControl, IdentificatorCreater idCreater) {
-		super(item, control, itemArray, indexForm, deleteControl, CanvasType.Configuration);
-		this.configuration = conf;
-		setConfigArray(conf);
-		this.tagForm = new TagForm(conf, control, deleteControl, idCreater);
-		isNew = true;
-		isRelease = true;
-
-		branchIndex = conf.getBranchesIndexs();
-		cprIndex = conf.getCPRsIndexs();
-
-		setConfig(conf);
-		setBranchArray(conf.getBranchesIndexs());
-		setChangeArray(conf.getChangesIndexs());
-		setArtifactArray(conf.getArtifactsIndexs());
-		setTagArray(conf.getTags());
-
-		setRoleArray(new ArrayList<>());
-		getRoleArray().add(conf.getAuthorIndex());
-
-		this.setOnCloseRequest(new EventHandler<WindowEvent>() {
-
-			@Override
-			public void handle(WindowEvent event) {
-				Alerts.showSaveSegment();
-			}
-		});
-
-		getSubmitButton().setOnAction(event -> setActionSubmitButton());
-		createForm();
-
-	}
-
-	@Override
-	public void closeForm() {
-
-		String actName = getNameTF().getText();
-		int[] IDs = getCanvasItem().getIDs();
-		LocalDate createDate = createdDP.getValue();
-
-		setName(actName);
-		getCanvasItem().setNameText(actName);
-
-		getControl().getFillForms().fillConfiguration(configuration, IDs, isRelease, createDate, actName, authorIndex,
-				isNew, getCanvasItem(), false);
-
-		getSubmitButton().setText("Save");
-
-		isNew = false;
-	}
+public class ConfigurationForm extends DateBasicForm implements ISegmentForm {
 
-	@Override
-	public void setActionSubmitButton() {
+    /**
+     * Globální proměnné třídy
+     */
+    private boolean isRelease;
 
-		closeForm();
-		close();
-	}
+    private Button addTag;
+    private boolean isNew;
 
-	@Override
-	public void createForm() {
+    final ToggleGroup group = new ToggleGroup();
 
-		createdLB = new Label("Created: ");
-		createdDP = new DatePicker();
+    private Label createdLB;
+    private Label isReleaseLB;
+    private Label authorRoleLB;
+    private Label cprLB;
+    private Label branchLB;
 
-		isReleaseLB = new Label("Release: ");
-		rbNo = new RadioButton("No");
-		rbNo.setToggleGroup(group);
-		rbYes = new RadioButton("Yes");
-		rbYes.setToggleGroup(group);
-		rbYes.setSelected(true);
+    private RadioButton rbYes;
+    private RadioButton rbNo;
+    private DatePicker createdDP;
+    private CheckComboBox<String> branchCB;
+    private ComboBox<String> authorRoleCB;
+    private CheckComboBox<String> cprCB;
 
-		authorRoleLB = new Label("Author-role: ");
-		authorRoleCB = new ComboBox<String>(getControl().getLists().getRoleObservable());
-		authorRoleCB.setVisibleRowCount(5);
-		authorRoleCB.getSelectionModel().selectedIndexProperty().addListener(roleListenerAut);
+    private int authorIndex;
 
-		cprLB = new Label("Conf-Person: ");
-		cprCB = new CheckComboBox<String>(getControl().getLists().getCPRObservable());
-		cprCB.getCheckModel().getCheckedItems().addListener(cprListener);
-		cprCB.setMaxWidth(Constans.checkComboBox);
+    private ArrayList<Integer> branchIndex;
+    private ArrayList<Integer> cprIndex;
 
-		branchLB = new Label("Branches");
-		branchCB = new CheckComboBox<String>(getControl().getLists().getBranchObservable());
-		branchCB.setMaxWidth(Constans.checkComboBox);
-		branchCB.getCheckModel().getCheckedItems().addListener(new ListChangeListener<String>() {
+    private TagForm tagForm;
 
-			public void onChanged(ListChangeListener.Change<? extends String> c) {
-				branchIndex.addAll(branchCB.getCheckModel().getCheckedIndices());
-				branchArray = branchCB.getCheckModel().getCheckedItems();
+    /**
+     * Konstruktor třídy Zinicializuje globální proměnné tříd Nastaví reakci na
+     * uzavření okna
+     */
+    public ConfigurationForm(FormController formController, CanvasController canvasController, DragAndDropItemPanel dgItemPanel, String name, int indexForm) {
 
-			}
-		});
+        super(formController, canvasController, dgItemPanel, name);
+        this.indexForm = indexForm;
 
-		addTag = new Button("Add Tag");
-		addTag.setOnAction(event -> tagForm.show());
+        this.tagForm = new TagForm(formController, "Tag");
+        isNew = true;
+        isRelease = true;
 
-		fillInfoPart();
-	}
+        branchIndex = new ArrayList<>();
+        cprIndex = new ArrayList<>();
 
-	/**
-	 * Pomocná metoda pro nastavení prvků do GridPane
-	 */
-	private void fillInfoPart() {
+        this.setOnCloseRequest(new EventHandler<WindowEvent>() {
 
-		getInfoPart().add(createdLB, 0, 1);
-		getInfoPart().setHalignment(createdLB, HPos.RIGHT);
-		getInfoPart().add(createdDP, 1, 1);
+            @Override
+            public void handle(WindowEvent event) {
+                Alerts.showSaveSegment();
+            }
+        });
 
-		getInfoPart().add(isReleaseLB, 0, 2);
-		getInfoPart().setHalignment(isReleaseLB, HPos.RIGHT);
-		getInfoPart().add(rbYes, 1, 2);
-		getInfoPart().add(rbNo, 2, 2);
+        getSubmitButton().setOnAction(event -> setActionSubmitButton());
+        createForm();
 
-		getInfoPart().add(authorRoleLB, 0, 3);
-		getInfoPart().setHalignment(authorRoleLB, HPos.RIGHT);
-		getInfoPart().add(authorRoleCB, 1, 3);
+    }
 
-		getInfoPart().add(cprLB, 0, 4);
-		getInfoPart().setHalignment(cprLB, HPos.RIGHT);
-		getInfoPart().add(cprCB, 1, 4);
+    @Override
+    public void closeForm() {
 
-		getInfoPart().add(branchLB, 0, 5);
-		getInfoPart().setHalignment(branchLB, HPos.RIGHT);
-		getInfoPart().add(branchCB, 1, 5);
+        String actName = getNameTF().getText();
+        LocalDate createDate = createdDP.getValue();
+        branchIndex.addAll(branchCB.getCheckModel().getCheckedIndices());
+        cprIndex.addAll(cprCB.getCheckModel().getCheckedIndices());
 
-		getInfoPart().add(addTag, 1, 6);
+        formController.saveDataFromConfiguration(actName, createDate, isRelease, authorIndex, branchIndex, cprIndex,
+                canvasController.getListOfItemOnCanvas(), indexForm);
+    }
 
-		group.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
+    @Override
+    public void setActionSubmitButton() {
 
-			@Override
-			public void changed(ObservableValue<? extends Toggle> observable, Toggle oldValue, Toggle newValue) {
-				RadioButton chk = (RadioButton) newValue.getToggleGroup().getSelectedToggle();
+        closeForm();
+        close();
+    }
 
-				if (chk.getText().contains("Yes")) {
-					isRelease = true;
-				} else {
-					isRelease = false;
-				}
+    @Override
+    public void deleteItem() {
+        formController.deleteConfiguration(indexForm);
+    }
 
-			}
-		});
+    public void createForm() {
 
-	}
+        createdLB = new Label("Created: ");
+        createdDP = new DatePicker();
 
-	/**
-	 * ChangeListener pro určení indexu prvku z comboBoxu pro Role
-	 */
-	ChangeListener<Number> roleListenerAut = new ChangeListener<Number>() {
+        isReleaseLB = new Label("Release: ");
+        rbNo = new RadioButton("No");
+        rbNo.setToggleGroup(group);
+        rbYes = new RadioButton("Yes");
+        rbYes.setToggleGroup(group);
+        rbYes.setSelected(true);
 
-		@Override
-		public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-			authorIndex = newValue.intValue();
+        authorRoleLB = new Label("Author-role: ");
+        authorRoleCB = new ComboBox<String>();
+        authorRoleCB.setVisibleRowCount(5);
+        authorRoleCB.getSelectionModel().selectedIndexProperty().addListener(roleListenerAut);
 
-		}
-	};
+        cprLB = new Label("Conf-Person: ");
+        cprCB = new CheckComboBox<String>();
+        cprCB.getCheckModel().getCheckedItems().addListener(cprListener);
+        cprCB.setMaxWidth(Constans.checkComboBox);
 
-	/**
-	 * ChangeListener pro určení indexů prvků z CheckComboBoxu pro CPR
-	 */
-	ListChangeListener<String> cprListener = new ListChangeListener<String>() {
+        branchLB = new Label("Branches");
+        branchCB = new CheckComboBox<String>();
+        branchCB.setMaxWidth(Constans.checkComboBox);
+        branchCB.getCheckModel().getCheckedItems().addListener(new ListChangeListener<String>() {
 
-		public void onChanged(ListChangeListener.Change<? extends String> c) {
-			cprIndex.addAll(cprCB.getCheckModel().getCheckedIndices());
+            public void onChanged(ListChangeListener.Change<? extends String> c) {
 
-		}
-	};
+                // branchArray = branchCB.getCheckModel().getCheckedItems(); Todo nastavit zaskrtnute polozky controller pro vytvoreni vyplneneho formular
 
-	/*** Getrs and Setrs ***/
+            }
+        });
 
-	public Configuration getConfiguration() {
-		return configuration;
-	}
+        addTag = new Button("Add Tag");
+        addTag.setOnAction(event -> tagForm.show());
 
-	public TagForm getTagForm() {
-		return tagForm;
-	}
+        fillInfoPart();
+    }
 
-	public void setTagForm(TagForm tagForm) {
-		this.tagForm = tagForm;
-	}
+    /**
+     * Pomocná metoda pro nastavení prvků do GridPane
+     */
+    private void fillInfoPart() {
 
-	public void setConfiguration(Configuration configuration) {
-		this.configuration = configuration;
-	}
+        getInfoPart().add(createdLB, 0, 1);
+        getInfoPart().setHalignment(createdLB, HPos.RIGHT);
+        getInfoPart().add(createdDP, 1, 1);
 
-	public boolean isRelease() {
-		return isRelease;
-	}
+        getInfoPart().add(isReleaseLB, 0, 2);
+        getInfoPart().setHalignment(isReleaseLB, HPos.RIGHT);
+        getInfoPart().add(rbYes, 1, 2);
+        getInfoPart().add(rbNo, 2, 2);
 
-	public void setRelease(boolean isRelease) {
-		this.isRelease = isRelease;
-	}
+        getInfoPart().add(authorRoleLB, 0, 3);
+        getInfoPart().setHalignment(authorRoleLB, HPos.RIGHT);
+        getInfoPart().add(authorRoleCB, 1, 3);
 
-	public RadioButton getRbYes() {
-		return rbYes;
-	}
+        getInfoPart().add(cprLB, 0, 4);
+        getInfoPart().setHalignment(cprLB, HPos.RIGHT);
+        getInfoPart().add(cprCB, 1, 4);
 
-	public void setRbYes(RadioButton rbYes) {
-		this.rbYes = rbYes;
-	}
+        getInfoPart().add(branchLB, 0, 5);
+        getInfoPart().setHalignment(branchLB, HPos.RIGHT);
+        getInfoPart().add(branchCB, 1, 5);
 
-	public RadioButton getRbNo() {
-		return rbNo;
-	}
+        getInfoPart().add(addTag, 1, 6);
 
-	public void setRbNo(RadioButton rbNo) {
-		this.rbNo = rbNo;
-	}
+        group.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
 
-	public DatePicker getCreatedDP() {
-		return createdDP;
-	}
+            @Override
+            public void changed(ObservableValue<? extends Toggle> observable, Toggle oldValue, Toggle newValue) {
+                RadioButton chk = (RadioButton) newValue.getToggleGroup().getSelectedToggle();
 
-	public void setCreatedDP(DatePicker createdDP) {
-		this.createdDP = createdDP;
-	}
+                if (chk.getText().contains("Yes")) {
+                    isRelease = true;
+                } else {
+                    isRelease = false;
+                }
 
-	public ComboBox<String> getAuthorRoleCB() {
-		return authorRoleCB;
-	}
+            }
+        });
 
-	public void setAuthorRoleCB(ComboBox<String> authorRoleCB) {
-		this.authorRoleCB = authorRoleCB;
-	}
+    }
 
-	public boolean isNew() {
-		return isNew;
-	}
+    /**
+     * ChangeListener pro určení indexu prvku z comboBoxu pro Role
+     */
+    ChangeListener<Number> roleListenerAut = new ChangeListener<Number>() {
 
-	public void setNew(boolean isNew) {
-		this.isNew = isNew;
-	}
+        @Override
+        public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+            authorIndex = newValue.intValue();
+
+        }
+    };
+
+    /**
+     * ChangeListener pro určení indexů prvků z CheckComboBoxu pro CPR
+     */
+    ListChangeListener<String> cprListener = new ListChangeListener<String>() {
+
+        public void onChanged(ListChangeListener.Change<? extends String> c) {
+            cprIndex.addAll(cprCB.getCheckModel().getCheckedIndices());
+
+        }
+    };
+
+    /*** Getrs and Setrs ***/
+
+    public TagForm getTagForm() {
+        return tagForm;
+    }
+
+    public void setTagForm(TagForm tagForm) {
+        this.tagForm = tagForm;
+    }
+
+    public boolean isRelease() {
+        return isRelease;
+    }
+
+    public void setRelease(boolean isRelease) {
+        this.isRelease = isRelease;
+    }
+
+    public RadioButton getRbYes() {
+        return rbYes;
+    }
+
+    public void setRbYes(RadioButton rbYes) {
+        this.rbYes = rbYes;
+    }
+
+    public RadioButton getRbNo() {
+        return rbNo;
+    }
+
+    public void setRbNo(RadioButton rbNo) {
+        this.rbNo = rbNo;
+    }
+
+    public DatePicker getCreatedDP() {
+        return createdDP;
+    }
+
+    public void setCreatedDP(DatePicker createdDP) {
+        this.createdDP = createdDP;
+    }
+
+    public ComboBox<String> getAuthorRoleCB() {
+        return authorRoleCB;
+    }
+
+    public void setAuthorRoleCB(ComboBox<String> authorRoleCB) {
+        this.authorRoleCB = authorRoleCB;
+    }
+
+    public boolean isNew() {
+        return isNew;
+    }
+
+    public void setNew(boolean isNew) {
+        this.isNew = isNew;
+    }
 
 }

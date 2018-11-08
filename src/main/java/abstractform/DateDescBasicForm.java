@@ -1,19 +1,11 @@
 package abstractform;
 
-import java.time.LocalDate;
-
 import Controllers.CanvasController;
 import Controllers.FormController;
-import graphics.CanvasItem;
-import graphics.DragAndDropCanvas;
-import graphics.DragAndDropItem;
 import graphics.DragAndDropItemPanel;
 import javafx.geometry.HPos;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
-import services.CanvasType;
-import services.Control;
-import services.DeleteControl;
 
 /**
  * Třída odděděná ze třídy DescriptionBasicForm přidávající vstupní pole pro Date
@@ -22,8 +14,8 @@ import services.DeleteControl;
  */
 public class DateDescBasicForm extends DescriptionBasicForm {
 
-	private Label dateLB;
-	private DatePicker dateDP;
+	protected Label dateLB;
+	protected DatePicker dateDP;
 
 	/**
 	 * Konstruktor třídy
@@ -31,7 +23,7 @@ public class DateDescBasicForm extends DescriptionBasicForm {
 	public DateDescBasicForm(FormController formController, CanvasController canvasController, DragAndDropItemPanel dgItemPanel, String name) {
 
 		super(formController, canvasController, dgItemPanel, name);
-		createForm();
+		fillFormDate();
 	}
 
 	/**
@@ -39,27 +31,23 @@ public class DateDescBasicForm extends DescriptionBasicForm {
 	 */
 	public DateDescBasicForm(FormController formController, String name) {
 		super(formController, name);
-		createForm();
+		fillFormDate();
 	}
 
+	/**
+	 * Vytvoří vstupní pole pro Date a přidá ho do GridPane
+	 */
+	public void fillFormDate() {
 
+		dateLB = new Label("Created: ");
+		dateDP = new DatePicker();
+		dateDP.setId("DP1");
 
-	
-	/** Getrs and Setrs **/
-	public Label getDateLB() {
-		return dateLB;
+		getInfoPart().add(dateLB, 0, 2);
+		getInfoPart().setHalignment(dateLB, HPos.RIGHT);
+		getInfoPart().add(dateDP, 1, 2);
+
 	}
 
-	public void setDateLB(Label dateLB) {
-		this.dateLB = dateLB;
-	}
-
-	public DatePicker getDateDP() {
-		return dateDP;
-	}
-
-	public void setDateDP(DatePicker dateDP) {
-		this.dateDP = dateDP;
-	}
 
 }

@@ -2,6 +2,7 @@ package forms;
 
 import java.time.LocalDate;
 
+import Controllers.FormController;
 import SPADEPAC.Artifact;
 import SPADEPAC.ArtifactClass;
 import SPADEPAC.Configuration;
@@ -50,31 +51,13 @@ public class ArtifactForm extends DateDescBasicForm implements ISegmentForm {
 	private int typeIndex;
 	private int authorIndex;
 
-	private Artifact artifact;
-	private Configuration conf;
-
 	/**
 	 * Konstruktor třídy Zinicializuje globální proměnné tříd Nastaví velikost
-	 * okna a reakci na uzavření formuláře
-	 * 
-	 * @param item
-	 *            CanvasItem
-	 * @param control
-	 *            Control
-	 * @param artifact
-	 *            Artifact
-	 * @param deleteControl
-	 *            DeleteControl
-	 * @param conf
-	 *            Configuration
+	 * okna a reakci na uzavření formuláři
 	 */
-	public ArtifactForm(CanvasItem item, Control control, Artifact artifact, DeleteControl deleteControl,
-			Configuration conf) {
-		super(item, control, deleteControl);
-		this.artifact = artifact;
-		this.conf = conf;
-		artifact.setExist(true);
-		setNew(true);
+	public ArtifactForm(FormController formController, String name, int indexForm) {
+		super(formController, name);
+		this.indexForm = indexForm;
 
 		getMainPanel().setMinSize(Constans.littleformWidth, Constans.littleformHeight);
 		getMainPanel().setMaxSize(Constans.littleformWidth, Constans.littleformHeight);
@@ -99,42 +82,29 @@ public class ArtifactForm extends DateDescBasicForm implements ISegmentForm {
 	public void closeForm() {
 
 		String actName = getNameTF().getText();
-		int[] IDs = getCanvasItem().getIDs();
-		int x = (int) getCanvasItem().getTranslateX();
-		int y = (int) getCanvasItem().getTranslateY();
-		LocalDate createdDate = getDateDP().getValue();
+		LocalDate createdDate = dateDP.getValue();
 		String type = ArtifactClass.values()[typeIndex].name();
 		String desc = getDescriptionTF().getText();
 
-		setName(actName);
-		getCanvasItem().setNameText(actName);
-		getControl().getFillForms().fillArtifact(artifact, IDs, desc, actName, createdDate, type, authorIndex, x, y,
-				typeIndex, isNew(), existRB.isSelected(), new ObjectFactory());
-
-		if (!existRB.isSelected()) {
-			getCanvasItem().getSegmentInfo().setRectangleColor(Constans.nonExistRectangleBorderColor);
-		} else {
-			getCanvasItem().getSegmentInfo().setRectangleColor(Constans.rectangleBorderColor);
-		}
-
-		setNew(false);
-
+		isSave = formController.saveDataFromArtifact(actName, createdDate, type, desc, authorIndex, typeIndex, existRB.isSelected(), indexForm);
 	}
 
 	@Override
 	public void setActionSubmitButton() {
 
 		closeForm();
-		close();
+		if(isSave){
+			close();
+		}
+
 	}
 
-	@Override
 	public void createForm() {
 
-		getDateLB().setText("Created: ");
+		dateLB.setText("Created: ");
 
 		authorRoleLB = new Label("Author: ");
-		authorRoleCB = new ComboBox<String>(getControl().getLists().getRoleObservable());
+		authorRoleCB = new ComboBox<String>();
 		authorRoleCB.setVisibleRowCount(5);
 		authorRoleCB.getSelectionModel().selectedIndexProperty().addListener(roleListenerAut);
 
@@ -189,9 +159,9 @@ public class ArtifactForm extends DateDescBasicForm implements ISegmentForm {
 	}
 
 	@Override
-	public void deleteItem(int iDs[]) {
+	public void deleteItem() {
 
-		deleteControl.deleteArtifact(conf, iDs);
+		formController.deleteArtifact(indexForm);
 
 	}
 

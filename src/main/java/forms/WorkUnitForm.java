@@ -3,6 +3,7 @@ package forms;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import Controllers.FormController;
 import SPADEPAC.RoleClass;
 import SPADEPAC.WorkUnit;
 import SPADEPAC.WorkUnitPriorityClass;
@@ -75,35 +76,15 @@ public class WorkUnitForm extends DescriptionBasicForm implements ISegmentForm {
 	private int resolutionIndex;
 	private int statusIndex;
 
-	private WorkUnit unit;
-	private Double estimated;
-
 	/**
 	 * Konstruktor třídy. Zinicializuje globální proměnné tříd Nastaví velikost
-	 * okna a reakci na uzavření formuláře
-	 * 
-	 * @param item
-	 *            CanvasItem
-	 * @param control
-	 *            Control
-	 * @param unit
-	 *            WorkUnit
-	 * 
-	 * @param deleteControl
-	 *            DeleteControl
-	 * @param conf
-	 *            Configuration
+	 * okna a reakci na uzavření formulář
 	 */
-	public WorkUnitForm(CanvasItem item, Control control, WorkUnit unit, DeleteControl deleteControl) {
-		super(item, control, deleteControl);
-		this.unit = unit;
-
+	public WorkUnitForm(FormController formController, String name) {
+		super(formController, name);
 		getMainPanel().setMinSize(Constans.workUnitformWidth, Constans.workUnitformHeight);
 		getMainPanel().setMaxSize(Constans.workUnitformWidth, Constans.workUnitformHeight);
-		setNew(true);
-		setRoleArray(new ArrayList<>());
-		getRoleArray().add(unit.getAssigneeIndex());
-		getRoleArray().add(unit.getAuthorIndex());
+
 		this.setOnCloseRequest(e -> {
 
 			e.consume();
@@ -124,57 +105,34 @@ public class WorkUnitForm extends DescriptionBasicForm implements ISegmentForm {
 	public void closeForm() {
 
 		String actName = getNameTF().getText();
-		int[] IDs = getCanvasItem().getIDs();
-		int x = (int) getCanvasItem().getTranslateX();
-		int y = (int) getCanvasItem().getTranslateY();
 		String category = categoryTF.getText();
-
-		getCanvasItem().setNameText(actName);
-		setName(actName);
-		getControl().getFillForms().fillWorkUnit(unit, IDs, getDescriptionTF().getText(), actName, assigneIndex,
-				authorIndex, category, x, y, priorityIndex, severityIndex, typeIndex, resolutionIndex, statusIndex,
-				estimated, isNew(), existRB.isSelected(), Control.objF);
-
-		if (!existRB.isSelected()) {
-			getCanvasItem().getSegmentInfo().setRectangleColor(Constans.nonExistRectangleBorderColor);
-		} else {
-			getCanvasItem().getSegmentInfo().setRectangleColor(Constans.rectangleBorderColor);
-		}
-		setNew(false);
-
+		String desc = getDescriptionTF().getText();
+		isSave = formController.saveDataFromWorkUnit(actName,desc, category, assigneIndex, authorIndex, priorityIndex, severityIndex, typeIndex,
+				resolutionIndex, statusIndex, estimatedTimeTF.getText(), getExistRB().isSelected(), indexForm);
 	}
 
 	@Override
 	public void setActionSubmitButton() {
-		estimated = -1.0;
-		try {
-			if (!estimatedTimeTF.getText().equals("")) {
-				estimated = Double.parseDouble(estimatedTimeTF.getText());
-			}
 
-			closeForm();
+		closeForm();
+		if(isSave){
 			close();
-		} catch (NumberFormatException e) {
-			Alerts.showWrongEstimatedTimeAlert();
-
 		}
-
 	}
 
-	@Override
 	public void createForm() {
 
 		estimatedTimeLB = new Label("Estimated Time: ");
 		estimatedTimeTF = new TextField();
 
 		priorityLB = new Label("Priority: ");
-		priorityCB = new ComboBox<String>(getControl().getLists().getPriorityObservable());
+		priorityCB = new ComboBox<String>();
 
 		priorityCB.getSelectionModel().selectedIndexProperty().addListener(priorityListener);
 		priorityCB.setVisibleRowCount(5);
 
 		severityLB = new Label("Severity: ");
-		severityCB = new ComboBox<String>(getControl().getLists().getSeverityTypeObservable());
+		severityCB = new ComboBox<String>();
 		severityCB.getSelectionModel().selectedIndexProperty().addListener(severityListener);
 		severityCB.setVisibleRowCount(5);
 
@@ -182,27 +140,27 @@ public class WorkUnitForm extends DescriptionBasicForm implements ISegmentForm {
 		categoryTF = new TextField();
 
 		typeLB = new Label("Type: ");
-		typeCB = new ComboBox<String>(getControl().getLists().getTypeObservable());
+		typeCB = new ComboBox<String>();
 		typeCB.getSelectionModel().selectedIndexProperty().addListener(typeListener);
 		typeCB.setVisibleRowCount(5);
 
 		asigneeRoleLB = new Label("Asignee-role: ");
-		asigneeRoleCB = new ComboBox<String>(getControl().getLists().getRoleObservable());
+		asigneeRoleCB = new ComboBox<String>();
 		asigneeRoleCB.setVisibleRowCount(5);
 		asigneeRoleCB.getSelectionModel().selectedIndexProperty().addListener(roleListenerAsig);
 
 		authorRoleLB = new Label("Author-role: ");
-		authorRoleCB = new ComboBox<String>(getControl().getLists().getRoleObservable());
+		authorRoleCB = new ComboBox<String>();
 		authorRoleCB.setVisibleRowCount(5);
 		authorRoleCB.getSelectionModel().selectedIndexProperty().addListener(roleListenerAut);
 
 		resolutionLB = new Label("Resolution: ");
-		resolutionCB = new ComboBox<String>(getControl().getLists().getResolutionTypeObservable());
+		resolutionCB = new ComboBox<String>();
 		resolutionCB.getSelectionModel().selectedIndexProperty().addListener(resolutionListener);
 		resolutionCB.setVisibleRowCount(5);
 
 		statusLB = new Label("Status: ");
-		statusCB = new ComboBox<String>(getControl().getLists().getStatusTypeObservable());
+		statusCB = new ComboBox<String>();
 		statusCB.getSelectionModel().selectedIndexProperty().addListener(statusListener);
 		statusCB.setVisibleRowCount(5);
 
@@ -210,6 +168,11 @@ public class WorkUnitForm extends DescriptionBasicForm implements ISegmentForm {
 		existRB.setSelected(true);
 
 		fillInfoPart();
+	}
+
+	@Override
+	public void deleteItem() {
+		formController.deleteWorkUnit(indexForm);
 	}
 
 	/**
@@ -336,13 +299,6 @@ public class WorkUnitForm extends DescriptionBasicForm implements ISegmentForm {
 		getInfoPart().add(authorRoleCB, 1, 10);
 
 		getInfoPart().add(existRB, 1, 11);
-
-	}
-
-	@Override
-	public void deleteItem(int iDs[]) {
-
-		deleteControl.deleteWorkUnit(iDs);
 
 	}
 

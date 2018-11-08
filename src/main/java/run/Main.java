@@ -7,6 +7,7 @@ import javafx.application.Application;
 import javafx.stage.Stage;
 import model.DataManipulator;
 import model.FileManipulator;
+import model.IdentificatorCreater;
 import services.Alerts;
 import Controllers.WindowController;
 
@@ -20,6 +21,7 @@ public class Main extends Application {
 	private ApplicationController applicationController;
 	private DataManipulator dataManipulator;
 	private ProcessGenerator processGenerator;
+	private IdentificatorCreater identificatorCreater;
 
 	/**
 	 * Hlavní metoda aplikace
@@ -37,13 +39,14 @@ public class Main extends Application {
 	public void start(Stage primaryStage) throws Exception {
 
 		this.processGenerator = new ProcessGenerator();
-		this.dataManipulator = new DataManipulator(processGenerator);
+		this.identificatorCreater = new IdentificatorCreater();
+		this.dataManipulator = new DataManipulator(processGenerator, identificatorCreater);
 		fileManipulator = new FileManipulator(processGenerator, dataManipulator);
 		alerts = new Alerts(fileManipulator);
-		this.applicationController = new ApplicationController(primaryStage, fileManipulator, dataManipulator, alerts);
+		this.applicationController = new ApplicationController(primaryStage, fileManipulator, dataManipulator, alerts, identificatorCreater, dataManipulator.getSegmentLists());
 		primaryStage.show();
 
-		MainWindow mainWindow = new MainWindow(applicationController.getWindowController(), applicationController.getFormController());
+		MainWindow mainWindow = new MainWindow(applicationController);
 
 	}
 

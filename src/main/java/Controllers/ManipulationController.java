@@ -80,7 +80,7 @@ public class ManipulationController {
 		if (chooseCanvasItem != null) {
 			canvasItemController.deleteItem(chooseCanvasItem);
 			int index = chooseCanvasItem.getFormIdentificator();
-			formController.deleteForm(index);
+			//formController.deleteForm(index); Navic asi
 		}
 		chooseCanvasItem = null;
 

@@ -2,6 +2,7 @@ package forms;
 
 import java.util.ArrayList;
 
+import Controllers.FormController;
 import SPADEPAC.Artifact;
 import SPADEPAC.Change;
 import SPADEPAC.Configuration;
@@ -42,33 +43,17 @@ public class ChangeForm extends DescriptionBasicForm implements ISegmentForm {
 	private RadioButton existRB;
 
 	private boolean newChange;
-	private Change change;
-	private Configuration conf;
 
 	/**
 	 * Konstruktor třídy Zinicializuje globální proměnné třídy Nastaví velikost
 	 * formuláře a reakci na uzavření formuláře
-	 * 
-	 * @param item
-	 *            CanvasItem
-	 * @param control
-	 *            Control
-	 * @param change
-	 *            Change
-	 * @param conf
-	 *            Configuration
-	 * @param deleteControl
-	 *            DeleteControl
+	 *
 	 */
-	public ChangeForm(CanvasItem item, Control control, Change change, Configuration conf,
-			DeleteControl deleteControl) {
-		super(item, control, deleteControl);
+	public ChangeForm(FormController formController, String name, int indexForm) {
+		super(formController, name);
 
 		this.newChange = true;
-		this.change = change;
-		this.conf = conf;
-		change.setExist(true);
-		setArtifactArray(new ArrayList());
+		this.indexForm = indexForm;
 
 		getMainPanel().setMinSize(Constans.littleformWidth, Constans.littleformHeight);
 		getMainPanel().setMaxSize(Constans.littleformWidth, Constans.littleformHeight);
@@ -93,45 +78,32 @@ public class ChangeForm extends DescriptionBasicForm implements ISegmentForm {
 	public void closeForm() {
 
 		String actName = getNameTF().getText();
-		int[] IDs = getCanvasItem().getIDs();
-		int x = (int) getCanvasItem().getTranslateX();
-		int y = (int) getCanvasItem().getTranslateY();
+		String desc = getDescriptionTF().getText();
 
-		setName(actName);
-		getCanvasItem().setNameText(actName);
-		getControl().getFillForms().fillChange(change, IDs, getDescriptionTF().getText(), actName, newChange, x, y,
-				existRB.isSelected(), Control.objF);
-
-		if (!existRB.isSelected()) {
-			getCanvasItem().getSegmentInfo().setRectangleColor(Constans.nonExistRectangleBorderColor);
-		} else {
-			getCanvasItem().getSegmentInfo().setRectangleColor(Constans.rectangleBorderColor);
-		}
-
-		newChange = false;
+		isSave = formController.saveDataFromChange(actName, desc, existRB.isSelected(), indexForm);
 	}
 
 	@Override
 	public void setActionSubmitButton() {
 
 		closeForm();
-		close();
+		if (isSave){
+			close();
+		}
+
 
 	}
 
 	@Override
+	public void deleteItem() {
+		formController.deleteChange(indexForm);
+	}
+
 	public void createForm() {
 
 		existRB = new RadioButton("Exist");
 		existRB.setSelected(true);
 		getInfoPart().add(existRB, 1, 3);
-
-	}
-
-	@Override
-	public void deleteItem(int iDs[]) {
-
-		deleteControl.deleteChange(conf, iDs);
 
 	}
 

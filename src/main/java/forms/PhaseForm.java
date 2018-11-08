@@ -62,7 +62,7 @@ public class PhaseForm extends DateDescBasicForm implements ISegmentForm {
 			}
 		});
 		getSubmitButton().setOnAction(event -> setActionSubmitButton());
-		createForm();
+		fillForm();
 
 	}
 	
@@ -70,7 +70,7 @@ public class PhaseForm extends DateDescBasicForm implements ISegmentForm {
 	public void closeForm() {
 
 		String actName = getNameTF().getText();
-		LocalDate endDateL = getDateDP().getValue();
+		LocalDate endDateL = dateDP.getValue();
 		String desc = getDescriptionTF().getText();
 
 		isSave = formController.saveDataFromPhaseForm(actName, endDateL, desc, configIndex, milestoneIndex, canvasController.getListOfItemOnCanvas(), indexForm);
@@ -86,9 +86,8 @@ public class PhaseForm extends DateDescBasicForm implements ISegmentForm {
 
 	}
 
-	@Override
-	public void createForm() {
-		getDateLB().setText("End Date: ");
+	public void fillForm() {
+		dateLB.setText("End-Date");
 
 		configLB = new Label("Configuration: ");
 		configCB = new ChoiceBox<>();

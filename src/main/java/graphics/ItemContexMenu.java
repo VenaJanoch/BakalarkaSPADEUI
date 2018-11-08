@@ -1,6 +1,7 @@
 package graphics;
 
 import Controllers.CanvasController;
+import Controllers.CanvasItemController;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SeparatorMenuItem;
@@ -19,6 +20,7 @@ public class ItemContexMenu extends ContextMenu {
 	/** Globální proměnné třídy */
 	private ManipulationController manipulation;
 	private CanvasController canvasController;
+	private CanvasItemController canvasItemController;
 	private MenuItem copyItem;
 	private MenuItem pasteItem;
 	private MenuItem deleteItem;
@@ -29,13 +31,12 @@ public class ItemContexMenu extends ContextMenu {
 	 *
 	 * @param manipulation
 	 *            ManipulationController
-	 * @param dgCanvas
-	 *            DragAndDropCanvas
 	 */
-	public ItemContexMenu(ManipulationController manipulation, CanvasController canvasController, DragAndDropCanvas dgCanvas) {
+	public ItemContexMenu(ManipulationController manipulation, CanvasController canvasController, CanvasItemController canvasItemController) {
 		super();
 		this.manipulation = manipulation;
 		this.canvasController = canvasController;
+		this.canvasItemController = canvasItemController;
 		createMenu();
 
 	}
@@ -65,8 +66,8 @@ public class ItemContexMenu extends ContextMenu {
 	public void setActions() {
 
 		copyItem.setOnAction(event -> manipulation.copyItem(canvasController));
-		deleteItem.setOnAction(event -> manipulation.deleteItem(canvasController));
-		cutItem.setOnAction(event -> manipulation.cutItem(canvasController));
+		deleteItem.setOnAction(event -> manipulation.deleteItem(canvasItemController));
+		cutItem.setOnAction(event -> manipulation.cutItem(canvasController, canvasItemController));
 	}
 
 	/** Getrs and Setrs **/

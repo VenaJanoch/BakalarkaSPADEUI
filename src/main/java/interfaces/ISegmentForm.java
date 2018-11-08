@@ -18,11 +18,6 @@ public interface ISegmentForm {
 	public void setActionSubmitButton();
 	
 	/**
-	 * Metoda pro vytvoření a přídání prvků do gridPanelu
-	 */
-	public void createForm();
-	
-	/**
 	 * Metoda pro nastavení reakce smazání prvku z plátna
 	 */
 	public void deleteItem();

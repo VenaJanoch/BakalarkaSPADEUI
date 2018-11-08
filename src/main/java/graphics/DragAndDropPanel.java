@@ -112,18 +112,18 @@ public class DragAndDropPanel extends BorderPane {
 	 */
 	
 	public void createAction() {
-		addButtons[0].setOnAction(event -> formController.showProjectForm());
-		addButtons[1].setOnAction(event -> {formController.showMilestoneFormAction();});
-		addButtons[2].setOnAction(event -> {formController.showRoleFormAction();});
-		addButtons[3].setOnAction(event -> {formController.showCPRFormAction();});
-		addButtons[4].setOnAction(event -> {formController.showPriorityFormAction();});
-		addButtons[5].setOnAction(event -> {formController.showSeverityFormAction();});
-		addButtons[6].setOnAction(event -> {formController.showRealtionFormAction();});
-		addButtons[7].setOnAction(event -> {formController.showResolutionFormAction();});
-		addButtons[8].setOnAction(event -> {formController.showStatusFormAction();});
-		addButtons[9].setOnAction(event -> {formController.showTypeFormAction();});
-		addButtons[10].setOnAction(event ->{formController.showBranchFormAction();});
-		addButtons[11].setOnAction(	event ->{formController.showConfTableFromAction();});
+		addButtons[0].setOnAction(event -> formController.showForm(Constans.projectFormIndex));
+		addButtons[1].setOnAction(event -> formController.showForm(Constans.milestoneFormIndex));
+		addButtons[2].setOnAction(event -> formController.showForm(Constans.roleFormIndex));
+		addButtons[3].setOnAction(event -> formController.showForm(Constans.cprFormIndex));
+		addButtons[4].setOnAction(event -> formController.showForm(Constans.priorityFormIndex));
+		addButtons[5].setOnAction(event -> formController.showForm(Constans.severityFormIndex));
+		addButtons[6].setOnAction(event -> formController.showForm(Constans.relationFormIndex));
+		addButtons[7].setOnAction(event -> formController.showForm(Constans.resolutionormIndex));
+		addButtons[8].setOnAction(event -> formController.showForm(Constans.statusFormIndex));
+		addButtons[9].setOnAction(event -> formController.showForm(Constans.wuTypeFormIndex));
+		addButtons[10].setOnAction(event -> formController.showForm(Constans.branchIndex));
+		addButtons[11].setOnAction(	event -> formController.showForm(Constans.configurationFormIndex));
 	}
 
 	

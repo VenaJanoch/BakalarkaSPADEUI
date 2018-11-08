@@ -2,6 +2,7 @@ package forms;
 
 import java.time.LocalDate;
 
+import Controllers.CanvasController;
 import Controllers.FormController;
 import SPADEPAC.Iteration;
 import abstractform.BasicForm;
@@ -51,7 +52,7 @@ public class IterationForm extends Date2DescBasicForm implements ISegmentForm {
 	 * @param indexForm
 	 *            DeleteControl
 	 */
-	public IterationForm(FormController formController, DragAndDropCanvas canvas, DragAndDropItemPanel dgItemPanel, String name, int indexForm) {
+	public IterationForm(FormController formController, CanvasController canvas, DragAndDropItemPanel dgItemPanel, String name, int indexForm) {
 
 		super(formController,canvas, dgItemPanel, name);
 		this.setOnCloseRequest(e -> {
@@ -74,8 +75,8 @@ public class IterationForm extends Date2DescBasicForm implements ISegmentForm {
 	public void closeForm() {
 
 		String actName = getNameTF().getText();
-		LocalDate startDate = getDateDP().getValue();
-		LocalDate endDate = getDate2DP().getValue();
+		LocalDate startDate = dateDP.getValue();
+		LocalDate endDate = dateDP.getValue();
 		String desc = getDescriptionTF().getText();
 		isSave = formController.saveDataFromIterationForm(actName, startDate,endDate,desc, chooseConfigID, canvasController.getListOfItemOnCanvas(), indexForm);
 	}
@@ -88,7 +89,7 @@ public class IterationForm extends Date2DescBasicForm implements ISegmentForm {
 		}
 	}
 
-	@Override
+
 	public void createForm() {
 
 		configLB = new Label("Configuration: ");
@@ -112,8 +113,8 @@ public class IterationForm extends Date2DescBasicForm implements ISegmentForm {
 	 */
 	private void fillInfoPart() {
 
-		getDateLB().setText("Start-Date");
-		getDate2LB().setText("End-Date");
+		dateLB.setText("Start-Date");
+		date2LB.setText("End-Date");
 
 		getInfoPart().add(configLB, 0, 4);
 		getInfoPart().setHalignment(configLB, HPos.RIGHT);
@@ -124,7 +125,7 @@ public class IterationForm extends Date2DescBasicForm implements ISegmentForm {
 	@Override
 	public void deleteItem() {
 
-		formController.deleteIteration();
+		formController.deleteIterationForm(indexForm);
 
 	}
 

@@ -64,7 +64,7 @@ public class ProjectForm extends Date2DescBasicForm implements  ISegmentForm{
 		});
 
 		getSubmitButton().setOnAction(event -> setActionSubmitButton());
-		createForm();
+		fillForm();
 		getFormName().setText(getTitle());
 	}
 
@@ -72,8 +72,8 @@ public class ProjectForm extends Date2DescBasicForm implements  ISegmentForm{
 	public void closeForm() {
 
 		String actName = getNameTF().getText();
-		LocalDate endDate = getDate2DP().getValue();
-		LocalDate startDate = getDateDP().getValue();
+		LocalDate endDate = date2DP.getValue();
+		LocalDate startDate = dateDP.getValue();
 		String desc = getDescriptionTF().getText();
 		//setName(actName);
 
@@ -88,15 +88,15 @@ public class ProjectForm extends Date2DescBasicForm implements  ISegmentForm{
 	}
 
 	@Override
-	public void createForm() {
-
-		getDateLB().setText("Start-Date");
-		getDate2LB().setText("End-Date");
+	public void deleteItem() {
 
 	}
 
-	@Override
-	public void deleteItem(int[] IDs) {
+
+	public void fillForm() {
+
+		dateLB.setText("Start-Date");
+		date2LB.setText("End-Date");
 
 	}
 

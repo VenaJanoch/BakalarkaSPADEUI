@@ -1,18 +1,22 @@
 package Controllers;
 
-import SPADEPAC.*;
+import SPADEPAC.Artifact;
 import abstractform.BasicForm;
+import forms.ConfigurationForm;
 import forms.*;
 import graphics.CanvasItem;
 import graphics.DragAndDropItemPanel;
 import javafx.collections.ObservableList;
-import javafx.scene.control.ChoiceBox;
+import javafx.scene.Node;
 import model.DataManipulator;
 import model.IdentificatorCreater;
 import services.*;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class FormController {
 
@@ -20,7 +24,7 @@ public class FormController {
     private IdentificatorCreater identificatorCreater;
 
     private ArrayList<BasicForm> forms;
-    private ArrayList<CanvasItem> canvasItemList;
+    private Map<Integer,CanvasItem> canvasItemList;
 
     private MilestoneForm milestoneForm;
     private ConfigPersonRelationForm CPRForm;
@@ -42,7 +46,7 @@ public class FormController {
 
         this.applicationController = applicationController;
         this.forms = new ArrayList<>();
-        this.canvasItemList = new ArrayList<>();
+        this.canvasItemList = new HashMap<>();
 
         this.dataManipulator = dataManipulator;
         this.identificatorCreater = identificatorCreater;
@@ -55,11 +59,11 @@ public class FormController {
         milestoneForm = new MilestoneForm(this, "Milestone");
         forms.add(Constans.milestoneFormIndex, milestoneForm);
 
-        CPRForm = new ConfigPersonRelationForm(this, "Configuration Person RElation");
-        forms.add(Constans.cprFormIndex, CPRForm);
-
         roleForm = new RoleForm(this, "Role");
         forms.add(Constans.roleFormIndex, roleForm);
+
+        CPRForm = new ConfigPersonRelationForm(this, "Configuration Person RElation");
+        forms.add(Constans.cprFormIndex, CPRForm);
 
         priorityForm = new PriorityForm(this, "Priority");
         forms.add(Constans.priorityFormIndex, priorityForm);
@@ -76,16 +80,17 @@ public class FormController {
         statusForm = new StatusForm(this, "Status");
         forms.add(Constans.statusFormIndex, statusForm);
 
-        branchFrom = new BranchForm(this, "Branch");
-        forms.add(Constans.branchIndex, branchFrom);
-
-        confTableForm = new ConfigurationTableForm(this,"Configuration");
-        forms.add(Constans.configurationFormIndex, confTableForm);
-
         typeForm = new TypeForm(this, "Type");
         forms.add(Constans.wuTypeFormIndex, typeForm);
 
 
+        branchFrom = new BranchForm(this, "Branch");
+        forms.add(Constans.branchIndex, branchFrom);
+
+        forms.add(Constans.configurationFormIndex, null);
+        confTableForm = new ConfigurationTableForm(this,"Configuration");
+        forms.remove(Constans.configurationFormIndex);
+        forms.add(Constans.configurationFormIndex, confTableForm);
     }
 
 
@@ -179,37 +184,84 @@ public class FormController {
      *            kořenový formulář
      * @return identifikátory objektu pro CanvasItem
      */
-    public int createNewForm(SegmentType type) {
+    public int createNewForm(SegmentType type, CanvasType canvasType) {
 
             switch (type) {
                 case Phase:
                     return createNewPhaseForm();
                 case Iteration:
-                            createNewIterationForm();
-                    return fillForms.createIteration(item, form, IDs);
-
+                    return createNewIterationForm();
                 case Activity:
-                    createNewActivityForm();
-                    return fillForms.createActivity(item, form, IDs);
-
+                    return  createNewActivityForm();
                 case WorkUnit:
-                    createNewWorkUnitForm();
-                    return fillForms.createWorkUnit(item, form, IDs);
-
+                    return createNewWorkUnitForm(canvasType);
                 case Configuration:
-                    createNewConfigurationForm();
-                    return fillForms.createConfigruration(item, form, IDs);
+                    return createNewConfigurationForm();
                 case Change:
-                    createNewChangeForm();
-                    return fillForms.createChange(item, form, IDs);
-
+                    return createNewChangeForm();
                 case Artifact:
-                    createNewArtifactForm();
-                    return fillForms.createArtifact(item, form, IDs);
+                    return createNewArtifactForm();
                 default:
                     return -1;
             }
 
+    }
+
+    private int createNewArtifactForm() {
+       int index = identificatorCreater.createArtifactID();
+       dataManipulator.createNewArtifact(index);
+       ArtifactForm artifactForm = new ArtifactForm(this, SegmentType.Artifact.name(), index);
+       forms.add(index, artifactForm);
+       return index;
+    }
+
+    private int createNewChangeForm() {
+        int index = identificatorCreater.createChangeID();
+        dataManipulator.createNewChance(index);
+        ChangeForm changeForm = new ChangeForm(this, SegmentType.Change.name(), index);
+        forms.add(index, changeForm);
+        return index;
+    }
+
+    private int createNewConfigurationForm() {
+        int index = identificatorCreater.createConfigurationID();
+        dataManipulator.createNewConfiguration(index);
+        CanvasController canvasController = new CanvasController(CanvasType.Configuration, applicationController);
+        ConfigurationForm configurationForm = new ConfigurationForm(this, canvasController,
+                new DragAndDropItemPanel(Constans.configurationDragTextIndexs), SegmentType.Configuration.name(), index);
+        forms.add(configurationForm);
+
+        return  index;
+
+    }
+
+    private int createNewWorkUnitForm(CanvasType canvasType) {
+
+        int index = identificatorCreater.createWorkUnitID();
+        dataManipulator.createNewWorkUnit(index);
+        WorkUnitForm workUnitForm = new WorkUnitForm(this, SegmentType.WorkUnit.name());
+        forms.add(index, workUnitForm);
+
+        workUnitForm.getAsigneeRoleCB().setItems(dataManipulator.getRoleObservable());
+        workUnitForm.getAuthorRoleCB().setItems(dataManipulator.getRoleObservable());
+        workUnitForm.getPriorityCB().setItems(dataManipulator.getPriorityObservable());
+        workUnitForm.getSeverityCB().setItems(dataManipulator.getSeverityObservable());
+        workUnitForm.getStatusCB().setItems(dataManipulator.getStatusObservable());
+        workUnitForm.getTypeCB().setItems(dataManipulator.getRoleTypeObservable());
+        workUnitForm.getResolutionCB().setItems(dataManipulator.getResolutionObservable());
+
+        return  index;
+    }
+
+    private int createNewActivityForm() {
+        int index = identificatorCreater.createActivityID();
+        dataManipulator.createNewActivity(index);
+        CanvasController canvasController = new CanvasController(CanvasType.Activity, applicationController);
+        ActivityForm activityForm = new ActivityForm(this, canvasController, new DragAndDropItemPanel(canvasController,
+                Constans.activityDragTextIndexs), SegmentType.Activity.name(), index);
+        forms.add(index, activityForm);
+
+        return  index;
     }
 
     int createNewPhaseForm(){
@@ -232,8 +284,8 @@ public class FormController {
         dataManipulator.createNewIteration(index);
         CanvasController canvasController = new CanvasController(CanvasType.Iteration, applicationController);
 
-        IterationForm iterationForm = new IterationForm(this, SegmentType.Iteration.name(),canvasController, new DragAndDropItemPanel(canvasController,
-                Constans.iterationDragTextIndexs) index);
+        IterationForm iterationForm = new IterationForm(this, canvasController, new DragAndDropItemPanel(canvasController,
+                Constans.iterationDragTextIndexs),SegmentType.Iteration.name(), index);
         forms.add(index, iterationForm);
 
         iterationForm.getConfigCB().setItems(dataManipulator.getConfigurationObservable());
@@ -266,36 +318,54 @@ public class FormController {
         return index;
     }
 
-    public boolean saveDataFromPhaseForm(String actName, LocalDate endDateL, String desc,int confIndex, int milestoneIndex, ArrayList itemIndexList, int indexForm) {
+    private List<Integer> prepareIndexsForManipulator(List<Integer> indexis) {
+        List<Integer> tmpIndexis = new ArrayList<>();
+        for (int index : indexis) {
+            tmpIndexis.add(prepareIndexForManipulator(index));
+        }
+        return tmpIndexis;
+    }
+
+    public boolean saveDataFromPhaseForm(String actName, LocalDate endDateL, String desc,int confIndex, int milestoneIndex, Map<Integer, CanvasItem> itemIndexList,
+                                         int indexForm) {
         String nameForManipulator = formControl.fillTextMapper(actName);
         String descriptionForManipulator = formControl.fillTextMapper(desc);
 
         int[] coords = getCoordsFromItem(indexForm);
 
         dataManipulator.addDataToPhase(nameForManipulator, endDateL, descriptionForManipulator, prepareIndexForManipulator(confIndex),
-                prepareIndexForManipulator(milestoneIndex), coords[0], coords[1], itemIndexList, indexForm);
+                prepareIndexForManipulator(milestoneIndex), coords[0], coords[1], itemIndexList.keySet(), indexForm);
         return true;
     }
 
-    public boolean saveDataFromIterationForm(String actName, LocalDate startDate, LocalDate endDate, String desc, int chooseConfigID, ArrayList itemIndexList, int indexForm) {
+    public boolean saveDataFromIterationForm(String actName, LocalDate startDate, LocalDate endDate, String desc, int chooseConfigID, Map<Integer,CanvasItem> itemIndexList, int indexForm) {
         String nameForManipulator = formControl.fillTextMapper(actName);
         String descriptionForManipulator = formControl.fillTextMapper(desc);
 
         int[] coords = getCoordsFromItem(indexForm);
 
         dataManipulator.addDataToIteration(nameForManipulator,startDate, endDate, descriptionForManipulator, prepareIndexForManipulator(chooseConfigID),
-                coords[0], coords[1], itemIndexList, indexForm);
+                coords[0], coords[1], itemIndexList.keySet(), indexForm);
         return true;
     }
 
+    public boolean saveDataFromActivityForm(String actName, String desc, Map<Integer, CanvasItem> mapOfItemOnCanvas, int indexForm) {
+
+        String nameForManipulator = formControl.fillTextMapper(actName);
+        String descriptionForManipulator = formControl.fillTextMapper(desc);
+        int[] coords = getCoordsFromItem(indexForm);
+
+        dataManipulator.addDataToActivity(nameForManipulator, descriptionForManipulator, coords[0], coords[1], mapOfItemOnCanvas.keySet(), indexForm);
+        return true;
+
+    }
 
     public void removeCanvasItemFromList(int id) {
-        canvasItemList.remove(id);
-        canvasItemList.add(id,null);
+        canvasItemList.put(id,null);
     }
 
     public void addCanvasItemToList(int formIndex, CanvasItem item) {
-        canvasItemList.add(formIndex,item);
+        canvasItemList.put(formIndex,item);
     }
 
 
@@ -345,5 +415,177 @@ public class FormController {
        return dataManipulator.getRoleTypeObservable();
     }
 
+
+    public void deleteActivityForm(int indexForm) {
+
+        if (!forms.get(indexForm).isSave()) {
+            forms.remove(indexForm);
+            forms.add(indexForm, null);
+        }
+        dataManipulator.removeActivity(indexForm);
+    }
+
+    public boolean saveDataFromWorkUnit(String actName,String description, String category, int assigneIndex, int authorIndex, int priorityIndex,int severityIndex,
+                                        int typeIndex, int resolutionIndex, int statusIndex, String estimated, boolean selected, int indexForm) {
+
+        String nameForManipulator = formControl.fillTextMapper(actName);
+        String categoryForManipulator = formControl.fillTextMapper(category);
+
+        int[] coords = getCoordsFromItem(indexForm);
+
+        double estimateForDataManipulator = -1.0;
+
+        try {
+            if (!estimated.equals("")) {
+                estimateForDataManipulator = Double.parseDouble(estimated);
+            }
+
+        } catch (NumberFormatException e) {
+            Alerts.showWrongEstimatedTimeAlert();
+            return  false;
+        }
+
+        setItemColor(indexForm, selected);
+
+        dataManipulator.addDataToWorkUnit(nameForManipulator, description ,categoryForManipulator, prepareIndexForManipulator(assigneIndex),
+                prepareIndexForManipulator(authorIndex), prepareIndexForManipulator(priorityIndex), prepareIndexForManipulator(severityIndex),
+                prepareIndexForManipulator(typeIndex), prepareIndexForManipulator(resolutionIndex), prepareIndexForManipulator(statusIndex),
+                coords[0], coords[1], estimateForDataManipulator, selected, indexForm);
+
+        return  true;
+    }
+
+    private void setItemColor(int indexForm, boolean isExist) {
+
+        CanvasItem item = canvasItemList.get(indexForm);
+        if(!isExist){
+            item.getSegmentInfo().setRectangleColor(Constans.nonExistRectangleBorderColor);
+        } else {
+            item.getSegmentInfo().setRectangleColor(Constans.rectangleBorderColor);
+        }
+
+    }
+
+    public void deleteWorkUnit(int indexForm) {
+
+        if (!forms.get(indexForm).isSave()) {
+            forms.remove(indexForm);
+            forms.add(indexForm, null);
+        }
+        dataManipulator.removeWorkUnit(indexForm);
+    }
+
+
+    public void deleteConfiguration(int indexForm) {
+
+        if (!forms.get(indexForm).isSave()) {
+            forms.remove(indexForm);
+            forms.add(indexForm, null);
+        }
+        dataManipulator.removeConfiguration(indexForm);
+
+    }
+
+    public void saveDataFromConfiguration(String actName, LocalDate createDate, boolean isRelease, int authorIndex, ArrayList<Integer> branchIndex,
+                                          ArrayList<Integer> cprIndex, Map<Integer,CanvasItem> itemIndexList, int indexForm) {
+        String nameForManipulator = formControl.fillTextMapper(actName);
+        int[] coords = getCoordsFromItem(indexForm);
+        ArrayList artefactList = new ArrayList();
+        ArrayList changeList = new ArrayList();
+
+        for(int index : itemIndexList.keySet()) {
+            if(identificatorCreater.getChangeIndexMaper().get(index) != null){
+                changeList.add(index);
+            }else {
+                artefactList.add(index);
+            }
+        }
+
+        dataManipulator.addDataToConfiguration(nameForManipulator, createDate, isRelease, coords[0], coords[1],
+                prepareIndexForManipulator(authorIndex), prepareIndexsForManipulator(branchIndex),
+                prepareIndexsForManipulator(cprIndex), artefactList, changeList, indexForm);
+
+
+    }
+
+
+    public boolean saveDataFromChange(String actName, String desc, boolean selected, int indexForm) {
+
+        String nameForManipulator = formControl.fillTextMapper(actName);
+        String descForManipulator = formControl.fillTextMapper(desc);
+
+        int[] coords = getCoordsFromItem(indexForm);
+
+        setItemColor(indexForm, selected);
+        dataManipulator.addDataToChange(nameForManipulator, descForManipulator, coords[0], coords[1], selected, indexForm);
+        return true;
+    }
+
+    public void deleteChange(int indexForm) {
+        if (!forms.get(indexForm).isSave()) {
+            forms.remove(indexForm);
+            forms.add(indexForm, null);
+        }
+        dataManipulator.removeChange(indexForm);
+
+    }
+
+    public boolean saveDataFromArtifact(String actName, LocalDate createdDate, String type, String desc, int authorIndex,
+                                        int typeIndex, boolean selected, int indexForm) {
+
+        String nameForManipulator = formControl.fillTextMapper(actName);
+        String descForManipulator = formControl.fillTextMapper(desc);
+
+        int[] coords = getCoordsFromItem(indexForm);
+        setItemColor(indexForm, selected);
+
+        dataManipulator.addDataToArtifact(nameForManipulator, descForManipulator, createdDate, selected, coords[0], coords[1],
+                prepareIndexForManipulator(authorIndex), typeIndex, indexForm);
+
+        return  true;
+    }
+
+    public void deleteArtifact(int indexForm) {
+        if (!forms.get(indexForm).isSave()) {
+            forms.remove(indexForm);
+            forms.add(indexForm, null);
+        }
+
+        dataManipulator.removeArtifact(indexForm);
+
+    }
+
+    public ConfigurationForm getConfigurationForm(int id) {
+
+        return (ConfigurationForm) forms.get(id);
+    }
+
+    public Node getMainPanelFromForm(int id) {
+
+        return forms.get(id).getMainPanel();
+
+    }
+
+    public int getSegmetIdFromFromId(SegmentType type, int formIndex) {
+
+        switch (type) {
+            case Phase:
+                return identificatorCreater.getPhaseIndex(formIndex);
+            case Iteration:
+                return identificatorCreater.getIterationIndex(formIndex);
+            case Activity:
+                return identificatorCreater.getActivityIndex(formIndex);
+            case WorkUnit:
+                return identificatorCreater.getWorkUnitIndex(formIndex);
+            case Configuration:
+                return identificatorCreater.getConfigurationIndex(formIndex);
+            case Change:
+                return identificatorCreater.getChangeIndex(formIndex);
+            case Artifact:
+                return identificatorCreater.getArtifactIndex(formIndex);
+            default:
+                return -1;
+        }
+    }
 }
 

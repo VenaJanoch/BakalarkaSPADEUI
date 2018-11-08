@@ -167,8 +167,8 @@ public class StatusForm extends TableClassBasicForm implements ISegmentTableForm
 
 		getTableTV().getItems().add(table);
 		getTableTV().sort();
-		getControl().getFillForms().fillStatusType(idName, formControl.fillTextMapper(nameST),
-				formControl.fillTextMapper(classST), superST, false);
+	//	getControl().getFillForms().fillStatusType(idName, formControl.fillTextMapper(nameST),
+			//	formControl.fillTextMapper(classST), superST, false);
 
 	}
 

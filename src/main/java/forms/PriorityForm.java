@@ -173,7 +173,7 @@ public class PriorityForm extends TableClassBasicForm implements ISegmentTableFo
 
 		getTableTV().getItems().add(table);
 		getTableTV().sort();
-		getControl().getFillForms().fillPriorityType(idName,formControl.fillTextMapper(nameST), formControl.fillTextMapper(classST), superST, new ObjectFactory(),false);
+		//getControl().getFillForms().fillPriorityType(idName,formControl.fillTextMapper(nameST), formControl.fillTextMapper(classST), superST, new ObjectFactory(),false);
 
 	}
 

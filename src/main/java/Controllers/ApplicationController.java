@@ -18,7 +18,7 @@ public class ApplicationController {
     public ApplicationController(Stage primaryStage, FileManipulator fileManipulator, DataManipulator dataManipulator, Alerts alerts,
                                  IdentificatorCreater identificatorCreater, SegmentLists segmentLists){
 
-        this.formController = new FormController(identificatorCreater, dataManipulator);
+        this.formController = new FormController(identificatorCreater, dataManipulator, this);
         this.manipulationController = new ManipulationController(formController);
         this.linkControl = new LinkControl(formController, identificatorCreater, segmentLists);
         this.canvasItemController = new CanvasItemController(linkControl, formController, manipulationController);

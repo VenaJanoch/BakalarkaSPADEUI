@@ -45,7 +45,6 @@ public class ConfigurationTableForm extends Table2BasicForm implements ISegmentT
 	 */
 
 	private TableView<ConfigTable> tableTV;
-	private BasicForm form;
 
 	private Label formName;
 
@@ -84,18 +83,16 @@ public class ConfigurationTableForm extends Table2BasicForm implements ISegmentT
 	 * 
 	 * @return BasicForm
 	 */
-	public BasicForm createConfigItem() {
+	public void createConfigItem() {
 
 		//CanvasItem item = new CanvasItem(SegmentType.Configuration, "New", getControl(), getControl().getForms().get(0),
 		//		0, 0, 0, getControl().getContexMenu(), getControl().getLinkControl(), getControl().getCanvas());
 //TODO Opravit nevim co to je
 		//form = getControl().getForms().get(item.getIDs()[0]);
-		form.getSubmitButton().setText("Add");
-		getMainPanel().setCenter(form.getMainPanel());
-
-		return form;
-
-	}
+		int id  = formController.createNewForm(SegmentType.Configuration, null);
+		getSubmitButton().setText("Add");
+		getMainPanel().setCenter(formController.getMainPanelFromForm(id));
+}
 
 	@Override
 	public Node getTable() {
@@ -140,7 +137,7 @@ public class ConfigurationTableForm extends Table2BasicForm implements ISegmentT
 			ConfigTable config = tableTV.getSelectionModel().getSelectedItems().get(0);
 			if (config != null) {
 				int id = config.getId().intValue();
-				getMainPanel().setCenter(getControl().getForms().get(id).getMainPanel());
+				getMainPanel().setCenter(formController.getMainPanelFromForm(id));
 			}
 		}
 	};
@@ -191,13 +188,4 @@ public class ConfigurationTableForm extends Table2BasicForm implements ISegmentT
 	public void setTableTV(TableView<ConfigTable> tableTV) {
 		this.tableTV = tableTV;
 	}
-
-	public BasicForm getForm() {
-		return form;
-	}
-
-	public void setForm(BasicForm form) {
-		this.form = form;
-	}
-
 }

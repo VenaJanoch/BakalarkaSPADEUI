@@ -1,5 +1,6 @@
 package forms;
 
+import Controllers.FormController;
 import SPADEPAC.RoleClass;
 import SPADEPAC.RoleSuperClass;
 import abstractform.TableClassBasicForm;
@@ -38,16 +39,10 @@ public class RoleTypeForm extends TableClassBasicForm implements ISegmentTableFo
 	/**
 	 * Konstruktor třídy Zinicializuje globální proměnné třídy Nastaví reakci na
 	 * potvrzovací tlačítko
-	 * 
-	 * @param control
-	 *            Control
-	 * @param deleteControl
-	 *            DeleteControl
-	 * @param idCreator
-	 *            IdentificatorCreater
+	 *
 	 */
-	public RoleTypeForm(Control control, DeleteControl deleteControl, IdentificatorCreater idCreator) {
-		super(control, deleteControl, idCreator);
+	public RoleTypeForm(FormController formController, String name) {
+		super(formController, name);
 
 		this.control = control;
 
@@ -167,8 +162,8 @@ public class RoleTypeForm extends TableClassBasicForm implements ISegmentTableFo
 
 		getTableTV().getItems().add(type);
 		getTableTV().sort();
-		getControl().getFillForms().fillRoleType(idName, formControl.fillTextMapper(nameST),
-				formControl.fillTextMapper(classST), superST, Control.objF, false);
+		//getControl().getFillForms().fillRoleType(idName, formControl.fillTextMapper(nameST),
+		//		formControl.fillTextMapper(classST), superST, Control.objF, false);
 
 	}
 

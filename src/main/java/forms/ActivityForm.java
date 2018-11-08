@@ -1,10 +1,13 @@
 package forms;
 
+import Controllers.CanvasController;
+import Controllers.FormController;
 import SPADEPAC.Activity;
 import SPADEPAC.ObjectFactory;
 import abstractform.BasicForm;
 import abstractform.DescriptionBasicForm;
 import graphics.CanvasItem;
+import graphics.DragAndDropItemPanel;
 import graphics.InfoBoxSegment;
 import interfaces.ISegmentForm;
 import javafx.event.EventHandler;
@@ -32,25 +35,12 @@ public class ActivityForm extends DescriptionBasicForm implements ISegmentForm {
 	/**
 	 * Konstruktor Třídy Zinicializuje globální proměnné tříd Nastaví reakci na
 	 * ukončení formuláře
-	 * 
-	 * @param item
-	 *            CanvasItem
-	 * @param control
-	 *            Control
-	 * @param itemArray
-	 * @param activity
-	 *            Activity
-	 * @param indexForm
-	 * @param deleteControl
-	 *            DeleteControl
+	 *
 	 */
-	public ActivityForm(CanvasItem item, Control control, int[] itemArray, Activity activity, int indexForm,
-			DeleteControl deleteControl) {
+	public ActivityForm(FormController formController, CanvasController canvasController, DragAndDropItemPanel dgItemPanel, String name, int indexForm) {
 
-		super(item, control, itemArray, indexForm, deleteControl, CanvasType.Activity);
-		this.activity = activity;
-		setWorkUnitArray(activity.getWorkUnits());
-		setNew(true);
+		super(formController,canvasController, dgItemPanel, name);
+		this. indexForm = indexForm;
 		this.setOnCloseRequest(e -> {
 
 			e.consume();
@@ -71,16 +61,8 @@ public class ActivityForm extends DescriptionBasicForm implements ISegmentForm {
 	public void closeForm() {
 
 		String actName = getNameTF().getText();
-		BasicForm form = getCanvasItem().getForm();
-		int[] IDs = getCanvasItem().getIDs();
-		int x = (int) getCanvasItem().getTranslateX();
-		int y = (int) getCanvasItem().getTranslateY();
 		String desc = getDescriptionTF().getText();
-		getCanvasItem().setNameText(actName);
-		setName(actName);
-		getControl().getFillForms().fillActivity(activity, IDs, desc, actName, x, y, isNew(), new ObjectFactory());
-		setNew(false);
-
+		formController.saveDataFromActivityForm(actName, desc, canvasController.getListOfItemOnCanvas(), indexForm);
 	}
 
 	@Override
@@ -89,15 +71,13 @@ public class ActivityForm extends DescriptionBasicForm implements ISegmentForm {
 		close();
 	}
 
-	@Override
 	public void createForm() {
 
 	}
 
 	@Override
-	public void deleteItem(int iDs[]) {
-		deleteControl.deleteActivity(iDs);
-
+	public void deleteItem() {
+		formController.deleteActivityForm(indexForm);
 	}
 
 }

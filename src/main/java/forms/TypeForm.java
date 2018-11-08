@@ -162,8 +162,8 @@ public class TypeForm extends TableClassBasicForm implements ISegmentTableForm {
 
 		getTableTV().getItems().add(table);
 		getTableTV().sort();
-		getControl().getFillForms().fillType(idName, formControl.fillTextMapper(nameST),
-				formControl.fillTextMapper(classST), superST, false);
+		//getControl().getFillForms().fillType(idName, formControl.fillTextMapper(nameST),
+		//		formControl.fillTextMapper(classST), superST, false);
 
 	}
 

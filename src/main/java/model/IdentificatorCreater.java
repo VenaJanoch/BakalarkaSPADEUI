@@ -30,15 +30,17 @@ public class IdentificatorCreater {
 	private int typeID = -1;
 	private int roleTypeID = -1;
 
-	private static int index;
+	private int index = 12;
 
 	private Map<Integer, Integer> changeIndexMaper = new HashMap<>();
 	private Map<Integer, Integer> artifactIndexMaper = new HashMap<>();
 	private Map<Integer, Integer> workUnitIndexMaper = new HashMap<>();
 	private Map<Integer, Integer> phaseIndexMaper = new HashMap<>();
 	private Map<Integer, Integer> iterationIndexMaper = new HashMap<>();
+	private Map<Integer, Integer> activityIndexMaper = new HashMap<>();
+	private Map<Integer, Integer> configurationIndexMaper = new HashMap<>();
 
-	/**
+    /**
 	 * Metody pro inkrementaci počtu daného prvku
 	 */
 	
@@ -103,7 +105,7 @@ public class IdentificatorCreater {
 		phaseID++;
 		phaseIndexMaper.put(index, phaseID);
 		index ++;
-		return index;
+		return index -1;
 
 	}
 
@@ -112,14 +114,15 @@ public class IdentificatorCreater {
 		iterationID++;
 		iterationIndexMaper.put(index, iterationID);
 		index++;
-		return index;
+		return index -1;
 	}
 
 	public int createActivityID() {
 
 		activityID++;
-
-		return activityID;
+		activityIndexMaper.put(index,activityID);
+		index++;
+		return index -1;
 	}
 
 	public int createWorkUnitID() {
@@ -127,7 +130,7 @@ public class IdentificatorCreater {
 		workUnitID++;
 		workUnitIndexMaper.put(index, workUnitID);
 		index++;
-		return workUnitID;
+		return index -1;
 	}
 
 	public int createMilestoneID() {
@@ -154,14 +157,14 @@ public class IdentificatorCreater {
 		changeID++;
 		changeIndexMaper.put(index,changeID);
 		index++;
-		return changeID;
+		return index -1;
 	}
 
 	public int createArtifactID() {
 		artifactID++;
 		artifactIndexMaper.put(index,activityID);
 		index++;
-		return artifactID;
+		return index -1;
 	}
 
 	public int createCPRID() {
@@ -171,7 +174,9 @@ public class IdentificatorCreater {
 
 	public int createConfigurationID() {
 		configID++;
-		return configID;
+		configurationIndexMaper.put(index, configID);
+		index++;
+		return index -1;
 	}
 
 	public int createTagID() {
@@ -179,7 +184,7 @@ public class IdentificatorCreater {
 		return tagID;
 	}
 
-	public int getChangeIndex(int formIndex){
+	public Integer getChangeIndex(int formIndex){
 
 		return getChangeIndexMaper().get(formIndex);
 	}
@@ -200,19 +205,14 @@ public class IdentificatorCreater {
 		return  iterationIndexMaper.get(formIdentificator);
 	}
 
-
-
-	public static int getIndex() {
-		return index;
+	public Integer getActivityIndex(int formIdentificator) {
+		return activityIndexMaper.get(formIdentificator);
 	}
 
-	public static void setIndex(int index) {
-		IdentificatorCreater.index = index;
+	public Integer getConfigurationIndex(int formIdentificator){
+		return configurationIndexMaper.get(formIdentificator);
 	}
 
-	public IdentificatorCreater() {
-		setIndex(1);
-	}
 
 	public int createLineID() {
 

@@ -22,10 +22,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
-import services.Alerts;
-import services.Constans;
-import services.Control;
-import services.DeleteControl;
+import services.*;
 import model.IdentificatorCreater;
 import tables.MilestoneTable;
 
@@ -79,7 +76,7 @@ public class MilestoneForm extends Table2BasicForm implements ISegmentTableForm 
 		getInternalPanel().setCenter(getTable());
 		getInternalPanel().setBottom(createControlPane());
 
-		criterionForm = new CriterionForm(getControl(), deleteControl, idCreator);
+		criterionForm = new CriterionForm(formController, SegmentType.Criterion.name());
 
 		getMainPanel().setCenter(getInternalPanel());
 		getMainPanel().setRight(criterionForm.getMainPanel());
@@ -180,7 +177,7 @@ public class MilestoneForm extends Table2BasicForm implements ISegmentTableForm 
 		MilestoneTable milestone = new MilestoneTable(idName, criterion);
 		tableTV.getItems().add(milestone);
 		tableTV.sort();
-		getControl().getFillForms().fillMilestone(idName, formControl.fillTextMapper(nameST), criterionIndex, false);
+		//getControl().getFillForms().fillMilestone(idName, formControl.fillTextMapper(nameST), criterionIndex, false);
 		criteriaCB.getCheckModel().clearChecks();
 
 	}
