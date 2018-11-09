@@ -34,235 +34,90 @@ import javafx.geometry.Point2D;
 public class SegmentLists {
 	/** Globální proměnné třídy **/
 	private ObservableList<String> configObservable;
-	private List<Configuration> configList;
-	private ArrayList<Integer> configFormIndex;
 
 	private ObservableList<String> branchObservable;
-	private List<Branch> branchList;
-	private ArrayList<Integer> branchFormIndex;
 
 	private ObservableList<String> roleObservable;
-	private List<Role> roleList;
-	private ArrayList<Integer> roleFormIndex;
-
-	private List<Change> changeList;
-	private ArrayList<Integer> changeFormIndex;
 
 	private ObservableList<String> criterionObservable;
-	private List<Criterion> criterionList;
-	private ArrayList<Integer> criterionFormIndex;
 
 	private ObservableList<String> milestoneObservable;
-	private List<Milestone> milestoneList;
-	private ArrayList<Integer> milestoneFormIndex;
 
 	private ObservableList<String> artifactObservable;
-	private List<Artifact> artifactList;
-	private ArrayList<Integer> artifactFormIndex;
 
 	private ObservableList<String> CPRObservable;
-	private List<ConfigPersonRelation> CPRList;
 
 	private ObservableList<String> roleTypeObservable;
-	private List<RoleType> roleTypeList;
 
 	private ObservableList<String> priorityTypeObservable;
-	private List<Priority> priorityTypeList;
 
 	private ObservableList<String> severityTypeObservable;
-	private List<Severity> severityTypeList;
 
 	private ObservableList<String> relationTypeObservable;
-	private List<Relation> relationTypeList;
 
 	private ObservableList<String> resolutionTypeObservable;
-	private List<Resolution> resolutionTypeList;
 
 	private ObservableList<String> statusTypeObservable;
-	private List<Status> statusTypeList;
 
 	private ObservableList<String> typeObservable;
-	private List<Type> typeList;
-
-	private List<WorkUnit> workUnitList;
-	private ArrayList<Integer> workUnitFormIndex;
-
-	private List<Link> linksList;
 
 	private ArrayList<NodeLink> arrows;
-
-	private Project project;
 
 	/**
 	 * Konstruktor třídy Zinicializuje globální proměnné a zavolá metodu pro
 	 * vytvoření seznamů
-	 *
-	 * @param project
-	 *            Instance kořenové třídy
-	 */
-	public SegmentLists(Project project) {
+	 *  */
+	public SegmentLists() {
 
-		this.project = project;
 		createLists();
 
 	}
 
-	/**
-	 * Umozni vymazání seznamů
-	 * 
-	 * @param project
-	 *            Kořenový element
-	 */
-	public void restartLists(Project project) {
-		this.project = project;
-
-		configList = project.getConfiguration();
-		configFormIndex.clear();
-		configObservable.clear();
-		configObservable.add(" ");
-
-		workUnitFormIndex.clear();
-
-		for (int i = 0; i < project.getWorkUnits().size(); i++) {
-			workUnitFormIndex.add(null);
-		}
-		workUnitList = project.getWorkUnits();
-
-		roleList = project.getRoles();
-		roleFormIndex.clear();
-		roleObservable.clear();
-		roleObservable.add("");
-
-		branchList = project.getBranches();
-		branchFormIndex.clear();
-		branchObservable.clear();
-
-		changeList = project.getChanges();
-		changeFormIndex.clear();
-
-		for (int i = 0; i < project.getChanges().size(); i++) {
-			changeFormIndex.add(null);
-		}
-
-		artifactFormIndex.clear();
-		artifactList = project.getArtifacts();
-		artifactObservable.clear();
-
-		for (int i = 0; i < project.getArtifacts().size(); i++) {
-			artifactFormIndex.add(null);
-		}
-
-		criterionList = project.getCriterions();
-		criterionObservable.clear();
-		criterionObservable.add("");
-
-		milestoneList = project.getMilestones();
-		milestoneObservable.clear();
-		milestoneObservable.add(" ");
-		milestoneObservable.add("");
-		CPRList = project.getCpr();
-		CPRObservable.clear();
-		CPRObservable.add("");
-
-		roleTypeList = project.getRoleType();
-		roleTypeObservable.clear();
-		roleTypeObservable.add("");
-
-		priorityTypeList = project.getPriority();
-		priorityTypeObservable.clear();
-		priorityTypeObservable.add("");
-
-		severityTypeList = project.getSeverity();
-		severityTypeObservable.clear();
-		severityTypeObservable.add("");
-		relationTypeList = project.getRelation();
-		relationTypeObservable.clear();
-		relationTypeObservable.add("");
-
-		resolutionTypeList = project.getResolution();
-		resolutionTypeObservable.clear();
-		resolutionTypeObservable.add("");
-
-		statusTypeList = project.getStatus();
-		statusTypeObservable.clear();
-		statusTypeObservable.add("");
-		linksList = project.getLinks();
-
-		typeList = project.getTypes();
-		typeObservable.clear();
-		typeObservable.add("");
-
-	}
 
 	/**
 	 * Zinicializuje veškeré seznami pro práci se segmenty a elementy
 	 */
 	public void createLists() {
 
-		linksList = project.getLinks();
-
-		configList = project.getConfiguration();
-		configFormIndex = new ArrayList<>();
 		configObservable = FXCollections.observableArrayList();
 		configObservable.add("");
 
-		workUnitFormIndex = new ArrayList<>();
-		workUnitList = project.getWorkUnits();
-
-		roleList = project.getRoles();
-		roleFormIndex = new ArrayList<>();
-		setRoleObservable(FXCollections.observableArrayList());
+		roleObservable = FXCollections.observableArrayList();
 		roleObservable.add("");
 
-		branchList = project.getBranches();
-		branchFormIndex = new ArrayList<>();
 		branchObservable = FXCollections.observableArrayList();
+		branchObservable.add("");
 
-		changeList = project.getChanges();
-		changeFormIndex = new ArrayList<>();
-		// changeObservable = FXCollections.observableArrayList();
-		// changeObservable.add("New");
 
-		setArtifactList(project.getArtifacts());
-		setArtifactFormIndex(new ArrayList<>());
-		setArtifactObservable(FXCollections.observableArrayList());
+		artifactObservable = FXCollections.observableArrayList();
 
-		criterionList = project.getCriterions();
-		criterionFormIndex = new ArrayList<>();
 		criterionObservable = FXCollections.observableArrayList();
 		criterionObservable.add("");
 
-		milestoneList = project.getMilestones();
-		milestoneFormIndex = new ArrayList<>();
 		milestoneObservable = FXCollections.observableArrayList();
 		milestoneObservable.add("");
 
-		setCPRList(project.getCpr());
 		CPRObservable = FXCollections.observableArrayList();
+		CPRObservable.add("");
 
-		setRoleTypeList(project.getRoleType());
-		setRoleTypeObservable(FXCollections.observableArrayList());
+		roleTypeObservable = FXCollections.observableArrayList();
 		roleTypeObservable.add("");
 
-		priorityTypeList = project.getPriority();
 		priorityTypeObservable = FXCollections.observableArrayList();
 		priorityTypeObservable.add("");
 
-		setSeverityTypeList(project.getSeverity());
-		setSeverityTypeObservable(FXCollections.observableArrayList());
+		severityTypeObservable = FXCollections.observableArrayList();
 		severityTypeObservable.add("");
 
-		setRelationTypeList(project.getRelation());
 		relationTypeObservable = FXCollections.observableArrayList();
 		relationTypeObservable.add("");
-		resolutionTypeList = project.getResolution();
-		resolutionTypeObservable = FXCollections.observableArrayList();
 
-		statusTypeList = project.getStatus();
+		resolutionTypeObservable = FXCollections.observableArrayList();
+		resolutionTypeObservable.add("");
+
 		statusTypeObservable = FXCollections.observableArrayList();
 		statusTypeObservable.add("");
 
-		typeList = project.getTypes();
 		typeObservable = FXCollections.observableArrayList();
 		typeObservable.add("");
 
@@ -274,13 +129,6 @@ public class SegmentLists {
 	}
 
 
-
-	public void removeWorkUnitRelation(int startItemId, int endItemId) {
-
-		workUnitList.get(startItemId).setRelationIndex(null);
-		workUnitList.get(endItemId).setRelationIndex(null);
-
-	}
 
 	public void addLinkToList(WorkUnitLink wuLink){
 		getArrows().add(wuLink);
@@ -330,6 +178,85 @@ public class SegmentLists {
 
 	}
 
+	public void removeItemFromObservableList(SegmentType segmentType, ArrayList indexList){
+
+		switch (segmentType) {
+			case Branch:
+				 removeDataFromLis(branchObservable, indexList);
+			case Priority:
+				removeDataFromLis(priorityTypeObservable, indexList);
+			case Severity:
+				removeDataFromLis(severityTypeObservable, indexList);
+			case Milestone:
+				removeDataFromLis(milestoneObservable, indexList);
+			case Criterion:
+				removeDataFromLis(criterionObservable, indexList);
+			case Role:
+				removeDataFromLis(roleObservable, indexList);
+			case RoleType:
+				removeDataFromLis(roleTypeObservable, indexList);
+			case ConfigPersonRelation:
+				removeDataFromLis(CPRObservable, indexList);
+			case Relation:
+				removeDataFromLis(relationTypeObservable, indexList);
+			case Resolution:
+				removeDataFromLis(resolutionTypeObservable, indexList);
+			case Status:
+				removeDataFromLis(statusTypeObservable, indexList);
+			case Type:
+				removeDataFromLis(typeObservable, indexList);
+			case Configuration:
+				removeDataFromLis(configObservable, indexList);
+			default:
+
+		}
+
+	}
+
+	public void addItemToObservableList(SegmentType segmentType, String segmentInfo){
+
+		switch (segmentType) {
+			case Branch:
+				branchObservable.add(segmentInfo) ;
+			case Priority:
+				priorityTypeObservable.add(segmentInfo);
+			case Severity:
+				severityTypeObservable.add(segmentInfo);
+			case Milestone:
+				milestoneObservable.add(segmentInfo);
+			case Criterion:
+				criterionObservable.add(segmentInfo);
+			case Role:
+				roleObservable.add(segmentInfo);
+			case RoleType:
+				roleTypeObservable.add(segmentInfo);
+			case ConfigPersonRelation:
+				CPRObservable.add(segmentInfo);
+			case Relation:
+				relationTypeObservable.add(segmentInfo);
+			case Resolution:
+				resolutionTypeObservable.add(segmentInfo);
+			case Status:
+				statusTypeObservable.add(segmentInfo);
+			case Type:
+				typeObservable.add(segmentInfo);
+			case Configuration:
+				configObservable.add(segmentInfo);
+			default:
+
+		}
+
+	}
+
+
+	private void removeDataFromLis(ObservableList<String> observableList, ArrayList<Integer> indexList) {
+
+		for (Integer i : indexList){
+			observableList.remove(i);
+		}
+
+	}
+
 
 	/** Getrs and Setrs **/
 
@@ -337,18 +264,6 @@ public class SegmentLists {
 
 	public ObservableList<String> getConfigObservable() {
 		return configObservable;
-	}
-
-	public void setConfigObservable(ObservableList<String> configObservable) {
-		this.configObservable = configObservable;
-	}
-
-	public List<Configuration> getConfigList() {
-		return configList;
-	}
-
-	public void setConfigList(List<Configuration> list) {
-		this.configList = list;
 	}
 
 	public ObservableList<String> getRoleObservable() {
@@ -363,288 +278,49 @@ public class SegmentLists {
 		return branchObservable;
 	}
 
-	public void setBranchObservable(ObservableList<String> branchObservable) {
-		this.branchObservable = branchObservable;
-	}
-
-	public List<Branch> getBranchList() {
-		return branchList;
-	}
-
-	public void setBranchList(List<Branch> list) {
-		this.branchList = list;
-	}
-
-	public List<Change> getChangeList() {
-		return changeList;
-	}
-
-	public void setChangeList(List<Change> changeList) {
-		this.changeList = changeList;
-	}
-
-	public ObservableList<String> getArtifactObservable() {
-		return artifactObservable;
-	}
-
-	public void setArtifactObservable(ObservableList<String> artifactObservable) {
-		this.artifactObservable = artifactObservable;
-	}
-
-	public ArrayList<Integer> getArtifactFormIndex() {
-		return artifactFormIndex;
-	}
-
-	public void setArtifactFormIndex(ArrayList<Integer> artifactFormIndex) {
-		this.artifactFormIndex = artifactFormIndex;
-	}
-
-	public List<Artifact> getArtifactList() {
-		return artifactList;
-	}
-
-	public void setArtifactList(List<Artifact> artifactList) {
-		this.artifactList = artifactList;
-	}
-
-	public ArrayList<Integer> getConfigFormIndex() {
-		return configFormIndex;
-	}
-
-	public void setConfigFormIndex(ArrayList<Integer> configFormIndex) {
-		this.configFormIndex = configFormIndex;
-	}
-
-	public ArrayList<Integer> getBranchFormIndex() {
-		return branchFormIndex;
-	}
-
-	public void setBranchFormIndex(ArrayList<Integer> branchFormIndex) {
-		this.branchFormIndex = branchFormIndex;
-	}
-
-	public List<Role> getRoleList() {
-		return roleList;
-	}
-
-	public void setRoleList(List<Role> roleList) {
-		this.roleList = roleList;
-	}
-
-	public ArrayList<Integer> getRoleFormIndex() {
-		return roleFormIndex;
-	}
-
-	public void setRoleFormIndex(ArrayList<Integer> roleFormIndex) {
-		this.roleFormIndex = roleFormIndex;
-	}
-
-	public ArrayList<Integer> getChangeFormIndex() {
-		return changeFormIndex;
-	}
-
-	public void setChangeFormIndex(ArrayList<Integer> changeFormIndex) {
-		this.changeFormIndex = changeFormIndex;
-	}
 
 	public ObservableList<String> getCriterionObservable() {
 		return criterionObservable;
-	}
-
-	public void setCriterionObservable(ObservableList<String> criterionObservable) {
-		this.criterionObservable = criterionObservable;
-	}
-
-	public List<Criterion> getCriterionList() {
-		return criterionList;
-	}
-
-	public void setCriterionList(List<Criterion> criterionList) {
-		this.criterionList = criterionList;
-	}
-
-	public ArrayList<Integer> getCriterionFormIndex() {
-		return criterionFormIndex;
-	}
-
-	public void setCriterionFormIndex(ArrayList<Integer> criterionFormIndex) {
-		this.criterionFormIndex = criterionFormIndex;
 	}
 
 	public ObservableList<String> getMilestoneObservable() {
 		return milestoneObservable;
 	}
 
-	public void setMilestoneObservable(ObservableList<String> milestoneObservable) {
-		this.milestoneObservable = milestoneObservable;
-	}
-
-	public List<Milestone> getMilestoneList() {
-		return milestoneList;
-	}
-
-	public void setMilestoneList(List<Milestone> milestoneList) {
-		this.milestoneList = milestoneList;
-	}
-
-	public ArrayList<Integer> getMilestoneFormIndex() {
-		return milestoneFormIndex;
-	}
-
-	public void setMilestoneFormIndex(ArrayList<Integer> milestoneFormIndex) {
-		this.milestoneFormIndex = milestoneFormIndex;
-	}
-
-	public List<ConfigPersonRelation> getCPRList() {
-		return CPRList;
-	}
-
-	public void setCPRList(List<ConfigPersonRelation> cPRList) {
-		CPRList = cPRList;
+	public ObservableList<String> getArtifactObservable() {
+		return artifactObservable;
 	}
 
 	public ObservableList<String> getCPRObservable() {
 		return CPRObservable;
 	}
 
-	public void setCPRObservable(ObservableList<String> cPRObservable) {
-		CPRObservable = cPRObservable;
-	}
-
 	public ObservableList<String> getRoleTypeObservable() {
 		return roleTypeObservable;
 	}
 
-	public void setRoleTypeObservable(ObservableList<String> roleTypeObservable) {
-		this.roleTypeObservable = roleTypeObservable;
-	}
-
-	public List<RoleType> getRoleTypeList() {
-		return roleTypeList;
-	}
-
-	public void setRoleTypeList(List<RoleType> roleTypeList) {
-		this.roleTypeList = roleTypeList;
-	}
-
-	public ObservableList<String> getPriorityObservable() {
+	public ObservableList<String> getPriorityTypeObservable() {
 		return priorityTypeObservable;
-	}
-
-	public void setPriorityTypeObservable(ObservableList<String> priorityObservable) {
-		this.priorityTypeObservable = priorityObservable;
-	}
-
-	public List<Priority> getPriorityTypeList() {
-		return priorityTypeList;
-	}
-
-	public void setPriorityTypeList(List<Priority> priorityTypeList) {
-		this.priorityTypeList = priorityTypeList;
 	}
 
 	public ObservableList<String> getSeverityTypeObservable() {
 		return severityTypeObservable;
 	}
 
-	public void setSeverityTypeObservable(ObservableList<String> severityTypeObservable) {
-		this.severityTypeObservable = severityTypeObservable;
-	}
-
-	public List<Severity> getSeverityTypeList() {
-		return severityTypeList;
-	}
-
-	public void setSeverityTypeList(List<Severity> severityTypeList) {
-		this.severityTypeList = severityTypeList;
-	}
-
 	public ObservableList<String> getRelationTypeObservable() {
 		return relationTypeObservable;
-	}
-
-	public void setRelationTypeObservable(ObservableList<String> relationTypeObservable) {
-		this.relationTypeObservable = relationTypeObservable;
 	}
 
 	public ObservableList<String> getResolutionTypeObservable() {
 		return resolutionTypeObservable;
 	}
 
-	public void setResolutionTypeObservable(ObservableList<String> resolutionTypeObservable) {
-		this.resolutionTypeObservable = resolutionTypeObservable;
-	}
-
 	public ObservableList<String> getStatusTypeObservable() {
 		return statusTypeObservable;
 	}
 
-	public void setStatusTypeObservable(ObservableList<String> statusTypeObservable) {
-		this.statusTypeObservable = statusTypeObservable;
-	}
-
-	public List<Status> getStatusTypeList() {
-		return statusTypeList;
-	}
-
-	public void setStatusTypeList(List<Status> statusTypeList) {
-		this.statusTypeList = statusTypeList;
-	}
-
-	public List<Resolution> getResolutionTypeList() {
-		return resolutionTypeList;
-	}
-
-	public void setResolutionTypeList(List<Resolution> resolutionTypeList) {
-		this.resolutionTypeList = resolutionTypeList;
-	}
-
-	public List<Relation> getRelationTypeList() {
-		return relationTypeList;
-	}
-
-	public void setRelationTypeList(List<Relation> relationTypeList) {
-		this.relationTypeList = relationTypeList;
-	}
-
-	public List<Link> getLinksList() {
-		return linksList;
-	}
-
-	public void setLinksList(List<Link> linksList) {
-		this.linksList = linksList;
-	}
-
 	public ObservableList<String> getTypeObservable() {
 		return typeObservable;
-	}
-
-	public void setTypeObservable(ObservableList<String> typeObservable) {
-		this.typeObservable = typeObservable;
-	}
-
-	public List<Type> getTypeList() {
-		return typeList;
-	}
-
-	public void setTypeList(List<Type> typeList) {
-		this.typeList = typeList;
-	}
-
-	public List<WorkUnit> getWorkUnitList() {
-		return workUnitList;
-	}
-
-	public void setWorkUnitList(List<WorkUnit> workUnitList) {
-		this.workUnitList = workUnitList;
-	}
-
-	public ArrayList<Integer> getWorkUnitFormIndex() {
-		return workUnitFormIndex;
-	}
-
-	public void setWorkUnitFormIndex(ArrayList<Integer> workUnitFormIndex) {
-		this.workUnitFormIndex = workUnitFormIndex;
 	}
 
 }

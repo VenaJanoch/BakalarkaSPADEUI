@@ -25,7 +25,10 @@ import services.Alerts;
 import services.Control;
 import services.DeleteControl;
 import model.IdentificatorCreater;
+import services.SegmentType;
 import tables.CPRTable;
+
+import java.text.Normalizer;
 
 /**
  * Třída představující tabulkový formulář pro element Configuration-Person-Relatio, odděděná od třídy
@@ -121,7 +124,7 @@ public class ConfigPersonRelationForm extends TableBasicForm implements ISegment
 			} else {
 				list = Alerts.showDeleteItemCPRAlert(getTableTV(), selection);
 				if (list != null) {
-					deleteControl.deleteCPR(list);
+					formController.deleteCPR(list);
 				}
 
 			}
@@ -162,23 +165,20 @@ public class ConfigPersonRelationForm extends TableBasicForm implements ISegment
 
 	@Override
 	public void addItem() {
-		String nameST = getNameTF().getText();
-		String roleST = formController.getRoleObservable().get(roleIndex);
-		String idName = idCreator.createCPRID() + "_" + nameST;
 
-		CPRTable cpr = new CPRTable(idName, roleST);
+		String roleST = formController.getRoleObservable().get(roleIndex);
+		String nameST = getNameTF().getText();
+		int id = formController.createTableItem(SegmentType.ConfigPersonRelation);
+		String idName = id + "_" + nameST;
+		CPRTable cpr = new CPRTable(idName, roleST, id);
 		tableTV.getItems().add(cpr);
 		tableTV.sort();
-	//	getControl().getFillForms().fillCPR(idName,formControl.fillTextMapper(nameST), configIndex, roleIndex, new ObjectFactory(), false);
+		formController.saveDataFromCPR(nameST,roleIndex, configIndex, id);
 	}
 
 	/** Getrs and Setrs ***/
 	public TableView<CPRTable> getTableTV() {
 		return tableTV;
-	}
-
-	public void setTableTV(TableView<CPRTable> tableTV) {
-		this.tableTV = tableTV;
 	}
 
 }

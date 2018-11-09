@@ -18,6 +18,7 @@ import services.Alerts;
 import services.Control;
 import services.DeleteControl;
 import model.IdentificatorCreater;
+import services.SegmentType;
 import tables.ClassTable;
 /**
  * Třída představující tabulkový formulář pro výčtový typ Resolution, odděděná od třídy
@@ -30,8 +31,6 @@ public class ResolutionForm extends TableClassBasicForm implements ISegmentTable
 	/**
 	 * Globální proměnné třídy
 	 */
-	private Control control;
-
 	private ComboBox<WorkUnitResolutionClass> classTypeCB;
 	private ComboBox<WorkUnitResolutionsSuperClass> superClassTypeCB;
 	/**
@@ -42,7 +41,6 @@ public class ResolutionForm extends TableClassBasicForm implements ISegmentTable
 	public ResolutionForm(FormController formController, String name) {
 		super(formController, name);
 
-		this.control = control;
 		this.setTitle("Edit Resolutions");
 		createForm();
 		getSubmitButton().setOnAction(event -> setActionSubmitButton());
@@ -79,7 +77,7 @@ public class ResolutionForm extends TableClassBasicForm implements ISegmentTable
 			} else {
 				list = Alerts.showDeleteItemAlert(getTableTV(), selection);
 				if (list != null) {
-					deleteControl.deleteResolution(list);
+					formController.deleteResolution(list);
 				}
 
 			}
@@ -150,7 +148,8 @@ public class ResolutionForm extends TableClassBasicForm implements ISegmentTable
 	public void addItem() {
 		String nameST = getNameTF().getText();
 		String classST;
-		String idName = idCreator.createResolutionID() + "_" + nameST;
+		int id = formController.createTableItem(SegmentType.Resolution);
+		String idName = id + "_" + nameST;
 
 		if (classTypeCB.getValue() == null || getClassIndex() == 0) {
 			classST = WorkUnitResolutionClass.UNASSIGNED.name();
@@ -163,8 +162,7 @@ public class ResolutionForm extends TableClassBasicForm implements ISegmentTable
 
 		getTableTV().getItems().add(table);
 		getTableTV().sort();
-	//	getControl().getFillForms().fillResolutionType(idName, formControl.fillTextMapper(nameST), formControl.fillTextMapper(classST), superST, false);
-
+	formController.saveDataFromResolutionForm(nameST, classST, superST, id);
 	}
 
 	@Override

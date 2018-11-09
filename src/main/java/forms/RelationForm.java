@@ -18,6 +18,7 @@ import services.Alerts;
 import services.Control;
 import services.DeleteControl;
 import model.IdentificatorCreater;
+import services.SegmentType;
 import tables.ClassTable;
 /**
  * Třída představující tabulkový formulář pro výčtový typ Relation, odděděná od třídy
@@ -30,8 +31,6 @@ public class RelationForm extends TableClassBasicForm implements ISegmentTableFo
 	/**
 	 * Globální proměnné třídy
 	 */
-	private Control control;
-
 	private ComboBox<WorkUnitRelationClass> classTypeCB;
 	private ComboBox<WorkUnitRelationSuperClass> superClassTypeCB;
 
@@ -42,8 +41,6 @@ public class RelationForm extends TableClassBasicForm implements ISegmentTableFo
 	 */
 	public RelationForm(FormController formController, String name) {
 		super(formController, name);
-
-		this.control = control;
 		this.setTitle("Edit Relations");
 
 		createForm();
@@ -80,7 +77,7 @@ public class RelationForm extends TableClassBasicForm implements ISegmentTableFo
 			} else {
 				list = Alerts.showDeleteItemAlert(getTableTV(), selection);
 				if (list != null) {
-					deleteControl.deleteRelation(list);
+		formController.deleteRelation(list);
 				}
 
 			}
@@ -152,7 +149,8 @@ public class RelationForm extends TableClassBasicForm implements ISegmentTableFo
 	public void addItem() {
 		String nameST = getNameTF().getText();
 		String classST;
-		String idName = idCreator.createRelationID() + "_" + nameST;
+		int id = formController.createTableItem(SegmentType.Relation);
+		String idName = id + "_" + nameST;
 
 		if (classTypeCB.getValue() == null || getClassIndex() == 0) {
 			classST = WorkUnitRelationClass.UNASSIGNED.name();
@@ -165,8 +163,7 @@ public class RelationForm extends TableClassBasicForm implements ISegmentTableFo
 
 		getTableTV().getItems().add(table);
 		getTableTV().sort();
-	//	getControl().getFillForms().fillRelationType(idName,formControl.fillTextMapper(nameST), formControl.fillTextMapper(classST), superST, false);
-
+	formController.saveDataFromRelationForm(nameST, classST, superST, id);
 	}
 
 	@Override

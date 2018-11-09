@@ -18,6 +18,7 @@ import services.Alerts;
 import services.Control;
 import services.DeleteControl;
 import model.IdentificatorCreater;
+import services.SegmentType;
 import tables.ClassTable;
 
 /**
@@ -31,7 +32,6 @@ public class TypeForm extends TableClassBasicForm implements ISegmentTableForm {
 	/**
 	 * Globální proměnné třídy
 	 */
-	private Control control;
 
 	private ComboBox<WorkUnitTypeClass> classTypeCB;
 	private ComboBox<WorkUnitTypeSuperClass> superClassTypeCB;
@@ -44,7 +44,6 @@ public class TypeForm extends TableClassBasicForm implements ISegmentTableForm {
 	public TypeForm(FormController formController, String name) {
 		super(formController, name);
 
-		this.control = control;
 		this.setTitle("Edit WorkUnit type");
 		createForm();
 		getSubmitButton().setOnAction(event -> setActionSubmitButton());
@@ -80,7 +79,7 @@ public class TypeForm extends TableClassBasicForm implements ISegmentTableForm {
 			} else {
 				list = Alerts.showDeleteItemAlert(getTableTV(), selection);
 				if (list != null) {
-					deleteControl.deleteType(list);
+					formController.deleteType(list);
 				}
 
 			}
@@ -149,7 +148,8 @@ public class TypeForm extends TableClassBasicForm implements ISegmentTableForm {
 	public void addItem() {
 		String nameST = getNameTF().getText();
 		String classST;
-		String idName = idCreator.createTypeID() + "_" + nameST;
+		int id = formController.createTableItem(SegmentType.Type);
+		String idName = id + "_" + nameST;
 
 		if (classTypeCB.getValue() == null || getClassIndex() == 0) {
 			classST = WorkUnitTypeClass.UNASSIGNED.name();
@@ -162,9 +162,7 @@ public class TypeForm extends TableClassBasicForm implements ISegmentTableForm {
 
 		getTableTV().getItems().add(table);
 		getTableTV().sort();
-		//getControl().getFillForms().fillType(idName, formControl.fillTextMapper(nameST),
-		//		formControl.fillTextMapper(classST), superST, false);
-
+		formController.saveDataFromTypeForm(nameST, classST, superST, id);
 	}
 
 	@Override

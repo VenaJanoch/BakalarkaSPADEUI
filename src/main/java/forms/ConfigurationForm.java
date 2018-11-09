@@ -83,7 +83,7 @@ public class ConfigurationForm extends DateBasicForm implements ISegmentForm {
         super(formController, canvasController, dgItemPanel, name);
         this.indexForm = indexForm;
 
-        this.tagForm = new TagForm(formController, "Tag");
+        this.tagForm = new TagForm(formController, "Tag", indexForm);
         isNew = true;
         isRelease = true;
 
@@ -123,9 +123,7 @@ public class ConfigurationForm extends DateBasicForm implements ISegmentForm {
     }
 
     @Override
-    public void deleteItem() {
-        formController.deleteConfiguration(indexForm);
-    }
+    public void deleteItem() {}
 
     public void createForm() {
 

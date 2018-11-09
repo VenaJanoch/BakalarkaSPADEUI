@@ -60,10 +60,11 @@ public class CanvasItemController {
      */
     public void setDragFromDragPoint(MouseEvent t, CanvasItem canvasItem, CanvasController canvasController) {
         if (!canvasController.isArrow()) {
+
             double offsetX = t.getSceneX() - canvasItem.getOrgSceneX();
             double offsetY = t.getSceneY() - canvasItem.getOrgSceneY();
             double newTranslateX = canvasItem.getOrgTranslateX() + offsetX;
-            double newTranslateY = canvasItem.getOrgSceneY() + offsetY;
+            double newTranslateY = canvasItem.getOrgTranslateY() + offsetY;
 
             ((AnchorPane) (t.getSource())).setTranslateX(newTranslateX);
             ((AnchorPane) (t.getSource())).setTranslateY(newTranslateY);
@@ -109,29 +110,6 @@ public class CanvasItemController {
         }
 
     }
-
-    /** public void connectItemWithForm(int isCreated){
-
-     if (isCreated == 0) {
-     IDs = control.createForm(this, rootForm);
-     } else if (isCreated == 1) {
-     IDs = control.createFormFromXML(this, rootForm);
-     } else if (isCreated == 2) {
-     IDs = manipulation.createCopyForm(this, rootForm);
-     } else {
-     IDs = manipulation.createCopyWorkUnitForm(this, rootForm);
-     }
-     idForm = IDs[0];
-     ID = type.name() + "_" + String.format("%03d", IDs[1]);
-     if (IDs[0] != 0) {
-     String title = control.getForms().get(IDs[0]).getTitle();
-     control.getForms().get(IDs[0]).getFormName().setText(title + " " + ID);
-
-     }
-
-
-     }**/
-
 
     /**
      * Slouží ke kontorle pozice prvku na plátně, při přejetí hranic plátna je

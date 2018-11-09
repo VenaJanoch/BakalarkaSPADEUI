@@ -33,15 +33,11 @@ public class Table2BasicForm extends BasicForm {
 	private TextField nameTF;
 	private BorderPane mainPanel;
 	private Scene scena;
-	private Control control;
 	private BorderPane internalPanel;
 	private GridPane controlPane;
 	private Button addBT;
 	private Button submitBT;
 	private SplitPane splitPane;
-	protected DeleteControl deleteControl;
-	protected FormControl formControl;
-	protected IdentificatorCreater idCreator;
 
 	/**
 	 * Konstruktor třídy Zinicializuje globální proměnné třídy
@@ -51,8 +47,6 @@ public class Table2BasicForm extends BasicForm {
 
 		super(formController, name);
 		this.setScene(creatScene());
-		this.deleteControl = deleteControl;
-
 	}
 
 
@@ -123,14 +117,6 @@ public class Table2BasicForm extends BasicForm {
 
 	public TextField getNameTF() {
 		return nameTF;
-	}
-
-	public Control getControl() {
-		return control;
-	}
-
-	public void setControl(Control control) {
-		this.control = control;
 	}
 
 	public void setNameTF(TextField nameTF) {

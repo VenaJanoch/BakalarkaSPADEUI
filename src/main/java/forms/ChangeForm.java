@@ -70,7 +70,7 @@ public class ChangeForm extends DescriptionBasicForm implements ISegmentForm {
 		});
 
 		getSubmitButton().setOnAction(event -> setActionSubmitButton());
-		createForm();
+		fillForm();
 
 	}
 
@@ -99,7 +99,7 @@ public class ChangeForm extends DescriptionBasicForm implements ISegmentForm {
 		formController.deleteChange(indexForm);
 	}
 
-	public void createForm() {
+	public void fillForm() {
 
 		existRB = new RadioButton("Exist");
 		existRB.setSelected(true);

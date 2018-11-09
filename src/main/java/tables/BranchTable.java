@@ -9,6 +9,7 @@ public class BranchTable {
 	/** Globální proměnné třídy **/
 	private StringProperty name;
 	private StringProperty main;
+	private int id;
 
 	/**
 	 * Konstruktor třídy 
@@ -17,10 +18,11 @@ public class BranchTable {
 	 * @param main hodnota main
 	 */
 	
-	public BranchTable(String name, String main) {
+	public BranchTable(String name, String main, int id) {
 		super();
 		this.name = new SimpleStringProperty(name);
 		this.main = new SimpleStringProperty(main);
+		this.id = id;
 	}
 
 	/**
@@ -41,13 +43,8 @@ public class BranchTable {
 		this.name.set(name);
 
 	}
-	
-	public final String getMain() {
-		return main.get();
-	}
 
-	public final void setMain(String main) {
-		this.main.set(main);
-
+	public int getId() {
+		return id;
 	}
 }

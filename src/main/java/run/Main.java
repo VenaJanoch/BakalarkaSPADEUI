@@ -10,6 +10,7 @@ import model.FileManipulator;
 import model.IdentificatorCreater;
 import services.Alerts;
 import Controllers.WindowController;
+import services.SegmentLists;
 
 public class Main extends Application {
 
@@ -22,6 +23,7 @@ public class Main extends Application {
 	private DataManipulator dataManipulator;
 	private ProcessGenerator processGenerator;
 	private IdentificatorCreater identificatorCreater;
+	private SegmentLists segmentLists;
 
 	/**
 	 * Hlavní metoda aplikace
@@ -38,12 +40,14 @@ public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 
+		this.segmentLists = new SegmentLists();
 		this.processGenerator = new ProcessGenerator();
 		this.identificatorCreater = new IdentificatorCreater();
 		this.dataManipulator = new DataManipulator(processGenerator, identificatorCreater);
 		fileManipulator = new FileManipulator(processGenerator, dataManipulator);
 		alerts = new Alerts(fileManipulator);
-		this.applicationController = new ApplicationController(primaryStage, fileManipulator, dataManipulator, alerts, identificatorCreater, dataManipulator.getSegmentLists());
+		this.applicationController = new ApplicationController(primaryStage, fileManipulator, dataManipulator, alerts,
+				identificatorCreater, segmentLists);
 		primaryStage.show();
 
 		MainWindow mainWindow = new MainWindow(applicationController);

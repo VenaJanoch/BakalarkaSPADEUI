@@ -24,10 +24,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
-import services.Alerts;
-import services.Constans;
-import services.Control;
-import services.DeleteControl;
+import services.*;
 import model.IdentificatorCreater;
 import tables.BranchTable;
 
@@ -129,7 +126,7 @@ public class BranchForm extends TableBasicForm implements ISegmentTableForm {
 			} else {
 				list = Alerts.showDeleteItemBranchAlert(getTableTV(), selection);
 				if (list != null) {
-					deleteControl.deleteBranch(list);
+					formController.deleteBranch(list);
 				}
 
 			}
@@ -182,13 +179,14 @@ public class BranchForm extends TableBasicForm implements ISegmentTableForm {
 	public void addItem() {
 
 		String nameST = getNameTF().getText();
-		String idName = idCreator.createBranchID() + "_" + nameST;
+		int id = formController.createTableItem(SegmentType.Branch);
+		String idName = id + "_" + nameST;
 
-		BranchTable tag = new BranchTable(idName, main);
-		tableTV.getItems().add(tag);
+		BranchTable branch = new BranchTable(idName, main, id);
+		tableTV.getItems().add(branch);
 		tableTV.sort();
 
-		//getControl().getFillForms().fillBranch(formControl.fillTextMapper(nameST), idName, isMain, false);
+		formController.saveDataFromBranch(nameST, id, isMain);
 	}
 
 	/*** Getrs and Setrs ***/

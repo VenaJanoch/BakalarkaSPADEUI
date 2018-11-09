@@ -18,6 +18,7 @@ import services.Alerts;
 import services.Control;
 import services.DeleteControl;
 import model.IdentificatorCreater;
+import services.SegmentType;
 import tables.ClassTable;
 
 /**
@@ -32,7 +33,6 @@ public class SeverityForm extends TableClassBasicForm implements ISegmentTableFo
 	/**
 	 * Globální proměnné třídy
 	 */
-	private Control control;
 	private ComboBox<WorkUnitSeverityClass> classTypeCB;
 	private ComboBox<WorkUnitSeveritySuperClass> superClassTypeCB;
 
@@ -44,7 +44,6 @@ public class SeverityForm extends TableClassBasicForm implements ISegmentTableFo
 	public SeverityForm(FormController formController, String name) {
 		super(formController, name);
 
-		this.control = control;
 		this.setTitle("Edit Severities");
 		createForm();
 		getSubmitButton().setOnAction(event -> setActionSubmitButton());
@@ -81,7 +80,7 @@ public class SeverityForm extends TableClassBasicForm implements ISegmentTableFo
 			} else {
 				list = Alerts.showDeleteItemAlert(getTableTV(), selection);
 				if (list != null) {
-					deleteControl.deleteSeverity(list);
+					formController.deleteSeverity(list);
 				}
 
 			}
@@ -153,7 +152,8 @@ public class SeverityForm extends TableClassBasicForm implements ISegmentTableFo
 	public void addItem() {
 		String nameST = getNameTF().getText();
 		String classST;
-		String idName = idCreator.createSeverityID() + "_" + nameST;
+		int id = formController.createTableItem(SegmentType.Severity);
+		String idName = id + "_" + nameST;
 
 		if (classTypeCB.getValue() == null || classIndex == 0) {
 			classST = WorkUnitSeverityClass.UNASSIGNED.name();
@@ -166,9 +166,7 @@ public class SeverityForm extends TableClassBasicForm implements ISegmentTableFo
 
 		getTableTV().getItems().add(table);
 		getTableTV().sort();
-		//getControl().getFillForms().fillSeverityType(idName, formControl.fillTextMapper(nameST),
-		//		formControl.fillTextMapper(classST), superST, false);
-
+		formController.saveDataFromSeverity(nameST, classST, superST, id);
 	}
 
 	@Override

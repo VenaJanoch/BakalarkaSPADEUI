@@ -8,6 +8,7 @@ public class CPRTable {
 	/** Globální proměnné třídy **/ 
 	private StringProperty name;
 	private StringProperty role;
+	private int id;
 	
 	/**
 	 * Konstruktor třídy
@@ -15,10 +16,11 @@ public class CPRTable {
 	 * @param name jméno CPR
 	 * @param role jméno vybrané role
 	 */
-	public CPRTable(String name, String role) {
+	public CPRTable(String name, String role, int id) {
 		super();
 		this.name = new SimpleStringProperty(name);
 		this.role = new SimpleStringProperty(role);
+		this.id = id;
 	}
 	
 	/**
@@ -49,4 +51,7 @@ public class CPRTable {
 
 	}
 
+	public int getId() {
+		return id;
+	}
 }

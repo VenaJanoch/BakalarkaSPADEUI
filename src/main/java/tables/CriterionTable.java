@@ -8,6 +8,7 @@ public class CriterionTable {
 	/** Globální proměnné třídy **/
 	private StringProperty name;
 	private StringProperty description;
+	private  int id;
 
 	/**
 	 * Konstruktor třídy Zinicializuje globální proměnné třídy
@@ -17,10 +18,11 @@ public class CriterionTable {
 	 * @param description
 	 *            popis criterion
 	 */
-	public CriterionTable(String name, String description) {
+	public CriterionTable(String name, String description, int id) {
 		super();
 		this.name = new SimpleStringProperty(name);
 		this.description = new SimpleStringProperty(description);
+		this.id = id;
 	}
 
 	/**
@@ -49,5 +51,9 @@ public class CriterionTable {
 	public final void setDescription(String descript) {
 		this.description.set(descript);
 
+	}
+
+	public int getId() {
+		return id;
 	}
 }

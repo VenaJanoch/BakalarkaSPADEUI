@@ -11,7 +11,7 @@ public class MilestoneTable {
 	/** Globální proměnné třídy **/
 	private StringProperty name;
 	private StringProperty criterion;
-
+	private int id;
 	/**
 	 * Konstruktor třídy Zinicializuje globální proměnnné třídy
 	 * 
@@ -20,10 +20,11 @@ public class MilestoneTable {
 	 * @param criterium
 	 *            criterio array
 	 */
-	public MilestoneTable(String name, String criterium) {
+	public MilestoneTable(String name, String criterium, int id) {
 		super();
 		this.name = new SimpleStringProperty(name);
 		this.criterion = new SimpleStringProperty(criterium);
+		this.id = id;
 
 	}
 	
@@ -55,4 +56,7 @@ public class MilestoneTable {
 
 	}
 
+	public int getId() {
+		return id;
+	}
 }

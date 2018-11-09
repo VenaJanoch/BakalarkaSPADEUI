@@ -1,6 +1,5 @@
 package Controllers;
 
-import SPADEPAC.Artifact;
 import abstractform.BasicForm;
 import forms.ConfigurationForm;
 import forms.*;
@@ -11,6 +10,7 @@ import javafx.scene.Node;
 import model.DataManipulator;
 import model.IdentificatorCreater;
 import services.*;
+import tables.*;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -41,8 +41,13 @@ public class FormController {
 
     private FormControl formControl;
     private ApplicationController applicationController;
+    private DeleteControl deleteControl;
 
-    public FormController(IdentificatorCreater identificatorCreater, DataManipulator dataManipulator, ApplicationController applicationController) {
+    private SegmentLists lists;
+
+    public FormController(IdentificatorCreater identificatorCreater, DataManipulator dataManipulator, ApplicationController applicationController, SegmentLists segmentLists) {
+
+        this.lists = segmentLists;
 
         this.applicationController = applicationController;
         this.forms = new ArrayList<>();
@@ -52,7 +57,7 @@ public class FormController {
         this.identificatorCreater = identificatorCreater;
 
         this.formControl = new FormControl();
-
+        this.deleteControl = new DeleteControl();
         projectForm = new ProjectForm(this, "Project");
         forms.add(Constans.projectFormIndex, projectForm);
 
@@ -242,13 +247,13 @@ public class FormController {
         WorkUnitForm workUnitForm = new WorkUnitForm(this, SegmentType.WorkUnit.name());
         forms.add(index, workUnitForm);
 
-        workUnitForm.getAsigneeRoleCB().setItems(dataManipulator.getRoleObservable());
-        workUnitForm.getAuthorRoleCB().setItems(dataManipulator.getRoleObservable());
-        workUnitForm.getPriorityCB().setItems(dataManipulator.getPriorityObservable());
-        workUnitForm.getSeverityCB().setItems(dataManipulator.getSeverityObservable());
-        workUnitForm.getStatusCB().setItems(dataManipulator.getStatusObservable());
-        workUnitForm.getTypeCB().setItems(dataManipulator.getRoleTypeObservable());
-        workUnitForm.getResolutionCB().setItems(dataManipulator.getResolutionObservable());
+        workUnitForm.getAsigneeRoleCB().setItems(lists.getRoleObservable());
+        workUnitForm.getAuthorRoleCB().setItems(lists.getRoleObservable());
+        workUnitForm.getPriorityCB().setItems(lists.getPriorityTypeObservable());
+        workUnitForm.getSeverityCB().setItems(lists.getSeverityTypeObservable());
+        workUnitForm.getStatusCB().setItems(lists.getStatusTypeObservable());
+        workUnitForm.getTypeCB().setItems(lists.getRoleTypeObservable());
+        workUnitForm.getResolutionCB().setItems(lists.getResolutionTypeObservable());
 
         return  index;
     }
@@ -273,8 +278,8 @@ public class FormController {
                 Constans.phaseDragTextIndexs ), SegmentType.Phase.name(), index);
         forms.add(index, phaseForm);
 
-        phaseForm.getConfigCB().setItems(dataManipulator.getConfigurationObservable());
-        phaseForm.getMilestoneCB().setItems(dataManipulator.getMilestoneObservable());
+        phaseForm.getConfigCB().setItems(lists.getConfigObservable());
+        phaseForm.getMilestoneCB().setItems(lists.getMilestoneObservable());
         return  index;
     }
 
@@ -288,7 +293,7 @@ public class FormController {
                 Constans.iterationDragTextIndexs),SegmentType.Iteration.name(), index);
         forms.add(index, iterationForm);
 
-        iterationForm.getConfigCB().setItems(dataManipulator.getConfigurationObservable());
+        iterationForm.getConfigCB().setItems(lists.getConfigObservable());
         return  index;
     }
 
@@ -404,15 +409,15 @@ public class FormController {
     }
 
     public ObservableList<String> getCriterionObservable() {
-        return dataManipulator.getCriterionObservable();
+        return lists.getCriterionObservable();
     }
 
     public ObservableList<String> getRoleObservable() {
-        return dataManipulator.getRoleObservable();
+        return lists.getRoleObservable();
     }
 
     public ObservableList<String> getRoleTypeObservable() {
-       return dataManipulator.getRoleTypeObservable();
+       return lists.getRoleTypeObservable();
     }
 
 
@@ -476,13 +481,21 @@ public class FormController {
     }
 
 
-    public void deleteConfiguration(int indexForm) {
+    public void deleteConfiguration(ObservableList<ConfigTable> list) {
 
-        if (!forms.get(indexForm).isSave()) {
-            forms.remove(indexForm);
-            forms.add(indexForm, null);
+        ArrayList<Integer> indexList = deleteControl.deleteConfig(list);
+        lists.removeItemFromObservableList(SegmentType.Configuration, indexList);
+
+        for(int i : indexList){
+
+            if (!forms.get(i).isSave()) {
+                forms.remove(i);
+                forms.add(i, null);
+            }
+            dataManipulator.removeConfiguration(identificatorCreater.getConfigurationFormIndex(i));
         }
-        dataManipulator.removeConfiguration(indexForm);
+
+
 
     }
 
@@ -544,6 +557,13 @@ public class FormController {
 
         return  true;
     }
+    public void saveDataFromBranch(String nameST, int id, boolean isMain) {
+
+        String nameForManipulator = formControl.fillTextMapper(nameST);
+
+        dataManipulator.addDataToBranch(nameForManipulator, id, isMain);
+    }
+
 
     public void deleteArtifact(int indexForm) {
         if (!forms.get(indexForm).isSave()) {
@@ -586,6 +606,195 @@ public class FormController {
             default:
                 return -1;
         }
+    }
+
+
+    public int createTableItem(SegmentType segmentType) {
+        switch (segmentType) {
+            case Branch:
+                return identificatorCreater.createBranchID();
+            case Priority:
+                return identificatorCreater.createPriorityID();
+            case Severity:
+            return identificatorCreater.createSeverityID();
+            case Milestone:
+             return identificatorCreater.createMilestoneID();
+            case Criterion:
+             return  identificatorCreater.createCriterionID();
+            case Role:
+               return identificatorCreater.createRoleID();
+            case RoleType:
+               return identificatorCreater.createRoleTypeID();
+            case ConfigPersonRelation:
+               return identificatorCreater.createCPRID();
+            case Relation:
+                return identificatorCreater.createRelationID();
+            case Resolution:
+                return identificatorCreater.createResolutionID();
+            case Status:
+                return identificatorCreater.createStatusID();
+            case Type:
+                return identificatorCreater.createTypeID();
+            case Tag:
+                return identificatorCreater.createTagID();
+            default:
+                return -1;
+        }
+    }
+
+    public void deleteBranch(ObservableList<BranchTable> list) {
+        ArrayList indexList = deleteControl.deleteBranch(list);
+        dataManipulator.removeBranch(indexList);
+        lists.removeItemFromObservableList(SegmentType.Branch, indexList);
+
+
+    }
+
+    public void saveDataFromCPR(String nameST, int roleIndex, int configIndex, int index) {
+        String nameForManipulator = formControl.fillTextMapper(nameST);
+        dataManipulator.addDataToCPR(nameForManipulator, roleIndex, configIndex, index);
+
+    }
+
+    public void deleteCPR(ObservableList<CPRTable> list) {
+        ArrayList indexList = deleteControl.deleteCPR(list);
+        dataManipulator.removeCPR(indexList);
+        lists.removeItemFromObservableList(SegmentType.ConfigPersonRelation, indexList);
+    }
+
+    public void saveDataFromCriterionForm(String nameST, String descriptionST, int id) {
+        String nameForManipulator = formControl.fillTextMapper(nameST);
+        String descForManipulator = formControl.fillTextMapper(descriptionST);
+        dataManipulator.addDataToCriterion(nameForManipulator, descForManipulator, id);
+    }
+
+    public void deleteCriterion(ObservableList<CriterionTable> list) {
+        ArrayList indexList = deleteControl.deleteCriterion(list);
+        dataManipulator.removeCriterion(indexList);
+        lists.removeItemFromObservableList(SegmentType.Criterion, indexList);
+    }
+
+    public void saveDataFromMilestoneForm(String nameST, ObservableList<Integer> criterionIndex, int id) {
+
+            String nameForManipulator = formControl.fillTextMapper(nameST);
+            dataManipulator.addDataToMilestone(nameForManipulator, criterionIndex, id);
+      }
+    public void deleteMilestone(ObservableList<MilestoneTable> list) {
+        ArrayList indexList = deleteControl.deleteMilestone(list);
+        dataManipulator.removeMilestone(indexList);
+        lists.removeItemFromObservableList(SegmentType.Milestone, indexList);
+    }
+
+    public void saveDataFromPriority(String nameST, String classST, String superST, int id) {
+
+        String nameForManipulator = formControl.fillTextMapper(nameST);
+        dataManipulator.addDataToPriority(nameForManipulator, classST, superST, id);
+    }
+
+    public void deletePriority(ObservableList<ClassTable> list) {
+        ArrayList indexList = deleteControl.deletePriority(list);
+        dataManipulator.removePriority(indexList);
+        lists.removeItemFromObservableList(SegmentType.Priority, indexList);
+    }
+
+    public void saveDataFromSeverity(String nameST, String classST, String superST, int id) {
+
+        String nameForManipulator = formControl.fillTextMapper(nameST);
+        dataManipulator.addDataToSeverity(nameForManipulator, classST, superST, id);
+    }
+
+    public void deleteSeverity(ObservableList<ClassTable> list) {
+        ArrayList indexList = deleteControl.deleteSeverity(list);
+        dataManipulator.removeSeverity(indexList);
+        lists.removeItemFromObservableList(SegmentType.Severity, indexList);
+    }
+
+    public void saveDataFromResolutionForm(String nameST, String classST, String superST, int id) {
+
+        String nameForManipulator = formControl.fillTextMapper(nameST);
+        dataManipulator.addDataToResolution(nameForManipulator, classST, superST, id);
+    }
+
+    public void deleteResolution(ObservableList<ClassTable> list) {
+        ArrayList indexList = deleteControl.deleteResolution(list);
+        dataManipulator.removeResolution(indexList);
+        lists.removeItemFromObservableList(SegmentType.Resolution, indexList);
+    }
+
+    public void saveDataFromRelationForm(String nameST, String classST, String superST, int id) {
+
+        String nameForManipulator = formControl.fillTextMapper(nameST);
+        dataManipulator.addDataToRelation(nameForManipulator, classST, superST, id);
+    }
+
+    public void deleteRelation(ObservableList<ClassTable> list) {
+        ArrayList indexList = deleteControl.deleteRelation(list);
+        dataManipulator.removeRelation(indexList);
+        lists.removeItemFromObservableList(SegmentType.Relation, indexList);
+    }
+
+    public void saveDataFromRoleForm(String nameST, String desc, int type, int id) {
+
+        String nameForManipulator = formControl.fillTextMapper(nameST);
+        String descForManipulator = formControl.fillTextMapper(desc);
+
+        dataManipulator.addDataToRole(nameForManipulator, descForManipulator, type,id);
+    }
+
+    public void deleteRole(ObservableList<RoleTable> list) {
+        ArrayList indexList = deleteControl.deleteRole(list);
+        dataManipulator.removeRole(indexList);
+        lists.removeItemFromObservableList(SegmentType.Role, indexList);
+    }
+
+    public void saveDataFromRoleTypeForm(String nameST, String classST, String superST, int id) {
+
+        String nameForManipulator = formControl.fillTextMapper(nameST);
+        dataManipulator.addDataToRoleType(nameForManipulator, classST, superST,id);
+    }
+
+    public void deleteRoleType(ObservableList<ClassTable> list) {
+        ArrayList indexList = deleteControl.deleteRoleType(list);
+        dataManipulator.removeRoleType(indexList);
+        lists.removeItemFromObservableList(SegmentType.RoleType, indexList);
+    }
+
+    public void saveDataFromTagForm(String tag, int configId, int id) {
+        String tagForManipulator = formControl.fillTextMapper(tag);
+
+        dataManipulator.addTagToConfiguration(tagForManipulator, configId, id);
+    }
+
+    public void deleteTag(int configId, ObservableList<TagTable> list) {
+
+            ArrayList indexList = deleteControl.deleteTag(list);
+            dataManipulator.removeTag(indexList, configId);
+            lists.removeItemFromObservableList(SegmentType.Tag, indexList);
+
+    }
+
+    public void saveDataFromStatusForm(String nameST, String classST, String superST, int id) {
+
+        String nameForManipulator = formControl.fillTextMapper(nameST);
+        dataManipulator.addDataToStatus(nameForManipulator, classST, superST,id);
+    }
+
+    public void deleteStatus(ObservableList<ClassTable> list) {
+        ArrayList indexList = deleteControl.deleteStatus(list);
+        dataManipulator.removeStatus(indexList);
+        lists.removeItemFromObservableList(SegmentType.Status, indexList);
+    }
+
+    public void saveDataFromTypeForm(String nameST, String classST, String superST, int id) {
+
+        String nameForManipulator = formControl.fillTextMapper(nameST);
+        dataManipulator.addDataToType(nameForManipulator, classST, superST,id);
+    }
+
+    public void deleteType(ObservableList<ClassTable> list) {
+        ArrayList indexList = deleteControl.deleteType(list);
+        dataManipulator.removeType(indexList);
+        lists.removeItemFromObservableList(SegmentType.Type, indexList);
     }
 }
 

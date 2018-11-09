@@ -18,11 +18,8 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
-import services.Alerts;
-import services.Control;
-import services.DeleteControl;
+import services.*;
 import model.IdentificatorCreater;
-import services.OrderCell;
 import tables.TagTable;
 
 /**
@@ -39,14 +36,17 @@ public class TagForm extends TableBasicForm implements ISegmentTableForm {
 	private TableView<TagTable> tableTV;
 	private TextField tagTF;
 
+	private int configId;
+
 	/**
 	 * Konstruktor třídy. Zinicializuje globální proměnné tříd Nastaví velikost
 	 * formuláře
 	 */
-	public TagForm(FormController formController, String name) {
+	public TagForm(FormController formController, String name, int configFormId) {
 
 		super(formController, name);
 		this.setTitle("Edit Tags");
+		this.configId = configFormId;
 		createForm();
 
 	}
@@ -98,7 +98,7 @@ public class TagForm extends TableBasicForm implements ISegmentTableForm {
 			} else {
 				list = Alerts.showDeleteItemTagAlert(getTableTV(), selection);
 				if (list != null) {
-					// deleteControl.deleteTag(config, list); todo controller pro tabulkove formular
+					 formController.deleteTag(configId, list);
 				}
 
 			}
@@ -123,10 +123,13 @@ public class TagForm extends TableBasicForm implements ISegmentTableForm {
 	@Override
 	public void addItem() {
 		String tagST = tagTF.getText();
-		String idName = idCreator.createTagID() + "_" + tagST;
+		int id = formController.createTableItem(SegmentType.Tag);
+
+		String idName = id + "_" + tagST;
 
 		TagTable tag = new TagTable(idName);
-	//	config.getTags().add(formControl.fillTextMapper(tagST));
+		formController.saveDataFromTagForm(tagST, configId, id);
+
 		tableTV.getItems().add(tag);
 		tableTV.sort();
 

@@ -18,6 +18,7 @@ import services.Alerts;
 import services.Control;
 import services.DeleteControl;
 import model.IdentificatorCreater;
+import services.SegmentType;
 import tables.ClassTable;
 
 /**
@@ -31,8 +32,6 @@ public class StatusForm extends TableClassBasicForm implements ISegmentTableForm
 	/**
 	 * Globální proměnné třídy
 	 */
-	private Control control;
-
 	private ComboBox<WorkUnitStatusClass> classTypeCB;
 	private ComboBox<WorkUnitStatusSuperClass> superClassTypeCB;
 
@@ -44,7 +43,6 @@ public class StatusForm extends TableClassBasicForm implements ISegmentTableForm
 	public StatusForm(FormController formController, String name) {
 		super(formController, name);
 
-		this.control = control;
 		this.setTitle("Edit Status");
 		createForm();
 		getSubmitButton().setOnAction(event -> setActionSubmitButton());
@@ -81,7 +79,7 @@ public class StatusForm extends TableClassBasicForm implements ISegmentTableForm
 			} else {
 				list = Alerts.showDeleteItemAlert(getTableTV(), selection);
 				if (list != null) {
-					deleteControl.deleteStatus(list);
+					formController.deleteStatus(list);
 				}
 
 			}
@@ -154,7 +152,8 @@ public class StatusForm extends TableClassBasicForm implements ISegmentTableForm
 	public void addItem() {
 		String nameST = getNameTF().getText();
 		String classST;
-		String idName = idCreator.createStatusID() + "_" + nameST;
+		int id = formController.createTableItem(SegmentType.Status);
+		String idName = id + "_" + nameST;
 
 		if (classTypeCB.getValue() == null || getClassIndex() == 0) {
 			classST = WorkUnitStatusClass.UNASSIGNED.name();
@@ -167,9 +166,7 @@ public class StatusForm extends TableClassBasicForm implements ISegmentTableForm
 
 		getTableTV().getItems().add(table);
 		getTableTV().sort();
-	//	getControl().getFillForms().fillStatusType(idName, formControl.fillTextMapper(nameST),
-			//	formControl.fillTextMapper(classST), superST, false);
-
+	formController.saveDataFromStatusForm(nameST, classST, superST, id);
 	}
 
 	@Override

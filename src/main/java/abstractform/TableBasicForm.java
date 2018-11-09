@@ -29,16 +29,12 @@ public class TableBasicForm extends BasicForm {
 	/** Globální proměnné třídy **/
 	private BorderPane mainPanel;
 	private Scene scena;
-	protected Control control;
 	protected GridPane controlPane;
 	protected Button add;
 	private Button submitButton;
 	protected Label nameLB;
 	protected TextField nameTF;
 	private Label formName;
-	protected DeleteControl deleteControl;
-	protected FormControl formControl;
-	protected IdentificatorCreater idCreator;
 
 	/**
 	 * Konstruktor třídy Zinicializuje globální proměnné třídy
@@ -48,7 +44,6 @@ public class TableBasicForm extends BasicForm {
 	public TableBasicForm(FormController formController, String name) {
 		super(formController, name);
 		this.setScene(creatSceneProject());
-		//this.formControl = new FormControl(control.getLists());
 	}
 
 	/**
@@ -122,28 +117,12 @@ public class TableBasicForm extends BasicForm {
 		this.mainPanel = mainPanel;
 	}
 
-	public Control getControl() {
-		return control;
-	}
-
-	public void setControl(Control control) {
-		this.control = control;
-	}
-
 	public GridPane getControlPane() {
 		return controlPane;
 	}
 
-	public void setControlPane(GridPane controlPane) {
-		this.controlPane = controlPane;
-	}
-
 	public Button getAddBT() {
 		return add;
-	}
-
-	public void setAddBT(Button add) {
-		this.add = add;
 	}
 
 	public Button getSubmitButton() {

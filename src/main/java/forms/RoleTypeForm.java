@@ -18,6 +18,7 @@ import services.Alerts;
 import services.Control;
 import services.DeleteControl;
 import model.IdentificatorCreater;
+import services.SegmentType;
 import tables.ClassTable;
 
 /**
@@ -31,8 +32,6 @@ public class RoleTypeForm extends TableClassBasicForm implements ISegmentTableFo
 	/**
 	 * Globální proměnné třídy
 	 */
-	private Control control;
-
 	private ComboBox<RoleClass> roleClassTypeCB;
 	private ComboBox<RoleSuperClass> roleSuperClassTypeCB;
 
@@ -43,8 +42,6 @@ public class RoleTypeForm extends TableClassBasicForm implements ISegmentTableFo
 	 */
 	public RoleTypeForm(FormController formController, String name) {
 		super(formController, name);
-
-		this.control = control;
 
 		createForm();
 		getSubmitButton().setVisible(false);
@@ -81,7 +78,7 @@ public class RoleTypeForm extends TableClassBasicForm implements ISegmentTableFo
 			} else {
 				list = Alerts.showDeleteItemAlert(getTableTV(), selection);
 				if (list != null) {
-					deleteControl.deleteRoleType(list);
+					formController.deleteRoleType(list);
 				}
 
 			}
@@ -149,7 +146,8 @@ public class RoleTypeForm extends TableClassBasicForm implements ISegmentTableFo
 	public void addItem() {
 		String nameST = getNameTF().getText();
 		String classST;
-		String idName = idCreator.createRoleTypeID() + "_" + nameST;
+		int id = formController.createTableItem(SegmentType.RoleType);
+		String idName = id + "_" + nameST;
 
 		if (roleClassTypeCB.getValue() == null || getClassIndex() == 0) {
 			classST = RoleClass.UNASSIGNED.name();
@@ -162,9 +160,7 @@ public class RoleTypeForm extends TableClassBasicForm implements ISegmentTableFo
 
 		getTableTV().getItems().add(type);
 		getTableTV().sort();
-		//getControl().getFillForms().fillRoleType(idName, formControl.fillTextMapper(nameST),
-		//		formControl.fillTextMapper(classST), superST, Control.objF, false);
-
+		formController.saveDataFromRoleTypeForm(nameST, classST, superST, id);
 	}
 
 	@Override

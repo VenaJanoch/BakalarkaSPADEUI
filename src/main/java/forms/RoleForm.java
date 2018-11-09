@@ -47,12 +47,9 @@ public class RoleForm extends Table2BasicForm implements ISegmentTableForm {
 	private ChoiceBox<String> roleTypeCB;
 	private TableView<RoleTable> tableTV;
 	private int roleIndex;
-	private Control control;
 	private ClassSwitcher classSwitcher;
 	private RoleTypeForm roleTForm;
 	private Label formName;
-
-	private DeleteControl deleteControl;
 
 	/**
 	 * Konstruktor třídy Zinicializuje globální proměnné třídy Nastaví reakci
@@ -61,9 +58,7 @@ public class RoleForm extends Table2BasicForm implements ISegmentTableForm {
 	 */
 	public RoleForm(FormController formController, String name) {
 		super(formController, name);
-		this.control = control;
 		this.roleIndex = 0;
-		this.deleteControl = deleteControl;
 		createForm();
 		getSubmitBT().setOnAction(event -> setActionSubmitButton());
 
@@ -136,7 +131,7 @@ public class RoleForm extends Table2BasicForm implements ISegmentTableForm {
 			} else {
 				list = Alerts.showDeleteItemRoleAlert(getTableTV(), selection);
 				if (list != null) {
-					deleteControl.deleteRole(list);
+					formController.deleteRole(list);
 				}
 
 			}
@@ -183,13 +178,13 @@ public class RoleForm extends Table2BasicForm implements ISegmentTableForm {
 		String nameST = getNameTF().getText();
 		String typeST = roleTypeCB.getValue();
 		String descritpST = descriptionTF.getText();
-		String idName = idCreator.createRoleID() + "_" + nameST;
+		int id = formController.createTableItem(SegmentType.Role);
+		String idName = id + "_" + nameST;
 
 		RoleTable role = new RoleTable(idName, descritpST, typeST);
 		tableTV.getItems().add(role);
 		tableTV.sort();
-		//getControl().getFillForms().fillRole(idName, formControl.fillTextMapper(descritpST),
-		//		formControl.fillTextMapper(nameST), roleIndex, false);
+		formController.saveDataFromRoleForm(nameST, descritpST, roleIndex, id);
 
 	}
 

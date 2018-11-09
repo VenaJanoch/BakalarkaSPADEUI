@@ -3,10 +3,13 @@ package model;
 import Controllers.LinkControl;
 import SPADEPAC.*;
 import XML.ProcessGenerator;
+import forms.CriterionForm;
 import forms.ProjectForm;
+import forms.ResolutionForm;
 import javafx.collections.ObservableList;
 import services.*;
 
+import javax.swing.text.html.HTML;
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
@@ -24,7 +27,7 @@ public class DataManipulator {
     private Project project;
     private ProcessGenerator procesGener;
     private IdentificatorCreater identificatorCreater;
-    private SegmentLists lists;
+
 
     public DataManipulator(ProcessGenerator processGenerator, IdentificatorCreater identificatorCreater) {
         this.procesGener = processGenerator;
@@ -32,8 +35,6 @@ public class DataManipulator {
 
         objF = new ObjectFactory();
         project = objF.createProject();
-        lists = new SegmentLists(project);
-
     }
 
 
@@ -155,10 +156,18 @@ public class DataManipulator {
         linkP.setArtifactIndex(artifactIndex);
         linkP.setChangeIndex(changeIndex);
 
-        lists.getLinksList().add(linkP);
 
-        lists.getChangeList().get(changeIndex).getArtifactIndex().add(artifactIndex);
-        lists.getArtifactList().get(artifactIndex).getChangeIndex().add(changeIndex);
+        project.getLinks().add(linkP);
+
+        project.getChanges().get(changeIndex).getArtifactIndex().add(artifactIndex);
+        project.getArtifacts().get(artifactIndex).getChangeIndex().add(changeIndex);
+    }
+
+    public void removeWorkUnitRelation(int startItemId, int endItemId) {
+
+        project.getWorkUnits().get(startItemId).setRelationIndex(null);
+        project.getWorkUnits().get(endItemId).setRelationIndex(null);
+
     }
 
     public void createWorkUnitRelation(Integer startIndex, Integer endIndex) {
@@ -169,9 +178,9 @@ public class DataManipulator {
         linkP.setLeftUnitIndex(startIndex);
         linkP.setRightUnitIndex(endIndex);
 
-        lists.getLinksList().add(linkP);
-        lists.getWorkUnitList().get(startIndex).setRightUnitIndex(endIndex);
-        lists.getWorkUnitList().get(endIndex).setLeftUnitIndex(startIndex);
+        project.getLinks().add(linkP);
+        project.getWorkUnits().get(startIndex).setRightUnitIndex(endIndex);
+        project.getWorkUnits().get(endIndex).setLeftUnitIndex(startIndex);
 
     }
 
@@ -214,26 +223,6 @@ public class DataManipulator {
         int segmentId = identificatorCreater.getActivityIndex(index);
         project.getActivities().add(segmentId, activity);
 
-    }
-
-    public ObservableList<String> getCriterionObservable() {
-        return lists.getCriterionObservable();
-    }
-
-    public ObservableList<String> getRoleObservable() {
-        return lists.getRoleObservable();
-    }
-
-    public ObservableList<String> getRoleTypeObservable() {
-        return lists.getRoleTypeObservable();
-    }
-
-    public ObservableList<String> getConfigurationObservable() {
-        return lists.getConfigObservable();
-    }
-
-    public ObservableList<String> getMilestoneObservable() {
-        return lists.getMilestoneObservable();
     }
 
     public Coordinates createCoords(int x, int y){
@@ -350,22 +339,6 @@ public class DataManipulator {
         project.getConfiguration().add(index, null);
     }
 
-    public ObservableList<String> getPriorityObservable() {
-        return  lists.getPriorityObservable();
-    }
-
-    public ObservableList<String> getSeverityObservable() {
-        return  lists.getSeverityTypeObservable();
-    }
-
-    public ObservableList<String> getStatusObservable() {
-        return  lists.getStatusTypeObservable();
-    }
-
-    public ObservableList<String> getResolutionObservable() {
-        return  lists.getResolutionTypeObservable();
-    }
-
     public void addDataToChange(String nameForManipulator, String descForManipulator, int x, int y, boolean selected, int indexForm) {
         Change change = project.getChanges().get(indexForm);
         change.setCoordinates(createCoords(x, y));
@@ -414,8 +387,206 @@ public class DataManipulator {
         project.getArtifacts().remove(index);
         project.getArtifacts().add(index, null);
     }
+    public void addDataToBranch(String nameForManipulator, int id, boolean isMain) {
+        Branch branch = objF.createBranch();
+        branch.setIsMain(isMain);
+        branch.setName(nameForManipulator);
+        project.getBranches().add(branch);
+    }
 
-    public SegmentLists getSegmentLists() {
-        return lists;
+    public void removeBranch(ArrayList<Integer> indexList) {
+        for(Integer i : indexList){
+            project.getBranches().remove(i);
+        }
+    }
+
+    public void removeArtifactChangeLink(int artifactID, int changeID) {
+
+
+        project.getArtifacts().get(artifactID).getChangeIndex().remove(0);
+        project.getChanges().get(changeID).getArtifactIndex().remove(0);
+
+    }
+
+    public void addDataToCPR(String nameForManipulator, int roleIndex, int configIndex, int index) {
+
+        ConfigPersonRelation cpr = objF.createConfigPersonRelation();
+        cpr.setConfigurationIndex(configIndex);
+        cpr.setPersonIndex(roleIndex);
+        cpr.setName(nameForManipulator);
+        project.getCpr().add(cpr);
+    }
+
+    public void removeCPR(ArrayList<Integer> indexList) {
+        for(Integer i : indexList){
+            project.getCpr().remove(i);
+        }
+    }
+
+    public void addDataToCriterion(String nameForManipulator, String descForManipulator, int index) {
+
+        Criterion criterion = objF.createCriterion();
+        criterion.setDescription(descForManipulator);
+        criterion.setName(nameForManipulator);
+        project.getCriterions().add(criterion);
+
+    }
+
+    public void removeCriterion(ArrayList<Integer> indexList) {
+        for(Integer i : indexList){
+            project.getCriterions().remove(i);
+        }
+    }
+
+    public void addDataToMilestone(String nameForManipulator, ObservableList<Integer> criterionIndex, int index) {
+
+        Milestone milestone = objF.createMilestone();
+        milestone.getCriteriaIndexs().addAll(criterionIndex);
+        milestone.setName(nameForManipulator);
+        //TODO milestone description? Zjistit Zda ma byt ve formulari
+        project.getMilestones().add(milestone);
+    }
+
+    public void removeMilestone(ArrayList<Integer> indexList) {
+        for(Integer i : indexList){
+            project.getMilestones().remove(i);
+        }
+    }
+
+    public void addDataToPriority(String nameForManipulator, String classST, String superST, int index) {
+
+        Priority priority = objF.createPriority();
+        priority.setPriorityClass(classST);
+        priority.setPrioritySuperClass(superST);
+        priority.setName(nameForManipulator);
+        project.getPriority().add(priority);
+
+    }
+
+    public void removePriority(ArrayList<Integer> indexList) {
+        for(Integer i : indexList){
+            project.getPriority().remove(i);
+        }
+    }
+
+    public void addDataToSeverity(String nameForManipulator, String classST, String superST, int index) {
+
+        Severity severity = objF.createSeverity();
+        severity.setSeverityClass(classST);
+        severity.setSeveritySuperClass(superST);
+        severity.setName(nameForManipulator);
+        project.getSeverity().add(severity);
+
+    }
+
+    public void removeSeverity(ArrayList<Integer> indexList) {
+        for(Integer i : indexList){
+            project.getSeverity().remove(i);
+        }
+    }
+
+    public void addDataToRelation(String nameForManipulator, String classST, String superST, int index) {
+
+        Relation relation = objF.createRelation();
+        relation.setRelationClass(classST);
+        relation.setRelationSuperClass(superST);
+        relation.setName(nameForManipulator);
+        project.getRelation().add(relation);
+
+    }
+
+    public void removeRelation(ArrayList<Integer> indexList) {
+        for(Integer i : indexList){
+            project.getRelation().remove(i);
+        }
+    }
+
+    public void addDataToResolution(String nameForManipulator, String classST, String superST, int index) {
+
+        Resolution resolution = objF.createResolution();
+        resolution.setResolutionClass(classST);
+        resolution.setResolutionSuperClass(superST);
+        resolution.setName(nameForManipulator);
+        project.getResolution().add(resolution);
+
+    }
+
+    public void removeResolution(ArrayList<Integer> indexList) {
+        for(Integer i : indexList){
+            project.getResolution().remove(i);
+        }
+    }
+
+    public void addDataToRole(String nameForManipulator, String descForManipulator, int type, int index) {
+
+        Role role = objF.createRole();
+        role.setDescription(descForManipulator);
+        role.setName(nameForManipulator);
+        role.setType(type);
+        project.getRoles().add(role);
+    }
+
+    public void removeRole(ArrayList<Integer> indexList) {
+        for(Integer i : indexList){
+            project.getRoles().remove(i);
+        }
+    }
+
+    public void addDataToRoleType(String nameForManipulator, String classST, String superST, int index) {
+
+        RoleType roleType = objF.createRoleType();
+        roleType.setRoleClass(classST);
+        roleType.setRoleSuperClass(superST);
+        roleType.setName(nameForManipulator);
+        project.getRoleType().add(roleType);
+    }
+
+    public void removeRoleType(ArrayList<Integer> indexList) {
+        for(Integer i : indexList){
+            project.getRoleType().remove(i);
+        }
+    }
+
+    public void addTagToConfiguration(String tag, int configId, int index) {
+        Configuration configuration = project.getConfiguration().get(configId);
+        configuration.getTags().add(tag);
+    }
+
+    public void removeTag(ArrayList<Integer> indexList, int configId) {
+        Configuration configuration = project.getConfiguration().get(configId);
+        for(Integer i : indexList){
+            configuration.getTags().remove(i);
+        }
+
+    }
+
+    public void addDataToStatus(String nameForManipulator, String classST, String superST, int index) {
+
+        Status status = objF.createStatus();
+        status.setStatusClass(classST);
+        status.setStatusSuperClass(superST);
+        status.setName(nameForManipulator);
+        project.getStatus().add(status);
+    }
+
+    public void removeStatus(ArrayList<Integer> indexList) {
+        for(Integer i : indexList){
+            project.getStatus().remove(i);
+        }
+    }
+
+    public void addDataToType(String nameForManipulator, String classST, String superST, int index) {
+
+        Type type = objF.createType();
+        type.setTypeClass(classST);
+        type.setTypeSuperClass(superST);
+        type.setName(nameForManipulator);
+        project.getTypes().add(type);
+    }
+
+    public void removeType(ArrayList<Integer> indexList) {
+        for(Integer i : indexList){
+            project.getTypes().remove(i);
+        }
     }
 }

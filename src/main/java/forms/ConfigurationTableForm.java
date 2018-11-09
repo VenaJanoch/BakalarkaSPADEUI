@@ -85,10 +85,6 @@ public class ConfigurationTableForm extends Table2BasicForm implements ISegmentT
 	 */
 	public void createConfigItem() {
 
-		//CanvasItem item = new CanvasItem(SegmentType.Configuration, "New", getControl(), getControl().getForms().get(0),
-		//		0, 0, 0, getControl().getContexMenu(), getControl().getLinkControl(), getControl().getCanvas());
-//TODO Opravit nevim co to je
-		//form = getControl().getForms().get(item.getIDs()[0]);
 		int id  = formController.createNewForm(SegmentType.Configuration, null);
 		getSubmitButton().setText("Add");
 		getMainPanel().setCenter(formController.getMainPanelFromForm(id));
@@ -156,7 +152,7 @@ public class ConfigurationTableForm extends Table2BasicForm implements ISegmentT
 			} else {
 				list = Alerts.showDeleteItemConfigAlert(getTableTV(), selection);
 				if (list != null) {
-					deleteControl.deleteConfig(list);
+					formController.deleteConfiguration(list);
 				}
 
 			}

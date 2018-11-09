@@ -20,6 +20,7 @@ import services.Alerts;
 import services.Control;
 import services.DeleteControl;
 import model.IdentificatorCreater;
+import services.SegmentType;
 import tables.ClassTable;
 
 /**
@@ -34,8 +35,6 @@ public class PriorityForm extends TableClassBasicForm implements ISegmentTableFo
 	/**
 	 * Globální proměnné třídy
 	 */
-	private Control control;
-
 	private ChoiceBox<WorkUnitPriorityClass> classTypeCB;
 	private ChoiceBox<WorkUnitPrioritySuperClass> superClassTypeCB;
 
@@ -49,8 +48,6 @@ public class PriorityForm extends TableClassBasicForm implements ISegmentTableFo
 	 */
 	public PriorityForm(FormController formController, String name) {
 		super(formController, name);
-
-		this.control = control;
 		this.setTitle("Edit Priority");
 		createForm();
 		getSubmitButton().setOnAction(event -> setActionSubmitButton());
@@ -86,7 +83,7 @@ public class PriorityForm extends TableClassBasicForm implements ISegmentTableFo
 			} else {
 				list = Alerts.showDeleteItemAlert(getTableTV(), selection);
 				if (list != null) {
-					deleteControl.deletePriority(list);
+					formController.deletePriority(list);
 				}
 
 			}
@@ -159,9 +156,11 @@ public class PriorityForm extends TableClassBasicForm implements ISegmentTableFo
 	@Override
 	public void addItem() {
 		String nameST = getNameTF().getText();
-		String idName = idCreator.createPriorityID() + "_" + nameST;
+
 		String classST;
-		
+		int id = formController.createTableItem(SegmentType.Priority);
+		String idName = id + "_" + nameST;
+
 		if (classTypeCB.getValue() == null || classIndex == 0) {
 		classST = WorkUnitPriorityClass.UNASSIGNED.name();	
 		}else{
@@ -173,8 +172,7 @@ public class PriorityForm extends TableClassBasicForm implements ISegmentTableFo
 
 		getTableTV().getItems().add(table);
 		getTableTV().sort();
-		//getControl().getFillForms().fillPriorityType(idName,formControl.fillTextMapper(nameST), formControl.fillTextMapper(classST), superST, new ObjectFactory(),false);
-
+		formController.saveDataFromPriority(nameST, classST, superST, id);
 	}
 
 	@Override

@@ -58,7 +58,6 @@ public class MilestoneForm extends Table2BasicForm implements ISegmentTableForm 
 	public MilestoneForm(FormController formController, String name) {
 
 		super(formController, name);
-		//this.setTitle("Edit Milestone");
 		createForm();
 		getSubmitBT().setOnAction(event -> setActionSubmitButton());
 
@@ -132,7 +131,7 @@ public class MilestoneForm extends Table2BasicForm implements ISegmentTableForm 
 			} else {
 				list = Alerts.showDeleteItemMilestoneAlert(getTableTV(), selection);
 				if (list != null) {
-					deleteControl.deleteMilestone(list);
+					formController.deleteMilestone(list);
 				}
 
 			}
@@ -168,16 +167,20 @@ public class MilestoneForm extends Table2BasicForm implements ISegmentTableForm 
 	public void addItem() {
 
 		String nameST = getNameTF().getText();
-		String idName = idCreator.createMilestoneID() + "_" + nameST;
 		String criterion = "";
+
 		if (criterionArray != null) {
 			criterion = criterionArray.toString();
 		}
 
-		MilestoneTable milestone = new MilestoneTable(idName, criterion);
+		int id = formController.createTableItem(SegmentType.Milestone);
+		String idName = id + "_" + nameST;
+
+
+		MilestoneTable milestone = new MilestoneTable(idName, criterion, id);
 		tableTV.getItems().add(milestone);
 		tableTV.sort();
-		//getControl().getFillForms().fillMilestone(idName, formControl.fillTextMapper(nameST), criterionIndex, false);
+		formController.saveDataFromMilestoneForm(nameST, criterionIndex, id );
 		criteriaCB.getCheckModel().clearChecks();
 
 	}

@@ -6,6 +6,7 @@ import graphics.ChangeArtifactLink;
 import graphics.NodeLink;
 import graphics.WorkUnitLink;
 import javafx.geometry.Point2D;
+import model.DataManipulator;
 import model.IdentificatorCreater;
 import services.*;
 
@@ -13,7 +14,6 @@ public class LinkControl {
 
 	/** Globální proměnné třídy */
 
-	private SegmentLists lists;
 	private int id;
 
 	private ChangeArtifactLink changeArtifactLink;
@@ -26,14 +26,18 @@ public class LinkControl {
 	private FormController formController;
 	private SegmentLists segmentLists;
 
+	private DataManipulator dataManipulator;
+
 	/**
 	 * Konstruktor třídy Zinicializuje globální proměnné třídy
 	 *
 	 */
-	public LinkControl(FormController formController, IdentificatorCreater identificatorCreater, SegmentLists segmentLists) {
+	public LinkControl(FormController formController, IdentificatorCreater identificatorCreater, SegmentLists segmentLists,
+					   DataManipulator dataManipulator) {
 		this.segmentLists = segmentLists;
 		this.identificatorCreater = identificatorCreater;
 		this.formController = formController;
+		this.dataManipulator = dataManipulator;
 	}
 	
 
@@ -191,9 +195,7 @@ public class LinkControl {
 
 		segmentLists.removeArrow(arrowId);
 
-		lists.getArtifactList().get(artifactID).getChangeIndex().remove(0);
-		lists.getChangeList().get(changeID).getArtifactIndex().remove(0);
-
+		dataManipulator.removeArtifactChangeLink(artifactID, changeID);
 	}
 
 	/**
@@ -202,7 +204,7 @@ public class LinkControl {
 	public void deleteWorkUnitArrow(LinkController linkController) {
 
 		segmentLists.removeArrow(linkController.getLinkId());
-		segmentLists.removeWorkUnitRelation(linkController.getStartItemId(), linkController.getEndItemId());
+		dataManipulator.removeWorkUnitRelation(linkController.getStartItemId(), linkController.getEndItemId());
 	}
 
 	/**

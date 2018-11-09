@@ -23,6 +23,8 @@ import services.Alerts;
 import services.Control;
 import services.DeleteControl;
 import model.IdentificatorCreater;
+import services.SegmentType;
+import tables.BranchTable;
 import tables.CriterionTable;
 
 /**
@@ -39,7 +41,6 @@ public class CriterionForm extends TableBasicForm implements ISegmentTableForm {
 	private Label descriptionLB;
 	private TextField descriptionTF;
 	private TableView<CriterionTable> tableTV;
-	private Control control;
 
 	/**
 	 * Konstruktor třídy Zinicializuje globální proměnné tříd
@@ -49,7 +50,6 @@ public class CriterionForm extends TableBasicForm implements ISegmentTableForm {
 
 	 public CriterionForm(FormController formController, String name) {
 		super(formController, name);
-		this.control = control;
 
 		getSubmitButton().setVisible(false);
 		createForm();
@@ -109,7 +109,7 @@ public class CriterionForm extends TableBasicForm implements ISegmentTableForm {
 			} else {
 				list = Alerts.showDeleteItemCriterionAlert(getTableTV(), selection);
 				if (list != null) {
-					deleteControl.deleteCriterion(list);
+					formController.deleteCriterion(list);
 				}
 
 			}
@@ -146,13 +146,14 @@ public class CriterionForm extends TableBasicForm implements ISegmentTableForm {
 	public void addItem() {
 		String nameST = nameTF.getText();
 		String descriptionST = descriptionTF.getText();
-		String idName = idCreator.createCriterionID() + "_" + nameST;
 
-		CriterionTable criterion = new CriterionTable(idName, descriptionST);
+		int id = formController.createTableItem(SegmentType.Criterion);
+		String idName = id + "_" + nameST;
+
+		CriterionTable criterion = new CriterionTable(idName, descriptionST, id);
 		tableTV.getItems().add(criterion);
 		tableTV.sort();
-		//control.getFillForms().fillCriterion(idName, formControl.fillTextMapper(nameST),
-		//		formControl.fillTextMapper(descriptionST), Control.objF, false);
+		formController.saveDataFromCriterionForm(nameST, descriptionST, id);
 	}
 
 	public TableView<CriterionTable> getTableTV() {

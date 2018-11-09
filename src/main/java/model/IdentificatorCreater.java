@@ -2,7 +2,6 @@ package model;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.function.Supplier;
 
 public class IdentificatorCreater {
 	/** Globální proměnné třídy **/
@@ -38,7 +37,8 @@ public class IdentificatorCreater {
 	private Map<Integer, Integer> phaseIndexMaper = new HashMap<>();
 	private Map<Integer, Integer> iterationIndexMaper = new HashMap<>();
 	private Map<Integer, Integer> activityIndexMaper = new HashMap<>();
-	private Map<Integer, Integer> configurationIndexMaper = new HashMap<>();
+	private Map<Integer, Integer> configurationFormToIndexMaper = new HashMap<>();
+	private Map<Integer, Integer> configurationIndexToFormMaper = new HashMap<>();
 
     /**
 	 * Metody pro inkrementaci počtu daného prvku
@@ -174,7 +174,8 @@ public class IdentificatorCreater {
 
 	public int createConfigurationID() {
 		configID++;
-		configurationIndexMaper.put(index, configID);
+		configurationFormToIndexMaper.put(index, configID);
+		configurationIndexToFormMaper.put(configID, index);
 		index++;
 		return index -1;
 	}
@@ -209,8 +210,12 @@ public class IdentificatorCreater {
 		return activityIndexMaper.get(formIdentificator);
 	}
 
+	public Integer getConfigurationFormIndex(int index) {
+		return configurationIndexToFormMaper.get(index);
+	}
+
 	public Integer getConfigurationIndex(int formIdentificator){
-		return configurationIndexMaper.get(formIdentificator);
+		return configurationFormToIndexMaper.get(formIdentificator);
 	}
 
 
@@ -232,6 +237,4 @@ public class IdentificatorCreater {
 	public Map<Integer, Integer> getWorkUnitIndexMaper() {
 		return  workUnitIndexMaper;
 	}
-
-
 }
