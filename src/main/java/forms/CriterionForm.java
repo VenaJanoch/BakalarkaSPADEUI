@@ -1,6 +1,7 @@
 package forms;
 
 import Controllers.FormController;
+import Controllers.FormDataController;
 import abstractform.TableBasicForm;
 import interfaces.ISegmentTableForm;
 import javafx.collections.FXCollections;
@@ -24,6 +25,7 @@ import services.Control;
 import services.DeleteControl;
 import model.IdentificatorCreater;
 import services.SegmentType;
+import sun.text.resources.FormatData;
 import tables.BranchTable;
 import tables.CriterionTable;
 
@@ -48,8 +50,8 @@ public class CriterionForm extends TableBasicForm implements ISegmentTableForm {
 	 *
 	 */
 
-	 public CriterionForm(FormController formController, String name) {
-		super(formController, name);
+	 public CriterionForm(FormController formController, FormDataController formDataController, String name) {
+		super(formController, formDataController, name);
 
 		getSubmitButton().setVisible(false);
 		createForm();
@@ -109,7 +111,7 @@ public class CriterionForm extends TableBasicForm implements ISegmentTableForm {
 			} else {
 				list = Alerts.showDeleteItemCriterionAlert(getTableTV(), selection);
 				if (list != null) {
-					formController.deleteCriterion(list);
+					formDataController.deleteCriterion(list);
 				}
 
 			}
@@ -153,7 +155,7 @@ public class CriterionForm extends TableBasicForm implements ISegmentTableForm {
 		CriterionTable criterion = new CriterionTable(idName, descriptionST, id);
 		tableTV.getItems().add(criterion);
 		tableTV.sort();
-		formController.saveDataFromCriterionForm(nameST, descriptionST, id);
+		formDataController.saveDataFromCriterionForm(nameST, idName, descriptionST, id);
 	}
 
 	public TableView<CriterionTable> getTableTV() {

@@ -1,6 +1,7 @@
 package forms;
 
 import Controllers.FormController;
+import Controllers.FormDataController;
 import SPADEPAC.WorkUnitTypeClass;
 import SPADEPAC.WorkUnitTypeSuperClass;
 import abstractform.TableClassBasicForm;
@@ -41,8 +42,8 @@ public class TypeForm extends TableClassBasicForm implements ISegmentTableForm {
 	 * potvrzovací tlačítko
 	 *
 	 */
-	public TypeForm(FormController formController, String name) {
-		super(formController, name);
+	public TypeForm(FormController formController, FormDataController formDataController, String name) {
+		super(formController, formDataController, name);
 
 		this.setTitle("Edit WorkUnit type");
 		createForm();
@@ -79,7 +80,7 @@ public class TypeForm extends TableClassBasicForm implements ISegmentTableForm {
 			} else {
 				list = Alerts.showDeleteItemAlert(getTableTV(), selection);
 				if (list != null) {
-					formController.deleteType(list);
+					formDataController.deleteType(list);
 				}
 
 			}
@@ -162,7 +163,7 @@ public class TypeForm extends TableClassBasicForm implements ISegmentTableForm {
 
 		getTableTV().getItems().add(table);
 		getTableTV().sort();
-		formController.saveDataFromTypeForm(nameST, classST, superST, id);
+		formDataController.saveDataFromTypeForm(nameST, idName, classST, superST, id);
 	}
 
 	@Override

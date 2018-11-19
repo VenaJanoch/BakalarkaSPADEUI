@@ -32,9 +32,9 @@ public class MainWindow extends Stage {
 	 * 
 	 * @param
 	 */
-	public MainWindow(ApplicationController applicationController) {
+	public MainWindow(WindowController windowController, ApplicationController applicationController) {
 		super();
-		this.windowController = applicationController.getWindowController();
+		this.windowController = windowController;
 		this.canvasController = new CanvasController(CanvasType.Project, applicationController);
 		this.formController = applicationController.getFormController();
 
@@ -54,9 +54,6 @@ public class MainWindow extends Stage {
 	private Scene creatScene() {
 
 		scena = new Scene(creatPanel(), Constans.width, Constans.height);
-
-		//dragCanvas.setMScene(scena); Todo je to potreba
-
 		return scena;
 	}
 

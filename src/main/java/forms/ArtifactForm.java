@@ -3,6 +3,7 @@ package forms;
 import java.time.LocalDate;
 
 import Controllers.FormController;
+import Controllers.FormDataController;
 import SPADEPAC.Artifact;
 import SPADEPAC.ArtifactClass;
 import SPADEPAC.Configuration;
@@ -55,8 +56,8 @@ public class ArtifactForm extends DateDescBasicForm implements ISegmentForm {
 	 * Konstruktor třídy Zinicializuje globální proměnné tříd Nastaví velikost
 	 * okna a reakci na uzavření formuláři
 	 */
-	public ArtifactForm(FormController formController, String name, int indexForm) {
-		super(formController, name);
+	public ArtifactForm(FormController formController, FormDataController formDataController, String name, int indexForm) {
+		super(formController, formDataController, name);
 		this.indexForm = indexForm;
 
 		getMainPanel().setMinSize(Constans.littleformWidth, Constans.littleformHeight);
@@ -86,7 +87,7 @@ public class ArtifactForm extends DateDescBasicForm implements ISegmentForm {
 		String type = ArtifactClass.values()[typeIndex].name();
 		String desc = getDescriptionTF().getText();
 
-		isSave = formController.saveDataFromArtifact(actName, createdDate, type, desc, authorIndex, typeIndex, existRB.isSelected(), indexForm);
+		isSave = formDataController.saveDataFromArtifact(actName, createdDate, type, desc, authorIndex, typeIndex, existRB.isSelected(), indexForm);
 	}
 
 	@Override

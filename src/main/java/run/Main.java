@@ -24,6 +24,7 @@ public class Main extends Application {
 	private ProcessGenerator processGenerator;
 	private IdentificatorCreater identificatorCreater;
 	private SegmentLists segmentLists;
+	private WindowController windowController;
 
 	/**
 	 * Hlavní metoda aplikace
@@ -44,13 +45,14 @@ public class Main extends Application {
 		this.processGenerator = new ProcessGenerator();
 		this.identificatorCreater = new IdentificatorCreater();
 		this.dataManipulator = new DataManipulator(processGenerator, identificatorCreater);
-		fileManipulator = new FileManipulator(processGenerator, dataManipulator);
-		alerts = new Alerts(fileManipulator);
-		this.applicationController = new ApplicationController(primaryStage, fileManipulator, dataManipulator, alerts,
+		this.fileManipulator = new FileManipulator(processGenerator, dataManipulator);
+		this.alerts = new Alerts(fileManipulator);
+		this.applicationController = new ApplicationController(fileManipulator, dataManipulator, alerts,
 				identificatorCreater, segmentLists);
 		primaryStage.show();
+		this.windowController = new WindowController(primaryStage,fileManipulator,dataManipulator,alerts);
 
-		MainWindow mainWindow = new MainWindow(applicationController);
+		MainWindow mainWindow = new MainWindow(windowController, applicationController);
 
 	}
 

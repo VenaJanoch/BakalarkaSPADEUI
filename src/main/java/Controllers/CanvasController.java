@@ -78,7 +78,6 @@ public class CanvasController {
 
         int formIndex = getFormIndexFromNewForm(type, canvasType);
         String segmentId = createSegmentId(type, formIndex);
-        // todo SegmentIdentificator
         CanvasItem item = canvasItemController.createCanvasItem(type,segmentId,formIndex,"New", x, y, this);
         canvas.getCanvas().getChildren().add(item);
         listOfItemOnCanvas.put(formIndex, item);

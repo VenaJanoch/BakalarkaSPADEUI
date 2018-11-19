@@ -39,13 +39,13 @@ public class FormController {
     private ProjectForm projectForm;
     private TypeForm typeForm;
 
-    private FormControl formControl;
     private ApplicationController applicationController;
     private DeleteControl deleteControl;
-
     private SegmentLists lists;
+    private FormDataController formDataController;
 
-    public FormController(IdentificatorCreater identificatorCreater, DataManipulator dataManipulator, ApplicationController applicationController, SegmentLists segmentLists) {
+    public FormController(IdentificatorCreater identificatorCreater, DataManipulator dataManipulator,
+                          ApplicationController applicationController, SegmentLists segmentLists, DeleteControl deleteControl) {
 
         this.lists = segmentLists;
 
@@ -56,48 +56,52 @@ public class FormController {
         this.dataManipulator = dataManipulator;
         this.identificatorCreater = identificatorCreater;
 
-        this.formControl = new FormControl();
-        this.deleteControl = new DeleteControl();
-        projectForm = new ProjectForm(this, "Project");
+        this.deleteControl = deleteControl;
+        }
+
+    public void initBasicForms(FormDataController formDataController){
+
+        this.formDataController = formDataController;
+
+        projectForm = new ProjectForm(this, formDataController, "Project");
         forms.add(Constans.projectFormIndex, projectForm);
 
-        milestoneForm = new MilestoneForm(this, "Milestone");
+        milestoneForm = new MilestoneForm(this, formDataController, "Milestone");
         forms.add(Constans.milestoneFormIndex, milestoneForm);
 
-        roleForm = new RoleForm(this, "Role");
+        roleForm = new RoleForm(this, formDataController,"Role");
         forms.add(Constans.roleFormIndex, roleForm);
 
-        CPRForm = new ConfigPersonRelationForm(this, "Configuration Person RElation");
+        CPRForm = new ConfigPersonRelationForm(this, formDataController,"Configuration Person RElation");
         forms.add(Constans.cprFormIndex, CPRForm);
 
-        priorityForm = new PriorityForm(this, "Priority");
+        priorityForm = new PriorityForm(this, formDataController,"Priority");
         forms.add(Constans.priorityFormIndex, priorityForm);
 
-        severityForm = new SeverityForm(this, "Severity");
+        severityForm = new SeverityForm(this, formDataController,"Severity");
         forms.add(Constans.severityFormIndex, severityForm);
 
-        relationForm = new RelationForm(this, "Relation");
+        relationForm = new RelationForm(this, formDataController,"Relation");
         forms.add(Constans.relationFormIndex, relationForm);
 
-        resolutionForm = new ResolutionForm(this, "Resolution");
+        resolutionForm = new ResolutionForm(this, formDataController,"Resolution");
         forms.add(Constans.resolutionormIndex, resolutionForm);
 
-        statusForm = new StatusForm(this, "Status");
+        statusForm = new StatusForm(this, formDataController,"Status");
         forms.add(Constans.statusFormIndex, statusForm);
 
-        typeForm = new TypeForm(this, "Type");
+        typeForm = new TypeForm(this, formDataController,"Type");
         forms.add(Constans.wuTypeFormIndex, typeForm);
 
 
-        branchFrom = new BranchForm(this, "Branch");
+        branchFrom = new BranchForm(this, formDataController,"Branch");
         forms.add(Constans.branchIndex, branchFrom);
 
         forms.add(Constans.configurationFormIndex, null);
-        confTableForm = new ConfigurationTableForm(this,"Configuration");
+        confTableForm = new ConfigurationTableForm(this,formDataController,"Configuration");
         forms.remove(Constans.configurationFormIndex);
         forms.add(Constans.configurationFormIndex, confTableForm);
     }
-
 
     public void deleteIterationForm(int formIdentificator) {
 
@@ -215,7 +219,7 @@ public class FormController {
     private int createNewArtifactForm() {
        int index = identificatorCreater.createArtifactID();
        dataManipulator.createNewArtifact(index);
-       ArtifactForm artifactForm = new ArtifactForm(this, SegmentType.Artifact.name(), index);
+       ArtifactForm artifactForm = new ArtifactForm(this, formDataController,  SegmentType.Artifact.name(), index);
        forms.add(index, artifactForm);
        return index;
     }
@@ -223,7 +227,7 @@ public class FormController {
     private int createNewChangeForm() {
         int index = identificatorCreater.createChangeID();
         dataManipulator.createNewChance(index);
-        ChangeForm changeForm = new ChangeForm(this, SegmentType.Change.name(), index);
+        ChangeForm changeForm = new ChangeForm(this, formDataController, SegmentType.Change.name(), index);
         forms.add(index, changeForm);
         return index;
     }
@@ -232,7 +236,7 @@ public class FormController {
         int index = identificatorCreater.createConfigurationID();
         dataManipulator.createNewConfiguration(index);
         CanvasController canvasController = new CanvasController(CanvasType.Configuration, applicationController);
-        ConfigurationForm configurationForm = new ConfigurationForm(this, canvasController,
+        ConfigurationForm configurationForm = new ConfigurationForm(this, formDataController,  canvasController,
                 new DragAndDropItemPanel(Constans.configurationDragTextIndexs), SegmentType.Configuration.name(), index);
         forms.add(configurationForm);
 
@@ -244,7 +248,7 @@ public class FormController {
 
         int index = identificatorCreater.createWorkUnitID();
         dataManipulator.createNewWorkUnit(index);
-        WorkUnitForm workUnitForm = new WorkUnitForm(this, SegmentType.WorkUnit.name());
+        WorkUnitForm workUnitForm = new WorkUnitForm(this, formDataController,  SegmentType.WorkUnit.name());
         forms.add(index, workUnitForm);
 
         workUnitForm.getAsigneeRoleCB().setItems(lists.getRoleObservable());
@@ -262,7 +266,7 @@ public class FormController {
         int index = identificatorCreater.createActivityID();
         dataManipulator.createNewActivity(index);
         CanvasController canvasController = new CanvasController(CanvasType.Activity, applicationController);
-        ActivityForm activityForm = new ActivityForm(this, canvasController, new DragAndDropItemPanel(canvasController,
+        ActivityForm activityForm = new ActivityForm(this, formDataController,  canvasController, new DragAndDropItemPanel(canvasController,
                 Constans.activityDragTextIndexs), SegmentType.Activity.name(), index);
         forms.add(index, activityForm);
 
@@ -274,7 +278,7 @@ public class FormController {
         int index = identificatorCreater.createPhaseID();
         dataManipulator.createNewPhase(index);
         CanvasController canvasController = new CanvasController(CanvasType.Phase, applicationController);
-        PhaseForm phaseForm = new PhaseForm(this, canvasController, new DragAndDropItemPanel(canvasController,
+        PhaseForm phaseForm = new PhaseForm(this, formDataController,  canvasController, new DragAndDropItemPanel(canvasController,
                 Constans.phaseDragTextIndexs ), SegmentType.Phase.name(), index);
         forms.add(index, phaseForm);
 
@@ -289,7 +293,7 @@ public class FormController {
         dataManipulator.createNewIteration(index);
         CanvasController canvasController = new CanvasController(CanvasType.Iteration, applicationController);
 
-        IterationForm iterationForm = new IterationForm(this, canvasController, new DragAndDropItemPanel(canvasController,
+        IterationForm iterationForm = new IterationForm(this, formDataController,  canvasController, new DragAndDropItemPanel(canvasController,
                 Constans.iterationDragTextIndexs),SegmentType.Iteration.name(), index);
         forms.add(index, iterationForm);
 
@@ -316,55 +320,6 @@ public class FormController {
         return coords;
     }
 
-    public int prepareIndexForManipulator(int index){
-        if(index != 0){
-            return  index -1;
-        }
-        return index;
-    }
-
-    private List<Integer> prepareIndexsForManipulator(List<Integer> indexis) {
-        List<Integer> tmpIndexis = new ArrayList<>();
-        for (int index : indexis) {
-            tmpIndexis.add(prepareIndexForManipulator(index));
-        }
-        return tmpIndexis;
-    }
-
-    public boolean saveDataFromPhaseForm(String actName, LocalDate endDateL, String desc,int confIndex, int milestoneIndex, Map<Integer, CanvasItem> itemIndexList,
-                                         int indexForm) {
-        String nameForManipulator = formControl.fillTextMapper(actName);
-        String descriptionForManipulator = formControl.fillTextMapper(desc);
-
-        int[] coords = getCoordsFromItem(indexForm);
-
-        dataManipulator.addDataToPhase(nameForManipulator, endDateL, descriptionForManipulator, prepareIndexForManipulator(confIndex),
-                prepareIndexForManipulator(milestoneIndex), coords[0], coords[1], itemIndexList.keySet(), indexForm);
-        return true;
-    }
-
-    public boolean saveDataFromIterationForm(String actName, LocalDate startDate, LocalDate endDate, String desc, int chooseConfigID, Map<Integer,CanvasItem> itemIndexList, int indexForm) {
-        String nameForManipulator = formControl.fillTextMapper(actName);
-        String descriptionForManipulator = formControl.fillTextMapper(desc);
-
-        int[] coords = getCoordsFromItem(indexForm);
-
-        dataManipulator.addDataToIteration(nameForManipulator,startDate, endDate, descriptionForManipulator, prepareIndexForManipulator(chooseConfigID),
-                coords[0], coords[1], itemIndexList.keySet(), indexForm);
-        return true;
-    }
-
-    public boolean saveDataFromActivityForm(String actName, String desc, Map<Integer, CanvasItem> mapOfItemOnCanvas, int indexForm) {
-
-        String nameForManipulator = formControl.fillTextMapper(actName);
-        String descriptionForManipulator = formControl.fillTextMapper(desc);
-        int[] coords = getCoordsFromItem(indexForm);
-
-        dataManipulator.addDataToActivity(nameForManipulator, descriptionForManipulator, coords[0], coords[1], mapOfItemOnCanvas.keySet(), indexForm);
-        return true;
-
-    }
-
     public void removeCanvasItemFromList(int id) {
         canvasItemList.put(id,null);
     }
@@ -373,9 +328,8 @@ public class FormController {
         canvasItemList.put(formIndex,item);
     }
 
-
     public void createChangeArtifactRelation(int startId, int endId) {
-
+        //TODO mozna pridat do FormDataControlleru
         Integer artifactStartIndex = identificatorCreater.getArtifactIndex(startId);
         Integer artifactEndIndex = identificatorCreater.getArtifactIndex(endId);
 
@@ -430,37 +384,7 @@ public class FormController {
         dataManipulator.removeActivity(indexForm);
     }
 
-    public boolean saveDataFromWorkUnit(String actName,String description, String category, int assigneIndex, int authorIndex, int priorityIndex,int severityIndex,
-                                        int typeIndex, int resolutionIndex, int statusIndex, String estimated, boolean selected, int indexForm) {
-
-        String nameForManipulator = formControl.fillTextMapper(actName);
-        String categoryForManipulator = formControl.fillTextMapper(category);
-
-        int[] coords = getCoordsFromItem(indexForm);
-
-        double estimateForDataManipulator = -1.0;
-
-        try {
-            if (!estimated.equals("")) {
-                estimateForDataManipulator = Double.parseDouble(estimated);
-            }
-
-        } catch (NumberFormatException e) {
-            Alerts.showWrongEstimatedTimeAlert();
-            return  false;
-        }
-
-        setItemColor(indexForm, selected);
-
-        dataManipulator.addDataToWorkUnit(nameForManipulator, description ,categoryForManipulator, prepareIndexForManipulator(assigneIndex),
-                prepareIndexForManipulator(authorIndex), prepareIndexForManipulator(priorityIndex), prepareIndexForManipulator(severityIndex),
-                prepareIndexForManipulator(typeIndex), prepareIndexForManipulator(resolutionIndex), prepareIndexForManipulator(statusIndex),
-                coords[0], coords[1], estimateForDataManipulator, selected, indexForm);
-
-        return  true;
-    }
-
-    private void setItemColor(int indexForm, boolean isExist) {
+    public void setItemColor(int indexForm, boolean isExist) {
 
         CanvasItem item = canvasItemList.get(indexForm);
         if(!isExist){
@@ -499,41 +423,6 @@ public class FormController {
 
     }
 
-    public void saveDataFromConfiguration(String actName, LocalDate createDate, boolean isRelease, int authorIndex, ArrayList<Integer> branchIndex,
-                                          ArrayList<Integer> cprIndex, Map<Integer,CanvasItem> itemIndexList, int indexForm) {
-        String nameForManipulator = formControl.fillTextMapper(actName);
-        int[] coords = getCoordsFromItem(indexForm);
-        ArrayList artefactList = new ArrayList();
-        ArrayList changeList = new ArrayList();
-
-        for(int index : itemIndexList.keySet()) {
-            if(identificatorCreater.getChangeIndexMaper().get(index) != null){
-                changeList.add(index);
-            }else {
-                artefactList.add(index);
-            }
-        }
-
-        dataManipulator.addDataToConfiguration(nameForManipulator, createDate, isRelease, coords[0], coords[1],
-                prepareIndexForManipulator(authorIndex), prepareIndexsForManipulator(branchIndex),
-                prepareIndexsForManipulator(cprIndex), artefactList, changeList, indexForm);
-
-
-    }
-
-
-    public boolean saveDataFromChange(String actName, String desc, boolean selected, int indexForm) {
-
-        String nameForManipulator = formControl.fillTextMapper(actName);
-        String descForManipulator = formControl.fillTextMapper(desc);
-
-        int[] coords = getCoordsFromItem(indexForm);
-
-        setItemColor(indexForm, selected);
-        dataManipulator.addDataToChange(nameForManipulator, descForManipulator, coords[0], coords[1], selected, indexForm);
-        return true;
-    }
-
     public void deleteChange(int indexForm) {
         if (!forms.get(indexForm).isSave()) {
             forms.remove(indexForm);
@@ -543,28 +432,6 @@ public class FormController {
 
     }
 
-    public boolean saveDataFromArtifact(String actName, LocalDate createdDate, String type, String desc, int authorIndex,
-                                        int typeIndex, boolean selected, int indexForm) {
-
-        String nameForManipulator = formControl.fillTextMapper(actName);
-        String descForManipulator = formControl.fillTextMapper(desc);
-
-        int[] coords = getCoordsFromItem(indexForm);
-        setItemColor(indexForm, selected);
-
-        dataManipulator.addDataToArtifact(nameForManipulator, descForManipulator, createdDate, selected, coords[0], coords[1],
-                prepareIndexForManipulator(authorIndex), typeIndex, indexForm);
-
-        return  true;
-    }
-    public void saveDataFromBranch(String nameST, int id, boolean isMain) {
-
-        String nameForManipulator = formControl.fillTextMapper(nameST);
-
-        dataManipulator.addDataToBranch(nameForManipulator, id, isMain);
-    }
-
-
     public void deleteArtifact(int indexForm) {
         if (!forms.get(indexForm).isSave()) {
             forms.remove(indexForm);
@@ -573,11 +440,6 @@ public class FormController {
 
         dataManipulator.removeArtifact(indexForm);
 
-    }
-
-    public ConfigurationForm getConfigurationForm(int id) {
-
-        return (ConfigurationForm) forms.get(id);
     }
 
     public Node getMainPanelFromForm(int id) {
@@ -642,159 +504,9 @@ public class FormController {
         }
     }
 
-    public void deleteBranch(ObservableList<BranchTable> list) {
-        ArrayList indexList = deleteControl.deleteBranch(list);
-        dataManipulator.removeBranch(indexList);
-        lists.removeItemFromObservableList(SegmentType.Branch, indexList);
 
-
-    }
-
-    public void saveDataFromCPR(String nameST, int roleIndex, int configIndex, int index) {
-        String nameForManipulator = formControl.fillTextMapper(nameST);
-        dataManipulator.addDataToCPR(nameForManipulator, roleIndex, configIndex, index);
-
-    }
-
-    public void deleteCPR(ObservableList<CPRTable> list) {
-        ArrayList indexList = deleteControl.deleteCPR(list);
-        dataManipulator.removeCPR(indexList);
-        lists.removeItemFromObservableList(SegmentType.ConfigPersonRelation, indexList);
-    }
-
-    public void saveDataFromCriterionForm(String nameST, String descriptionST, int id) {
-        String nameForManipulator = formControl.fillTextMapper(nameST);
-        String descForManipulator = formControl.fillTextMapper(descriptionST);
-        dataManipulator.addDataToCriterion(nameForManipulator, descForManipulator, id);
-    }
-
-    public void deleteCriterion(ObservableList<CriterionTable> list) {
-        ArrayList indexList = deleteControl.deleteCriterion(list);
-        dataManipulator.removeCriterion(indexList);
-        lists.removeItemFromObservableList(SegmentType.Criterion, indexList);
-    }
-
-    public void saveDataFromMilestoneForm(String nameST, ObservableList<Integer> criterionIndex, int id) {
-
-            String nameForManipulator = formControl.fillTextMapper(nameST);
-            dataManipulator.addDataToMilestone(nameForManipulator, criterionIndex, id);
-      }
-    public void deleteMilestone(ObservableList<MilestoneTable> list) {
-        ArrayList indexList = deleteControl.deleteMilestone(list);
-        dataManipulator.removeMilestone(indexList);
-        lists.removeItemFromObservableList(SegmentType.Milestone, indexList);
-    }
-
-    public void saveDataFromPriority(String nameST, String classST, String superST, int id) {
-
-        String nameForManipulator = formControl.fillTextMapper(nameST);
-        dataManipulator.addDataToPriority(nameForManipulator, classST, superST, id);
-    }
-
-    public void deletePriority(ObservableList<ClassTable> list) {
-        ArrayList indexList = deleteControl.deletePriority(list);
-        dataManipulator.removePriority(indexList);
-        lists.removeItemFromObservableList(SegmentType.Priority, indexList);
-    }
-
-    public void saveDataFromSeverity(String nameST, String classST, String superST, int id) {
-
-        String nameForManipulator = formControl.fillTextMapper(nameST);
-        dataManipulator.addDataToSeverity(nameForManipulator, classST, superST, id);
-    }
-
-    public void deleteSeverity(ObservableList<ClassTable> list) {
-        ArrayList indexList = deleteControl.deleteSeverity(list);
-        dataManipulator.removeSeverity(indexList);
-        lists.removeItemFromObservableList(SegmentType.Severity, indexList);
-    }
-
-    public void saveDataFromResolutionForm(String nameST, String classST, String superST, int id) {
-
-        String nameForManipulator = formControl.fillTextMapper(nameST);
-        dataManipulator.addDataToResolution(nameForManipulator, classST, superST, id);
-    }
-
-    public void deleteResolution(ObservableList<ClassTable> list) {
-        ArrayList indexList = deleteControl.deleteResolution(list);
-        dataManipulator.removeResolution(indexList);
-        lists.removeItemFromObservableList(SegmentType.Resolution, indexList);
-    }
-
-    public void saveDataFromRelationForm(String nameST, String classST, String superST, int id) {
-
-        String nameForManipulator = formControl.fillTextMapper(nameST);
-        dataManipulator.addDataToRelation(nameForManipulator, classST, superST, id);
-    }
-
-    public void deleteRelation(ObservableList<ClassTable> list) {
-        ArrayList indexList = deleteControl.deleteRelation(list);
-        dataManipulator.removeRelation(indexList);
-        lists.removeItemFromObservableList(SegmentType.Relation, indexList);
-    }
-
-    public void saveDataFromRoleForm(String nameST, String desc, int type, int id) {
-
-        String nameForManipulator = formControl.fillTextMapper(nameST);
-        String descForManipulator = formControl.fillTextMapper(desc);
-
-        dataManipulator.addDataToRole(nameForManipulator, descForManipulator, type,id);
-    }
-
-    public void deleteRole(ObservableList<RoleTable> list) {
-        ArrayList indexList = deleteControl.deleteRole(list);
-        dataManipulator.removeRole(indexList);
-        lists.removeItemFromObservableList(SegmentType.Role, indexList);
-    }
-
-    public void saveDataFromRoleTypeForm(String nameST, String classST, String superST, int id) {
-
-        String nameForManipulator = formControl.fillTextMapper(nameST);
-        dataManipulator.addDataToRoleType(nameForManipulator, classST, superST,id);
-    }
-
-    public void deleteRoleType(ObservableList<ClassTable> list) {
-        ArrayList indexList = deleteControl.deleteRoleType(list);
-        dataManipulator.removeRoleType(indexList);
-        lists.removeItemFromObservableList(SegmentType.RoleType, indexList);
-    }
-
-    public void saveDataFromTagForm(String tag, int configId, int id) {
-        String tagForManipulator = formControl.fillTextMapper(tag);
-
-        dataManipulator.addTagToConfiguration(tagForManipulator, configId, id);
-    }
-
-    public void deleteTag(int configId, ObservableList<TagTable> list) {
-
-            ArrayList indexList = deleteControl.deleteTag(list);
-            dataManipulator.removeTag(indexList, configId);
-            lists.removeItemFromObservableList(SegmentType.Tag, indexList);
-
-    }
-
-    public void saveDataFromStatusForm(String nameST, String classST, String superST, int id) {
-
-        String nameForManipulator = formControl.fillTextMapper(nameST);
-        dataManipulator.addDataToStatus(nameForManipulator, classST, superST,id);
-    }
-
-    public void deleteStatus(ObservableList<ClassTable> list) {
-        ArrayList indexList = deleteControl.deleteStatus(list);
-        dataManipulator.removeStatus(indexList);
-        lists.removeItemFromObservableList(SegmentType.Status, indexList);
-    }
-
-    public void saveDataFromTypeForm(String nameST, String classST, String superST, int id) {
-
-        String nameForManipulator = formControl.fillTextMapper(nameST);
-        dataManipulator.addDataToType(nameForManipulator, classST, superST,id);
-    }
-
-    public void deleteType(ObservableList<ClassTable> list) {
-        ArrayList indexList = deleteControl.deleteType(list);
-        dataManipulator.removeType(indexList);
-        lists.removeItemFromObservableList(SegmentType.Type, indexList);
+    public ArrayList<BasicForm> getForms() {
+        return forms;
     }
 }
 

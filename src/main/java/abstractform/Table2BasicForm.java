@@ -1,6 +1,7 @@
 package abstractform;
 
 import Controllers.FormController;
+import Controllers.FormDataController;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
@@ -43,9 +44,9 @@ public class Table2BasicForm extends BasicForm {
 	 * Konstruktor třídy Zinicializuje globální proměnné třídy
 	 *
 	 */
-	public Table2BasicForm(FormController formController, String name) {
+	public Table2BasicForm(FormController formController, FormDataController formDataController, String name) {
 
-		super(formController, name);
+		super(formController, formDataController, name);
 		this.setScene(creatScene());
 	}
 

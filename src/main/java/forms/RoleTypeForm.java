@@ -1,6 +1,7 @@
 package forms;
 
 import Controllers.FormController;
+import Controllers.FormDataController;
 import SPADEPAC.RoleClass;
 import SPADEPAC.RoleSuperClass;
 import abstractform.TableClassBasicForm;
@@ -40,8 +41,8 @@ public class RoleTypeForm extends TableClassBasicForm implements ISegmentTableFo
 	 * potvrzovací tlačítko
 	 *
 	 */
-	public RoleTypeForm(FormController formController, String name) {
-		super(formController, name);
+	public RoleTypeForm(FormController formController, FormDataController formDataController, String name) {
+		super(formController, formDataController, name);
 
 		createForm();
 		getSubmitButton().setVisible(false);
@@ -78,7 +79,7 @@ public class RoleTypeForm extends TableClassBasicForm implements ISegmentTableFo
 			} else {
 				list = Alerts.showDeleteItemAlert(getTableTV(), selection);
 				if (list != null) {
-					formController.deleteRoleType(list);
+					formDataController.deleteRoleType(list);
 				}
 
 			}
@@ -160,7 +161,7 @@ public class RoleTypeForm extends TableClassBasicForm implements ISegmentTableFo
 
 		getTableTV().getItems().add(type);
 		getTableTV().sort();
-		formController.saveDataFromRoleTypeForm(nameST, classST, superST, id);
+		formDataController.saveDataFromRoleTypeForm(nameST, idName, classST, superST, id);
 	}
 
 	@Override

@@ -78,11 +78,7 @@ public class DragAndDropCanvas extends ScrollPane {
 		});
 
 		canvas.setOnDragEntered(event ->  {
-			// TODO: NEvim co to je
-				if (event.getGestureSource() != this && event.getDragboard().hasString()) {
-				}
-
-				event.consume();
+			event.consume();
 
 		});
 

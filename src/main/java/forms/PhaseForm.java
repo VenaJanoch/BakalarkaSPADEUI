@@ -4,6 +4,7 @@ import java.time.LocalDate;
 
 import Controllers.CanvasController;
 import Controllers.FormController;
+import Controllers.FormDataController;
 import SPADEPAC.ObjectFactory;
 import SPADEPAC.Phase;
 import abstractform.BasicForm;
@@ -17,6 +18,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.geometry.HPos;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
+import org.junit.experimental.theories.FromDataPoints;
 import services.Alerts;
 import services.CanvasType;
 import services.Control;
@@ -48,9 +50,9 @@ public class PhaseForm extends DateDescBasicForm implements ISegmentForm {
 	 *
 	 * @param indexForm
 	 */
-	public PhaseForm(FormController formController,CanvasController canvasController, DragAndDropItemPanel dgItemPanel, String name, int indexForm) {
+	public PhaseForm(FormController formController, FormDataController formDataController, CanvasController canvasController, DragAndDropItemPanel dgItemPanel, String name, int indexForm) {
 
-		super(formController,canvasController, dgItemPanel, name);
+		super(formController, formDataController, canvasController, dgItemPanel, name);
 		this. indexForm = indexForm;
 		this.setOnCloseRequest(e -> {
 			e.consume();
@@ -73,7 +75,7 @@ public class PhaseForm extends DateDescBasicForm implements ISegmentForm {
 		LocalDate endDateL = dateDP.getValue();
 		String desc = getDescriptionTF().getText();
 
-		isSave = formController.saveDataFromPhaseForm(actName, endDateL, desc, configIndex, milestoneIndex, canvasController.getListOfItemOnCanvas(), indexForm);
+		isSave = formDataController.saveDataFromPhaseForm(actName, endDateL, desc, configIndex, milestoneIndex, canvasController.getListOfItemOnCanvas(), indexForm);
 
 	}
 

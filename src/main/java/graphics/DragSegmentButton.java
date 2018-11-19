@@ -19,21 +19,8 @@ public class DragSegmentButton extends Button {
 
 	/** Globální proměnné třídy **/
 	//private SegmentType type;
-	private CanvasController canvasController;
-	private DragController dragController;
-
-
-
-	/**
-	 * Přetížený konstruktor třídy pro přidání tlačítek do formulářového okna
-	 * Nastaví vlastnosti tlačítka
-	 * @param type SegmentType
-	 */
-	public DragSegmentButton(SegmentType type) {
-		//this(type);
-		this.setOnAction(event -> canvasController.addCanvasItemFromPanel(type.name(),0,0));
-
-	}
+	private double x = 0;
+	private double y = 0;
 
 	/**
 	 * Přetížený konstruktor třídy pro přidání tlačítek do hlavního okna
@@ -42,17 +29,13 @@ public class DragSegmentButton extends Button {
 	 * @param canvasController DragAndDropCanvas
 	 */
 	public DragSegmentButton(SegmentType type, CanvasController canvasController) {
-		//this(type);
 		super();
-		//this.setType(type); //todo smazat Segment type vymyslet jak rozlisit jednotliva platna
 		this.setText(type.name());
 		this.setFont(Font.font ("Verdana", 15));
 		this.setId("dg"+ type);
 		setDragDetected();
 		setDragDone();
-		this.canvasController = canvasController;
-		this.dragController = dragController;
-		this.setOnAction(event -> canvasController.addCanvasItemFromPanel(type.name(),0,0));
+		this.setOnAction(event -> canvasController.addCanvasItemFromPanel(type.name(),x,y));
 
 	}
 
@@ -74,26 +57,15 @@ public class DragSegmentButton extends Button {
 	/**
 	 * Metoda pro nastavení dokončení drag and drop
 	 */
-	private void setDragDone(){
-		new EventHandler<DragEvent>() {
-			public void handle(DragEvent event) {
-				if (event.getTransferMode() == TransferMode.MOVE) {
-				}
-				event.consume();
+	private void setDragDone() {
+
+		this.setOnDragDone(event -> { //TODO Umistit prvek na pozici mysi
+			if (event.getTransferMode() == TransferMode.MOVE) {
+				x = getTranslateX();
+				y = getTranslateY();
 			}
-		};
+			event.consume();
+		});
 	}
-
-
-
-
-	/** Getrs and Setrs	 */
-//	public SegmentType getType() {
-//		return type;
-//	}
-
-//	public void setType(SegmentType type) {
-//		this.type = type;
-//	}
 
 }

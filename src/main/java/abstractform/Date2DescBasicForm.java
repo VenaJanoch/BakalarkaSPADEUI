@@ -7,6 +7,7 @@ import java.time.LocalDate;
 
 import Controllers.CanvasController;
 import Controllers.FormController;
+import Controllers.FormDataController;
 import graphics.CanvasItem;
 import graphics.DragAndDropCanvas;
 import graphics.DragAndDropItemPanel;
@@ -30,18 +31,18 @@ public class Date2DescBasicForm extends DateDescBasicForm {
 	/**
 	 * Konstruktor Třídy
 	 */
-	public Date2DescBasicForm(FormController formController, String name) {
+	public Date2DescBasicForm(FormController formController, FormDataController formDataController, String name) {
 
-		super(formController, name);
+		super(formController,formDataController, name);
 		fillFormDate2();
 	}
 
 	/**
 	 * Přetížený konstruktor
 	 */
-	public Date2DescBasicForm(FormController formController, CanvasController canvasController, DragAndDropItemPanel dgItemPanel, String name) {
+	public Date2DescBasicForm(FormController formController, FormDataController formDataController, CanvasController canvasController, DragAndDropItemPanel dgItemPanel, String name) {
 
-		super(formController, canvasController, dgItemPanel, name);
+		super(formController, formDataController, canvasController, dgItemPanel, name);
 		fillFormDate2();
 	}
 

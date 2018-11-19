@@ -37,6 +37,7 @@ public class MenuPanel extends VBox {
 
 		this.setBackground(new Background(new BackgroundFill(Color.BLUE, CornerRadii.EMPTY, Insets.EMPTY)));
 		this.setMinWidth(Constans.width);
+		this.windowController = windowController;
 		createMenu();
 
 	}
@@ -66,16 +67,7 @@ public class MenuPanel extends VBox {
 		fileMenu.getItems().addAll(newItem, new SeparatorMenuItem(), openItem, new SeparatorMenuItem(), saveItem,
 				saveAsItem, new SeparatorMenuItem(), validationItem, new SeparatorMenuItem(), exitItem);
 
-		exitItem.setOnAction(event -> {	windowController.closeProjectWindow();
-			/*event.consume();
-			int result = Alerts.showCloseApp(control);
-
-			if (result != -1) {
-				control.setClose(true);
-				Platform.exit();
-			}*/ //Todo Zkusit tuhle funkcnost
-
-		});
+		exitItem.setOnAction(event -> windowController.closeProject());
 		saveItem.setOnAction(event -> windowController.saveItemAction());// control.saveFile());
 		saveAsItem.setOnAction(event -> windowController.saveItemAsAction()); //.saveAsFile());
 		openItem.setOnAction(event -> windowController.openProccesXMLAction()); //.openFile());

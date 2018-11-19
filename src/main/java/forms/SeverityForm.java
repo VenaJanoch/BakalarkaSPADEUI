@@ -1,6 +1,7 @@
 package forms;
 
 import Controllers.FormController;
+import Controllers.FormDataController;
 import SPADEPAC.WorkUnitSeverityClass;
 import SPADEPAC.WorkUnitSeveritySuperClass;
 import abstractform.TableClassBasicForm;
@@ -41,8 +42,8 @@ public class SeverityForm extends TableClassBasicForm implements ISegmentTableFo
 	 * potvrzovací tlačítko
 	 *
 	 */
-	public SeverityForm(FormController formController, String name) {
-		super(formController, name);
+	public SeverityForm(FormController formController, FormDataController formDataController, String name) {
+		super(formController, formDataController, name);
 
 		this.setTitle("Edit Severities");
 		createForm();
@@ -80,7 +81,7 @@ public class SeverityForm extends TableClassBasicForm implements ISegmentTableFo
 			} else {
 				list = Alerts.showDeleteItemAlert(getTableTV(), selection);
 				if (list != null) {
-					formController.deleteSeverity(list);
+					formDataController.deleteSeverity(list);
 				}
 
 			}
@@ -166,7 +167,7 @@ public class SeverityForm extends TableClassBasicForm implements ISegmentTableFo
 
 		getTableTV().getItems().add(table);
 		getTableTV().sort();
-		formController.saveDataFromSeverity(nameST, classST, superST, id);
+		formDataController.saveDataFromSeverity(nameST, idName, classST, superST, id);
 	}
 
 	@Override

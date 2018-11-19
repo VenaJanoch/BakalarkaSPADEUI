@@ -1,6 +1,7 @@
 package abstractform;
 
 import Controllers.FormController;
+import Controllers.FormDataController;
 import services.ClassSwitcher;
 import services.Control;
 import services.DeleteControl;
@@ -39,9 +40,9 @@ public class TableClassBasicForm extends TableBasicForm {
 	/**
 	 * Konstruktor třídy Zinicializuje globální proměnné třídy
 	 */
-	public TableClassBasicForm(FormController formController, String name) {
+	public TableClassBasicForm(FormController formController, FormDataController formDataController, String name) {
 
-		super(formController, name);
+		super(formController,formDataController, name);
 		setSwitcher(new ClassSwitcher(control));
 		classIndex = 0;
 		setSuperIndex(0);

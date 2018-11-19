@@ -1,6 +1,7 @@
 package forms;
 
 import Controllers.FormController;
+import Controllers.FormDataController;
 import org.controlsfx.control.CheckComboBox;
 
 import abstractform.Table2BasicForm;
@@ -55,9 +56,9 @@ public class MilestoneForm extends Table2BasicForm implements ISegmentTableForm 
 	 *
 	 *
 	 */
-	public MilestoneForm(FormController formController, String name) {
+	public MilestoneForm(FormController formController, FormDataController formDataController, String name) {
 
-		super(formController, name);
+		super(formController, formDataController, name);
 		createForm();
 		getSubmitBT().setOnAction(event -> setActionSubmitButton());
 
@@ -75,7 +76,7 @@ public class MilestoneForm extends Table2BasicForm implements ISegmentTableForm 
 		getInternalPanel().setCenter(getTable());
 		getInternalPanel().setBottom(createControlPane());
 
-		criterionForm = new CriterionForm(formController, SegmentType.Criterion.name());
+		criterionForm = new CriterionForm(formController, formDataController, SegmentType.Criterion.name());
 
 		getMainPanel().setCenter(getInternalPanel());
 		getMainPanel().setRight(criterionForm.getMainPanel());
@@ -131,7 +132,7 @@ public class MilestoneForm extends Table2BasicForm implements ISegmentTableForm 
 			} else {
 				list = Alerts.showDeleteItemMilestoneAlert(getTableTV(), selection);
 				if (list != null) {
-					formController.deleteMilestone(list);
+					formDataController.deleteMilestone(list);
 				}
 
 			}
@@ -150,7 +151,6 @@ public class MilestoneForm extends Table2BasicForm implements ISegmentTableForm 
 			public void onChanged(ListChangeListener.Change<? extends String> c) {
 				criterionIndex = criteriaCB.getCheckModel().getCheckedIndices();
 				criterionArray = criteriaCB.getCheckModel().getCheckedItems();
-
 			}
 		});
 
@@ -176,29 +176,17 @@ public class MilestoneForm extends Table2BasicForm implements ISegmentTableForm 
 		int id = formController.createTableItem(SegmentType.Milestone);
 		String idName = id + "_" + nameST;
 
-
 		MilestoneTable milestone = new MilestoneTable(idName, criterion, id);
 		tableTV.getItems().add(milestone);
 		tableTV.sort();
-		formController.saveDataFromMilestoneForm(nameST, criterionIndex, id );
+
+		formDataController.saveDataFromMilestoneForm(nameST, idName, criterionIndex, id );
 		criteriaCB.getCheckModel().clearChecks();
 
 	}
 
 	public TableView<MilestoneTable> getTableTV() {
 		return tableTV;
-	}
-
-	public void setTableTV(TableView<MilestoneTable> tableTV) {
-		this.tableTV = tableTV;
-	}
-
-	public CriterionForm getCriterionForm() {
-		return criterionForm;
-	}
-
-	public void setCriterionForm(CriterionForm criterionForm) {
-		this.criterionForm = criterionForm;
 	}
 
 }

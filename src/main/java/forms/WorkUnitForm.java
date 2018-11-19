@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import Controllers.FormController;
+import Controllers.FormDataController;
 import SPADEPAC.RoleClass;
 import SPADEPAC.WorkUnit;
 import SPADEPAC.WorkUnitPriorityClass;
@@ -80,8 +81,8 @@ public class WorkUnitForm extends DescriptionBasicForm implements ISegmentForm {
 	 * Konstruktor třídy. Zinicializuje globální proměnné tříd Nastaví velikost
 	 * okna a reakci na uzavření formulář
 	 */
-	public WorkUnitForm(FormController formController, String name) {
-		super(formController, name);
+	public WorkUnitForm(FormController formController, FormDataController formDataController, String name) {
+		super(formController, formDataController, name);
 		getMainPanel().setMinSize(Constans.workUnitformWidth, Constans.workUnitformHeight);
 		getMainPanel().setMaxSize(Constans.workUnitformWidth, Constans.workUnitformHeight);
 
@@ -107,7 +108,7 @@ public class WorkUnitForm extends DescriptionBasicForm implements ISegmentForm {
 		String actName = getNameTF().getText();
 		String category = categoryTF.getText();
 		String desc = getDescriptionTF().getText();
-		isSave = formController.saveDataFromWorkUnit(actName,desc, category, assigneIndex, authorIndex, priorityIndex, severityIndex, typeIndex,
+		isSave = formDataController.saveDataFromWorkUnit(actName,desc, category, assigneIndex, authorIndex, priorityIndex, severityIndex, typeIndex,
 				resolutionIndex, statusIndex, estimatedTimeTF.getText(), getExistRB().isSelected(), indexForm);
 	}
 

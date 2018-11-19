@@ -2,6 +2,7 @@ package abstractform;
 
 import Controllers.CanvasController;
 import Controllers.FormController;
+import Controllers.FormDataController;
 import graphics.CanvasItem;
 import graphics.DragAndDropCanvas;
 import graphics.DragAndDropItemPanel;
@@ -11,6 +12,7 @@ import javafx.scene.control.TextField;
 import services.CanvasType;
 import services.Control;
 import services.DeleteControl;
+import sun.text.resources.FormatData;
 
 import java.text.Normalizer;
 
@@ -30,18 +32,18 @@ public class DescriptionBasicForm extends BasicForm {
 	 * Konstruktor třídy
 	 *
 	 */
-	public DescriptionBasicForm(FormController formController, CanvasController canvasController, DragAndDropItemPanel dgItem, String name) {
+	public DescriptionBasicForm(FormController formController, FormDataController formDataController, CanvasController canvasController, DragAndDropItemPanel dgItem, String name) {
 
-		super(formController, canvasController, dgItem, name);
+		super(formController, formDataController, canvasController, dgItem, name);
 		createForm();
 	}
 
 	/**
 	 * Přetížený konstruktor třídy
 	 */
-	public DescriptionBasicForm(FormController formController, String name) {
+	public DescriptionBasicForm(FormController formController, FormDataController formDataController, String name) {
 
-		super(formController, name);
+		super(formController, formDataController, name);
 		createForm();
 	}
 

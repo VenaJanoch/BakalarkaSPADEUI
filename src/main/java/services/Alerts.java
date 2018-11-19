@@ -414,7 +414,7 @@ public class Alerts {
 		Optional<ButtonType> result = alert.showAndWait();
 
 		if (result.get() == buttonTypeOne) {
-			fileManipulator.saveFile();
+			fileManipulator.saveFile(); //TODO pokud se neprovede ulozeni nevypnout aplikaci
 			return 0;
 		} else if (result.get() == buttonOK) {
 			return 1;

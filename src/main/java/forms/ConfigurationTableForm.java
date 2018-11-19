@@ -1,6 +1,7 @@
 package forms;
 
 import Controllers.FormController;
+import Controllers.FormDataController;
 import abstractform.BasicForm;
 import abstractform.Table2BasicForm;
 import graphics.CanvasItem;
@@ -53,8 +54,8 @@ public class ConfigurationTableForm extends Table2BasicForm implements ISegmentT
 	 *
 	 */
 
-	public ConfigurationTableForm(FormController formController, String name) {
-		super(formController, name);
+	public ConfigurationTableForm(FormController formController, FormDataController formDataController, String name) {
+		super(formController, formDataController, name);
 
 		createForm();
 		getSubmitBT().setOnAction(event -> setActionSubmitButton());

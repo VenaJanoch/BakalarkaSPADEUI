@@ -1,9 +1,11 @@
 package forms;
 
+import java.text.Normalizer;
 import java.time.LocalDate;
 
 import Controllers.CanvasController;
 import Controllers.FormController;
+import Controllers.FormDataController;
 import SPADEPAC.Iteration;
 import abstractform.BasicForm;
 import abstractform.Date2DescBasicForm;
@@ -52,9 +54,9 @@ public class IterationForm extends Date2DescBasicForm implements ISegmentForm {
 	 * @param indexForm
 	 *            DeleteControl
 	 */
-	public IterationForm(FormController formController, CanvasController canvas, DragAndDropItemPanel dgItemPanel, String name, int indexForm) {
+	public IterationForm(FormController formController, FormDataController formDataController, CanvasController canvas, DragAndDropItemPanel dgItemPanel, String name, int indexForm) {
 
-		super(formController,canvas, dgItemPanel, name);
+		super(formController, formDataController ,canvas, dgItemPanel, name);
 		this.setOnCloseRequest(e -> {
 
 			e.consume();
@@ -78,7 +80,7 @@ public class IterationForm extends Date2DescBasicForm implements ISegmentForm {
 		LocalDate startDate = dateDP.getValue();
 		LocalDate endDate = dateDP.getValue();
 		String desc = getDescriptionTF().getText();
-		isSave = formController.saveDataFromIterationForm(actName, startDate,endDate,desc, chooseConfigID, canvasController.getListOfItemOnCanvas(), indexForm);
+		isSave = formDataController.saveDataFromIterationForm(actName, startDate,endDate,desc, chooseConfigID, canvasController.getListOfItemOnCanvas(), indexForm);
 	}
 
 	@Override

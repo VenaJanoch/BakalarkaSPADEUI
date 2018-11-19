@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import Controllers.CanvasController;
 import Controllers.FormController;
+import Controllers.FormDataController;
 import graphics.DragAndDropCanvas;
 import graphics.DragAndDropItemPanel;
 import javafx.geometry.HPos;
@@ -54,14 +55,16 @@ public abstract class BasicForm extends Stage {
 	protected int indexForm;
 
 	protected FormController formController;
+	protected FormDataController formDataController;
 	protected CanvasController  canvasController;
 	/**
 	 * Konstruktor třídy pro formuláře s vlastním plátnem Zinicializuje globální
 	 * proměnné třídy
 	 */
-	public BasicForm(FormController formController, CanvasController canvasController, DragAndDropItemPanel dgItem, String name) {
+	public BasicForm(FormController formController, FormDataController formDataController, CanvasController canvasController, DragAndDropItemPanel dgItem, String name) {
 		super();
 		this.formController = formController;
+		this.formDataController = formDataController;
 
 		this.setTitle("Edit " + name + " Form");
 		this.canvasController = canvasController;
@@ -80,7 +83,7 @@ public abstract class BasicForm extends Stage {
 	 *
 	 */
 
-	public BasicForm(FormController formController, String name) {
+	public BasicForm(FormController formController, FormDataController formDataController, String name) {
 
 		super();
 		this.setTitle("Edit " + name);

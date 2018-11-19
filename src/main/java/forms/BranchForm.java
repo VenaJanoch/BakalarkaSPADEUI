@@ -1,6 +1,7 @@
 package forms;
 
 import Controllers.FormController;
+import Controllers.FormDataController;
 import SPADEPAC.ObjectFactory;
 import abstractform.TableBasicForm;
 import interfaces.ISegmentTableForm;
@@ -60,8 +61,8 @@ public class BranchForm extends TableBasicForm implements ISegmentTableForm {
 	 * formuláře
 	 *
 	 */
-	public BranchForm(FormController formController, String name) {
-		super(formController, name);
+	public BranchForm(FormController formController, FormDataController formDataController, String name) {
+		super(formController, formDataController, name);
 
 		getMainPanel().setMinSize(Constans.littleformWidth, Constans.littleformHeight);
 		getMainPanel().setMaxSize(Constans.littleformWidth, Constans.littleformHeight);
@@ -124,9 +125,9 @@ public class BranchForm extends TableBasicForm implements ISegmentTableForm {
 			if (selection.size() == 0) {
 				Alerts.showNoItemsDeleteAlert();
 			} else {
-				list = Alerts.showDeleteItemBranchAlert(getTableTV(), selection);
+				list = Alerts.showDeleteItemBranchAlert(tableTV, selection);
 				if (list != null) {
-					formController.deleteBranch(list);
+					formDataController.deleteBranch(list);
 				}
 
 			}
@@ -186,49 +187,7 @@ public class BranchForm extends TableBasicForm implements ISegmentTableForm {
 		tableTV.getItems().add(branch);
 		tableTV.sort();
 
-		formController.saveDataFromBranch(nameST, id, isMain);
+		formDataController.saveDataFromBranch(nameST, idName, id, isMain);
 	}
 
-	/*** Getrs and Setrs ***/
-
-	public boolean isNewBranch() {
-		return newBranch;
 	}
-
-	public void setNewBranch(boolean newBranch) {
-		this.newBranch = newBranch;
-	}
-
-	public boolean isMain() {
-		return isMain;
-	}
-
-	public void setMain(boolean isMain) {
-		this.isMain = isMain;
-	}
-
-	public RadioButton getRbYes() {
-		return rbYes;
-	}
-
-	public void setRbYes(RadioButton rbYes) {
-		this.rbYes = rbYes;
-	}
-
-	public RadioButton getRbNo() {
-		return rbNo;
-	}
-
-	public void setRbNo(RadioButton rbNo) {
-		this.rbNo = rbNo;
-	}
-
-	public TableView<BranchTable> getTableTV() {
-		return tableTV;
-	}
-
-	public void setTableTV(TableView<BranchTable> tableTV) {
-		this.tableTV = tableTV;
-	}
-
-}

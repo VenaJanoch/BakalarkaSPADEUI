@@ -1,6 +1,7 @@
 package forms;
 
 import Controllers.FormController;
+import Controllers.FormDataController;
 import SPADEPAC.ObjectFactory;
 import abstractform.TableBasicForm;
 import interfaces.ISegmentTableForm;
@@ -58,8 +59,8 @@ public class ConfigPersonRelationForm extends TableBasicForm implements ISegment
 	 *
 	 */
 	
-	public ConfigPersonRelationForm(FormController formController, String name) {
-		super(formController, name);
+	public ConfigPersonRelationForm(FormController formController, FormDataController formDataController, String name) {
+		super(formController, formDataController, name);
 
 		createForm();
 		getSubmitButton().setOnAction(event -> setActionSubmitButton());
@@ -124,7 +125,7 @@ public class ConfigPersonRelationForm extends TableBasicForm implements ISegment
 			} else {
 				list = Alerts.showDeleteItemCPRAlert(getTableTV(), selection);
 				if (list != null) {
-					formController.deleteCPR(list);
+					formDataController.deleteCPR(list);
 				}
 
 			}
@@ -173,7 +174,7 @@ public class ConfigPersonRelationForm extends TableBasicForm implements ISegment
 		CPRTable cpr = new CPRTable(idName, roleST, id);
 		tableTV.getItems().add(cpr);
 		tableTV.sort();
-		formController.saveDataFromCPR(nameST,roleIndex, configIndex, id);
+		formDataController.saveDataFromCPR(nameST, idName,roleIndex, configIndex, id);
 	}
 
 	/** Getrs and Setrs ***/

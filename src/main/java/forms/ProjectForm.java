@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.List;
 
 import Controllers.FormController;
+import Controllers.FormDataController;
 import SPADEPAC.Activity;
 import SPADEPAC.Iteration;
 import SPADEPAC.Phase;
@@ -43,8 +44,8 @@ public class ProjectForm extends Date2DescBasicForm implements  ISegmentForm{
 	 *
 	 *            Project
 	 */
-	public ProjectForm(FormController formController, String name) {
-		super(formController, name);
+	public ProjectForm(FormController formController, FormDataController formDataController, String name) {
+		super(formController, formDataController, name);
 
 		getMainPanel().setMinSize(Constans.littleformWidth, Constans.littleformHeight);
 		getMainPanel().setMaxSize(Constans.littleformWidth, Constans.littleformHeight);
@@ -75,8 +76,8 @@ public class ProjectForm extends Date2DescBasicForm implements  ISegmentForm{
 		LocalDate endDate = date2DP.getValue();
 		LocalDate startDate = dateDP.getValue();
 		String desc = getDescriptionTF().getText();
-		//setName(actName);
 
+		formDataController.saveDataFromProjectFrom(actName, endDate, startDate, desc);
 		//getControl().getFillForms().fillProject(desc, actName, startDate, endDate);
 
 	}

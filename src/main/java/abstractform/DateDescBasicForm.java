@@ -2,6 +2,7 @@ package abstractform;
 
 import Controllers.CanvasController;
 import Controllers.FormController;
+import Controllers.FormDataController;
 import graphics.DragAndDropItemPanel;
 import javafx.geometry.HPos;
 import javafx.scene.control.DatePicker;
@@ -20,17 +21,17 @@ public class DateDescBasicForm extends DescriptionBasicForm {
 	/**
 	 * Konstruktor třídy
 	 */
-	public DateDescBasicForm(FormController formController, CanvasController canvasController, DragAndDropItemPanel dgItemPanel, String name) {
+	public DateDescBasicForm(FormController formController, FormDataController formDataController, CanvasController canvasController, DragAndDropItemPanel dgItemPanel, String name) {
 
-		super(formController, canvasController, dgItemPanel, name);
+		super(formController,formDataController, canvasController, dgItemPanel, name);
 		fillFormDate();
 	}
 
 	/**
 	 * Přetížený konstruktor třídy
 	 */
-	public DateDescBasicForm(FormController formController, String name) {
-		super(formController, name);
+	public DateDescBasicForm(FormController formController, FormDataController formDataController, String name) {
+		super(formController,formDataController, name);
 		fillFormDate();
 	}
 

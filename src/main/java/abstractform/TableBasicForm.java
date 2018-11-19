@@ -1,6 +1,7 @@
 package abstractform;
 
 import Controllers.FormController;
+import Controllers.FormDataController;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
@@ -41,8 +42,8 @@ public class TableBasicForm extends BasicForm {
 	 * 
 	 *
 	 */
-	public TableBasicForm(FormController formController, String name) {
-		super(formController, name);
+	public TableBasicForm(FormController formController, FormDataController formDataController, String name) {
+		super(formController, formDataController, name);
 		this.setScene(creatSceneProject());
 	}
 

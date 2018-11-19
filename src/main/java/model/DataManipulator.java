@@ -438,7 +438,7 @@ public class DataManipulator {
         }
     }
 
-    public void addDataToMilestone(String nameForManipulator, ObservableList<Integer> criterionIndex, int index) {
+    public void addDataToMilestone(String nameForManipulator, List<Integer> criterionIndex, int index) {
 
         Milestone milestone = objF.createMilestone();
         milestone.getCriteriaIndexs().addAll(criterionIndex);
@@ -588,5 +588,12 @@ public class DataManipulator {
         for(Integer i : indexList){
             project.getTypes().remove(i);
         }
+    }
+
+    public void addDataToProject(String nameForManipulator, String descForManipulator, LocalDate startDate, LocalDate endDate) {
+        project.setDescription(descForManipulator);
+        project.setName(nameForManipulator);
+        project.setStartDate(convertDate(startDate));
+        project.setEndDate(convertDate(endDate));
     }
 }

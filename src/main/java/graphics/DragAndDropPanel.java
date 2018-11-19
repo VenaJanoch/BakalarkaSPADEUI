@@ -66,34 +66,6 @@ public class DragAndDropPanel extends BorderPane {
 		this.setCenter(items);
 
 	}
-
-	/**
-	 * Přetížený konstruktor třídy využívají kořenový formulář do kterého se přidá
-	 * @param form BasicForm
-	 */
-	public DragAndDropPanel(FormController formController, WindowController windowController, BasicForm form) {
-	//todo Asi zrusit protoze je k nicemu :D
-		super();
-		this.formController = formController;
-		this.windowController = windowController;
-		this.buttonBox = new HBox(5);
-		this.setPadding(new Insets(10));
-		this.setBackground(new Background(new BackgroundFill(Color.BROWN, CornerRadii.EMPTY, Insets.EMPTY)));
-
-		items = new DragAndDropItemPanel(canvasController, Constans.projectDragTextIndexs);
-		this.setAlignment(items, Pos.BOTTOM_LEFT);
-
-		addButtons = new Button[Constans.addButtonCount];
-		createButtons();
-		createAction();
-
-		buttonBox.getChildren().addAll(addButtons);
-
-		this.setCenter(buttonBox);
-
-		this.setBottom(items);
-
-	}
 	
 	
 	/**

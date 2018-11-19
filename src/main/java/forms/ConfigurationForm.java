@@ -6,6 +6,7 @@ import java.util.List;
 
 import Controllers.CanvasController;
 import Controllers.FormController;
+import Controllers.FormDataController;
 import abstractform.DateBasicForm;
 import forms.TagForm;
 import graphics.DragAndDropItemPanel;
@@ -78,12 +79,12 @@ public class ConfigurationForm extends DateBasicForm implements ISegmentForm {
      * Konstruktor třídy Zinicializuje globální proměnné tříd Nastaví reakci na
      * uzavření okna
      */
-    public ConfigurationForm(FormController formController, CanvasController canvasController, DragAndDropItemPanel dgItemPanel, String name, int indexForm) {
+    public ConfigurationForm(FormController formController, FormDataController formDataController, CanvasController canvasController, DragAndDropItemPanel dgItemPanel, String name, int indexForm) {
 
-        super(formController, canvasController, dgItemPanel, name);
+        super(formController, formDataController, canvasController, dgItemPanel, name);
         this.indexForm = indexForm;
 
-        this.tagForm = new TagForm(formController, "Tag", indexForm);
+        this.tagForm = new TagForm(formController, formDataController,"Tag", indexForm);
         isNew = true;
         isRelease = true;
 
@@ -111,7 +112,7 @@ public class ConfigurationForm extends DateBasicForm implements ISegmentForm {
         branchIndex.addAll(branchCB.getCheckModel().getCheckedIndices());
         cprIndex.addAll(cprCB.getCheckModel().getCheckedIndices());
 
-        formController.saveDataFromConfiguration(actName, createDate, isRelease, authorIndex, branchIndex, cprIndex,
+        formDataController.saveDataFromConfiguration(actName, createDate, isRelease, authorIndex, branchIndex, cprIndex,
                 canvasController.getListOfItemOnCanvas(), indexForm);
     }
 
@@ -154,7 +155,8 @@ public class ConfigurationForm extends DateBasicForm implements ISegmentForm {
 
             public void onChanged(ListChangeListener.Change<? extends String> c) {
 
-                // branchArray = branchCB.getCheckModel().getCheckedItems(); Todo nastavit zaskrtnute polozky controller pro vytvoreni vyplneneho formular
+                // branchArray = branchCB.getCheckModel().getCheckedItems();
+                // Todo nastavit zaskrtnute polozky controller pro vytvoreni vyplneneho formular
 
             }
         });

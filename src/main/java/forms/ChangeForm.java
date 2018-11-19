@@ -3,6 +3,7 @@ package forms;
 import java.util.ArrayList;
 
 import Controllers.FormController;
+import Controllers.FormDataController;
 import SPADEPAC.Artifact;
 import SPADEPAC.Change;
 import SPADEPAC.Configuration;
@@ -49,8 +50,8 @@ public class ChangeForm extends DescriptionBasicForm implements ISegmentForm {
 	 * formuláře a reakci na uzavření formuláře
 	 *
 	 */
-	public ChangeForm(FormController formController, String name, int indexForm) {
-		super(formController, name);
+	public ChangeForm(FormController formController, FormDataController formDataController, String name, int indexForm) {
+		super(formController, formDataController, name);
 
 		this.newChange = true;
 		this.indexForm = indexForm;
@@ -80,7 +81,7 @@ public class ChangeForm extends DescriptionBasicForm implements ISegmentForm {
 		String actName = getNameTF().getText();
 		String desc = getDescriptionTF().getText();
 
-		isSave = formController.saveDataFromChange(actName, desc, existRB.isSelected(), indexForm);
+		isSave = formDataController.saveDataFromChange(actName, desc, existRB.isSelected(), indexForm);
 	}
 
 	@Override

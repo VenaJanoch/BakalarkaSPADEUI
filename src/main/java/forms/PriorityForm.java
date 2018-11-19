@@ -1,6 +1,7 @@
 package forms;
 
 import Controllers.FormController;
+import Controllers.FormDataController;
 import SPADEPAC.ObjectFactory;
 import SPADEPAC.WorkUnitPriorityClass;
 import SPADEPAC.WorkUnitPrioritySuperClass;
@@ -46,8 +47,8 @@ public class PriorityForm extends TableClassBasicForm implements ISegmentTableFo
 	 * Zinicializuje globální proměnné třídy
 	 * Nastaví reakci na potvrzovací tlačítko
 	 */
-	public PriorityForm(FormController formController, String name) {
-		super(formController, name);
+	public PriorityForm(FormController formController, FormDataController formDataController, String name) {
+		super(formController, formDataController, name);
 		this.setTitle("Edit Priority");
 		createForm();
 		getSubmitButton().setOnAction(event -> setActionSubmitButton());
@@ -83,7 +84,7 @@ public class PriorityForm extends TableClassBasicForm implements ISegmentTableFo
 			} else {
 				list = Alerts.showDeleteItemAlert(getTableTV(), selection);
 				if (list != null) {
-					formController.deletePriority(list);
+					formDataController.deletePriority(list);
 				}
 
 			}
@@ -172,7 +173,7 @@ public class PriorityForm extends TableClassBasicForm implements ISegmentTableFo
 
 		getTableTV().getItems().add(table);
 		getTableTV().sort();
-		formController.saveDataFromPriority(nameST, classST, superST, id);
+		formDataController.saveDataFromPriority(nameST, idName, classST, superST, id);
 	}
 
 	@Override

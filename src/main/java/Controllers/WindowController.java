@@ -60,35 +60,23 @@ public class WindowController {
 
         primaryStage.setOnCloseRequest(event -> {
             event.consume();
-
             if (!isClose()) {
-                int result = alerts.showCloseApp();
-
-                if (result != -1) {
-                    Platform.exit();
-                }
-
+               closeProject();
             }
-
         });
+    }
+
+    public void closeProject(){
+        int result = alerts.showCloseApp();
+        if (result != -1) {
+            Platform.exit();
+        }
     }
 
 
     /********* Getrs and Setrs *************/
-    public Stage getPrimaryStage() {
-        return primaryStage;
-    }
-
-    public void setPrimaryStage(Stage primaryStage) {
-        this.primaryStage = primaryStage;
-    }
-
     public boolean isClose() {
         return isClose;
-    }
-
-    public void setClose(boolean isClose) {
-        this.isClose = isClose;
     }
 
 }

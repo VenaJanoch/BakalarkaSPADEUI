@@ -1,6 +1,7 @@
 package forms;
 
 import Controllers.FormController;
+import Controllers.FormDataController;
 import abstractform.Table2BasicForm;
 import interfaces.ISegmentTableForm;
 import javafx.beans.value.ChangeListener;
@@ -56,8 +57,8 @@ public class RoleForm extends Table2BasicForm implements ISegmentTableForm {
 	 * potvrzovacímu tlačítku
 	 *
 	 */
-	public RoleForm(FormController formController, String name) {
-		super(formController, name);
+	public RoleForm(FormController formController, FormDataController formDataController, String name) {
+		super(formController, formDataController, name);
 		this.roleIndex = 0;
 		createForm();
 		getSubmitBT().setOnAction(event -> setActionSubmitButton());
@@ -82,7 +83,7 @@ public class RoleForm extends Table2BasicForm implements ISegmentTableForm {
 		getInternalPanel().setCenter(getTable());
 		getInternalPanel().setBottom(createControlPane());
 
-		roleTForm = new RoleTypeForm(formController,"RoleType"); // Todo udelat segment type pro role type
+		roleTForm = new RoleTypeForm(formController, formDataController, SegmentType.RoleType.name());
 		getMainPanel().setCenter(getInternalPanel());
 		getMainPanel().setRight(roleTForm.getMainPanel());
 
@@ -131,7 +132,7 @@ public class RoleForm extends Table2BasicForm implements ISegmentTableForm {
 			} else {
 				list = Alerts.showDeleteItemRoleAlert(getTableTV(), selection);
 				if (list != null) {
-					formController.deleteRole(list);
+					formDataController.deleteRole(list);
 				}
 
 			}
@@ -184,7 +185,7 @@ public class RoleForm extends Table2BasicForm implements ISegmentTableForm {
 		RoleTable role = new RoleTable(idName, descritpST, typeST);
 		tableTV.getItems().add(role);
 		tableTV.sort();
-		formController.saveDataFromRoleForm(nameST, descritpST, roleIndex, id);
+		formDataController.saveDataFromRoleForm(nameST, idName, descritpST, roleIndex, id);
 
 	}
 

@@ -1,6 +1,7 @@
 package forms;
 
 import Controllers.FormController;
+import Controllers.FormDataController;
 import SPADEPAC.WorkUnitRelationClass;
 import SPADEPAC.WorkUnitRelationSuperClass;
 import abstractform.TableClassBasicForm;
@@ -39,8 +40,8 @@ public class RelationForm extends TableClassBasicForm implements ISegmentTableFo
 	 * Zinicializuje globální proměnné třídy
 	 * Nastaví reakci na potvrzovací tlačítko
 	 */
-	public RelationForm(FormController formController, String name) {
-		super(formController, name);
+	public RelationForm(FormController formController, FormDataController formDataController, String name) {
+		super(formController, formDataController, name);
 		this.setTitle("Edit Relations");
 
 		createForm();
@@ -77,7 +78,7 @@ public class RelationForm extends TableClassBasicForm implements ISegmentTableFo
 			} else {
 				list = Alerts.showDeleteItemAlert(getTableTV(), selection);
 				if (list != null) {
-		formController.deleteRelation(list);
+		formDataController.deleteRelation(list);
 				}
 
 			}
@@ -163,7 +164,7 @@ public class RelationForm extends TableClassBasicForm implements ISegmentTableFo
 
 		getTableTV().getItems().add(table);
 		getTableTV().sort();
-	formController.saveDataFromRelationForm(nameST, classST, superST, id);
+	formDataController.saveDataFromRelationForm(nameST, idName, classST, superST, id);
 	}
 
 	@Override

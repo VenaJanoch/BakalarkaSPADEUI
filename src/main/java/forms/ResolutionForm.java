@@ -1,6 +1,7 @@
 package forms;
 
 import Controllers.FormController;
+import Controllers.FormDataController;
 import SPADEPAC.WorkUnitResolutionClass;
 import SPADEPAC.WorkUnitResolutionsSuperClass;
 import abstractform.TableClassBasicForm;
@@ -38,8 +39,8 @@ public class ResolutionForm extends TableClassBasicForm implements ISegmentTable
 	 * Zinicializuje globální proměnné třídy
 	 * Nastaví reakci na potvrzovací tlačítko
 	 */
-	public ResolutionForm(FormController formController, String name) {
-		super(formController, name);
+	public ResolutionForm(FormController formController, FormDataController formDataController, String name) {
+		super(formController, formDataController, name);
 
 		this.setTitle("Edit Resolutions");
 		createForm();
@@ -77,7 +78,7 @@ public class ResolutionForm extends TableClassBasicForm implements ISegmentTable
 			} else {
 				list = Alerts.showDeleteItemAlert(getTableTV(), selection);
 				if (list != null) {
-					formController.deleteResolution(list);
+					formDataController.deleteResolution(list);
 				}
 
 			}
@@ -162,7 +163,7 @@ public class ResolutionForm extends TableClassBasicForm implements ISegmentTable
 
 		getTableTV().getItems().add(table);
 		getTableTV().sort();
-	formController.saveDataFromResolutionForm(nameST, classST, superST, id);
+	formDataController.saveDataFromResolutionForm(nameST, idName, classST, superST, id);
 	}
 
 	@Override

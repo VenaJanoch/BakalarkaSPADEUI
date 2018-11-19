@@ -1,6 +1,7 @@
 package forms;
 
 import Controllers.FormController;
+import Controllers.FormDataController;
 import SPADEPAC.WorkUnitStatusClass;
 import SPADEPAC.WorkUnitStatusSuperClass;
 import abstractform.TableClassBasicForm;
@@ -40,8 +41,8 @@ public class StatusForm extends TableClassBasicForm implements ISegmentTableForm
 	 * potvrzovací tlačítko
 	 *
 	 */
-	public StatusForm(FormController formController, String name) {
-		super(formController, name);
+	public StatusForm(FormController formController, FormDataController formDataController, String name) {
+		super(formController, formDataController, name);
 
 		this.setTitle("Edit Status");
 		createForm();
@@ -79,7 +80,7 @@ public class StatusForm extends TableClassBasicForm implements ISegmentTableForm
 			} else {
 				list = Alerts.showDeleteItemAlert(getTableTV(), selection);
 				if (list != null) {
-					formController.deleteStatus(list);
+					formDataController.deleteStatus(list);
 				}
 
 			}
@@ -166,7 +167,7 @@ public class StatusForm extends TableClassBasicForm implements ISegmentTableForm
 
 		getTableTV().getItems().add(table);
 		getTableTV().sort();
-	formController.saveDataFromStatusForm(nameST, classST, superST, id);
+	formDataController.saveDataFromStatusForm(nameST, idName, classST, superST, id);
 	}
 
 	@Override

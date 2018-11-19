@@ -2,6 +2,7 @@ package forms;
 
 import Controllers.CanvasController;
 import Controllers.FormController;
+import Controllers.FormDataController;
 import SPADEPAC.Activity;
 import SPADEPAC.ObjectFactory;
 import abstractform.BasicForm;
@@ -37,9 +38,9 @@ public class ActivityForm extends DescriptionBasicForm implements ISegmentForm {
 	 * ukončení formuláře
 	 *
 	 */
-	public ActivityForm(FormController formController, CanvasController canvasController, DragAndDropItemPanel dgItemPanel, String name, int indexForm) {
+	public ActivityForm(FormController formController, FormDataController formDataController, CanvasController canvasController, DragAndDropItemPanel dgItemPanel, String name, int indexForm) {
 
-		super(formController,canvasController, dgItemPanel, name);
+		super(formController, formDataController, canvasController, dgItemPanel, name);
 		this. indexForm = indexForm;
 		this.setOnCloseRequest(e -> {
 
@@ -62,7 +63,7 @@ public class ActivityForm extends DescriptionBasicForm implements ISegmentForm {
 
 		String actName = getNameTF().getText();
 		String desc = getDescriptionTF().getText();
-		formController.saveDataFromActivityForm(actName, desc, canvasController.getListOfItemOnCanvas(), indexForm);
+		formDataController.saveDataFromActivityForm(actName, desc, canvasController.getListOfItemOnCanvas(), indexForm);
 	}
 
 	@Override
