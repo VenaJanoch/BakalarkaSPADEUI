@@ -57,9 +57,12 @@ public class FormDataController {
         int[] coords = formController.getCoordsFromItem(indexForm);
 
         dataManipulator.addDataToPhase(nameForManipulator, endDateL, descriptionForManipulator, prepareIndexForManipulator(confIndex),
-                prepareIndexForManipulator(milestoneIndex), coords[0], coords[1], itemIndexList.keySet(), indexForm);
+                prepareIndexForManipulator(milestoneIndex), coords[0], coords[1], itemIndexList.keySet(), identificatorCreater.getPhaseIndex(indexForm));
+       formController.setNameToItem(indexForm, nameForManipulator);
         return true;
     }
+
+
 
     public boolean saveDataFromIterationForm(String actName, LocalDate startDate, LocalDate endDate, String desc, int chooseConfigID, Map<Integer,CanvasItem> itemIndexList, int indexForm) {
         String nameForManipulator = formControl.fillTextMapper(actName);
@@ -68,7 +71,8 @@ public class FormDataController {
         int[] coords = formController.getCoordsFromItem(indexForm);
 
         dataManipulator.addDataToIteration(nameForManipulator,startDate, endDate, descriptionForManipulator, prepareIndexForManipulator(chooseConfigID),
-                coords[0], coords[1], itemIndexList.keySet(), indexForm);
+                coords[0], coords[1], itemIndexList.keySet(), identificatorCreater.getIterationIndex(indexForm));
+        formController.setNameToItem(indexForm, nameForManipulator);
         return true;
     }
 
@@ -78,7 +82,8 @@ public class FormDataController {
         String descriptionForManipulator = formControl.fillTextMapper(desc);
         int[] coords = formController.getCoordsFromItem(indexForm);
 
-        dataManipulator.addDataToActivity(nameForManipulator, descriptionForManipulator, coords[0], coords[1], mapOfItemOnCanvas.keySet(), indexForm);
+        dataManipulator.addDataToActivity(nameForManipulator, descriptionForManipulator, coords[0], coords[1], mapOfItemOnCanvas.keySet(), identificatorCreater.getActivityIndex(indexForm));
+        formController.setNameToItem(indexForm, nameForManipulator);
         return true;
 
     }
@@ -109,8 +114,8 @@ public class FormDataController {
         dataManipulator.addDataToWorkUnit(nameForManipulator, descriptionForManipulator ,categoryForManipulator, prepareIndexForManipulator(assigneIndex),
                 prepareIndexForManipulator(authorIndex), prepareIndexForManipulator(priorityIndex), prepareIndexForManipulator(severityIndex),
                 prepareIndexForManipulator(typeIndex), prepareIndexForManipulator(resolutionIndex), prepareIndexForManipulator(statusIndex),
-                coords[0], coords[1], estimateForDataManipulator, selected, indexForm);
-
+                coords[0], coords[1], estimateForDataManipulator, selected, identificatorCreater.getWorkUnitIndex(indexForm));
+        formController.setNameToItem(indexForm, nameForManipulator);
         return  true;
     }
 
@@ -145,8 +150,8 @@ public class FormDataController {
         int[] coords = formController.getCoordsFromItem(indexForm);
 
         formController.setItemColor(indexForm, selected);
-        dataManipulator.addDataToChange(nameForManipulator, descForManipulator, coords[0], coords[1], selected, indexForm);
-
+        dataManipulator.addDataToChange(nameForManipulator, descForManipulator, coords[0], coords[1], selected, identificatorCreater.getChangeIndex(indexForm));
+        formController.setNameToItem(indexForm, nameForManipulator);
         return true;
     }
 
@@ -160,9 +165,9 @@ public class FormDataController {
         formController.setItemColor(indexForm, selected);
 
         dataManipulator.addDataToArtifact(nameForManipulator, descForManipulator, createdDate, selected, coords[0], coords[1],
-                prepareIndexForManipulator(authorIndex), typeIndex, indexForm);
+                prepareIndexForManipulator(authorIndex), typeIndex, identificatorCreater.getArtifactIndex(indexForm));
         lists.getArtifactObservable().add(actName);
-
+        formController.setNameToItem(indexForm, nameForManipulator);
         return  true;
     }
     public void saveDataFromBranch(String nameST, String idName, int id, boolean isMain) {

@@ -57,6 +57,7 @@ public class IterationForm extends Date2DescBasicForm implements ISegmentForm {
 	public IterationForm(FormController formController, FormDataController formDataController, CanvasController canvas, DragAndDropItemPanel dgItemPanel, String name, int indexForm) {
 
 		super(formController, formDataController ,canvas, dgItemPanel, name);
+		this.indexForm = indexForm;
 		this.setOnCloseRequest(e -> {
 
 			e.consume();

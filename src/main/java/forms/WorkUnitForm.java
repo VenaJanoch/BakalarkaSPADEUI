@@ -81,11 +81,11 @@ public class WorkUnitForm extends DescriptionBasicForm implements ISegmentForm {
 	 * Konstruktor třídy. Zinicializuje globální proměnné tříd Nastaví velikost
 	 * okna a reakci na uzavření formulář
 	 */
-	public WorkUnitForm(FormController formController, FormDataController formDataController, String name) {
+	public WorkUnitForm(FormController formController, FormDataController formDataController, String name, int indexForm) {
 		super(formController, formDataController, name);
 		getMainPanel().setMinSize(Constans.workUnitformWidth, Constans.workUnitformHeight);
 		getMainPanel().setMaxSize(Constans.workUnitformWidth, Constans.workUnitformHeight);
-
+		this.indexForm = indexForm;
 		this.setOnCloseRequest(e -> {
 
 			e.consume();

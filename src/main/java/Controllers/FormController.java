@@ -203,7 +203,7 @@ public class FormController {
                 case Activity:
                     return  createNewActivityForm();
                 case WorkUnit:
-                    return createNewWorkUnitForm(canvasType);
+                    return createNewWorkUnitForm();
                 case Configuration:
                     return createNewConfigurationForm();
                 case Change:
@@ -244,11 +244,11 @@ public class FormController {
 
     }
 
-    private int createNewWorkUnitForm(CanvasType canvasType) {
+    private int createNewWorkUnitForm() {
 
         int index = identificatorCreater.createWorkUnitID();
         dataManipulator.createNewWorkUnit();
-        WorkUnitForm workUnitForm = new WorkUnitForm(this, formDataController,  SegmentType.WorkUnit.name());
+        WorkUnitForm workUnitForm = new WorkUnitForm(this, formDataController,  SegmentType.WorkUnit.name(), index);
         forms.add(index, workUnitForm);
 
         workUnitForm.getAsigneeRoleCB().setItems(lists.getRoleObservable());
@@ -318,6 +318,11 @@ public class FormController {
         int y = (int) item.getTranslateY();
         int[] coords = {x, y};
         return coords;
+    }
+
+    public void setNameToItem(int indexForm, String name) {
+        CanvasItem item = canvasItemList.get(indexForm);
+        item.setNameText(name);
     }
 
     public void removeCanvasItemFromList(int id) {

@@ -42,10 +42,6 @@ public class InfoBoxSegment extends Group {
 		this.segmentName = new Text(type.name());
 		this.length = Constans.minCanvasItemWidth;
 
-		if (length < 40) {
-			length = 42.0;
-		}
-
 		this.topRectangle = new Rectangle(length, Constans.infoBoxHeightRectangle);
 		this.botomRectangle = new Rectangle(length, Constans.infoBoxHeightRectangle);
 		height = Constans.infoBoxHeight;
@@ -110,12 +106,12 @@ public class InfoBoxSegment extends Group {
 		double width = testname.getLayoutBounds().getWidth();
 
 		name.setText(nameStr);
-		name.setWrappingWidth(Constans.maxCanvasItemWidth);
+		name.setWrappingWidth(Constans.maxCanvasItemWidth - Constans.offset);
 
-		if (width > length && width < Constans.maxCanvasItemWidth) {
+		if (width < (Constans.maxCanvasItemWidth - Constans.offset)) {
 			repaintBox(width, height);
 
-		} else if (width > Constans.maxCanvasItemWidth) {
+		} else{
 			int count = countHeightBotomRectangle((int) width);
 			repaintBox(Constans.maxCanvasItemWidth, count * height);
 		}
@@ -131,7 +127,7 @@ public class InfoBoxSegment extends Group {
 	 */
 	private int countHeightBotomRectangle(int width) {
 
-		int row = width / (int) Constans.maxCanvasItemWidth;
+		int row = width / (int) (Constans.maxCanvasItemWidth - Constans.offset);
 
 		return row + 1;
 	}

@@ -89,6 +89,7 @@ public abstract class BasicForm extends Stage {
 		this.setTitle("Edit " + name);
 		mainPanel = new BorderPane();
 		this.formController = formController;
+		this.formDataController = formDataController;
 		this.setScene(creatSceneProject());
 
 	}
