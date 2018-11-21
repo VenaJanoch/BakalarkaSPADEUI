@@ -218,7 +218,7 @@ public class FormController {
 
     private int createNewArtifactForm() {
        int index = identificatorCreater.createArtifactID();
-       dataManipulator.createNewArtifact(index);
+       dataManipulator.createNewArtifact();
        ArtifactForm artifactForm = new ArtifactForm(this, formDataController,  SegmentType.Artifact.name(), index);
        forms.add(index, artifactForm);
        return index;
@@ -226,7 +226,7 @@ public class FormController {
 
     private int createNewChangeForm() {
         int index = identificatorCreater.createChangeID();
-        dataManipulator.createNewChance(index);
+        dataManipulator.createNewChance();
         ChangeForm changeForm = new ChangeForm(this, formDataController, SegmentType.Change.name(), index);
         forms.add(index, changeForm);
         return index;
@@ -234,7 +234,7 @@ public class FormController {
 
     private int createNewConfigurationForm() {
         int index = identificatorCreater.createConfigurationID();
-        dataManipulator.createNewConfiguration(index);
+        dataManipulator.createNewConfiguration();
         CanvasController canvasController = new CanvasController(CanvasType.Configuration, applicationController);
         ConfigurationForm configurationForm = new ConfigurationForm(this, formDataController,  canvasController,
                 new DragAndDropItemPanel(Constans.configurationDragTextIndexs), SegmentType.Configuration.name(), index);
@@ -247,7 +247,7 @@ public class FormController {
     private int createNewWorkUnitForm(CanvasType canvasType) {
 
         int index = identificatorCreater.createWorkUnitID();
-        dataManipulator.createNewWorkUnit(index);
+        dataManipulator.createNewWorkUnit();
         WorkUnitForm workUnitForm = new WorkUnitForm(this, formDataController,  SegmentType.WorkUnit.name());
         forms.add(index, workUnitForm);
 
@@ -264,7 +264,7 @@ public class FormController {
 
     private int createNewActivityForm() {
         int index = identificatorCreater.createActivityID();
-        dataManipulator.createNewActivity(index);
+        dataManipulator.createNewActivity();
         CanvasController canvasController = new CanvasController(CanvasType.Activity, applicationController);
         ActivityForm activityForm = new ActivityForm(this, formDataController,  canvasController, new DragAndDropItemPanel(canvasController,
                 Constans.activityDragTextIndexs), SegmentType.Activity.name(), index);
@@ -276,7 +276,7 @@ public class FormController {
     int createNewPhaseForm(){
 
         int index = identificatorCreater.createPhaseID();
-        dataManipulator.createNewPhase(index);
+        dataManipulator.createNewPhase();
         CanvasController canvasController = new CanvasController(CanvasType.Phase, applicationController);
         PhaseForm phaseForm = new PhaseForm(this, formDataController,  canvasController, new DragAndDropItemPanel(canvasController,
                 Constans.phaseDragTextIndexs ), SegmentType.Phase.name(), index);
@@ -290,7 +290,7 @@ public class FormController {
     int createNewIterationForm(){
 
         int index = identificatorCreater.createIterationID();
-        dataManipulator.createNewIteration(index);
+        dataManipulator.createNewIteration();
         CanvasController canvasController = new CanvasController(CanvasType.Iteration, applicationController);
 
         IterationForm iterationForm = new IterationForm(this, formDataController,  canvasController, new DragAndDropItemPanel(canvasController,

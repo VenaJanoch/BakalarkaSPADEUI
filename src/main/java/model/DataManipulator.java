@@ -184,11 +184,9 @@ public class DataManipulator {
 
     }
 
-    public void createNewPhase(int index) {
+    public void createNewPhase() {
         Phase phase = objF.createPhase();
-
-        int segmentId = identificatorCreater.getPhaseIndex(index);
-        project.getPhases().add(segmentId, phase);
+        project.getPhases().add(phase);
     }
 
     public void removePhase(int formIdentificator) {
@@ -211,17 +209,14 @@ public class DataManipulator {
 
 
 
-    public void createNewIteration(int index) {
+    public void createNewIteration() {
         Iteration iteration = objF.createIteration();
-
-        int segmentId = identificatorCreater.getIterationIndex(index);
-        project.getIterations().add(segmentId, iteration);
+        project.getIterations().add(iteration);
     }
 
-    public void createNewActivity(int index) {
+    public void createNewActivity() {
         Activity activity = objF.createActivity();
-        int segmentId = identificatorCreater.getActivityIndex(index);
-        project.getActivities().add(segmentId, activity);
+        project.getActivities().add(activity);
 
     }
 
@@ -235,7 +230,7 @@ public class DataManipulator {
     public void addDataToPhase(String actName, LocalDate endDateL, String desc, int confIndex, int milestoneIndex, int x, int y,
                                Set<Integer> itemIndexList, int indexForm) {
 
-        Phase phase =  project.getPhases().get(identificatorCreater.getPhaseIndex(indexForm));
+        Phase phase =  project.getPhases().get(indexForm);
         phase.setEndDate(convertDate(endDateL));
         phase.setConfiguration(confIndex);
         phase.setDescription(desc);
@@ -249,7 +244,7 @@ public class DataManipulator {
     public void addDataToIteration(String nameForManipulator, LocalDate startDate, LocalDate endDate, String descriptionForManipulator,
                                    int configIndex, int x, int y, Set<Integer> itemIndexList, int indexForm) {
 
-        Iteration iteration = project.getIterations().get(identificatorCreater.getIterationIndex(indexForm));
+        Iteration iteration = project.getIterations().get(indexForm);
         iteration.setConfiguration(configIndex);
         iteration.setDescription(descriptionForManipulator);
         iteration.setEndDate(convertDate(endDate));
@@ -262,8 +257,8 @@ public class DataManipulator {
     }
 
     public void addDataToActivity(String nameForManipulator, String descriptionForManipulator, int x, int y, Set<Integer> setOfItemOnCanvas, int indexForm) {
-
-        Activity activity = project.getActivities().get(identificatorCreater.getActivityIndex(indexForm));
+        //TODO predelat formController a davat rovnou id prvku ne index formulare
+        Activity activity = project.getActivities().get(indexForm);
         activity.setDescription(descriptionForManipulator);
         activity.setName(nameForManipulator);
         activity.setCoordinates(createCoords(x, y));
@@ -272,10 +267,9 @@ public class DataManipulator {
     }
 
 
-    public void createNewWorkUnit(int index) {
+    public void createNewWorkUnit() {
         WorkUnit workUnit = objF.createWorkUnit();
-        int segmentId = identificatorCreater.getWorkUnitIndex(index);
-        project.getWorkUnits().add(segmentId,workUnit);
+        project.getWorkUnits().add(workUnit);
     }
 
     public void addDataToWorkUnit(String nameForManipulator,String description, String categoryForManipulator, int assigneIndex, int authorIndex,
@@ -327,10 +321,9 @@ public class DataManipulator {
 
     }
 
-    public void createNewConfiguration(int index) {
+    public void createNewConfiguration() {
         Configuration configuration = objF.createConfiguration();
-        int segmentId = identificatorCreater.getConfigurationIndex(index);
-        project.getConfiguration().add(segmentId,configuration);
+        project.getConfiguration().add(configuration);
     }
 
     public void removeConfiguration(int indexForm){
@@ -345,14 +338,11 @@ public class DataManipulator {
         change.setDescriptoin(descForManipulator);
         change.setName(nameForManipulator);
         change.setExist(selected);
-        change.setExist(selected);
     }
 
-    public void createNewChance(int index) {
+    public void createNewChance() {
         Change change = objF.createChange();
-
-        int segmentId = identificatorCreater.getChangeIndex(index);
-        project.getChanges().add(segmentId, change);
+        project.getChanges().add(change);
     }
 
     public void removeChange(int indexForm) {
@@ -362,10 +352,9 @@ public class DataManipulator {
 
     }
 
-    public void createNewArtifact(int index) {
+    public void createNewArtifact() {
         Artifact artifact = objF.createArtifact();
-        int segmentId = identificatorCreater.getArtifactIndex(index);
-        project.getArtifacts().add(segmentId, artifact);
+        project.getArtifacts().add(artifact);
     }
 
     public void addDataToArtifact(String nameForManipulator, String descForManipulator, LocalDate createdDate, boolean isCreate, int x, int y, int authorIndex, int typeIndex,

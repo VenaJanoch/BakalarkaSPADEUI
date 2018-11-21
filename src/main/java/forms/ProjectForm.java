@@ -50,9 +50,6 @@ public class ProjectForm extends Date2DescBasicForm implements  ISegmentForm{
 		getMainPanel().setMinSize(Constans.littleformWidth, Constans.littleformHeight);
 		getMainPanel().setMaxSize(Constans.littleformWidth, Constans.littleformHeight);
 
-	//	setCanvasItem(new CanvasItem(SegmentType.Project, "", control, this, 0, 0, 0, control.getContexMenu(),
-	//			control.getLinkControl(), control.getChooseCanvas()));
-
 		this.setOnCloseRequest(e -> {
 
 			e.consume();
@@ -78,8 +75,6 @@ public class ProjectForm extends Date2DescBasicForm implements  ISegmentForm{
 		String desc = getDescriptionTF().getText();
 
 		formDataController.saveDataFromProjectFrom(actName, endDate, startDate, desc);
-		//getControl().getFillForms().fillProject(desc, actName, startDate, endDate);
-
 	}
 
 	@Override

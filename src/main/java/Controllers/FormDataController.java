@@ -88,6 +88,7 @@ public class FormDataController {
 
         String nameForManipulator = formControl.fillTextMapper(actName);
         String categoryForManipulator = formControl.fillTextMapper(category);
+        String descriptionForManipulator = formControl.fillTextMapper(description);
 
         int[] coords = formController.getCoordsFromItem(indexForm);
 
@@ -105,7 +106,7 @@ public class FormDataController {
 
         formController.setItemColor(indexForm, selected);
 
-        dataManipulator.addDataToWorkUnit(nameForManipulator, description ,categoryForManipulator, prepareIndexForManipulator(assigneIndex),
+        dataManipulator.addDataToWorkUnit(nameForManipulator, descriptionForManipulator ,categoryForManipulator, prepareIndexForManipulator(assigneIndex),
                 prepareIndexForManipulator(authorIndex), prepareIndexForManipulator(priorityIndex), prepareIndexForManipulator(severityIndex),
                 prepareIndexForManipulator(typeIndex), prepareIndexForManipulator(resolutionIndex), prepareIndexForManipulator(statusIndex),
                 coords[0], coords[1], estimateForDataManipulator, selected, indexForm);

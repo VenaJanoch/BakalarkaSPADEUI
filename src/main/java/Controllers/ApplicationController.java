@@ -21,7 +21,7 @@ public class ApplicationController {
         DeleteControl deleteControl = new DeleteControl();
         this.formController = new FormController(identificatorCreater, dataManipulator, this, segmentLists, deleteControl);
         formDataController = new FormDataController(formController, deleteControl, segmentLists, dataManipulator, identificatorCreater);
-      //  formController.initBasicForms(formDataController);
+        //formController.initBasicForms(formDataController);
         this.manipulationController = new ManipulationController(formController);
         this.linkControl = new LinkControl(formController, identificatorCreater, segmentLists, dataManipulator);
         this.canvasItemController = new CanvasItemController(linkControl, formController, manipulationController);
