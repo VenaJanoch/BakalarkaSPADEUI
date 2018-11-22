@@ -101,8 +101,8 @@ public class RoleTypeForm extends TableClassBasicForm implements ISegmentTableFo
 
 		getControlPane().add(classLB, 0, 1);
 		getControlPane().add(roleClassTypeCB, 1, 1);
-		getControlPane().add(superLB, 4, 1);
-		getControlPane().add(roleSuperClassTypeCB, 3, 1);
+		getControlPane().add(superLB, 3, 1);
+		getControlPane().add(roleSuperClassTypeCB, 4, 1);
 		getControlPane().add(getAddBT(), 5, 0);
 
 		getAddBT().setOnAction(event -> addItem());

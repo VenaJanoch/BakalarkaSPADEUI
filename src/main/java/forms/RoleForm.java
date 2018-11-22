@@ -94,17 +94,23 @@ public class RoleForm extends Table2BasicForm implements ISegmentTableForm {
 		tableTV = new TableView<RoleTable>();
 
 		TableColumn<RoleTable, String> nameColumn = new TableColumn<RoleTable, String>("Name");
+		TableColumn<RoleTable, String> descColumn = new TableColumn<RoleTable, String>("Description");
 		TableColumn<RoleTable, String> typeColumn = new TableColumn<RoleTable, String>("Type");
 
 		nameColumn.setCellValueFactory(new PropertyValueFactory("name"));
 		nameColumn.setMinWidth(150);
 		nameColumn.setCellFactory(TextFieldTableCell.forTableColumn());
 
+		descColumn.setCellValueFactory(new PropertyValueFactory("desc"));
+		descColumn.setMinWidth(150);
+		descColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+
+
 		typeColumn.setCellValueFactory(new PropertyValueFactory("type"));
 		typeColumn.setMinWidth(150);
 		typeColumn.setCellFactory(TextFieldTableCell.forTableColumn());
 
-		tableTV.getColumns().addAll(nameColumn, typeColumn);
+		tableTV.getColumns().addAll(nameColumn,descColumn, typeColumn);
 
 		tableTV.setEditable(false);
 

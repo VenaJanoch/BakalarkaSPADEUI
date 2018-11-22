@@ -108,10 +108,10 @@ public class InfoBoxSegment extends Group {
 		name.setText(nameStr);
 		name.setWrappingWidth(Constans.maxCanvasItemWidth - Constans.offset);
 
-		if (width < (Constans.maxCanvasItemWidth - Constans.offset)) {
+		if (width > length && width < (Constans.maxCanvasItemWidth - Constans.offset)) {
 			repaintBox(width, height);
 
-		} else{
+		} else if (width > Constans.maxCanvasItemWidth) {
 			int count = countHeightBotomRectangle((int) width);
 			repaintBox(Constans.maxCanvasItemWidth, count * height);
 		}
