@@ -58,7 +58,12 @@ public class ActivityForm extends DescriptionBasicForm implements ISegmentForm {
 
 	}
 
-	@Override
+    public void setDataToForm(String name, String description) {
+		getNameTF().setText(name);
+		getDescriptionTF().setText(description);
+    }
+
+    @Override
 	public void closeForm() {
 
 		String actName = getNameTF().getText();

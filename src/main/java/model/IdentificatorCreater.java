@@ -4,237 +4,258 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class IdentificatorCreater {
-	/** Globální proměnné třídy **/
-	private int linesID = -1;
-	private int phaseID = -1;
-	private int iterationID = -1;
-	private int activityID = -1;
-	private int workUnitID = -1;
-	private int milestoneID = -1;
-	private int criteriumID = -1;
-	private int roleID = -1;
-	private int branchID = -1;
-	private int changeID = -1;
-	private int artifactID = -1;
-	private int configPRID = -1;
-	private int configID = -1;
-	private int tagID = -1;
-	private int CPRID = -1;
+    /**
+     * Globální proměnné třídy
+     **/
+    private int linesID = -1;
+    private int phaseID = -1;
+    private int iterationID = -1;
+    private int activityID = -1;
+    private int workUnitID = -1;
+    private int milestoneID = -1;
+    private int criteriumID = -1;
+    private int roleID = -1;
+    private int branchID = -1;
+    private int changeID = -1;
+    private int artifactID = -1;
+    private int configPRID = -1;
+    private int configID = -1;
+    private int tagID = -1;
+    private int CPRID = -1;
 
-	private int priorityID = -1;
-	private int severityID = -1;
-	private int resolutionID = -1;
-	private int relationID = -1;
-	private int statusID = -1;
-	private int typeID = -1;
-	private int roleTypeID = -1;
+    private int priorityID = -1;
+    private int severityID = -1;
+    private int resolutionID = -1;
+    private int relationID = -1;
+    private int statusID = -1;
+    private int typeID = -1;
+    private int roleTypeID = -1;
 
-	private int index = 12;
+    private int index = 14;
 
-	private Map<Integer, Integer> changeIndexMaper = new HashMap<>();
-	private Map<Integer, Integer> artifactIndexMaper = new HashMap<>();
-	private Map<Integer, Integer> workUnitIndexMaper = new HashMap<>();
-	private Map<Integer, Integer> phaseIndexMaper = new HashMap<>();
-	private Map<Integer, Integer> iterationIndexMaper = new HashMap<>();
-	private Map<Integer, Integer> activityIndexMaper = new HashMap<>();
-	private Map<Integer, Integer> configurationFormToIndexMaper = new HashMap<>();
-	private Map<Integer, Integer> configurationIndexToFormMaper = new HashMap<>();
+    private Map<Integer, Integer> changeSegmentIndexToFormMaper = new HashMap<>();
+    private Map<Integer, Integer> changeIndexMaper = new HashMap<>();
+    private Map<Integer, Integer> artifactSegmentIndexToFormMaper = new HashMap<>();
+    private Map<Integer, Integer> artifactIndexMaper = new HashMap<>();
+    private Map<Integer, Integer> workUnitIndexMaper = new HashMap<>();
+    private Map<Integer, Integer> workUnitSegmentIndexToFormMaper = new HashMap<>();
+    private Map<Integer, Integer> phaseIndexMaper = new HashMap<>();
+    private Map<Integer, Integer> iterationIndexMaper = new HashMap<>();
+    private Map<Integer, Integer> activityIndexMaper = new HashMap<>();
+    private Map<Integer, Integer> configurationFormToIndexMaper = new HashMap<>();
+    private Map<Integer, Integer> configurationIndexToFormMaper = new HashMap<>();
 
     /**
-	 * Metody pro inkrementaci počtu daného prvku
-	 */
-	
-	public int createRoleTypeID() {
+     * Metody pro inkrementaci počtu daného prvku
+     */
 
-		roleTypeID++;
+    public int createRoleTypeID() {
 
-		return roleTypeID;
+        roleTypeID++;
 
-	}
+        return roleTypeID;
 
-	public int createTypeID() {
+    }
 
-		typeID++;
+    public int createTypeID() {
 
-		return typeID;
+        typeID++;
 
-	}
+        return typeID;
 
-	public int createStatusID() {
+    }
 
-		statusID++;
+    public int createStatusID() {
 
-		return statusID;
+        statusID++;
 
-	}
+        return statusID;
 
-	public int createRelationID() {
+    }
 
-		relationID++;
+    public int createRelationID() {
 
-		return relationID;
+        relationID++;
 
-	}
+        return relationID;
 
-	public int createResolutionID() {
+    }
 
-		resolutionID++;
+    public int createResolutionID() {
 
-		return resolutionID;
+        resolutionID++;
 
-	}
+        return resolutionID;
 
-	public int createSeverityID() {
+    }
 
-		severityID++;
+    public int createSeverityID() {
 
-		return severityID;
+        severityID++;
 
-	}
+        return severityID;
 
-	public int createPriorityID() {
+    }
 
-		priorityID++;
+    public int createPriorityID() {
 
-		return priorityID;
+        priorityID++;
 
-	}
+        return priorityID;
 
-	public int createPhaseID() {
+    }
 
-		phaseID++;
-		phaseIndexMaper.put(index, phaseID);
-		index ++;
-		return index -1;
+    public int createPhaseID() {
 
-	}
+        phaseID++;
+        phaseIndexMaper.put(index, phaseID);
+        index++;
+        return index - 1;
 
-	public int createIterationID() {
+    }
 
-		iterationID++;
-		iterationIndexMaper.put(index, iterationID);
-		index++;
-		return index -1;
-	}
+    public int createIterationID() {
 
-	public int createActivityID() {
+        iterationID++;
+        iterationIndexMaper.put(index, iterationID);
+        index++;
+        return index - 1;
+    }
 
-		activityID++;
-		activityIndexMaper.put(index,activityID);
-		index++;
-		return index -1;
-	}
+    public int createActivityID() {
 
-	public int createWorkUnitID() {
+        activityID++;
+        activityIndexMaper.put(index, activityID);
+        index++;
+        return index - 1;
+    }
 
-		workUnitID++;
-		workUnitIndexMaper.put(index, workUnitID);
-		index++;
-		return index -1;
-	}
+    public int createWorkUnitID() {
 
-	public int createMilestoneID() {
-		milestoneID++;
-		return milestoneID;
-	}
+        workUnitID++;
+        workUnitIndexMaper.put(index, workUnitID);
+        workUnitSegmentIndexToFormMaper.put(workUnitID, index);
+        index++;
+        return index - 1;
+    }
 
-	public int createCriterionID() {
-		criteriumID++;
-		return criteriumID;
-	}
+    public int createMilestoneID() {
+        milestoneID++;
+        return milestoneID;
+    }
 
-	public int createRoleID() {
-		roleID++;
-		return roleID;
-	}
+    public int createCriterionID() {
+        criteriumID++;
+        return criteriumID;
+    }
 
-	public int createBranchID() {
-		branchID++;
-		return branchID;
-	}
+    public int createRoleID() {
+        roleID++;
+        return roleID;
+    }
 
-	public int createChangeID() {
-		changeID++;
-		changeIndexMaper.put(index,changeID);
-		index++;
-		return index -1;
-	}
+    public int createBranchID() {
+        branchID++;
+        return branchID;
+    }
 
-	public int createArtifactID() {
-		artifactID++;
-		artifactIndexMaper.put(index,activityID);
-		index++;
-		return index -1;
-	}
+    public int createChangeID() {
+        changeID++;
+        changeIndexMaper.put(index, changeID);
+        changeSegmentIndexToFormMaper.put(changeID, index);
+        index++;
+        return index - 1;
+    }
 
-	public int createCPRID() {
-		configPRID++;
-		return configPRID;
-	}
+    public int createArtifactID() {
+        artifactID++;
+        artifactIndexMaper.put(index, artifactID);
+        artifactSegmentIndexToFormMaper.put(artifactID, index);
+        index++;
+        return index - 1;
+    }
 
-	public int createConfigurationID() {
-		configID++;
-		configurationFormToIndexMaper.put(index, configID);
-		configurationIndexToFormMaper.put(configID, index);
-		index++;
-		return index -1;
-	}
+    public int createCPRID() {
+        configPRID++;
+        return configPRID;
+    }
 
-	public int createTagID() {
-		tagID++;
-		return tagID;
-	}
+    public int createConfigurationID() {
+        configID++;
+        configurationFormToIndexMaper.put(index, configID);
+        configurationIndexToFormMaper.put(configID, index);
+        index++;
+        return index - 1;
+    }
 
-	public Integer getChangeIndex(int formIndex){
+    public int createTagID() {
+        tagID++;
+        return tagID;
+    }
 
-		return getChangeIndexMaper().get(formIndex);
-	}
+    public Integer getChangeIndex(int formIndex) {
 
-	public  Integer getArtifactIndex(int formIndex){
-		return  getArtifactIndexMaper().get(formIndex);
-	}
+        return getChangeIndexMaper().get(formIndex);
+    }
 
-	public Integer getWorkUnitIndex(int startSegmentId) {
-		return  getWorkUnitIndexMaper().get(startSegmentId);
-	}
+    public Integer getArtifactIndex(int formIndex) {
+        return getArtifactIndexMaper().get(formIndex);
+    }
 
-	public Integer getPhaseIndex(int formIndex){
-		return  phaseIndexMaper.get(formIndex);
-	}
+    public Integer getWorkUnitIndex(int startSegmentId) {
+        return getWorkUnitIndexMaper().get(startSegmentId);
+    }
 
-	public Integer getIterationIndex(int formIdentificator) {
-		return  iterationIndexMaper.get(formIdentificator);
-	}
+    public Integer getPhaseIndex(int formIndex) {
+        return phaseIndexMaper.get(formIndex);
+    }
 
-	public Integer getActivityIndex(int formIdentificator) {
-		return activityIndexMaper.get(formIdentificator);
-	}
+    public Integer getIterationIndex(int formIdentificator) {
+        return iterationIndexMaper.get(formIdentificator);
+    }
 
-	public Integer getConfigurationFormIndex(int index) {
-		return configurationIndexToFormMaper.get(index);
-	}
+    public Integer getActivityIndex(int formIdentificator) {
+        return activityIndexMaper.get(formIdentificator);
+    }
 
-	public Integer getConfigurationIndex(int formIdentificator){
-		return configurationFormToIndexMaper.get(formIdentificator);
-	}
+    public Integer getConfigurationFormIndex(int index) {
+        return configurationIndexToFormMaper.get(index);
+    }
+
+    public Integer getConfigurationIndex(int formIdentificator) {
+        return configurationFormToIndexMaper.get(formIdentificator);
+    }
 
 
-	public int createLineID() {
+    public int createLineID() {
 
-		linesID++;
+        linesID++;
 
-		return linesID;
+        return linesID;
 
-	}
+    }
 
-	public Map<Integer, Integer> getChangeIndexMaper() {
-		return changeIndexMaper;
-	}
-	public Map<Integer, Integer> getArtifactIndexMaper() {
-		return artifactIndexMaper;
-	}
+    public Map<Integer, Integer> getChangeIndexMaper() {
+        return changeIndexMaper;
+    }
 
-	public Map<Integer, Integer> getWorkUnitIndexMaper() {
-		return  workUnitIndexMaper;
-	}
+    public Map<Integer, Integer> getArtifactIndexMaper() {
+        return artifactIndexMaper;
+    }
+
+    public Map<Integer, Integer> getWorkUnitIndexMaper() {
+        return workUnitIndexMaper;
+    }
+
+    public Map<Integer, Integer> getWorkUnitSegmentIndexToFormMaper() {
+        return workUnitSegmentIndexToFormMaper;
+    }
+
+    public Map<Integer, Integer> getChangeSegmentIndexToFormMaper() {
+        return changeSegmentIndexToFormMaper;
+    }
+
+    public Map<Integer, Integer> getArtifactSegmentIndexToFormMaper() {
+        return artifactSegmentIndexToFormMaper;
+    }
 }

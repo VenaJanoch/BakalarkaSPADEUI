@@ -36,7 +36,7 @@ public class ConfigurationValueTest {
         itemSet.add(2);
         itemSet.add(3);
         date = LocalDate.of(2018, 10, 10);
-        data.addDataToConfiguration("Jmeno1", date, true,68, 69, 2 ,itemSet, itemSet,
+        data.addDataToConfiguration("Jmeno1", date, true,2 ,itemSet, itemSet,
                 itemSet, itemSet, 0);
         configuration = data.getProject().getConfiguration().get(0);
     }

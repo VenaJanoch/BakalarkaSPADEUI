@@ -73,6 +73,13 @@ public class IterationForm extends Date2DescBasicForm implements ISegmentForm {
 		createForm();
 
 	}
+	public void setDataToForm(String name, String description, LocalDate startDate, LocalDate endDate, int configurationIndex) {
+		getNameTF().setText(name);
+		getDescriptionTF().setText(description);
+		dateDP.setValue(startDate);
+		date2DP.setValue(endDate);
+		configCB.getSelectionModel().select(configurationIndex);
+	}
 
 	@Override
 	public void closeForm() {

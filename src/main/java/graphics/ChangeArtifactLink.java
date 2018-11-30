@@ -1,5 +1,7 @@
 package graphics;
 
+import Controllers.CanvasController;
+import Controllers.ManipulationController;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import Controllers.LinkControl;
@@ -11,8 +13,8 @@ public class ChangeArtifactLink extends NodeLink {
      * @param ID          Identifikace spojnice
      * @param linkControl LinkControl
      */
-    public ChangeArtifactLink(int ID, LinkControl linkControl) {
-        super(ID, linkControl);
+    public ChangeArtifactLink(int ID, LinkControl linkControl, CanvasController canvasController, ManipulationController manipulationController) {
+        super(ID, linkControl,canvasController, manipulationController );
     }
 
     /**

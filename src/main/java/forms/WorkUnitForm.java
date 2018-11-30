@@ -3,6 +3,7 @@ package forms;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import Controllers.CanvasController;
 import Controllers.FormController;
 import Controllers.FormDataController;
 import SPADEPAC.RoleClass;
@@ -30,11 +31,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.stage.WindowEvent;
-import services.Alerts;
-import services.Constans;
-import services.Control;
-import services.DeleteControl;
-import services.SegmentType;
+import services.*;
 
 /**
  * Třída představující formulář pro element Work Unit, odděděná od třídy
@@ -81,8 +78,8 @@ public class WorkUnitForm extends DescriptionBasicForm implements ISegmentForm {
 	 * Konstruktor třídy. Zinicializuje globální proměnné tříd Nastaví velikost
 	 * okna a reakci na uzavření formulář
 	 */
-	public WorkUnitForm(FormController formController, FormDataController formDataController, String name, int indexForm) {
-		super(formController, formDataController, name);
+	public WorkUnitForm(FormController formController, FormDataController formDataController, CanvasController canvasController, String name, int indexForm) {
+		super(formController, formDataController, canvasController, name);
 		getMainPanel().setMinSize(Constans.workUnitformWidth, Constans.workUnitformHeight);
 		getMainPanel().setMaxSize(Constans.workUnitformWidth, Constans.workUnitformHeight);
 		this.indexForm = indexForm;
@@ -109,7 +106,7 @@ public class WorkUnitForm extends DescriptionBasicForm implements ISegmentForm {
 		String category = categoryTF.getText();
 		String desc = getDescriptionTF().getText();
 		isSave = formDataController.saveDataFromWorkUnit(actName,desc, category, assigneIndex, authorIndex, priorityIndex, severityIndex, typeIndex,
-				resolutionIndex, statusIndex, estimatedTimeTF.getText(), getExistRB().isSelected(), indexForm);
+				resolutionIndex, statusIndex, estimatedTimeTF.getText(), getExistRB().isSelected(), indexForm, canvasController.getCanvasType());
 	}
 
 	@Override
@@ -301,6 +298,23 @@ public class WorkUnitForm extends DescriptionBasicForm implements ISegmentForm {
 
 		getInfoPart().add(existRB, 1, 11);
 
+	}
+
+	public void setDataToForm(String name, int assigneeIndex, int authorIndex, String category, String description, String estimatedTime,
+							  int priorityIndex, int resolutionIndex, int severityIndex,int statusIndex, int typeIndex, boolean isExist){
+		getNameTF().setText(name);
+		getDescriptionTF().setText(description);
+		getCategoryTF().setText(category);
+		asigneeRoleCB.getSelectionModel().select(assigneeIndex);
+		authorRoleCB.getSelectionModel().select(authorIndex);
+		estimatedTimeTF.setText(estimatedTime);
+		priorityCB.getSelectionModel().select(priorityIndex);
+		resolutionCB.getSelectionModel().select(resolutionIndex);
+		severityCB.getSelectionModel().select(severityIndex);
+		statusCB.getSelectionModel().select(statusIndex);
+		typeCB.getSelectionModel().select(typeIndex);
+		existRB.setSelected(isExist);
+		isSave = true;
 	}
 
 	/**** Gets and Setrs ***/

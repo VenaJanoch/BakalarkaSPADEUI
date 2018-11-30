@@ -39,7 +39,7 @@ public class WorkUnitNullValueTest {
         }
         data.createNewWorkUnit();
         data.addDataToWorkUnit(null,null, null, 0, 0, 0, 0,
-                0, 0, 0, 0, 0, -1, true, 0);
+                0, 0, 0, 0, 0, -1, true, 0, false);
         workUnit = data.getProject().getWorkUnits().get(0);
     }
 

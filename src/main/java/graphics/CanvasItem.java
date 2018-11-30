@@ -171,4 +171,8 @@ public class CanvasItem extends AnchorPane {
 	public SegmentType getSegmentType() {
 		return segmentType;
 	}
+
+	public CanvasController getCanvasController() {
+		return canvasController;
+	}
 }

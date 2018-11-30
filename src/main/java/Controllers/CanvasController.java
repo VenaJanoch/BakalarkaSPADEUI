@@ -40,6 +40,7 @@ public class CanvasController {
         this.manipulationController = applicationController.getManipulationController();
         this.itemContexMenu = new ItemContexMenu(manipulationController,this,canvasItemController);
         this.formController = applicationController.getFormController();
+        this.linkButton = new ToggleButton();
     }
 
 
@@ -58,7 +59,7 @@ public class CanvasController {
 
         } else if (event.getCode() == KeyCode.ESCAPE) {
             if (manipulationController.getLink() != null) {
-               manipulationController.getLink().getBackgroundPolygon().setStroke(Color.TRANSPARENT);
+               manipulationController.getLink().coverBackgroundPolygon();
             }
         }
 
@@ -71,6 +72,7 @@ public class CanvasController {
     public void addPolygonToCanvas(Polygon backgroundPlygon){
         canvas.getCanvas().getChildren().add(backgroundPlygon);
     }
+
 
     public CanvasItem addCanvasItemFromPanel(String segment, double x, double y) {
 
@@ -85,7 +87,21 @@ public class CanvasController {
 
     }
 
-    private String createSegmentId(SegmentType type, int formIndex) {
+    public CanvasItem addCanvasItemFromExistData(SegmentType type, int formIndex, String name, double x, double y){
+        String segmentId = createSegmentId(type, formIndex);
+        CanvasItem item = canvasItemController.createCanvasItem(type,segmentId,formIndex,name, x, y, this);
+        canvas.getCanvas().getChildren().add(item);
+        listOfItemOnCanvas.put(formIndex, item);
+        return item;
+    }
+
+    public CanvasItem addCanvasItemFromExistData(SegmentType type, int formIndex, String name, double x, double y, boolean isExist){
+        CanvasItem item  =  addCanvasItemFromExistData(type, formIndex, name, x,  y);
+        formController.setItemColor(formIndex, isExist);
+        return item;
+    }
+
+    public String createSegmentId(SegmentType type, int formIndex) {
 
         int id = formController.getSegmetIdFromFromId(type,formIndex);
         String number = String.format("%03d", id);
@@ -232,16 +248,8 @@ public class CanvasController {
         return linkButton;
     }
 
-    public void setLinkButton(ToggleButton linkButton) {
-        this.linkButton = linkButton;
-    }
-
     public boolean isArrow() {
         return arrow;
-    }
-
-    public void setArrow(boolean arrow) {
-        this.arrow = arrow;
     }
 
     public boolean isStartArrow() {

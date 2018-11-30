@@ -6,6 +6,7 @@ import Controllers.FormController;
 import Controllers.WindowController;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -27,6 +28,7 @@ public class MainWindow extends Stage {
 	private DragAndDropPanel dragAndDrop;
 	private WindowController windowController;
 	private FormController formController;
+
 	/**
 	 * Konstruktor třídy Nastaví reakci na uzavírání aplikace
 	 * 
@@ -43,8 +45,7 @@ public class MainWindow extends Stage {
 		windowController.closeProjectWindow();
 
 		this.setScene(creatScene());
-		windowController.setSceneToPrimaryStage(scena, this.getTitle());
-	}
+		}
 
 	/**
 	 * Vytvoří instanci Scene
@@ -78,4 +79,7 @@ public class MainWindow extends Stage {
 		return mainPanel;
 	}
 
+	public CanvasController getCanvasController() {
+		return canvasController;
+	}
 }

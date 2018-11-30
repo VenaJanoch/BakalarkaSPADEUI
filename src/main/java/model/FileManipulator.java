@@ -90,16 +90,20 @@ public class FileManipulator {
      * Umožní zobrazneí systémového okna pro výběr souboru k načtení XML souboru
      * s procesem Zavolá metody pro restartování datových struktur
      */
-    public boolean loadFile() {
+    public File loadFile() {
 
         fileChooser.setTitle(Constans.fileChooserTitle);
 
         XMLProcessFile = fileChooser.showOpenDialog(new Stage());
         if (XMLProcessFile != null) {
 
-            return true;
+            return XMLProcessFile;
         }
-        return false;
+        return null;
+    }
+
+    public void parseProject(File xmlProject){
+        dataManipulator.setProject(procesGener.readProcess(xmlProject));
     }
 
 }

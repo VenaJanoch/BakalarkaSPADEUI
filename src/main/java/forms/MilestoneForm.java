@@ -76,7 +76,7 @@ public class MilestoneForm extends Table2BasicForm implements ISegmentTableForm 
 		getInternalPanel().setCenter(getTable());
 		getInternalPanel().setBottom(createControlPane());
 
-		criterionForm = new CriterionForm(formController, formDataController, SegmentType.Criterion.name());
+		criterionForm = (CriterionForm) formController.getForms().get(Constans.criterionFormIndex);
 
 		getMainPanel().setCenter(getInternalPanel());
 		getMainPanel().setRight(criterionForm.getMainPanel());

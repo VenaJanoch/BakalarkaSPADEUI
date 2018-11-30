@@ -38,11 +38,15 @@ public class FormController {
     private ConfigurationTableForm confTableForm;
     private ProjectForm projectForm;
     private TypeForm typeForm;
+    private CriterionForm criterionForm;
+    private RoleTypeForm roleTypeForm;
 
     private ApplicationController applicationController;
     private DeleteControl deleteControl;
     private SegmentLists lists;
     private FormDataController formDataController;
+
+    private int lastConfigurationIndex = -1;
 
     public FormController(IdentificatorCreater identificatorCreater, DataManipulator dataManipulator,
                           ApplicationController applicationController, SegmentLists segmentLists, DeleteControl deleteControl) {
@@ -66,8 +70,14 @@ public class FormController {
         projectForm = new ProjectForm(this, formDataController, "Project");
         forms.add(Constans.projectFormIndex, projectForm);
 
+        criterionForm = new CriterionForm(this, formDataController, "Criterion");
+        forms.add(criterionForm);
+
         milestoneForm = new MilestoneForm(this, formDataController, "Milestone");
         forms.add(Constans.milestoneFormIndex, milestoneForm);
+
+        roleTypeForm = new RoleTypeForm(this, formDataController, "Role type");
+        forms.add(roleTypeForm);
 
         roleForm = new RoleForm(this, formDataController,"Role");
         forms.add(Constans.roleFormIndex, roleForm);
@@ -203,7 +213,7 @@ public class FormController {
                 case Activity:
                     return  createNewActivityForm();
                 case WorkUnit:
-                    return createNewWorkUnitForm();
+                    return createNewWorkUnitForm(canvasType);
                 case Configuration:
                     return createNewConfigurationForm();
                 case Change:
@@ -217,38 +227,62 @@ public class FormController {
     }
 
     private int createNewArtifactForm() {
-       int index = identificatorCreater.createArtifactID();
-       dataManipulator.createNewArtifact();
-       ArtifactForm artifactForm = new ArtifactForm(this, formDataController,  SegmentType.Artifact.name(), index);
-       forms.add(index, artifactForm);
-       return index;
+        dataManipulator.createNewArtifact();
+        int index = createNewArtifactFormWithoutManipulator();
+        return  index;
+    }
+
+    public int createNewArtifactFormWithoutManipulator(){
+        int index = identificatorCreater.createArtifactID();
+
+        ArtifactForm artifactForm = new ArtifactForm(this, formDataController,  SegmentType.Artifact.name(), index);
+        forms.add(index, artifactForm);
+        return index;
+
     }
 
     private int createNewChangeForm() {
-        int index = identificatorCreater.createChangeID();
         dataManipulator.createNewChance();
+        int index = createNewChangeFormWithoutManipulator();
+        return  index;
+    }
+    public int createNewChangeFormWithoutManipulator(){
+
+        int index = identificatorCreater.createChangeID();
         ChangeForm changeForm = new ChangeForm(this, formDataController, SegmentType.Change.name(), index);
         forms.add(index, changeForm);
         return index;
     }
 
+
     private int createNewConfigurationForm() {
-        int index = identificatorCreater.createConfigurationID();
+
         dataManipulator.createNewConfiguration();
-        CanvasController canvasController = new CanvasController(CanvasType.Configuration, applicationController);
-        ConfigurationForm configurationForm = new ConfigurationForm(this, formDataController,  canvasController,
-                new DragAndDropItemPanel(Constans.configurationDragTextIndexs), SegmentType.Configuration.name(), index);
-        forms.add(configurationForm);
-
+        int index = createNewConfiguratioFormWithoutManipulator();
         return  index;
-
     }
 
-    private int createNewWorkUnitForm() {
+    public int createNewConfiguratioFormWithoutManipulator(){
+        lastConfigurationIndex = identificatorCreater.createConfigurationID();
+        CanvasController canvasController = new CanvasController(CanvasType.Configuration, applicationController);
+        ConfigurationForm configurationForm = new ConfigurationForm(this, formDataController,  canvasController,
+                new DragAndDropItemPanel(canvasController, Constans.configurationDragTextIndexs), SegmentType.Configuration.name(), lastConfigurationIndex);
+        forms.add(configurationForm);
 
-        int index = identificatorCreater.createWorkUnitID();
+        return  lastConfigurationIndex;
+    }
+
+    private int createNewWorkUnitForm(CanvasType canvasType) {
         dataManipulator.createNewWorkUnit();
-        WorkUnitForm workUnitForm = new WorkUnitForm(this, formDataController,  SegmentType.WorkUnit.name(), index);
+        int index = createNewWorkUnitFormWithoutManipulator(canvasType);
+        return index;
+    }
+
+    public int createNewWorkUnitFormWithoutManipulator(CanvasType canvasType){
+        int index = identificatorCreater.createWorkUnitID();
+
+        CanvasController canvasController = new CanvasController(canvasType, applicationController);
+        WorkUnitForm workUnitForm = new WorkUnitForm(this, formDataController, canvasController, SegmentType.WorkUnit.name(), index);
         forms.add(index, workUnitForm);
 
         workUnitForm.getAsigneeRoleCB().setItems(lists.getRoleObservable());
@@ -262,9 +296,16 @@ public class FormController {
         return  index;
     }
 
+
     private int createNewActivityForm() {
-        int index = identificatorCreater.createActivityID();
+
         dataManipulator.createNewActivity();
+        int index = createNewActivityFormWithoutManipulator();
+        return index;
+    }
+
+    public int createNewActivityFormWithoutManipulator(){
+        int index = identificatorCreater.createActivityID();
         CanvasController canvasController = new CanvasController(CanvasType.Activity, applicationController);
         ActivityForm activityForm = new ActivityForm(this, formDataController,  canvasController, new DragAndDropItemPanel(canvasController,
                 Constans.activityDragTextIndexs), SegmentType.Activity.name(), index);
@@ -273,10 +314,15 @@ public class FormController {
         return  index;
     }
 
-    int createNewPhaseForm(){
+    private int createNewPhaseForm(){
+        dataManipulator.createNewPhase();
+        int index = createNewPhaseFormWithoutManipulator();
+        return  index;
+    }
+
+    public int createNewPhaseFormWithoutManipulator(){
 
         int index = identificatorCreater.createPhaseID();
-        dataManipulator.createNewPhase();
         CanvasController canvasController = new CanvasController(CanvasType.Phase, applicationController);
         PhaseForm phaseForm = new PhaseForm(this, formDataController,  canvasController, new DragAndDropItemPanel(canvasController,
                 Constans.phaseDragTextIndexs ), SegmentType.Phase.name(), index);
@@ -289,8 +335,14 @@ public class FormController {
 
     int createNewIterationForm(){
 
-        int index = identificatorCreater.createIterationID();
         dataManipulator.createNewIteration();
+        int index = createNewIterationFormWithoutManipulator();
+        return index;
+    }
+
+    public int createNewIterationFormWithoutManipulator(){
+        int index = identificatorCreater.createIterationID();
+
         CanvasController canvasController = new CanvasController(CanvasType.Iteration, applicationController);
 
         IterationForm iterationForm = new IterationForm(this, formDataController,  canvasController, new DragAndDropItemPanel(canvasController,
@@ -512,6 +564,33 @@ public class FormController {
 
     public ArrayList<BasicForm> getForms() {
         return forms;
+    }
+
+    public void setNewItemToConfigurationTable(String actName, String isRelease, int id) {
+        ConfigTable configTable = new ConfigTable(actName, isRelease, id);
+        ConfigurationTableForm configurationTableForm = (ConfigurationTableForm) forms.get(Constans.configurationFormIndex);
+        configurationTableForm.getTableTV().getItems().add(configTable);
+        configurationTableForm.getTableTV().sort();
+        configurationTableForm.createConfigItem();
+    }
+
+    public void setEditItemInConfigurationTable(String actName, String isRelease, int indexForm, int id) {
+        ConfigTable configTable = new ConfigTable(actName, isRelease, indexForm);
+        ConfigurationTableForm configurationTableForm = (ConfigurationTableForm) forms.get(Constans.configurationFormIndex);
+        configurationTableForm.getTableTV().getItems().remove(id);
+        configurationTableForm.getTableTV().getItems().add(id,configTable);
+        configurationTableForm.getTableTV().sort();
+
+    }
+
+    public void setConfigurationFormToTableForm(){
+        ConfigurationTableForm configurationTableForm = (ConfigurationTableForm) forms.get(Constans.configurationFormIndex);
+        configurationTableForm.getMainPanel().setCenter(getMainPanelFromForm(lastConfigurationIndex));
+    }
+
+
+    public Map<Integer, CanvasItem> getCanvasItemList() {
+        return canvasItemList;
     }
 }
 

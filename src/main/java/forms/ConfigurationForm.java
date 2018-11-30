@@ -91,14 +91,9 @@ public class ConfigurationForm extends DateBasicForm implements ISegmentForm {
         branchIndex = new ArrayList<>();
         cprIndex = new ArrayList<>();
 
-        this.setOnCloseRequest(new EventHandler<WindowEvent>() {
+        this.setOnCloseRequest(event -> Alerts.showSaveSegment());
 
-            @Override
-            public void handle(WindowEvent event) {
-                Alerts.showSaveSegment();
-            }
-        });
-
+        getSubmitButton().setText("Add");
         getSubmitButton().setOnAction(event -> setActionSubmitButton());
         createForm();
 
@@ -112,15 +107,21 @@ public class ConfigurationForm extends DateBasicForm implements ISegmentForm {
         branchIndex.addAll(branchCB.getCheckModel().getCheckedIndices());
         cprIndex.addAll(cprCB.getCheckModel().getCheckedIndices());
 
-        formDataController.saveDataFromConfiguration(actName, createDate, isRelease, authorIndex, branchIndex, cprIndex,
-                canvasController.getListOfItemOnCanvas(), indexForm);
+        isSave =  formDataController.saveDataFromConfiguration(actName, createDate, isRelease, authorIndex, branchIndex, cprIndex,
+                canvasController.getListOfItemOnCanvas(), isNew, indexForm);
     }
 
     @Override
     public void setActionSubmitButton() {
 
         closeForm();
-        close();
+        if(isSave){
+            isNew = false;
+            getSubmitButton().setText("Ok");
+            close();
+
+        }
+
     }
 
     @Override
@@ -293,4 +294,19 @@ public class ConfigurationForm extends DateBasicForm implements ISegmentForm {
         this.isNew = isNew;
     }
 
+    public void setDataToForm(String name, LocalDate createdDate, int authorIndex, ArrayList<Integer> cprIndexs, ArrayList<Integer> branchIndexs,
+                              List<String> tags) {
+        getNameTF().setText(name);
+        getDateDP().setValue(createdDate);
+        authorRoleCB.getSelectionModel().select(authorIndex);
+        for(int i : cprIndexs){
+            cprCB.getCheckModel().check(i);
+        }
+
+        for(int i : branchIndexs){
+            branchCB.getCheckModel().check(i);
+        }
+
+
+    }
 }

@@ -31,107 +31,84 @@ import services.SegmentType;
 /**
  * Třída představující formulář pro element Change, odděděná od třídy BasicForm
  * a implementující ISegmentForm
- * 
- * @author Václav Janoch
  *
+ * @author Václav Janoch
  */
 public class ChangeForm extends DescriptionBasicForm implements ISegmentForm {
 
-	/**
-	 * Globální proměnné třídy
-	 */
-	private ComboBox<String> changeCB;
-	private RadioButton existRB;
+    /**
+     * Globální proměnné třídy
+     */
+    private ComboBox<String> changeCB;
+    private RadioButton existRB;
 
-	private boolean newChange;
+    private boolean newChange;
 
-	/**
-	 * Konstruktor třídy Zinicializuje globální proměnné třídy Nastaví velikost
-	 * formuláře a reakci na uzavření formuláře
-	 *
-	 */
-	public ChangeForm(FormController formController, FormDataController formDataController, String name, int indexForm) {
-		super(formController, formDataController, name);
+    /**
+     * Konstruktor třídy Zinicializuje globální proměnné třídy Nastaví velikost
+     * formuláře a reakci na uzavření formuláře
+     */
+    public ChangeForm(FormController formController, FormDataController formDataController, String name, int indexForm) {
+        super(formController, formDataController, name);
 
-		this.newChange = true;
-		this.indexForm = indexForm;
+        this.newChange = true;
+        this.indexForm = indexForm;
 
-		getMainPanel().setMinSize(Constans.littleformWidth, Constans.littleformHeight);
-		getMainPanel().setMaxSize(Constans.littleformWidth, Constans.littleformHeight);
+        getMainPanel().setMinSize(Constans.littleformWidth, Constans.littleformHeight);
+        getMainPanel().setMaxSize(Constans.littleformWidth, Constans.littleformHeight);
 
-		this.setOnCloseRequest(e -> {
+        this.setOnCloseRequest(e -> {
 
-			e.consume();
-			int result = Alerts.showSaveSegment();
-			if (result == 1) {
-				setActionSubmitButton();
-			} else if (result == 0) {
-				this.close();
-			}
-		});
+            e.consume();
+            int result = Alerts.showSaveSegment();
+            if (result == 1) {
+                setActionSubmitButton();
+            } else if (result == 0) {
+                this.close();
+            }
+        });
 
-		getSubmitButton().setOnAction(event -> setActionSubmitButton());
-		fillForm();
+        getSubmitButton().setOnAction(event -> setActionSubmitButton());
+        fillForm();
 
-	}
+    }
 
-	@Override
-	public void closeForm() {
+    @Override
+    public void closeForm() {
 
-		String actName = getNameTF().getText();
-		String desc = getDescriptionTF().getText();
+        String actName = getNameTF().getText();
+        String desc = getDescriptionTF().getText();
 
-		isSave = formDataController.saveDataFromChange(actName, desc, existRB.isSelected(), indexForm);
-	}
+        isSave = formDataController.saveDataFromChange(actName, desc, existRB.isSelected(), indexForm);
+    }
 
-	@Override
-	public void setActionSubmitButton() {
+    @Override
+    public void setActionSubmitButton() {
 
-		closeForm();
-		if (isSave){
-			close();
-		}
+        closeForm();
+        if (isSave) {
+            close();
+        }
 
 
-	}
+    }
 
-	@Override
-	public void deleteItem() {
-		formController.deleteChange(indexForm);
-	}
+    @Override
+    public void deleteItem() {
+        formController.deleteChange(indexForm);
+    }
 
-	public void fillForm() {
+    public void fillForm() {
 
-		existRB = new RadioButton("Exist");
-		existRB.setSelected(true);
-		getInfoPart().add(existRB, 1, 3);
+        existRB = new RadioButton("Exist");
+        existRB.setSelected(true);
+        getInfoPart().add(existRB, 1, 3);
 
-	}
+    }
 
-	/** Getrs and Setrs ***/
-
-	public ComboBox<String> getChangeCB() {
-		return changeCB;
-	}
-
-	public void setChangeCB(ComboBox<String> changeCB) {
-		this.changeCB = changeCB;
-	}
-
-	public boolean isNewChange() {
-		return newChange;
-	}
-
-	public void setNewChange(boolean newChange) {
-		this.newChange = newChange;
-	}
-
-	public RadioButton getExistRB() {
-		return existRB;
-	}
-
-	public void setExistRB(RadioButton existRB) {
-		this.existRB = existRB;
-	}
-
+    public void setDataToForm(String name, String descriptoin, boolean isExist) {
+        getNameTF().setText(name);
+        getDescriptionTF().setText(descriptoin);
+        existRB.setSelected(isExist);
+    }
 }

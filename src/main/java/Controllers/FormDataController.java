@@ -4,15 +4,15 @@ import graphics.CanvasItem;
 import javafx.collections.ObservableList;
 import model.DataManipulator;
 import model.IdentificatorCreater;
-import org.junit.experimental.theories.FromDataPoints;
+import org.omg.PortableInterceptor.INACTIVE;
 import services.*;
 import tables.*;
 
-import java.text.Normalizer;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class FormDataController {
 
@@ -35,10 +35,10 @@ public class FormDataController {
     }
 
     private int prepareIndexForManipulator(int index){
-        if(index != 0){
-            return  index -1;
-        }
-        return index;
+        //if(index != 0){
+          //  return  index -1;
+        //}
+        return index - 1;
     }
     
     private List<Integer> prepareIndexsForManipulator(List<Integer> indexis) {
@@ -49,6 +49,16 @@ public class FormDataController {
         return tmpIndexis;
     }
 
+    private ArrayList<Integer>  prepareCanvasItemIndexForManipulator(Set<Integer> keys){
+
+        ArrayList<Integer> indexs = new ArrayList<>();
+        for(Integer i : keys){
+            indexs.add(identificatorCreater.getWorkUnitIndex(i));
+        }
+
+        return indexs;
+    }
+
     public boolean saveDataFromPhaseForm(String actName, LocalDate endDateL, String desc, int confIndex, int milestoneIndex, Map<Integer, CanvasItem> itemIndexList,
                                          int indexForm) {
         String nameForManipulator = formControl.fillTextMapper(actName);
@@ -57,7 +67,7 @@ public class FormDataController {
         int[] coords = formController.getCoordsFromItem(indexForm);
 
         dataManipulator.addDataToPhase(nameForManipulator, endDateL, descriptionForManipulator, prepareIndexForManipulator(confIndex),
-                prepareIndexForManipulator(milestoneIndex), coords[0], coords[1], itemIndexList.keySet(), identificatorCreater.getPhaseIndex(indexForm));
+                prepareIndexForManipulator(milestoneIndex), coords[0], coords[1], prepareCanvasItemIndexForManipulator(itemIndexList.keySet()), identificatorCreater.getPhaseIndex(indexForm));
        formController.setNameToItem(indexForm, nameForManipulator);
         return true;
     }
@@ -71,7 +81,7 @@ public class FormDataController {
         int[] coords = formController.getCoordsFromItem(indexForm);
 
         dataManipulator.addDataToIteration(nameForManipulator,startDate, endDate, descriptionForManipulator, prepareIndexForManipulator(chooseConfigID),
-                coords[0], coords[1], itemIndexList.keySet(), identificatorCreater.getIterationIndex(indexForm));
+                coords[0], coords[1], prepareCanvasItemIndexForManipulator(itemIndexList.keySet()), identificatorCreater.getIterationIndex(indexForm));
         formController.setNameToItem(indexForm, nameForManipulator);
         return true;
     }
@@ -82,14 +92,15 @@ public class FormDataController {
         String descriptionForManipulator = formControl.fillTextMapper(desc);
         int[] coords = formController.getCoordsFromItem(indexForm);
 
-        dataManipulator.addDataToActivity(nameForManipulator, descriptionForManipulator, coords[0], coords[1], mapOfItemOnCanvas.keySet(), identificatorCreater.getActivityIndex(indexForm));
+        dataManipulator.addDataToActivity(nameForManipulator, descriptionForManipulator, coords[0], coords[1], prepareCanvasItemIndexForManipulator(mapOfItemOnCanvas.keySet()),
+                identificatorCreater.getActivityIndex(indexForm));
         formController.setNameToItem(indexForm, nameForManipulator);
         return true;
 
     }
 
     public boolean saveDataFromWorkUnit(String actName,String description, String category, int assigneIndex, int authorIndex, int priorityIndex,int severityIndex,
-                                        int typeIndex, int resolutionIndex, int statusIndex, String estimated, boolean selected, int indexForm) {
+                                        int typeIndex, int resolutionIndex, int statusIndex, String estimated, boolean selected, int indexForm, CanvasType canvasType) {
 
         String nameForManipulator = formControl.fillTextMapper(actName);
         String categoryForManipulator = formControl.fillTextMapper(category);
@@ -109,36 +120,53 @@ public class FormDataController {
             return  false;
         }
 
+        boolean isProjectCanvas = false;
+        if(canvasType.equals(CanvasType.Project)){
+            isProjectCanvas = true;
+        }
+
         formController.setItemColor(indexForm, selected);
 
         dataManipulator.addDataToWorkUnit(nameForManipulator, descriptionForManipulator ,categoryForManipulator, prepareIndexForManipulator(assigneIndex),
                 prepareIndexForManipulator(authorIndex), prepareIndexForManipulator(priorityIndex), prepareIndexForManipulator(severityIndex),
                 prepareIndexForManipulator(typeIndex), prepareIndexForManipulator(resolutionIndex), prepareIndexForManipulator(statusIndex),
-                coords[0], coords[1], estimateForDataManipulator, selected, identificatorCreater.getWorkUnitIndex(indexForm));
+                coords[0], coords[1], estimateForDataManipulator, selected, identificatorCreater.getWorkUnitIndex(indexForm), isProjectCanvas);
         formController.setNameToItem(indexForm, nameForManipulator);
         return  true;
     }
 
-    public void saveDataFromConfiguration(String actName, LocalDate createDate, boolean isRelease, int authorIndex, ArrayList<Integer> branchIndex,
-                                          ArrayList<Integer> cprIndex, Map<Integer,CanvasItem> itemIndexList, int indexForm) {
+    public boolean saveDataFromConfiguration(String actName, LocalDate createDate, boolean isRelease, int authorIndex, ArrayList<Integer> branchIndex,
+                                          ArrayList<Integer> cprIndex, Map<Integer,CanvasItem> itemIndexList, boolean isNew, int indexForm) {
         String nameForManipulator = formControl.fillTextMapper(actName);
-        int[] coords = formController.getCoordsFromItem(indexForm);
         ArrayList artefactList = new ArrayList();
         ArrayList changeList = new ArrayList();
-
         for(int index : itemIndexList.keySet()) {
             if(identificatorCreater.getChangeIndexMaper().get(index) != null){
-                changeList.add(index);
+                changeList.add(identificatorCreater.getChangeIndexMaper().get(index));
             }else {
-                artefactList.add(index);
+                artefactList.add(identificatorCreater.getChangeIndexMaper().get(index));
             }
         }
+        String release = "NO";
+        if(isRelease){
+            release = "YES";
+        }
+        dataManipulator.addDataToConfiguration(nameForManipulator, createDate, isRelease, prepareIndexForManipulator(authorIndex),
+                prepareIndexsForManipulator(branchIndex), prepareIndexsForManipulator(cprIndex), artefactList, changeList, identificatorCreater.getConfigurationIndex(indexForm));
+        int configIndex = identificatorCreater.getConfigurationIndex(indexForm);
+        String idName = identificatorCreater.getConfigurationIndex(indexForm) + "_" + actName;
 
-        dataManipulator.addDataToConfiguration(nameForManipulator, createDate, isRelease, coords[0], coords[1],
-                prepareIndexForManipulator(authorIndex), prepareIndexsForManipulator(branchIndex),
-                prepareIndexsForManipulator(cprIndex), artefactList, changeList, indexForm);
-        lists.getConfigObservable().add(actName);
+        if (isNew){
+            lists.getConfigObservable().add(idName);
+            formController.setNewItemToConfigurationTable(idName, release, indexForm);
+        }else{
+            lists.getConfigObservable().remove(configIndex + 1);
+            lists.getConfigObservable().add(configIndex + 1, idName);
+            formController.setEditItemInConfigurationTable(idName, release, indexForm, configIndex);
+        }
 
+        formController.setConfigurationFormToTableForm();
+        return true;
     }
 
 
@@ -215,6 +243,9 @@ public class FormDataController {
     public void saveDataFromMilestoneForm(String nameST, String idName, List<Integer> criterionIndex, int id) {
 
         String nameForManipulator = formControl.fillTextMapper(nameST);
+        if(criterionIndex == null){
+            criterionIndex = new ArrayList<>();
+        }
         dataManipulator.addDataToMilestone(nameForManipulator, criterionIndex, id);
         lists.getMilestoneObservable().add(idName);
     }
@@ -281,7 +312,7 @@ public class FormDataController {
         String nameForManipulator = formControl.fillTextMapper(nameST);
         String descForManipulator = formControl.fillTextMapper(desc);
 
-        dataManipulator.addDataToRole(nameForManipulator, descForManipulator, type,id);
+        dataManipulator.addDataToRole(nameForManipulator, descForManipulator, prepareIndexForManipulator(type),id);
         lists.getRoleObservable().add(idName);
     }
 
@@ -347,7 +378,6 @@ public class FormDataController {
     public void saveDataFromProjectFrom(String nameST, LocalDate endDate, LocalDate startDate, String desc) {
         String nameForManipulator = formControl.fillTextMapper(nameST);
         String descForManipulator = formControl.fillTextMapper(desc);
-
         dataManipulator.addDataToProject(nameForManipulator, descForManipulator, startDate, endDate);
 
     }

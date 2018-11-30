@@ -32,68 +32,73 @@ import services.SegmentType;
 /**
  * Třída představující formulář pro kořenový Element Project, odděděná od třídy
  * Dete2DescBasicForm a implementující ISegmentForm
- * 
- * @author Václav Janoch
  *
+ * @author Václav Janoch
  */
-public class ProjectForm extends Date2DescBasicForm implements  ISegmentForm{
+public class ProjectForm extends Date2DescBasicForm implements ISegmentForm {
 
-	/**
-	 * Konstruktor třídy Nastaví velikost okna, reakci na uzavření okna
-	 * formuláře a zinicializuje globální proměnné tříd
-	 *
-	 *            Project
-	 */
-	public ProjectForm(FormController formController, FormDataController formDataController, String name) {
-		super(formController, formDataController, name);
+    /**
+     * Konstruktor třídy Nastaví velikost okna, reakci na uzavření okna
+     * formuláře a zinicializuje globální proměnné tříd
+     * <p>
+     * Project
+     */
+    public ProjectForm(FormController formController, FormDataController formDataController, String name) {
+        super(formController, formDataController, name);
 
-		getMainPanel().setMinSize(Constans.littleformWidth, Constans.littleformHeight);
-		getMainPanel().setMaxSize(Constans.littleformWidth, Constans.littleformHeight);
+        getMainPanel().setMinSize(Constans.littleformWidth, Constans.littleformHeight);
+        getMainPanel().setMaxSize(Constans.littleformWidth, Constans.littleformHeight);
 
-		this.setOnCloseRequest(e -> {
+        this.setOnCloseRequest(e -> {
 
-			e.consume();
-			int result = Alerts.showSaveSegment();
-			if (result == 1) {
-				setActionSubmitButton();
-			} else if (result == 0) {
-				this.close();
-			}
-		});
+            e.consume();
+            int result = Alerts.showSaveSegment();
+            if (result == 1) {
+                setActionSubmitButton();
+            } else if (result == 0) {
+                this.close();
+            }
+        });
 
-		getSubmitButton().setOnAction(event -> setActionSubmitButton());
-		fillForm();
-		getFormName().setText(getTitle());
-	}
+        getSubmitButton().setOnAction(event -> setActionSubmitButton());
+        fillForm();
+        getFormName().setText(getTitle());
+    }
 
-	@Override
-	public void closeForm() {
+    @Override
+    public void closeForm() {
 
-		String actName = getNameTF().getText();
-		LocalDate endDate = date2DP.getValue();
-		LocalDate startDate = dateDP.getValue();
-		String desc = getDescriptionTF().getText();
+        String actName = getNameTF().getText();
+        LocalDate endDate = date2DP.getValue();
+        LocalDate startDate = dateDP.getValue();
+        String desc = getDescriptionTF().getText();
 
-		formDataController.saveDataFromProjectFrom(actName, endDate, startDate, desc);
-	}
+        formDataController.saveDataFromProjectFrom(actName, endDate, startDate, desc);
+    }
 
-	@Override
-	public void setActionSubmitButton() {
-		closeForm();
-		close();
-	}
+    @Override
+    public void setActionSubmitButton() {
+        closeForm();
+        close();
+    }
 
-	@Override
-	public void deleteItem() {
+    @Override
+    public void deleteItem() {
 
-	}
+    }
 
 
-	public void fillForm() {
+    public void fillForm() {
 
-		dateLB.setText("Start-Date");
-		date2LB.setText("End-Date");
+        dateLB.setText("Start-Date");
+        date2LB.setText("End-Date");
 
-	}
+    }
 
+    public void setDataToForm(String name, String description, LocalDate startDate, LocalDate endDate) {
+        getNameTF().setText(name);
+        getDescriptionTF().setText(description);
+        dateDP.setValue(startDate);
+        date2DP.setValue(endDate);
+    }
 }

@@ -10,14 +10,10 @@ public class ManipulationController {
 
 	/** Globální proměnné třídy */
 
-	private int[] itemIds;
-	private String itemName;
-	private SegmentType type;
 	private DeleteControl deleteControl;
 
 	private CanvasItem chooseCanvasItem;
 	private DragAndDropCanvas chooseCanvas;
-
 
 	private boolean isCut;
 	private boolean isCopy;
@@ -32,18 +28,13 @@ public class ManipulationController {
 	 */
 	public ManipulationController(FormController formController) {
 		//this.copyForms = copyForms;
-		//this.control = control;
-		//this.project = project;
-		//this.lists = lists;
-		//this.deleteControl = deleteControl;
 		this.formController = formController;
-		//this.forms = forms;
 		isCut = false;
 	}
 
 	/**
 	 * Uloží data o kopírovaném prvku
-	 * 
+	 *
 	 *
 	 */
 	public void copyItem(CanvasController canvasController) {
@@ -61,7 +52,7 @@ public class ManipulationController {
 
 	/**
 	 * Uloží data o vyjmutém prvku a smaže ho z plátna
-	 * 
+	 *
 
 	 */
 	public void cutItem(CanvasController canvasController, CanvasItemController canvasItemController) {
@@ -124,7 +115,7 @@ public class ManipulationController {
 
 	public void setLink(NodeLink link) {
 		if (this.link != null) {
-			this.link.getBackgroundPolygon().setStroke(Color.TRANSPARENT);
+			this.link.coverBackgroundPolygon();
 		}
 		this.link = link;
 	}

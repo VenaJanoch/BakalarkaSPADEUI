@@ -10,6 +10,7 @@ import org.junit.Test;
 import services.SegmentLists;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashSet;
 
 import static org.junit.Assert.assertNotEquals;
@@ -34,7 +35,7 @@ public class IterationNullValueTest {
 
         data.createNewIteration();
 
-        data.addDataToIteration(null, null, null, null, 0,0, 0, new HashSet<>(),0);
+        data.addDataToIteration(null, null, null, null, 0,0, 0, new ArrayList<>(),0);
 
         iteration = data.getProject().getIterations().get(0);
     }

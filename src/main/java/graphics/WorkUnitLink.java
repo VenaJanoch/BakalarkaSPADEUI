@@ -1,6 +1,7 @@
 package graphics;
 
 import Controllers.CanvasController;
+import Controllers.ManipulationController;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.geometry.Point2D;
@@ -13,113 +14,114 @@ import Controllers.LinkControl;
 
 /**
  * Třída vykreslující spojení mezi WorkUnity odděděná od třídy NodeLink
- * @author Václav Janoch
  *
+ * @author Václav Janoch
  */
 public class WorkUnitLink extends NodeLink {
 
 
-	private LineComboBox relationCB;
-	private Polygon polygon;
+    private LineComboBox relationCB;
+    private Polygon polygon;
 
-	/**
-	 * Konstruktor třídy
-	 * Naplní globálí proměné rodičovské třídy
-	 * @param ID
-	 * @param linkControl
-	 */
-	
-	public WorkUnitLink(int ID, LinkControl linkControl, CanvasController canvasController, ObservableList<String> relationTypeList) {
-		super(ID, linkControl);
+    /**
+     * Konstruktor třídy
+     * Naplní globálí proměné rodičovské třídy
+     *
+     * @param ID
+     * @param linkControl
+     */
 
-		relationCB = new LineComboBox(relationTypeList);
-		polygon = new Polygon();
+    public WorkUnitLink(int ID, LinkControl linkControl, CanvasController canvasController, ObservableList<String> relationTypeList, ManipulationController manipulationController) {
+        super(ID, linkControl, canvasController, manipulationController);
 
-		relationCB.setVisible(false);
-		polygon.setVisible(false);
+        relationCB = new LineComboBox(relationTypeList);
+        polygon = new Polygon();
 
-		canvasController.addRelationCBToCanvas(relationCB, polygon);
+        relationCB.setVisible(false);
+        polygon.setVisible(false);
 
-	}
+        canvasController.addRelationCBToCanvas(relationCB, polygon);
+      }
 
-	/**
-	 * Metoda pro nastavení koncového bodu spojnice, zviditelnění spojnice, šipky a výběrového boxu
-	 * @param endPointL koncový bod
-	 */
-	
-	public void setArrowAndBox(Point2D endPointL) {
+    /**
+     * Metoda pro nastavení koncového bodu spojnice, zviditelnění spojnice, šipky a výběrového boxu
+     *
+     * @param endPointL koncový bod
+     */
 
-		setEndPoint(endPointL, Constans.ArrowRadius);
+    public void setArrowAndBox(Point2D endPointL) {
 
-		Point2D center = linkController.calculateCenter(startPoint, endPoint);
+        setEndPoint(endPointL, Constans.ArrowRadius);
 
-		relationCB.setTranslateX(center.getX());
-		relationCB.setTranslateY(center.getY());
+        Point2D center = linkController.calculateCenter(startPoint, endPoint);
 
-		polygon.getPoints().addAll(linkController.calculateArrowPosition(endPoint));
+        relationCB.setTranslateX(center.getX());
+        relationCB.setTranslateY(center.getY());
 
-		relationCB.setVisible(true);
+        polygon.getPoints().addAll(linkController.calculateArrowPosition(endPoint));
 
-		polygon.setVisible(true);
-	}
+        relationCB.setVisible(true);
 
-	/**
-	 * MouseEvent handler pro reakci na kliknutí na šipku
-	 */
-	EventHandler<MouseEvent> polygonMouseEvent = new EventHandler<MouseEvent>() {
+        polygon.setVisible(true);
+    }
 
-		@Override
-		public void handle(MouseEvent t) {
-				pressedDeleteArrow(t);
-		}
-	};
+    /**
+     * MouseEvent handler pro reakci na kliknutí na šipku
+     */
+    EventHandler<MouseEvent> polygonMouseEvent = new EventHandler<MouseEvent>() {
 
-	/**
-	 * Metoda pro smazání spojnice mezi Work Units, vymazání spojení z datových struktur
-	 */
-	public void deleteArrow() {
-		this.setVisible(false);
-		relationCB.setVisible(false);
-		relationCB = null;
-		polygon.setVisible(false);
-		polygon = null;
-		getBackgroundPolygon().setVisible(false);
-		//setBackgroundPolygon(null);
-		linkControl.deleteWorkUnitArrow(linkController);
-	}
+        @Override
+        public void handle(MouseEvent t) {
+            pressedDeleteArrow(t);
+        }
+    };
 
-	/**
-	 * Metoda kontrolující dvojklik na spojnici
-	 */
-	protected void pressedDeleteArrow(MouseEvent t) {
-		
-	//	control.getManipulation().setLink(this);
-	//	control.getManipulation().setClicItem(null);
+    /**
+     * Metoda pro smazání spojnice mezi Work Units, vymazání spojení z datových struktur
+     */
+    public void deleteArrow() {
+        this.setVisible(false);
+        relationCB.setVisible(false);
+        relationCB = null;
+        polygon.setVisible(false);
+        polygon = null;
+        getBackgroundPolygon().setVisible(false);
+        //setBackgroundPolygon(null);
+        linkControl.deleteWorkUnitArrow(linkController);
+    }
 
-		getBackgroundPolygon().setStroke(Color.BLACK);
-		getBackgroundPolygon().getStrokeDashArray().add(2d);
-		
-		if (t.getButton().equals(MouseButton.PRIMARY)) {
-			if (t.getClickCount() == 2) {
-				deleteArrow();
-			}
+    /**
+     * Metoda kontrolující dvojklik na spojnici
+     */
+    protected void pressedDeleteArrow(MouseEvent t) {
 
-		}else{
-		
-		}
+        //	control.getManipulation().setLink(this);
+        //	control.getManipulation().setClicItem(null);
 
-	}
+        getBackgroundPolygon().setStroke(Color.BLACK);
+        getBackgroundPolygon().getStrokeDashArray().add(2d);
 
-	public void repaintEndPolygon(double x, double y){
-		setEndPoint(new Point2D(x, y), Constans.ArrowRadius);
-		polygon.getPoints().clear();
-		polygon.getPoints().addAll(linkController.calculateArrowPosition(endPoint));
-	}
+        if (t.getButton().equals(MouseButton.PRIMARY)) {
+            if (t.getClickCount() == 2) {
+                deleteArrow();
+            }
 
-	public void repaintComboBox() {
+        } else {
 
-		Point2D center = linkController.calculateCenter(startPoint,endPoint);
-		relationCB.setTranslateX(center.getX());
-		relationCB.setTranslateY(center.getY());
-	}
+        }
+
+    }
+
+    public void repaintEndPolygon(double x, double y) {
+        setEndPoint(new Point2D(x, y), Constans.ArrowRadius);
+        polygon.getPoints().clear();
+        polygon.getPoints().addAll(linkController.calculateArrowPosition(endPoint));
+    }
+
+    public void repaintComboBox() {
+
+        Point2D center = linkController.calculateCenter(startPoint, endPoint);
+        relationCB.setTranslateX(center.getX());
+        relationCB.setTranslateY(center.getY());
+    }
 }

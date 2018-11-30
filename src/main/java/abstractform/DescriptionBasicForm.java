@@ -39,6 +39,16 @@ public class DescriptionBasicForm extends BasicForm {
 	}
 
 	/**
+	 * Konstruktor třídy
+	 *
+	 */
+	public DescriptionBasicForm(FormController formController, FormDataController formDataController, CanvasController canvasController, String name) {
+
+		super(formController, formDataController, canvasController, name);
+		createForm();
+	}
+
+	/**
 	 * Přetížený konstruktor třídy
 	 */
 	public DescriptionBasicForm(FormController formController, FormDataController formDataController, String name) {

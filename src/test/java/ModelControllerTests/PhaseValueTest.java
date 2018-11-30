@@ -9,6 +9,7 @@ import org.junit.Test;
 import services.SegmentLists;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -19,7 +20,7 @@ public class PhaseValueTest {
 
     Phase phase;
     SegmentLists lists;
-    Set itemSet = new HashSet();
+    ArrayList itemSet = new ArrayList();
     LocalDate date;
     @Before
     public void setUp() throws Exception {
@@ -29,7 +30,6 @@ public class PhaseValueTest {
         DataManipulator data = new DataManipulator(processGenerator, idCreator);
         this.lists = new SegmentLists();
 
-        itemSet = new HashSet();
         itemSet.add(1);
         itemSet.add(2);
         itemSet.add(3);

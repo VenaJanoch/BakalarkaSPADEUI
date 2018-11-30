@@ -124,25 +124,6 @@ public class DataManipulator {
         return dateXML;
     }
 
-    /**
-     * Umožní převedení data ve formátu XMLGregorianCalendar uloženého v XML do
-     * formátu LocalDate
-     *
-     * @param xmlDate XMLGregorianCalendar
-     * @return LocalDate
-     */
-    public LocalDate convertDateFromXML(XMLGregorianCalendar xmlDate) {
-
-        if (xmlDate == null) {
-            return null;
-        }
-
-        Date date = xmlDate.toGregorianCalendar().getTime();
-        Instant instant = date.toInstant();
-        ZonedDateTime zdt = instant.atZone(ZoneId.systemDefault());
-        LocalDate localDate = zdt.toLocalDate();
-        return localDate;
-    }
 
     public Project getProject() {
         return project;
@@ -228,7 +209,7 @@ public class DataManipulator {
     }
 
     public void addDataToPhase(String actName, LocalDate endDateL, String desc, int confIndex, int milestoneIndex, int x, int y,
-                               Set<Integer> itemIndexList, int indexForm) {
+                               ArrayList<Integer> itemIndexList, int indexForm) {
 
         Phase phase =  project.getPhases().get(indexForm);
         phase.setEndDate(convertDate(endDateL));
@@ -242,7 +223,7 @@ public class DataManipulator {
     }
 
     public void addDataToIteration(String nameForManipulator, LocalDate startDate, LocalDate endDate, String descriptionForManipulator,
-                                   int configIndex, int x, int y, Set<Integer> itemIndexList, int indexForm) {
+                                   int configIndex, int x, int y, ArrayList<Integer> itemIndexList, int indexForm) {
 
         Iteration iteration = project.getIterations().get(indexForm);
         iteration.setConfiguration(configIndex);
@@ -256,8 +237,8 @@ public class DataManipulator {
 
     }
 
-    public void addDataToActivity(String nameForManipulator, String descriptionForManipulator, int x, int y, Set<Integer> setOfItemOnCanvas, int indexForm) {
-        //TODO predelat formController a davat rovnou id prvku ne index formulare
+    public void addDataToActivity(String nameForManipulator, String descriptionForManipulator, int x, int y, ArrayList<Integer> setOfItemOnCanvas, int indexForm) {
+
         Activity activity = project.getActivities().get(indexForm);
         activity.setDescription(descriptionForManipulator);
         activity.setName(nameForManipulator);
@@ -274,7 +255,11 @@ public class DataManipulator {
 
     public void addDataToWorkUnit(String nameForManipulator,String description, String categoryForManipulator, int assigneIndex, int authorIndex,
                                   int priorityIndex, int severityIndex, int typeIndex, int resolutionIndex, int statusIndex,
-                                  int x, int y, double estimateForDataManipulator,boolean isExist, int indexForm) {
+                                  int x, int y, double estimateForDataManipulator,boolean isExist, int indexForm, boolean isProjectCanvas) {
+
+        if(isProjectCanvas){
+            project.getWorkUnitIndexs().add(indexForm);
+        }
 
         WorkUnit workUnit = project.getWorkUnits().get(indexForm);
         workUnit.setAssigneeIndex(assigneIndex);
@@ -292,7 +277,7 @@ public class DataManipulator {
         workUnit.setResolutionIndex(resolutionIndex);
     }
 
-    public void addDataToConfiguration(String actName, LocalDate createDate, boolean isRelease, int x, int y, int authorIndex,
+    public void addDataToConfiguration(String actName, LocalDate createDate, boolean isRelease, int authorIndex,
                                        List<Integer> branches, List<Integer> cprs, ArrayList artifactIndexs, ArrayList changeIndexs, int indexForm) {
         Configuration configuration = project.getConfiguration().get(indexForm);
         configuration.setAuthorIndex(authorIndex);
@@ -584,5 +569,9 @@ public class DataManipulator {
         project.setName(nameForManipulator);
         project.setStartDate(convertDate(startDate));
         project.setEndDate(convertDate(endDate));
+    }
+
+    public void setProject(Project project) {
+        this.project = project;
     }
 }

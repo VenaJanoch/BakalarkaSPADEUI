@@ -1,11 +1,15 @@
 package Controllers;
 
+import XML.ProcessGenerator;
+import graphics.MainWindow;
 import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import model.DataManipulator;
 import model.FileManipulator;
+import model.IdentificatorCreater;
 import services.Alerts;
+import services.SegmentLists;
 
 import javax.xml.crypto.Data;
 import java.io.File;
@@ -17,16 +21,30 @@ public class WindowController {
     private boolean isClose;
     private FileManipulator fileManipulator;
     private DataManipulator dataManipulator;
+    private FormFillController formFillController;
+    private ApplicationController applicationController;
     private Alerts alerts;
+    MainWindow mainWindow;
 
-
-    public WindowController(Stage primaryStage, FileManipulator fileManipulator, DataManipulator dataManipulator, Alerts alerts){
+    public WindowController(Stage primaryStage){
         this.primaryStage = primaryStage;
-        this.fileManipulator = fileManipulator;
-        this.dataManipulator = dataManipulator;
-        this.alerts = alerts;
-    }
+        initApplication();
+        this.mainWindow = new MainWindow(this, applicationController);
+        setSceneToPrimaryStage(mainWindow.getScene(), mainWindow.getTitle());
+        applicationController.getFormFillController().setProjectCanvasController(mainWindow.getCanvasController());
+        }
 
+    private void initApplication(){
+        SegmentLists segmentLists = new SegmentLists();
+        ProcessGenerator processGenerator = new ProcessGenerator();
+        IdentificatorCreater identificatorCreater = new IdentificatorCreater();
+        this.dataManipulator = new DataManipulator(processGenerator, identificatorCreater);
+        this.fileManipulator = new FileManipulator(processGenerator, dataManipulator);
+        this.alerts = new Alerts(fileManipulator);
+        this.applicationController = new ApplicationController(fileManipulator, dataManipulator, alerts, identificatorCreater, segmentLists);
+        this.formFillController = applicationController.getFormFillController();
+
+    }
 
     public void setSceneToPrimaryStage(Scene scene, String title){
         this.primaryStage.setTitle(title);
@@ -44,12 +62,22 @@ public class WindowController {
 
     public void openProccesXMLAction() {
 
-        fileManipulator.loadFile();
+        File xmlFile = fileManipulator.loadFile();
+       if(xmlFile != null){
+           createNewProcessAction();
+           fileManipulator.parseProject(xmlFile);
+           formFillController.createFormsFromData();
+       }
+
     }
 
     public void createNewProcessAction() {
 
-        //Todo obsluha udalosti
+        initApplication();
+        this.mainWindow = new MainWindow(this, applicationController);
+        setSceneToPrimaryStage(mainWindow.getScene(), mainWindow.getTitle());
+        applicationController.getFormFillController().setProjectCanvasController(mainWindow.getCanvasController());
+
     }
 
     public void validationAction() {

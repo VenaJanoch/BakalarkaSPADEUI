@@ -10,6 +10,7 @@ import org.junit.Test;
 import services.SegmentLists;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -33,7 +34,7 @@ public class ActivityNullValueTest {
 
         data.createNewActivity();
 
-        data.addDataToActivity(null, null, 0, 0, new HashSet<>(), 0);
+        data.addDataToActivity(null, null, 0, 0, new ArrayList<>(), 0);
 
         activity = data.getProject().getActivities().get(0);
     }

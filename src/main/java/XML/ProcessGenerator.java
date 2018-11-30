@@ -73,7 +73,7 @@ public class ProcessGenerator {
 	 * 
 	 **/
 	public void validate(Project project) {
-		rootElement = of.createPoject(project);
+		rootElement = of.createProject(project);
 		try {
 			marshallerVal.marshal(rootElement, new FileOutputStream(new File("Testovaci")));
 		} catch (MarshalException e) {
@@ -107,7 +107,7 @@ public class ProcessGenerator {
 
 	public void saveProcess(File file,Project project) {
 
-		rootElement = of.createPoject(project);
+		rootElement = of.createProject(project);
 		try {
 
 			marshallerVal.marshal(rootElement, new FileOutputStream(file));
@@ -140,7 +140,7 @@ public class ProcessGenerator {
 	 */
 
 	private void saveWithOutValidation(File file, Project project) {
-		rootElement = of.createPoject(project);
+		rootElement = of.createProject(project);
 
 		try {
 			marshaller.marshal(rootElement, new FileOutputStream(file));

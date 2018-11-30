@@ -10,21 +10,23 @@ import services.SegmentLists;
 
 public class ApplicationController {
 
-    CanvasItemController canvasItemController;
-    FormController formController;
-    FormDataController formDataController;
-    LinkControl linkControl;
-    ManipulationController manipulationController;
+    private CanvasItemController canvasItemController;
+    private FormController formController;
+    private FormDataController formDataController;
+    private LinkControl linkControl;
+    private ManipulationController manipulationController;
+    private FormFillController formFillController;
 
     public ApplicationController(FileManipulator fileManipulator, DataManipulator dataManipulator, Alerts alerts,
                                  IdentificatorCreater identificatorCreater, SegmentLists segmentLists){
         DeleteControl deleteControl = new DeleteControl();
         this.formController = new FormController(identificatorCreater, dataManipulator, this, segmentLists, deleteControl);
         formDataController = new FormDataController(formController, deleteControl, segmentLists, dataManipulator, identificatorCreater);
-        formController.initBasicForms(formDataController);
         this.manipulationController = new ManipulationController(formController);
-        this.linkControl = new LinkControl(formController, identificatorCreater, segmentLists, dataManipulator);
+        this.linkControl = new LinkControl(formController, identificatorCreater, segmentLists, dataManipulator, manipulationController);
         this.canvasItemController = new CanvasItemController(linkControl, formController, manipulationController);
+        this.formFillController = new FormFillController(formController,dataManipulator,canvasItemController, identificatorCreater, segmentLists, linkControl, formController.getCanvasItemList());
+        formController.initBasicForms(formDataController);
     }
 
     /** Getrs and Setrs **/
@@ -42,5 +44,9 @@ public class ApplicationController {
 
     public ManipulationController getManipulationController() {
         return manipulationController;
+    }
+
+    public FormFillController getFormFillController() {
+        return formFillController;
     }
 }

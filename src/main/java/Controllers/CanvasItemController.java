@@ -1,35 +1,17 @@
 package Controllers;
 
-import abstractform.BasicForm;
 import graphics.CanvasItem;
-import graphics.DragAndDropCanvas;
 import javafx.geometry.Point2D;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import services.*;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 public class CanvasItemController {
 
     private ManipulationController manipulation;
-
-
-    private Map<Integer, List<Integer>> startLinkIdMap;
-    private Map<Integer, List<Integer>> endLinkIdMap;
-    int[] IDs;
-    private int idForm;
-    private String ID;
-
-    private AnchorPane canvas = null;
-    private DragAndDropCanvas dgCanvas;
-
     private SegmentType type;
-    private BasicForm form;
     private LinkControl linkControl;
     private FormController formController;
 
@@ -38,15 +20,13 @@ public class CanvasItemController {
 
         this.manipulation = manipulationController;
         this.linkControl = linkControl;
-        this.startLinkIdMap = new HashMap<>();
-        this.endLinkIdMap = new HashMap<>();
         this.formController = formController;
     }
 
     public CanvasItem createCanvasItem(SegmentType type, String segmentIdentificator, int formIndex, String name, double x, double y, CanvasController canvasController) {
 
-        startLinkIdMap.put(formIndex, new ArrayList<>());
-        endLinkIdMap.put(formIndex, new ArrayList<>());
+        linkControl.createLinkInstanceInMap(formIndex);
+        this.type = type;
 
         CanvasItem item = new CanvasItem(type, segmentIdentificator, formIndex, name, 0, x, y, canvasController, this);
         formController.addCanvasItemToList(formIndex, item);
@@ -89,7 +69,7 @@ public class CanvasItemController {
             if (canvasController.isArrow()) {
 
                 linkControl.ArrowManipulation(false, canvasController.isStartArrow(), canvasController, item.getFormIdentificator(), type, item.getTranslateX(),
-                        item.getOrgTranslateY(), item.getWidth(), item.getHeight());
+                        item.getTranslateY(), item.getWidth(), item.getHeight());
             } else {
 
                 if (t.getClickCount() == 2) {
@@ -149,14 +129,14 @@ public class CanvasItemController {
      * Metoda pro smazání spojnic mezi prvky a smazání z datových struktur
      */
     public void deleteLinks(int itemIdentificator) {
-        linkControl.deleteLinks(startLinkIdMap.get(itemIdentificator), endLinkIdMap.get(itemIdentificator));
+        linkControl.deleteLinks(itemIdentificator);
     }
 
     /**
      * Překreslí spojnici mezi prvky po přesunu počátečního prvku
      */
     public void repaintArrows(SegmentType segmentType, int itemIdentificator, double translateX, double translateY, double width, double height) {
-        linkControl.repaintArrow(segmentType, startLinkIdMap.get(itemIdentificator), endLinkIdMap.get(itemIdentificator), translateX, translateY, width, height);
+        linkControl.repaintArrow(segmentType, itemIdentificator, translateX, translateY, width, height);
 
     }
 
@@ -164,7 +144,7 @@ public class CanvasItemController {
 
         chooseCanvasItem.setVisible(false);
         int id = chooseCanvasItem.getFormIdentificator();
-        linkControl.deleteLinks(startLinkIdMap.get(id), endLinkIdMap.get(id));
+        linkControl.deleteLinks(id);
         formController.removeCanvasItemFromList(id);
 
     }

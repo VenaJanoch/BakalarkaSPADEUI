@@ -1,6 +1,7 @@
 package forms;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import Controllers.CanvasController;
 import Controllers.FormController;
@@ -170,4 +171,12 @@ public class PhaseForm extends DateDescBasicForm implements ISegmentForm {
 		this.milestoneCB = milestoneCB;
 	}
 
+	public void setDataToForm(String name, LocalDate endDate, String description, Integer milestoneIndex, Integer configuration) {
+		getNameTF().setText(name);
+		getDescriptionTF().setText(description);
+		dateDP.setValue(endDate);
+		getMilestoneCB().getSelectionModel().select(milestoneIndex);
+		getConfigCB().getSelectionModel().select(configuration);
+
+	}
 }

@@ -11,6 +11,7 @@ import org.junit.Test;
 import services.SegmentLists;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -20,7 +21,7 @@ public class ActivityValueTest {
 
     Activity activity;
     SegmentLists lists;
-    Set itemSet = new HashSet();
+    ArrayList itemSet = new ArrayList();
 
     @Before
     public void setUp() throws Exception {

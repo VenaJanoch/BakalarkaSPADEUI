@@ -34,7 +34,7 @@ public class ConfigurationNullValueTest {
 
         data.createNewConfiguration();
 
-        data.addDataToConfiguration(null, null, false,0, 0, 0,new ArrayList<>(), new ArrayList<>(),
+        data.addDataToConfiguration(null, null, false,0,new ArrayList<>(), new ArrayList<>(),
                 new ArrayList(), new ArrayList(), 0);
 
         configuration = data.getProject().getConfiguration().get(0);

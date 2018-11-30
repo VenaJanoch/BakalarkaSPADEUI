@@ -20,7 +20,7 @@ public class IterationValueTest {
 
     Iteration iteration;
     SegmentLists lists;
-    Set itemSet = new HashSet();
+    ArrayList itemSet = new ArrayList();
     LocalDate date;
     @Before
     public void setUp() throws Exception {
@@ -30,7 +30,6 @@ public class IterationValueTest {
         DataManipulator data = new DataManipulator(processGenerator, idCreator);
         this.lists = new SegmentLists();
 
-        itemSet = new HashSet();
         itemSet.add(1);
         itemSet.add(2);
         itemSet.add(3);

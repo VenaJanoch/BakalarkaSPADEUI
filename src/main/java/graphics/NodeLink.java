@@ -1,6 +1,8 @@
 package graphics;
 
+import Controllers.CanvasController;
 import Controllers.LinkController;
+import Controllers.ManipulationController;
 import javafx.geometry.Point2D;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
@@ -17,16 +19,14 @@ import Controllers.LinkControl;
 public abstract class NodeLink extends Line {
 
     /*** Globální proměnné třídy */
-    //protected int[] startIDs;
-    //protected int[] endIDs;
-    //protected Control control;
     protected Point2D startPoint;
     protected Point2D endPoint;
 
     protected Polygon backgroundPolygon;
-    //	private SegmentType type;
     protected LinkControl linkControl;
     protected LinkController linkController;
+    protected CanvasController canvasController;
+    protected ManipulationController manipulationController;
 
 
     /**
@@ -36,23 +36,27 @@ public abstract class NodeLink extends Line {
      *                    SegmentType
      * @param linkControl LinkControl
      */
-    public NodeLink(int Id, LinkControl linkControl) {
+    public NodeLink(int Id, LinkControl linkControl, CanvasController canvasController, ManipulationController manipulationController) {
         super();
 
+        this.manipulationController = manipulationController;
         this.linkController = new LinkController(Id);
+        this.canvasController = canvasController;
         this.setVisible(false);
         this.linkControl = linkControl;
         setId(Integer.toString(Id));
 
         endPoint = new Point2D(0, 0);
         backgroundPolygon = new Polygon();
+
         backgroundPolygon.setOnMouseClicked(event -> {
             backgroundPolygon.setStroke(Color.BLACK);
             backgroundPolygon.getStrokeDashArray().add(2d);
+            this.manipulationController.setLink(this);
 
         });
         backgroundPolygon.setFill(Color.TRANSPARENT);
-        //	canvas.getChildren().add(backgroundPolygon);
+        canvasController.addPolygonToCanvas(backgroundPolygon);
     }
 
 
@@ -115,14 +119,14 @@ public abstract class NodeLink extends Line {
 
     }
 
+    public  void coverBackgroundPolygon(){
+        backgroundPolygon.setStroke(Color.TRANSPARENT);
+    }
+
     /*** Getrs and Setrs ***/
 
     public Polygon getBackgroundPolygon() {
         return backgroundPolygon;
-    }
-
-    public void setBackgroundPolygon(Polygon backgroundPolygon) {
-        this.backgroundPolygon = backgroundPolygon;
     }
 
 }

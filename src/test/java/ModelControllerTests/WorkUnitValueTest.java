@@ -10,6 +10,7 @@ import model.IdentificatorCreater;
 import org.junit.Before;
 import org.junit.Test;
 import services.Alerts;
+import services.CanvasType;
 import services.DeleteControl;
 import services.SegmentLists;
 
@@ -37,7 +38,7 @@ public class WorkUnitValueTest {
         }
         data.createNewWorkUnit();
         data.addDataToWorkUnit("Jmeno","Desc", "Category", 2, 2, 2, 2,
-                2, 2, 2, 56, 65, 23, false, 0);
+                2, 2, 2, 56, 65, 23, false, 0, false);
         workUnit = data.getProject().getWorkUnits().get(0);
     }
 

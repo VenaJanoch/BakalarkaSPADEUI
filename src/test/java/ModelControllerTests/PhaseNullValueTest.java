@@ -9,6 +9,7 @@ import org.junit.Test;
 import services.SegmentLists;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashSet;
 
 import static org.junit.Assert.assertNotNull;
@@ -32,7 +33,7 @@ public class PhaseNullValueTest {
 
         data.createNewPhase();
 
-        data.addDataToPhase(null, null, null, 0, 0,0, 0, new HashSet<>(),0);
+        data.addDataToPhase(null, null, null, 0, 0,0, 0, new ArrayList<>(),0);
 
         phase = data.getProject().getPhases().get(0);
     }
