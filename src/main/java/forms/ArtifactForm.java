@@ -206,5 +206,6 @@ public class ArtifactForm extends DateDescBasicForm implements ISegmentForm {
         }
         mineTypeCB.getSelectionModel().select(i);
         existRB.setSelected(isExist);
+        isSave = true;
     }
 }

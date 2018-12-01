@@ -52,6 +52,14 @@ public class LinkControl {
     }
 
 
+    public void ArrowManipulation(boolean isSave, boolean startArrow, CanvasController canvasController, int segmentIdAct, SegmentType segmentType,
+                                  double x, double y, double width, double height, int relationIndex) {
+
+        ArrowManipulation(isSave, startArrow, canvasController, segmentIdAct, segmentType, x, y, width, height);
+        workUnitLink.setRelationIndexToComboBox(relationIndex);
+
+    }
+
     /**
      * Rozhodne o propojení Change a Artifact Vytvoří instanci třídy NodeLink a
      * přídá ji do seznamu Rozhodne o počátečním a koncovém prvku
@@ -128,6 +136,10 @@ public class LinkControl {
         startSegmentId = segmentIdAct;
 
         return workUnitLink;
+    }
+
+    public void setRealtionIndexToLink(int id, int relationIndex){
+        dataManipulator.setRelationIndexToLink(id, relationIndex);
     }
 
     private ChangeArtifactLink createChangeArtifactLink(CanvasController canvasController, int startSegmentIdAct, double x, double y, double width, double height) {

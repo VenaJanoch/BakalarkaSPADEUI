@@ -44,6 +44,14 @@ public class BranchTable {
 
 	}
 
+	public String getMain() {
+		return main.get();
+	}
+
+	public StringProperty mainProperty() {
+		return main;
+	}
+
 	public int getId() {
 		return id;
 	}

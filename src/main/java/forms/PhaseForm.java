@@ -43,7 +43,6 @@ public class PhaseForm extends DateDescBasicForm implements ISegmentForm {
 	private ChoiceBox<String> milestoneCB;
 	private int milestoneIndex;
 	private int configIndex;
-	//private Phase phase;
 
 	/**
 	 * Konstruktor třídy Zinicializuje globální proměnné tříd Nastaví reakci na

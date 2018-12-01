@@ -110,5 +110,6 @@ public class ChangeForm extends DescriptionBasicForm implements ISegmentForm {
         getNameTF().setText(name);
         getDescriptionTF().setText(descriptoin);
         existRB.setSelected(isExist);
+        isSave = true;
     }
 }

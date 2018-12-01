@@ -140,11 +140,12 @@ public class FormDataController {
         String nameForManipulator = formControl.fillTextMapper(actName);
         ArrayList artefactList = new ArrayList();
         ArrayList changeList = new ArrayList();
+
         for(int index : itemIndexList.keySet()) {
             if(identificatorCreater.getChangeIndexMaper().get(index) != null){
                 changeList.add(identificatorCreater.getChangeIndexMaper().get(index));
             }else {
-                artefactList.add(identificatorCreater.getChangeIndexMaper().get(index));
+                artefactList.add(identificatorCreater.getArtifactIndexMaper().get(index));
             }
         }
         String release = "NO";

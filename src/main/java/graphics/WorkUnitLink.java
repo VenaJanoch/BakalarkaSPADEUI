@@ -2,6 +2,8 @@ package graphics;
 
 import Controllers.CanvasController;
 import Controllers.ManipulationController;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.geometry.Point2D;
@@ -22,6 +24,7 @@ public class WorkUnitLink extends NodeLink {
 
     private LineComboBox relationCB;
     private Polygon polygon;
+    private int relationIndex;
 
     /**
      * Konstruktor třídy
@@ -35,6 +38,7 @@ public class WorkUnitLink extends NodeLink {
         super(ID, linkControl, canvasController, manipulationController);
 
         relationCB = new LineComboBox(relationTypeList);
+        relationCB.getSelectionModel().selectedIndexProperty().addListener(relationListener);
         polygon = new Polygon();
 
         relationCB.setVisible(false);
@@ -75,6 +79,10 @@ public class WorkUnitLink extends NodeLink {
             pressedDeleteArrow(t);
         }
     };
+
+    public void setRelationIndexToComboBox(int relationIndex){
+        relationCB.getSelectionModel().select(relationIndex);
+    }
 
     /**
      * Metoda pro smazání spojnice mezi Work Units, vymazání spojení z datových struktur
@@ -124,4 +132,15 @@ public class WorkUnitLink extends NodeLink {
         relationCB.setTranslateX(center.getX());
         relationCB.setTranslateY(center.getY());
     }
+
+    ChangeListener<Number> relationListener = new ChangeListener<Number>() {
+
+        @Override
+        public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+
+            relationIndex = newValue.intValue();
+            linkControl.setRealtionIndexToLink(id, relationIndex);
+
+        }
+    };
 }

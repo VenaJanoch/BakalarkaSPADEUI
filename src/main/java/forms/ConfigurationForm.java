@@ -75,13 +75,21 @@ public class ConfigurationForm extends DateBasicForm implements ISegmentForm {
 
     private TagForm tagForm;
 
+    private ObservableList<String> cprList;
+    private ObservableList<String> branchList;
+    private ObservableList<String> roleList;
     /**
      * Konstruktor třídy Zinicializuje globální proměnné tříd Nastaví reakci na
      * uzavření okna
      */
-    public ConfigurationForm(FormController formController, FormDataController formDataController, CanvasController canvasController, DragAndDropItemPanel dgItemPanel, String name, int indexForm) {
+    public ConfigurationForm(FormController formController, FormDataController formDataController, CanvasController canvasController,
+                             DragAndDropItemPanel dgItemPanel, String name,ObservableList<String> cprList, ObservableList<String> branchList,
+                             ObservableList<String> roleList, int indexForm) {
 
         super(formController, formDataController, canvasController, dgItemPanel, name);
+        this.cprList = cprList;
+        this.branchList = branchList;
+        this.roleList = roleList;
         this.indexForm = indexForm;
 
         this.tagForm = new TagForm(formController, formDataController,"Tag", indexForm);
@@ -140,27 +148,21 @@ public class ConfigurationForm extends DateBasicForm implements ISegmentForm {
         rbYes.setSelected(true);
 
         authorRoleLB = new Label("Author-role: ");
-        authorRoleCB = new ComboBox<String>();
+        authorRoleCB = new ComboBox<String>(roleList);
         authorRoleCB.setVisibleRowCount(5);
         authorRoleCB.getSelectionModel().selectedIndexProperty().addListener(roleListenerAut);
 
+        cprCB = new CheckComboBox<>(cprList);
         cprLB = new Label("Conf-Person: ");
-        cprCB = new CheckComboBox<String>();
         cprCB.getCheckModel().getCheckedItems().addListener(cprListener);
         cprCB.setMaxWidth(Constans.checkComboBox);
 
         branchLB = new Label("Branches");
-        branchCB = new CheckComboBox<String>();
+        branchCB = new CheckComboBox<String>(branchList);
         branchCB.setMaxWidth(Constans.checkComboBox);
-        branchCB.getCheckModel().getCheckedItems().addListener(new ListChangeListener<String>() {
+        branchCB.getCheckModel().getCheckedItems().addListener(branchListener);
 
-            public void onChanged(ListChangeListener.Change<? extends String> c) {
 
-                // branchArray = branchCB.getCheckModel().getCheckedItems();
-                // Todo nastavit zaskrtnute polozky controller pro vytvoreni vyplneneho formular
-
-            }
-        });
 
         addTag = new Button("Add Tag");
         addTag.setOnAction(event -> tagForm.show());
@@ -236,6 +238,27 @@ public class ConfigurationForm extends DateBasicForm implements ISegmentForm {
         }
     };
 
+    ListChangeListener<String> branchListener = new ListChangeListener<String>() {
+
+        public void onChanged(ListChangeListener.Change<? extends String> c) {
+            branchIndex.addAll(branchCB.getCheckModel().getCheckedIndices());
+
+        }
+    };
+
+    public void setDataToForm(String name, LocalDate createdDate, int authorIndex, ArrayList<Integer> cprIndexs, ArrayList<Integer> branchIndexs) {
+        getNameTF().setText(name);
+        getDateDP().setValue(createdDate);
+        authorRoleCB.getSelectionModel().select(authorIndex);
+        for(int i : cprIndexs){
+            cprCB.getCheckModel().check(i);
+        }
+
+        for(int i : branchIndexs){
+            branchCB.getCheckModel().check(i);
+        }
+    }
+
     /*** Getrs and Setrs ***/
 
     public TagForm getTagForm() {
@@ -294,19 +317,4 @@ public class ConfigurationForm extends DateBasicForm implements ISegmentForm {
         this.isNew = isNew;
     }
 
-    public void setDataToForm(String name, LocalDate createdDate, int authorIndex, ArrayList<Integer> cprIndexs, ArrayList<Integer> branchIndexs,
-                              List<String> tags) {
-        getNameTF().setText(name);
-        getDateDP().setValue(createdDate);
-        authorRoleCB.getSelectionModel().select(authorIndex);
-        for(int i : cprIndexs){
-            cprCB.getCheckModel().check(i);
-        }
-
-        for(int i : branchIndexs){
-            branchCB.getCheckModel().check(i);
-        }
-
-
-    }
 }

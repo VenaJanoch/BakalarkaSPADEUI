@@ -27,6 +27,7 @@ public abstract class NodeLink extends Line {
     protected LinkController linkController;
     protected CanvasController canvasController;
     protected ManipulationController manipulationController;
+    protected int id;
 
 
     /**
@@ -45,7 +46,7 @@ public abstract class NodeLink extends Line {
         this.setVisible(false);
         this.linkControl = linkControl;
         setId(Integer.toString(Id));
-
+        this.id = Id;
         endPoint = new Point2D(0, 0);
         backgroundPolygon = new Polygon();
 

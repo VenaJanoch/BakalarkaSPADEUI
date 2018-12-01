@@ -266,7 +266,8 @@ public class FormController {
         lastConfigurationIndex = identificatorCreater.createConfigurationID();
         CanvasController canvasController = new CanvasController(CanvasType.Configuration, applicationController);
         ConfigurationForm configurationForm = new ConfigurationForm(this, formDataController,  canvasController,
-                new DragAndDropItemPanel(canvasController, Constans.configurationDragTextIndexs), SegmentType.Configuration.name(), lastConfigurationIndex);
+                new DragAndDropItemPanel(canvasController, Constans.configurationDragTextIndexs), SegmentType.Configuration.name(),
+                lists.getCPRObservable(), lists.getBranchObservable(), lists.getRoleObservable(), lastConfigurationIndex);
         forms.add(configurationForm);
 
         return  lastConfigurationIndex;

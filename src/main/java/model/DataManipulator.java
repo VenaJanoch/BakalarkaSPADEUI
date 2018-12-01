@@ -151,7 +151,7 @@ public class DataManipulator {
 
     }
 
-    public void createWorkUnitRelation(Integer startIndex, Integer endIndex) {
+    public void createWorkUnitRelation(int startIndex, Integer endIndex) {
 
         Link linkP = objF.createLink();
 
@@ -160,8 +160,6 @@ public class DataManipulator {
         linkP.setRightUnitIndex(endIndex);
 
         project.getLinks().add(linkP);
-        project.getWorkUnits().get(startIndex).setRightUnitIndex(endIndex);
-        project.getWorkUnits().get(endIndex).setLeftUnitIndex(startIndex);
 
     }
 
@@ -573,5 +571,9 @@ public class DataManipulator {
 
     public void setProject(Project project) {
         this.project = project;
+    }
+
+    public void setRelationIndexToLink(int id, int relationIndex) {
+    project.getLinks().get(id).setRelationIndex(relationIndex);
     }
 }
