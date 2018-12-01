@@ -21,12 +21,13 @@ public class ApplicationController {
                                  IdentificatorCreater identificatorCreater, SegmentLists segmentLists){
         DeleteControl deleteControl = new DeleteControl();
         this.formController = new FormController(identificatorCreater, dataManipulator, this, segmentLists, deleteControl);
-        formDataController = new FormDataController(formController, deleteControl, segmentLists, dataManipulator, identificatorCreater);
+        this.formDataController = new FormDataController(formController, deleteControl, segmentLists, dataManipulator, identificatorCreater);
         this.manipulationController = new ManipulationController(formController);
         this.linkControl = new LinkControl(formController, identificatorCreater, segmentLists, dataManipulator, manipulationController);
         this.canvasItemController = new CanvasItemController(linkControl, formController, manipulationController);
         this.formFillController = new FormFillController(formController,dataManipulator,canvasItemController, identificatorCreater, segmentLists, linkControl, formController.getCanvasItemList());
         formController.initBasicForms(formDataController);
+        this.manipulationController.setFormFillController(formFillController);
     }
 
     /** Getrs and Setrs **/

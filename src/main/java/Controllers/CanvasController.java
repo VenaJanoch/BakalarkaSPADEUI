@@ -31,6 +31,8 @@ public class CanvasController {
 
     private Map<Integer, CanvasItem> listOfItemOnCanvas = new HashMap<>();
 
+    private int newFormIndex;
+
     public CanvasController(CanvasType canvasType, ApplicationController applicationController) { // todo je potreba canvasType? Smazat
 
         this.canvas = new DragAndDropCanvas(this);
@@ -73,16 +75,29 @@ public class CanvasController {
         canvas.getCanvas().getChildren().add(backgroundPlygon);
     }
 
-
     public CanvasItem addCanvasItemFromPanel(String segment, double x, double y) {
 
         SegmentType type = Control.findSegmentType(segment);
 
-        int formIndex = getFormIndexFromNewForm(type, canvasType);
-        String segmentId = createSegmentId(type, formIndex);
-        CanvasItem item = canvasItemController.createCanvasItem(type,segmentId,formIndex,"New", x, y, this);
+        CanvasItem canvasItem = addCanvasItemFromPanel(type, x, y);
+        return canvasItem;
+    }
+
+    public CanvasItem addCanvasItemFromPanel(SegmentType segment, double x, double y, boolean isExist) {
+
+        CanvasItem item = addCanvasItemFromPanel(segment, x, y);
+        formController.setItemColor(newFormIndex, isExist);
+        return item;
+
+    }
+
+    public CanvasItem addCanvasItemFromPanel(SegmentType type, double x, double y) {
+
+       newFormIndex = getFormIndexFromNewForm(type, canvasType);
+        String segmentId = createSegmentId(type, newFormIndex);
+        CanvasItem item = canvasItemController.createCanvasItem(type,segmentId,newFormIndex,"New", x, y, this);
         canvas.getCanvas().getChildren().add(item);
-        listOfItemOnCanvas.put(formIndex, item);
+        listOfItemOnCanvas.put(newFormIndex, item);
         return item;
 
     }

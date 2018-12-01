@@ -4,6 +4,7 @@ import Controllers.LinkControl;
 import SPADEPAC.*;
 import XML.ProcessGenerator;
 import forms.CriterionForm;
+import forms.IterationForm;
 import forms.ProjectForm;
 import forms.ResolutionForm;
 import javafx.collections.ObservableList;
@@ -575,5 +576,92 @@ public class DataManipulator {
 
     public void setRelationIndexToLink(int id, int relationIndex) {
     project.getLinks().get(id).setRelationIndex(relationIndex);
+    }
+
+    public void copyDataFromActivity(int oldActivityId, int newActivityId) {
+        Activity oldActivity = project.getActivities().get(oldActivityId);
+        Activity newActivity = project.getActivities().get(newActivityId);
+
+        newActivity.setCoordinates(oldActivity.getCoordinates());
+        newActivity.setName(oldActivity.getName());
+        newActivity.setDescription(oldActivity.getDescription());
+
+       int workUnitSize = project.getWorkUnits().size();
+        for (int i =0; i < oldActivity.getWorkUnits().size(); i++){
+            copyDataFromWorkUnit(oldActivity.getWorkUnits().get(i));
+            newActivity.getWorkUnits().add(workUnitSize + i);
+        }
+    }
+
+    public void copyDataFromWorkUnit(int oldWUId){
+        WorkUnit oldWu = project.getWorkUnits().get(oldWUId);
+        WorkUnit newWu = objF.createWorkUnit();
+        copyDataFromWorkUnit(oldWu, newWu);
+        project.getWorkUnits().add(newWu);
+
+    }
+
+    public void copyDataFromWorkUnit(int oldWUId, int newWUId){
+        WorkUnit oldWu = project.getWorkUnits().get(oldWUId);
+        WorkUnit newWu = project.getWorkUnits().get(newWUId);
+        copyDataFromWorkUnit(oldWu, newWu);
+
+    }
+
+    public  void copyDataFromWorkUnit(WorkUnit oldWu, WorkUnit newWu){
+        newWu.setResolutionIndex(oldWu.getResolutionIndex());
+        newWu.setStatusIndex(oldWu.getStatusIndex());
+        newWu.setTypeIndex(oldWu.getTypeIndex());
+        newWu.setSeverityIndex(oldWu.getSeverityIndex());
+        newWu.setPriorityIndex(oldWu.getPriorityIndex());
+        newWu.setName(oldWu.getName());
+        newWu.setExist(oldWu.isExist());
+        newWu.setEstimatedTime(oldWu.getEstimatedTime());
+        newWu.setDescription(oldWu.getDescription());
+        newWu.setCoordinates(oldWu.getCoordinates());
+        newWu.setCategory(oldWu.getCategory());
+        newWu.setAuthorIndex(oldWu.getAuthorIndex());
+        newWu.setAssigneeIndex(oldWu.getAssigneeIndex());
+        newWu.setRelationIndex(oldWu.getRelationIndex());
+    }
+
+    public void copyDataFromIteration(int oldIteratationId, int newIterationId) {
+        Iteration oldIteration = project.getIterations().get(oldIteratationId);
+        Iteration newIteration = project.getIterations().get(newIterationId);
+
+        newIteration.setCoordinates(oldIteration.getCoordinates());
+        newIteration.setName(oldIteration.getName());
+        newIteration.setDescription(oldIteration.getDescription());
+        newIteration.setStartDate(oldIteration.getStartDate());
+        newIteration.setEndDate(oldIteration.getEndDate());
+        newIteration.setConfiguration(oldIteration.getConfiguration());
+
+        int workUnitSize = project.getWorkUnits().size();
+        for (int i =0; i < oldIteration.getWorkUnits().size(); i++){
+            copyDataFromWorkUnit(oldIteration.getWorkUnits().get(i));
+            newIteration.getWorkUnits().add(workUnitSize + i);
+        }
+
+    }
+
+
+    public void copyDataFromPhase(int phaseId, int newPhaseId) {
+        Phase oldPhase = project.getPhases().get(phaseId);
+        Phase newPhase = project.getPhases().get(newPhaseId);
+
+        newPhase.setCoordinates(oldPhase.getCoordinates());
+        newPhase.setName(oldPhase.getName());
+        newPhase.setDescription(oldPhase.getDescription());
+        newPhase.setEndDate(oldPhase.getEndDate());
+        newPhase.setConfiguration(oldPhase.getConfiguration());
+        newPhase.setConfiguration(oldPhase.getConfiguration());
+        newPhase.setMilestoneIndex(oldPhase.getMilestoneIndex());
+
+        int workUnitSize = project.getWorkUnits().size();
+        for (int i =0; i < oldPhase.getWorkUnits().size(); i++){
+            copyDataFromWorkUnit(oldPhase.getWorkUnits().get(i));
+            newPhase.getWorkUnits().add(workUnitSize + i);
+        }
+
     }
 }

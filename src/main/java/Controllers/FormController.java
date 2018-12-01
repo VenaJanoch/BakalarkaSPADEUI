@@ -132,57 +132,6 @@ public class FormController {
         dataManipulator.removePhase(formIdentificator);
     }
 
-    public  void createCopyForm(int oldFormIndex, SegmentType segmentType){
-        //Todo CreateCopyForm
-    }
-
-    /**
-     * Rozhodne, který segment nebo element se vytvoří
-     *
-     * @param item
-     *            instance třídy CanvasItem
-     * @param form
-     *            instance seznamu formulářů
-     * @return pole identifikátorů prvku
-     */
-    public int[] createCopyForm(CanvasItem item, BasicForm form) {
-       /* SegmentType sType = item.getType();
-
-        int[] IDs = new int[4];
-
-        switch (sType) {
-            case Phase:
-                Phase phase = project.getPhases().get(itemIds[1]);
-                return copyForms.createPhase(item, form, phase, IDs, itemIds);
-
-            case Iteration:
-
-                Iteration iteration = project.getIterations().get(itemIds[1]);
-                return copyForms.createIteration(item, form, iteration, IDs, itemIds);
-            case Activity:
-
-                Activity activity = project.getActivities().get(itemIds[1]);
-                return copyForms.createActivity(item, form, activity, IDs, itemIds);
-
-            case WorkUnit:
-
-                WorkUnit unit = lists.getWorkUnitList().get(itemIds[1]);
-                return copyForms.createWorkUnit(item, form, unit, IDs, itemIds);
-
-            case Change:
-                Change change = lists.getChangeList().get(itemIds[1]);
-                return copyForms.createChange(item, form, change, IDs, itemIds);
-
-            case Artifact:
-                Artifact artifact = lists.getArtifactList().get(itemIds[1]);
-                return copyForms.createArtifact(item, form, artifact, IDs, itemIds);
-
-            default:
-                return IDs;
-        }*/
-       return  null; //Todo dodelat
-    }
-
     /**
      * Metoda pro vytvoření nových Work Unit u nových prvků s daty starých
      *
