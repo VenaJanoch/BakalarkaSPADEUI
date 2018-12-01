@@ -132,19 +132,6 @@ public class FormController {
         dataManipulator.removePhase(formIdentificator);
     }
 
-    /**
-     * Metoda pro vytvoření nových Work Unit u nových prvků s daty starých
-     *
-     * @param canvasItem
-     *            instance třídy CanvasItem
-     * @param rootForm
-     *            kořenový formulář
-     * @return
-     */
-    public int[] createCopyWorkUnitForm(CanvasItem canvasItem, BasicForm rootForm) {
-        int[] IDs = new int[4];
-        return IDs; //copyForms.createCopyWorkUnit(canvasItem, rootForm, IDs);
-    }
 
     /**
      * Metoda pro určení metody pro vytvoření konkrétního segmentu nebo elementu
@@ -203,7 +190,6 @@ public class FormController {
         return index;
     }
 
-
     private int createNewConfigurationForm() {
 
         dataManipulator.createNewConfiguration();
@@ -245,7 +231,6 @@ public class FormController {
 
         return  index;
     }
-
 
     private int createNewActivityForm() {
 
@@ -410,7 +395,6 @@ public class FormController {
         }
         dataManipulator.removeWorkUnit(indexForm);
     }
-
 
     public void deleteConfiguration(ObservableList<ConfigTable> list) {
 

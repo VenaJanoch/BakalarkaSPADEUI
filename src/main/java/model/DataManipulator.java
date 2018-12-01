@@ -3,10 +3,7 @@ package model;
 import Controllers.LinkControl;
 import SPADEPAC.*;
 import XML.ProcessGenerator;
-import forms.CriterionForm;
-import forms.IterationForm;
-import forms.ProjectForm;
-import forms.ResolutionForm;
+import forms.*;
 import javafx.collections.ObservableList;
 import services.*;
 
@@ -663,5 +660,30 @@ public class DataManipulator {
             newPhase.getWorkUnits().add(workUnitSize + i);
         }
 
+    }
+
+    public void copyDataFromChange(int changeId, int newchangeId) {
+
+        Change oldChange = project.getChanges().get(changeId);
+        Change newChange = project.getChanges().get(newchangeId);
+
+        newChange.setCoordinates(oldChange.getCoordinates());
+        newChange.setName(oldChange.getName());
+        newChange.setDescriptoin(oldChange.getDescriptoin());
+        newChange.setExist(oldChange.isExist());
+        }
+
+    public void copyDataFromArtifact(int artifactId, int newArtifactId) {
+        Artifact oldArtifact = project.getArtifacts().get(artifactId);
+        Artifact newArtifact = project.getArtifacts().get(newArtifactId);
+
+        newArtifact.setCoordinates(oldArtifact.getCoordinates());
+        newArtifact.setName(oldArtifact.getName());
+        newArtifact.setDescriptoin(oldArtifact.getDescriptoin());
+        newArtifact.setExist(oldArtifact.isExist());
+        newArtifact.setMimeType(oldArtifact.getMimeType());
+        newArtifact.setCreated(oldArtifact.getCreated());
+        newArtifact.setAuthorIndex(oldArtifact.getAuthorIndex());
+        newArtifact.setArtifactIndex(oldArtifact.getArtifactIndex());
     }
 }

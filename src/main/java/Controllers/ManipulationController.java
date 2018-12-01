@@ -60,7 +60,7 @@ public class ManipulationController {
 
         if (chooseCanvasItem != null) {
             copyItem(canvasController);
-            deleteItem(canvasItemController);
+            isCut = true;
         }
     }
 
@@ -71,7 +71,8 @@ public class ManipulationController {
         if (chooseCanvasItem != null) {
             canvasItemController.deleteItem(chooseCanvasItem);
             int index = chooseCanvasItem.getFormIdentificator();
-            //formController.deleteForm(index); Navic asi
+            deleteForm(index, chooseCanvasItem.getSegmentType());
+
         }
         chooseCanvasItem = null;
 
@@ -87,8 +88,13 @@ public class ManipulationController {
         if (chooseCanvasItem != null) {
 
             if (FormControl.copyControl(segmentType, canvasType)) {
+                if(isCut){
+                    createCopyForm(chooseCanvasItem.getFormIdentificator(), segmentType, canvasController);
+                    deleteItem(canvasItemController);
+                }else  {
+                    createCopyForm(chooseCanvasItem.getFormIdentificator(), segmentType, canvasController);
+                }
 
-                createCopyForm(chooseCanvasItem.getFormIdentificator(), segmentType, canvasController);
             }
         } else {
             Alerts.badCopyItem(segmentType, canvasType);
@@ -108,21 +114,82 @@ public class ManipulationController {
         switch (segmentType) {
             case Phase:
                 formFillController.fillPhaseForm(oldFormIndex);
+                break;
             case Iteration:
                 formFillController.fillIterationForm(oldFormIndex);
+                break;
             case Activity:
                 formFillController.fillActivityForm(oldFormIndex);
+                break;
             case WorkUnit:
-                formFillController.fillWorkUnitForm(oldFormIndex, canvasController.getCanvasType(), canvasController);
+                formFillController.fillWorkUnitForm(oldFormIndex, canvasController);
+                break;
             case Change:
-
+                formFillController.fillChangeForm(oldFormIndex, canvasController);
+                break;
             case Artifact:
-
+                formFillController.fillArtifactForm(oldFormIndex, canvasController);
+                break;
             default:
+                break;
     }
     }
 
 
+    public void deleteForm(int formIndex, SegmentType segmentType){
+        switch (segmentType){
+            case Phase:
+                formController.deletePhaseForm(formIndex);
+                break;
+            case Iteration:
+                formController.deleteIterationForm(formIndex);
+                break;
+            case Activity:
+                formController.deleteActivityForm(formIndex);
+                break;
+            case WorkUnit:
+                formController.deleteWorkUnit(formIndex);
+                break;
+            case Milestone:
+                break;
+            case Criterion:
+                break;
+            case Configuration:
+                 break;
+            case ConfigPersonRelation:
+                break;
+            case Branch:
+                break;
+            case Change:
+                formController.deleteChange(formIndex);
+                break;
+            case Artifact:
+                formController.deleteArtifact (formIndex);
+                break;
+            case Role:
+                break;
+            case Tag:
+                break;
+            case Project:
+                break;
+            case Priority:
+                break;
+            case Severity:
+                break;
+            case RoleType:
+                break;
+            case Relation:
+                break;
+            case Resolution:
+                break;
+            case Status:
+                break;
+            case Type:
+                break;
+            default:
+                break;
+        }
+    }
 
     /**
      * Getrs and Setrs

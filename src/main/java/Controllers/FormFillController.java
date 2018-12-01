@@ -82,10 +82,6 @@ public class FormFillController {
         return text;
     }
 
-    public void fillConfigurationForm(Configuration configuration){
-
-    }
-
     private void fillConfigurationForm() {
         Configuration configuration = project.getConfiguration().get(0);
         if (configuration != null){
@@ -134,48 +130,73 @@ public class FormFillController {
         fillChangeForm(configuration.getChangesIndexs(), canvasController);
     }
 
+
+    public void fillChangeForm(int oldFormId, CanvasController canvasController){
+        int id = formController.createNewForm(SegmentType.Change, canvasController.getCanvasType());
+        int changeId = identificatorCreater.getChangeIndex(oldFormId);
+        int newChangeId = identificatorCreater.getChangeIndex(id);
+        dataManipulator.copyDataFromChange(changeId, newChangeId);
+        fillChangeForm(newChangeId, id, canvasController);
+    }
+
+    private void fillChangeForm(int segmentId, int formId, CanvasController canvasController) {
+
+        Change change = project.getChanges().get(segmentId);
+        ChangeForm form = (ChangeForm) forms.get(formId);
+
+        boolean isExist = false;
+        if(change.isExist()){
+            isExist = true;
+        }
+
+        String name = prepareStringForForm(change.getName());
+        String description = prepareStringForForm(change.getDescriptoin());
+        form.setDataToForm(name, description, isExist);
+
+        canvasController.addCanvasItemFromExistData(SegmentType.Change, formId, change.getName(), change.getCoordinates().getXCoordinate(),
+                change.getCoordinates().getYCoordinate(), isExist);
+   }
+
     private void fillChangeForm(List<Integer> changeIndexs, CanvasController canvasController) {
         for (int i = 0; i < changeIndexs.size(); i++){
 
             int id = formController.createNewChangeFormWithoutManipulator();
-            Change change = project.getChanges().get(changeIndexs.get(i));
-            ChangeForm form = (ChangeForm) forms.get(id);
-
-            boolean isExist = false;
-            if(change.isExist()){
-                isExist = true;
+            fillChangeForm(changeIndexs.get(i), id, canvasController);
             }
-
-            String name = prepareStringForForm(change.getName());
-            String description = prepareStringForForm(change.getDescriptoin());
-            form.setDataToForm(name, description, isExist);
-
-            canvasController.addCanvasItemFromExistData(SegmentType.Change, id, change.getName(), change.getCoordinates().getXCoordinate(),
-                    change.getCoordinates().getYCoordinate(), isExist);
-        }
     }
 
+    public void fillArtifactForm(int oldFormId, CanvasController canvasController){
+        int id = formController.createNewForm(SegmentType.Artifact, canvasController.getCanvasType());
+        int artifactId = identificatorCreater.getArtifactIndex(oldFormId);
+        int newArtifactId = identificatorCreater.getArtifactIndex(id);
+        dataManipulator.copyDataFromArtifact(artifactId, newArtifactId);
+        fillArtifactForm(newArtifactId, id, canvasController);
+    }
+
+    private void fillArtifactForm(int segmentId, int formId, CanvasController canvasController){
+        Artifact artifact = project.getArtifacts().get(segmentId);
+        ArtifactForm form = (ArtifactForm) forms.get(formId);
+
+        int authorIndex = prepareIndexForForm(artifact.getAuthorIndex());
+        LocalDate createDate = convertDateFromXML(artifact.getCreated());
+        String name = prepareStringForForm(artifact.getName());
+        String description = prepareStringForForm(artifact.getDescriptoin());
+        boolean isExist = false;
+        if(artifact.isExist()){
+            isExist = true;
+        }
+
+        form.setDataToForm(name, description, authorIndex, createDate, artifact.getMimeType(), isExist);
+
+        canvasController.addCanvasItemFromExistData(SegmentType.Artifact, formId, artifact.getName(), artifact.getCoordinates().getXCoordinate(),
+                artifact.getCoordinates().getYCoordinate(), isExist);
+
+    }
     private void fillArtifactForm(List<Integer> artifactsIndexs, CanvasController canvasController) {
         for (int i = 0; i < artifactsIndexs.size(); i++){
 
             int id = formController.createNewArtifactFormWithoutManipulator();
-            Artifact artifact = project.getArtifacts().get(artifactsIndexs.get(i));
-            ArtifactForm form = (ArtifactForm) forms.get(id);
-
-            int authorIndex = prepareIndexForForm(artifact.getAuthorIndex());
-            LocalDate createDate = convertDateFromXML(artifact.getCreated());
-            String name = prepareStringForForm(artifact.getName());
-            String description = prepareStringForForm(artifact.getDescriptoin());
-            boolean isExist = false;
-            if(artifact.isExist()){
-                isExist = true;
-            }
-
-            form.setDataToForm(name, description, authorIndex, createDate, artifact.getMimeType(), isExist);
-
-            canvasController.addCanvasItemFromExistData(SegmentType.Artifact, id, artifact.getName(), artifact.getCoordinates().getXCoordinate(),
-                    artifact.getCoordinates().getYCoordinate(), isExist);
-
+            fillArtifactForm(artifactsIndexs.get(i), id, canvasController);
             }
     }
 
@@ -446,8 +467,8 @@ public class FormFillController {
         }
     }
 
-    public void fillWorkUnitForm(int oldFormId, CanvasType canvasType, CanvasController canvasController){
-        int id = formController.createNewForm(SegmentType.WorkUnit, canvasType);
+    public void fillWorkUnitForm(int oldFormId, CanvasController canvasController){
+        int id = formController.createNewForm(SegmentType.WorkUnit, canvasController.getCanvasType());
         int wuId = identificatorCreater.getWorkUnitIndex(oldFormId);
         int newWUId = identificatorCreater.getWorkUnitIndex(id);
         dataManipulator.copyDataFromWorkUnit(wuId, newWUId);
@@ -583,7 +604,6 @@ public class FormFillController {
         int newIterationId = identificatorCreater.getIterationIndex(id);
         dataManipulator.copyDataFromIteration(iteratationId, newIterationId);
         fillIterationForm(newIterationId, id);
-
     }
 
     public void fillIterationForm(int segmentId, int formId){
