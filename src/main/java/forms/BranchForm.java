@@ -41,7 +41,7 @@ public class BranchForm extends TableBasicForm implements ISegmentTableForm {
      * Globální proměnné třídy
      */
     private Label isMainLB;
-    private boolean isMain;
+    private boolean isMain = true;
 
     private ToggleGroup group = new ToggleGroup();
 

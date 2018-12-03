@@ -257,6 +257,10 @@ public class ConfigurationForm extends DateBasicForm implements ISegmentForm {
         for(int i : branchIndexs){
             branchCB.getCheckModel().check(i);
         }
+
+        isSave = true;
+        isNew = false;
+        getSubmitButton().setText("Ok");
     }
 
     /*** Getrs and Setrs ***/

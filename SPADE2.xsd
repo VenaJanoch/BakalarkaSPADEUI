@@ -377,7 +377,7 @@
             <xs:enumeration value="DUPLICATE"/>
             <xs:enumeration value="WONT_FIX"/>
             <xs:enumeration value="FIXED"/>
-            <xs:enumeration value="WORKS_AS_DEISGNED"/>
+            <xs:enumeration value="WORKS_AS_DESIGNED"/>
             <xs:enumeration value="WORKS_FOR_ME"/>
             <xs:enumeration value="INCOMPLETE"/>
             <xs:enumeration value="OTHER"/>
@@ -416,7 +416,7 @@
             <xs:enumeration value="UNASSIGNED"/>
             <xs:enumeration value="NEW"/>
             <xs:enumeration value="ACCEPTED"/>
-            <xs:enumeration value="IN_PROGRESS"/>
+            <xs:enumeration value="IN PROGRESS"/>
             <xs:enumeration value="RESOLVED"/>
             <xs:enumeration value="VERIFIED"/>
             <xs:enumeration value="DONE"/>

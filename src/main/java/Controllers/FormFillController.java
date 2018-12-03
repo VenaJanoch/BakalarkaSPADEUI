@@ -82,29 +82,37 @@ public class FormFillController {
         return text;
     }
 
+    private void addDataToConfigurationTable(int id, int formId, Configuration configuration, ConfigurationTableForm configTable){
+
+        String idName = createTableItemIdName(id,prepareStringForForm(configuration.getName()));
+        String isRelease = "YES";
+        if(configuration.isIsRelease() == null || !configuration.isIsRelease()){
+            isRelease = "NO";
+        }
+
+        ConfigTable table = new ConfigTable(idName, isRelease, formId);
+
+        configTable.getTableTV().getItems().add(table);
+        segmentLists.getConfigObservable().add(idName);
+    }
+
     private void fillConfigurationForm() {
+        ConfigurationTableForm form = (ConfigurationTableForm)forms.get(Constans.configurationFormIndex);
         Configuration configuration = project.getConfiguration().get(0);
         if (configuration != null){
             fillConfigurationWithoutCreateId(project.getConfiguration().get(0), Constans.configurationFormIndex + 1);
+            addDataToConfigurationTable(0, Constans.configurationFormIndex + 1, configuration, form);
         }
 
-        for (int i = 1; i < project.getConfiguration().size(); i++){
+        int id;
+        for (int i = 1; i < project.getConfiguration().size() - 1; i++){
             configuration = project.getConfiguration().get(i);
-            int id = formController.createNewConfiguratioFormWithoutManipulator();
+            id = formController.createNewConfiguratioFormWithoutManipulator();
             fillConfigurationWithoutCreateId(configuration, id);
-
-            ConfigurationTableForm form = (ConfigurationTableForm)forms.get(Constans.configurationFormIndex);
-            String idName = createTableItemIdName(id,prepareStringForForm(configuration.getName()));
-            String isRelease = "YES";
-            if(configuration.isIsRelease() == null || !configuration.isIsRelease()){
-                isRelease = "NO";
-            }
-
-            ConfigTable table = new ConfigTable(idName, isRelease, id);
-
-            form.getTableTV().getItems().add(table);
-            segmentLists.getConfigObservable().add(idName);
+            addDataToConfigurationTable(i, id, configuration, form);
         }
+        id = formController.createNewForm(SegmentType.Configuration, CanvasType.Configuration);
+        form.getMainPanel().setCenter(formController.getMainPanelFromForm(id));
 
     }
     private void fillConfigurationWithoutCreateId(Configuration configuration, int id){
@@ -112,7 +120,7 @@ public class FormFillController {
         ConfigurationForm form = (ConfigurationForm) forms.get(id);
 
         String name = prepareStringForForm(configuration.getName());
-        int authorIndex = prepareIndexForForm(prepareIndexForForm(configuration.getAuthorIndex()));
+        int authorIndex = prepareIndexForForm(configuration.getAuthorIndex());
         LocalDate createdDate = convertDateFromXML(configuration.getCreate());
         ArrayList<Integer> cprIndexs = prepareIndexForMultiComboBox(configuration.getCPRsIndexs());
         ArrayList<Integer> branchIndexs = prepareIndexForMultiComboBox(configuration.getBranchesIndexs());
@@ -123,7 +131,6 @@ public class FormFillController {
             TagTable tagTable = new TagTable(configuration.getTags().get(j));
             tagView.getItems().add(tagTable);
         }
-
         CanvasController canvasController = form.getCanvasController();
 
         fillArtifactForm(configuration.getArtifactsIndexs(), canvasController);
