@@ -32,6 +32,7 @@ public class WindowController {
         this.mainWindow = new MainWindow(this, applicationController);
         setSceneToPrimaryStage(mainWindow.getScene(), mainWindow.getTitle());
         applicationController.getFormFillController().setProjectCanvasController(mainWindow.getCanvasController());
+        primaryStage.setMaximized(true);
         }
 
     private void initApplication(){

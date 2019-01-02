@@ -87,6 +87,8 @@ public abstract class BasicForm extends Stage {
         this.formController = formController;
         this.formDataController = formDataController;
         this.setScene(creatSceneProject());
+        this.setMinHeight(Constans.formHeight);
+        this.setMinWidth(Constans.formWidth);
 
     }
 

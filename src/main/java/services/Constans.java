@@ -15,20 +15,20 @@ public class Constans {
     /**
      * Konstanty pro nastavení velikosti oken
      */
-    public static final int width = 1100;
+    public static final int width = 1300;
     public static final int height = 800;
     public static final int offset = 12;
 
-    public static final int formWidth = 700;
-    public static final int formHeight = 600;
+    public static final int formWidth = 850;
+    public static final int formHeight = 650;
     public static final int workUnitformWidth = 350;
-    public static final int workUnitformHeight = 500;
-    public static final double littleformWidth = 300;
-    public static final double littleformHeight = 300;
+    public static final int workUnitformHeight = 550;
+    public static final double littleformWidth = 350;
+    public static final double littleformHeight = 350;
     public static final int canvasMaxWidth = 2000;
     public static final int canvasMaxHeight = 2000;
-    public static final int milestoneFormWidth = 1100;
-    public static final int milestoneFormHeight = 750;
+    public static final int twoFormWidth = 1250;
+    public static final int twoFormHeight = 850;
 
     public static final double minCanvasItemWidth = 125;
     public static final double maxCanvasItemWidth = 125;

@@ -21,141 +21,140 @@ import model.IdentificatorCreater;
 
 /**
  * Třída umoznující vytvoření tabulkového formuláře
- * 
- * @author Václav Janoch
  *
+ * @author Václav Janoch
  */
 public class TableBasicForm extends BasicForm {
 
-	/** Globální proměnné třídy **/
-	private BorderPane mainPanel;
-	private Scene scena;
-	protected GridPane controlPane;
-	protected Button add;
-	private Button submitButton;
-	protected Label nameLB;
-	protected TextField nameTF;
-	private Label formName;
+    /**
+     * Globální proměnné třídy
+     **/
+    private BorderPane mainPanel;
+    private Scene scena;
+    protected GridPane controlPane;
+    protected Button add;
+    private Button submitButton;
+    protected Label nameLB;
+    protected TextField nameTF;
+    private Label formName;
 
-	/**
-	 * Konstruktor třídy Zinicializuje globální proměnné třídy
-	 * 
-	 *
-	 */
-	public TableBasicForm(FormController formController, FormDataController formDataController, String name) {
-		super(formController, formDataController, name);
-		this.setScene(creatSceneProject());
-	}
+    /**
+     * Konstruktor třídy Zinicializuje globální proměnné třídy
+     */
+    public TableBasicForm(FormController formController, FormDataController formDataController, String name) {
+        super(formController, formDataController, name);
+        this.setScene(creatSceneProject());
+    }
 
-	/**
-	 * Vytvoří scénu pro formulář projektu
-	 * 
-	 * @return Scene
-	 */
-	private Scene creatSceneProject() {
+    /**
+     * Vytvoří scénu pro formulář projektu
+     *
+     * @return Scene
+     */
+    private Scene creatSceneProject() {
 
-		scena = new Scene(creatPanel(), Constans.formWidth, Constans.formHeight);
+        scena = new Scene(creatPanel(), Constans.formWidth, Constans.formHeight);
 
-		return scena;
-	}
+        return scena;
+    }
 
-	@Override
-	void createForm() {
+    @Override
+    void createForm() {
 
-	}
+    }
 
-	/**
-	 * Vytvoří a rozloží základní prvky ve formuláři
-	 * 
-	 * @return BorderPane
-	 */
-	private Parent creatPanel() {
+    /**
+     * Vytvoří a rozloží základní prvky ve formuláři
+     *
+     * @return BorderPane
+     */
+    private Parent creatPanel() {
 
-		mainPanel = new BorderPane();
-		mainPanel.setPadding(new Insets(5));
+        mainPanel = new BorderPane();
+        mainPanel.setPadding(new Insets(5));
 
-		controlPane = new GridPane();
-		submitButton = new Button("OK");
+        controlPane = new GridPane();
+        submitButton = new Button("OK");
 
-		nameLB = new Label("Name: ");
-		nameTF = new TextField();
-		nameTF.setId("formName");
-		add = new Button("Add");
+        nameLB = new Label("Name: ");
+        nameTF = new TextField();
+        nameTF.setId("formName");
+        add = new Button("Add");
 
-		add.setPrefWidth(60);
-		add.setPrefHeight(60);
-		controlPane.setVgap(5);
+        add.setPrefWidth(60);
+        add.setPrefHeight(60);
+        controlPane.setVgap(5);
 
-		controlPane.add(nameLB, 0, 0);
-		controlPane.add(nameTF, 1, 0);
+        controlPane.add(nameLB, 0, 0);
+        controlPane.add(nameTF, 1, 0);
 
-		controlPane.setHgap(3);
-		controlPane.setVgap(3);
+        controlPane.setHgap(3);
+        controlPane.setVgap(3);
 
-		controlPane.setAlignment(Pos.CENTER);
-		controlPane.setPadding(new Insets(5));
+        controlPane.setAlignment(Pos.CENTER);
+        controlPane.setPadding(new Insets(5));
 
-		formName = new Label();
-		formName.setAlignment(Pos.CENTER);
-		formName.setFont(Font.font(25));
-		formName.setId("formID");
+        formName = new Label();
+        formName.setAlignment(Pos.CENTER);
+        formName.setFont(Font.font(25));
+        formName.setId("formID");
 
-		mainPanel.setAlignment(formName, Pos.CENTER);
-		mainPanel.setRight(submitButton);
-		mainPanel.setAlignment(submitButton, Pos.BOTTOM_CENTER);
-		mainPanel.setTop(formName);
+        mainPanel.setAlignment(formName, Pos.CENTER);
+        mainPanel.setRight(submitButton);
+        mainPanel.setAlignment(submitButton, Pos.BOTTOM_CENTER);
+        mainPanel.setTop(formName);
 
-		return mainPanel;
-	}
+        return mainPanel;
+    }
 
-	/*** Getrs and Setrs ***/
+    /*** Getrs and Setrs ***/
 
-	public BorderPane getMainPanel() {
-		return mainPanel;
-	}
+    public BorderPane getMainPanel() {
+        return mainPanel;
+    }
 
-	public void setMainPanel(BorderPane mainPanel) {
-		this.mainPanel = mainPanel;
-	}
+    public void setMainPanel(BorderPane mainPanel) {
+        this.mainPanel = mainPanel;
+    }
 
-	public GridPane getControlPane() {
-		return controlPane;
-	}
+    public GridPane getControlPane() {
+        return controlPane;
+    }
 
-	public Button getAddBT() {
-		return add;
-	}
+    public Button getAddBT() {
+        return add;
+    }
 
-	public Button getSubmitButton() {
-		return submitButton;
-	}
+    public Button getSubmitButton() {
+        return submitButton;
+    }
 
-	public void setSubmitButton(Button submitButton) {
-		this.submitButton = submitButton;
-	}
+    public void setSubmitButton(Button submitButton) {
+        this.submitButton = submitButton;
+    }
 
-	public TextField getNameTF() {
-		return nameTF;
-	}
+    public TextField getNameTF() {
+        return nameTF;
+    }
 
-	public void setNameTF(TextField nameTF) {
-		this.nameTF = nameTF;
-	}
+    public void setNameTF(TextField nameTF) {
+        this.nameTF = nameTF;
+    }
 
-	public Label getNameLB() {
-		return nameLB;
-	}
+    public Label getNameLB() {
+        return nameLB;
+    }
 
-	public void setNameLB(Label nameLB) {
-		this.nameLB = nameLB;
-	}
+    public void setNameLB(Label nameLB) {
+        this.nameLB = nameLB;
+    }
 
-	public Label getFormName() {
-		return formName;
-	}
+    public Label getFormName() {
+        return formName;
+    }
 
-	public void setFormName(Label formName) {
-		this.formName = formName;
-	}
+    public void setFormName(Label formName) {
+        this.formName = formName;
+    }
 
 }
