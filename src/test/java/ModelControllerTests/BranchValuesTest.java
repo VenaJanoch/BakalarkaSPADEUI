@@ -5,6 +5,7 @@ import Controllers.FormController;
 import Controllers.FormDataController;
 import SPADEPAC.Branch;
 import SPADEPAC.Criterion;
+import SPADEPAC.Project;
 import XML.ProcessGenerator;
 import model.DataManipulator;
 import model.FileManipulator;
@@ -27,24 +28,13 @@ public class BranchValuesTest {
         @Before
         public void setUp() throws Exception {
 
-            IdentificatorCreater idCreator = new IdentificatorCreater();
-            ProcessGenerator processGenerator = new ProcessGenerator();
-            DataManipulator data =  new DataManipulator(processGenerator,idCreator);
-            this.lists =  new SegmentLists();
-            FileManipulator file = new FileManipulator(processGenerator,data);
-            Alerts alerts = new Alerts(file);
-            ApplicationController ap = new ApplicationController(file, data, alerts, idCreator, lists);
-            DeleteControl deleteControl = new DeleteControl();
-            FormController formController = new FormController(idCreator, data, ap, lists, deleteControl);
-            for(int i = 0; i < 12; i++){
-                formController.getForms().add(null);
-            }
-            FormDataController formDataController = new FormDataController(formController, deleteControl, lists, data, idCreator);
-
-
+            WarmUp warmUp = new WarmUp();
+            FormDataController formDataController = warmUp.getFormDataController();
+            Project project = warmUp.getData().getProject();
+            FormController formController = warmUp.getFormController();
             formController.createTableItem(SegmentType.Branch);
-            formDataController.saveDataFromBranch("Jmeno1", "0_Jmeno1",0, false);
-            branch = data.getProject().getBranches().get(0);
+            formDataController.saveDataFromBranch("Jmeno1", "0_Jmeno1", 0, false);
+            branch = project.getBranches().get(0);
         }
 
         @Test

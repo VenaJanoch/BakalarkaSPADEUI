@@ -2,6 +2,8 @@ package ModelControllerTests;
 
 import Controllers.ApplicationController;
 import Controllers.FormController;
+import Controllers.FormDataController;
+import SPADEPAC.Project;
 import SPADEPAC.WorkUnit;
 import XML.ProcessGenerator;
 import model.DataManipulator;
@@ -24,22 +26,15 @@ public class WorkUnitValueTest {
     @Before
     public void setUp() throws Exception {
 
-        IdentificatorCreater idCreator = new IdentificatorCreater();
-        ProcessGenerator processGenerator = new ProcessGenerator();
-        DataManipulator data = new DataManipulator(processGenerator, idCreator);
-        this.lists = new SegmentLists();
-        FileManipulator file = new FileManipulator(processGenerator, data);
-        Alerts alerts = new Alerts(file);
-        ApplicationController ap = new ApplicationController(file, data, alerts, idCreator, lists);
-        DeleteControl deleteControl = new DeleteControl();
-        FormController formController = new FormController(idCreator, data, ap, lists, deleteControl);
-        for (int i = 0; i < 12; i++) {
-            formController.getForms().add(null);
-        }
-        data.createNewWorkUnit();
-        data.addDataToWorkUnit("Jmeno","Desc", "Category", 2, 2, 2, 2,
+        WarmUp warmUp = new WarmUp();
+        FormDataController formDataController = warmUp.getFormDataController();
+        Project project = warmUp.getData().getProject();
+        FormController formController = warmUp.getFormController();
+
+        warmUp.getData().createNewWorkUnit();
+        warmUp.getData().addDataToWorkUnit("Jmeno","Desc", "Category", 2, 2, 2, 2,
                 2, 2, 2, 56, 65, 23, false, 0, false);
-        workUnit = data.getProject().getWorkUnits().get(0);
+        workUnit = project.getWorkUnits().get(0);
     }
 
     @Test

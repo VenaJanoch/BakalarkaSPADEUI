@@ -4,6 +4,7 @@ import Controllers.ApplicationController;
 import Controllers.FormController;
 import Controllers.FormDataController;
 import SPADEPAC.ConfigPersonRelation;
+import SPADEPAC.Project;
 import XML.ProcessGenerator;
 import model.DataManipulator;
 import model.FileManipulator;
@@ -24,24 +25,14 @@ public class CPRValueTest {
         @Before
         public void setUp() throws Exception {
 
-            IdentificatorCreater idCreator = new IdentificatorCreater();
-            ProcessGenerator processGenerator = new ProcessGenerator();
-            DataManipulator data =  new DataManipulator(processGenerator,idCreator);
-            this.lists =  new SegmentLists();
-            FileManipulator file = new FileManipulator(processGenerator,data);
-            Alerts alerts = new Alerts(file);
-            ApplicationController ap = new ApplicationController(file, data, alerts, idCreator, lists);
-            DeleteControl deleteControl = new DeleteControl();
-            FormController formController = new FormController(idCreator, data, ap, lists, deleteControl);
-            for(int i = 0; i < 12; i++){
-                formController.getForms().add(null);
-            }
-            FormDataController formDataController = new FormDataController(formController, deleteControl, lists, data, idCreator);
-
+            WarmUp warmUp = new WarmUp();
+            FormDataController formDataController = warmUp.getFormDataController();
+            Project project = warmUp.getData().getProject();
+            FormController formController = warmUp.getFormController();
 
             formController.createTableItem(SegmentType.ConfigPersonRelation);
             formDataController.saveDataFromCPR("Jmeno1", "0_Jmeno1",3, 3,0);
-            cpr = data.getProject().getCpr().get(0);
+            cpr = project.getCpr().get(0);
         }
 
         @Test
