@@ -77,11 +77,9 @@ public class RoleTypeForm extends TableClassBasicForm implements ISegmentTableFo
 			if (selection.size() == 0) {
 				Alerts.showNoItemsDeleteAlert();
 			} else {
-				list = Alerts.showDeleteItemAlert(getTableTV(), selection);
-				if (list != null) {
-					formDataController.deleteRoleType(list);
-				}
-
+				formDataController.deleteRoleType(selection);
+				getTableTV().getItems().removeAll(selection);
+				getTableTV().getSelectionModel().clearSelection();
 			}
 		}
 
@@ -157,7 +155,7 @@ public class RoleTypeForm extends TableClassBasicForm implements ISegmentTableFo
 		}
 		String superST = RoleSuperClass.values()[superIndex].name();
 
-		ClassTable type = new ClassTable(idName, classST, superST);
+		ClassTable type = new ClassTable(idName, classST, superST, id);
 
 		getTableTV().getItems().add(type);
 		getTableTV().sort();

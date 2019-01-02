@@ -244,7 +244,7 @@ public class FormFillController {
             String idName = createTableItemIdName(id, segment.getName());
             String lclass = segment.getTypeClass();
             String superClass = segment.getTypeSuperClass();
-            ClassTable table = new ClassTable(idName, lclass, superClass);
+            ClassTable table = new ClassTable(idName, lclass, superClass, id);
 
             form.getTableTV().getItems().add(table);
             segmentLists.getTypeObservable().add(idName);
@@ -259,7 +259,7 @@ public class FormFillController {
             String idName = createTableItemIdName(id, segment.getName());
             String lclass = segment.getStatusClass();
             String superClass = segment.getStatusSuperClass();
-            ClassTable table = new ClassTable(idName, lclass, superClass);
+            ClassTable table = new ClassTable(idName, lclass, superClass, id);
 
             form.getTableTV().getItems().add(table);
             segmentLists.getStatusTypeObservable().add(idName);
@@ -274,7 +274,7 @@ public class FormFillController {
             String idName = createTableItemIdName(id, segment.getName());
             String lclass = segment.getResolutionClass();
             String superClass = segment.getResolutionSuperClass();
-            ClassTable table = new ClassTable(idName, lclass, superClass);
+            ClassTable table = new ClassTable(idName, lclass, superClass, id);
 
             form.getTableTV().getItems().add(table);
             segmentLists.getResolutionTypeObservable().add(idName);
@@ -289,7 +289,7 @@ public class FormFillController {
             String idName = createTableItemIdName(id, segment.getName());
             String lclass = segment.getRelationClass();
             String superClass = segment.getRelationSuperClass();
-            ClassTable table = new ClassTable(idName, lclass, superClass);
+            ClassTable table = new ClassTable(idName, lclass, superClass, id);
 
             form.getTableTV().getItems().add(table);
             segmentLists.getRelationTypeObservable().add(idName);
@@ -304,7 +304,7 @@ public class FormFillController {
             String idName = createTableItemIdName(id, segment.getName());
             String lclass = segment.getSeverityClass();
             String superClass = segment.getSeveritySuperClass();
-            ClassTable table = new ClassTable(idName, lclass, superClass);
+            ClassTable table = new ClassTable(idName, lclass, superClass, id);
 
             form.getTableTV().getItems().add(table);
             segmentLists.getSeverityTypeObservable().add(idName);
@@ -319,7 +319,7 @@ public class FormFillController {
             String idName = createTableItemIdName(id, segment.getName());
             String lclass = segment.getPriorityClass();
             String superClass = segment.getPrioritySuperClass();
-            ClassTable table = new ClassTable(idName, lclass, superClass);
+            ClassTable table = new ClassTable(idName, lclass, superClass, id);
 
             form.getTableTV().getItems().add(table);
             segmentLists.getPriorityTypeObservable().add(idName);
@@ -360,7 +360,7 @@ public class FormFillController {
             RoleType roleType = project.getRoleType().get(i);
             int id = formController.createTableItem(SegmentType.RoleType);
             String idName = createTableItemIdName(id, roleType.getName());
-            ClassTable type = new ClassTable(idName, roleType.getRoleClass(), roleType.getRoleSuperClass());
+            ClassTable type = new ClassTable(idName, roleType.getRoleClass(), roleType.getRoleSuperClass(), id);
 
             roleTypeForm.getTableTV().getItems().add(type);
             segmentLists.getRoleTypeObservable().add(idName);

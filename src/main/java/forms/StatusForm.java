@@ -163,7 +163,7 @@ public class StatusForm extends TableClassBasicForm implements ISegmentTableForm
 		}
 		String superST = WorkUnitStatusSuperClass.values()[superIndex].name();
 
-		ClassTable table = new ClassTable(idName, classST, superST);
+		ClassTable table = new ClassTable(idName, classST, superST, id);
 
 		getTableTV().getItems().add(table);
 		getTableTV().sort();

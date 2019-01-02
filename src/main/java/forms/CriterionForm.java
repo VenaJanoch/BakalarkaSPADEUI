@@ -103,16 +103,14 @@ public class CriterionForm extends TableBasicForm implements ISegmentTableForm {
 		ObservableList<CriterionTable> selection = FXCollections
 				.observableArrayList(tableTV.getSelectionModel().getSelectedItems());
 
-		ObservableList<CriterionTable> list = null;
-
 		if (event.getCode() == KeyCode.DELETE) {
 			if (selection.size() == 0) {
 				Alerts.showNoItemsDeleteAlert();
-			} else {
-				list = Alerts.showDeleteItemCriterionAlert(getTableTV(), selection);
-				if (list != null) {
-					formDataController.deleteCriterion(list);
-				}
+			}
+			else{
+				formDataController.deleteCriterion(selection);
+				tableTV.getItems().removeAll(selection);
+				tableTV.getSelectionModel().clearSelection();
 
 			}
 		}

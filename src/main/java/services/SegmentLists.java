@@ -183,30 +183,43 @@ public class SegmentLists {
 		switch (segmentType) {
 			case Branch:
 				 removeDataFromLis(branchObservable, indexList);
+				 break;
 			case Priority:
 				removeDataFromLis(priorityTypeObservable, indexList);
+				break;
 			case Severity:
 				removeDataFromLis(severityTypeObservable, indexList);
+				break;
 			case Milestone:
 				removeDataFromLis(milestoneObservable, indexList);
+				break;
 			case Criterion:
 				removeDataFromLis(criterionObservable, indexList);
+				break;
 			case Role:
 				removeDataFromLis(roleObservable, indexList);
+				break;
 			case RoleType:
 				removeDataFromLis(roleTypeObservable, indexList);
+				break;
 			case ConfigPersonRelation:
 				removeDataFromLis(CPRObservable, indexList);
+				break;
 			case Relation:
 				removeDataFromLis(relationTypeObservable, indexList);
+				break;
 			case Resolution:
 				removeDataFromLis(resolutionTypeObservable, indexList);
+				break;
 			case Status:
 				removeDataFromLis(statusTypeObservable, indexList);
+				break;
 			case Type:
 				removeDataFromLis(typeObservable, indexList);
+				break;
 			case Configuration:
 				removeDataFromLis(configObservable, indexList);
+				break;
 			default:
 
 		}
@@ -252,7 +265,7 @@ public class SegmentLists {
 	private void removeDataFromLis(ObservableList<String> observableList, ArrayList<Integer> indexList) {
 
 		for (Integer i : indexList){
-			observableList.remove(i);
+			observableList.remove(i+1);
 		}
 
 	}

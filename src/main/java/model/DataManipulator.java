@@ -403,12 +403,13 @@ public class DataManipulator {
     }
 
     public void removeCriterion(ArrayList<Integer> indexList) {
-        for(Integer i : indexList){
+        for (Integer i : indexList) {
             project.getCriterions().remove(i);
+            project.getCriterions().add(i, null);
         }
     }
 
-    public void addDataToMilestone(String nameForManipulator, List<Integer> criterionIndex, int index) {
+    public void addDataToMilestone(String nameForManipulator, List<Integer> criterionIndex) {
 
         Milestone milestone = objF.createMilestone();
         milestone.getCriteriaIndexs().addAll(criterionIndex);
@@ -487,7 +488,7 @@ public class DataManipulator {
         }
     }
 
-    public void addDataToRole(String nameForManipulator, String descForManipulator, int type, int index) {
+    public void addDataToRole(String nameForManipulator, String descForManipulator, int type) {
 
         Role role = objF.createRole();
         role.setDescription(descForManipulator);
@@ -512,6 +513,7 @@ public class DataManipulator {
     }
 
     public void removeRoleType(ArrayList<Integer> indexList) {
+
         for(Integer i : indexList){
             project.getRoleType().remove(i);
         }

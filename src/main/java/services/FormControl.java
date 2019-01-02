@@ -9,24 +9,7 @@ import forms.WorkUnitForm;
 
 public class FormControl {
 
-	/**
-	 * Metoda sloužící k namapování prázdného nebo neexistujícího prvku na
-	 * prázdný element
-	 * 
-	 * @param text
-	 *            text
-	 * @return vysledný řetězec
-	 */
-	public String fillTextMapper(String text) {
 
-		
-		if (text == null || text.equals("")) {
-			return null;
-		}
-
-		return text;
-
-	}
 
 	/**
 	 * Metoda sloužící k namapování neezistujícího prvku z XML na prázdný

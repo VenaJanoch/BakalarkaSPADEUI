@@ -6,6 +6,7 @@ import model.FileManipulator;
 import model.IdentificatorCreater;
 import services.Alerts;
 import services.DeleteControl;
+import services.MapperTableToObject;
 import services.SegmentLists;
 
 public class ApplicationController {
@@ -19,9 +20,10 @@ public class ApplicationController {
 
     public ApplicationController(FileManipulator fileManipulator, DataManipulator dataManipulator, Alerts alerts,
                                  IdentificatorCreater identificatorCreater, SegmentLists segmentLists){
-        DeleteControl deleteControl = new DeleteControl();
+        MapperTableToObject mapperTableToObject = new MapperTableToObject();
+        DeleteControl deleteControl = new DeleteControl(segmentLists, mapperTableToObject);
         this.formController = new FormController(identificatorCreater, dataManipulator, this, segmentLists, deleteControl);
-        this.formDataController = new FormDataController(formController, deleteControl, segmentLists, dataManipulator, identificatorCreater);
+        this.formDataController = new FormDataController(formController, deleteControl, segmentLists, mapperTableToObject, dataManipulator, identificatorCreater);
         this.manipulationController = new ManipulationController(formController);
         this.linkControl = new LinkControl(formController, identificatorCreater, segmentLists, dataManipulator, manipulationController);
         this.canvasItemController = new CanvasItemController(linkControl, formController, manipulationController);

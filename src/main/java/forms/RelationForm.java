@@ -160,7 +160,7 @@ public class RelationForm extends TableClassBasicForm implements ISegmentTableFo
 		}
 		String superST = WorkUnitRelationSuperClass.values()[getSuperIndex()].name();
 
-		ClassTable table = new ClassTable(idName, classST, superST);
+		ClassTable table = new ClassTable(idName, classST, superST, id);
 
 		getTableTV().getItems().add(table);
 		getTableTV().sort();
