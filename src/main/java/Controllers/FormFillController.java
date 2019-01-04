@@ -347,7 +347,7 @@ public class FormFillController {
             int id = formController.createTableItem(SegmentType.Role);
             String idName = createTableItemIdName(id, role.getName());
             String type = segmentLists.getRoleTypeObservable().get(prepareIndexForForm(role.getType()));
-            RoleTable roleTable = new RoleTable(idName, prepareStringForForm(role.getDescription()), type);
+            RoleTable roleTable = new RoleTable(idName, prepareStringForForm(role.getDescription()), type, id);
 
             roleForm.getTableTV().getItems().add(roleTable);
             segmentLists.getRoleObservable().add(idName);

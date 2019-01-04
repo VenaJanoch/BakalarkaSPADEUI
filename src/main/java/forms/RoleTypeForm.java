@@ -20,7 +20,10 @@ import services.Control;
 import services.DeleteControl;
 import model.IdentificatorCreater;
 import services.SegmentType;
+import tables.BasicTable;
 import tables.ClassTable;
+
+import java.util.ArrayList;
 
 /**
  * Třída představující tabulkový formulář pro výčtový typ Role-Type, odděděná od
@@ -71,15 +74,16 @@ public class RoleTypeForm extends TableClassBasicForm implements ISegmentTableFo
 		ObservableList<ClassTable> selection = FXCollections
 				.observableArrayList(getTableTV().getSelectionModel().getSelectedItems());
 
-		ObservableList<ClassTable> list = null;
-
 		if (event.getCode() == KeyCode.DELETE) {
 			if (selection.size() == 0) {
 				Alerts.showNoItemsDeleteAlert();
-			} else {
-				formDataController.deleteRoleType(selection);
+			}
+			else{
+				ArrayList<BasicTable> list = new ArrayList<>(selection);
+				formDataController.deleteRoleType(list);
 				getTableTV().getItems().removeAll(selection);
 				getTableTV().getSelectionModel().clearSelection();
+
 			}
 		}
 

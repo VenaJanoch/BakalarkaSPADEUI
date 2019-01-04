@@ -4,12 +4,10 @@ package tables;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
-public class BranchTable {
+public class BranchTable extends BasicTable{
 
 	/** Globální proměnné třídy **/
-	private StringProperty name;
 	private StringProperty main;
-	private int id;
 
 	/**
 	 * Konstruktor třídy 
@@ -19,10 +17,8 @@ public class BranchTable {
 	 */
 	
 	public BranchTable(String name, String main, int id) {
-		super();
-		this.name = new SimpleStringProperty(name);
+		super(name, id);
 		this.main = new SimpleStringProperty(main);
-		this.id = id;
 	}
 
 	/**
@@ -31,18 +27,10 @@ public class BranchTable {
 	@Override
 	public String toString() {
 
-		return name.get();
+		return getName();
 	}
 	
 	/** Getrs and Setrs **/
-	public final String getName() {
-		return name.get();
-	}
-
-	public final void setName(String name) {
-		this.name.set(name);
-
-	}
 
 	public String getMain() {
 		return main.get();
@@ -52,7 +40,5 @@ public class BranchTable {
 		return main;
 	}
 
-	public int getId() {
-		return id;
-	}
+
 }

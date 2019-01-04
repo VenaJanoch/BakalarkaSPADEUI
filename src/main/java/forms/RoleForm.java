@@ -26,7 +26,10 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
 import services.*;
 import model.IdentificatorCreater;
+import tables.BasicTable;
 import tables.RoleTable;
+
+import java.util.ArrayList;
 
 /**
  * Třída představující dvojitý formulář pro element Role, vytvoří tabulku s
@@ -130,16 +133,15 @@ public class RoleForm extends Table2BasicForm implements ISegmentTableForm {
 		ObservableList<RoleTable> selection = FXCollections
 				.observableArrayList(tableTV.getSelectionModel().getSelectedItems());
 
-		ObservableList<RoleTable> list = null;
-
 		if (event.getCode() == KeyCode.DELETE) {
 			if (selection.size() == 0) {
 				Alerts.showNoItemsDeleteAlert();
-			} else {
-				list = Alerts.showDeleteItemRoleAlert(getTableTV(), selection);
-				if (list != null) {
-					formDataController.deleteRole(list);
-				}
+			}
+			else{
+				ArrayList<BasicTable> list = new ArrayList<>(selection);
+				formDataController.deleteRoleObservable(list);
+				getTableTV().getItems().removeAll(selection);
+				getTableTV().getSelectionModel().clearSelection();
 
 			}
 		}
@@ -188,7 +190,7 @@ public class RoleForm extends Table2BasicForm implements ISegmentTableForm {
 		int id = formController.createTableItem(SegmentType.Role);
 		String idName = id + "_" + nameST;
 
-		RoleTable role = new RoleTable(idName, descritpST, typeST);
+		RoleTable role = new RoleTable(idName, descritpST, typeST, id);
 		tableTV.getItems().add(role);
 		tableTV.sort();
 		formDataController.saveDataFromRoleForm(nameST, idName, descritpST, roleIndex, id);

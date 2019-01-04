@@ -6,12 +6,11 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.ObservableList;
 
-public class MilestoneTable {
+public class MilestoneTable extends BasicTable {
 
 	/** Globální proměnné třídy **/
-	private StringProperty name;
 	private StringProperty criterion;
-	private int id;
+
 	/**
 	 * Konstruktor třídy Zinicializuje globální proměnnné třídy
 	 * 
@@ -21,11 +20,8 @@ public class MilestoneTable {
 	 *            criterio array
 	 */
 	public MilestoneTable(String name, String criterium, int id) {
-		super();
-		this.name = new SimpleStringProperty(name);
+		super(name, id);
 		this.criterion = new SimpleStringProperty(criterium);
-		this.id = id;
-
 	}
 	
 	/**
@@ -34,18 +30,10 @@ public class MilestoneTable {
 	@Override
 	public String toString() {
 
-		return name.get();
+		return getName();
 	}
 
 	/** Globální proměnné třídy **/
-	public final String getName() {
-		return name.get();
-	}
-
-	public final void setName(String name) {
-		this.name.set(name);
-
-	}
 
 	public final String getCriterion() {
 		return criterion.get();
@@ -54,9 +42,5 @@ public class MilestoneTable {
 	public final void setCriterion(String name) {
 		this.criterion.set(name);
 
-	}
-
-	public int getId() {
-		return id;
 	}
 }

@@ -4,7 +4,7 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 public class TagTable {
-
+	//TODO Zjistit zpusob mazani pripadne pridat ID
 	/** Globální proměnné třídy **/
 	private StringProperty tag;
 

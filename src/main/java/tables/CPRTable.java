@@ -3,13 +3,10 @@ package tables;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
-public class CPRTable {
+public class CPRTable extends BasicTable{
 
 	/** Globální proměnné třídy **/ 
-	private StringProperty name;
 	private StringProperty role;
-	private int id;
-	
 	/**
 	 * Konstruktor třídy
 	 * Zinicializuje globální proměnné třídy
@@ -17,10 +14,8 @@ public class CPRTable {
 	 * @param role jméno vybrané role
 	 */
 	public CPRTable(String name, String role, int id) {
-		super();
-		this.name = new SimpleStringProperty(name);
+		super(name, id);
 		this.role = new SimpleStringProperty(role);
-		this.id = id;
 	}
 	
 	/**
@@ -29,19 +24,10 @@ public class CPRTable {
 	@Override
 	public String toString() {
 
-		return name.get();
+		return getName();
 	}
 	
 	/** Getrs and Setrs **/
-	public final String getName() {
-		return name.get();
-	}
-
-	public final void setName(String name) {
-		this.name.set(name);
-
-	}
-	
 	public final String getRole() {
 		return role.get();
 	}
@@ -49,9 +35,5 @@ public class CPRTable {
 	public final void setRole(String role) {
 		this.role.set(role);
 
-	}
-
-	public int getId() {
-		return id;
 	}
 }

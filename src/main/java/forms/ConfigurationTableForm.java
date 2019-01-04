@@ -30,7 +30,10 @@ import services.Control;
 import services.DeleteControl;
 import model.IdentificatorCreater;
 import services.SegmentType;
+import tables.BasicTable;
 import tables.ConfigTable;
+
+import java.util.ArrayList;
 
 /**
  * Třída představující dvojitý formulář pro element Configuration, vytvoří
@@ -133,7 +136,7 @@ public class ConfigurationTableForm extends Table2BasicForm implements ISegmentT
 
 			ConfigTable config = tableTV.getSelectionModel().getSelectedItems().get(0);
 			if (config != null) {
-				int id = config.getId().intValue();
+				int id = config.getIdProperty().intValue();
 				getMainPanel().setCenter(formController.getMainPanelFromForm(id));
 			}
 		}
@@ -145,16 +148,15 @@ public class ConfigurationTableForm extends Table2BasicForm implements ISegmentT
 		ObservableList<ConfigTable> selection = FXCollections
 				.observableArrayList(tableTV.getSelectionModel().getSelectedItems());
 
-		ObservableList<ConfigTable> list = null;
-
 		if (event.getCode() == KeyCode.DELETE) {
 			if (selection.size() == 0) {
 				Alerts.showNoItemsDeleteAlert();
-			} else {
-				list = Alerts.showDeleteItemConfigAlert(getTableTV(), selection);
-				if (list != null) {
-					formController.deleteConfiguration(list);
-				}
+			}
+			else{
+				ArrayList<BasicTable> list = new ArrayList<>(selection);
+				formController.deleteConfiguration(list);
+				tableTV.getItems().removeAll(selection);
+				tableTV.getSelectionModel().clearSelection();
 
 			}
 		}

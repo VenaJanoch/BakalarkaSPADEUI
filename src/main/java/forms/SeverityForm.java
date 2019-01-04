@@ -20,7 +20,10 @@ import services.Control;
 import services.DeleteControl;
 import model.IdentificatorCreater;
 import services.SegmentType;
+import tables.BasicTable;
 import tables.ClassTable;
+
+import java.util.ArrayList;
 
 /**
  * Třída představující tabulkový formulář pro výčtový typ Severity, odděděná od
@@ -73,16 +76,15 @@ public class SeverityForm extends TableClassBasicForm implements ISegmentTableFo
 		ObservableList<ClassTable> selection = FXCollections
 				.observableArrayList(getTableTV().getSelectionModel().getSelectedItems());
 
-		ObservableList<ClassTable> list = null;
-
 		if (event.getCode() == KeyCode.DELETE) {
 			if (selection.size() == 0) {
 				Alerts.showNoItemsDeleteAlert();
-			} else {
-				list = Alerts.showDeleteItemAlert(getTableTV(), selection);
-				if (list != null) {
-					formDataController.deleteSeverity(list);
-				}
+			}
+			else{
+				ArrayList<BasicTable> list = new ArrayList<>(selection);
+				formDataController.deleteSeverity(list);
+				getTableTV().getItems().removeAll(selection);
+				getTableTV().getSelectionModel().clearSelection();
 
 			}
 		}

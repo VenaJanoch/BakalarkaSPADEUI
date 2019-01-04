@@ -3,12 +3,10 @@ package tables;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
-public class CriterionTable {
+public class CriterionTable extends BasicTable{
 
 	/** Globální proměnné třídy **/
-	private StringProperty name;
 	private StringProperty description;
-	private  int id;
 
 	/**
 	 * Konstruktor třídy Zinicializuje globální proměnné třídy
@@ -19,10 +17,8 @@ public class CriterionTable {
 	 *            popis criterion
 	 */
 	public CriterionTable(String name, String description, int id) {
-		super();
-		this.name = new SimpleStringProperty(name);
+		super(name, id);
 		this.description = new SimpleStringProperty(description);
-		this.id = id;
 	}
 
 	/**
@@ -31,18 +27,10 @@ public class CriterionTable {
 	@Override
 	public String toString() {
 
-		return name.get();
+		return getName();
 	}
 
 	/** Getrs and Setrs **/
-	public final String getName() {
-		return name.get();
-	}
-
-	public final void setName(String name) {
-		this.name.set(name);
-
-	}
 
 	public final String getDescription() {
 		return description.get();
@@ -51,9 +39,5 @@ public class CriterionTable {
 	public final void setDescription(String descript) {
 		this.description.set(descript);
 
-	}
-
-	public int getId() {
-		return id;
 	}
 }

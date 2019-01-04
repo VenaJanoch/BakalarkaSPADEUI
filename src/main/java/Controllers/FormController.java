@@ -396,9 +396,9 @@ public class FormController {
         dataManipulator.removeWorkUnit(indexForm);
     }
 
-    public void deleteConfiguration(ObservableList<ConfigTable> list) {
+    public void deleteConfiguration(ArrayList<BasicTable> list) {
 
-        ArrayList<Integer> indexList = deleteControl.deleteConfig(list);
+        ArrayList<Integer> indexList = deleteControl.findIndexesForDelete(list);
         lists.removeItemFromObservableList(SegmentType.Configuration, indexList);
 
         for(int i : indexList){

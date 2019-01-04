@@ -27,9 +27,11 @@ import services.Control;
 import services.DeleteControl;
 import model.IdentificatorCreater;
 import services.SegmentType;
+import tables.BasicTable;
 import tables.CPRTable;
 
 import java.text.Normalizer;
+import java.util.ArrayList;
 
 /**
  * Třída představující tabulkový formulář pro element Configuration-Person-Relatio, odděděná od třídy
@@ -116,17 +118,15 @@ public class ConfigPersonRelationForm extends TableBasicForm implements ISegment
 	public void deleteSelected(KeyEvent event) {
 		ObservableList<CPRTable> selection = FXCollections
 				.observableArrayList(tableTV.getSelectionModel().getSelectedItems());
-
-		ObservableList<CPRTable> list = null;
-
 		if (event.getCode() == KeyCode.DELETE) {
 			if (selection.size() == 0) {
 				Alerts.showNoItemsDeleteAlert();
-			} else {
-				list = Alerts.showDeleteItemCPRAlert(getTableTV(), selection);
-				if (list != null) {
-					formDataController.deleteCPR(list);
-				}
+			}
+			else{
+				ArrayList<BasicTable> list = new ArrayList<>(selection);
+				formDataController.deleteCPR(list);
+				tableTV.getItems().removeAll(selection);
+				tableTV.getSelectionModel().clearSelection();
 
 			}
 		}

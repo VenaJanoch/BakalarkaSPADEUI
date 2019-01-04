@@ -24,8 +24,10 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
 import services.*;
-import model.IdentificatorCreater;
+import tables.BasicTable;
 import tables.MilestoneTable;
+
+import java.util.ArrayList;
 
 /**
  * Třída představující dvojitý formulář pro element Milestone, vytvoří tabulku s
@@ -124,16 +126,15 @@ public class MilestoneForm extends Table2BasicForm implements ISegmentTableForm 
 		ObservableList<MilestoneTable> selection = FXCollections
 				.observableArrayList(tableTV.getSelectionModel().getSelectedItems());
 
-		ObservableList<MilestoneTable> list = null;
-
 		if (event.getCode() == KeyCode.DELETE) {
 			if (selection.size() == 0) {
 				Alerts.showNoItemsDeleteAlert();
-			} else {
-				list = Alerts.showDeleteItemMilestoneAlert(getTableTV(), selection);
-				if (list != null) {
-					formDataController.deleteMilestone(list);
-				}
+			}
+			else{
+				ArrayList<BasicTable> list = new ArrayList<>(selection);
+				formDataController.deleteMilestoneObservable(list);
+				tableTV.getItems().removeAll(selection);
+				tableTV.getSelectionModel().clearSelection();
 
 			}
 		}

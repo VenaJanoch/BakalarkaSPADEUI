@@ -5,15 +5,14 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
-public class ClassTable {
+public class ClassTable extends BasicTable {
 
     /**
      * Globální proměnné třídy
      **/
-    private StringProperty name;
+
     private StringProperty classType;
     private StringProperty superType;
-    private int id;
 
 
     /**
@@ -24,12 +23,10 @@ public class ClassTable {
      * @param superType super class
      */
     public ClassTable(String name, String classType, String superType, int id) {
-        super();
-        this.name = new SimpleStringProperty(name);
+        super(name, id);
         this.classType = new SimpleStringProperty(classType);
         this.superType = new SimpleStringProperty(superType);
-        this.id = id;
-    }
+        }
 
 
     /**
@@ -38,21 +35,14 @@ public class ClassTable {
     @Override
     public String toString() {
 
-        return name.get();
+        return getName();
     }
 
 
     /**
      * Getrs and Setrs
      */
-    public final String getName() {
-        return name.get();
-    }
 
-    public final void setName(String name) {
-        this.name.set(name);
-
-    }
 
     public final String getClassType() {
         return classType.get();
@@ -70,9 +60,5 @@ public class ClassTable {
     public final void setSuperType(String superType) {
         this.superType.set(superType);
 
-    }
-
-    public int getId() {
-        return id;
     }
 }

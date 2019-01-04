@@ -26,8 +26,11 @@ import services.DeleteControl;
 import model.IdentificatorCreater;
 import services.SegmentType;
 import sun.text.resources.FormatData;
+import tables.BasicTable;
 import tables.BranchTable;
 import tables.CriterionTable;
+
+import java.util.ArrayList;
 
 /**
  * Třída představující tabulkový formulář pro element Criterion, odděděná od
@@ -108,7 +111,8 @@ public class CriterionForm extends TableBasicForm implements ISegmentTableForm {
 				Alerts.showNoItemsDeleteAlert();
 			}
 			else{
-				formDataController.deleteCriterion(selection);
+				ArrayList<BasicTable> list = new ArrayList<>(selection);
+				formDataController.deleteCriterion(list);
 				tableTV.getItems().removeAll(selection);
 				tableTV.getSelectionModel().clearSelection();
 

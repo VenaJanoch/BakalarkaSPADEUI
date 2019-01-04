@@ -3,6 +3,7 @@ package forms;
 import Controllers.FormController;
 import Controllers.FormDataController;
 import SPADEPAC.ObjectFactory;
+import abstractform.BasicForm;
 import abstractform.TableBasicForm;
 import interfaces.ISegmentTableForm;
 import javafx.beans.value.ChangeListener;
@@ -27,7 +28,10 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import services.*;
 import model.IdentificatorCreater;
+import tables.BasicTable;
 import tables.BranchTable;
+
+import java.util.ArrayList;
 
 /**
  * Třída představující tabulkový formulář pro element Branch, odděděná od třídy
@@ -117,16 +121,17 @@ public class BranchForm extends TableBasicForm implements ISegmentTableForm {
         ObservableList<BranchTable> selection = FXCollections
                 .observableArrayList(tableTV.getSelectionModel().getSelectedItems());
 
-        ObservableList<BranchTable> list = null;
+
 
         if (event.getCode() == KeyCode.DELETE) {
             if (selection.size() == 0) {
                 Alerts.showNoItemsDeleteAlert();
-            } else {
-                list = Alerts.showDeleteItemBranchAlert(tableTV, selection);
-                if (list != null) {
-                    formDataController.deleteBranch(list);
-                }
+            }
+            else{
+                ArrayList<BasicTable> list = new ArrayList<>(selection);
+                formDataController.deleteBranch(list);
+                tableTV.getItems().removeAll(selection);
+                tableTV.getSelectionModel().clearSelection();
 
             }
         }

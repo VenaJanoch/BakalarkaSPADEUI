@@ -16,14 +16,7 @@ import javafx.scene.control.ButtonBar.ButtonData;
 import java.util.List;
 
 import model.FileManipulator;
-import tables.BranchTable;
-import tables.CPRTable;
-import tables.ClassTable;
-import tables.ConfigTable;
-import tables.CriterionTable;
-import tables.MilestoneTable;
-import tables.RoleTable;
-import tables.TagTable;
+import tables.*;
 
 public class Alerts {
 
@@ -175,13 +168,13 @@ public class Alerts {
      * @param selection vybrané prvky
      * @return smazané prvky
      */
-    public static boolean showDeleteItemCriterionAlert(ObservableList<CriterionTable> selection, Map<Integer, ArrayList<String>> milestoneToCriterionMapper) {
+    public static boolean showDeleteItemCascadeAlert(ArrayList<BasicTable> selection, Map<Integer, ArrayList<TableToObjectInstanc>> mapper) {
 
         ObservableList<String> deleteList = FXCollections.observableArrayList();
-        for (CriterionTable criterion : selection) {
-            deleteList.add(criterion.getName());
-            if(milestoneToCriterionMapper.containsKey(criterion.getId())){
-                deleteList.addAll(milestoneToCriterionMapper.get(criterion.getId()));
+        for (BasicTable table : selection) {
+            deleteList.add(table.getName());
+            if(mapper.containsKey(table.getId())){
+                deleteList.addAll(mapper.get(table.getId()).toString());
             }
         }
 
@@ -412,12 +405,12 @@ public class Alerts {
         alert.showAndWait();
     }
 
-    public static boolean showDeleteItemRoleTypeAlert(ObservableList<ClassTable> selection, Map<Integer,ArrayList<String>> milestoneToCriterionMapper) {
+    public static boolean showDeleteItemRoleTypeAlert(ObservableList<ClassTable> selection, Map<Integer,ArrayList<TableToObjectInstanc>> milestoneToCriterionMapper) {
         ObservableList<String> deleteList = FXCollections.observableArrayList();
         for (ClassTable classTable : selection) {
             deleteList.add(classTable.getName());
             if(milestoneToCriterionMapper.containsKey(classTable.getId())){
-                deleteList.addAll(milestoneToCriterionMapper.get(classTable.getId()));
+                deleteList.addAll(milestoneToCriterionMapper.get(classTable.getId()).toString());
             }
         }
 

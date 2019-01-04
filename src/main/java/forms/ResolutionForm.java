@@ -20,7 +20,11 @@ import services.Control;
 import services.DeleteControl;
 import model.IdentificatorCreater;
 import services.SegmentType;
+import tables.BasicTable;
 import tables.ClassTable;
+
+import java.util.ArrayList;
+
 /**
  * Třída představující tabulkový formulář pro výčtový typ Resolution, odděděná od třídy
  * TableClassBasicForm a implementující ISegmentTableForm
@@ -70,16 +74,15 @@ public class ResolutionForm extends TableClassBasicForm implements ISegmentTable
 		ObservableList<ClassTable> selection = FXCollections
 				.observableArrayList(getTableTV().getSelectionModel().getSelectedItems());
 
-		ObservableList<ClassTable> list = null;
-
 		if (event.getCode() == KeyCode.DELETE) {
 			if (selection.size() == 0) {
 				Alerts.showNoItemsDeleteAlert();
-			} else {
-				list = Alerts.showDeleteItemAlert(getTableTV(), selection);
-				if (list != null) {
-					formDataController.deleteResolution(list);
-				}
+			}
+			else{
+				ArrayList<BasicTable> list = new ArrayList<>(selection);
+				formDataController.deleteResolution(list);
+				getTableTV().getItems().removeAll(selection);
+				getTableTV().getSelectionModel().clearSelection();
 
 			}
 		}

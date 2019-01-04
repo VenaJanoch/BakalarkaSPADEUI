@@ -3,12 +3,11 @@ package tables;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
-public class RoleTable {
+public class RoleTable extends BasicTable {
 
     /**
      * Globální proměnné třídy
      **/
-    private StringProperty name;
     private StringProperty type;
     private StringProperty desc;
 
@@ -20,9 +19,8 @@ public class RoleTable {
      * @param desc popis description
      * @param type typ role
      */
-    public RoleTable(String name, String desc, String type) {
-        super();
-        this.name = new SimpleStringProperty(name);
+    public RoleTable(String name, String desc, String type, int id) {
+        super(name, id);
         this.type = new SimpleStringProperty(type);
         this.desc = new SimpleStringProperty(desc);
     }
@@ -33,21 +31,13 @@ public class RoleTable {
     @Override
     public String toString() {
 
-        return name.get();
+        return getName();
     }
 
 
     /**
      * Getrs and Setrs
      **/
-    public final String getName() {
-        return name.get();
-    }
-
-    public final void setName(String name) {
-        this.name.set(name);
-
-    }
 
     public final String getType() {
         return type.get();

@@ -405,7 +405,6 @@ public class DataManipulator {
     public void removeCriterion(ArrayList<Integer> indexList) {
         for (Integer i : indexList) {
             project.getCriterions().remove(i);
-            project.getCriterions().add(i, null);
         }
     }
 
