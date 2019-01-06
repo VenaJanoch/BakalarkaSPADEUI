@@ -19,6 +19,7 @@ import services.Alerts;
 import services.DeleteControl;
 import services.SegmentLists;
 import services.SegmentType;
+import tables.CriterionTable;
 
 public class CriterionNullValueTest {
 
@@ -33,7 +34,7 @@ public class CriterionNullValueTest {
             FormController formController = warmUp.getFormController();
 
             formController.createTableItem(SegmentType.Criterion);
-            formDataController.saveDataFromCriterionForm("", "","", 0);
+            formDataController.saveDataFromCriterionForm("", new CriterionTable("","",0));
             criterion = project.getCriterions().get(0);
         }
 

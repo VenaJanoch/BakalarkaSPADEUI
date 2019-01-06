@@ -3,6 +3,7 @@ package forms;
 import Controllers.FormController;
 import Controllers.FormDataController;
 import SPADEPAC.ObjectFactory;
+import abstractform.BasicForm;
 import abstractform.TableBasicForm;
 import interfaces.ISegmentTableForm;
 import javafx.beans.value.ChangeListener;
@@ -47,7 +48,7 @@ public class ConfigPersonRelationForm extends TableBasicForm implements ISegment
 	 */
 	private Label personRoleLB;
 
-	private ComboBox<String> personCB;
+	private ComboBox<BasicTable> personCB;
 
 	private TableView<CPRTable> tableTV;
 
@@ -137,7 +138,7 @@ public class ConfigPersonRelationForm extends TableBasicForm implements ISegment
 	public GridPane createControlPane() {
 
 		personRoleLB = new Label("Person-Role: ");
-		personCB = new ComboBox<String>(formController.getRoleObservable());
+		personCB = new ComboBox<BasicTable>(formController.getRoleObservable());
 		personCB.setVisibleRowCount(5);
 		personCB.getSelectionModel().selectedIndexProperty().addListener(roleListener);
 		personCB.setId("personCB");
@@ -167,11 +168,11 @@ public class ConfigPersonRelationForm extends TableBasicForm implements ISegment
 	@Override
 	public void addItem() {
 
-		String roleST = formController.getRoleObservable().get(roleIndex);
+		BasicTable roleST = formController.getRoleObservable().get(roleIndex);
 		String nameST = getNameTF().getText();
 		int id = formController.createTableItem(SegmentType.ConfigPersonRelation);
 		String idName = id + "_" + nameST;
-		CPRTable cpr = new CPRTable(idName, roleST, id);
+		CPRTable cpr = new CPRTable(idName, roleST.getName(), id);
 		tableTV.getItems().add(cpr);
 		tableTV.sort();
 		formDataController.saveDataFromCPR(nameST, idName,roleIndex, configIndex, id);

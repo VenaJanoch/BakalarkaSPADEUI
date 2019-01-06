@@ -82,10 +82,7 @@ public class SeverityForm extends TableClassBasicForm implements ISegmentTableFo
 			}
 			else{
 				ArrayList<BasicTable> list = new ArrayList<>(selection);
-				formDataController.deleteSeverity(list);
-				getTableTV().getItems().removeAll(selection);
-				getTableTV().getSelectionModel().clearSelection();
-
+				formDataController.deleteSeverity(list, getTableTV());
 			}
 		}
 
@@ -169,7 +166,7 @@ public class SeverityForm extends TableClassBasicForm implements ISegmentTableFo
 
 		getTableTV().getItems().add(table);
 		getTableTV().sort();
-		formDataController.saveDataFromSeverity(nameST, idName, classST, superST, id);
+		formDataController.saveDataFromSeverity(nameST, table);
 	}
 
 	@Override

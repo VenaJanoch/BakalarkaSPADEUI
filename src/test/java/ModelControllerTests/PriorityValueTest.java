@@ -17,6 +17,7 @@ import services.Alerts;
 import services.DeleteControl;
 import services.SegmentLists;
 import services.SegmentType;
+import tables.ClassTable;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
@@ -34,8 +35,8 @@ public class PriorityValueTest {
             FormController formController = warmUp.getFormController();
 
             formController.createTableItem(SegmentType.Priority);
-            formDataController.saveDataFromPriority("Jmeno1", "0_Jmeno1", WorkUnitPriorityClass.HIGH.name(), WorkUnitPrioritySuperClass.HIGH.name()
-                    ,0);
+            formDataController.saveDataFromPriority("Jmeno1", new ClassTable("0_Jmeno1", WorkUnitPriorityClass.HIGH.name(), WorkUnitPrioritySuperClass.HIGH.name()
+                    ,0));
             priority = project.getPriority().get(0);
 
         }

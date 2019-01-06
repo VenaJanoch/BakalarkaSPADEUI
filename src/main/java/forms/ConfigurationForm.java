@@ -36,6 +36,7 @@ import services.Constans;
 import services.Control;
 import services.DeleteControl;
 import model.IdentificatorCreater;
+import tables.BasicTable;
 
 /**
  * Třída představující formulář pro element Configuration, odděděná od třídy
@@ -65,7 +66,7 @@ public class ConfigurationForm extends DateBasicForm implements ISegmentForm {
     private RadioButton rbNo;
     private DatePicker createdDP;
     private CheckComboBox<String> branchCB;
-    private ComboBox<String> authorRoleCB;
+    private ComboBox<BasicTable> authorRoleCB;
     private CheckComboBox<String> cprCB;
 
     private int authorIndex;
@@ -77,14 +78,14 @@ public class ConfigurationForm extends DateBasicForm implements ISegmentForm {
 
     private ObservableList<String> cprList;
     private ObservableList<String> branchList;
-    private ObservableList<String> roleList;
+    private ObservableList<BasicTable> roleList;
     /**
      * Konstruktor třídy Zinicializuje globální proměnné tříd Nastaví reakci na
      * uzavření okna
      */
     public ConfigurationForm(FormController formController, FormDataController formDataController, CanvasController canvasController,
-                             DragAndDropItemPanel dgItemPanel, String name,ObservableList<String> cprList, ObservableList<String> branchList,
-                             ObservableList<String> roleList, int indexForm) {
+                             DragAndDropItemPanel dgItemPanel, String name, ObservableList<String> cprList, ObservableList<String> branchList,
+                             ObservableList<BasicTable> roleList, int indexForm) {
 
         super(formController, formDataController, canvasController, dgItemPanel, name);
         this.cprList = cprList;
@@ -148,7 +149,7 @@ public class ConfigurationForm extends DateBasicForm implements ISegmentForm {
         rbYes.setSelected(true);
 
         authorRoleLB = new Label("Author-role: ");
-        authorRoleCB = new ComboBox<String>(roleList);
+        authorRoleCB = new ComboBox<BasicTable>(roleList);
         authorRoleCB.setVisibleRowCount(5);
         authorRoleCB.getSelectionModel().selectedIndexProperty().addListener(roleListenerAut);
 
@@ -305,11 +306,11 @@ public class ConfigurationForm extends DateBasicForm implements ISegmentForm {
         this.createdDP = createdDP;
     }
 
-    public ComboBox<String> getAuthorRoleCB() {
+    public ComboBox<BasicTable> getAuthorRoleCB() {
         return authorRoleCB;
     }
 
-    public void setAuthorRoleCB(ComboBox<String> authorRoleCB) {
+    public void setAuthorRoleCB(ComboBox<BasicTable> authorRoleCB) {
         this.authorRoleCB = authorRoleCB;
     }
 

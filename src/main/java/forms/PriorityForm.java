@@ -85,10 +85,7 @@ public class PriorityForm extends TableClassBasicForm implements ISegmentTableFo
 			}
 			else{
 				ArrayList<BasicTable> list = new ArrayList<>(selection);
-				formDataController.deletePriority(list);
-				getTableTV().getItems().removeAll(selection);
-				getTableTV().getSelectionModel().clearSelection();
-
+				formDataController.deletePriority(list, getTableTV());
 			}
 		}
 
@@ -175,7 +172,7 @@ public class PriorityForm extends TableClassBasicForm implements ISegmentTableFo
 
 		getTableTV().getItems().add(table);
 		getTableTV().sort();
-		formDataController.saveDataFromPriority(nameST, idName, classST, superST, id);
+		formDataController.saveDataFromPriority(nameST, table);
 	}
 
 	@Override

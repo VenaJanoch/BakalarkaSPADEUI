@@ -112,10 +112,7 @@ public class CriterionForm extends TableBasicForm implements ISegmentTableForm {
 			}
 			else{
 				ArrayList<BasicTable> list = new ArrayList<>(selection);
-				formDataController.deleteCriterion(list);
-				tableTV.getItems().removeAll(selection);
-				tableTV.getSelectionModel().clearSelection();
-
+				formDataController.deleteCriterion(list, getTableTV());
 			}
 		}
 	}
@@ -157,7 +154,7 @@ public class CriterionForm extends TableBasicForm implements ISegmentTableForm {
 		CriterionTable criterion = new CriterionTable(idName, descriptionST, id);
 		tableTV.getItems().add(criterion);
 		tableTV.sort();
-		formDataController.saveDataFromCriterionForm(nameST, idName, descriptionST, id);
+		formDataController.saveDataFromCriterionForm(nameST, criterion);
 	}
 
 	public TableView<CriterionTable> getTableTV() {

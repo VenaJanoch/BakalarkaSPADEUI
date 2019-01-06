@@ -393,7 +393,7 @@ public class DataManipulator {
         }
     }
 
-    public void addDataToCriterion(String nameForManipulator, String descForManipulator, int index) {
+    public void addDataToCriterion(String nameForManipulator, String descForManipulator) {
 
         Criterion criterion = objF.createCriterion();
         criterion.setDescription(descForManipulator);
@@ -420,9 +420,9 @@ public class DataManipulator {
     public void removeMilestone(ArrayList<Integer> indexList) {
         for(Integer i : indexList){
             project.getMilestones().remove(i);
+
         }
     }
-
     public void addDataToPriority(String nameForManipulator, String classST, String superST, int index) {
 
         Priority priority = objF.createPriority();

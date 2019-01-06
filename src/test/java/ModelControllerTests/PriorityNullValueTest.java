@@ -14,6 +14,7 @@ import services.Alerts;
 import services.DeleteControl;
 import services.SegmentLists;
 import services.SegmentType;
+import tables.ClassTable;
 
 import static org.junit.Assert.*;
 
@@ -30,8 +31,8 @@ public class PriorityNullValueTest {
             FormController formController = warmUp.getFormController();
 
             formController.createTableItem(SegmentType.Priority);
-            formDataController.saveDataFromPriority("", "", WorkUnitPriorityClass.UNASSIGNED.name(), WorkUnitPrioritySuperClass.UNASSIGNED.name()
-                    ,0);
+            formDataController.saveDataFromPriority("", new ClassTable("", WorkUnitPriorityClass.UNASSIGNED.name(), WorkUnitPrioritySuperClass.UNASSIGNED.name()
+                    ,0));
             priority = project.getPriority().get(0);
         }
 

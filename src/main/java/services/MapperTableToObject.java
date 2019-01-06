@@ -1,82 +1,140 @@
 package services;
 
-import javafx.scene.control.Tab;
+import javafx.collections.ObservableList;
+import tables.BasicTable;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class MapperTableToObject {
+
+    private SegmentLists lists;
+
     private Map<Integer, ArrayList<TableToObjectInstanc>> milestoneToCriterionMapper;
-    private Map<Integer, ArrayList<TableToObjectInstanc>> roleTypeToRoleMapper;
+    private Map<Integer, ArrayList<TableToObjectInstanc>> roleToRoleTypeMapper;
     private Map<Integer, ArrayList<TableToObjectInstanc>> priorityToWUMapper;
     private Map<Integer, ArrayList<TableToObjectInstanc>> severityToWUMapper;
 
 
-    public MapperTableToObject(){
+    public MapperTableToObject(SegmentLists lists) {
+        this.lists = lists;
         this.milestoneToCriterionMapper = new HashMap<>();
-        this.roleTypeToRoleMapper = new HashMap<>();
+        this.roleToRoleTypeMapper = new HashMap<>();
         this.priorityToWUMapper = new HashMap<>();
         this.severityToWUMapper = new HashMap<>();
     }
 
-    public void mapMilestoneToCriterion(List<Integer> criterionIndex, TableToObjectInstanc instanc){
-        for(int index : criterionIndex){
-            if(getMilestoneToCriterionMapper().containsKey(index)){
-                getMilestoneToCriterionMapper().get(index).add(instanc);
-            }else{
+    public void mapTableToObject(SegmentType segmentType, ArrayList<Integer> indexList, TableToObjectInstanc instanc) {
+
+        switch (segmentType) {
+            case Milestone:
+                addInstanceToMap(indexList, lists.getCriterionObservable(), instanc, milestoneToCriterionMapper);
+                break;
+            default:
+
+        }
+    }
+
+    public void mapTableToObject(SegmentType segmentType, int index, TableToObjectInstanc instanc) {
+
+        switch (segmentType) {
+            case Branch:
+             //   addInstanceToMap(indexList, lists.getCriterionObservable(), instanc, );
+                break;
+            case Priority:
+                addInstanceToMap(index, lists.getPriorityTypeObservable(), instanc, priorityToWUMapper);
+                break;
+            case Severity:
+                addInstanceToMap(index, lists.getSeverityTypeObservable(), instanc, severityToWUMapper);
+                break;
+            case Role:
+                addInstanceToMap(index, lists.getRoleTypeObservable(), instanc, roleToRoleTypeMapper);
+                break;
+            case ConfigPersonRelation:
+                break;
+            case Relation:
+                break;
+            case Resolution:
+                break;
+            case Status:
+                break;
+            case Type:
+                break;
+            case Configuration:
+                break;
+            default:
+
+        }
+    }
+
+    private void addInstanceToMap(ArrayList<Integer> criterionIndex, ObservableList<BasicTable> list, TableToObjectInstanc instanc,
+                                 Map<Integer, ArrayList<TableToObjectInstanc>> map ) {
+        for (int index : criterionIndex) {
+            addInstanceToMap(index, list, instanc, map);
+        }
+    }
+
+    private void addInstanceToMap(int index, ObservableList<BasicTable> list, TableToObjectInstanc instanc,
+                                 Map<Integer, ArrayList<TableToObjectInstanc>> map ){
+        int key = list.get(index).getId();
+        if (key != -1) {
+            if (map.containsKey(key)) {
+                map.get(key).add(instanc);
+            } else {
                 ArrayList<TableToObjectInstanc> listName = new ArrayList<>();
                 listName.add(instanc);
-                getMilestoneToCriterionMapper().put(index, listName);
+                map.put(key, listName);
             }
         }
     }
 
-    public void mapPriorityToWorkUnit(int priorityIndex, TableToObjectInstanc instanc) {
 
-            if(priorityToWUMapper.containsKey(priorityIndex)){
-                priorityToWUMapper.get(priorityIndex).add(instanc);
-               }else{
-                ArrayList<TableToObjectInstanc> listName = new ArrayList<>();
-                listName.add(instanc);
-                priorityToWUMapper.put(priorityIndex, listName);
-               }
+    public void upDateMap(Map<Integer, ArrayList<TableToObjectInstanc>> map, ArrayList<Integer> dependencCriterion, ArrayList<Integer> ids) {
+        for (int i : map.keySet()) {
+            ArrayList<TableToObjectInstanc> objectList = map.get(i);
+            ArrayList<TableToObjectInstanc> objectListTmp = new ArrayList<>();
+            if (objectList != null) {
+                objectListTmp.addAll(objectList);
+                for (int j = objectListTmp.size() - 1; j >= 0; j--) {
+                    for (int k : ids) {
+                        if (objectListTmp.get(j).getId() == k) {
+                            objectList.remove(j);
+                        }
+                    }
 
-    }
-
-    public void mapRoleTypeToRole(int roleTypeIndex, TableToObjectInstanc instanc){
-        if(getRoleTypeToRoleMapper().containsKey(roleTypeIndex)){
-            getRoleTypeToRoleMapper().get(roleTypeIndex).add(instanc);
-        }else{
-            ArrayList<TableToObjectInstanc> listName = new ArrayList<>();
-            listName.add(instanc);
-            getRoleTypeToRoleMapper().put(roleTypeIndex, listName);
+                }
+            }
         }
-
-    }
-
-    public void mapSeverityToWorkUnit(int roleType, TableToObjectInstanc instanc) {
-
-        if(severityToWUMapper.containsKey(roleType)){
-            severityToWUMapper.get(roleType).add(instanc);
-            }else{
-            ArrayList<TableToObjectInstanc> listName = new ArrayList<>();
-            listName.add(instanc);
-            severityToWUMapper.put(roleType, listName);
+        for (int i : dependencCriterion) {
+            milestoneToCriterionMapper.remove(i);
         }
+    }
+
+
+    public void mapTableToWU(int assigneIndex, int authorIndex, int priorityIndex, int severityIndex, int typeIndex, int resolutionIndex,
+                             int statusIndex, int indexForm, String WUName) {
+        mapTableToObject(SegmentType.Priority, priorityIndex, new TableToObjectInstanc(WUName, indexForm, SegmentType.WorkUnit) );
+        mapTableToObject(SegmentType.Severity, severityIndex, new TableToObjectInstanc(WUName, indexForm, SegmentType.WorkUnit) );
 
     }
 
-    /** Getters and Setters **/
+    /**
+     * Getters and Setters
+     **/
 
     public Map<Integer, ArrayList<TableToObjectInstanc>> getMilestoneToCriterionMapper() {
         return milestoneToCriterionMapper;
     }
 
-    public Map<Integer, ArrayList<TableToObjectInstanc>> getRoleTypeToRoleMapper() {
-        return roleTypeToRoleMapper;
+    public Map<Integer, ArrayList<TableToObjectInstanc>> getRoleToRoleTypeMapper() {
+        return roleToRoleTypeMapper;
     }
 
+    public Map<Integer, ArrayList<TableToObjectInstanc>> getPriorityToWUMapper() {
+        return priorityToWUMapper;
+    }
+
+    public Map<Integer, ArrayList<TableToObjectInstanc>> getSeverityToWUMapper() {
+        return severityToWUMapper;
+    }
 
 }

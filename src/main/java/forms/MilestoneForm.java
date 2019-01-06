@@ -45,12 +45,12 @@ public class MilestoneForm extends Table2BasicForm implements ISegmentTableForm 
 	private Label criteriaLB;
 	private Label formName;
 
-	private CheckComboBox<String> criteriaCB;
+	private CheckComboBox<BasicTable> criteriaCB;
 	private TableView<MilestoneTable> tableTV;
 
 	private CriterionForm criterionForm;
 
-	private ObservableList<String> criterionArray;
+	private ObservableList<BasicTable> criterionArray;
 	private ObservableList<Integer> criterionIndex;
 
 	/**
@@ -63,6 +63,8 @@ public class MilestoneForm extends Table2BasicForm implements ISegmentTableForm 
 		super(formController, formDataController, name);
 		createForm();
 		getSubmitBT().setOnAction(event -> setActionSubmitButton());
+		criterionIndex = FXCollections.observableArrayList();
+
 
 	}
 
@@ -145,11 +147,11 @@ public class MilestoneForm extends Table2BasicForm implements ISegmentTableForm 
 	public GridPane createControlPane() {
 
 		criteriaLB = new Label("Criteria: ");
-		criteriaCB = new CheckComboBox<String>(formController.getCriterionObservable());
+		criteriaCB = new CheckComboBox<BasicTable>(formController.getCriterionObservable());
 		criteriaCB.setMaxWidth(Constans.checkComboBox);
-		criteriaCB.getCheckModel().getCheckedItems().addListener(new ListChangeListener<String>() {
+		criteriaCB.getCheckModel().getCheckedItems().addListener(new ListChangeListener<BasicTable>() {
 
-			public void onChanged(ListChangeListener.Change<? extends String> c) {
+			public void onChanged(ListChangeListener.Change<? extends BasicTable> c) {
 				criterionIndex = criteriaCB.getCheckModel().getCheckedIndices();
 				criterionArray = criteriaCB.getCheckModel().getCheckedItems();
 			}
@@ -181,7 +183,7 @@ public class MilestoneForm extends Table2BasicForm implements ISegmentTableForm 
 		tableTV.getItems().add(milestone);
 		tableTV.sort();
 
-		formDataController.saveDataFromMilestoneForm(nameST, idName, criterionIndex, id );
+		formDataController.saveDataFromMilestoneForm(nameST, new ArrayList<>(criterionIndex), milestone);
 		criteriaCB.getCheckModel().clearChecks();
 
 	}

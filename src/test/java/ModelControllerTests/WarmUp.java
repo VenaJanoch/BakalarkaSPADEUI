@@ -17,11 +17,11 @@ public class WarmUp {
     private FormController formController;
 
     public WarmUp(){
-        MapperTableToObject mapperTableToObject = new MapperTableToObject();
+        this.lists =  new SegmentLists();
+        MapperTableToObject mapperTableToObject = new MapperTableToObject(lists);
         IdentificatorCreater idCreator = new IdentificatorCreater();
         ProcessGenerator processGenerator = new ProcessGenerator();
         data =  new DataManipulator(processGenerator,idCreator);
-        this.lists =  new SegmentLists();
         FileManipulator file = new FileManipulator(processGenerator,data);
         Alerts alerts = new Alerts(file);
         ApplicationController ap = new ApplicationController(file, data, alerts, idCreator, lists);

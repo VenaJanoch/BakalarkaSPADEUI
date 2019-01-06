@@ -17,6 +17,7 @@ import services.Alerts;
 import services.DeleteControl;
 import services.SegmentLists;
 import services.SegmentType;
+import tables.ClassTable;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
@@ -35,8 +36,8 @@ public class SeverityNullValueTest {
 
 
             formController.createTableItem(SegmentType.Severity);
-            formDataController.saveDataFromSeverity("", "", WorkUnitSeverityClass.UNASSIGNED.name(), WorkUnitSeveritySuperClass.UNASSIGNED.name()
-                    ,0);
+            formDataController.saveDataFromSeverity("", new ClassTable("", WorkUnitSeverityClass.UNASSIGNED.name(), WorkUnitSeveritySuperClass.UNASSIGNED.name()
+                    ,0));
             severity = project.getSeverity().get(0);
         }
 

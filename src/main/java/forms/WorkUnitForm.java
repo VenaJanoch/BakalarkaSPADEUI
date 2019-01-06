@@ -32,6 +32,7 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.stage.WindowEvent;
 import services.*;
+import tables.BasicTable;
 
 /**
  * Třída představující formulář pro element Work Unit, odděděná od třídy
@@ -57,14 +58,14 @@ public class WorkUnitForm extends DescriptionBasicForm implements ISegmentForm {
 
 	private TextField estimatedTimeTF;
 	private RadioButton existRB;
-	private ComboBox<String> priorityCB;
-	private ComboBox<String> severityCB;
+	private ComboBox<BasicTable> priorityCB;
+	private ComboBox<BasicTable> severityCB;
 	private ComboBox<String> resolutionCB;
 	private ComboBox<String> statusCB;
 	private TextField categoryTF;
 	private ComboBox<String> typeCB;
-	private ComboBox<String> asigneeRoleCB;
-	private ComboBox<String> authorRoleCB;
+	private ComboBox<BasicTable> asigneeRoleCB;
+	private ComboBox<BasicTable> authorRoleCB;
 
 	private int priorityIndex;
 	private int severityIndex;
@@ -124,13 +125,13 @@ public class WorkUnitForm extends DescriptionBasicForm implements ISegmentForm {
 		estimatedTimeTF = new TextField();
 
 		priorityLB = new Label("Priority: ");
-		priorityCB = new ComboBox<String>();
+		priorityCB = new ComboBox<BasicTable>();
 
 		priorityCB.getSelectionModel().selectedIndexProperty().addListener(priorityListener);
 		priorityCB.setVisibleRowCount(5);
 
 		severityLB = new Label("Severity: ");
-		severityCB = new ComboBox<String>();
+		severityCB = new ComboBox<BasicTable>();
 		severityCB.getSelectionModel().selectedIndexProperty().addListener(severityListener);
 		severityCB.setVisibleRowCount(5);
 
@@ -143,12 +144,12 @@ public class WorkUnitForm extends DescriptionBasicForm implements ISegmentForm {
 		typeCB.setVisibleRowCount(5);
 
 		asigneeRoleLB = new Label("Asignee-role: ");
-		asigneeRoleCB = new ComboBox<String>();
+		asigneeRoleCB = new ComboBox<>();
 		asigneeRoleCB.setVisibleRowCount(5);
 		asigneeRoleCB.getSelectionModel().selectedIndexProperty().addListener(roleListenerAsig);
 
 		authorRoleLB = new Label("Author-role: ");
-		authorRoleCB = new ComboBox<String>();
+		authorRoleCB = new ComboBox<>();
 		authorRoleCB.setVisibleRowCount(5);
 		authorRoleCB.getSelectionModel().selectedIndexProperty().addListener(roleListenerAut);
 
@@ -327,19 +328,19 @@ public class WorkUnitForm extends DescriptionBasicForm implements ISegmentForm {
 		this.estimatedTimeTF = estimatedTimeTF;
 	}
 
-	public ComboBox<String> getPriorityCB() {
+	public ComboBox<BasicTable> getPriorityCB() {
 		return priorityCB;
 	}
 
-	public void setPriorityCB(ComboBox<String> priorityCB) {
+	public void setPriorityCB(ComboBox<BasicTable> priorityCB) {
 		this.priorityCB = priorityCB;
 	}
 
-	public ComboBox<String> getSeverityCB() {
+	public ComboBox<BasicTable> getSeverityCB() {
 		return severityCB;
 	}
 
-	public void setSeverityCB(ComboBox<String> severityCB) {
+	public void setSeverityCB(ComboBox<BasicTable> severityCB) {
 		this.severityCB = severityCB;
 	}
 
@@ -359,19 +360,19 @@ public class WorkUnitForm extends DescriptionBasicForm implements ISegmentForm {
 		this.typeCB = typeCB;
 	}
 
-	public ComboBox<String> getAsigneeRoleCB() {
+	public ComboBox<BasicTable> getAsigneeRoleCB() {
 		return asigneeRoleCB;
 	}
 
-	public void setAsigneeRoleCB(ComboBox<String> asigneeRoleCB) {
+	public void setAsigneeRoleCB(ComboBox<BasicTable> asigneeRoleCB) {
 		this.asigneeRoleCB = asigneeRoleCB;
 	}
 
-	public ComboBox<String> getAuthorRoleCB() {
+	public ComboBox<BasicTable> getAuthorRoleCB() {
 		return authorRoleCB;
 	}
 
-	public void setAuthorRoleCB(ComboBox<String> authorRoleCB) {
+	public void setAuthorRoleCB(ComboBox<BasicTable> authorRoleCB) {
 		this.authorRoleCB = authorRoleCB;
 	}
 

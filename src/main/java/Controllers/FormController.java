@@ -12,10 +12,8 @@ import model.IdentificatorCreater;
 import services.*;
 import tables.*;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class FormController {
@@ -226,7 +224,7 @@ public class FormController {
         workUnitForm.getPriorityCB().setItems(lists.getPriorityTypeObservable());
         workUnitForm.getSeverityCB().setItems(lists.getSeverityTypeObservable());
         workUnitForm.getStatusCB().setItems(lists.getStatusTypeObservable());
-        workUnitForm.getTypeCB().setItems(lists.getRoleTypeObservable());
+        workUnitForm.getTypeCB().setItems(lists.getTypeObservable());
         workUnitForm.getResolutionCB().setItems(lists.getResolutionTypeObservable());
 
         return  index;
@@ -354,15 +352,15 @@ public class FormController {
         dataManipulator.createWorkUnitRelation(startIndex, endIndex);
     }
 
-    public ObservableList<String> getCriterionObservable() {
+    public ObservableList<BasicTable> getCriterionObservable() {
         return lists.getCriterionObservable();
     }
 
-    public ObservableList<String> getRoleObservable() {
+    public ObservableList<BasicTable> getRoleObservable() {
         return lists.getRoleObservable();
     }
 
-    public ObservableList<String> getRoleTypeObservable() {
+    public ObservableList<BasicTable> getRoleTypeObservable() {
        return lists.getRoleTypeObservable();
     }
 
@@ -387,18 +385,25 @@ public class FormController {
 
     }
 
+    public void deleteWorkUnit(ArrayList<Integer> indicesForm) {
+
+        for(int i : indicesForm){
+            deleteWorkUnit(identificatorCreater.getWorkUnitIndex(i));
+        }
+    }
+
     public void deleteWorkUnit(int indexForm) {
 
         if (!forms.get(indexForm).isSave()) {
             forms.remove(indexForm);
             forms.add(indexForm, null);
         }
-        dataManipulator.removeWorkUnit(indexForm);
+        dataManipulator.removeWorkUnit(identificatorCreater.getWorkUnitIndexMaper().get(indexForm));
     }
 
     public void deleteConfiguration(ArrayList<BasicTable> list) {
 
-        ArrayList<Integer> indexList = deleteControl.findIndexesForDelete(list);
+        ArrayList<Integer> indexList = deleteControl.findIndicesForDelete(list);
         lists.removeItemFromObservableList(SegmentType.Configuration, indexList);
 
         for(int i : indexList){

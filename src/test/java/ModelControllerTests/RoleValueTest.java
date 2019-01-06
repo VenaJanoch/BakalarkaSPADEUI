@@ -15,6 +15,7 @@ import services.Alerts;
 import services.DeleteControl;
 import services.SegmentLists;
 import services.SegmentType;
+import tables.RoleTable;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
@@ -34,7 +35,7 @@ public class RoleValueTest {
 
 
             formController.createTableItem(SegmentType.Role);
-            formDataController.saveDataFromRoleForm("Jmeno", "0_Jmeno", "desc", 3,0);
+            formDataController.saveDataFromRoleForm("Jmeno", 3, new RoleTable("0_Jmeno", "desc","",0));
             role = project.getRoles().get(0);
         }
 

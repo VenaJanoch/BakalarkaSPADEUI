@@ -2,8 +2,8 @@ package services;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
-import SPADEPAC.*;
 import javafx.collections.ObservableList;
 import tables.*;
 
@@ -27,6 +27,40 @@ public class DeleteControl {
         this.mapperTableToObject = mapperTableToObject;
     }
 
+    public ArrayList<Integer> findIndicesForDelete(SegmentType segmentType, ArrayList<Integer> indicesList) {
+
+        switch (segmentType) {
+            case Branch:
+                break;
+            case Priority:
+                return findTableToObjectIndicesForDelete(indicesList, mapperTableToObject.getPriorityToWUMapper());
+            case Severity:
+                return findTableToObjectIndicesForDelete(indicesList, mapperTableToObject.getSeverityToWUMapper());
+            case Milestone:
+                return findTableToObjectIndicesForDelete(indicesList, mapperTableToObject.getMilestoneToCriterionMapper());
+            case Criterion:
+                break;
+            case Role:
+                return findTableToObjectIndicesForDelete(indicesList, mapperTableToObject.getRoleToRoleTypeMapper());
+            case RoleType:
+                break;
+            case ConfigPersonRelation:
+                break;
+            case Relation:
+                break;
+            case Resolution:
+                break;
+            case Status:
+                break;
+            case Type:
+                break;
+            case Configuration:
+                break;
+            default:
+
+        }
+        return null;
+    }
 
     /**
      * Vymazání informací o elementu Tag a smazání ze seznamů
@@ -44,40 +78,7 @@ public class DeleteControl {
         return indexForDelete;
     }
 
-    /**
-     * Vymazání informací o výčtovém typu Severity a smazání ze seznamů
-     *
-     * @param tables
-     */
-    /**
-     * Vymazání informací o výčtovém typu Relation a smazání ze seznamů
-     *
-     * @param tables
-     */
-    public ArrayList deleteRelation(ObservableList<ClassTable> tables) {
-        ArrayList indexForDelete = new ArrayList();
-
-        for (ClassTable table : tables) {
-
-            int index = lists.getRelationTypeObservable().indexOf(table.getName());
-            indexForDelete.add(index);
-        }
-        return indexForDelete;
-
-    }
-
-    /**
-     * Vymazání informací o výčtovém typu Status a smazání ze seznamů
-     *
-     * @param tables
-     */
-
-    /**
-     * Vymazání informací o elementu Criterion a smazání ze seznamů
-     *
-     * @param tables
-     */
-    public ArrayList findIndexesForDelete(ArrayList<BasicTable> tables) {
+    public ArrayList<Integer> findIndicesForDelete(ArrayList<BasicTable> tables) {
         ArrayList indexForDelete = new ArrayList();
 
         for (BasicTable table : tables) {
@@ -86,34 +87,18 @@ public class DeleteControl {
         return indexForDelete;
     }
 
-    public ArrayList findMilestonesIndexesForDelete(ArrayList<Integer> criterionIndexes) {
-        ArrayList<Integer> milestonesToDelete = new ArrayList<>();
-        for (Integer i : criterionIndexes) {
-            List<TableToObjectInstanc> milestones = mapperTableToObject.getMilestoneToCriterionMapper().get(i);
-            if (milestones != null) {
-
-                for (TableToObjectInstanc j : milestones) {
-                    if (!milestonesToDelete.contains(j.getId())) {
-                        milestonesToDelete.add(j.getId());
+    private ArrayList<Integer> findTableToObjectIndicesForDelete(ArrayList<Integer> indices, Map<Integer, ArrayList<TableToObjectInstanc>> map) {
+        ArrayList<Integer> listToDelete = new ArrayList<>();
+        for (Integer i : indices) {
+            List<TableToObjectInstanc> tabToObjList = map.get(i);
+            if (tabToObjList != null) {
+                for (TableToObjectInstanc j : tabToObjList) {
+                    if (!listToDelete.contains(j.getId())) {
+                        listToDelete.add(j.getId());
                     }
                 }
             }
         }
-        return milestonesToDelete;
-    }
-
-    public ArrayList findRoleIndexesForDelete(ArrayList<Integer> roleTypeIndexes) {
-        ArrayList<Integer> rolesToDelete = new ArrayList<>();
-        for (Integer i : roleTypeIndexes) {
-            List<TableToObjectInstanc> roles = mapperTableToObject.getRoleTypeToRoleMapper().get(i);
-            if (roles != null) {
-                for (TableToObjectInstanc j : roles) {
-                    if (!rolesToDelete.contains(j.getId())) {
-                        rolesToDelete.add(j.getId());
-                    }
-                }
-            }
-        }
-        return rolesToDelete;
+        return listToDelete;
     }
 }

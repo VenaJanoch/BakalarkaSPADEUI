@@ -80,11 +80,8 @@ public class RoleTypeForm extends TableClassBasicForm implements ISegmentTableFo
 			}
 			else{
 				ArrayList<BasicTable> list = new ArrayList<>(selection);
-				formDataController.deleteRoleType(list);
-				getTableTV().getItems().removeAll(selection);
-				getTableTV().getSelectionModel().clearSelection();
-
-			}
+				formDataController.deleteRoleType(list, getTableTV());
+				}
 		}
 
 	}
@@ -163,7 +160,7 @@ public class RoleTypeForm extends TableClassBasicForm implements ISegmentTableFo
 
 		getTableTV().getItems().add(type);
 		getTableTV().sort();
-		formDataController.saveDataFromRoleTypeForm(nameST, idName, classST, superST, id);
+		formDataController.saveDataFromRoleTypeForm(nameST, type);
 	}
 
 	@Override

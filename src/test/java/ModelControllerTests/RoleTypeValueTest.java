@@ -16,6 +16,7 @@ import services.Alerts;
 import services.DeleteControl;
 import services.SegmentLists;
 import services.SegmentType;
+import tables.ClassTable;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
@@ -34,7 +35,7 @@ public class RoleTypeValueTest {
 
 
             formController.createTableItem(SegmentType.RoleType);
-            formDataController.saveDataFromRoleTypeForm("Jmeno", "0_Jmeno", RoleClass.ANALYST.name(), RoleSuperClass.TEAM_MEMBER.name(),0);
+            formDataController.saveDataFromRoleTypeForm("Jmeno",new ClassTable("0_Jmeno", RoleClass.ANALYST.name(), RoleSuperClass.TEAM_MEMBER.name(),0));
             roleType = project.getRoleType().get(0);
         }
 

@@ -15,6 +15,7 @@ import services.Alerts;
 import services.DeleteControl;
 import services.SegmentLists;
 import services.SegmentType;
+import tables.CriterionTable;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
@@ -32,7 +33,7 @@ public class CriterionValuesTest {
             FormController formController = warmUp.getFormController();
 
             formController.createTableItem(SegmentType.Criterion);
-            formDataController.saveDataFromCriterionForm("Jmeno1", "0_Jmeno1" ,"Description1", 0);
+            formDataController.saveDataFromCriterionForm("Jmeno1", new CriterionTable("0_Jmeno1" ,"Description1", 0));
             criterion = project.getCriterions().get(0);
         }
 

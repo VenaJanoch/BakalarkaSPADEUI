@@ -30,6 +30,7 @@ import graphics.WorkUnitLink;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Point2D;
+import tables.*;
 
 public class SegmentLists {
     /**
@@ -39,21 +40,21 @@ public class SegmentLists {
 
     private ObservableList<String> branchObservable;
 
-    private ObservableList<String> roleObservable;
+    private ObservableList<BasicTable> roleObservable;
 
-    private ObservableList<String> criterionObservable;
+    private ObservableList<BasicTable> criterionObservable;
 
-    private ObservableList<String> milestoneObservable;
+    private ObservableList<BasicTable> milestoneObservable;
 
     private ObservableList<String> artifactObservable;
 
     private ObservableList<String> CPRObservable;
 
-    private ObservableList<String> roleTypeObservable;
+    private ObservableList<BasicTable> roleTypeObservable;
 
-    private ObservableList<String> priorityTypeObservable;
+    private ObservableList<BasicTable> priorityTypeObservable;
 
-    private ObservableList<String> severityTypeObservable;
+    private ObservableList<BasicTable> severityTypeObservable;
 
     private ObservableList<String> relationTypeObservable;
 
@@ -85,7 +86,7 @@ public class SegmentLists {
         configObservable.add("");
 
         roleObservable = FXCollections.observableArrayList();
-        roleObservable.add("");
+        roleObservable.add(new RoleTable(",","","",-1));
 
         branchObservable = FXCollections.observableArrayList();
         branchObservable.add("");
@@ -94,22 +95,22 @@ public class SegmentLists {
         artifactObservable = FXCollections.observableArrayList();
 
         criterionObservable = FXCollections.observableArrayList();
-        criterionObservable.add("");
+        criterionObservable.add(new CriterionTable("","",-1));
 
         milestoneObservable = FXCollections.observableArrayList();
-        milestoneObservable.add("");
+        milestoneObservable.add(new MilestoneTable("","",-1));
 
         CPRObservable = FXCollections.observableArrayList();
         CPRObservable.add("");
 
         roleTypeObservable = FXCollections.observableArrayList();
-        roleTypeObservable.add("");
+        roleTypeObservable.add(new ClassTable("", "", "",-1));
 
         priorityTypeObservable = FXCollections.observableArrayList();
-        priorityTypeObservable.add("");
+        priorityTypeObservable.add(new ClassTable("", "", "",-1));
 
         severityTypeObservable = FXCollections.observableArrayList();
-        severityTypeObservable.add("");
+        severityTypeObservable.add(new ClassTable("", "", "",-1));
 
         relationTypeObservable = FXCollections.observableArrayList();
         relationTypeObservable.add("");
@@ -179,29 +180,26 @@ public class SegmentLists {
 
     }
 
-    public void removeItemFromObservableList(SegmentType segmentType, ArrayList indexList) {
+    public ArrayList<Integer> removeItemFromObservableList(SegmentType segmentType, ArrayList indexList) {
 
         switch (segmentType) {
             case Branch:
                 removeDataFromLis(branchObservable, indexList);
                 break;
             case Priority:
-                removeDataFromLis(priorityTypeObservable, indexList);
-                break;
+                return removeDataFromListTest(priorityTypeObservable, indexList);
             case Severity:
-                removeDataFromLis(severityTypeObservable, indexList);
-                break;
+                return removeDataFromListTest(severityTypeObservable, indexList);
             case Milestone:
-                removeDataFromLis(milestoneObservable, indexList);
-                break;
+                return removeDataFromListTest(milestoneObservable, indexList);
             case Criterion:
-                removeDataFromLis(criterionObservable, indexList);
+                removeDataFromListTest(criterionObservable, indexList);
                 break;
             case Role:
-                removeDataFromLis(roleObservable, indexList);
+                removeDataFromListTest(roleObservable, indexList);
                 break;
             case RoleType:
-                removeDataFromLis(roleTypeObservable, indexList);
+                removeDataFromListTest(roleTypeObservable, indexList);
                 break;
             case ConfigPersonRelation:
                 removeDataFromLis(CPRObservable, indexList);
@@ -224,26 +222,26 @@ public class SegmentLists {
             default:
 
         }
-
+        return null;
     }
 
-    public void addItemToObservableList(SegmentType segmentType, String segmentInfo) {
+    public void addItemToObservableList(SegmentType segmentType, String segmentInfo, BasicTable basicTable) {
 
         switch (segmentType) {
             case Branch:
                 branchObservable.add(segmentInfo);
             case Priority:
-                priorityTypeObservable.add(segmentInfo);
+                priorityTypeObservable.add(basicTable);
             case Severity:
-                severityTypeObservable.add(segmentInfo);
+                severityTypeObservable.add(basicTable);
             case Milestone:
-                milestoneObservable.add(segmentInfo);
+                milestoneObservable.add(basicTable);
             case Criterion:
-                criterionObservable.add(segmentInfo);
+                criterionObservable.add(basicTable);
             case Role:
-                roleObservable.add(segmentInfo);
+                roleObservable.add(basicTable);
             case RoleType:
-                roleTypeObservable.add(segmentInfo);
+                roleTypeObservable.add(basicTable);
             case ConfigPersonRelation:
                 CPRObservable.add(segmentInfo);
             case Relation:
@@ -265,12 +263,26 @@ public class SegmentLists {
 
     private void removeDataFromLis(ObservableList<String> observableList, ArrayList<Integer> indexList) {
 
-        for (int i = indexList.size(); i > 0; i--) {
+        for (int i = indexList.size() - 1; i >= 0; i--) {
             observableList.remove(indexList.get(i) + 1);
         }
 
     }
 
+    private ArrayList<Integer> removeDataFromListTest(ObservableList<BasicTable> observableList, ArrayList<Integer> indexList) {
+        ArrayList<Integer> tableIndeces = new ArrayList<>();
+
+        for (int i = indexList.size() - 1; i >= 0; i--) {
+            int itemId = indexList.get(i);
+            for (int j = 0; j < observableList.size(); j++){
+                if(observableList.get(j).getId() == itemId){
+                    observableList.remove(j);
+                    tableIndeces.add(j-1);
+                }
+            }
+        }
+        return tableIndeces;
+    }
 
     /**
      * Getrs and Setrs
@@ -281,11 +293,11 @@ public class SegmentLists {
         return configObservable;
     }
 
-    public ObservableList<String> getRoleObservable() {
+    public ObservableList<BasicTable> getRoleObservable() {
         return roleObservable;
     }
 
-    public void setRoleObservable(ObservableList<String> roleObservable) {
+    public void setRoleObservable(ObservableList<BasicTable> roleObservable) {
         this.roleObservable = roleObservable;
     }
 
@@ -294,11 +306,11 @@ public class SegmentLists {
     }
 
 
-    public ObservableList<String> getCriterionObservable() {
+    public ObservableList<BasicTable> getCriterionObservable() {
         return criterionObservable;
     }
 
-    public ObservableList<String> getMilestoneObservable() {
+    public ObservableList<BasicTable> getMilestoneObservable() {
         return milestoneObservable;
     }
 
@@ -310,15 +322,15 @@ public class SegmentLists {
         return CPRObservable;
     }
 
-    public ObservableList<String> getRoleTypeObservable() {
+    public ObservableList<BasicTable> getRoleTypeObservable() {
         return roleTypeObservable;
     }
 
-    public ObservableList<String> getPriorityTypeObservable() {
+    public ObservableList<BasicTable> getPriorityTypeObservable() {
         return priorityTypeObservable;
     }
 
-    public ObservableList<String> getSeverityTypeObservable() {
+    public ObservableList<BasicTable> getSeverityTypeObservable() {
         return severityTypeObservable;
     }
 

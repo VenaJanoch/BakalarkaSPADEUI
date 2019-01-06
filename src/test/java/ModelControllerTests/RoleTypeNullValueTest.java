@@ -16,6 +16,7 @@ import services.Alerts;
 import services.DeleteControl;
 import services.SegmentLists;
 import services.SegmentType;
+import tables.ClassTable;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
@@ -34,7 +35,7 @@ public class RoleTypeNullValueTest {
 
 
             formController.createTableItem(SegmentType.RoleType);
-            formDataController.saveDataFromRoleTypeForm("", "", RoleClass.UNASSIGNED.name(), RoleSuperClass.UNASSIGNED.name(),0);
+            formDataController.saveDataFromRoleTypeForm("", new ClassTable("", RoleClass.UNASSIGNED.name(), RoleSuperClass.UNASSIGNED.name(),0));
             roleType = project.getRoleType().get(0);
         }
 

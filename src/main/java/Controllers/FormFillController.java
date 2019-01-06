@@ -307,7 +307,7 @@ public class FormFillController {
             ClassTable table = new ClassTable(idName, lclass, superClass, id);
 
             form.getTableTV().getItems().add(table);
-            segmentLists.getSeverityTypeObservable().add(idName);
+            segmentLists.getSeverityTypeObservable().add(table);
         }
     }
 
@@ -322,7 +322,7 @@ public class FormFillController {
             ClassTable table = new ClassTable(idName, lclass, superClass, id);
 
             form.getTableTV().getItems().add(table);
-            segmentLists.getPriorityTypeObservable().add(idName);
+            segmentLists.getPriorityTypeObservable().add(table);
         }
     }
 
@@ -332,8 +332,8 @@ public class FormFillController {
             ConfigPersonRelation cpr = project.getCpr().get(i);
             int id = formController.createTableItem(SegmentType.ConfigPersonRelation);
             String idName = createTableItemIdName(id, cpr.getName());
-            String role = segmentLists.getRoleObservable().get(prepareIndexForForm(cpr.getPersonIndex()));
-            CPRTable cprTable = new CPRTable(idName, role, id);
+            BasicTable role = segmentLists.getRoleObservable().get(prepareIndexForForm(cpr.getPersonIndex()));
+            CPRTable cprTable = new CPRTable(idName, role.getName(), id);
 
             cprForm.getTableTV().getItems().add(cprTable);
             segmentLists.getCPRObservable().add(idName);
@@ -346,11 +346,11 @@ public class FormFillController {
             Role role = project.getRoles().get(i);
             int id = formController.createTableItem(SegmentType.Role);
             String idName = createTableItemIdName(id, role.getName());
-            String type = segmentLists.getRoleTypeObservable().get(prepareIndexForForm(role.getType()));
-            RoleTable roleTable = new RoleTable(idName, prepareStringForForm(role.getDescription()), type, id);
+            BasicTable type = segmentLists.getRoleTypeObservable().get(prepareIndexForForm(role.getType()));
+            RoleTable roleTable = new RoleTable(idName, prepareStringForForm(role.getDescription()), type.getName(), id);
 
             roleForm.getTableTV().getItems().add(roleTable);
-            segmentLists.getRoleObservable().add(idName);
+            segmentLists.getRoleObservable().add(roleTable);
         }
     }
 
@@ -363,7 +363,7 @@ public class FormFillController {
             ClassTable type = new ClassTable(idName, roleType.getRoleClass(), roleType.getRoleSuperClass(), id);
 
             roleTypeForm.getTableTV().getItems().add(type);
-            segmentLists.getRoleTypeObservable().add(idName);
+            segmentLists.getRoleTypeObservable().add(type);
         }
     }
 
@@ -376,7 +376,7 @@ public class FormFillController {
             String criterion = prepareIndexForTable(milestone.getCriteriaIndexs(), segmentLists.getCriterionObservable()).toString();
             MilestoneTable milestoneTable = new MilestoneTable(idName, criterion, id);
             milestoneForm.getTableTV().getItems().add(milestoneTable);
-            segmentLists.getMilestoneObservable().add(idName);
+            segmentLists.getMilestoneObservable().add(milestoneTable);
         }
     }
 
@@ -399,7 +399,7 @@ public class FormFillController {
             String idName = createTableItemIdName(id, criterion.getName());
             CriterionTable criterionTable = new CriterionTable(idName, prepareStringForForm(criterion.getDescription()), id);
             criterionForm.getTableTV().getItems().add(criterionTable);
-            segmentLists.getCriterionObservable().add(idName);
+            segmentLists.getCriterionObservable().add(criterionTable);
         }
 
     }

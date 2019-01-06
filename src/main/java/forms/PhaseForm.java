@@ -24,6 +24,7 @@ import services.Alerts;
 import services.CanvasType;
 import services.Control;
 import services.DeleteControl;
+import tables.BasicTable;
 
 /**
  * Třída představující formulář pro segment Phase, odděděná od třídy
@@ -40,7 +41,7 @@ public class PhaseForm extends DateDescBasicForm implements ISegmentForm {
 	private Label milestoneLB;
 
 	private ChoiceBox<String> configCB;
-	private ChoiceBox<String> milestoneCB;
+	private ChoiceBox<BasicTable> milestoneCB;
 	private int milestoneIndex;
 	private int configIndex;
 
@@ -162,11 +163,11 @@ public class PhaseForm extends DateDescBasicForm implements ISegmentForm {
 		this.configCB = configCB;
 	}
 
-	public ChoiceBox<String> getMilestoneCB() {
+	public ChoiceBox<BasicTable> getMilestoneCB() {
 		return milestoneCB;
 	}
 
-	public void setMilestoneCB(ChoiceBox<String> milestoneCB) {
+	public void setMilestoneCB(ChoiceBox<BasicTable> milestoneCB) {
 		this.milestoneCB = milestoneCB;
 	}
 

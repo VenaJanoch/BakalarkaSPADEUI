@@ -20,7 +20,11 @@ import services.Control;
 import services.DeleteControl;
 import model.IdentificatorCreater;
 import services.SegmentType;
+import tables.BasicTable;
 import tables.ClassTable;
+
+import java.util.ArrayList;
+
 /**
  * Třída představující tabulkový formulář pro výčtový typ Relation, odděděná od třídy
  * TableClassBasicForm a implementující ISegmentTableForm
@@ -69,18 +73,13 @@ public class RelationForm extends TableClassBasicForm implements ISegmentTableFo
 	public void deleteSelected(KeyEvent event) {
 		ObservableList<ClassTable> selection = FXCollections
 				.observableArrayList(getTableTV().getSelectionModel().getSelectedItems());
-
-		ObservableList<ClassTable> list = null;
-
 		if (event.getCode() == KeyCode.DELETE) {
 			if (selection.size() == 0) {
 				Alerts.showNoItemsDeleteAlert();
-			} else {
-				list = Alerts.showDeleteItemAlert(getTableTV(), selection);
-				if (list != null) {
-		formDataController.deleteRelation(list);
-				}
-
+			}
+			else{
+				ArrayList<BasicTable> list = new ArrayList<>(selection);
+				formDataController.deleteRelation(list, getTableTV());
 			}
 		}
 

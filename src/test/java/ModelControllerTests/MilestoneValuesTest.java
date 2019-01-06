@@ -16,6 +16,7 @@ import services.Alerts;
 import services.DeleteControl;
 import services.SegmentLists;
 import services.SegmentType;
+import tables.MilestoneTable;
 
 import java.util.ArrayList;
 
@@ -39,7 +40,7 @@ public class MilestoneValuesTest {
             list.add(1);
             list.add(3);
             list.add(4);
-            formDataController.saveDataFromMilestoneForm("Jmeno1", "0_Jmeno1" ,list, 0);
+            formDataController.saveDataFromMilestoneForm("Jmeno1", list, new MilestoneTable("0_Jmeno1", "", 0));
             milestone = project.getMilestones().get(0);
         }
 

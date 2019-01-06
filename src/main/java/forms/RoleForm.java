@@ -48,7 +48,7 @@ public class RoleForm extends Table2BasicForm implements ISegmentTableForm {
 	private Label descriptionLB;
 
 	private TextField descriptionTF;
-	private ChoiceBox<String> roleTypeCB;
+	private ChoiceBox<BasicTable> roleTypeCB;
 	private TableView<RoleTable> tableTV;
 	private int roleIndex;
 	private ClassSwitcher classSwitcher;
@@ -185,25 +185,25 @@ public class RoleForm extends Table2BasicForm implements ISegmentTableForm {
 	@Override
 	public void addItem() {
 		String nameST = getNameTF().getText();
-		String typeST = roleTypeCB.getValue();
+		BasicTable typeST = roleTypeCB.getValue();
 		String descritpST = descriptionTF.getText();
 		int id = formController.createTableItem(SegmentType.Role);
 		String idName = id + "_" + nameST;
 
-		RoleTable role = new RoleTable(idName, descritpST, typeST, id);
+		RoleTable role = new RoleTable(idName, descritpST, typeST.getName(), id);
 		tableTV.getItems().add(role);
 		tableTV.sort();
-		formDataController.saveDataFromRoleForm(nameST, idName, descritpST, roleIndex, id);
+		formDataController.saveDataFromRoleForm(nameST, roleIndex, role);
 
 	}
 
 	/*** Getrs and Setrs ***/
 
-	public ChoiceBox<String> getRoleTypeCB() {
+	public ChoiceBox<BasicTable> getRoleTypeCB() {
 		return roleTypeCB;
 	}
 
-	public void setRoleTypeCB(ChoiceBox<String> roleTypeCB) {
+	public void setRoleTypeCB(ChoiceBox<BasicTable> roleTypeCB) {
 		this.roleTypeCB = roleTypeCB;
 	}
 
