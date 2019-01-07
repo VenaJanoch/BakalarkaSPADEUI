@@ -81,10 +81,7 @@ public class StatusForm extends TableClassBasicForm implements ISegmentTableForm
 			}
 			else{
 				ArrayList<BasicTable> list = new ArrayList<>(selection);
-				formDataController.deleteStatus(list);
-				getTableTV().getItems().removeAll(selection);
-				getTableTV().getSelectionModel().clearSelection();
-
+				formDataController.deleteStatus(list, getTableTV());
 			}
 		}
 
@@ -169,7 +166,7 @@ public class StatusForm extends TableClassBasicForm implements ISegmentTableForm
 
 		getTableTV().getItems().add(table);
 		getTableTV().sort();
-	formDataController.saveDataFromStatusForm(nameST, idName, classST, superST, id);
+	formDataController.saveDataFromStatusForm(nameST, table);
 	}
 
 	@Override

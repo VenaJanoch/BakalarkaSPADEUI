@@ -81,10 +81,7 @@ public class TypeForm extends TableClassBasicForm implements ISegmentTableForm {
 			}
 			else{
 				ArrayList<BasicTable> list = new ArrayList<>(selection);
-				formDataController.deleteType(list);
-				getTableTV().getItems().removeAll(selection);
-				getTableTV().getSelectionModel().clearSelection();
-
+				formDataController.deleteType(list, getTableTV());
 			}
 		}
 
@@ -165,7 +162,7 @@ public class TypeForm extends TableClassBasicForm implements ISegmentTableForm {
 
 		getTableTV().getItems().add(table);
 		getTableTV().sort();
-		formDataController.saveDataFromTypeForm(nameST, idName, classST, superST, id);
+		formDataController.saveDataFromTypeForm(nameST, table);
 	}
 
 	@Override

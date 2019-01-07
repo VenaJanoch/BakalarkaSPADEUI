@@ -185,12 +185,16 @@ public class RoleForm extends Table2BasicForm implements ISegmentTableForm {
 	@Override
 	public void addItem() {
 		String nameST = getNameTF().getText();
-		BasicTable typeST = roleTypeCB.getValue();
+		BasicTable typeBT = roleTypeCB.getValue();
 		String descritpST = descriptionTF.getText();
 		int id = formController.createTableItem(SegmentType.Role);
 		String idName = id + "_" + nameST;
+		String typeST = "";
+		if(typeBT != null){
+			typeST = typeBT.getName();
+		}
 
-		RoleTable role = new RoleTable(idName, descritpST, typeST.getName(), id);
+		RoleTable role = new RoleTable(idName, descritpST, typeST, id);
 		tableTV.getItems().add(role);
 		tableTV.sort();
 		formDataController.saveDataFromRoleForm(nameST, roleIndex, role);

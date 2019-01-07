@@ -247,7 +247,7 @@ public class FormFillController {
             ClassTable table = new ClassTable(idName, lclass, superClass, id);
 
             form.getTableTV().getItems().add(table);
-            segmentLists.getTypeObservable().add(idName);
+            segmentLists.getTypeObservable().add(table);
         }
     }
 
@@ -262,7 +262,7 @@ public class FormFillController {
             ClassTable table = new ClassTable(idName, lclass, superClass, id);
 
             form.getTableTV().getItems().add(table);
-            segmentLists.getStatusTypeObservable().add(idName);
+            segmentLists.getStatusTypeObservable().add(table);
         }
     }
 
@@ -277,7 +277,7 @@ public class FormFillController {
             ClassTable table = new ClassTable(idName, lclass, superClass, id);
 
             form.getTableTV().getItems().add(table);
-            segmentLists.getResolutionTypeObservable().add(idName);
+            segmentLists.getResolutionTypeObservable().add(table);
         }
     }
 
@@ -292,7 +292,7 @@ public class FormFillController {
             ClassTable table = new ClassTable(idName, lclass, superClass, id);
 
             form.getTableTV().getItems().add(table);
-            segmentLists.getRelationTypeObservable().add(idName);
+            segmentLists.getRelationTypeObservable().add(table);
         }
     }
 

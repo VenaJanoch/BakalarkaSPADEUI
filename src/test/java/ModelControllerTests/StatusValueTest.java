@@ -17,6 +17,7 @@ import services.Alerts;
 import services.DeleteControl;
 import services.SegmentLists;
 import services.SegmentType;
+import tables.ClassTable;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
@@ -35,8 +36,8 @@ public class StatusValueTest {
 
 
             formController.createTableItem(SegmentType.Status);
-            formDataController.saveDataFromStatusForm("Jmeno1", "0_Jmeno1", WorkUnitStatusClass.UNASSIGNED.name(), WorkUnitStatusSuperClass.UNASSIGNED.name()
-                    ,0);
+            formDataController.saveDataFromStatusForm("Jmeno1", new ClassTable("0_Jmeno1", WorkUnitStatusClass.UNASSIGNED.name(), WorkUnitStatusSuperClass.UNASSIGNED.name()
+                    ,0));
             status = project.getStatus().get(0);
         }
 

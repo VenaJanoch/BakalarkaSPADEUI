@@ -531,5 +531,50 @@ public class FormController {
     public Map<Integer, CanvasItem> getCanvasItemList() {
         return canvasItemList;
     }
+
+    public void updateWUListItem(SegmentType type, ArrayList<Integer> wuList) {
+            switch (type) {
+                case Priority:
+                    for (int i : wuList){
+                        WorkUnitForm form = (WorkUnitForm) forms.get(i);
+                        form.getPriorityCB().getSelectionModel().select(0);
+                    }
+                    break;
+                case Severity:
+                    for (int i : wuList){
+                        WorkUnitForm form = (WorkUnitForm) forms.get(i);
+                        form.getSeverityCB().getSelectionModel().select(0);
+                    }
+                    break;
+                case Role:
+                    for (int i : wuList){
+                        WorkUnitForm form = (WorkUnitForm) forms.get(i);
+                        form.getAuthorRoleCB().getSelectionModel().select(0);
+                        form.getAsigneeRoleCB().getSelectionModel().select(0);
+                    }
+                    break;
+                case Resolution:
+                    for (int i : wuList){
+                        WorkUnitForm form = (WorkUnitForm) forms.get(i);
+                        form.getResolutionCB().getSelectionModel().select(0);
+                    }
+                    break;
+                case Status:
+                    for (int i : wuList){
+                        WorkUnitForm form = (WorkUnitForm) forms.get(i);
+                        form.getStatusCB().getSelectionModel().select(0);
+                    }
+                    break;
+                case Type:
+                    for (int i : wuList){
+                        WorkUnitForm form = (WorkUnitForm) forms.get(i);
+                        form.getTypeCB().getSelectionModel().select(0);
+                    }
+                    break;
+                default:
+
+            }
+
+        }
 }
 

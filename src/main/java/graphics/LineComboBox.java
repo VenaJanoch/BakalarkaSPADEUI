@@ -4,6 +4,7 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ComboBox;
+import tables.BasicTable;
 
 /**
  * Třída definující box pro výběr relace mezi dvěma Work Unit. Odděděná od třídy
@@ -12,12 +13,12 @@ import javafx.scene.control.ComboBox;
  * @author Václav Janoch
  *
  */
-public class LineComboBox extends ComboBox<String> {
+public class LineComboBox extends ComboBox<BasicTable> {
 
 	/** Globální proměnné třídy */
 	private int relationIndex;
 
-	public LineComboBox(ObservableList<String> relationTypeObservable) {
+	public LineComboBox(ObservableList<BasicTable> relationTypeObservable) {
 		super(relationTypeObservable);
 
 		this.getSelectionModel().selectedIndexProperty().addListener(relationListener);

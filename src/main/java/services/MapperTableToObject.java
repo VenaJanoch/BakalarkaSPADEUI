@@ -13,6 +13,10 @@ public class MapperTableToObject {
     private Map<Integer, ArrayList<TableToObjectInstanc>> roleToRoleTypeMapper;
     private Map<Integer, ArrayList<TableToObjectInstanc>> priorityToWUMapper;
     private Map<Integer, ArrayList<TableToObjectInstanc>> severityToWUMapper;
+    private Map<Integer, ArrayList<TableToObjectInstanc>> resolutionToWUMapper;
+    private Map<Integer, ArrayList<TableToObjectInstanc>> statusToWUMapper;
+    private Map<Integer, ArrayList<TableToObjectInstanc>> typeToWUMapper;
+    private Map<Integer, ArrayList<TableToObjectInstanc>> relationToWUMapper;
 
 
     public MapperTableToObject(SegmentLists lists) {
@@ -21,6 +25,10 @@ public class MapperTableToObject {
         this.roleToRoleTypeMapper = new HashMap<>();
         this.priorityToWUMapper = new HashMap<>();
         this.severityToWUMapper = new HashMap<>();
+        this.resolutionToWUMapper = new HashMap<>();
+        this.statusToWUMapper = new HashMap<>();
+        this.typeToWUMapper = new HashMap<>();
+        this.relationToWUMapper = new HashMap<>();
     }
 
     public void mapTableToObject(SegmentType segmentType, ArrayList<Integer> indexList, TableToObjectInstanc instanc) {
@@ -52,12 +60,16 @@ public class MapperTableToObject {
             case ConfigPersonRelation:
                 break;
             case Relation:
+                addInstanceToMap(index, lists.getRelationTypeObservable(), instanc, relationToWUMapper);
                 break;
             case Resolution:
+                addInstanceToMap(index, lists.getResolutionTypeObservable(), instanc, resolutionToWUMapper);
                 break;
             case Status:
+                addInstanceToMap(index, lists.getStatusTypeObservable(), instanc, statusToWUMapper);
                 break;
             case Type:
+                addInstanceToMap(index, lists.getTypeObservable(), instanc, typeToWUMapper);
                 break;
             case Configuration:
                 break;
@@ -88,7 +100,7 @@ public class MapperTableToObject {
     }
 
 
-    public void upDateMap(Map<Integer, ArrayList<TableToObjectInstanc>> map, ArrayList<Integer> dependencCriterion, ArrayList<Integer> ids) {
+    public void updateValueList(Map<Integer, ArrayList<TableToObjectInstanc>> map, ArrayList<Integer> dependencCriterion, ArrayList<Integer> ids) {
         for (int i : map.keySet()) {
             ArrayList<TableToObjectInstanc> objectList = map.get(i);
             ArrayList<TableToObjectInstanc> objectListTmp = new ArrayList<>();
@@ -104,8 +116,12 @@ public class MapperTableToObject {
                 }
             }
         }
+
+    }
+
+    public void deleteFromMap(Map<Integer, ArrayList<TableToObjectInstanc>> map, ArrayList<Integer> dependencCriterion){
         for (int i : dependencCriterion) {
-            milestoneToCriterionMapper.remove(i);
+            map.remove(i);
         }
     }
 
@@ -114,6 +130,12 @@ public class MapperTableToObject {
                              int statusIndex, int indexForm, String WUName) {
         mapTableToObject(SegmentType.Priority, priorityIndex, new TableToObjectInstanc(WUName, indexForm, SegmentType.WorkUnit) );
         mapTableToObject(SegmentType.Severity, severityIndex, new TableToObjectInstanc(WUName, indexForm, SegmentType.WorkUnit) );
+       // mapTableToObject(SegmentType.Role, assigneIndex, new TableToObjectInstanc(WUName, indexForm, SegmentType.WorkUnit) );
+        // TODO: Upravit mapovani role do ostatnich segmentu ne jenom do Unitu
+       // mapTableToObject(SegmentType.Role, authorIndex, new TableToObjectInstanc(WUName, indexForm, SegmentType.WorkUnit) );
+        mapTableToObject(SegmentType.Type, typeIndex, new TableToObjectInstanc(WUName, indexForm, SegmentType.WorkUnit) );
+        mapTableToObject(SegmentType.Status, statusIndex, new TableToObjectInstanc(WUName, indexForm, SegmentType.WorkUnit) );
+        mapTableToObject(SegmentType.Resolution, resolutionIndex, new TableToObjectInstanc(WUName, indexForm, SegmentType.WorkUnit) );
 
     }
 
@@ -137,4 +159,19 @@ public class MapperTableToObject {
         return severityToWUMapper;
     }
 
+    public Map<Integer, ArrayList<TableToObjectInstanc>> getResolutionToWUMapper() {
+        return resolutionToWUMapper;
+    }
+
+    public Map<Integer, ArrayList<TableToObjectInstanc>> getStatusToWUMapper() {
+        return statusToWUMapper;
+    }
+
+    public Map<Integer, ArrayList<TableToObjectInstanc>> getTypeToWUMapper() {
+        return typeToWUMapper;
+    }
+
+    public Map<Integer, ArrayList<TableToObjectInstanc>> getRelationToWUMapper() {
+        return relationToWUMapper;
+    }
 }

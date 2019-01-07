@@ -17,6 +17,7 @@ import services.Alerts;
 import services.DeleteControl;
 import services.SegmentLists;
 import services.SegmentType;
+import tables.ClassTable;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
@@ -34,8 +35,8 @@ public class TypeNullValueTest {
             FormController formController = warmUp.getFormController();
 
             formController.createTableItem(SegmentType.Type);
-            formDataController.saveDataFromTypeForm("", "", WorkUnitTypeClass.UNASSIGNED.name(), WorkUnitTypeSuperClass.UNASSIGNED.name()
-                    ,0);
+            formDataController.saveDataFromTypeForm("", new ClassTable("", WorkUnitTypeClass.UNASSIGNED.name(), WorkUnitTypeSuperClass.UNASSIGNED.name()
+                    ,0));
             type = project.getTypes().get(0);
         }
 

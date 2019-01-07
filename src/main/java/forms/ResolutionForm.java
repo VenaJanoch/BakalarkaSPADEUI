@@ -80,10 +80,7 @@ public class ResolutionForm extends TableClassBasicForm implements ISegmentTable
 			}
 			else{
 				ArrayList<BasicTable> list = new ArrayList<>(selection);
-				formDataController.deleteResolution(list);
-				getTableTV().getItems().removeAll(selection);
-				getTableTV().getSelectionModel().clearSelection();
-
+				formDataController.deleteResolution(list, getTableTV());
 			}
 		}
 
@@ -166,7 +163,7 @@ public class ResolutionForm extends TableClassBasicForm implements ISegmentTable
 
 		getTableTV().getItems().add(table);
 		getTableTV().sort();
-	formDataController.saveDataFromResolutionForm(nameST, idName, classST, superST, id);
+	formDataController.saveDataFromResolutionForm(nameST, table);
 	}
 
 	@Override

@@ -13,6 +13,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
 import services.Constans;
 import Controllers.LinkControl;
+import tables.BasicTable;
 
 /**
  * Třída vykreslující spojení mezi WorkUnity odděděná od třídy NodeLink
@@ -34,7 +35,7 @@ public class WorkUnitLink extends NodeLink {
      * @param linkControl
      */
 
-    public WorkUnitLink(int ID, LinkControl linkControl, CanvasController canvasController, ObservableList<String> relationTypeList, ManipulationController manipulationController) {
+    public WorkUnitLink(int ID, LinkControl linkControl, CanvasController canvasController, ObservableList<BasicTable> relationTypeList, ManipulationController manipulationController) {
         super(ID, linkControl, canvasController, manipulationController);
 
         relationCB = new LineComboBox(relationTypeList);

@@ -56,13 +56,13 @@ public class SegmentLists {
 
     private ObservableList<BasicTable> severityTypeObservable;
 
-    private ObservableList<String> relationTypeObservable;
+    private ObservableList<BasicTable> relationTypeObservable;
 
-    private ObservableList<String> resolutionTypeObservable;
+    private ObservableList<BasicTable> resolutionTypeObservable;
 
-    private ObservableList<String> statusTypeObservable;
+    private ObservableList<BasicTable> statusTypeObservable;
 
-    private ObservableList<String> typeObservable;
+    private ObservableList<BasicTable> typeObservable;
 
     private ArrayList<NodeLink> arrows;
 
@@ -113,16 +113,16 @@ public class SegmentLists {
         severityTypeObservable.add(new ClassTable("", "", "",-1));
 
         relationTypeObservable = FXCollections.observableArrayList();
-        relationTypeObservable.add("");
+        relationTypeObservable.add(new ClassTable("", "", "",-1));
 
         resolutionTypeObservable = FXCollections.observableArrayList();
-        resolutionTypeObservable.add("");
+        resolutionTypeObservable.add(new ClassTable("", "", "",-1));
 
         statusTypeObservable = FXCollections.observableArrayList();
-        statusTypeObservable.add("");
+        statusTypeObservable.add(new ClassTable("", "", "",-1));
 
         typeObservable = FXCollections.observableArrayList();
-        typeObservable.add("");
+        typeObservable.add(new ClassTable("", "", "",-1));
 
         arrows = new ArrayList<>();
     }
@@ -205,16 +205,16 @@ public class SegmentLists {
                 removeDataFromLis(CPRObservable, indexList);
                 break;
             case Relation:
-                removeDataFromLis(relationTypeObservable, indexList);
+                removeDataFromListTest(relationTypeObservable, indexList);
                 break;
             case Resolution:
-                removeDataFromLis(resolutionTypeObservable, indexList);
+                removeDataFromListTest(resolutionTypeObservable, indexList);
                 break;
             case Status:
-                removeDataFromLis(statusTypeObservable, indexList);
+                removeDataFromListTest(statusTypeObservable, indexList);
                 break;
             case Type:
-                removeDataFromLis(typeObservable, indexList);
+                removeDataFromListTest(typeObservable, indexList);
                 break;
             case Configuration:
                 removeDataFromLis(configObservable, indexList);
@@ -245,13 +245,13 @@ public class SegmentLists {
             case ConfigPersonRelation:
                 CPRObservable.add(segmentInfo);
             case Relation:
-                relationTypeObservable.add(segmentInfo);
+                relationTypeObservable.add(basicTable);
             case Resolution:
-                resolutionTypeObservable.add(segmentInfo);
+                resolutionTypeObservable.add(basicTable);
             case Status:
-                statusTypeObservable.add(segmentInfo);
+                statusTypeObservable.add(basicTable);
             case Type:
-                typeObservable.add(segmentInfo);
+                typeObservable.add(basicTable);
             case Configuration:
                 configObservable.add(segmentInfo);
             default:
@@ -334,19 +334,19 @@ public class SegmentLists {
         return severityTypeObservable;
     }
 
-    public ObservableList<String> getRelationTypeObservable() {
+    public ObservableList<BasicTable> getRelationTypeObservable() {
         return relationTypeObservable;
     }
 
-    public ObservableList<String> getResolutionTypeObservable() {
+    public ObservableList<BasicTable> getResolutionTypeObservable() {
         return resolutionTypeObservable;
     }
 
-    public ObservableList<String> getStatusTypeObservable() {
+    public ObservableList<BasicTable> getStatusTypeObservable() {
         return statusTypeObservable;
     }
 
-    public ObservableList<String> getTypeObservable() {
+    public ObservableList<BasicTable> getTypeObservable() {
         return typeObservable;
     }
 

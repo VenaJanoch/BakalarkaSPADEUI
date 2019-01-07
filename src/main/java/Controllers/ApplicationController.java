@@ -21,7 +21,7 @@ public class ApplicationController {
     public ApplicationController(FileManipulator fileManipulator, DataManipulator dataManipulator, Alerts alerts,
                                  IdentificatorCreater identificatorCreater, SegmentLists segmentLists){
         MapperTableToObject mapperTableToObject = new MapperTableToObject(segmentLists);
-        DeleteControl deleteControl = new DeleteControl(segmentLists, mapperTableToObject);
+        DeleteControl deleteControl = new DeleteControl(segmentLists, mapperTableToObject, identificatorCreater);
         this.formController = new FormController(identificatorCreater, dataManipulator, this, segmentLists, deleteControl);
         this.formDataController = new FormDataController(formController, deleteControl, segmentLists, mapperTableToObject, dataManipulator, identificatorCreater);
         this.manipulationController = new ManipulationController(formController);

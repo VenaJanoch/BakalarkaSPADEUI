@@ -17,6 +17,7 @@ import services.Alerts;
 import services.DeleteControl;
 import services.SegmentLists;
 import services.SegmentType;
+import tables.ClassTable;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
@@ -34,8 +35,8 @@ public class RelationValueTest {
         FormController formController = warmUp.getFormController();
 
         formController.createTableItem(SegmentType.Relation);
-        formDataController.saveDataFromRelationForm("Jmeno1", "0_Jmeno1", WorkUnitRelationClass.CHILD.name(), WorkUnitRelationSuperClass.CAUSAL.name()
-                ,0);
+        formDataController.saveDataFromRelationForm("Jmeno1", new ClassTable("0_Jmeno1", WorkUnitRelationClass.CHILD.name(),
+                WorkUnitRelationSuperClass.CAUSAL.name(),0));
         relation = project.getRelation().get(0);
     }
 

@@ -17,6 +17,7 @@ import services.Alerts;
 import services.DeleteControl;
 import services.SegmentLists;
 import services.SegmentType;
+import tables.ClassTable;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
@@ -34,8 +35,8 @@ public class ResolutionNullValueTest {
         FormController formController = warmUp.getFormController();
 
         formController.createTableItem(SegmentType.Resolution);
-        formDataController.saveDataFromResolutionForm("", "", WorkUnitResolutionClass.UNASSIGNED.name(), WorkUnitResolutionsSuperClass.UNASSIGNED.name()
-                ,0);
+        formDataController.saveDataFromResolutionForm("", new ClassTable("", WorkUnitResolutionClass.UNASSIGNED.name(), WorkUnitResolutionsSuperClass.UNASSIGNED.name()
+                ,0));
         resolution = project.getResolution().get(0);
     }
 

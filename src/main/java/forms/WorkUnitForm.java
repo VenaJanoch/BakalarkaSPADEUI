@@ -60,10 +60,10 @@ public class WorkUnitForm extends DescriptionBasicForm implements ISegmentForm {
 	private RadioButton existRB;
 	private ComboBox<BasicTable> priorityCB;
 	private ComboBox<BasicTable> severityCB;
-	private ComboBox<String> resolutionCB;
-	private ComboBox<String> statusCB;
+	private ComboBox<BasicTable> resolutionCB;
+	private ComboBox<BasicTable> statusCB;
 	private TextField categoryTF;
-	private ComboBox<String> typeCB;
+	private ComboBox<BasicTable> typeCB;
 	private ComboBox<BasicTable> asigneeRoleCB;
 	private ComboBox<BasicTable> authorRoleCB;
 
@@ -139,7 +139,7 @@ public class WorkUnitForm extends DescriptionBasicForm implements ISegmentForm {
 		categoryTF = new TextField();
 
 		typeLB = new Label("Type: ");
-		typeCB = new ComboBox<String>();
+		typeCB = new ComboBox<BasicTable>();
 		typeCB.getSelectionModel().selectedIndexProperty().addListener(typeListener);
 		typeCB.setVisibleRowCount(5);
 
@@ -154,12 +154,12 @@ public class WorkUnitForm extends DescriptionBasicForm implements ISegmentForm {
 		authorRoleCB.getSelectionModel().selectedIndexProperty().addListener(roleListenerAut);
 
 		resolutionLB = new Label("Resolution: ");
-		resolutionCB = new ComboBox<String>();
+		resolutionCB = new ComboBox<BasicTable>();
 		resolutionCB.getSelectionModel().selectedIndexProperty().addListener(resolutionListener);
 		resolutionCB.setVisibleRowCount(5);
 
 		statusLB = new Label("Status: ");
-		statusCB = new ComboBox<String>();
+		statusCB = new ComboBox<BasicTable>();
 		statusCB.getSelectionModel().selectedIndexProperty().addListener(statusListener);
 		statusCB.setVisibleRowCount(5);
 
@@ -352,11 +352,11 @@ public class WorkUnitForm extends DescriptionBasicForm implements ISegmentForm {
 		this.categoryTF = categoryTF;
 	}
 
-	public ComboBox<String> getTypeCB() {
+	public ComboBox<BasicTable> getTypeCB() {
 		return typeCB;
 	}
 
-	public void setTypeCB(ComboBox<String> typeCB) {
+	public void setTypeCB(ComboBox<BasicTable> typeCB) {
 		this.typeCB = typeCB;
 	}
 
@@ -376,19 +376,19 @@ public class WorkUnitForm extends DescriptionBasicForm implements ISegmentForm {
 		this.authorRoleCB = authorRoleCB;
 	}
 
-	public ComboBox<String> getResolutionCB() {
+	public ComboBox<BasicTable> getResolutionCB() {
 		return resolutionCB;
 	}
 
-	public void setResolutionCB(ComboBox<String> resolutionCB) {
+	public void setResolutionCB(ComboBox<BasicTable> resolutionCB) {
 		this.resolutionCB = resolutionCB;
 	}
 
-	public ComboBox<String> getStatusCB() {
+	public ComboBox<BasicTable> getStatusCB() {
 		return statusCB;
 	}
 
-	public void setStatusCB(ComboBox<String> statusCB) {
+	public void setStatusCB(ComboBox<BasicTable> statusCB) {
 		this.statusCB = statusCB;
 	}
 

@@ -25,7 +25,7 @@ public class WarmUp {
         FileManipulator file = new FileManipulator(processGenerator,data);
         Alerts alerts = new Alerts(file);
         ApplicationController ap = new ApplicationController(file, data, alerts, idCreator, lists);
-        DeleteControl deleteControl = new DeleteControl(new SegmentLists(), mapperTableToObject);
+        DeleteControl deleteControl = new DeleteControl(new SegmentLists(), mapperTableToObject, idCreator);
         formController = new FormController(idCreator, data, ap, lists, deleteControl);
         for(int i = 0; i < 12; i++){
             formController.getForms().add(null);

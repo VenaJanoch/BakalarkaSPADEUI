@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import javafx.collections.ObservableList;
+import model.IdentificatorCreater;
 import tables.*;
 
 public class DeleteControl {
@@ -15,16 +16,18 @@ public class DeleteControl {
 
     private SegmentLists lists;
     private MapperTableToObject mapperTableToObject;
+    private IdentificatorCreater idCreater;
 
 
     /**
      * Konstruktor třídy
      * Zinicializuje globální proměnné třídy
      */
-    public DeleteControl(SegmentLists lists, MapperTableToObject mapperTableToObject) {
+    public DeleteControl(SegmentLists lists, MapperTableToObject mapperTableToObject, IdentificatorCreater identificatorCreater) {
 
         this.lists = lists;
         this.mapperTableToObject = mapperTableToObject;
+        this.idCreater = identificatorCreater;
     }
 
     public ArrayList<Integer> findIndicesForDelete(SegmentType segmentType, ArrayList<Integer> indicesList) {
@@ -47,13 +50,13 @@ public class DeleteControl {
             case ConfigPersonRelation:
                 break;
             case Relation:
-                break;
+                return findTableToObjectIndicesForDelete(indicesList, mapperTableToObject.getRelationToWUMapper());
             case Resolution:
-                break;
+                return findTableToObjectIndicesForDelete(indicesList, mapperTableToObject.getResolutionToWUMapper());
             case Status:
-                break;
+                return findTableToObjectIndicesForDelete(indicesList, mapperTableToObject.getStatusToWUMapper());
             case Type:
-                break;
+                return findTableToObjectIndicesForDelete(indicesList, mapperTableToObject.getTypeToWUMapper());
             case Configuration:
                 break;
             default:
@@ -61,6 +64,53 @@ public class DeleteControl {
         }
         return null;
     }
+
+    public ArrayList<Integer> findIndicesForDeleteData(SegmentType segmentType, ArrayList<Integer> indicesList) {
+
+        switch (segmentType) {
+            case Branch:
+                break;
+            case Priority:
+                return findTableToObjectIndicesForDeleteData(indicesList, mapperTableToObject.getPriorityToWUMapper());
+            case Severity:
+                return findTableToObjectIndicesForDeleteData(indicesList, mapperTableToObject.getSeverityToWUMapper());
+            case Milestone:
+                return findTableToObjectIndicesForDeleteData(indicesList, mapperTableToObject.getMilestoneToCriterionMapper());
+            case Criterion:
+                break;
+            case Role:
+                return findTableToObjectIndicesForDeleteData(indicesList, mapperTableToObject.getRoleToRoleTypeMapper());
+            case RoleType:
+                break;
+            case ConfigPersonRelation:
+                break;
+            case Relation:
+                return findTableToObjectIndicesForDeleteData(indicesList, mapperTableToObject.getRelationToWUMapper());
+            case Resolution:
+                return findTableToObjectIndicesForDeleteData(indicesList, mapperTableToObject.getResolutionToWUMapper());
+            case Status:
+                return findTableToObjectIndicesForDeleteData(indicesList, mapperTableToObject.getStatusToWUMapper());
+            case Type:
+                return findTableToObjectIndicesForDeleteData(indicesList, mapperTableToObject.getTypeToWUMapper());
+            case Configuration:
+                break;
+            default:
+
+        }
+        return null;
+    }
+
+    private ArrayList<Integer> findTableToObjectIndicesForDeleteData(ArrayList<Integer> indicesList, Map<Integer, ArrayList<TableToObjectInstanc>> map) {
+        ArrayList<Integer> list = findTableToObjectIndicesForDelete(indicesList, map);
+        ArrayList<Integer> indexDataList = new ArrayList<>();
+
+        for(int i : list){
+            indexDataList.add(idCreater.getWorkUnitIndexMaper().get(i));
+        }
+
+        return indexDataList;
+    }
+
 
     /**
      * Vymazání informací o elementu Tag a smazání ze seznamů
