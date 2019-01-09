@@ -7,8 +7,10 @@ import graphics.CanvasItem;
 import graphics.DragAndDropItemPanel;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
+import javafx.scene.control.ComboBox;
 import model.DataManipulator;
 import model.IdentificatorCreater;
+import org.controlsfx.control.CheckComboBox;
 import services.*;
 import tables.*;
 
@@ -532,7 +534,45 @@ public class FormController {
         return canvasItemList;
     }
 
-    public void updateWUListItem(SegmentType type, ArrayList<Integer> wuList) {
+    public void upDateComboBox(ComboBox<BasicTable> cb, int position){
+        cb.getSelectionModel().select(position);
+    }
+
+    public void upDateCheckComboBox(CheckComboBox<BasicTable> cb, ArrayList<Integer> positions){
+        for (int i : positions){
+            cb.getCheckModel().check(i);
+        }
+    }
+
+    public void updateComboBoxItem(SegmentType formType, SegmentType comboBoxType, ArrayList<Integer> formList){
+        switch (formType) {
+
+            case WorkUnit:
+                updateWUListItem(comboBoxType, formList);
+            default:
+
+        }
+    }
+
+    public void updateCheckComboBoxItem(SegmentType formType, SegmentType comboBoxType, ArrayList<Integer> formList, ArrayList<Integer> indices) {
+        switch (formType) {
+            case Configuration:
+                ComboBox<BasicTable> cb = null;
+
+                for (int i : formList) {
+                    ConfigurationForm form = (ConfigurationForm) forms.get(i);
+                    switch (comboBoxType ) {
+                        case ConfigPersonRelation:
+                        upDateCheckComboBox(form.getCprCB(), indices);
+                        break;
+                        default:
+                    }
+                }
+                break;
+
+        }
+    }
+    private void updateWUListItem(SegmentType type, ArrayList<Integer> wuList) {
             switch (type) {
                 case Priority:
                     for (int i : wuList){

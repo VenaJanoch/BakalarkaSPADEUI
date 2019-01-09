@@ -10,6 +10,7 @@ import Controllers.FormDataController;
 import abstractform.DateBasicForm;
 import forms.TagForm;
 import graphics.DragAndDropItemPanel;
+import javafx.collections.FXCollections;
 import org.controlsfx.control.CheckComboBox;
 
 import SPADEPAC.Configuration;
@@ -67,16 +68,16 @@ public class ConfigurationForm extends DateBasicForm implements ISegmentForm {
     private DatePicker createdDP;
     private CheckComboBox<String> branchCB;
     private ComboBox<BasicTable> authorRoleCB;
-    private CheckComboBox<String> cprCB;
+    private CheckComboBox<BasicTable> cprCB;
 
     private int authorIndex;
 
     private ArrayList<Integer> branchIndex;
-    private ArrayList<Integer> cprIndex;
+    private ObservableList<Integer> cprIndex;
 
     private TagForm tagForm;
 
-    private ObservableList<String> cprList;
+    private ObservableList<BasicTable> cprList;
     private ObservableList<String> branchList;
     private ObservableList<BasicTable> roleList;
     /**
@@ -84,7 +85,7 @@ public class ConfigurationForm extends DateBasicForm implements ISegmentForm {
      * uzavření okna
      */
     public ConfigurationForm(FormController formController, FormDataController formDataController, CanvasController canvasController,
-                             DragAndDropItemPanel dgItemPanel, String name, ObservableList<String> cprList, ObservableList<String> branchList,
+                             DragAndDropItemPanel dgItemPanel, String name, ObservableList<BasicTable> cprList, ObservableList<String> branchList,
                              ObservableList<BasicTable> roleList, int indexForm) {
 
         super(formController, formDataController, canvasController, dgItemPanel, name);
@@ -98,7 +99,7 @@ public class ConfigurationForm extends DateBasicForm implements ISegmentForm {
         isRelease = true;
 
         branchIndex = new ArrayList<>();
-        cprIndex = new ArrayList<>();
+        cprIndex = FXCollections.observableArrayList();
 
         this.setOnCloseRequest(event -> Alerts.showSaveSegment());
 
@@ -116,7 +117,7 @@ public class ConfigurationForm extends DateBasicForm implements ISegmentForm {
         branchIndex.addAll(branchCB.getCheckModel().getCheckedIndices());
         cprIndex.addAll(cprCB.getCheckModel().getCheckedIndices());
 
-        isSave =  formDataController.saveDataFromConfiguration(actName, createDate, isRelease, authorIndex, branchIndex, cprIndex,
+        isSave =  formDataController.saveDataFromConfiguration(actName, createDate, isRelease, authorIndex, branchIndex, new ArrayList<>(cprIndex),
                 canvasController.getListOfItemOnCanvas(), isNew, indexForm);
     }
 
@@ -153,10 +154,10 @@ public class ConfigurationForm extends DateBasicForm implements ISegmentForm {
         authorRoleCB.setVisibleRowCount(5);
         authorRoleCB.getSelectionModel().selectedIndexProperty().addListener(roleListenerAut);
 
-        cprCB = new CheckComboBox<>(cprList);
-        cprLB = new Label("Conf-Person: ");
-        cprCB.getCheckModel().getCheckedItems().addListener(cprListener);
+        cprLB = new Label("CPR");
+        cprCB = new CheckComboBox<BasicTable>(cprList);
         cprCB.setMaxWidth(Constans.checkComboBox);
+        cprCB.getCheckModel().getCheckedItems().addListener(cprListener);
 
         branchLB = new Label("Branches");
         branchCB = new CheckComboBox<String>(branchList);
@@ -231,9 +232,9 @@ public class ConfigurationForm extends DateBasicForm implements ISegmentForm {
     /**
      * ChangeListener pro určení indexů prvků z CheckComboBoxu pro CPR
      */
-    ListChangeListener<String> cprListener = new ListChangeListener<String>() {
+    ListChangeListener<BasicTable> cprListener = new ListChangeListener<BasicTable>() {
 
-        public void onChanged(ListChangeListener.Change<? extends String> c) {
+        public void onChanged(ListChangeListener.Change<? extends BasicTable> c) {
             cprIndex.addAll(cprCB.getCheckModel().getCheckedIndices());
 
         }
@@ -243,7 +244,6 @@ public class ConfigurationForm extends DateBasicForm implements ISegmentForm {
 
         public void onChanged(ListChangeListener.Change<? extends String> c) {
             branchIndex.addAll(branchCB.getCheckModel().getCheckedIndices());
-
         }
     };
 
@@ -322,4 +322,7 @@ public class ConfigurationForm extends DateBasicForm implements ISegmentForm {
         this.isNew = isNew;
     }
 
+    public CheckComboBox<BasicTable> getCprCB() {
+        return cprCB;
+    }
 }

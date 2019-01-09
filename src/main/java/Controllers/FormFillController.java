@@ -336,7 +336,7 @@ public class FormFillController {
             CPRTable cprTable = new CPRTable(idName, role.getName(), id);
 
             cprForm.getTableTV().getItems().add(cprTable);
-            segmentLists.getCPRObservable().add(idName);
+            segmentLists.getCPRObservable().add(cprTable);
         }
     }
 

@@ -27,19 +27,6 @@ public class Alerts {
     }
 
     /**
-     * Alert pro informování o špatně vyplněném EstimatedTime
-     */
-    public static void showWrongEstimatedTimeAlert() {
-
-        Alert alert = new Alert(AlertType.ERROR);
-        alert.setTitle("Insert error");
-        alert.setHeaderText("Wrong Estimated time!");
-        alert.setContentText("Please provide a number in Estimated time filed! \n" + "in format 1; 1.1;");
-        alert.showAndWait();
-
-    }
-
-    /**
      * Alert s informací o chybě při validaci procesu
      *
      * @param error část chybového hlášení
@@ -102,72 +89,7 @@ public class Alerts {
         alert.showAndWait();
     }
 
-    /**
-     * Alert s infomací o výběru prvků tabulky pro smazání a možností zrušení
-     * akce.
-     *
-     * @param table     Tabulka s prvky
-     * @param selection vybrané prvky
-     * @return smazané prvky
-     */
-    public static ObservableList<ClassTable> showDeleteItemAlert(TableView table, ObservableList selection) {
-        List<ClassTable> list = null;
-        Alert alert = new Alert(AlertType.CONFIRMATION);
-        alert.setTitle("Deleting selection");
-        alert.setHeaderText("Do you want to delete selected elements?");
-        alert.setGraphic(new ListView<CriterionTable>(selection));
 
-        Optional<ButtonType> result = alert.showAndWait();
-        if (result.get() == ButtonType.OK) {
-
-            list = table.getSelectionModel().getSelectedItems();
-
-            table.getItems().removeAll(selection);
-
-            table.getSelectionModel().clearSelection();
-        }
-
-        return selection;
-
-    }
-
-    /**
-     * Alert s infomací o výběru prvků tabulky Configurací pro smazání a
-     * možností zrušení akce.
-     *
-     * @param table     Tabulka s prvky
-     * @param selection vybrané prvky
-     * @return smazané prvky
-     */
-    public static ObservableList<ConfigTable> showDeleteItemConfigAlert(TableView<ConfigTable> table,
-                                                                        ObservableList<ConfigTable> selection) {
-        List<ConfigTable> list = null;
-        Alert alert = new Alert(AlertType.CONFIRMATION);
-        alert.setTitle("Deleting selection");
-        alert.setHeaderText("Do you want to delete selected elements?");
-        alert.setGraphic(new ListView<ConfigTable>(selection));
-
-        Optional<ButtonType> result = alert.showAndWait();
-        if (result.get() == ButtonType.OK) {
-
-            list = table.getSelectionModel().getSelectedItems();
-
-            table.getItems().removeAll(selection);
-
-            table.getSelectionModel().clearSelection();
-        }
-
-        return selection;
-
-    }
-
-    /**
-     * Alert s infomací o výběru prvků z tabulky Criterii pro smazání a možností
-     * zrušení akce.
-     *
-     * @param selection vybrané prvky
-     * @return smazané prvky
-     */
     public static boolean showDeleteItemCascadeAlert(ArrayList<BasicTable> selection, Map<Integer, ArrayList<TableToObjectInstanc>> mapper) {
 
         ObservableList<String> deleteList = FXCollections.observableArrayList();
@@ -192,137 +114,52 @@ public class Alerts {
 
     }
 
-    /**
-     * Alert s infomací o výběru prvků z tabulky Milestone pro smazání a
-     * možností zrušení akce.
-     *
-     * @param table     Tabulka s prvky
-     * @param selection vybrané prvky
-     * @return smazané prvky
-     */
-    public static ObservableList<MilestoneTable> showDeleteItemMilestoneAlert(TableView<MilestoneTable> table,
-                                                                              ObservableList<MilestoneTable> selection) {
+    private static ObservableList<String> createDeleteObservableList(ArrayList<BasicTable> selection, Map<Integer, ArrayList<TableToObjectInstanc>> mapper ) {
 
-        List<MilestoneTable> list = null;
-        Alert alert = new Alert(AlertType.CONFIRMATION);
-        alert.setTitle("Deleting selection");
-        alert.setHeaderText("Do you want to delete selected elements?");
-        alert.setGraphic(new ListView<MilestoneTable>(selection));
-
-        Optional<ButtonType> result = alert.showAndWait();
-        if (result.get() == ButtonType.OK) {
-
-            list = table.getSelectionModel().getSelectedItems();
-
-            table.getItems().removeAll(selection);
-
-            table.getSelectionModel().clearSelection();
+        ObservableList<String> deleteList = FXCollections.observableArrayList();
+        for (BasicTable table : selection) {
+            deleteList.add(table.getName());
+            if(mapper.containsKey(table.getId())){
+                deleteList.addAll(mapper.get(table.getId()).toString());
+            }
         }
-
-        return selection;
-
+        return deleteList;
     }
 
-    /**
-     * Alert s infomací o výběru prvků z tabulky CPR pro smazání a možností
-     * zrušení akce.
-     *
-     * @param table     Tabulka s prvky
-     * @param selection vybrané prvky
-     * @return smazané prvky
-     */
-    public static ObservableList<CPRTable> showDeleteItemCPRAlert(TableView<CPRTable> table,
-                                                                  ObservableList<CPRTable> selection) {
-
-        List<CPRTable> list = null;
-        Alert alert = new Alert(AlertType.CONFIRMATION);
-        alert.setTitle("Deleting selection");
-        alert.setHeaderText("Do you want to delete selected elements?");
-        alert.setGraphic(new ListView<CPRTable>(selection));
-
-        Optional<ButtonType> result = alert.showAndWait();
-        if (result.get() == ButtonType.OK) {
-
-            list = table.getSelectionModel().getSelectedItems();
-
-            table.getItems().removeAll(selection);
-
-            table.getSelectionModel().clearSelection();
-        }
-
-        return selection;
-
-    }
-
-    /**
-     * Alert s infomací o výběru prvků z tabulky Branch pro smazání a možností
-     * zrušení akce.
-     *
-     * @param table     Tabulka s prvky
-     * @param selection vybrané prvky
-     * @return smazané prvky
-     */
-    public static ObservableList<BranchTable> showDeleteItemBranchAlert(TableView<BranchTable> table,
-                                                                        ObservableList<BranchTable> selection) {
-
-        List<BranchTable> list = null;
-        Alert alert = new Alert(AlertType.CONFIRMATION);
-        alert.setTitle("Deleting selection");
-        alert.setHeaderText("Do you want to delete selected elements?");
-        alert.setGraphic(new ListView<BranchTable>(selection));
-
-        Optional<ButtonType> result = alert.showAndWait();
-        if (result.get() == ButtonType.OK) {
-
-            list = table.getSelectionModel().getSelectedItems();
-
-            table.getItems().removeAll(selection);
-
-            table.getSelectionModel().clearSelection();
-        }
-
-        return selection;
-    }
-
-    /**
-     * Alert s infomací o výběru prvků z tabulky Role pro smazání a možností
-     * zrušení akce.
-     *
-     * @param table     Tabulka s prvky
-     * @param selection vybrané prvky
-     * @return smazané prvky
-     */
-    public static ObservableList<RoleTable> showDeleteItemRoleAlert(TableView<RoleTable> table,
-                                                                    ObservableList<RoleTable> selection) {
-
-        List<RoleTable> list = null;
+    public static boolean showDeleteItemCascadeAlert(ObservableList<String> deleteList){
 
         Alert alert = new Alert(AlertType.CONFIRMATION);
         alert.setTitle("Deleting selection");
         alert.setHeaderText("Do you want to delete selected elements?");
-        alert.setGraphic(new ListView<RoleTable>(selection));
+        alert.setGraphic(new ListView<>(deleteList));
 
         Optional<ButtonType> result = alert.showAndWait();
         if (result.get() == ButtonType.OK) {
-
-            list = table.getSelectionModel().getSelectedItems();
-
-            table.getItems().removeAll(selection);
-
-            table.getSelectionModel().clearSelection();
+            return true;
         }
 
-        return selection;
+        return false;
     }
 
-    /**
-     * Alert s infomací o výběru prvků z tabulky Tag pro smazání a možností
-     * zrušení akce.
-     *
-     * @param table     Tabulka s prvky
-     * @param selection vybrané prvky
-     * @return smazané prvky
-     */
+    //(ArrayList<BasicTable> selection, Map<Integer, ArrayList<TableToObjectInstanc>> mapper ) {
+
+/**
+ * Alert s infomací o výběru prvků z tabulky Criterii pro smazání a možností
+ * zrušení akce.
+ *
+ * @param selection vybrané prvky
+ * @return smazané prvky
+ */
+    public static boolean showDeleteItemCascadeAlert(ArrayList<BasicTable> selection, ArrayList<Map<Integer, ArrayList<TableToObjectInstanc>>> mappers ) {
+
+        for(Map<Integer, ArrayList<TableToObjectInstanc>> map : mappers){
+            showDeleteItemCascadeAlert(selection, map);
+        }
+
+        return false;
+
+    }
+
     public static ObservableList<TagTable> showDeleteItemTagAlert(TableView<TagTable> table, ObservableList selection) {
 
         List<TagTable> list = null;
@@ -405,28 +242,6 @@ public class Alerts {
         alert.showAndWait();
     }
 
-    public static boolean showDeleteItemRoleTypeAlert(ObservableList<ClassTable> selection, Map<Integer,ArrayList<TableToObjectInstanc>> milestoneToCriterionMapper) {
-        ObservableList<String> deleteList = FXCollections.observableArrayList();
-        for (ClassTable classTable : selection) {
-            deleteList.add(classTable.getName());
-            if(milestoneToCriterionMapper.containsKey(classTable.getId())){
-                deleteList.addAll(milestoneToCriterionMapper.get(classTable.getId()).toString());
-            }
-        }
-
-        Alert alert = new Alert(AlertType.CONFIRMATION);
-        alert.setTitle("Deleting selection");
-        alert.setHeaderText("Do you want to delete selected elements?");
-        alert.setGraphic(new ListView<>(deleteList));
-
-        Optional<ButtonType> result = alert.showAndWait();
-        if (result.get() == ButtonType.OK) {
-            return true;
-        }
-
-        return false;
-
-    }
 
     /**
      * Alert s infomací o ukončení aplikace s možností uložení procesu, přídně

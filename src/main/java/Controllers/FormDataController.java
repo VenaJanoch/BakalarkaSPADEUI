@@ -218,17 +218,31 @@ public class FormDataController {
 
     }
 
-    public void saveDataFromCPR(String nameST, String idName, int roleIndex, int configIndex, int index) {
+    public void saveDataFromCPR(String nameST, int roleIndex, int configIndex, CPRTable cprTable) {
+        mapperTableToObject.mapTableToObject(SegmentType.ConfigPersonRelation, roleIndex,
+                new TableToObjectInstanc(cprTable.getName(), cprTable.getId(), SegmentType.ConfigPersonRelation));
         String nameForManipulator = InputController.fillTextMapper(nameST);
 
-        dataManipulator.addDataToCPR(nameForManipulator, prepareIndexForManipulator(roleIndex), prepareIndexForManipulator(configIndex), index);
-        lists.getCPRObservable().add(idName);
+        dataManipulator.addDataToCPR(nameForManipulator, prepareIndexForManipulator(roleIndex), prepareIndexForManipulator(configIndex));
+        lists.getCPRObservable().add(cprTable);
     }
 
-    public void deleteCPR(ArrayList<BasicTable> list) {
-        ArrayList indexList = deleteControl.findIndicesForDelete(list);
-        dataManipulator.removeCPR(indexList);
-        lists.removeItemFromObservableList(SegmentType.ConfigPersonRelation, indexList);
+    public void deleteCPR(ArrayList<BasicTable> selection, TableView view) {
+
+        if(Alerts.showDeleteItemCascadeAlert(selection, mapperTableToObject.getConfigToCPR())){
+            ArrayList indexList = deleteControl.findIndicesForDelete(selection);
+            ObservableList tableIndexList = view.getSelectionModel().getSelectedIndices();
+            dataManipulator.removeCPR(tableIndexList);
+            lists.removeItemFromObservableList(SegmentType.ConfigPersonRelation, indexList);
+            view.getItems().removeAll(selection);
+            view.getSelectionModel().clearSelection();
+            ArrayList configFormList = deleteControl.findIndicesForDelete(SegmentType.ConfigPersonRelation, indexList);
+            ArrayList configDataList = deleteControl.findIndicesForDeleteData(SegmentType.ConfigPersonRelation, indexList);
+
+            formController.updateCheckComboBoxItem(SegmentType.Configuration, SegmentType.ConfigPersonRelation, configFormList, indexList);
+            dataManipulator.updateItemList(SegmentType.Configuration ,SegmentType.ConfigPersonRelation, configDataList, tableIndexList);
+            mapperTableToObject.deleteFromMap( mapperTableToObject.getRoleToCPR(), indexList);
+        }
     }
 
     public void saveDataFromCriterionForm(String nameST, CriterionTable criterionTable) {
@@ -241,7 +255,7 @@ public class FormDataController {
     public void deleteCriterion(ArrayList<BasicTable> selection, TableView tableView ) {
         if(Alerts.showDeleteItemCascadeAlert(selection, mapperTableToObject.getMilestoneToCriterionMapper())){
             ArrayList indexList = deleteControl.findIndicesForDelete(selection);
-            dataManipulator.removeCriterion(indexList);
+            dataManipulator.removeCriterion(tableView.getSelectionModel().getSelectedIndices());
             lists.removeItemFromObservableList(SegmentType.Criterion, indexList);
             tableView.getItems().removeAll(selection);
             tableView.getSelectionModel().clearSelection();
@@ -268,16 +282,16 @@ public class FormDataController {
 
     public void deleteMilestone(ArrayList<Integer> list) {
 
-        dataManipulator.removeMilestone(list);
         ArrayList<Integer> tableIndices =  lists.removeItemFromObservableList(SegmentType.Milestone, list);
         MilestoneForm milestoneForm = (MilestoneForm)formController.getForms().get(Constans.milestoneFormIndex);
 
         TableView<MilestoneTable> tv = milestoneForm.getTableTV();
-        for(Integer i : tableIndices){
+        for(int i : tableIndices){
             tv.getSelectionModel().select(i);
         }
         ObservableList<MilestoneTable> selection = FXCollections
                 .observableArrayList(tv.getSelectionModel().getSelectedItems());
+        dataManipulator.removeMilestone(tv.getSelectionModel().getSelectedIndices());
         tv.getItems().removeAll(selection);
 
         tv.getSelectionModel().clearSelection();
@@ -300,8 +314,8 @@ public class FormDataController {
             view.getSelectionModel().clearSelection();
             ArrayList wuList = deleteControl.findIndicesForDelete(SegmentType.Priority, indexList);
             ArrayList wuListData = deleteControl.findIndicesForDeleteData(SegmentType.Priority, indexList);
-            formController.updateWUListItem(SegmentType.Priority, wuList);
-            dataManipulator.updateWUListItem(SegmentType.Priority, wuListData);
+            formController.updateComboBoxItem(SegmentType.WorkUnit, SegmentType.Priority, wuList);
+            dataManipulator.updateItemList(SegmentType.WorkUnit,SegmentType.Priority, wuListData);
             mapperTableToObject.deleteFromMap( mapperTableToObject.getPriorityToWUMapper(), indexList);
         }
     }
@@ -321,8 +335,8 @@ public class FormDataController {
             view.getSelectionModel().clearSelection();
             ArrayList wuList = deleteControl.findIndicesForDelete(SegmentType.Severity, indexList);
             ArrayList wuListData = deleteControl.findIndicesForDeleteData(SegmentType.Severity, indexList);
-            formController.updateWUListItem(SegmentType.Severity, wuList);
-            dataManipulator.updateWUListItem(SegmentType.Severity, wuListData);
+            formController.updateComboBoxItem(SegmentType.WorkUnit, SegmentType.Severity, wuList);
+            dataManipulator.updateItemList(SegmentType.WorkUnit, SegmentType.Severity, wuListData);
             mapperTableToObject.deleteFromMap( mapperTableToObject.getSeverityToWUMapper(), indexList);
         }
     }
@@ -343,8 +357,8 @@ public class FormDataController {
             view.getSelectionModel().clearSelection();
             ArrayList wuList = deleteControl.findIndicesForDelete(SegmentType.Resolution, indexList);
             ArrayList wuListData = deleteControl.findIndicesForDeleteData(SegmentType.Resolution, indexList);
-            formController.updateWUListItem(SegmentType.Resolution, wuList);
-            dataManipulator.updateWUListItem(SegmentType.Resolution, wuListData);
+            formController.updateComboBoxItem(SegmentType.WorkUnit, SegmentType.Resolution, wuList);
+            dataManipulator.updateItemList(SegmentType.WorkUnit,SegmentType.Resolution, wuListData);
             mapperTableToObject.deleteFromMap( mapperTableToObject.getResolutionToWUMapper(), indexList);
         }
     }
@@ -375,25 +389,41 @@ public class FormDataController {
         lists.getRoleObservable().add(roleTable);
     }
 
-    public void deleteRoleObservable(ArrayList<BasicTable> list) {
-        ArrayList indexList = deleteControl.findIndicesForDelete(list);
+    public void deleteRoleObservable(ArrayList<BasicTable> selection, TableView tableView) {
+
+      /* if(Alerts.showDeleteItemCascadeAlert(selection, mapperTableToObject.getMilestoneToCriterionMapper())){
+            ArrayList indexList = deleteControl.findIndicesForDelete(selection);
+            dataManipulator.removeCriterion(tableView.getSelectionModel().getSelectedIndices());
+            lists.removeItemFromObservableList(SegmentType.Criterion, indexList);
+            tableView.getItems().removeAll(selection);
+            tableView.getSelectionModel().clearSelection();
+            ArrayList milestoneList = deleteControl.findIndicesForDelete(SegmentType.Milestone, indexList);
+            deleteMilestone(milestoneList);
+            mapperTableToObject.updateValueList( mapperTableToObject.getMilestoneToCriterionMapper(), indexList, milestoneList);
+          //  return true;
+        }*/
+
+        ArrayList indexList = deleteControl.findIndicesForDelete(selection);
         deleteRole(indexList);
     }
 
-    public void deleteRole(ArrayList<Integer> roleTypeIndexes){
-        dataManipulator.removeRole(roleTypeIndexes);
-        lists.removeItemFromObservableList(SegmentType.Role, roleTypeIndexes);
-        RoleForm milestoneForm = (RoleForm) formController.getForms().get(Constans.roleFormIndex);
+    public boolean deleteRole(ArrayList<Integer> roleTypeIndexes){
 
+
+
+        ArrayList<Integer> tableIndices = lists.removeItemFromObservableList(SegmentType.Role, roleTypeIndexes);
+        RoleForm milestoneForm = (RoleForm) formController.getForms().get(Constans.roleFormIndex);
         TableView<RoleTable> tv = milestoneForm.getTableTV();
-        for(Integer i : roleTypeIndexes){
+        for(int i : tableIndices){
             tv.getSelectionModel().select(i);
         }
-
+        dataManipulator.removeRole(tv.getSelectionModel().getSelectedIndices());
         ObservableList<RoleTable> selection = FXCollections
                 .observableArrayList(tv.getSelectionModel().getSelectedItems());
         tv.getItems().removeAll(selection);
         tv.getSelectionModel().clearSelection();
+
+        return false;
     }
 
     public void saveDataFromRoleTypeForm(String nameST, ClassTable classTable) {
@@ -406,13 +436,12 @@ public class FormDataController {
     public void deleteRoleType(ArrayList<BasicTable> selection, TableView tableView) {
         if(Alerts.showDeleteItemCascadeAlert(selection, mapperTableToObject.getRoleToRoleTypeMapper())){
             ArrayList<Integer> indexList = deleteControl.findIndicesForDelete(selection);
-            dataManipulator.removeRoleType(indexList);
+            dataManipulator.removeRoleType(tableView.getSelectionModel().getSelectedIndices());
             lists.removeItemFromObservableList(SegmentType.RoleType, indexList);
             tableView.getItems().removeAll(selection);
             tableView.getSelectionModel().clearSelection();
             ArrayList roleList = deleteControl.findIndicesForDelete(SegmentType.Role, indexList);
             deleteRole(roleList);
-            deleteMilestone(roleList);
             mapperTableToObject.updateValueList( mapperTableToObject.getRoleToRoleTypeMapper(), indexList, roleList);
         }
     }
@@ -449,18 +478,10 @@ public class FormDataController {
             view.getSelectionModel().clearSelection();
             ArrayList wuList = deleteControl.findIndicesForDelete(SegmentType.Status, indexList);
             ArrayList wuListData = deleteControl.findIndicesForDeleteData(SegmentType.Status, indexList);
-            formController.updateWUListItem(SegmentType.Status, wuList);
-            dataManipulator.updateWUListItem(SegmentType.Status, wuListData);
+            formController.updateComboBoxItem(SegmentType.WorkUnit,SegmentType.Status, wuList);
+            dataManipulator.updateItemList(SegmentType.WorkUnit,SegmentType.Status, wuListData);
             mapperTableToObject.deleteFromMap( mapperTableToObject.getStatusToWUMapper(), indexList);
         }
-    }
-
-    private ArrayList<Integer> prepareIndicesForManipulatorData(ArrayList<Integer> list, Map<Integer, Integer> map){
-        ArrayList<Integer> deleteList = new ArrayList<>();
-        for(int i : list){
-            deleteList.add(map.get(i));
-        }
-        return deleteList;
     }
 
     public void saveDataFromTypeForm(String nameST, ClassTable classTable) {
@@ -479,9 +500,9 @@ public class FormDataController {
             view.getSelectionModel().clearSelection();
             ArrayList wuList = deleteControl.findIndicesForDelete(SegmentType.Type, indexList);
             ArrayList wuListData = deleteControl.findIndicesForDeleteData(SegmentType.Type, indexList);
-            formController.updateWUListItem(SegmentType.Type, wuList);
-            dataManipulator.updateWUListItem(SegmentType.Type, wuListData);
-            mapperTableToObject.deleteFromMap( mapperTableToObject.getTypeToWUMapper(), indexList);
+            formController.updateComboBoxItem(SegmentType.WorkUnit, SegmentType.Type, wuList);
+            dataManipulator.updateItemList(SegmentType.WorkUnit,SegmentType.Type, wuListData);
+            mapperTableToObject.deleteFromMap(mapperTableToObject.getTypeToWUMapper(), indexList);
         }
     }
 

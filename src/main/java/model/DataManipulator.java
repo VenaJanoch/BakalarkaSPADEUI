@@ -5,7 +5,9 @@ import SPADEPAC.*;
 import XML.ProcessGenerator;
 import forms.*;
 import javafx.collections.ObservableList;
+import javafx.scene.control.ComboBox;
 import services.*;
+import tables.BasicTable;
 
 import javax.swing.text.html.HTML;
 import javax.xml.datatype.DatatypeConfigurationException;
@@ -273,7 +275,58 @@ public class DataManipulator {
         workUnit.setResolutionIndex(resolutionIndex);
     }
 
-    public void updateWUListItem(SegmentType type, ArrayList<Integer> wuList) {
+
+    public void updateItemList(SegmentType formType, SegmentType elementType, ArrayList<Integer> elementList){
+        switch (formType) {
+            case WorkUnit:
+                updateWUListItem(elementType, elementList);
+                break;
+            case Configuration:
+                for (int i : elementList) {
+                    Configuration segment = project.getConfiguration().get(i);
+                    switch (elementType ) {
+                        case Role:
+                            segment.setAuthorIndex(-1);
+                            break;
+                        default:
+                    }
+                }
+            default:
+
+        }
+    }
+
+    private void updateElementListFromSegment(ObservableList<Integer> indices, List<Integer> elementList ){
+        for(int i : indices){
+            for(int j : elementList){
+                if(j == i){
+                    elementList.remove(i);
+                }
+            }
+        }
+    }
+
+    public void updateItemList(SegmentType formType, SegmentType elementType, ArrayList<Integer> formList, ObservableList<Integer> indices) {
+        switch (formType) {
+            case Configuration:
+                for (int i : formList) {
+                    Configuration segment = project.getConfiguration().get(i);
+                    switch (elementType ) {
+                        case ConfigPersonRelation:
+                            updateElementListFromSegment(indices, segment.getCPRsIndexs());
+                            break;
+                        default:
+                    }
+                }
+                break;
+
+        }
+    }
+
+
+
+
+    private void updateWUListItem(SegmentType type, ArrayList<Integer> wuList) {
         switch (type) {
             case Priority:
                 for (int i : wuList){
@@ -428,7 +481,7 @@ public class DataManipulator {
 
     }
 
-    public void addDataToCPR(String nameForManipulator, int roleIndex, int configIndex, int index) {
+    public void addDataToCPR(String nameForManipulator, int roleIndex, int configIndex) {
 
         ConfigPersonRelation cpr = objF.createConfigPersonRelation();
         cpr.setConfigurationIndex(configIndex);
@@ -437,8 +490,8 @@ public class DataManipulator {
         project.getCpr().add(cpr);
     }
 
-    public void removeCPR(ArrayList<Integer> indexList) {
-        for(Integer i : indexList){
+    public void removeCPR(ObservableList<Integer> indexList) {
+        for(int i = indexList.size() -1; i >= 0; i-- ){
             project.getCpr().remove(i);
         }
     }
@@ -452,8 +505,8 @@ public class DataManipulator {
 
     }
 
-    public void removeCriterion(ArrayList<Integer> indexList) {
-        for (Integer i : indexList) {
+    public void removeCriterion(ObservableList<Integer> indexList) {
+        for(int i = indexList.size() -1; i >= 0; i-- ){
             project.getCriterions().remove(i);
         }
     }
@@ -467,10 +520,9 @@ public class DataManipulator {
         project.getMilestones().add(milestone);
     }
 
-    public void removeMilestone(ArrayList<Integer> indexList) {
-        for(Integer i : indexList){
+    public void removeMilestone(ObservableList<Integer> indexList) {
+        for(int i = indexList.size() -1; i >= 0; i-- ){
             project.getMilestones().remove(i);
-
         }
     }
     public void addDataToPriority(String nameForManipulator, String classST, String superST, int index) {
@@ -547,8 +599,8 @@ public class DataManipulator {
         project.getRoles().add(role);
     }
 
-    public void removeRole(ArrayList<Integer> indexList) {
-        for(int i : indexList){
+    public void removeRole(ObservableList<Integer> indexList) {
+        for(int i = indexList.size() -1; i >= 0; i-- ){
             project.getRoles().remove(i);
         }
     }
@@ -562,9 +614,8 @@ public class DataManipulator {
         project.getRoleType().add(roleType);
     }
 
-    public void removeRoleType(ArrayList<Integer> indexList) {
-
-        for(int i : indexList){
+    public void removeRoleType(ObservableList<Integer> indexList) {
+        for(int i = indexList.size() -1; i >= 0; i-- ){
             project.getRoleType().remove(i);
         }
     }

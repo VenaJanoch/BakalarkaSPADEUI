@@ -139,10 +139,7 @@ public class RoleForm extends Table2BasicForm implements ISegmentTableForm {
 			}
 			else{
 				ArrayList<BasicTable> list = new ArrayList<>(selection);
-				formDataController.deleteRoleObservable(list);
-				getTableTV().getItems().removeAll(selection);
-				getTableTV().getSelectionModel().clearSelection();
-
+				formDataController.deleteRoleObservable(list, getTableTV());
 			}
 		}
 

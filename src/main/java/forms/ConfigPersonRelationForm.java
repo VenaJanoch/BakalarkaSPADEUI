@@ -125,10 +125,7 @@ public class ConfigPersonRelationForm extends TableBasicForm implements ISegment
 			}
 			else{
 				ArrayList<BasicTable> list = new ArrayList<>(selection);
-				formDataController.deleteCPR(list);
-				tableTV.getItems().removeAll(selection);
-				tableTV.getSelectionModel().clearSelection();
-
+				formDataController.deleteCPR(list, getTableTV());
 			}
 		}
 
@@ -175,7 +172,7 @@ public class ConfigPersonRelationForm extends TableBasicForm implements ISegment
 		CPRTable cpr = new CPRTable(idName, roleST.getName(), id);
 		tableTV.getItems().add(cpr);
 		tableTV.sort();
-		formDataController.saveDataFromCPR(nameST, idName,roleIndex, configIndex, id);
+		formDataController.saveDataFromCPR(nameST, roleIndex, configIndex, cpr);
 	}
 
 	/** Getrs and Setrs ***/

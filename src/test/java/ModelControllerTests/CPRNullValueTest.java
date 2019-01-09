@@ -16,6 +16,7 @@ import services.Alerts;
 import services.DeleteControl;
 import services.SegmentLists;
 import services.SegmentType;
+import tables.CPRTable;
 
 import static org.junit.Assert.*;
 
@@ -33,7 +34,7 @@ public class CPRNullValueTest {
 
 
             formController.createTableItem(SegmentType.ConfigPersonRelation);
-            formDataController.saveDataFromCPR("", "",1, 1,0);
+            formDataController.saveDataFromCPR("", 0,1, new CPRTable("","",0));
             cpr = project.getCpr().get(0);
         }
 

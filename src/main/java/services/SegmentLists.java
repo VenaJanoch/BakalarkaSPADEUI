@@ -48,7 +48,7 @@ public class SegmentLists {
 
     private ObservableList<String> artifactObservable;
 
-    private ObservableList<String> CPRObservable;
+    private ObservableList<BasicTable> CPRObservable;
 
     private ObservableList<BasicTable> roleTypeObservable;
 
@@ -86,7 +86,7 @@ public class SegmentLists {
         configObservable.add("");
 
         roleObservable = FXCollections.observableArrayList();
-        roleObservable.add(new RoleTable(",","","",-1));
+        roleObservable.add(new RoleTable("","","",-1));
 
         branchObservable = FXCollections.observableArrayList();
         branchObservable.add("");
@@ -101,7 +101,7 @@ public class SegmentLists {
         milestoneObservable.add(new MilestoneTable("","",-1));
 
         CPRObservable = FXCollections.observableArrayList();
-        CPRObservable.add("");
+        CPRObservable.add(new CPRTable("", "", -1));
 
         roleTypeObservable = FXCollections.observableArrayList();
         roleTypeObservable.add(new ClassTable("", "", "",-1));
@@ -196,13 +196,12 @@ public class SegmentLists {
                 removeDataFromListTest(criterionObservable, indexList);
                 break;
             case Role:
-                removeDataFromListTest(roleObservable, indexList);
-                break;
+                return removeDataFromListTest(roleObservable, indexList);
             case RoleType:
                 removeDataFromListTest(roleTypeObservable, indexList);
                 break;
             case ConfigPersonRelation:
-                removeDataFromLis(CPRObservable, indexList);
+                removeDataFromListTest(CPRObservable, indexList);
                 break;
             case Relation:
                 removeDataFromListTest(relationTypeObservable, indexList);
@@ -243,7 +242,7 @@ public class SegmentLists {
             case RoleType:
                 roleTypeObservable.add(basicTable);
             case ConfigPersonRelation:
-                CPRObservable.add(segmentInfo);
+                CPRObservable.add(basicTable);
             case Relation:
                 relationTypeObservable.add(basicTable);
             case Resolution:
@@ -318,7 +317,7 @@ public class SegmentLists {
         return artifactObservable;
     }
 
-    public ObservableList<String> getCPRObservable() {
+    public ObservableList<BasicTable> getCPRObservable() {
         return CPRObservable;
     }
 

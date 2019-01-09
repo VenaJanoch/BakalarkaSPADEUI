@@ -83,7 +83,7 @@ public class DeleteControl {
             case RoleType:
                 break;
             case ConfigPersonRelation:
-                break;
+                return findTableToObjectIndicesForDeleteData(indicesList, mapperTableToObject.getRoleToCPR());
             case Relation:
                 return findTableToObjectIndicesForDeleteData(indicesList, mapperTableToObject.getRelationToWUMapper());
             case Resolution:
