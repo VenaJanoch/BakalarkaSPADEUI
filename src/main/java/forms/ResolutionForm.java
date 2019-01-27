@@ -43,8 +43,8 @@ public class ResolutionForm extends TableClassBasicForm implements ISegmentTable
 	 * Zinicializuje globální proměnné třídy
 	 * Nastaví reakci na potvrzovací tlačítko
 	 */
-	public ResolutionForm(FormController formController, FormDataController formDataController, String name) {
-		super(formController, formDataController, name);
+	public ResolutionForm(FormController formController, FormDataController formDataController, SegmentType type) {
+		super(formController, formDataController, type);
 
 		this.setTitle("Edit Resolutions");
 		createForm();

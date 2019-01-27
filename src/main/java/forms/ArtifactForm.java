@@ -55,8 +55,8 @@ public class ArtifactForm extends DateDescBasicForm implements ISegmentForm {
      * Konstruktor třídy Zinicializuje globální proměnné tříd Nastaví velikost
      * okna a reakci na uzavření formuláři
      */
-    public ArtifactForm(FormController formController, FormDataController formDataController, String name, int indexForm) {
-        super(formController, formDataController, name);
+    public ArtifactForm(FormController formController, FormDataController formDataController, SegmentType type, int indexForm) {
+        super(formController, formDataController, type);
         this.indexForm = indexForm;
 
         getMainPanel().setMinSize(Constans.littleformWidth, Constans.littleformHeight);

@@ -25,7 +25,6 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
 import services.*;
-import model.IdentificatorCreater;
 import tables.BasicTable;
 import tables.RoleTable;
 
@@ -60,8 +59,8 @@ public class RoleForm extends Table2BasicForm implements ISegmentTableForm {
 	 * potvrzovacímu tlačítku
 	 *
 	 */
-	public RoleForm(FormController formController, FormDataController formDataController, String name) {
-		super(formController, formDataController, name);
+	public RoleForm(FormController formController, FormDataController formDataController, SegmentType type) {
+		super(formController, formDataController, type);
 		this.roleIndex = 0;
 		createForm();
 		getSubmitBT().setOnAction(event -> setActionSubmitButton());
@@ -139,7 +138,7 @@ public class RoleForm extends Table2BasicForm implements ISegmentTableForm {
 			}
 			else{
 				ArrayList<BasicTable> list = new ArrayList<>(selection);
-				formDataController.deleteRoleObservable(list, getTableTV());
+				formDataController.deleteRole(list, getTableTV());
 			}
 		}
 
@@ -182,20 +181,14 @@ public class RoleForm extends Table2BasicForm implements ISegmentTableForm {
 	@Override
 	public void addItem() {
 		String nameST = getNameTF().getText();
-		BasicTable typeBT = roleTypeCB.getValue();
 		String descritpST = descriptionTF.getText();
 		int id = formController.createTableItem(SegmentType.Role);
-		String idName = id + "_" + nameST;
-		String typeST = "";
-		if(typeBT != null){
-			typeST = typeBT.getName();
-		}
 
-		RoleTable role = new RoleTable(idName, descritpST, typeST, id);
+		RoleTable role = formDataController.prepareRoleToTable(nameST, descritpST, id, roleIndex);
 		tableTV.getItems().add(role);
 		tableTV.sort();
 		formDataController.saveDataFromRoleForm(nameST, roleIndex, role);
-
+		roleTypeCB.getSelectionModel().clearSelection();
 	}
 
 	/*** Getrs and Setrs ***/

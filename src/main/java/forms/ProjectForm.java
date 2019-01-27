@@ -43,8 +43,8 @@ public class ProjectForm extends Date2DescBasicForm implements ISegmentForm {
      * <p>
      * Project
      */
-    public ProjectForm(FormController formController, FormDataController formDataController, String name) {
-        super(formController, formDataController, name);
+    public ProjectForm(FormController formController, FormDataController formDataController, SegmentType type) {
+        super(formController, formDataController, type);
 
         getMainPanel().setMinSize(Constans.littleformWidth, Constans.littleformHeight);
         getMainPanel().setMaxSize(Constans.littleformWidth, Constans.littleformHeight);

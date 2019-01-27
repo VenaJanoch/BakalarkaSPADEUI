@@ -20,10 +20,7 @@ import javafx.geometry.HPos;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import org.junit.experimental.theories.FromDataPoints;
-import services.Alerts;
-import services.CanvasType;
-import services.Control;
-import services.DeleteControl;
+import services.*;
 import tables.BasicTable;
 
 /**
@@ -51,9 +48,9 @@ public class PhaseForm extends DateDescBasicForm implements ISegmentForm {
 	 *
 	 * @param indexForm
 	 */
-	public PhaseForm(FormController formController, FormDataController formDataController, CanvasController canvasController, DragAndDropItemPanel dgItemPanel, String name, int indexForm) {
+	public PhaseForm(FormController formController, FormDataController formDataController, CanvasController canvasController, DragAndDropItemPanel dgItemPanel, SegmentType type, int indexForm) {
 
-		super(formController, formDataController, canvasController, dgItemPanel, name);
+		super(formController, formDataController, canvasController, dgItemPanel, type);
 		this. indexForm = indexForm;
 		this.setOnCloseRequest(e -> {
 			e.consume();
@@ -152,6 +149,15 @@ public class PhaseForm extends DateDescBasicForm implements ISegmentForm {
 
 	}
 
+	public void setDataToForm(String name, LocalDate endDate, String description, Integer milestoneIndex, Integer configuration) {
+		getNameTF().setText(name);
+		getDescriptionTF().setText(description);
+		dateDP.setValue(endDate);
+		getMilestoneCB().getSelectionModel().select(milestoneIndex);
+		getConfigCB().getSelectionModel().select(configuration);
+
+	}
+
 	/**
 	 * Getrs and Setrs
 	 */
@@ -171,12 +177,5 @@ public class PhaseForm extends DateDescBasicForm implements ISegmentForm {
 		this.milestoneCB = milestoneCB;
 	}
 
-	public void setDataToForm(String name, LocalDate endDate, String description, Integer milestoneIndex, Integer configuration) {
-		getNameTF().setText(name);
-		getDescriptionTF().setText(description);
-		dateDP.setValue(endDate);
-		getMilestoneCB().getSelectionModel().select(milestoneIndex);
-		getConfigCB().getSelectionModel().select(configuration);
 
-	}
 }

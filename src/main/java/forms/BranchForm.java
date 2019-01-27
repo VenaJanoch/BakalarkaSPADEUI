@@ -63,8 +63,8 @@ public class BranchForm extends TableBasicForm implements ISegmentTableForm {
      * Konstruktor třídy Zinicializuje globální proměnné tříd Nastaví velikost
      * formuláře
      */
-    public BranchForm(FormController formController, FormDataController formDataController, String name) {
-        super(formController, formDataController, name);
+    public BranchForm(FormController formController, FormDataController formDataController, SegmentType type) {
+        super(formController, formDataController, type);
 
         getMainPanel().setMinSize(Constans.littleformWidth, Constans.littleformHeight);
         getMainPanel().setMaxSize(Constans.littleformWidth, Constans.littleformHeight);

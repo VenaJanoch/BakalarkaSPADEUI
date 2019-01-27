@@ -12,6 +12,7 @@ import javafx.scene.control.TextField;
 import services.CanvasType;
 import services.Control;
 import services.DeleteControl;
+import services.SegmentType;
 import sun.text.resources.FormatData;
 
 import java.text.Normalizer;
@@ -32,9 +33,10 @@ public class DescriptionBasicForm extends BasicForm {
 	 * Konstruktor třídy
 	 *
 	 */
-	public DescriptionBasicForm(FormController formController, FormDataController formDataController, CanvasController canvasController, DragAndDropItemPanel dgItem, String name) {
+	public DescriptionBasicForm(FormController formController, FormDataController formDataController, CanvasController canvasController,
+								DragAndDropItemPanel dgItem, SegmentType type) {
 
-		super(formController, formDataController, canvasController, dgItem, name);
+		super(formController, formDataController, canvasController, dgItem, type);
 		createForm();
 	}
 
@@ -42,18 +44,18 @@ public class DescriptionBasicForm extends BasicForm {
 	 * Konstruktor třídy
 	 *
 	 */
-	public DescriptionBasicForm(FormController formController, FormDataController formDataController, CanvasController canvasController, String name) {
+	public DescriptionBasicForm(FormController formController, FormDataController formDataController, CanvasController canvasController, SegmentType type) {
 
-		super(formController, formDataController, canvasController, name);
+		super(formController, formDataController, canvasController, type);
 		createForm();
 	}
 
 	/**
 	 * Přetížený konstruktor třídy
 	 */
-	public DescriptionBasicForm(FormController formController, FormDataController formDataController, String name) {
+	public DescriptionBasicForm(FormController formController, FormDataController formDataController, SegmentType type) {
 
-		super(formController, formDataController, name);
+		super(formController, formDataController, type);
 		createForm();
 	}
 

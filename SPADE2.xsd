@@ -81,11 +81,13 @@
         <xs:attribute name="endDate" type="xs:date"/>
         <xs:attribute name="name" type="xs:string"/>
         <xs:attribute name="description" type="xs:string"/>
+        <xs:attribute name="id" type="xs:int"/>
     </xs:complexType>
 
     <xs:complexType name="Criterion">
         <xs:attribute name="name" type="xs:string"/>
         <xs:attribute name="description" type="xs:string"/>
+        <xs:attribute name="id" type="xs:int"/>
     </xs:complexType>
 
 
@@ -101,6 +103,7 @@
         <xs:attribute name="description" type="xs:string"/>
         <xs:attribute name="endDate" type="xs:date"/>
         <xs:attribute name="startDate" type="xs:date"/>
+        <xs:attribute name="id" type="xs:int"/>
     </xs:complexType>
 
     <xs:complexType name="Activity">
@@ -113,6 +116,7 @@
 
         <xs:attribute name="name" type="xs:string"/>
         <xs:attribute name="description" type="xs:string"/>
+        <xs:attribute name="id" type="xs:int"/>
     </xs:complexType>
 
     <xs:complexType name="WorkUnit">
@@ -146,6 +150,7 @@
         <xs:attribute name="description" type="xs:string"/>
         <xs:attribute name="estimatedTime" type="xs:double"/>
         <xs:attribute name="exist" type="xs:boolean"/>
+        <xs:attribute name="id" type="xs:int"/>
     </xs:complexType>
 
 
@@ -153,18 +158,21 @@
         <xs:attribute name="name" type="xs:string"/>
         <xs:attribute name="priorityClass" type="xs:string"/>
         <xs:attribute name="prioritySuperClass" type="xs:string"/>
+        <xs:attribute name="id" type="xs:int"/>
     </xs:complexType>
 
     <xs:complexType name="Relation">
         <xs:attribute name="name" type="xs:string"/>
         <xs:attribute name="relationClass" type="xs:string"/>
         <xs:attribute name="relationSuperClass" type="xs:string"/>
+        <xs:attribute name="id" type="xs:int"/>
     </xs:complexType>
 
     <xs:complexType name="Resolution">
         <xs:attribute name="name" type="xs:string"/>
         <xs:attribute name="resolutionClass" type="xs:string"/>
         <xs:attribute name="resolutionSuperClass" type="xs:string"/>
+        <xs:attribute name="id" type="xs:int"/>
     </xs:complexType>
 
 
@@ -172,18 +180,21 @@
         <xs:attribute name="name" type="xs:string"/>
         <xs:attribute name="severityClass" type="xs:string"/>
         <xs:attribute name="severitySuperClass" type="xs:string"/>
+        <xs:attribute name="id" type="xs:int"/>
     </xs:complexType>
 
     <xs:complexType name="Status">
         <xs:attribute name="name" type="xs:string"/>
         <xs:attribute name="statusClass" type="xs:string"/>
         <xs:attribute name="statusSuperClass" type="xs:string"/>
+        <xs:attribute name="id" type="xs:int"/>
     </xs:complexType>
 
     <xs:complexType name="Type">
         <xs:attribute name="name" type="xs:string"/>
         <xs:attribute name="typeClass" type="xs:string"/>
         <xs:attribute name="typeSuperClass" type="xs:string"/>
+        <xs:attribute name="id" type="xs:int"/>
     </xs:complexType>
 
 
@@ -194,6 +205,7 @@
         </xs:sequence>
         <xs:attribute name="name" type="xs:string"/>
         <xs:attribute name="description" type="xs:string"/>
+        <xs:attribute name="id" type="xs:int"/>
     </xs:complexType>
 
     <xs:complexType name="Configuration">
@@ -213,6 +225,7 @@
         <xs:attribute name="name" type="xs:string"/>
         <xs:attribute name="create" type="xs:date"/>
         <xs:attribute name="isRelease" type="xs:boolean"/>
+        <xs:attribute name="id" type="xs:int"/>
     </xs:complexType>
 
     <xs:complexType name="ConfigPersonRelation">
@@ -223,12 +236,14 @@
                         minOccurs="0" maxOccurs="1"/>
         </xs:sequence>
         <xs:attribute name="name" type="xs:string"/>
+        <xs:attribute name="id" type="xs:int"/>
     </xs:complexType>
 
     <xs:complexType name="Branch">
 
         <xs:attribute name="name" type="xs:string"/>
         <xs:attribute name="isMain" type="xs:boolean"/>
+        <xs:attribute name="id" type="xs:int"/>
 
     </xs:complexType>
 
@@ -241,6 +256,7 @@
         <xs:attribute name="name" type="xs:string"/>
         <xs:attribute name="descriptoin" type="xs:string"/>
         <xs:attribute name="exist" type="xs:boolean"/>
+        <xs:attribute name="id" type="xs:int"/>
     </xs:complexType>
 
     <xs:complexType name="Artifact">
@@ -258,6 +274,7 @@
         <xs:attribute name="created" type="xs:dateTime"/>
         <xs:attribute name="artifactIndex" type="xs:int"/>
         <xs:attribute name="exist" type="xs:boolean"/>
+        <xs:attribute name="id" type="xs:int"/>
     </xs:complexType>
 
     <xs:complexType name="Role">
@@ -267,6 +284,7 @@
         </xs:sequence>
         <xs:attribute name="description" type="xs:string"/>
         <xs:attribute name="name" type="xs:string"/>
+        <xs:attribute name="id" type="xs:int"/>
     </xs:complexType>
 
 
@@ -274,6 +292,7 @@
         <xs:attribute name="name" type="xs:string"/>
         <xs:attribute name="RoleClass" type="xs:string"/>
         <xs:attribute name="RoleSuperClass" type="xs:string"/>
+        <xs:attribute name="id" type="xs:int"/>
     </xs:complexType>
 
     <xs:simpleType name="ArtifactClass">

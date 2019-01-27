@@ -50,8 +50,8 @@ public class PriorityForm extends TableClassBasicForm implements ISegmentTableFo
 	 * Zinicializuje globální proměnné třídy
 	 * Nastaví reakci na potvrzovací tlačítko
 	 */
-	public PriorityForm(FormController formController, FormDataController formDataController, String name) {
-		super(formController, formDataController, name);
+	public PriorityForm(FormController formController, FormDataController formDataController, SegmentType type) {
+		super(formController, formDataController, type);
 		this.setTitle("Edit Priority");
 		createForm();
 		getSubmitButton().setOnAction(event -> setActionSubmitButton());

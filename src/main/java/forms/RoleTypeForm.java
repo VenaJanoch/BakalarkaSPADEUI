@@ -44,8 +44,8 @@ public class RoleTypeForm extends TableClassBasicForm implements ISegmentTableFo
 	 * potvrzovací tlačítko
 	 *
 	 */
-	public RoleTypeForm(FormController formController, FormDataController formDataController, String name) {
-		super(formController, formDataController, name);
+	public RoleTypeForm(FormController formController, FormDataController formDataController, SegmentType type) {
+		super(formController, formDataController, type);
 
 		createForm();
 		getSubmitButton().setVisible(false);

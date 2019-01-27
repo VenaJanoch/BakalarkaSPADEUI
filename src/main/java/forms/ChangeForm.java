@@ -48,8 +48,8 @@ public class ChangeForm extends DescriptionBasicForm implements ISegmentForm {
      * Konstruktor třídy Zinicializuje globální proměnné třídy Nastaví velikost
      * formuláře a reakci na uzavření formuláře
      */
-    public ChangeForm(FormController formController, FormDataController formDataController, String name, int indexForm) {
-        super(formController, formDataController, name);
+    public ChangeForm(FormController formController, FormDataController formDataController, SegmentType type, int indexForm) {
+        super(formController, formDataController, type);
 
         this.newChange = true;
         this.indexForm = indexForm;

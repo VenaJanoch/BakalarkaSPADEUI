@@ -58,9 +58,9 @@ public class MilestoneForm extends Table2BasicForm implements ISegmentTableForm 
 	 *
 	 *
 	 */
-	public MilestoneForm(FormController formController, FormDataController formDataController, String name) {
+	public MilestoneForm(FormController formController, FormDataController formDataController, SegmentType type) {
 
-		super(formController, formDataController, name);
+		super(formController, formDataController, type);
 		createForm();
 		getSubmitBT().setOnAction(event -> setActionSubmitButton());
 		criterionIndex = FXCollections.observableArrayList();
@@ -134,7 +134,7 @@ public class MilestoneForm extends Table2BasicForm implements ISegmentTableForm 
 			}
 			else{
 				ArrayList<BasicTable> list = new ArrayList<>(selection);
-				formDataController.deleteMilestoneObservable(list);
+				formDataController.deleteMilestone(list, getTableTV());
 				tableTV.getItems().removeAll(selection);
 				tableTV.getSelectionModel().clearSelection();
 
@@ -170,20 +170,13 @@ public class MilestoneForm extends Table2BasicForm implements ISegmentTableForm 
 	public void addItem() {
 
 		String nameST = getNameTF().getText();
-		String criterion = "";
-
-		if (criterionArray != null) {
-			criterion = criterionArray.toString();
-		}
-
 		int id = formController.createTableItem(SegmentType.Milestone);
-		String idName = id + "_" + nameST;
-
-		MilestoneTable milestone = new MilestoneTable(idName, criterion, id);
+		ArrayList criterionList = new ArrayList<>(criterionIndex);
+		MilestoneTable milestone = formDataController.prepareMilestoneToTable(nameST, id, criterionList);
 		tableTV.getItems().add(milestone);
 		tableTV.sort();
 
-		formDataController.saveDataFromMilestoneForm(nameST, new ArrayList<>(criterionIndex), milestone);
+		formDataController.saveDataFromMilestoneForm(nameST, criterionList, milestone);
 		criteriaCB.getCheckModel().clearChecks();
 
 	}

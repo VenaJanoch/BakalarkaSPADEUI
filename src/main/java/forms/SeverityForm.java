@@ -45,8 +45,8 @@ public class SeverityForm extends TableClassBasicForm implements ISegmentTableFo
 	 * potvrzovací tlačítko
 	 *
 	 */
-	public SeverityForm(FormController formController, FormDataController formDataController, String name) {
-		super(formController, formDataController, name);
+	public SeverityForm(FormController formController, FormDataController formDataController, SegmentType type) {
+		super(formController, formDataController, type);
 
 		this.setTitle("Edit Severities");
 		createForm();

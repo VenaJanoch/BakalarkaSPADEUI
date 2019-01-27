@@ -13,6 +13,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import services.Constans;
+import services.SegmentType;
 
 /**
  * Třída umožnující zobrazení dvou formulářů v jednom okně
@@ -37,9 +38,9 @@ public class Table2BasicForm extends BasicForm {
     /**
      * Konstruktor třídy Zinicializuje globální proměnné třídy
      */
-    public Table2BasicForm(FormController formController, FormDataController formDataController, String name) {
+    public Table2BasicForm(FormController formController, FormDataController formDataController, SegmentType type) {
 
-        super(formController, formDataController, name);
+        super(formController, formDataController, type);
         this.setScene(creatScene());
         this.setMinHeight(Constans.twoFormHeight);
         this.setMinWidth(Constans.twoFormWidth);

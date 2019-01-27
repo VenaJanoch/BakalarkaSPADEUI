@@ -57,8 +57,8 @@ public class ConfigurationTableForm extends Table2BasicForm implements ISegmentT
 	 *
 	 */
 
-	public ConfigurationTableForm(FormController formController, FormDataController formDataController, String name) {
-		super(formController, formDataController, name);
+	public ConfigurationTableForm(FormController formController, FormDataController formDataController, SegmentType type) {
+		super(formController, formDataController, type);
 
 		createForm();
 		getSubmitBT().setOnAction(event -> setActionSubmitButton());

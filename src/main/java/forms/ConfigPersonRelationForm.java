@@ -62,8 +62,8 @@ public class ConfigPersonRelationForm extends TableBasicForm implements ISegment
 	 *
 	 */
 	
-	public ConfigPersonRelationForm(FormController formController, FormDataController formDataController, String name) {
-		super(formController, formDataController, name);
+	public ConfigPersonRelationForm(FormController formController, FormDataController formDataController, SegmentType type) {
+		super(formController, formDataController, type);
 
 		createForm();
 		getSubmitButton().setOnAction(event -> setActionSubmitButton());

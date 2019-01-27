@@ -53,8 +53,8 @@ public class CriterionForm extends TableBasicForm implements ISegmentTableForm {
 	 *
 	 */
 
-	 public CriterionForm(FormController formController, FormDataController formDataController, String name) {
-		super(formController, formDataController, name);
+	 public CriterionForm(FormController formController, FormDataController formDataController, SegmentType type) {
+		super(formController, formDataController, type);
 
 		getSubmitButton().setVisible(false);
 		createForm();

@@ -8,6 +8,7 @@ import javafx.geometry.HPos;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import services.SegmentType;
 
 /**
  * Třída odděděná ze třídy DescriptionBasicForm přidávající vstupní pole pro Date
@@ -22,9 +23,10 @@ public class DateBasicForm extends BasicForm {
 	/**
 	 * Konstruktor třídy
 	 */
-	public DateBasicForm(FormController formController, FormDataController formDataController, CanvasController canvasController, DragAndDropItemPanel dgItemPanel, String name) {
+	public DateBasicForm(FormController formController, FormDataController formDataController, CanvasController canvasController,
+						 DragAndDropItemPanel dgItemPanel, SegmentType type) {
 
-		super(formController, formDataController, canvasController, dgItemPanel, name);
+		super(formController, formDataController, canvasController, dgItemPanel, type);
 		createForm();
 	}
 
@@ -32,8 +34,8 @@ public class DateBasicForm extends BasicForm {
 	/**
 	 * Přetížený konstruktor třídy
 	 */
-	public DateBasicForm(FormController formController, FormDataController formDataController, String name) {
-		super(formController, formDataController, name);
+	public DateBasicForm(FormController formController, FormDataController formDataController, SegmentType type) {
+		super(formController, formDataController, type);
 		createForm();
 	}
 

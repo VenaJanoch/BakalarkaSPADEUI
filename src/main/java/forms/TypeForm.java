@@ -45,8 +45,8 @@ public class TypeForm extends TableClassBasicForm implements ISegmentTableForm {
 	 * potvrzovací tlačítko
 	 *
 	 */
-	public TypeForm(FormController formController, FormDataController formDataController, String name) {
-		super(formController, formDataController, name);
+	public TypeForm(FormController formController, FormDataController formDataController, SegmentType type) {
+		super(formController, formDataController, type);
 
 		this.setTitle("Edit WorkUnit type");
 		createForm();

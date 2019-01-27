@@ -6,6 +6,7 @@ import services.ClassSwitcher;
 import services.Control;
 import services.DeleteControl;
 import model.IdentificatorCreater;
+import services.SegmentType;
 import tables.ClassTable;
 import javafx.geometry.Insets;
 import javafx.scene.control.Label;
@@ -40,9 +41,9 @@ public class TableClassBasicForm extends TableBasicForm {
 	/**
 	 * Konstruktor třídy Zinicializuje globální proměnné třídy
 	 */
-	public TableClassBasicForm(FormController formController, FormDataController formDataController, String name) {
+	public TableClassBasicForm(FormController formController, FormDataController formDataController, SegmentType type) {
 
-		super(formController,formDataController, name);
+		super(formController,formDataController, type);
 		setSwitcher(new ClassSwitcher(control));
 		classIndex = 0;
 		setSuperIndex(0);

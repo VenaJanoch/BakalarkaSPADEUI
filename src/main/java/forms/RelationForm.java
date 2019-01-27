@@ -44,8 +44,8 @@ public class RelationForm extends TableClassBasicForm implements ISegmentTableFo
 	 * Zinicializuje globální proměnné třídy
 	 * Nastaví reakci na potvrzovací tlačítko
 	 */
-	public RelationForm(FormController formController, FormDataController formDataController, String name) {
-		super(formController, formDataController, name);
+	public RelationForm(FormController formController, FormDataController formDataController, SegmentType type) {
+		super(formController, formDataController, type);
 		this.setTitle("Edit Relations");
 
 		createForm();

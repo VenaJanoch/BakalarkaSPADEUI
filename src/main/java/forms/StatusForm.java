@@ -44,8 +44,8 @@ public class StatusForm extends TableClassBasicForm implements ISegmentTableForm
 	 * potvrzovací tlačítko
 	 *
 	 */
-	public StatusForm(FormController formController, FormDataController formDataController, String name) {
-		super(formController, formDataController, name);
+	public StatusForm(FormController formController, FormDataController formDataController, SegmentType type) {
+		super(formController, formDataController, type);
 
 		this.setTitle("Edit Status");
 		createForm();

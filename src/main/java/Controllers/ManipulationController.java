@@ -1,10 +1,8 @@
 package Controllers;
 
-import abstractform.BasicForm;
 import graphics.CanvasItem;
 import graphics.DragAndDropCanvas;
 import graphics.NodeLink;
-import javafx.scene.paint.Color;
 import services.*;
 
 public class ManipulationController {
@@ -113,13 +111,13 @@ public class ManipulationController {
 
         switch (segmentType) {
             case Phase:
-                formFillController.fillPhaseForm(oldFormIndex);
+                formFillController.addExistPhaseFormToCanvas(oldFormIndex);
                 break;
             case Iteration:
                 formFillController.fillIterationForm(oldFormIndex);
                 break;
             case Activity:
-                formFillController.fillActivityForm(oldFormIndex);
+                formFillController.addExistActivityFormToCanvas(oldFormIndex);
                 break;
             case WorkUnit:
                 formFillController.fillWorkUnitForm(oldFormIndex, canvasController);

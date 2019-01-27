@@ -17,6 +17,7 @@ import javafx.scene.control.Label;
 import services.CanvasType;
 import services.Control;
 import services.DeleteControl;
+import services.SegmentType;
 
 /**
  * Třída odděděná ze třídy DateDescBasicForm přidávající vstupní pole pro druhý Date
@@ -31,18 +32,19 @@ public class Date2DescBasicForm extends DateDescBasicForm {
 	/**
 	 * Konstruktor Třídy
 	 */
-	public Date2DescBasicForm(FormController formController, FormDataController formDataController, String name) {
+	public Date2DescBasicForm(FormController formController, FormDataController formDataController, SegmentType type) {
 
-		super(formController,formDataController, name);
+		super(formController,formDataController, type);
 		fillFormDate2();
 	}
 
 	/**
 	 * Přetížený konstruktor
 	 */
-	public Date2DescBasicForm(FormController formController, FormDataController formDataController, CanvasController canvasController, DragAndDropItemPanel dgItemPanel, String name) {
+	public Date2DescBasicForm(FormController formController, FormDataController formDataController, CanvasController canvasController,
+							  DragAndDropItemPanel dgItemPanel, SegmentType type) {
 
-		super(formController, formDataController, canvasController, dgItemPanel, name);
+		super(formController, formDataController, canvasController, dgItemPanel, type);
 		fillFormDate2();
 	}
 

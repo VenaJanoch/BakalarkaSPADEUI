@@ -92,13 +92,7 @@ public class Alerts {
 
     public static boolean showDeleteItemCascadeAlert(ArrayList<BasicTable> selection, Map<Integer, ArrayList<TableToObjectInstanc>> mapper) {
 
-        ObservableList<String> deleteList = FXCollections.observableArrayList();
-        for (BasicTable table : selection) {
-            deleteList.add(table.getName());
-            if(mapper.containsKey(table.getId())){
-                deleteList.addAll(mapper.get(table.getId()).toString());
-            }
-        }
+        ObservableList<String> deleteList = createDeleteObservableList(selection, mapper);
 
         Alert alert = new Alert(AlertType.CONFIRMATION);
         alert.setTitle("Deleting selection");
@@ -115,12 +109,21 @@ public class Alerts {
     }
 
     private static ObservableList<String> createDeleteObservableList(ArrayList<BasicTable> selection, Map<Integer, ArrayList<TableToObjectInstanc>> mapper ) {
-
         ObservableList<String> deleteList = FXCollections.observableArrayList();
         for (BasicTable table : selection) {
             deleteList.add(table.getName());
             if(mapper.containsKey(table.getId())){
                 deleteList.addAll(mapper.get(table.getId()).toString());
+            }
+        }
+        return deleteList;
+    }
+
+    private static ObservableList<String> createDeleteObservableList(ObservableList<String> deleteList, ArrayList<Integer> indices, Map<Integer, ArrayList<TableToObjectInstanc>> mapper ) {
+
+        for (int i : indices) {
+            if(mapper.containsKey(i)){
+                deleteList.addAll(mapper.get(i).toString());
             }
         }
         return deleteList;
@@ -151,13 +154,16 @@ public class Alerts {
  * @return smazané prvky
  */
     public static boolean showDeleteItemCascadeAlert(ArrayList<BasicTable> selection, ArrayList<Map<Integer, ArrayList<TableToObjectInstanc>>> mappers ) {
-
-        for(Map<Integer, ArrayList<TableToObjectInstanc>> map : mappers){
-            showDeleteItemCascadeAlert(selection, map);
+        ObservableList<String> deleteList = FXCollections.observableArrayList();
+        for (BasicTable table : selection) {
+            deleteList.add(table.getName());
+            for(Map<Integer, ArrayList<TableToObjectInstanc>> map : mappers){
+                if(map.containsKey(table.getId())){
+                    deleteList.addAll(map.get(table.getId()).toString());
+                }
+            }
         }
-
-        return false;
-
+        return showDeleteItemCascadeAlert(deleteList);
     }
 
     public static ObservableList<TagTable> showDeleteItemTagAlert(TableView<TagTable> table, ObservableList selection) {

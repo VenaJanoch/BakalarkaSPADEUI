@@ -31,11 +31,7 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleGroup;
 import javafx.stage.WindowEvent;
-import services.Alerts;
-import services.CanvasType;
-import services.Constans;
-import services.Control;
-import services.DeleteControl;
+import services.*;
 import model.IdentificatorCreater;
 import tables.BasicTable;
 
@@ -85,16 +81,16 @@ public class ConfigurationForm extends DateBasicForm implements ISegmentForm {
      * uzavření okna
      */
     public ConfigurationForm(FormController formController, FormDataController formDataController, CanvasController canvasController,
-                             DragAndDropItemPanel dgItemPanel, String name, ObservableList<BasicTable> cprList, ObservableList<String> branchList,
+                             DragAndDropItemPanel dgItemPanel, SegmentType type, ObservableList<BasicTable> cprList, ObservableList<String> branchList,
                              ObservableList<BasicTable> roleList, int indexForm) {
 
-        super(formController, formDataController, canvasController, dgItemPanel, name);
+        super(formController, formDataController, canvasController, dgItemPanel, type);
         this.cprList = cprList;
         this.branchList = branchList;
         this.roleList = roleList;
         this.indexForm = indexForm;
 
-        this.tagForm = new TagForm(formController, formDataController,"Tag", indexForm);
+        this.tagForm = new TagForm(formController, formDataController,SegmentType.Tag, indexForm);
         isNew = true;
         isRelease = true;
 

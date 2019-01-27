@@ -43,9 +43,9 @@ public class TagForm extends TableBasicForm implements ISegmentTableForm {
 	 * Konstruktor třídy. Zinicializuje globální proměnné tříd Nastaví velikost
 	 * formuláře
 	 */
-	public TagForm(FormController formController, FormDataController formDataController, String name, int configFormId) {
+	public TagForm(FormController formController, FormDataController formDataController, SegmentType type, int configFormId) {
 
-		super(formController, formDataController, name);
+		super(formController, formDataController, type);
 		this.setTitle("Edit Tags");
 		this.configId = configFormId;
 		createForm();

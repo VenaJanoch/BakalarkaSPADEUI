@@ -17,10 +17,7 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.WindowEvent;
-import services.Alerts;
-import services.CanvasType;
-import services.Control;
-import services.DeleteControl;
+import services.*;
 
 /**
  * Třída představující formuláře segmentu Activity, děděná od
@@ -38,9 +35,10 @@ public class ActivityForm extends DescriptionBasicForm implements ISegmentForm {
 	 * ukončení formuláře
 	 *
 	 */
-	public ActivityForm(FormController formController, FormDataController formDataController, CanvasController canvasController, DragAndDropItemPanel dgItemPanel, String name, int indexForm) {
+	public ActivityForm(FormController formController, FormDataController formDataController, CanvasController canvasController,
+						DragAndDropItemPanel dgItemPanel, SegmentType type, int indexForm) {
 
-		super(formController, formDataController, canvasController, dgItemPanel, name);
+		super(formController, formDataController, canvasController, dgItemPanel, type);
 		this. indexForm = indexForm;
 		this.setOnCloseRequest(e -> {
 

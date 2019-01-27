@@ -13,10 +13,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
-import services.Constans;
-import services.Control;
-import services.DeleteControl;
-import services.FormControl;
+import services.*;
 import model.IdentificatorCreater;
 
 /**
@@ -41,8 +38,8 @@ public class TableBasicForm extends BasicForm {
     /**
      * Konstruktor třídy Zinicializuje globální proměnné třídy
      */
-    public TableBasicForm(FormController formController, FormDataController formDataController, String name) {
-        super(formController, formDataController, name);
+    public TableBasicForm(FormController formController, FormDataController formDataController, SegmentType type) {
+        super(formController, formDataController, type);
         this.setScene(creatSceneProject());
     }
 

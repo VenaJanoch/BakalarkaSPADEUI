@@ -253,6 +253,11 @@ public class CanvasController {
         canvas.getCanvas().getChildren().addAll(relationCB, polygon);
     }
 
+
+    public void clearCanvas() {
+        canvas.clearCanvas();
+    }
+
     /** Getrs and Setrs **/
 
     public Map<Integer, CanvasItem> getListOfItemOnCanvas() {
@@ -282,6 +287,7 @@ public class CanvasController {
     public DragAndDropCanvas getCanvas() {
         return canvas;
     }
+
 
 
 }

@@ -21,6 +21,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import services.Constans;
+import services.SegmentType;
 
 /**
  * Absraktní třídy pro formuláře volané z kreslícího plátna
@@ -49,6 +50,7 @@ public abstract class BasicForm extends Stage {
     private DragAndDropCanvas canvas;
     private BorderPane dragBox;
 
+    private SegmentType segmentType;
 
     protected boolean isSave;
     protected int indexForm;
@@ -61,17 +63,17 @@ public abstract class BasicForm extends Stage {
      * Konstruktor třídy pro formuláře s vlastním plátnem Zinicializuje globální
      * proměnné třídy
      */
-    public BasicForm(FormController formController, FormDataController formDataController, CanvasController canvasController, DragAndDropItemPanel dgItem, String name) {
-        this(formController, formDataController, canvasController, name);
-        this.setTitle("Edit " + name + " Form");
+    public BasicForm(FormController formController, FormDataController formDataController, CanvasController canvasController, DragAndDropItemPanel dgItem, SegmentType type) {
+        this(formController, formDataController, canvasController, type);
+        this.setTitle("Edit " + type.name() + " Form");
         this.dgItem = dgItem;
         this.dragBox = new BorderPane();
         this.mainPanel = new BorderPane();
         this.setScene(creatSceneCanvas());
     }
 
-    public BasicForm(FormController formController, FormDataController formDataController, CanvasController canvasController, String name) {
-        this(formController, formDataController, name);
+    public BasicForm(FormController formController, FormDataController formDataController, CanvasController canvasController, SegmentType type) {
+        this(formController, formDataController, type);
         this.canvasController = canvasController;
         this.canvas = canvasController.getCanvas();
     }
@@ -80,16 +82,16 @@ public abstract class BasicForm extends Stage {
      * Konstruktor třídy pro prvky bez plátna
      */
 
-    public BasicForm(FormController formController, FormDataController formDataController, String name) {
+    public BasicForm(FormController formController, FormDataController formDataController, SegmentType type) {
         super();
-        this.setTitle("Edit " + name);
+        this.setTitle("Edit " + type.name());
         mainPanel = new BorderPane();
         this.formController = formController;
         this.formDataController = formDataController;
         this.setScene(creatSceneProject());
         this.setMinHeight(Constans.formHeight);
         this.setMinWidth(Constans.formWidth);
-
+        this.segmentType = type;
     }
 
 
@@ -218,5 +220,9 @@ public abstract class BasicForm extends Stage {
 
     public CanvasController getCanvasController() {
         return canvasController;
+    }
+
+    public SegmentType getSegmentType() {
+        return segmentType;
     }
 }

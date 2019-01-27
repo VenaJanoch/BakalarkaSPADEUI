@@ -32,12 +32,8 @@ public class DragAndDropCanvas extends ScrollPane {
 	private AnchorPane canvas;
 	private ItemContexMenu contexMenu;
 
-//	private CanvasType canvasType;
 	private CanvasController canvasController;
-//	private boolean Arrow;
-//	private boolean StartArrow;
-//	private BasicForm form;
-//	private int indexForm;
+
 
 
 
@@ -92,6 +88,10 @@ public class DragAndDropCanvas extends ScrollPane {
 
 		});
 
+	}
+
+	public void clearCanvas(){
+		canvas.getChildren().clear();
 	}
 
 	/** Getrs and Setrs **/

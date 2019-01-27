@@ -54,9 +54,10 @@ public class IterationForm extends Date2DescBasicForm implements ISegmentForm {
 	 * @param indexForm
 	 *            DeleteControl
 	 */
-	public IterationForm(FormController formController, FormDataController formDataController, CanvasController canvas, DragAndDropItemPanel dgItemPanel, String name, int indexForm) {
+	public IterationForm(FormController formController, FormDataController formDataController, CanvasController canvas, DragAndDropItemPanel dgItemPanel,
+						 SegmentType type, int indexForm) {
 
-		super(formController, formDataController ,canvas, dgItemPanel, name);
+		super(formController, formDataController ,canvas, dgItemPanel, type);
 		this.indexForm = indexForm;
 		this.setOnCloseRequest(e -> {
 
