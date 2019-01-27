@@ -68,6 +68,8 @@ public class DeleteControl {
     public ArrayList<Integer> findIndicesForDeleteData(SegmentType segmentType, ArrayList<Integer> indicesList) {
 
         switch (segmentType) {
+            case Phase:
+                return findTableToObjectIndicesForDeleteData(indicesList, mapperTableToObject.getPhaseToMilestone());
             case Branch:
                 break;
             case Priority:
@@ -83,7 +85,7 @@ public class DeleteControl {
             case RoleType:
                 break;
             case ConfigPersonRelation:
-                return findTableToObjectIndicesForDeleteData(indicesList, mapperTableToObject.getRoleToCPR());
+                return findTableToObjectIndicesForDeleteData(indicesList, mapperTableToObject.getCPRToRoleMapper());
             case Relation:
                 return findTableToObjectIndicesForDeleteData(indicesList, mapperTableToObject.getRelationToWUMapper());
             case Resolution:

@@ -8,6 +8,7 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.ComboBox;
 import services.*;
 import tables.BasicTable;
+import tables.MilestoneTable;
 
 import javax.swing.text.html.HTML;
 import javax.xml.datatype.DatatypeConfigurationException;
@@ -281,29 +282,74 @@ public class DataManipulator {
             case WorkUnit:
                 updateWUListItem(elementType, elementList);
                 break;
+            case Role:
+                for (int i : elementList){
+                    Role role = project.getRoles().get(i);
+                    role.setType(-1);
+                }
+                break;
             case Configuration:
-                for (int i : elementList) {
-                    Configuration segment = project.getConfiguration().get(i);
+
                     switch (elementType ) {
                         case Role:
-                            segment.setAuthorIndex(-1);
+                            for (int i : elementList) {
+                                Configuration segment = project.getConfiguration().get(i);
+                                segment.setAuthorIndex(-1);
+                            }
                             break;
                         default:
                     }
-                }
             default:
 
         }
     }
 
-    private void updateElementListFromSegment(ObservableList<Integer> indices, List<Integer> elementList ){
-        for(int i : indices){
-            for(int j : elementList){
-                if(j == i){
-                    elementList.remove(i);
-                }
+    private void updateElementListFromSegmet(int changeValue, List<Integer> elementList ){
+
+        int changeIndex = 0;
+        int change = 0;
+
+        for(int i = 0; i < elementList.size(); i++){
+            if(changeValue == elementList.get(i)){
+                changeIndex = i;
+                change++;
             }
         }
+
+        if(change == 0){
+                for(int i = 0; i < elementList.size(); i++){
+                    if(changeValue > elementList.get(i)){
+                        continue;
+                    }
+                    int value = elementList.get(i) - 1;
+                    elementList.set(i, value);
+                }
+            return;
+        }
+
+            for(int i = elementList.size() - 1; i >= 0 ; i--){
+                if(elementList.get(i) == changeValue){
+                    break;
+                }else {
+                    int value = elementList.get(i) - 1;
+                    elementList.set(i, value);
+                }
+
+            }
+
+            elementList.remove(changeIndex);
+
+    }
+
+    private void updateElementListFromSegment(ObservableList<Integer> indices, List<Integer> elementList ){
+
+        for (int j = indices.size() - 1; j >= 0; j--){
+
+            updateElementListFromSegmet(indices.get(j), elementList);
+
+        }
+
+
     }
 
     public void updateItemList(SegmentType formType, SegmentType elementType, ArrayList<Integer> formList, ObservableList<Integer> indices) {
@@ -315,10 +361,24 @@ public class DataManipulator {
                         case ConfigPersonRelation:
                             updateElementListFromSegment(indices, segment.getCPRsIndexs());
                             break;
+
                         default:
                     }
                 }
                 break;
+            case Milestone:
+
+                    switch (elementType ) {
+                        case Criterion:
+                            for (Milestone segment : project.getMilestones()) {
+                                 updateElementListFromSegment(indices, segment.getCriteriaIndexs());
+                            }
+                        break;
+                        default:
+                    }
+                break;
+
+                default:
 
         }
     }
@@ -496,33 +556,35 @@ public class DataManipulator {
         }
     }
 
-    public void addDataToCriterion(String nameForManipulator, String descForManipulator) {
+    public void addDataToCriterion(String nameForManipulator, String descForManipulator, int id) {
 
         Criterion criterion = objF.createCriterion();
         criterion.setDescription(descForManipulator);
         criterion.setName(nameForManipulator);
+        criterion.setId(id);
         project.getCriterions().add(criterion);
 
     }
 
     public void removeCriterion(ObservableList<Integer> indexList) {
         for(int i = indexList.size() -1; i >= 0; i-- ){
-            project.getCriterions().remove(i);
+            project.getCriterions().remove((int)indexList.get(i));
         }
     }
 
-    public void addDataToMilestone(String nameForManipulator, List<Integer> criterionIndex) {
+    public void addDataToMilestone(String nameForManipulator, List<Integer> criterionIndex, int id) {
 
         Milestone milestone = objF.createMilestone();
         milestone.getCriteriaIndexs().addAll(criterionIndex);
         milestone.setName(nameForManipulator);
+        milestone.setId(id);
         //TODO milestone description? Zjistit Zda ma byt ve formulari
         project.getMilestones().add(milestone);
     }
 
     public void removeMilestone(ObservableList<Integer> indexList) {
         for(int i = indexList.size() -1; i >= 0; i-- ){
-            project.getMilestones().remove(i);
+            project.getMilestones().remove((int)indexList.get(i));
         }
     }
     public void addDataToPriority(String nameForManipulator, String classST, String superST, int index) {
@@ -537,7 +599,7 @@ public class DataManipulator {
 
     public void removePriority(ObservableList<Integer> indexList) {
         for(int i = indexList.size() -1; i >= 0; i-- ){
-            project.getPriority().remove(i);
+            project.getPriority().remove((int)indexList.get(i));
         }
     }
 
@@ -553,7 +615,7 @@ public class DataManipulator {
 
     public void removeSeverity(ObservableList<Integer> indexList) {
         for(int i = indexList.size() -1; i >= 0; i-- ){
-            project.getSeverity().remove(i);
+            project.getSeverity().remove((int)indexList.get(i));
         }
     }
 
@@ -570,7 +632,7 @@ public class DataManipulator {
 
     public void removeRelation(ObservableList<Integer> indexList) {
         for(int i = indexList.size() -1; i >= 0; i-- ){
-            project.getRelation().remove(i);
+            project.getRelation().remove((int)indexList.get(i));
         }
     }
 
@@ -586,22 +648,23 @@ public class DataManipulator {
 
     public void removeResolution(ObservableList<Integer> indexList) {
         for(int i = indexList.size() -1; i >= 0; i-- ){
-            project.getResolution().remove(i);
+            project.getResolution().remove((int)indexList.get(i));
         }
     }
 
-    public void addDataToRole(String nameForManipulator, String descForManipulator, int type) {
+    public void addDataToRole(String nameForManipulator, String descForManipulator, int type, int id) {
 
         Role role = objF.createRole();
         role.setDescription(descForManipulator);
         role.setName(nameForManipulator);
         role.setType(type);
+        role.setId(id);
         project.getRoles().add(role);
     }
 
     public void removeRole(ObservableList<Integer> indexList) {
         for(int i = indexList.size() -1; i >= 0; i-- ){
-            project.getRoles().remove(i);
+            project.getRoles().remove((int)indexList.get(i));
         }
     }
 
@@ -616,7 +679,7 @@ public class DataManipulator {
 
     public void removeRoleType(ObservableList<Integer> indexList) {
         for(int i = indexList.size() -1; i >= 0; i-- ){
-            project.getRoleType().remove(i);
+            project.getRoleType().remove((int)indexList.get(i));
         }
     }
 
@@ -788,5 +851,28 @@ public class DataManipulator {
         newArtifact.setCreated(oldArtifact.getCreated());
         newArtifact.setAuthorIndex(oldArtifact.getAuthorIndex());
         newArtifact.setArtifactIndex(oldArtifact.getArtifactIndex());
+    }
+
+    public Phase getPhase(Integer phaseIndex) {
+        return project.getPhases().get(phaseIndex);
+    }
+
+    public ArrayList getCriterionIds(List<Integer> criterionIndex) {
+
+        List<Criterion> criterion = project.getCriterions();
+        ArrayList<Integer> existCriterionId = new ArrayList();
+        for( int i : criterionIndex){
+            if(i != -1){
+                existCriterionId.add(criterion.get(i).getId());
+            }
+
+        }
+        return existCriterionId;
+    }
+
+    public int getMilestoneId(int milestoneIndexForManipulator) {
+
+        return project.getMilestones().get(milestoneIndexForManipulator).getId();
+
     }
 }

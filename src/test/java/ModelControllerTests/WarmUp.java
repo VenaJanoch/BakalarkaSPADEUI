@@ -1,6 +1,7 @@
 package ModelControllerTests;
 
 import Controllers.ApplicationController;
+import Controllers.DataPreparer;
 import Controllers.FormController;
 import Controllers.FormDataController;
 import XML.ProcessGenerator;
@@ -26,11 +27,12 @@ public class WarmUp {
         Alerts alerts = new Alerts(file);
         ApplicationController ap = new ApplicationController(file, data, alerts, idCreator, lists);
         DeleteControl deleteControl = new DeleteControl(new SegmentLists(), mapperTableToObject, idCreator);
-        formController = new FormController(idCreator, data, ap, lists, deleteControl);
+        DataPreparer dataPreparer = new DataPreparer(idCreator);
+        formController = new FormController(idCreator, data, ap, lists, deleteControl, dataPreparer);
         for(int i = 0; i < 12; i++){
             formController.getForms().add(null);
         }
-        this.formDataController = new FormDataController(formController, deleteControl, lists, mapperTableToObject, data, idCreator);
+        this.formDataController = new FormDataController(formController, deleteControl, lists, mapperTableToObject, data, idCreator, dataPreparer);
     }
 
     public SegmentLists getLists() {

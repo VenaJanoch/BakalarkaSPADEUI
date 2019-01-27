@@ -17,12 +17,15 @@ public class MapperTableToObject {
     private Map<Integer, ArrayList<TableToObjectInstanc>> statusToWUMapper;
     private Map<Integer, ArrayList<TableToObjectInstanc>> typeToWUMapper;
     private Map<Integer, ArrayList<TableToObjectInstanc>> relationToWUMapper;
-    private Map<Integer, ArrayList<TableToObjectInstanc>> roleToWUMapper;
-    private Map<Integer, ArrayList<TableToObjectInstanc>> roleToCPR;
-    private Map<Integer, ArrayList<TableToObjectInstanc>> roleToConfiguration;
-    private Map<Integer, ArrayList<TableToObjectInstanc>> roleToArtifact;
+    private Map<Integer, ArrayList<TableToObjectInstanc>> wuToRoleMapper;
+    private Map<Integer, ArrayList<TableToObjectInstanc>> CPRToRoleMapper;
+    private Map<Integer, ArrayList<TableToObjectInstanc>> configurationToRoleMapper;
+    private Map<Integer, ArrayList<TableToObjectInstanc>> artifactToRoleMapper;
     private Map<Integer, ArrayList<TableToObjectInstanc>> configToCPR;
+    private Map<Integer, ArrayList<TableToObjectInstanc>> phaseToMilestone;
 
+
+    private ArrayList<Map<Integer, ArrayList<TableToObjectInstanc>>> roleMaps;
 
     public MapperTableToObject(SegmentLists lists) {
         this.lists = lists;
@@ -34,11 +37,24 @@ public class MapperTableToObject {
         this.statusToWUMapper = new HashMap<>();
         this.typeToWUMapper = new HashMap<>();
         this.relationToWUMapper = new HashMap<>();
-        this.roleToWUMapper = new HashMap<>();
-        this.roleToArtifact = new HashMap<>();
-        this.roleToConfiguration = new HashMap<>();
-        this.roleToCPR = new HashMap<>();
+        this.wuToRoleMapper = new HashMap<>();
+        this.artifactToRoleMapper = new HashMap<>();
+        this.configurationToRoleMapper = new HashMap<>();
+        this.CPRToRoleMapper = new HashMap<>();
         this.configToCPR = new HashMap<>();
+        this.phaseToMilestone = new HashMap<>();
+
+        this.roleMaps = new ArrayList<>();
+        initRoleMapsList();
+    }
+
+    private void initRoleMapsList(){
+        roleMaps.add(wuToRoleMapper);
+        roleMaps.add(configurationToRoleMapper);
+        roleMaps.add(artifactToRoleMapper);
+        roleMaps.add(CPRToRoleMapper);
+
+
     }
 
     public void mapTableToObject(SegmentType segmentType, ArrayList<Integer> indexList, TableToObjectInstanc instanc) {
@@ -48,7 +64,7 @@ public class MapperTableToObject {
                 addInstanceToMap(indexList, lists.getCriterionObservable(), instanc, milestoneToCriterionMapper);
                 break;
             case Configuration:
-                addInstanceToMap(indexList, lists.getRoleObservable(), instanc, roleToConfiguration);
+                addInstanceToMap(indexList, lists.getRoleObservable(), instanc, configurationToRoleMapper);
                 break;
             default:
 
@@ -62,13 +78,16 @@ public class MapperTableToObject {
                 addInstanceToMap(index, lists.getRoleTypeObservable(), instanc, roleToRoleTypeMapper);
                 break;
             case Artifact:
-                addInstanceToMap(index, lists.getRoleObservable(), instanc, roleToArtifact);
+                addInstanceToMap(index, lists.getRoleObservable(), instanc, artifactToRoleMapper);
                 break;
             case ConfigPersonRelation:
-                addInstanceToMap(index, lists.getRoleObservable(), instanc, roleToCPR);
+                addInstanceToMap(index, lists.getRoleObservable(), instanc, CPRToRoleMapper);
                 break;
             case Configuration:
-                addInstanceToMap(index, lists.getRoleObservable(), instanc, roleToConfiguration);
+                addInstanceToMap(index, lists.getRoleObservable(), instanc, configurationToRoleMapper);
+                break;
+            case Phase:
+                addInstanceToMap(index, lists.getMilestoneObservable(), instanc, phaseToMilestone);
                 break;
             default:
 
@@ -82,8 +101,8 @@ public class MapperTableToObject {
         addInstanceToMap(typeIndex, lists.getTypeObservable(), new TableToObjectInstanc(WUName, indexForm, SegmentType.WorkUnit), typeToWUMapper);
         addInstanceToMap(statusIndex, lists.getStatusTypeObservable(), new TableToObjectInstanc(WUName, indexForm, SegmentType.WorkUnit), statusToWUMapper);
         addInstanceToMap(resolutionIndex, lists.getResolutionTypeObservable(), new TableToObjectInstanc(WUName, indexForm, SegmentType.WorkUnit), resolutionToWUMapper);
-        addInstanceToMap(assigneIndex, lists.getRoleObservable(), new TableToObjectInstanc(WUName, indexForm, SegmentType.WorkUnit), roleToWUMapper );
-        addInstanceToMap(authorIndex, lists.getRoleObservable(), new TableToObjectInstanc(WUName, indexForm, SegmentType.WorkUnit), roleToWUMapper );
+        addInstanceToMap(assigneIndex, lists.getRoleObservable(), new TableToObjectInstanc(WUName, indexForm, SegmentType.WorkUnit), wuToRoleMapper);
+        addInstanceToMap(authorIndex, lists.getRoleObservable(), new TableToObjectInstanc(WUName, indexForm, SegmentType.WorkUnit), wuToRoleMapper);
     }
 
 
@@ -94,9 +113,8 @@ public class MapperTableToObject {
         }
     }
 
-    private void addInstanceToMap(int index, ObservableList<BasicTable> list, TableToObjectInstanc instanc,
+    private void addInstanceToMap(int key, ObservableList<BasicTable> list, TableToObjectInstanc instanc,
                                  Map<Integer, ArrayList<TableToObjectInstanc>> map ){
-        int key = list.get(index).getId();
         if (key != -1) {
             if (map.containsKey(key)) {
                 ArrayList tmpList = map.get(key);
@@ -112,7 +130,7 @@ public class MapperTableToObject {
     }
 
 
-    public void updateValueList(Map<Integer, ArrayList<TableToObjectInstanc>> map, ArrayList<Integer> dependencCriterion, ArrayList<Integer> ids) {
+    public void updateValueList(Map<Integer, ArrayList<TableToObjectInstanc>> map, ArrayList<Integer> ids) {
         for (int i : map.keySet()) {
             ArrayList<TableToObjectInstanc> objectList = map.get(i);
             ArrayList<TableToObjectInstanc> objectListTmp = new ArrayList<>();
@@ -137,6 +155,22 @@ public class MapperTableToObject {
         }
     }
 
+    public void deleteFromRoleMaps(ArrayList<Integer> dependencyRole) {
+        for (int i : dependencyRole) {
+            wuToRoleMapper.remove(i);
+            CPRToRoleMapper.remove(i);
+            configurationToRoleMapper.remove(i);
+            artifactToRoleMapper.remove(i);
+        }
+
+    }
+
+    public void updateRoleMaps(ArrayList<Integer> indexList) {
+        updateValueList(wuToRoleMapper, indexList);
+        updateValueList(CPRToRoleMapper, indexList);
+        updateValueList(configurationToRoleMapper, indexList);
+        updateValueList(artifactToRoleMapper, indexList);
+    }
 
 
 
@@ -176,23 +210,33 @@ public class MapperTableToObject {
         return relationToWUMapper;
     }
 
-    public Map<Integer, ArrayList<TableToObjectInstanc>> getRoleToWUMapper() {
-        return roleToWUMapper;
+    public Map<Integer, ArrayList<TableToObjectInstanc>> getWuToRoleMapper() {
+        return wuToRoleMapper;
     }
 
-    public Map<Integer, ArrayList<TableToObjectInstanc>> getRoleToCPR() {
-        return roleToCPR;
+    public Map<Integer, ArrayList<TableToObjectInstanc>> getCPRToRoleMapper() {
+        return CPRToRoleMapper;
     }
 
-    public Map<Integer, ArrayList<TableToObjectInstanc>> getRoleToConfiguration() {
-        return roleToConfiguration;
+    public Map<Integer, ArrayList<TableToObjectInstanc>> getConfigurationToRoleMapper() {
+        return configurationToRoleMapper;
     }
 
-    public Map<Integer, ArrayList<TableToObjectInstanc>> getRoleToArtifact() {
-        return roleToArtifact;
+    public Map<Integer, ArrayList<TableToObjectInstanc>> getArtifactToRoleMapper() {
+        return artifactToRoleMapper;
     }
 
     public Map<Integer, ArrayList<TableToObjectInstanc>> getConfigToCPR() {
         return configToCPR;
     }
+
+    public ArrayList<Map<Integer, ArrayList<TableToObjectInstanc>>> getRoleMaps() {
+        return roleMaps;
+    }
+
+    public Map<Integer, ArrayList<TableToObjectInstanc>> getPhaseToMilestone() {
+        return phaseToMilestone;
+    }
+
+
 }
