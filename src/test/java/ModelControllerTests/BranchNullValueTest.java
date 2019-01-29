@@ -16,6 +16,7 @@ import services.Alerts;
 import services.DeleteControl;
 import services.SegmentLists;
 import services.SegmentType;
+import tables.BranchTable;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
@@ -33,7 +34,7 @@ public class BranchNullValueTest {
             Project project = warmUp.getData().getProject();
             FormController formController = warmUp.getFormController();
             formController.createTableItem(SegmentType.Branch);
-            formDataController.saveDataFromBranch("", "",0, true);
+            formDataController.saveDataFromBranch("", new BranchTable("","YES", true, 0));
             branch = project.getBranches().get(0);
         }
 

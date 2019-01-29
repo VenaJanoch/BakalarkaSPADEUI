@@ -8,7 +8,7 @@ public class BranchTable extends BasicTable{
 
 	/** Globální proměnné třídy **/
 	private StringProperty main;
-
+	private boolean mainBool;
 	/**
 	 * Konstruktor třídy 
 	 * Zinicializuje globální proměnné
@@ -16,9 +16,10 @@ public class BranchTable extends BasicTable{
 	 * @param main hodnota main
 	 */
 	
-	public BranchTable(String name, String main, int id) {
+	public BranchTable(String name, String main, boolean isMain, int id) {
 		super(name, id);
 		this.main = new SimpleStringProperty(main);
+		this.mainBool = isMain;
 	}
 
 	/**
@@ -40,5 +41,7 @@ public class BranchTable extends BasicTable{
 		return main;
 	}
 
-
+	public boolean isMainBool() {
+		return mainBool;
+	}
 }

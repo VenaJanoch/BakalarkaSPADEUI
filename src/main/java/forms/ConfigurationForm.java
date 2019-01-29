@@ -62,7 +62,7 @@ public class ConfigurationForm extends DateBasicForm implements ISegmentForm {
     private RadioButton rbYes;
     private RadioButton rbNo;
     private DatePicker createdDP;
-    private CheckComboBox<String> branchCB;
+    private CheckComboBox<BasicTable> branchCB;
     private ComboBox<BasicTable> authorRoleCB;
     private CheckComboBox<BasicTable> cprCB;
 
@@ -74,14 +74,14 @@ public class ConfigurationForm extends DateBasicForm implements ISegmentForm {
     private TagForm tagForm;
 
     private ObservableList<BasicTable> cprList;
-    private ObservableList<String> branchList;
+    private ObservableList<BasicTable> branchList;
     private ObservableList<BasicTable> roleList;
     /**
      * Konstruktor třídy Zinicializuje globální proměnné tříd Nastaví reakci na
      * uzavření okna
      */
     public ConfigurationForm(FormController formController, FormDataController formDataController, CanvasController canvasController,
-                             DragAndDropItemPanel dgItemPanel, SegmentType type, ObservableList<BasicTable> cprList, ObservableList<String> branchList,
+                             DragAndDropItemPanel dgItemPanel, SegmentType type, ObservableList<BasicTable> cprList, ObservableList<BasicTable> branchList,
                              ObservableList<BasicTable> roleList, int indexForm) {
 
         super(formController, formDataController, canvasController, dgItemPanel, type);
@@ -156,7 +156,7 @@ public class ConfigurationForm extends DateBasicForm implements ISegmentForm {
         cprCB.getCheckModel().getCheckedItems().addListener(cprListener);
 
         branchLB = new Label("Branches");
-        branchCB = new CheckComboBox<String>(branchList);
+        branchCB = new CheckComboBox<BasicTable>(branchList);
         branchCB.setMaxWidth(Constans.checkComboBox);
         branchCB.getCheckModel().getCheckedItems().addListener(branchListener);
 
@@ -236,9 +236,9 @@ public class ConfigurationForm extends DateBasicForm implements ISegmentForm {
         }
     };
 
-    ListChangeListener<String> branchListener = new ListChangeListener<String>() {
+    ListChangeListener<BasicTable> branchListener = new ListChangeListener<BasicTable>() {
 
-        public void onChanged(ListChangeListener.Change<? extends String> c) {
+        public void onChanged(ListChangeListener.Change<? extends BasicTable> c) {
             branchIndex.addAll(branchCB.getCheckModel().getCheckedIndices());
         }
     };

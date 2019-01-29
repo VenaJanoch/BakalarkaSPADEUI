@@ -38,7 +38,7 @@ public class SegmentLists {
      **/
     private ObservableList<String> configObservable;
 
-    private ObservableList<String> branchObservable;
+    private ObservableList<BasicTable> branchObservable;
 
     private ObservableList<BasicTable> roleObservable;
 
@@ -89,7 +89,7 @@ public class SegmentLists {
         roleObservable.add(new RoleTable("","","",-1));
 
         branchObservable = FXCollections.observableArrayList();
-        branchObservable.add("");
+        branchObservable.add(new BranchTable("","", false,-1));
 
 
         artifactObservable = FXCollections.observableArrayList();
@@ -184,7 +184,7 @@ public class SegmentLists {
 
         switch (segmentType) {
             case Branch:
-                removeDataFromLis(branchObservable, indexList);
+                removeDataFromListTest(branchObservable, indexList);
                 break;
             case Priority:
                 return removeDataFromListTest(priorityTypeObservable, indexList);
@@ -228,7 +228,7 @@ public class SegmentLists {
 
         switch (segmentType) {
             case Branch:
-                branchObservable.add(segmentInfo);
+                branchObservable.add(basicTable);
             case Priority:
                 priorityTypeObservable.add(basicTable);
             case Severity:
@@ -300,7 +300,7 @@ public class SegmentLists {
         this.roleObservable = roleObservable;
     }
 
-    public ObservableList<String> getBranchObservable() {
+    public ObservableList<BasicTable> getBranchObservable() {
         return branchObservable;
     }
 

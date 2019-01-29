@@ -4,7 +4,6 @@ import SPADEPAC.*;
 import abstractform.BasicForm;
 import forms.*;
 import graphics.CanvasItem;
-import javafx.collections.ObservableList;
 import model.DataManipulator;
 import model.IdentificatorCreater;
 import services.CanvasType;
@@ -72,8 +71,8 @@ public class FormFillController {
         fillConfigurationForm();
         addExistPhaseFormToCanvas();
         addExistActivityFormToCanvas();
-        fillIterationForm();
-        fillWorkUnitForm(project.getWorkUnitIndexs(), projectCanvasController, CanvasType.Project);
+        addExistIterationFormToCanvas();
+        addExistWorkUnitFormToCanvas(project.getWorkUnitIndexs(), projectCanvasController, CanvasType.Project);
         fillLink();
 
     }
@@ -225,10 +224,10 @@ public class FormFillController {
                 isMain = "YES";
             }
 
-            BranchTable table = new BranchTable(idName, isMain, id);
+            BranchTable table = new BranchTable(idName, isMain, segment.isIsMain(), id);
 
             form.getTableTV().getItems().add(table);
-            segmentLists.getBranchObservable().add(idName);
+            segmentLists.getBranchObservable().add(table);
         }
     }
 
@@ -445,7 +444,7 @@ public class FormFillController {
 
         CanvasController canvasController = phaseForm.getCanvasController();
         canvasController.clearCanvas();
-        fillWorkUnitForm(phase.getWorkUnits(), canvasController, CanvasType.Phase);
+        addExistWorkUnitFormToCanvas(phase.getWorkUnits(), canvasController, CanvasType.Phase);
 
         return phase;
     }
@@ -461,16 +460,16 @@ public class FormFillController {
         }
     }
 
-    public void fillWorkUnitForm(int oldFormId, CanvasController canvasController){
+    public void addExistWorkUnitFormToCanvas(int oldFormId, CanvasController canvasController){
         int id = formController.createNewForm(SegmentType.WorkUnit, canvasController.getCanvasType());
         int wuId = identificatorCreater.getWorkUnitIndex(oldFormId);
         int newWUId = identificatorCreater.getWorkUnitIndex(id);
         dataManipulator.copyDataFromWorkUnit(wuId, newWUId);
-        fillWorkUnitForm(newWUId, id, canvasController);
+        addExistWorkUnitFormToCanvas(newWUId, id, canvasController);
     }
 
 
-    public void fillWorkUnitForm(int segmentId, int formId, CanvasController canvasController){
+    public WorkUnit fillWorkUnitForm(int segmentId, int formId){
         WorkUnit workUnit = project.getWorkUnits().get(segmentId);
         WorkUnitForm workUnitForm = (WorkUnitForm) forms.get(formId);
 
@@ -484,43 +483,41 @@ public class FormFillController {
         String name = dataPreparer.prepareStringForForm(workUnit.getName());
         String category = dataPreparer.prepareStringForForm(workUnit.getCategory());
         String description = dataPreparer.prepareStringForForm(workUnit.getDescription());
-        String estimate = prepareEstimateForForm(workUnit.getEstimatedTime());
+        String estimate;
+        if(workUnit.getEstimatedTime() == null){
+            estimate = "";
+        }else{
+            estimate = dataPreparer.prepareEstimateForForm(workUnit.getEstimatedTime());
+
+        }
 
         boolean isExist = false;
-        if(workUnit.isExist()){
+        if(workUnit.isExist() != null && workUnit.isExist()){
             isExist = true;
         }
 
         workUnitForm.setDataToForm(name, assigneIndex,authorIndex, category, description,estimate ,
                 priorityIndex, resolutionIndex, severityIndex, statusIndex, typeIndex, isExist);
-
-        canvasController.addCanvasItemFromExistData(SegmentType.WorkUnit, formId, workUnit.getName(), workUnit.getCoordinates().getXCoordinate(),
-                workUnit.getCoordinates().getYCoordinate(), isExist);
+        return workUnit;
 
     }
 
-    public void fillWorkUnitForm(List<Integer> workUnitsIndexs, CanvasController canvasController, CanvasType canvasType){
+    public void addExistWorkUnitFormToCanvas(List<Integer> workUnitsIndexs, CanvasController canvasController, CanvasType canvasType){
 
 
         for (int i = 0; i < workUnitsIndexs.size(); i++){
-
             int id = formController.createNewWorkUnitFormWithoutManipulator(canvasType);
-            fillWorkUnitForm(workUnitsIndexs.get(i), id, canvasController);
+            addExistWorkUnitFormToCanvas(workUnitsIndexs.get(i), id, canvasController);
 
         }
 
     }
 
-    private String prepareEstimateForForm(double estimate) {
-
-        if (estimate == -1.0){
-            return "";
-        }
-
-
-        return String.valueOf(estimate);
+    private void addExistWorkUnitFormToCanvas(int segmentId, int formId, CanvasController canvasController){
+        WorkUnit workUnit = fillWorkUnitForm(segmentId, formId);
+        canvasController.addCanvasItemFromExistData(SegmentType.WorkUnit, formId, workUnit.getName(), workUnit.getCoordinates().getXCoordinate(),
+                workUnit.getCoordinates().getYCoordinate());
     }
-
 
     public void fillLink(){
         for(int i = 0; i < project.getLinks().size(); i++){
@@ -583,7 +580,7 @@ public class FormFillController {
 
         CanvasController canvasController = activityForm.getCanvasController();
         canvasController.clearCanvas();
-        fillWorkUnitForm(activity.getWorkUnits(), canvasController, CanvasType.Activity);
+        addExistWorkUnitFormToCanvas(activity.getWorkUnits(), canvasController, CanvasType.Activity);
 
         return activity;
     }
@@ -599,19 +596,31 @@ public class FormFillController {
         }
     }
 
-    public void addExistIterationFormToCanvas(Integer iterationIndex, int formIdentificator) {
+    public void addExistIterationFormToCanvas(){
+
+        for (int i = 0; i < project.getIterations().size(); i++){
+
+            int id = formController.createNewIterationFormWithoutManipulator();
+            addExistIterationFormToCanvas(i, id);
+
+        }
     }
 
+    public void addExistIterationFormToCanvas(int segmentId, int formId){
+        Iteration iteration = fillIterationForm(segmentId, formId);
+        projectCanvasController.addCanvasItemFromExistData(SegmentType.Iteration, formId, iteration.getName(), iteration.getCoordinates().getXCoordinate(),
+                iteration.getCoordinates().getYCoordinate());
+    }
 
-    public void fillIterationForm(int oldFormId){
+    public void addExistIterationFormToCanvas(int oldFormId){
         int id = formController.createNewForm(SegmentType.Iteration, CanvasType.Iteration);
         int iteratationId = identificatorCreater.getIterationIndex(oldFormId);
         int newIterationId = identificatorCreater.getIterationIndex(id);
         dataManipulator.copyDataFromIteration(iteratationId, newIterationId);
-        fillIterationForm(newIterationId, id);
+        addExistIterationFormToCanvas(newIterationId, id);
     }
 
-    public void fillIterationForm(int segmentId, int formId){
+    public Iteration fillIterationForm(int segmentId, int formId){
         Iteration iteration = project.getIterations().get(segmentId);
         IterationForm iterationForm = (IterationForm) forms.get(formId);
 
@@ -622,26 +631,16 @@ public class FormFillController {
         iterationForm.setDataToForm(name, description, convertDateFromXML(iteration.getStartDate()), convertDateFromXML(iteration.getEndDate()),
                 confiIndex);
 
-        projectCanvasController.addCanvasItemFromExistData(SegmentType.Iteration, formId, iteration.getName(), iteration.getCoordinates().getXCoordinate(),
-                iteration.getCoordinates().getYCoordinate());
         CanvasController canvasController = iterationForm.getCanvasController();
+        canvasController.clearCanvas();
+        addExistWorkUnitFormToCanvas(iteration.getWorkUnits(), canvasController, CanvasType.Iteration);
 
-        fillWorkUnitForm(iteration.getWorkUnits(), canvasController, CanvasType.Iteration);
-
+        return iteration;
     }
 
-    public void fillIterationForm(){
-
-        for (int i = 0; i < project.getIterations().size(); i++){
-
-            int id = formController.createNewIterationFormWithoutManipulator();
-            fillIterationForm(i, id);
-
-        }
-    }
 
     /**
-     * Getrs
+     * Geters
      */
 
     public void setProjectCanvasController(CanvasController projectCanvasController) {

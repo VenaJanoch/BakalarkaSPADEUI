@@ -85,6 +85,16 @@ public class DataPreparer {
     }
 
 
+    public String prepareEstimateForForm(Double estimate) {
+
+        if (estimate == -1.0 || estimate == null){
+            return "";
+        }
+
+
+        return String.valueOf(estimate);
+    }
+
     public int prepareIndexForManipulator(int index){
         //if(index != 0){
         //  return  index -1;

@@ -1,6 +1,5 @@
 package Controllers;
 
-import SPADEPAC.Criterion;
 import SPADEPAC.Milestone;
 import SPADEPAC.Role;
 import abstractform.BasicForm;
@@ -301,16 +300,16 @@ public class FormController {
         BasicForm form = forms.get(formIdentificator);
         switch (form.getSegmentType()){
             case Phase:
-                formFillController.addExistPhaseFormToCanvas(identificatorCreater.getPhaseIndex(formIdentificator), formIdentificator);
+                formFillController.fillPhaseForm(identificatorCreater.getPhaseIndex(formIdentificator), formIdentificator);
                 break;
             case Iteration:
-                formFillController.addExistIterationFormToCanvas(identificatorCreater.getIterationIndex(formIdentificator), formIdentificator);
+                formFillController.fillIterationForm(identificatorCreater.getIterationIndex(formIdentificator), formIdentificator);
                 break;
             case Activity:
-                formFillController.addExistActivityFormToCanvas(identificatorCreater.getActivityIndex(formIdentificator), formIdentificator);
+                formFillController.fillActivityForm(identificatorCreater.getActivityIndex(formIdentificator), formIdentificator);
                 break;
             case WorkUnit:
-                // formFillController.fillWorkUnitForm(identificatorCreater.getWorkUnitIndex(formIdentificator), formIdentificator);
+                formFillController.fillWorkUnitForm(identificatorCreater.getWorkUnitIndex(formIdentificator), formIdentificator);
                 break;
             case Change:
                 //  formFillController.fillChangeForm(identificatorCreater.getIterationIndex(formIdentificator), formIdentificator);break;

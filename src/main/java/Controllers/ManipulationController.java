@@ -114,13 +114,13 @@ public class ManipulationController {
                 formFillController.addExistPhaseFormToCanvas(oldFormIndex);
                 break;
             case Iteration:
-                formFillController.fillIterationForm(oldFormIndex);
+                formFillController.addExistIterationFormToCanvas(oldFormIndex);
                 break;
             case Activity:
                 formFillController.addExistActivityFormToCanvas(oldFormIndex);
                 break;
             case WorkUnit:
-                formFillController.fillWorkUnitForm(oldFormIndex, canvasController);
+                formFillController.addExistWorkUnitFormToCanvas(oldFormIndex, canvasController);
                 break;
             case Change:
                 formFillController.fillChangeForm(oldFormIndex, canvasController);

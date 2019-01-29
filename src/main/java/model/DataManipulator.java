@@ -277,26 +277,64 @@ public class DataManipulator {
     }
 
 
-    public void updateItemList(SegmentType formType, SegmentType elementType, ArrayList<Integer> elementList){
+    public void updateItemList(SegmentType formType, SegmentType elementType, ArrayList<Integer> elementIndexList){
+        if (elementIndexList == null){
+            return;
+        }
         switch (formType) {
             case WorkUnit:
-                updateWUListItem(elementType, elementList);
+                updateWUListItem(elementType, elementIndexList);
+                break;
+            case Milestone:
+
+                switch (elementType ) {
+                    case Criterion:
+                        for (Milestone segment : project.getMilestones()) {
+                            updateElementListFromSegment(elementIndexList, segment.getCriteriaIndexs());
+                        }
+                        break;
+                    default:
+                }
                 break;
             case Role:
-                for (int i : elementList){
-                    Role role = project.getRoles().get(i);
-                    role.setType(-1);
+                for (Role segment : project.getRoles()) {
+                    for(int i : elementIndexList){
+                        int type = segment.getType();
+                        if( type == i ){
+                            segment.setType(-1);
+                        }else if(type > i ){
+                            segment.setType(type - 1);
+                        }
+                    }
+
                 }
+
                 break;
             case Configuration:
 
                     switch (elementType ) {
                         case Role:
-                            for (int i : elementList) {
-                                Configuration segment = project.getConfiguration().get(i);
-                                segment.setAuthorIndex(-1);
+                            for (Configuration segment : project.getConfiguration()) {
+                                for(int i : elementIndexList){
+                                    int type = segment.getAuthorIndex();
+                                    if( type == i ){
+                                        segment.setAuthorIndex(-1);
+                                    }else if(type > i ){
+                                        segment.setAuthorIndex(type - 1);
+                                    }
+                                }
+
                             }
                             break;
+                        case ConfigPersonRelation:
+                            for (Configuration segment : project.getConfiguration()) {
+                                updateElementListFromSegment(elementIndexList, segment.getCPRsIndexs());
+                            }
+                            break;
+                        case Branch:
+                            for (Configuration segment : project.getConfiguration()) {
+                                updateElementListFromSegment(elementIndexList, segment.getBranchesIndexs());
+                            }
                         default:
                     }
             default:
@@ -341,94 +379,98 @@ public class DataManipulator {
 
     }
 
-    private void updateElementListFromSegment(ObservableList<Integer> indices, List<Integer> elementList ){
+    private void updateElementListFromSegment(ArrayList<Integer> indices, List<Integer> elementList ){
 
         for (int j = indices.size() - 1; j >= 0; j--){
 
             updateElementListFromSegmet(indices.get(j), elementList);
 
         }
-
-
     }
 
-    public void updateItemList(SegmentType formType, SegmentType elementType, ArrayList<Integer> formList, ObservableList<Integer> indices) {
-        switch (formType) {
-            case Configuration:
-                for (int i : formList) {
-                    Configuration segment = project.getConfiguration().get(i);
-                    switch (elementType ) {
-                        case ConfigPersonRelation:
-                            updateElementListFromSegment(indices, segment.getCPRsIndexs());
-                            break;
+    private void updateWUListItem(SegmentType type, ArrayList<Integer> elementIndexList) {
 
-                        default:
-                    }
-                }
-                break;
-            case Milestone:
-
-                    switch (elementType ) {
-                        case Criterion:
-                            for (Milestone segment : project.getMilestones()) {
-                                 updateElementListFromSegment(indices, segment.getCriteriaIndexs());
-                            }
-                        break;
-                        default:
-                    }
-                break;
-
-                default:
-
-        }
-    }
-
-
-
-
-    private void updateWUListItem(SegmentType type, ArrayList<Integer> wuList) {
         switch (type) {
             case Priority:
-                for (int i : wuList){
-                    WorkUnit wu = project.getWorkUnits().get(i);
-                    wu.setPriorityIndex(-1);
+                for (WorkUnit segment : project.getWorkUnits()) {
+                    for(int i : elementIndexList){
+                        int index = segment.getPriorityIndex();
+                        if( index == i ){
+                            segment.setPriorityIndex(-1);
+                        }else if(index > i ){
+                            segment.setPriorityIndex(index - 1);
+                        }
+                    }
                 }
                 break;
             case Severity:
-                for (int i : wuList){
-                    WorkUnit wu = project.getWorkUnits().get(i);
-                    wu.setSeverityIndex(-1);
+                for (WorkUnit segment : project.getWorkUnits()) {
+                    for(int i : elementIndexList){
+                        int index = segment.getSeverityIndex();
+                        if( index == i ){
+                            segment.setSeverityIndex(-1);
+                        }else if(index > i ){
+                            segment.setSeverityIndex(index - 1);
+                        }
+                    }
                 }
                 break;
             case Role:
-                for (int i : wuList){
-                    WorkUnit wu = project.getWorkUnits().get(i);
-                    wu.setAssigneeIndex(-1);
-                    wu.setAuthorIndex(-1);
+                for (WorkUnit segment : project.getWorkUnits()) {
+                    for(int i : elementIndexList){
+                        int index = segment.getAuthorIndex();
+                        int index2 = segment.getAssigneeIndex();
+                        if( index == i ){
+                            segment.setAuthorIndex(-1);
+                        }else if(index > i ){
+                            segment.setAuthorIndex(index - 1);
+                        }
+                        if( index2 == i ){
+                            segment.setAssigneeIndex(-1);
+                        }else if(index2 > i ){
+                            segment.setAssigneeIndex(index2 - 1);
+                        }
+                    }
                 }
                 break;
             case Resolution:
-                for (int i : wuList){
-                    WorkUnit wu = project.getWorkUnits().get(i);
-                    wu.setResolutionIndex(-1);
+                for (WorkUnit segment : project.getWorkUnits()) {
+                    for(int i : elementIndexList){
+                        int index = segment.getResolutionIndex();
+                        if( index == i ){
+                            segment.setResolutionIndex(-1);
+                        }else if(index > i ){
+                            segment.setResolutionIndex(index - 1);
+                        }
+                    }
                 }
                 break;
             case Status:
-                for (int i : wuList){
-                    WorkUnit wu = project.getWorkUnits().get(i);
-                    wu.setStatusIndex(-1);
+                for (WorkUnit segment : project.getWorkUnits()) {
+                    for(int i : elementIndexList){
+                        int index = segment.getStatusIndex();
+                        if( index == i ){
+                            segment.setStatusIndex(-1);
+                        }else if(index > i ){
+                            segment.setStatusIndex(index - 1);
+                        }
+                    }
                 }
                 break;
             case Type:
-                for (int i : wuList){
-                    WorkUnit wu = project.getWorkUnits().get(i);
-                   wu.setTypeIndex(-1);
+
+                for (WorkUnit segment : project.getWorkUnits()) {
+                    for(int i : elementIndexList){
+                        int index = segment.getTypeIndex();
+                        if( index == i ){
+                            segment.setTypeIndex(-1);
+                        }else if(index > i ){
+                            segment.setTypeIndex(index - 1);
+                        }
+                    }
                 }
             case Relation:
-                for (int i : wuList){
-                    WorkUnit wu = project.getWorkUnits().get(i);
-                    wu.setRelationIndex(-1);
-                }
+
                 break;
             default:
 
@@ -541,18 +583,19 @@ public class DataManipulator {
 
     }
 
-    public void addDataToCPR(String nameForManipulator, int roleIndex, int configIndex) {
+    public void addDataToCPR(String nameForManipulator, int roleIndex, int configIndex, int id) {
 
         ConfigPersonRelation cpr = objF.createConfigPersonRelation();
         cpr.setConfigurationIndex(configIndex);
         cpr.setPersonIndex(roleIndex);
         cpr.setName(nameForManipulator);
+        cpr.setId(id);
         project.getCpr().add(cpr);
     }
 
     public void removeCPR(ObservableList<Integer> indexList) {
         for(int i = indexList.size() -1; i >= 0; i-- ){
-            project.getCpr().remove(i);
+            project.getCpr().remove((int)indexList.get(i));
         }
     }
 
@@ -603,12 +646,13 @@ public class DataManipulator {
         }
     }
 
-    public void addDataToSeverity(String nameForManipulator, String classST, String superST, int index) {
+    public void addDataToSeverity(String nameForManipulator, String classST, String superST, int id) {
 
         Severity severity = objF.createSeverity();
         severity.setSeverityClass(classST);
         severity.setSeveritySuperClass(superST);
         severity.setName(nameForManipulator);
+        severity.setId(id);
         project.getSeverity().add(severity);
 
     }
@@ -636,12 +680,13 @@ public class DataManipulator {
         }
     }
 
-    public void addDataToResolution(String nameForManipulator, String classST, String superST, int index) {
+    public void addDataToResolution(String nameForManipulator, String classST, String superST, int id) {
 
         Resolution resolution = objF.createResolution();
         resolution.setResolutionClass(classST);
         resolution.setResolutionSuperClass(superST);
         resolution.setName(nameForManipulator);
+        resolution.setId(id);
         project.getResolution().add(resolution);
 
     }
@@ -668,12 +713,13 @@ public class DataManipulator {
         }
     }
 
-    public void addDataToRoleType(String nameForManipulator, String classST, String superST, int index) {
+    public void addDataToRoleType(String nameForManipulator, String classST, String superST, int id) {
 
         RoleType roleType = objF.createRoleType();
         roleType.setRoleClass(classST);
         roleType.setRoleSuperClass(superST);
         roleType.setName(nameForManipulator);
+        roleType.setId(id);
         project.getRoleType().add(roleType);
     }
 
@@ -696,33 +742,35 @@ public class DataManipulator {
 
     }
 
-    public void addDataToStatus(String nameForManipulator, String classST, String superST, int index) {
+    public void addDataToStatus(String nameForManipulator, String classST, String superST, int id) {
 
         Status status = objF.createStatus();
         status.setStatusClass(classST);
         status.setStatusSuperClass(superST);
         status.setName(nameForManipulator);
+        status.setId(id);
         project.getStatus().add(status);
     }
 
     public void removeStatus(ObservableList<Integer> indexList) {
         for(int i = indexList.size() -1; i >= 0; i-- ){
-            project.getStatus().remove(i);
+            project.getStatus().remove((int)indexList.get(i));
         }
     }
 
-    public void addDataToType(String nameForManipulator, String classST, String superST, int index) {
+    public void addDataToType(String nameForManipulator, String classST, String superST, int id) {
 
         Type type = objF.createType();
         type.setTypeClass(classST);
         type.setTypeSuperClass(superST);
         type.setName(nameForManipulator);
+        type.setId(id);
         project.getTypes().add(type);
     }
 
     public void removeType(ObservableList<Integer> indexList) {
         for(int i = indexList.size() -1; i >= 0; i-- ){
-            project.getTypes().remove(i);
+            project.getTypes().remove((int)indexList.get(i));
         }
     }
 
@@ -874,5 +922,13 @@ public class DataManipulator {
 
         return project.getMilestones().get(milestoneIndexForManipulator).getId();
 
+    }
+
+    public int roleTypeIndex(int typeFormManipulator) {
+        int index = typeFormManipulator;
+        if(typeFormManipulator != -1){
+            index = project.getRoleType().get(typeFormManipulator).getId();
+        }
+        return index;
     }
 }

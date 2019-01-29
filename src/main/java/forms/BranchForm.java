@@ -129,10 +129,7 @@ public class BranchForm extends TableBasicForm implements ISegmentTableForm {
             }
             else{
                 ArrayList<BasicTable> list = new ArrayList<>(selection);
-                formDataController.deleteBranch(list);
-                tableTV.getItems().removeAll(selection);
-                tableTV.getSelectionModel().clearSelection();
-
+                formDataController.deleteBranch(list, getTableTV());
             }
         }
 
@@ -186,12 +183,13 @@ public class BranchForm extends TableBasicForm implements ISegmentTableForm {
         int id = formController.createTableItem(SegmentType.Branch);
         String idName = id + "_" + nameST;
 
-        BranchTable branch = new BranchTable(idName, main, id);
+        BranchTable branch = new BranchTable(idName, main, isMain, id);
         tableTV.getItems().add(branch);
         tableTV.sort();
 
-        formDataController.saveDataFromBranch(nameST, idName, id, isMain);
+        formDataController.saveDataFromBranch(nameST,branch);
     }
+
 
     public TableView<BranchTable> getTableTV() {
         return tableTV;

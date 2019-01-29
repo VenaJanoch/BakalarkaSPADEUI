@@ -20,6 +20,7 @@ public class MapperTableToObject {
     private Map<Integer, ArrayList<TableToObjectInstanc>> wuToRoleMapper;
     private Map<Integer, ArrayList<TableToObjectInstanc>> CPRToRoleMapper;
     private Map<Integer, ArrayList<TableToObjectInstanc>> configurationToRoleMapper;
+    private Map<Integer, ArrayList<TableToObjectInstanc>> configurationToBranchMapper;
     private Map<Integer, ArrayList<TableToObjectInstanc>> artifactToRoleMapper;
     private Map<Integer, ArrayList<TableToObjectInstanc>> configToCPR;
     private Map<Integer, ArrayList<TableToObjectInstanc>> phaseToMilestone;
@@ -43,6 +44,7 @@ public class MapperTableToObject {
         this.CPRToRoleMapper = new HashMap<>();
         this.configToCPR = new HashMap<>();
         this.phaseToMilestone = new HashMap<>();
+        this.configurationToBranchMapper = new HashMap<>();
 
         this.roleMaps = new ArrayList<>();
         initRoleMapsList();
@@ -88,6 +90,9 @@ public class MapperTableToObject {
                 break;
             case Phase:
                 addInstanceToMap(index, lists.getMilestoneObservable(), instanc, phaseToMilestone);
+                break;
+            case Branch: // Todo predelat na vetev pro Configuration
+                addInstanceToMap(index, lists.getBranchObservable(), instanc, configurationToBranchMapper);
                 break;
             default:
 
@@ -238,5 +243,7 @@ public class MapperTableToObject {
         return phaseToMilestone;
     }
 
-
+    public Map<Integer, ArrayList<TableToObjectInstanc>> getConfigurationToBranchMapper() {
+        return configurationToBranchMapper;
+    }
 }
