@@ -9,7 +9,7 @@ public class RoleTable extends BasicTable {
      * Globální proměnné třídy
      **/
     private StringProperty type;
-    private StringProperty desc;
+    private StringProperty description;
 
     /**
      * Konstruktor třídy
@@ -22,7 +22,7 @@ public class RoleTable extends BasicTable {
     public RoleTable(String name, String desc, String type, int id) {
         super(name, id);
         this.type = new SimpleStringProperty(type);
-        this.desc = new SimpleStringProperty(desc);
+        this.description = new SimpleStringProperty(desc);
     }
 
     /**
@@ -48,12 +48,12 @@ public class RoleTable extends BasicTable {
 
     }
 
-    public final String getDesc() {
-        return desc.get();
+    public final String getDescription() {
+        return description.get();
     }
 
-    public final void setDesc(String desc) {
-        this.desc.set(desc);
+    public final void setDescription(String description) {
+        this.description.set(description);
 
     }
 

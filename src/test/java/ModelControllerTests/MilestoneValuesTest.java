@@ -40,7 +40,8 @@ public class MilestoneValuesTest {
             list.add(1);
             list.add(3);
             list.add(4);
-            formDataController.saveDataFromMilestoneForm("Jmeno1", list, new MilestoneTable("0_Jmeno1", "", 0));
+            formDataController.saveDataFromMilestoneForm("Jmeno1","", list, new MilestoneTable("0_Jmeno1","Desc",
+                    "", 0));
             milestone = project.getMilestones().get(0);
         }
 

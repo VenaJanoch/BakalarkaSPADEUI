@@ -32,7 +32,7 @@ public class CPRValueTest {
             FormController formController = warmUp.getFormController();
 
             formController.createTableItem(SegmentType.ConfigPersonRelation);
-            formDataController.saveDataFromCPR("Jmeno1", 3, 0, new CPRTable("0_Jmeno1","3",0));
+            formDataController.saveDataFromCPR("Jmeno1", 3, new CPRTable("0_Jmeno1","3",0));
             cpr = project.getCpr().get(0);
         }
 

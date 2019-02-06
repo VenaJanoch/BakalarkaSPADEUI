@@ -89,7 +89,7 @@ public class FormFillController {
         ConfigTable table = new ConfigTable(idName, isRelease, formId);
 
         configTable.getTableTV().getItems().add(table);
-        segmentLists.getConfigObservable().add(idName);
+        segmentLists.getConfigObservable().add(table);
     }
 
     private void fillConfigurationForm() {
@@ -124,7 +124,8 @@ public class FormFillController {
         form.setDataToForm(name, createdDate, authorIndex, cprIndexs, branchIndexs);
         TableView<TagTable> tagView =  form.getTagForm().getTableTV();
         for(int j = 0; j < configuration.getTags().size(); j++){
-            TagTable tagTable = new TagTable(configuration.getTags().get(j));
+            id = identificatorCreater.createTagID();
+            TagTable tagTable = new TagTable(configuration.getTags().get(j), id);
             tagView.getItems().add(tagTable);
         }
         CanvasController canvasController = form.getCanvasController();
@@ -369,7 +370,7 @@ public class FormFillController {
             int id = formController.createTableItem(SegmentType.Milestone);
             String idName = dataPreparer.createTableItemIdName(id, milestone.getName());
             String criterion = dataPreparer.prepareIndexForTable(milestone.getCriteriaIndexs(), segmentLists.getCriterionObservable()).toString();
-            MilestoneTable milestoneTable = new MilestoneTable(idName, criterion, id);
+            MilestoneTable milestoneTable = new MilestoneTable(idName, milestone.getDescription(), criterion, id);
             milestoneForm.getTableTV().getItems().add(milestoneTable);
             segmentLists.getMilestoneObservable().add(milestoneTable);
         }
@@ -646,6 +647,7 @@ public class FormFillController {
     public void setProjectCanvasController(CanvasController projectCanvasController) {
         this.projectCanvasController = projectCanvasController;
     }
+
 
 
 }

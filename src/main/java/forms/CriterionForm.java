@@ -3,21 +3,20 @@ package forms;
 import Controllers.FormController;
 import Controllers.FormDataController;
 import abstractform.TableBasicForm;
+import controlPanels.CriterionControlPanel;
 import interfaces.ISegmentTableForm;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
-import javafx.scene.control.Label;
-import javafx.scene.control.SelectionMode;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import services.Alerts;
@@ -26,9 +25,7 @@ import services.DeleteControl;
 import model.IdentificatorCreater;
 import services.SegmentType;
 import sun.text.resources.FormatData;
-import tables.BasicTable;
-import tables.BranchTable;
-import tables.CriterionTable;
+import tables.*;
 
 import java.util.ArrayList;
 
@@ -46,7 +43,8 @@ public class CriterionForm extends TableBasicForm implements ISegmentTableForm {
 	private Label descriptionLB;
 	private TextField descriptionTF;
 	private TableView<CriterionTable> tableTV;
-
+	private CriterionControlPanel criterionControlPanel;
+	private CriterionControlPanel editCriterionControlPanel;
 	/**
 	 * Konstruktor třídy Zinicializuje globální proměnné tříd
 	 *
@@ -55,10 +53,28 @@ public class CriterionForm extends TableBasicForm implements ISegmentTableForm {
 
 	 public CriterionForm(FormController formController, FormDataController formDataController, SegmentType type) {
 		super(formController, formDataController, type);
-
+		criterionControlPanel = new CriterionControlPanel("Add", formDataController);
+		editCriterionControlPanel = new CriterionControlPanel("Edit", formDataController);
+		editCriterionControlPanel.createControlPanel();
 		getSubmitButton().setVisible(false);
+		 setEventHandler();
 		createForm();
+	}
 
+	@Override
+	protected void setEventHandler() {
+		OnMousePressedEventHandler = new EventHandler<MouseEvent>() {
+
+			@Override
+			public void handle(MouseEvent t) {
+				if(t.getClickCount() == 2) {
+					CriterionTable criterionTable = tableTV.getSelectionModel().getSelectedItems().get(0);
+					if (criterionTable != null) {
+						editCriterionControlPanel.showEditControlPanel(criterionTable, tableTV);
+					}
+				}
+			}
+		};
 	}
 
 	@Override
@@ -87,7 +103,7 @@ public class CriterionForm extends TableBasicForm implements ISegmentTableForm {
 		descriptionColumn.setCellFactory(TextFieldTableCell.forTableColumn());
 
 		tableTV.getColumns().addAll(nameColumn, descriptionColumn);
-
+		tableTV.setOnMousePressed(OnMousePressedEventHandler);
 		tableTV.setEditable(false);
 
 		tableTV.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
@@ -122,31 +138,39 @@ public class CriterionForm extends TableBasicForm implements ISegmentTableForm {
 
 	}
 
+	/**
+	 * EventHandler pro určení prvku z tabulky a zobrazní odpovídajícího
+	 * formuláře
+	 */
+	EventHandler<MouseEvent> OnMousePressedEventHandler = new EventHandler<MouseEvent>() {
+
+		@Override
+		public void handle(MouseEvent t) {
+			if(t.getClickCount() == 2) {
+				CriterionTable criterionTable = tableTV.getSelectionModel().getSelectedItems().get(0);
+				if (criterionTable != null) {
+					editCriterionControlPanel.showEditControlPanel(criterionTable, tableTV);
+				}
+			}
+		}
+	};
+
+
 	@Override
 	public GridPane createControlPane() {
 
-		descriptionLB = new Label("Description: ");
-		descriptionTF = new TextField();
+		GridPane controlPanel = criterionControlPanel.createControlPanel();
 
+		add = criterionControlPanel.getButton();
 		add.setOnAction(event -> addItem());
 
-		controlPane.add(descriptionLB, 2, 0);
-		controlPane.add(descriptionTF, 3, 0);
-		controlPane.add(add, 4, 0);
-
-		controlPane.setHgap(3);
-		controlPane.setVgap(3);
-
-		controlPane.setAlignment(Pos.CENTER);
-		controlPane.setPadding(new Insets(5));
-
-		return controlPane;
+		return controlPanel;
 	}
 
 	@Override
 	public void addItem() {
-		String nameST = nameTF.getText();
-		String descriptionST = descriptionTF.getText();
+		String nameST = criterionControlPanel.getName();
+		String descriptionST = criterionControlPanel.getDescriptionText();
 
 		int id = formController.createTableItem(SegmentType.Criterion);
 		String idName = id + "_" + nameST;

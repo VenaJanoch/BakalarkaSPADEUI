@@ -37,7 +37,7 @@ public class PhaseForm extends DateDescBasicForm implements ISegmentForm {
 	private Label configLB;
 	private Label milestoneLB;
 
-	private ChoiceBox<String> configCB;
+	private ChoiceBox<BasicTable> configCB;
 	private ChoiceBox<BasicTable> milestoneCB;
 	private int milestoneIndex;
 	private int configIndex;
@@ -161,20 +161,12 @@ public class PhaseForm extends DateDescBasicForm implements ISegmentForm {
 	/**
 	 * Getrs and Setrs
 	 */
-	public ChoiceBox<String> getConfigCB() {
+	public ChoiceBox<BasicTable> getConfigCB() {
 		return configCB;
-	}
-
-	public void setConfigCB(ChoiceBox<String> configCB) {
-		this.configCB = configCB;
 	}
 
 	public ChoiceBox<BasicTable> getMilestoneCB() {
 		return milestoneCB;
-	}
-
-	public void setMilestoneCB(ChoiceBox<BasicTable> milestoneCB) {
-		this.milestoneCB = milestoneCB;
 	}
 
 

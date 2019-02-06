@@ -2,6 +2,10 @@ package forms;
 
 import Controllers.FormController;
 import Controllers.FormDataController;
+import controlPanels.MilestoneControlPanel;
+import javafx.event.EventHandler;
+import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
 import org.controlsfx.control.CheckComboBox;
 
 import abstractform.Table2BasicForm;
@@ -12,10 +16,6 @@ import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
-import javafx.scene.control.Label;
-import javafx.scene.control.SelectionMode;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.input.KeyCode;
@@ -25,6 +25,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
 import services.*;
 import tables.BasicTable;
+import tables.CriterionTable;
 import tables.MilestoneTable;
 
 import java.util.ArrayList;
@@ -42,16 +43,15 @@ public class MilestoneForm extends Table2BasicForm implements ISegmentTableForm 
 	/**
 	 * Globální proměnné třídy
 	 */
-	private Label criteriaLB;
+
 	private Label formName;
 
-	private CheckComboBox<BasicTable> criteriaCB;
 	private TableView<MilestoneTable> tableTV;
 
 	private CriterionForm criterionForm;
 
-	private ObservableList<BasicTable> criterionArray;
-	private ObservableList<Integer> criterionIndex;
+	private MilestoneControlPanel milestoneControlPanel;
+	private MilestoneControlPanel editMilestoneControlPanel;
 
 	/**
 	 * Konstruktor třídy Zinicializuje globální proměnné třídy
@@ -61,11 +61,28 @@ public class MilestoneForm extends Table2BasicForm implements ISegmentTableForm 
 	public MilestoneForm(FormController formController, FormDataController formDataController, SegmentType type) {
 
 		super(formController, formDataController, type);
+
+		milestoneControlPanel = new MilestoneControlPanel("Add", formDataController, formController);
+		editMilestoneControlPanel = new MilestoneControlPanel("Edit", formDataController, formController);
+		editMilestoneControlPanel.createControlPanel();
+		setEventHandler();
 		createForm();
 		getSubmitBT().setOnAction(event -> setActionSubmitButton());
-		criterionIndex = FXCollections.observableArrayList();
+	}
 
+	protected void setEventHandler(){
+		OnMousePressedEventHandler = new EventHandler<MouseEvent>() {
 
+			@Override
+			public void handle(MouseEvent t) {
+				if(t.getClickCount() == 2) {
+					MilestoneTable milestoneTable = tableTV.getSelectionModel().getSelectedItems().get(0);
+					if (milestoneTable != null) {
+						editMilestoneControlPanel.showEditControlPanel(milestoneTable, tableTV);
+					}
+				}
+			}
+		};
 	}
 
 	@Override
@@ -74,17 +91,15 @@ public class MilestoneForm extends Table2BasicForm implements ISegmentTableForm 
 		formName = new Label("Milestone Form");
 		formName.setFont(Font.font(25));
 
-		getInternalPanel().setTop(formName);
-		getInternalPanel().setAlignment(formName, Pos.CENTER);
+		internalPanel.setTop(formName);
+		internalPanel.setAlignment(formName, Pos.CENTER);
 
-		getInternalPanel().setCenter(getTable());
-		getInternalPanel().setBottom(createControlPane());
+		internalPanel.setCenter(getTable());
+		internalPanel.setBottom(createControlPane());
 
 		criterionForm = (CriterionForm) formController.getForms().get(Constans.criterionFormIndex);
-
-		getMainPanel().setCenter(getInternalPanel());
-		getMainPanel().setRight(criterionForm.getMainPanel());
-
+		setEventHandler();
+		mainPanel.setRight(criterionForm.getMainPanel());
 	}
 
 	@Override
@@ -99,17 +114,23 @@ public class MilestoneForm extends Table2BasicForm implements ISegmentTableForm 
 
 		TableColumn<MilestoneTable, String> nameColumn = new TableColumn<MilestoneTable, String>("Name");
 		TableColumn<MilestoneTable, String> criterionColumn = new TableColumn<MilestoneTable, String>("Criterion");
+		TableColumn<MilestoneTable, String> descriptionColumn = new TableColumn<MilestoneTable, String>("Description");
 
 		nameColumn.setCellValueFactory(new PropertyValueFactory("name"));
 		nameColumn.setMinWidth(100);
 		nameColumn.setCellFactory(TextFieldTableCell.forTableColumn());
 
+		descriptionColumn.setCellValueFactory(new PropertyValueFactory("description"));
+		descriptionColumn.setMinWidth(100);
+		descriptionColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+
+
 		criterionColumn.setCellValueFactory(new PropertyValueFactory("criterion"));
 		criterionColumn.setMinWidth(100);
 		criterionColumn.setCellFactory(TextFieldTableCell.forTableColumn());
 
-		tableTV.getColumns().addAll(nameColumn, criterionColumn);
-
+		tableTV.getColumns().addAll(nameColumn, descriptionColumn, criterionColumn);
+		tableTV.setOnMousePressed(OnMousePressedEventHandler);
 		tableTV.setEditable(false);
 
 		tableTV.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
@@ -135,9 +156,6 @@ public class MilestoneForm extends Table2BasicForm implements ISegmentTableForm 
 			else{
 				ArrayList<BasicTable> list = new ArrayList<>(selection);
 				formDataController.deleteMilestone(list, getTableTV());
-				tableTV.getItems().removeAll(selection);
-				tableTV.getSelectionModel().clearSelection();
-
 			}
 		}
 
@@ -146,39 +164,31 @@ public class MilestoneForm extends Table2BasicForm implements ISegmentTableForm 
 	@Override
 	public GridPane createControlPane() {
 
-		criteriaLB = new Label("Criteria: ");
-		criteriaCB = new CheckComboBox<BasicTable>(formController.getCriterionObservable());
-		criteriaCB.setMaxWidth(Constans.checkComboBox);
-		criteriaCB.getCheckModel().getCheckedItems().addListener(new ListChangeListener<BasicTable>() {
+		GridPane controlPane = milestoneControlPanel.createControlPanel();
 
-			public void onChanged(ListChangeListener.Change<? extends BasicTable> c) {
-				criterionIndex = criteriaCB.getCheckModel().getCheckedIndices();
-				criterionArray = criteriaCB.getCheckModel().getCheckedItems();
-			}
-		});
+		add = milestoneControlPanel.getButton();
+		add.setOnAction(event -> addItem());
 
-		getControlPane().add(criteriaLB, 2, 0);
-		getControlPane().add(criteriaCB, 3, 0);
-		getControlPane().add(getAddBT(), 4, 0);
+		return controlPane;
 
-		getAddBT().setOnAction(event -> addItem());
-
-		return getControlPane();
 	}
 
 	@Override
 	public void addItem() {
 
-		String nameST = getNameTF().getText();
+		String nameST = milestoneControlPanel.getName();
+		String descriptionST = milestoneControlPanel.getDescriptionText();
+
 		int id = formController.createTableItem(SegmentType.Milestone);
-		ArrayList criterionList = new ArrayList<>(criterionIndex);
-		MilestoneTable milestone = formDataController.prepareMilestoneToTable(nameST, id, criterionList);
+
+		ArrayList criterionList = new ArrayList<>(milestoneControlPanel.getCriterionIndex());
+		MilestoneTable milestone = formDataController.prepareMilestoneToTable(nameST, descriptionST, id, criterionList);
+
 		tableTV.getItems().add(milestone);
 		tableTV.sort();
 
-		formDataController.saveDataFromMilestoneForm(nameST, criterionList, milestone);
-		criteriaCB.getCheckModel().clearChecks();
-
+		formDataController.saveDataFromMilestoneForm(nameST, descriptionST, criterionList, milestone);
+		milestoneControlPanel.clearCriteriaCB();
 	}
 
 	public TableView<MilestoneTable> getTableTV() {

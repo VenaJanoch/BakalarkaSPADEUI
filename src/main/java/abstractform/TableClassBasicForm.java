@@ -2,6 +2,8 @@ package abstractform;
 
 import Controllers.FormController;
 import Controllers.FormDataController;
+import javafx.event.EventHandler;
+import javafx.scene.input.MouseEvent;
 import services.ClassSwitcher;
 import services.Control;
 import services.DeleteControl;
@@ -24,19 +26,14 @@ import javafx.scene.layout.BorderPane;
  * @author Václav Janoch
  *
  */
-public class TableClassBasicForm extends TableBasicForm {
+public abstract class TableClassBasicForm extends TableBasicForm {
 	/**
 	 * Globální proměnné třídy
 	 */
-	protected Label classLB;
-	protected Label superLB;
-	private TableView<ClassTable> tableTV;
 
-	private ClassSwitcher switcher;
-	private Control control;
+	protected TableView<ClassTable> tableTV;
+	protected EventHandler<MouseEvent> OnMousePressedEventHandler;
 
-	protected int classIndex;
-	protected int superIndex;
 
 	/**
 	 * Konstruktor třídy Zinicializuje globální proměnné třídy
@@ -44,20 +41,18 @@ public class TableClassBasicForm extends TableBasicForm {
 	public TableClassBasicForm(FormController formController, FormDataController formDataController, SegmentType type) {
 
 		super(formController,formDataController, type);
-		setSwitcher(new ClassSwitcher(control));
-		classIndex = 0;
-		setSuperIndex(0);
 		createforms();
 
 	}
+
+	abstract protected void setEventHandler();
+
+
 	/**
 	 * Vytvoří TableView pro typ ClassTable
 	 * 
 	 */
 	public void createforms() {
-
-		setClassLB(new Label("Class: "));
-		setSuperLB(new Label("Super Class: "));
 
 		tableTV = new TableView<ClassTable>();
 		tableTV.setId("classTable");
@@ -86,58 +81,9 @@ public class TableClassBasicForm extends TableBasicForm {
 		tableTV.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
 		BorderPane.setMargin(tableTV, new Insets(5));
-
-	}
-
-	/**
-	 * Getrs and Setrs
-	 */
-	public ClassSwitcher getSwitcher() {
-		return switcher;
-	}
-
-	public void setSwitcher(ClassSwitcher switcher) {
-		this.switcher = switcher;
-	}
-
-	public Label getClassLB() {
-		return classLB;
-	}
-
-	public void setClassLB(Label classLB) {
-		this.classLB = classLB;
-	}
-
-	public Label getSuperLB() {
-		return superLB;
-	}
-
-	public void setSuperLB(Label superLB) {
-		this.superLB = superLB;
 	}
 
 	public TableView<ClassTable> getTableTV() {
 		return tableTV;
 	}
-
-	public void setTableTV(TableView<ClassTable> tableTV) {
-		this.tableTV = tableTV;
-	}
-
-	public int getClassIndex() {
-		return classIndex;
-	}
-
-	public void setClassIndex(int classIndex) {
-		this.classIndex = classIndex;
-	}
-
-	public int getSuperIndex() {
-		return superIndex;
-	}
-
-	public void setSuperIndex(int superIndex) {
-		this.superIndex = superIndex;
-	}
-
 }

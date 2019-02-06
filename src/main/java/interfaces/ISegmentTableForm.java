@@ -1,7 +1,9 @@
 package interfaces;
 
+import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 /**
  * Rozhraná s metodami pro práci s tabulkovými formuláři
@@ -9,6 +11,7 @@ import javafx.scene.layout.GridPane;
  *
  */
 public interface ISegmentTableForm {
+
 	/**
 	 * Metoda pro přídání prvku do interního gridPanelu
 	 */

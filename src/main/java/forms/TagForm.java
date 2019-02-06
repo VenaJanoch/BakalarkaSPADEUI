@@ -3,10 +3,14 @@ package forms;
 import Controllers.FormController;
 import Controllers.FormDataController;
 import SPADEPAC.Configuration;
+import abstractControlPane.NameControlPanel;
 import abstractform.TableBasicForm;
+import controlPanels.MilestoneControlPanel;
+import controlPanels.TagControlPanel;
 import interfaces.ISegmentTableForm;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.SelectionMode;
@@ -17,10 +21,12 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import services.*;
 import model.IdentificatorCreater;
+import tables.MilestoneTable;
 import tables.TagTable;
 
 /**
@@ -35,8 +41,8 @@ public class TagForm extends TableBasicForm implements ISegmentTableForm {
 	 * Globální proměnné třídy
 	 */
 	private TableView<TagTable> tableTV;
-	private TextField tagTF;
-
+	private TagControlPanel tagControlPanel;
+	private TagControlPanel editTagControlPanel;
 	private int configId;
 
 	/**
@@ -46,11 +52,32 @@ public class TagForm extends TableBasicForm implements ISegmentTableForm {
 	public TagForm(FormController formController, FormDataController formDataController, SegmentType type, int configFormId) {
 
 		super(formController, formDataController, type);
+		tagControlPanel = new TagControlPanel("Add", formDataController);
+		editTagControlPanel = new TagControlPanel("Edit", formDataController);
+		editTagControlPanel.createControlPanel();
+
 		this.setTitle("Edit Tags");
 		this.configId = configFormId;
 		createForm();
-
+		setEventHandler();
 	}
+
+	@Override
+	protected void setEventHandler() {
+		OnMousePressedEventHandler = new EventHandler<MouseEvent>() {
+
+			@Override
+			public void handle(MouseEvent t) {
+				if(t.getClickCount() == 2) {
+					TagTable tagTable = tableTV.getSelectionModel().getSelectedItems().get(0);
+					if (tagTable != null) {
+						editTagControlPanel.showEditControlPanel(tagTable, configId, tableTV);
+					}
+				}
+			}
+		};
+	}
+
 
 	@Override
 	public Node getTable() {
@@ -72,7 +99,7 @@ public class TagForm extends TableBasicForm implements ISegmentTableForm {
 		tagColumn.setCellFactory(TextFieldTableCell.forTableColumn());
 
 		tableTV.getColumns().addAll(numberColumn, tagColumn);
-
+		tableTV.setOnMousePressed(OnMousePressedEventHandler);
 		tableTV.setEditable(true);
 
 		tableTV.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
@@ -110,26 +137,23 @@ public class TagForm extends TableBasicForm implements ISegmentTableForm {
 	@Override
 	public GridPane createControlPane() {
 
-		getNameLB().setText("Tag");
-		tagTF = new TextField();
+		GridPane controlPane = tagControlPanel.createControlPanel();
 
-		getControlPane().add(tagTF, 1, 0);
-		getControlPane().add(getAddBT(), 2, 0);
+		add = tagControlPanel.getButton();
+		add.setOnAction(event -> addItem());
 
-		getAddBT().setOnAction(event -> addItem());
-
-		return getControlPane();
+		return controlPane;
 	}
 
 	@Override
 	public void addItem() {
-		String tagST = tagTF.getText();
+		String tagST = tagControlPanel.getName();
 		int id = formController.createTableItem(SegmentType.Tag);
 
 		String idName = id + "_" + tagST;
 
-		TagTable tag = new TagTable(idName);
-		formDataController.saveDataFromTagForm(tagST, idName, configId, id);
+		TagTable tag = new TagTable(idName, id);
+		formDataController.saveDataFromTagForm(tagST, configId, id);
 
 		tableTV.getItems().add(tag);
 		tableTV.sort();

@@ -61,7 +61,13 @@ public class ConfigurationTableForm extends Table2BasicForm implements ISegmentT
 		super(formController, formDataController, type);
 
 		createForm();
+		setEventHandler();
 		getSubmitBT().setOnAction(event -> setActionSubmitButton());
+	}
+
+	@Override
+	protected void setEventHandler() {
+
 	}
 
 	@Override
@@ -72,14 +78,12 @@ public class ConfigurationTableForm extends Table2BasicForm implements ISegmentT
 		getInternalPanel().setCenter(getTable());
 		getInternalPanel().setLeft(new SplitPane());
 
-		getMainPanel().setRight(getInternalPanel());
-		getMainPanel().setTop(formName);
-		getMainPanel().setAlignment(formName, Pos.TOP_CENTER);
+		mainPanel.setTop(formName);
+		mainPanel.setAlignment(formName, Pos.TOP_CENTER);
 
 		createConfigItem();
 		getNameTF().setVisible(false);
 		getNameLB().setVisible(false);
-
 	}
 
 	/**
@@ -91,7 +95,7 @@ public class ConfigurationTableForm extends Table2BasicForm implements ISegmentT
 
 		int id  = formController.createNewForm(SegmentType.Configuration, null);
 		getSubmitButton().setText("Add");
-		getMainPanel().setCenter(formController.getMainPanelFromForm(id));
+		mainPanel.setCenter(formController.getMainPanelFromForm(id));
 }
 
 	@Override
@@ -137,7 +141,7 @@ public class ConfigurationTableForm extends Table2BasicForm implements ISegmentT
 			ConfigTable config = tableTV.getSelectionModel().getSelectedItems().get(0);
 			if (config != null) {
 				int id = config.getIdProperty().intValue();
-				getMainPanel().setCenter(formController.getMainPanelFromForm(id));
+				mainPanel.setCenter(formController.getMainPanelFromForm(id));
 			}
 		}
 	};
@@ -154,10 +158,7 @@ public class ConfigurationTableForm extends Table2BasicForm implements ISegmentT
 			}
 			else{
 				ArrayList<BasicTable> list = new ArrayList<>(selection);
-				formController.deleteConfiguration(list);
-				tableTV.getItems().removeAll(selection);
-				tableTV.getSelectionModel().clearSelection();
-
+				formDataController.deleteConfiguration(list, getTableTV());
 			}
 		}
 

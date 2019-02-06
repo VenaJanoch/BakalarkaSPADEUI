@@ -36,7 +36,7 @@ public class SegmentLists {
     /**
      * Globální proměnné třídy
      **/
-    private ObservableList<String> configObservable;
+    private ObservableList<BasicTable> configObservable;
 
     private ObservableList<BasicTable> branchObservable;
 
@@ -83,7 +83,7 @@ public class SegmentLists {
     public void createLists() {
 
         configObservable = FXCollections.observableArrayList();
-        configObservable.add("");
+        configObservable.add(new ConfigTable("", "", -1));
 
         roleObservable = FXCollections.observableArrayList();
         roleObservable.add(new RoleTable("","","",-1));
@@ -98,7 +98,7 @@ public class SegmentLists {
         criterionObservable.add(new CriterionTable("","",-1));
 
         milestoneObservable = FXCollections.observableArrayList();
-        milestoneObservable.add(new MilestoneTable("","",-1));
+        milestoneObservable.add(new MilestoneTable("","","",-1));
 
         CPRObservable = FXCollections.observableArrayList();
         CPRObservable.add(new CPRTable("", "", -1));
@@ -180,6 +180,48 @@ public class SegmentLists {
 
     }
 
+    public int removeItemFromObservableList(SegmentType segmentType, int indexList) {
+        switch (segmentType) {
+            case Branch:
+               return removeDataFromListTest(branchObservable, indexList);
+
+            case Priority:
+                return removeDataFromListTest(priorityTypeObservable, indexList);
+            case Severity:
+                return  removeDataFromListTest(severityTypeObservable, indexList);
+            case Milestone:
+                return  removeDataFromListTest(milestoneObservable, indexList);
+            case Criterion:
+                return removeDataFromListTest(criterionObservable, indexList);
+
+            case Role:
+                return removeDataFromListTest(roleObservable, indexList);
+            case RoleType:
+                return  removeDataFromListTest(roleTypeObservable, indexList);
+
+            case ConfigPersonRelation:
+                return removeDataFromListTest(CPRObservable, indexList);
+
+            case Relation:
+                return removeDataFromListTest(relationTypeObservable, indexList);
+
+            case Resolution:
+                return removeDataFromListTest(resolutionTypeObservable, indexList);
+
+            case Status:
+                return removeDataFromListTest(statusTypeObservable, indexList);
+
+            case Type:
+                return removeDataFromListTest(typeObservable, indexList);
+
+            case Configuration:
+                return removeDataFromListTest(configObservable, indexList);
+
+            default:
+        }
+        return -1;
+    }
+
     public ArrayList<Integer> removeItemFromObservableList(SegmentType segmentType, ArrayList indexList) {
 
         switch (segmentType) {
@@ -216,7 +258,7 @@ public class SegmentLists {
                 removeDataFromListTest(typeObservable, indexList);
                 break;
             case Configuration:
-                removeDataFromLis(configObservable, indexList);
+                removeDataFromListTest(configObservable, indexList);
                 break;
             default:
 
@@ -224,63 +266,79 @@ public class SegmentLists {
         return null;
     }
 
-    public void addItemToObservableList(SegmentType segmentType, String segmentInfo, BasicTable basicTable) {
+    public void updateListItem(SegmentType segmentType, int id, BasicTable table) {
+       int listIndex =  removeItemFromObservableList(segmentType, id);
+        addItemToObservableList(segmentType, listIndex, table);
+    }
+
+    public void addItemToObservableList(SegmentType segmentType, int index, BasicTable basicTable) {
 
         switch (segmentType) {
             case Branch:
-                branchObservable.add(basicTable);
+                branchObservable.add(index, basicTable);
+                break;
             case Priority:
-                priorityTypeObservable.add(basicTable);
+                priorityTypeObservable.add(index, basicTable);
+                break;
             case Severity:
-                severityTypeObservable.add(basicTable);
+                severityTypeObservable.add(index, basicTable);
+                break;
             case Milestone:
-                milestoneObservable.add(basicTable);
+                milestoneObservable.add(index, basicTable);
+                break;
             case Criterion:
-                criterionObservable.add(basicTable);
+                criterionObservable.add(index, basicTable);
+                break;
             case Role:
-                roleObservable.add(basicTable);
+                roleObservable.add(index, basicTable);
+                break;
             case RoleType:
-                roleTypeObservable.add(basicTable);
+                roleTypeObservable.add(index, basicTable);
+                break;
             case ConfigPersonRelation:
-                CPRObservable.add(basicTable);
+                CPRObservable.add(index, basicTable);
+                break;
             case Relation:
-                relationTypeObservable.add(basicTable);
+                relationTypeObservable.add(index, basicTable);
+                break;
             case Resolution:
-                resolutionTypeObservable.add(basicTable);
+                resolutionTypeObservable.add(index, basicTable);
+                break;
             case Status:
-                statusTypeObservable.add(basicTable);
+                statusTypeObservable.add(index, basicTable);
+                break;
             case Type:
-                typeObservable.add(basicTable);
+                typeObservable.add(index, basicTable);
+                break;
             case Configuration:
-                configObservable.add(segmentInfo);
+                configObservable.add(index, basicTable);
+                break;
             default:
 
         }
 
     }
 
-
-    private void removeDataFromLis(ObservableList<String> observableList, ArrayList<Integer> indexList) {
+    private ArrayList<Integer> removeDataFromListTest(ObservableList<BasicTable> observableList, ArrayList<Integer> indexList) {
+        ArrayList<Integer> listIndicies = new ArrayList<>();
 
         for (int i = indexList.size() - 1; i >= 0; i--) {
-            observableList.remove(indexList.get(i) + 1);
+
+            listIndicies.add(removeDataFromListTest(observableList, indexList.get(i)));
+
         }
 
+        return listIndicies;
     }
 
-    private ArrayList<Integer> removeDataFromListTest(ObservableList<BasicTable> observableList, ArrayList<Integer> indexList) {
-        ArrayList<Integer> tableIndeces = new ArrayList<>();
-
-        for (int i = indexList.size() - 1; i >= 0; i--) {
-            int itemId = indexList.get(i);
+    private int removeDataFromListTest(ObservableList<BasicTable> observableList, int indexList) {
             for (int j = 0; j < observableList.size(); j++){
-                if(observableList.get(j).getId() == itemId){
+                if(observableList.get(j).getId() == indexList){
                     observableList.remove(j);
-                    tableIndeces.add(j-1);
+                    return j;
                 }
             }
-        }
-        return tableIndeces;
+            return -1;
     }
 
     /**
@@ -288,7 +346,7 @@ public class SegmentLists {
      **/
 
 
-    public ObservableList<String> getConfigObservable() {
+    public ObservableList<BasicTable> getConfigObservable() {
         return configObservable;
     }
 
@@ -348,5 +406,6 @@ public class SegmentLists {
     public ObservableList<BasicTable> getTypeObservable() {
         return typeObservable;
     }
+
 
 }

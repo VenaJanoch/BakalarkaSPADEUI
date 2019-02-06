@@ -3,11 +3,11 @@ package forms;
 import Controllers.FormController;
 import Controllers.FormDataController;
 import abstractform.Table2BasicForm;
+import controlPanels.RoleControlPanel;
 import interfaces.ISegmentTableForm;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -21,6 +21,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
@@ -49,10 +50,12 @@ public class RoleForm extends Table2BasicForm implements ISegmentTableForm {
 	private TextField descriptionTF;
 	private ChoiceBox<BasicTable> roleTypeCB;
 	private TableView<RoleTable> tableTV;
-	private int roleIndex;
 	private ClassSwitcher classSwitcher;
 	private RoleTypeForm roleTForm;
 	private Label formName;
+
+	private RoleControlPanel roleControlPanel;
+	private RoleControlPanel editRoleControlPanel;
 
 	/**
 	 * Konstruktor třídy Zinicializuje globální proměnné třídy Nastaví reakci
@@ -61,10 +64,31 @@ public class RoleForm extends Table2BasicForm implements ISegmentTableForm {
 	 */
 	public RoleForm(FormController formController, FormDataController formDataController, SegmentType type) {
 		super(formController, formDataController, type);
-		this.roleIndex = 0;
+
+		roleControlPanel = new RoleControlPanel("Add", formDataController, formController);
+		editRoleControlPanel = new RoleControlPanel("Edit", formDataController, formController);
+		editRoleControlPanel.createControlPanel();
+
+		setEventHandler();
 		createForm();
 		getSubmitBT().setOnAction(event -> setActionSubmitButton());
 
+	}
+
+	@Override
+	protected void setEventHandler() {
+		OnMousePressedEventHandler = new EventHandler<MouseEvent>() {
+
+			@Override
+			public void handle(MouseEvent t) {
+				if(t.getClickCount() == 2) {
+					RoleTable roleTable = tableTV.getSelectionModel().getSelectedItems().get(0);
+					if (roleTable != null) {
+						editRoleControlPanel.showEditControlPanel(roleTable, tableTV);
+					}
+				}
+			}
+		};
 	}
 
 	@Override
@@ -103,7 +127,7 @@ public class RoleForm extends Table2BasicForm implements ISegmentTableForm {
 		nameColumn.setMinWidth(150);
 		nameColumn.setCellFactory(TextFieldTableCell.forTableColumn());
 
-		descColumn.setCellValueFactory(new PropertyValueFactory("desc"));
+		descColumn.setCellValueFactory(new PropertyValueFactory("description"));
 		descColumn.setMinWidth(150);
 		descColumn.setCellFactory(TextFieldTableCell.forTableColumn());
 
@@ -113,7 +137,7 @@ public class RoleForm extends Table2BasicForm implements ISegmentTableForm {
 		typeColumn.setCellFactory(TextFieldTableCell.forTableColumn());
 
 		tableTV.getColumns().addAll(nameColumn,descColumn, typeColumn);
-
+		tableTV.setOnMousePressed(OnMousePressedEventHandler);
 		tableTV.setEditable(false);
 
 		tableTV.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
@@ -126,6 +150,7 @@ public class RoleForm extends Table2BasicForm implements ISegmentTableForm {
 
 		return tableTV;
 	}
+
 
 	@Override
 	public void deleteSelected(KeyEvent event) {
@@ -147,48 +172,27 @@ public class RoleForm extends Table2BasicForm implements ISegmentTableForm {
 	@Override
 	public GridPane createControlPane() {
 
-		roleTypeLB = new Label("Type: ");
-		roleTypeCB = new ChoiceBox<>(formController.getRoleTypeObservable());
-		roleTypeCB.getSelectionModel().selectedIndexProperty().addListener(roleListener);
-		roleTypeCB.setMaxWidth(Constans.checkComboBox);
-		descriptionLB = new Label("Description: ");
-		descriptionTF = new TextField();
+		GridPane controlPanel = roleControlPanel.createControlPanel();
 
-		getControlPane().add(descriptionLB, 2, 0);
-		getControlPane().add(descriptionTF, 3, 0);
-		getControlPane().add(roleTypeLB, 4, 0);
-		getControlPane().add(roleTypeCB, 5, 0);
-		getControlPane().add(getAddBT(), 6, 0);
+		add = roleControlPanel.getButton();
+		add.setOnAction(event -> addItem());
 
-		getAddBT().setOnAction(event -> addItem());
-
-		return getControlPane();
+		return controlPanel;
 	}
 
-	/**
-	 * ChangeListener pro určení indexu prvku z comboBoxu pro Role-Type
-	 */
-	ChangeListener<Number> roleListener = new ChangeListener<Number>() {
-
-		@Override
-		public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-
-			roleIndex = newValue.intValue();
-
-		}
-	};
 
 	@Override
 	public void addItem() {
-		String nameST = getNameTF().getText();
-		String descritpST = descriptionTF.getText();
+		String nameST = roleControlPanel.getName();
+		String descritpST = roleControlPanel.getDescriptionText();
+		int roleIndex = roleControlPanel.getRoleTypeIndex();
 		int id = formController.createTableItem(SegmentType.Role);
 
-		RoleTable role = formDataController.prepareRoleToTable(nameST, descritpST, id, roleIndex);
+		RoleTable role = formDataController.prepareRoleToTable(nameST, descritpST, id, roleIndex );
 		tableTV.getItems().add(role);
 		tableTV.sort();
 		formDataController.saveDataFromRoleForm(nameST, roleIndex, role);
-		roleTypeCB.getSelectionModel().clearSelection();
+		roleControlPanel.clearSelection();
 	}
 
 	/*** Getrs and Setrs ***/

@@ -2,18 +2,20 @@ package forms;
 
 import Controllers.FormController;
 import Controllers.FormDataController;
-import SPADEPAC.WorkUnitRelationClass;
-import SPADEPAC.WorkUnitRelationSuperClass;
+import SPADEPAC.*;
 import abstractform.TableClassBasicForm;
+import controlPanels.ClassControlPanel;
 import interfaces.ISegmentTableForm;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.control.ComboBox;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import services.Alerts;
 import services.Control;
@@ -33,11 +35,10 @@ import java.util.ArrayList;
  *
  */
 public class RelationForm extends TableClassBasicForm implements ISegmentTableForm {
-	/**
-	 * Globální proměnné třídy
-	 */
-	private ComboBox<WorkUnitRelationClass> classTypeCB;
-	private ComboBox<WorkUnitRelationSuperClass> superClassTypeCB;
+	private ClassControlPanel classControlPanel;
+	private ClassControlPanel editClassControlPanel;
+	private String[] classArray = new String[WorkUnitRelationClass.values().length];
+	private String[] superClassArray = new String[WorkUnitResolutionsSuperClass.values().length];
 
 	/**
 	 * Konstruktor třídy
@@ -47,10 +48,42 @@ public class RelationForm extends TableClassBasicForm implements ISegmentTableFo
 	public RelationForm(FormController formController, FormDataController formDataController, SegmentType type) {
 		super(formController, formDataController, type);
 		this.setTitle("Edit Relations");
+		
+		classControlPanel = new ClassControlPanel("Add", SegmentType.Severity, formDataController, formController);
+		editClassControlPanel = new ClassControlPanel("Edit", SegmentType.Severity, formDataController, formController);
+		int i = 0;
+		for(WorkUnitRelationClass classItem : WorkUnitRelationClass.values()){
+			classArray[i] = classItem.name();
+			i++;
+		}
+		i = 0;
+		for(WorkUnitResolutionsSuperClass superClass : WorkUnitResolutionsSuperClass.values()){
+			superClassArray[i] = superClass.name();
+			i++;
+		}
 
+		editClassControlPanel.createControlPanel(classArray, superClassArray);
+
+		setEventHandler();
 		createForm();
 		getSubmitButton().setOnAction(event -> setActionSubmitButton());
 
+	}
+
+	@Override
+	protected void setEventHandler() {
+		OnMousePressedEventHandler = new EventHandler<MouseEvent>() {
+
+			@Override
+			public void handle(MouseEvent t) {
+				if(t.getClickCount() == 2) {
+					ClassTable classTable = tableTV.getSelectionModel().getSelectedItems().get(0);
+					if (classTable != null) {
+						editClassControlPanel.showEditControlPanel(classTable, SegmentType.Relation, tableTV);
+					}
+				}
+			}
+		};
 	}
 
 	@Override
@@ -58,28 +91,27 @@ public class RelationForm extends TableClassBasicForm implements ISegmentTableFo
 		getFormName().setText("Relation Form");
 		getMainPanel().setCenter(getTable());
 		getMainPanel().setBottom(createControlPane());
-
 	}
 
 	@Override
 	public Node getTable() {
 
-		getTableTV().setOnKeyReleased(event -> deleteSelected(event));
-
-		return getTableTV();
+		tableTV.setOnKeyReleased(event -> deleteSelected(event));
+		tableTV.setOnMousePressed(OnMousePressedEventHandler);
+		return tableTV;
 	}
 
 	@Override
 	public void deleteSelected(KeyEvent event) {
 		ObservableList<ClassTable> selection = FXCollections
-				.observableArrayList(getTableTV().getSelectionModel().getSelectedItems());
+				.observableArrayList(tableTV.getSelectionModel().getSelectedItems());
 		if (event.getCode() == KeyCode.DELETE) {
 			if (selection.size() == 0) {
 				Alerts.showNoItemsDeleteAlert();
 			}
 			else{
 				ArrayList<BasicTable> list = new ArrayList<>(selection);
-				formDataController.deleteRelation(list, getTableTV());
+				formDataController.deleteRelation(list, tableTV);
 			}
 		}
 
@@ -88,82 +120,28 @@ public class RelationForm extends TableClassBasicForm implements ISegmentTableFo
 	@Override
 	public GridPane createControlPane() {
 
-		classTypeCB = new ComboBox<WorkUnitRelationClass>(
-				FXCollections.observableArrayList(WorkUnitRelationClass.values()));
-		classTypeCB.getSelectionModel().selectedIndexProperty().addListener(classListener);
+		GridPane controlPane = classControlPanel.createControlPanel(classArray, superClassArray);
 
-		superClassTypeCB = new ComboBox<WorkUnitRelationSuperClass>(
-				FXCollections.observableArrayList(WorkUnitRelationSuperClass.values()));
-		superClassTypeCB.getSelectionModel().selectedIndexProperty().addListener(superListener);
+		add = classControlPanel.getButton();
+		add.setOnAction(event -> addItem());
 
-		classTypeCB.setValue(WorkUnitRelationClass.UNASSIGNED);
-		superClassTypeCB.setValue(WorkUnitRelationSuperClass.UNASSIGNED);
-		
-		getControlPane().add(classLB, 2, 0);
-		getControlPane().add(classTypeCB, 3, 0);
-		getControlPane().add(superLB, 4, 0);
-		getControlPane().add(superClassTypeCB, 5, 0);
-		getControlPane().add(getAddBT(), 6, 0);
-
-		getAddBT().setOnAction(event -> addItem());
-
-		return getControlPane();
+		return controlPane;
 	}
-
-	/**
-	 * ChangeListener pro určení indexu prvku z comboBoxu pro Class. Zavolá metody pro mapování Class na Super Class
-	 */
-	ChangeListener<Number> classListener = new ChangeListener<Number>() {
-
-		@Override
-		public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-
-			setClassIndex(newValue.intValue());
-
-			setSuperIndex(getSwitcher().relationClassToSupperClass(getClassIndex()));
-			if (getSuperIndex() == -1) {
-				superClassTypeCB.setDisable(false);
-				superClassTypeCB.setValue(WorkUnitRelationSuperClass.values()[0]);
-				superIndex = 0;
-			} else {
-				superClassTypeCB.setDisable(true);
-				superClassTypeCB.setValue(WorkUnitRelationSuperClass.values()[getSuperIndex()]);
-			}
-		}
-	};
-
-	/**
-	 * ChangeListener pro určení indexu prvku z comboBoxu pro Super Class
-	 */
-	ChangeListener<Number> superListener = new ChangeListener<Number>() {
-
-		@Override
-		public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-
-			superIndex = newValue.intValue();
-
-		}
-	};
-
+	
 	@Override
 	public void addItem() {
-		String nameST = getNameTF().getText();
-		String classST;
+		String nameST = classControlPanel.getClassName();
 		int id = formController.createTableItem(SegmentType.Relation);
 		String idName = id + "_" + nameST;
 
-		if (classTypeCB.getValue() == null || getClassIndex() == 0) {
-			classST = WorkUnitRelationClass.UNASSIGNED.name();
-		} else {
-			classST = classTypeCB.getValue().name();
-		}
-		String superST = WorkUnitRelationSuperClass.values()[getSuperIndex()].name();
+		String classST = classControlPanel.getClassName();
+		String superST = classControlPanel.getSuperClassName();
 
 		ClassTable table = new ClassTable(idName, classST, superST, id);
 
-		getTableTV().getItems().add(table);
-		getTableTV().sort();
-	formDataController.saveDataFromRelationForm(nameST, table);
+		tableTV.getItems().add(table);
+		tableTV.sort();
+		formDataController.saveDataFromRelationForm(nameST, table);
 	}
 
 	@Override

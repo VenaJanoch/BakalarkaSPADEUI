@@ -3,7 +3,7 @@ package tables;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
-public class TagTable {
+public class TagTable extends BasicTable {
 	//TODO Zjistit zpusob mazani pripadne pridat ID
 	/** Globální proměnné třídy **/
 	private StringProperty tag;
@@ -14,8 +14,8 @@ public class TagTable {
 	 * @param tag
 	 *            String prvek pro přídání do tabulky
 	 */
-	public TagTable(String tag) {
-		super();
+	public TagTable(String tag, int id) {
+		super(tag, id);
 		this.tag = new SimpleStringProperty(tag);
 	}
 

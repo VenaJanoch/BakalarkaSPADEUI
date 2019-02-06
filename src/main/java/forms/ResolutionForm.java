@@ -2,18 +2,20 @@ package forms;
 
 import Controllers.FormController;
 import Controllers.FormDataController;
-import SPADEPAC.WorkUnitResolutionClass;
-import SPADEPAC.WorkUnitResolutionsSuperClass;
+import SPADEPAC.*;
 import abstractform.TableClassBasicForm;
+import controlPanels.ClassControlPanel;
 import interfaces.ISegmentTableForm;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.control.ComboBox;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import services.Alerts;
 import services.Control;
@@ -33,11 +35,11 @@ import java.util.ArrayList;
  *
  */
 public class ResolutionForm extends TableClassBasicForm implements ISegmentTableForm {
-	/**
-	 * Globální proměnné třídy
-	 */
-	private ComboBox<WorkUnitResolutionClass> classTypeCB;
-	private ComboBox<WorkUnitResolutionsSuperClass> superClassTypeCB;
+	
+	private ClassControlPanel classControlPanel;
+	private ClassControlPanel editClassControlPanel;
+	private String[] classArray = new String[WorkUnitResolutionClass.values().length];
+	private String[] superClassArray = new String[WorkUnitResolutionsSuperClass.values().length];
 	/**
 	 * Konstruktor třídy
 	 * Zinicializuje globální proměnné třídy
@@ -46,7 +48,23 @@ public class ResolutionForm extends TableClassBasicForm implements ISegmentTable
 	public ResolutionForm(FormController formController, FormDataController formDataController, SegmentType type) {
 		super(formController, formDataController, type);
 
+		classControlPanel = new ClassControlPanel("Add", SegmentType.Resolution, formDataController, formController);
+		editClassControlPanel = new ClassControlPanel("Edit", SegmentType.Resolution, formDataController, formController);
+		int i = 0;
+		for(WorkUnitResolutionClass classItem : WorkUnitResolutionClass.values()){
+			classArray[i] = classItem.name();
+			i++;
+		}
+		i = 0;
+		for(WorkUnitResolutionsSuperClass superClass : WorkUnitResolutionsSuperClass.values()){
+			superClassArray[i] = superClass.name();
+			i++;
+		}
+
+		editClassControlPanel.createControlPanel(classArray, superClassArray);
+		
 		this.setTitle("Edit Resolutions");
+		setEventHandler();
 		createForm();
 		getSubmitButton().setOnAction(event -> setActionSubmitButton());
 
@@ -62,17 +80,35 @@ public class ResolutionForm extends TableClassBasicForm implements ISegmentTable
 	}
 
 	@Override
+	protected void setEventHandler() {
+		OnMousePressedEventHandler = new EventHandler<MouseEvent>() {
+
+			@Override
+			public void handle(MouseEvent t) {
+				if(t.getClickCount() == 2) {
+					ClassTable classTable = tableTV.getSelectionModel().getSelectedItems().get(0);
+					if (classTable != null) {
+						editClassControlPanel.showEditControlPanel(classTable, SegmentType.Resolution, tableTV);
+					}
+				}
+			}
+		};
+
+	}
+
+	@Override
 	public Node getTable() {
 
-		getTableTV().setOnKeyReleased(event -> deleteSelected(event));
+		tableTV.setOnKeyReleased(event -> deleteSelected(event));
+		tableTV.setOnMousePressed(OnMousePressedEventHandler);
 
-		return getTableTV();
+		return tableTV;
 	}
 
 	@Override
 	public void deleteSelected(KeyEvent event) {
 		ObservableList<ClassTable> selection = FXCollections
-				.observableArrayList(getTableTV().getSelectionModel().getSelectedItems());
+				.observableArrayList(tableTV.getSelectionModel().getSelectedItems());
 
 		if (event.getCode() == KeyCode.DELETE) {
 			if (selection.size() == 0) {
@@ -80,7 +116,7 @@ public class ResolutionForm extends TableClassBasicForm implements ISegmentTable
 			}
 			else{
 				ArrayList<BasicTable> list = new ArrayList<>(selection);
-				formDataController.deleteResolution(list, getTableTV());
+				formDataController.deleteResolution(list, tableTV);
 			}
 		}
 
@@ -89,81 +125,30 @@ public class ResolutionForm extends TableClassBasicForm implements ISegmentTable
 	@Override
 	public GridPane createControlPane() {
 
-		classTypeCB = new ComboBox<WorkUnitResolutionClass>(
-				FXCollections.observableArrayList(WorkUnitResolutionClass.values()));
-		classTypeCB.getSelectionModel().selectedIndexProperty().addListener(classListener);
+		GridPane controlPane = classControlPanel.createControlPanel(classArray, superClassArray);
 
-		superClassTypeCB = new ComboBox<WorkUnitResolutionsSuperClass>(
-				FXCollections.observableArrayList(WorkUnitResolutionsSuperClass.values()));
-		superClassTypeCB.getSelectionModel().selectedIndexProperty().addListener(superListener);
+		add = classControlPanel.getButton();
+		add.setOnAction(event -> addItem());
 
-		classTypeCB.setValue(WorkUnitResolutionClass.UNASSIGNED);
-		superClassTypeCB.setValue(WorkUnitResolutionsSuperClass.UNASSIGNED);
-		
-		getControlPane().add(classLB, 2, 0);
-		getControlPane().add(classTypeCB, 3, 0);
-		getControlPane().add(superLB, 4, 0);
-		getControlPane().add(superClassTypeCB, 5, 0);
-		getControlPane().add(getAddBT(), 6, 0);
-
-		getAddBT().setOnAction(event -> addItem());
-
-		return getControlPane();
+		return controlPane;
 	}
-
-	/**
-	 * ChangeListener pro určení indexu prvku z comboBoxu pro Class. Zavolá metody pro mapování Class na Super Class
-	 */
-	ChangeListener<Number> classListener = new ChangeListener<Number>() {
-
-		@Override
-		public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-
-			setClassIndex(newValue.intValue());
-			setSuperIndex(getSwitcher().resolutionClassToSupperClass(getClassIndex()));
-			if (superIndex == -1) {
-				superClassTypeCB.setDisable(false);
-				superClassTypeCB.setValue(WorkUnitResolutionsSuperClass.values()[0]);
-				superIndex = 0;
-			} else {
-				superClassTypeCB.setDisable(true);
-				superClassTypeCB.setValue(WorkUnitResolutionsSuperClass.values()[getSuperIndex()]);
-			}
-		}
-	};
-
-	/**
-	 * ChangeListener pro určení indexu prvku z comboBoxu pro Super Class
-	 */
-	ChangeListener<Number> superListener = new ChangeListener<Number>() {
-
-		@Override
-		public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-
-			superIndex = newValue.intValue();
-
-		}
-	};
 
 	@Override
 	public void addItem() {
-		String nameST = getNameTF().getText();
-		String classST;
+		String nameST = classControlPanel.getClassName();
+
 		int id = formController.createTableItem(SegmentType.Resolution);
 		String idName = id + "_" + nameST;
 
-		if (classTypeCB.getValue() == null || getClassIndex() == 0) {
-			classST = WorkUnitResolutionClass.UNASSIGNED.name();
-		} else {
-			classST = classTypeCB.getValue().name();
-		}
-		String superST = WorkUnitResolutionsSuperClass.values()[getSuperIndex()].name();
+		String classST = classControlPanel.getClassName();
+		String superST = classControlPanel.getSuperClassName();
 
 		ClassTable table = new ClassTable(idName, classST, superST, id);
 
-		getTableTV().getItems().add(table);
-		getTableTV().sort();
-	formDataController.saveDataFromResolutionForm(nameST, table);
+		tableTV.getItems().add(table);
+		tableTV.sort();
+
+		formDataController.saveDataFromResolutionForm(nameST, table);
 	}
 
 	@Override

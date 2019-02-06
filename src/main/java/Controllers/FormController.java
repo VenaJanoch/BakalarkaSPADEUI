@@ -324,7 +324,7 @@ public class FormController {
                 tableView.getItems().clear();
                 for (int i = 0; i < milestones.size(); i++) {
                     Milestone milestone = milestones.get(i);
-                    tableView.getItems().add(dataPreparer.prepareMilestoneTable(milestone.getName(), milestone.getId(),
+                    tableView.getItems().add(dataPreparer.prepareMilestoneTable(milestone.getName(), milestone.getDescription(), milestone.getId(),
                             milestone.getCriteriaIndexs(), segmentLists.getCriterionObservable()));
 
                 }
@@ -467,23 +467,6 @@ public class FormController {
         dataManipulator.removeWorkUnit(identificatorCreater.getWorkUnitIndexMaper().get(indexForm));
     }
 
-    public void deleteConfiguration(ArrayList<BasicTable> list) {
-
-        ArrayList<Integer> indexList = deleteControl.findIndicesForDelete(list);
-        segmentLists.removeItemFromObservableList(SegmentType.Configuration, indexList);
-
-        for(int i : indexList){
-
-            if (!forms.get(i).isSave()) {
-                forms.remove(i);
-                forms.add(i, null);
-            }
-            dataManipulator.removeConfiguration(identificatorCreater.getConfigurationFormIndex(i));
-        }
-
-
-
-    }
 
     public void deleteChange(int indexForm) {
         if (!forms.get(indexForm).isSave()) {
@@ -579,14 +562,7 @@ public class FormController {
         configurationTableForm.createConfigItem();
     }
 
-    public void setEditItemInConfigurationTable(String actName, String isRelease, int indexForm, int id) {
-        ConfigTable configTable = new ConfigTable(actName, isRelease, indexForm);
-        ConfigurationTableForm configurationTableForm = (ConfigurationTableForm) forms.get(Constans.configurationFormIndex);
-        configurationTableForm.getTableTV().getItems().remove(id);
-        configurationTableForm.getTableTV().getItems().add(id,configTable);
-        configurationTableForm.getTableTV().sort();
 
-    }
 
     public void setConfigurationFormToTableForm(){
         ConfigurationTableForm configurationTableForm = (ConfigurationTableForm) forms.get(Constans.configurationFormIndex);

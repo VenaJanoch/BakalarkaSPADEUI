@@ -5,11 +5,14 @@ import Controllers.FormDataController;
 import SPADEPAC.ObjectFactory;
 import abstractform.BasicForm;
 import abstractform.TableBasicForm;
+import controlPanels.BranchControlPanel;
+import controlPanels.MilestoneControlPanel;
 import interfaces.ISegmentTableForm;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.ComboBox;
@@ -24,12 +27,14 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import services.*;
 import model.IdentificatorCreater;
 import tables.BasicTable;
 import tables.BranchTable;
+import tables.MilestoneTable;
 
 import java.util.ArrayList;
 
@@ -44,20 +49,11 @@ public class BranchForm extends TableBasicForm implements ISegmentTableForm {
     /**
      * Globální proměnné třídy
      */
-    private Label isMainLB;
-    private boolean isMain = true;
 
-    private ToggleGroup group = new ToggleGroup();
-
-    private RadioButton rbYes;
-    private RadioButton rbNo;
-
-    private ComboBox<String> branchesCB;
     private TableView<BranchTable> tableTV;
+    private BranchControlPanel branchoneControlPanel;
+    private BranchControlPanel editBranchControlPanel;
 
-    private String main = "YES";
-
-    private boolean newBranch;
 
     /**
      * Konstruktor třídy Zinicializuje globální proměnné tříd Nastaví velikost
@@ -66,12 +62,34 @@ public class BranchForm extends TableBasicForm implements ISegmentTableForm {
     public BranchForm(FormController formController, FormDataController formDataController, SegmentType type) {
         super(formController, formDataController, type);
 
+        branchoneControlPanel = new BranchControlPanel("Add", formDataController, formController);
+        editBranchControlPanel = new BranchControlPanel("Edit", formDataController, formController);
+        editBranchControlPanel.createControlPanel();
+
+
         getMainPanel().setMinSize(Constans.littleformWidth, Constans.littleformHeight);
         getMainPanel().setMaxSize(Constans.littleformWidth, Constans.littleformHeight);
 
+        setEventHandler();
         getSubmitButton().setOnAction(event -> setActionSubmitButton());
         createForm();
 
+    }
+
+    @Override
+    protected void setEventHandler() {
+        OnMousePressedEventHandler = new EventHandler<MouseEvent>() {
+
+            @Override
+            public void handle(MouseEvent t) {
+                if(t.getClickCount() == 2) {
+                    BranchTable branchTable = tableTV.getSelectionModel().getSelectedItems().get(0);
+                    if (branchTable != null) {
+                        editBranchControlPanel.showEditControlPanel(branchTable, tableTV);
+                    }
+                }
+            }
+        };
     }
 
     @Override
@@ -90,6 +108,7 @@ public class BranchForm extends TableBasicForm implements ISegmentTableForm {
     public Node getTable() {
         tableTV = new TableView<BranchTable>();
         tableTV.setId("branchTable");
+        tableTV.setEditable(false);
         TableColumn<BranchTable, String> nameColumn = new TableColumn<BranchTable, String>("Name");
         TableColumn<BranchTable, String> mainColumn = new TableColumn<BranchTable, String>("Is Main");
 
@@ -104,7 +123,7 @@ public class BranchForm extends TableBasicForm implements ISegmentTableForm {
         tableTV.getColumns().addAll(nameColumn, mainColumn);
 
         tableTV.setEditable(true);
-
+        tableTV.setOnMousePressed(OnMousePressedEventHandler);
         tableTV.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
         tableTV.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
@@ -138,52 +157,21 @@ public class BranchForm extends TableBasicForm implements ISegmentTableForm {
     @Override
     public GridPane createControlPane() {
 
-        isMainLB = new Label("Main");
+        GridPane controlPane = branchoneControlPanel.createControlPanel();
 
-        rbYes = new RadioButton("Yes");
-        rbYes.setToggleGroup(group);
-        rbYes.setSelected(true);
-        rbYes.setId("YesRB");
-        rbNo = new RadioButton("No");
-        rbNo.setToggleGroup(group);
-        rbNo.setId("NoRB");
+        add = branchoneControlPanel.getButton();
+        add.setOnAction(event -> addItem());
 
-        group.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
-
-            @Override
-            public void changed(ObservableValue<? extends Toggle> observable, Toggle oldValue, Toggle newValue) {
-                RadioButton chk = (RadioButton) newValue.getToggleGroup().getSelectedToggle();
-
-                if (chk.getText().contains("Yes")) {
-                    isMain = true;
-                    main = "YES";
-                } else {
-                    main = "NO";
-                    isMain = false;
-                }
-
-            }
-        });
-
-        getControlPane().add(isMainLB, 2, 0);
-        getControlPane().add(rbYes, 3, 0);
-        getControlPane().add(rbNo, 4, 0);
-
-        getControlPane().add(getAddBT(), 5, 0);
-
-        getAddBT().setOnAction(event -> addItem());
-
-        return getControlPane();
+        return controlPane;
     }
 
     @Override
     public void addItem() {
 
-        String nameST = getNameTF().getText();
+        String nameST = branchoneControlPanel.getName();
         int id = formController.createTableItem(SegmentType.Branch);
-        String idName = id + "_" + nameST;
 
-        BranchTable branch = new BranchTable(idName, main, isMain, id);
+        BranchTable branch = formDataController.prepareBranchToTable(nameST, branchoneControlPanel.isMain(), id);
         tableTV.getItems().add(branch);
         tableTV.sort();
 

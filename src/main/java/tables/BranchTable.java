@@ -41,7 +41,15 @@ public class BranchTable extends BasicTable{
 		return main;
 	}
 
+	public void setMain(String main) {
+		this.main.set(main);
+	}
+
 	public boolean isMainBool() {
 		return mainBool;
+	}
+
+	public void setMainBool(boolean mainBool) {
+		this.mainBool = mainBool;
 	}
 }

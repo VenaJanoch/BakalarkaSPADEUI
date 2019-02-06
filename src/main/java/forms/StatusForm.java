@@ -2,18 +2,23 @@ package forms;
 
 import Controllers.FormController;
 import Controllers.FormDataController;
+import SPADEPAC.WorkUnitSeverityClass;
+import SPADEPAC.WorkUnitSeveritySuperClass;
 import SPADEPAC.WorkUnitStatusClass;
 import SPADEPAC.WorkUnitStatusSuperClass;
 import abstractform.TableClassBasicForm;
+import controlPanels.ClassControlPanel;
 import interfaces.ISegmentTableForm;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.control.ComboBox;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import services.Alerts;
 import services.Control;
@@ -33,12 +38,10 @@ import java.util.ArrayList;
  *
  */
 public class StatusForm extends TableClassBasicForm implements ISegmentTableForm {
-	/**
-	 * Globální proměnné třídy
-	 */
-	private ComboBox<WorkUnitStatusClass> classTypeCB;
-	private ComboBox<WorkUnitStatusSuperClass> superClassTypeCB;
-
+	private ClassControlPanel classControlPanel;
+	private ClassControlPanel editClassControlPanel;
+	private String[] classArray = new String[WorkUnitStatusClass.values().length];
+	private String[] superClassArray = new String[WorkUnitStatusSuperClass.values().length];
 	/**
 	 * Konstruktor třídy Zinicializuje globální proměnné třídy Nastaví reakci na
 	 * potvrzovací tlačítko
@@ -47,10 +50,42 @@ public class StatusForm extends TableClassBasicForm implements ISegmentTableForm
 	public StatusForm(FormController formController, FormDataController formDataController, SegmentType type) {
 		super(formController, formDataController, type);
 
+		classControlPanel = new ClassControlPanel("Add", SegmentType.Status, formDataController, formController);
+		editClassControlPanel = new ClassControlPanel("Edit", SegmentType.Status, formDataController, formController);
+		int i = 0;
+		for(WorkUnitStatusClass classItem : WorkUnitStatusClass.values()){
+			classArray[i] = classItem.name();
+			i++;
+		}
+		i = 0;
+		for(WorkUnitStatusSuperClass superClass : WorkUnitStatusSuperClass.values()){
+			superClassArray[i] = superClass.name();
+			i++;
+		}
+
+		editClassControlPanel.createControlPanel(classArray, superClassArray);
+		
 		this.setTitle("Edit Status");
+		setEventHandler();
 		createForm();
 		getSubmitButton().setOnAction(event -> setActionSubmitButton());
 
+	}
+
+	@Override
+	protected void setEventHandler() {
+		OnMousePressedEventHandler = new EventHandler<MouseEvent>() {
+
+			@Override
+			public void handle(MouseEvent t) {
+				if(t.getClickCount() == 2) {
+					ClassTable classTable = tableTV.getSelectionModel().getSelectedItems().get(0);
+					if (classTable != null) {
+						editClassControlPanel.showEditControlPanel(classTable, SegmentType.Status, tableTV);
+					}
+				}
+			}
+		};
 	}
 
 	@Override
@@ -65,15 +100,15 @@ public class StatusForm extends TableClassBasicForm implements ISegmentTableForm
 	@Override
 	public Node getTable() {
 
-		getTableTV().setOnKeyReleased(event -> deleteSelected(event));
-
-		return getTableTV();
+		tableTV.setOnKeyReleased(event -> deleteSelected(event));
+		tableTV.setOnMousePressed(OnMousePressedEventHandler);
+		return tableTV;
 	}
 
 	@Override
 	public void deleteSelected(KeyEvent event) {
 		ObservableList<ClassTable> selection = FXCollections
-				.observableArrayList(getTableTV().getSelectionModel().getSelectedItems());
+				.observableArrayList(tableTV.getSelectionModel().getSelectedItems());
 
 		if (event.getCode() == KeyCode.DELETE) {
 			if (selection.size() == 0) {
@@ -81,7 +116,7 @@ public class StatusForm extends TableClassBasicForm implements ISegmentTableForm
 			}
 			else{
 				ArrayList<BasicTable> list = new ArrayList<>(selection);
-				formDataController.deleteStatus(list, getTableTV());
+				formDataController.deleteStatus(list, tableTV);
 			}
 		}
 
@@ -89,84 +124,28 @@ public class StatusForm extends TableClassBasicForm implements ISegmentTableForm
 
 	@Override
 	public GridPane createControlPane() {
+		GridPane controlPane = classControlPanel.createControlPanel(classArray, superClassArray);
 
-		classTypeCB = new ComboBox<WorkUnitStatusClass>(
-				FXCollections.observableArrayList(WorkUnitStatusClass.values()));
-		classTypeCB.getSelectionModel().selectedIndexProperty().addListener(classListener);
+		add = classControlPanel.getButton();
+		add.setOnAction(event -> addItem());
 
-		superClassTypeCB = new ComboBox<WorkUnitStatusSuperClass>(
-				FXCollections.observableArrayList(WorkUnitStatusSuperClass.values()));
-		superClassTypeCB.getSelectionModel().selectedIndexProperty().addListener(superListener);
-
-		classTypeCB.setValue(WorkUnitStatusClass.UNASSIGNED);
-		superClassTypeCB.setValue(WorkUnitStatusSuperClass.UNASSIGNED);
-
-		getControlPane().add(classLB, 2, 0);
-		getControlPane().add(classTypeCB, 3, 0);
-		getControlPane().add(superLB, 4, 0);
-		getControlPane().add(superClassTypeCB, 5, 0);
-		getControlPane().add(getAddBT(), 6, 0);
-
-		getAddBT().setOnAction(event -> addItem());
-
-		return getControlPane();
-	}
-
-	/**
-	 * ChangeListener pro určení indexu prvku z comboBoxu pro Class. Zavolá
-	 * metody pro mapování Class na Super Class
-	 */
-	ChangeListener<Number> classListener = new ChangeListener<Number>() {
-
-		@Override
-		public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-
-			classIndex = newValue.intValue();
-
-			superIndex = getSwitcher().statusClassToSupperClass(classIndex);
-			if (superIndex == -1) {
-				superClassTypeCB.setDisable(false);
-				superClassTypeCB.setValue(WorkUnitStatusSuperClass.values()[0]);
-				superIndex = 0;
-			} else {
-				superClassTypeCB.setDisable(true);
-				superClassTypeCB.setValue(WorkUnitStatusSuperClass.values()[getSuperIndex()]);
-			}
-		}
-	};
-
-	/**
-	 * ChangeListener pro určení indexu prvku z comboBoxu pro Super Class
-	 */
-	ChangeListener<Number> superListener = new ChangeListener<Number>() {
-
-		@Override
-		public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-
-			superIndex = newValue.intValue();
-
-		}
-	};
+		return controlPane;	}
 
 	@Override
 	public void addItem() {
-		String nameST = getNameTF().getText();
-		String classST;
+		String nameST = classControlPanel.getName();
+
 		int id = formController.createTableItem(SegmentType.Status);
 		String idName = id + "_" + nameST;
 
-		if (classTypeCB.getValue() == null || getClassIndex() == 0) {
-			classST = WorkUnitStatusClass.UNASSIGNED.name();
-		} else {
-			classST = classTypeCB.getValue().name();
-		}
-		String superST = WorkUnitStatusSuperClass.values()[superIndex].name();
+		String classST = classControlPanel.getClassName();
+		String superST = classControlPanel.getSuperClassName();
 
 		ClassTable table = new ClassTable(idName, classST, superST, id);
 
-		getTableTV().getItems().add(table);
-		getTableTV().sort();
-	formDataController.saveDataFromStatusForm(nameST, table);
+		tableTV.getItems().add(table);
+		tableTV.sort();
+		formDataController.saveDataFromStatusForm(nameST, table);
 	}
 
 	@Override

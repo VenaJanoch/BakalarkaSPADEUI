@@ -2,14 +2,19 @@ package forms;
 
 import Controllers.FormController;
 import Controllers.FormDataController;
+import SPADEPAC.ConfigPersonRelation;
 import SPADEPAC.ObjectFactory;
 import abstractform.BasicForm;
 import abstractform.TableBasicForm;
+import controlPanels.ClassControlPanel;
+import controlPanels.ConfigPersonRelationControlPanel;
+import controlPanels.MilestoneControlPanel;
 import interfaces.ISegmentTableForm;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.ComboBox;
@@ -21,6 +26,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import services.Alerts;
@@ -30,6 +36,7 @@ import model.IdentificatorCreater;
 import services.SegmentType;
 import tables.BasicTable;
 import tables.CPRTable;
+import tables.MilestoneTable;
 
 import java.text.Normalizer;
 import java.util.ArrayList;
@@ -46,15 +53,10 @@ public class ConfigPersonRelationForm extends TableBasicForm implements ISegment
 	/**
 	 * Globální proměnné třídy
 	 */
-	private Label personRoleLB;
-
-	private ComboBox<BasicTable> personCB;
 
 	private TableView<CPRTable> tableTV;
-
-	private int roleIndex;
-	private int configIndex;
-
+	private ConfigPersonRelationControlPanel cprControlPanel;
+	private ConfigPersonRelationControlPanel editCPRControlPanel;
 	/**
 	 * Konstruktor třídy
 	 * Zinicializuje globální proměnné tříd
@@ -65,10 +67,31 @@ public class ConfigPersonRelationForm extends TableBasicForm implements ISegment
 	public ConfigPersonRelationForm(FormController formController, FormDataController formDataController, SegmentType type) {
 		super(formController, formDataController, type);
 
+		cprControlPanel = new ConfigPersonRelationControlPanel("Add", formDataController, formController);
+		editCPRControlPanel = new ConfigPersonRelationControlPanel("Edit", formDataController, formController);
+		editCPRControlPanel.createControlPanel();
+
+		setEventHandler();
 		createForm();
 		getSubmitButton().setOnAction(event -> setActionSubmitButton());
 
 	}
+
+	@Override
+		protected void setEventHandler(){
+			OnMousePressedEventHandler = new EventHandler<MouseEvent>() {
+
+				@Override
+				public void handle(MouseEvent t) {
+					if(t.getClickCount() == 2) {
+						CPRTable cprTable = tableTV.getSelectionModel().getSelectedItems().get(0);
+						if (cprTable != null) {
+							editCPRControlPanel.showEditControlPanel(cprTable, tableTV);
+						}
+					}
+				}
+			};
+		}
 
 	@Override
 	public void setActionSubmitButton() {
@@ -82,7 +105,6 @@ public class ConfigPersonRelationForm extends TableBasicForm implements ISegment
 
 		getMainPanel().setCenter(getTable());
 		getMainPanel().setBottom(createControlPane());
-
 	}
 
 	@Override
@@ -101,7 +123,7 @@ public class ConfigPersonRelationForm extends TableBasicForm implements ISegment
 		roleColumn.setCellFactory(TextFieldTableCell.forTableColumn());
 
 		tableTV.getColumns().addAll(nameColumn, roleColumn);
-
+		tableTV.setOnMousePressed(OnMousePressedEventHandler);
 		tableTV.setEditable(false);
 
 		tableTV.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
@@ -134,45 +156,27 @@ public class ConfigPersonRelationForm extends TableBasicForm implements ISegment
 	@Override
 	public GridPane createControlPane() {
 
-		personRoleLB = new Label("Person-Role: ");
-		personCB = new ComboBox<BasicTable>(formController.getRoleObservable());
-		personCB.setVisibleRowCount(5);
-		personCB.getSelectionModel().selectedIndexProperty().addListener(roleListener);
-		personCB.setId("personCB");
-		getControlPane().add(personRoleLB, 4, 0);
-		getControlPane().add(personCB, 5, 0);
+		GridPane controlPane = cprControlPanel.createControlPanel();
 
-		getControlPane().add(getAddBT(), 6, 0);
+		add = cprControlPanel.getButton();
+		add.setOnAction(event -> addItem());
 
-		getAddBT().setOnAction(event -> addItem());
-
-		return getControlPane();
+		return controlPane;
 	}
-	/**
-	 * ChangeListener pro určení indexu prvku z comboBoxu pro Role
-	 */
-	ChangeListener<Number> roleListener = new ChangeListener<Number>() {
 
-		@Override
-		public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-
-			roleIndex = newValue.intValue();
-
-		}
-	};
 
 
 	@Override
 	public void addItem() {
 
-		BasicTable roleST = formController.getRoleObservable().get(roleIndex);
-		String nameST = getNameTF().getText();
+		String nameST = cprControlPanel.getName();
 		int id = formController.createTableItem(SegmentType.ConfigPersonRelation);
-		String idName = id + "_" + nameST;
-		CPRTable cpr = new CPRTable(idName, roleST.getName(), id);
+		int roleIndex = cprControlPanel.getRoleIndex();
+		CPRTable cpr = formDataController.prepareCPRToTable(nameST, roleIndex, id);
+
 		tableTV.getItems().add(cpr);
 		tableTV.sort();
-		formDataController.saveDataFromCPR(nameST, roleIndex, configIndex, cpr);
+		formDataController.saveDataFromCPR(nameST, roleIndex, cpr);
 	}
 
 	/** Getrs and Setrs ***/

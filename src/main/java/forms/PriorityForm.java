@@ -2,20 +2,21 @@ package forms;
 
 import Controllers.FormController;
 import Controllers.FormDataController;
-import SPADEPAC.ObjectFactory;
-import SPADEPAC.WorkUnitPriorityClass;
-import SPADEPAC.WorkUnitPrioritySuperClass;
+import SPADEPAC.*;
 import abstractform.TableClassBasicForm;
+import controlPanels.ClassControlPanel;
 import interfaces.ISegmentTableForm;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import services.Alerts;
 import services.Control;
@@ -36,14 +37,10 @@ import java.util.ArrayList;
  */
 public class PriorityForm extends TableClassBasicForm implements ISegmentTableForm {
 
-	/**
-	 * Globální proměnné třídy
-	 */
-	private ChoiceBox<WorkUnitPriorityClass> classTypeCB;
-	private ChoiceBox<WorkUnitPrioritySuperClass> superClassTypeCB;
-
-	private Label classTypeLB;
-	private Label superClassTypeLB;
+	private ClassControlPanel classControlPanel;
+	private ClassControlPanel editClassControlPanel;
+	private String[] classArray = new String[WorkUnitPriorityClass.values().length];
+	private String[] superClassArray = new String[WorkUnitPrioritySuperClass.values().length];
 
 	/**
 	 * Konstruktor třídy
@@ -53,9 +50,44 @@ public class PriorityForm extends TableClassBasicForm implements ISegmentTableFo
 	public PriorityForm(FormController formController, FormDataController formDataController, SegmentType type) {
 		super(formController, formDataController, type);
 		this.setTitle("Edit Priority");
+
+		classControlPanel = new ClassControlPanel("Add", SegmentType.Priority, formDataController, formController);
+		editClassControlPanel = new ClassControlPanel("Edit", SegmentType.Priority, formDataController, formController);
+		int i = 0;
+		for(WorkUnitPriorityClass classItem : WorkUnitPriorityClass.values()){
+			classArray[i] = classItem.name();
+			i++;
+		}
+		i = 0;
+		for(WorkUnitPrioritySuperClass superClass : WorkUnitPrioritySuperClass.values()){
+			superClassArray[i] = superClass.name();
+			i++;
+		}
+
+		editClassControlPanel.createControlPanel(classArray, superClassArray);
+
+		setEventHandler();
 		createForm();
+
 		getSubmitButton().setOnAction(event -> setActionSubmitButton());
 
+	}
+
+	@Override
+	protected void setEventHandler() {
+		OnMousePressedEventHandler = new EventHandler<MouseEvent>() {
+
+			@Override
+			public void handle(MouseEvent t) {
+				if(t.getClickCount() == 2) {
+					ClassTable classTable = tableTV.getSelectionModel().getSelectedItems().get(0);
+					if (classTable != null) {
+						editClassControlPanel.showEditControlPanel(classTable, SegmentType.Priority, tableTV);
+					}
+				}
+			}
+		};
+		
 	}
 
 	@Override
@@ -69,15 +101,15 @@ public class PriorityForm extends TableClassBasicForm implements ISegmentTableFo
 	@Override
 	public Node getTable() {
 
-		getTableTV().setOnKeyReleased(event -> deleteSelected(event));
-
-		return getTableTV();
+		tableTV.setOnKeyReleased(event -> deleteSelected(event));
+		tableTV.setOnMousePressed(OnMousePressedEventHandler);
+		return tableTV;
 	}
 
 	@Override
 	public void deleteSelected(KeyEvent event) {
 		ObservableList<ClassTable> selection = FXCollections
-				.observableArrayList(getTableTV().getSelectionModel().getSelectedItems());
+				.observableArrayList(tableTV.getSelectionModel().getSelectedItems());
 
 		if (event.getCode() == KeyCode.DELETE) {
 			if (selection.size() == 0) {
@@ -85,7 +117,7 @@ public class PriorityForm extends TableClassBasicForm implements ISegmentTableFo
 			}
 			else{
 				ArrayList<BasicTable> list = new ArrayList<>(selection);
-				formDataController.deletePriority(list, getTableTV());
+				formDataController.deletePriority(list, tableTV);
 			}
 		}
 
@@ -94,84 +126,28 @@ public class PriorityForm extends TableClassBasicForm implements ISegmentTableFo
 	@Override
 	public GridPane createControlPane() {
 
-		classTypeLB = new Label("Class: ");
-		classTypeCB = new ChoiceBox<WorkUnitPriorityClass>(
-				FXCollections.observableArrayList(WorkUnitPriorityClass.values()));
-		classTypeCB.getSelectionModel().selectedIndexProperty().addListener(classListener);
+		GridPane controlPane = classControlPanel.createControlPanel(classArray, superClassArray);
 
-		superClassTypeLB = new Label("SuperClass: ");
-		superClassTypeCB = new ChoiceBox<WorkUnitPrioritySuperClass>(
-				FXCollections.observableArrayList(WorkUnitPrioritySuperClass.values()));
-		superClassTypeCB.getSelectionModel().selectedIndexProperty().addListener(superListener);
-		
-		classTypeCB.setValue(WorkUnitPriorityClass.UNASSIGNED);
-		superClassTypeCB.setValue(WorkUnitPrioritySuperClass.UNASSIGNED);
-		
-		getControlPane().add(classLB, 2, 0);
-		getControlPane().add(classTypeCB, 3, 0);
-		getControlPane().add(superLB, 4, 0);
-		getControlPane().add(superClassTypeCB, 5, 0);
-		getControlPane().add(getAddBT(), 6, 0);
+		add = classControlPanel.getButton();
+		add.setOnAction(event -> addItem());
 
-		getAddBT().setOnAction(event -> addItem());
-
-		return getControlPane();
+		return controlPane;
 	}
-
-	/**
-	 * ChangeListener pro určení indexu prvku z comboBoxu pro Class. Zavolá metody pro mapování Class na Super Class
-	 */
-	ChangeListener<Number> classListener = new ChangeListener<Number>() {
-
-		@Override
-		public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-
-			setClassIndex(newValue.intValue());
-
-			setSuperIndex(getSwitcher().priorityClassToSupperClass(getClassIndex()));
-			if(getSuperIndex() == -1){
-				superClassTypeCB.setDisable(false);
-				superClassTypeCB.setValue(WorkUnitPrioritySuperClass.values()[0]);
-				superIndex = 0;
-			}else{
-				superClassTypeCB.setDisable(true);
-				superClassTypeCB.setValue(WorkUnitPrioritySuperClass.values()[getSuperIndex()]);
-			}
-		}
-	};
-
-	/**
-	 * ChangeListener pro určení indexu prvku z comboBoxu pro Super Class
-	 */
-	ChangeListener<Number> superListener = new ChangeListener<Number>() {
-
-		@Override
-		public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-
-			setSuperIndex(newValue.intValue());
-
-		}
-	};
-
+	
 	@Override
 	public void addItem() {
-		String nameST = getNameTF().getText();
+		String nameST = classControlPanel.getClassName();
 
-		String classST;
 		int id = formController.createTableItem(SegmentType.Priority);
 		String idName = id + "_" + nameST;
 
-		if (classTypeCB.getValue() == null || classIndex == 0) {
-		classST = WorkUnitPriorityClass.UNASSIGNED.name();	
-		}else{
-			classST = classTypeCB.getValue().name();			
-		}
-		String superST = WorkUnitPrioritySuperClass.values()[getSuperIndex()].name();
+		String classST = classControlPanel.getClassName();
+		String superST = classControlPanel.getSuperClassName();
 
 		ClassTable table = new ClassTable(idName, classST, superST, id);
 
-		getTableTV().getItems().add(table);
-		getTableTV().sort();
+		tableTV.getItems().add(table);
+		tableTV.sort();
 		formDataController.saveDataFromPriority(nameST, table);
 	}
 

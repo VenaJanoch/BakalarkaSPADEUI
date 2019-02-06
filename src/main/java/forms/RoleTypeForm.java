@@ -4,16 +4,21 @@ import Controllers.FormController;
 import Controllers.FormDataController;
 import SPADEPAC.RoleClass;
 import SPADEPAC.RoleSuperClass;
+import SPADEPAC.RoleType;
 import abstractform.TableClassBasicForm;
+import controlPanels.ClassControlPanel;
 import interfaces.ISegmentTableForm;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import services.Alerts;
 import services.Control;
@@ -22,6 +27,7 @@ import model.IdentificatorCreater;
 import services.SegmentType;
 import tables.BasicTable;
 import tables.ClassTable;
+import tables.MilestoneTable;
 
 import java.util.ArrayList;
 
@@ -33,11 +39,12 @@ import java.util.ArrayList;
  *
  */
 public class RoleTypeForm extends TableClassBasicForm implements ISegmentTableForm {
-	/**
-	 * Globální proměnné třídy
-	 */
-	private ComboBox<RoleClass> roleClassTypeCB;
-	private ComboBox<RoleSuperClass> roleSuperClassTypeCB;
+
+	private ClassControlPanel classControlPanel;
+	private ClassControlPanel editClassControlPanel;
+	private String[] classArray = new String[RoleClass.values().length];
+	private String[] superClassArray = new String[RoleSuperClass.values().length];
+
 
 	/**
 	 * Konstruktor třídy Zinicializuje globální proměnné třídy Nastaví reakci na
@@ -47,10 +54,42 @@ public class RoleTypeForm extends TableClassBasicForm implements ISegmentTableFo
 	public RoleTypeForm(FormController formController, FormDataController formDataController, SegmentType type) {
 		super(formController, formDataController, type);
 
+		classControlPanel = new ClassControlPanel("Add", SegmentType.RoleType, formDataController, formController);
+		editClassControlPanel = new ClassControlPanel("Edit", SegmentType.RoleType, formDataController, formController);
+		int i = 0;
+		for(RoleClass roleClass : RoleClass.values()){
+			classArray[i] = roleClass.name();
+			i++;
+		}
+		i = 0;
+		for(RoleSuperClass roleSuperClass : RoleSuperClass.values()){
+			superClassArray[i] = roleSuperClass.name();
+			i++;
+		}
+
+		editClassControlPanel.createControlPanel(classArray, superClassArray);
+
+		setEventHandler();
 		createForm();
 		getSubmitButton().setVisible(false);
 
 	}
+
+	protected void setEventHandler(){
+		OnMousePressedEventHandler = new EventHandler<MouseEvent>() {
+
+			@Override
+			public void handle(MouseEvent t) {
+				if(t.getClickCount() == 2) {
+					ClassTable classTable = tableTV.getSelectionModel().getSelectedItems().get(0);
+					if (classTable != null) {
+						editClassControlPanel.showEditControlPanel(classTable, SegmentType.RoleType, tableTV);
+					}
+				}
+			}
+		};
+	}
+
 
 	@Override
 	public void createForm() {
@@ -64,15 +103,15 @@ public class RoleTypeForm extends TableClassBasicForm implements ISegmentTableFo
 
 	@Override
 	public Node getTable() {
-		getTableTV().setOnKeyReleased(event -> deleteSelected(event));
-
-		return getTableTV();
+		tableTV.setOnKeyReleased(event -> deleteSelected(event));
+		tableTV.setOnMousePressed(OnMousePressedEventHandler);
+		return tableTV;
 	}
 
 	@Override
 	public void deleteSelected(KeyEvent event) {
 		ObservableList<ClassTable> selection = FXCollections
-				.observableArrayList(getTableTV().getSelectionModel().getSelectedItems());
+				.observableArrayList(tableTV.getSelectionModel().getSelectedItems());
 
 		if (event.getCode() == KeyCode.DELETE) {
 			if (selection.size() == 0) {
@@ -80,7 +119,7 @@ public class RoleTypeForm extends TableClassBasicForm implements ISegmentTableFo
 			}
 			else{
 				ArrayList<BasicTable> list = new ArrayList<>(selection);
-				formDataController.deleteRoleType(list, getTableTV());
+				formDataController.deleteRoleType(list, tableTV);
 				}
 		}
 
@@ -89,77 +128,29 @@ public class RoleTypeForm extends TableClassBasicForm implements ISegmentTableFo
 	@Override
 	public GridPane createControlPane() {
 
-		roleClassTypeCB = new ComboBox<RoleClass>(FXCollections.observableArrayList(RoleClass.values()));
-		roleClassTypeCB.getSelectionModel().selectedIndexProperty().addListener(classListener);
+		GridPane controlPane = classControlPanel.createControlPanel(classArray, superClassArray);
 
-		roleSuperClassTypeCB = new ComboBox<RoleSuperClass>(FXCollections.observableArrayList(RoleSuperClass.values()));
-		roleSuperClassTypeCB.getSelectionModel().selectedIndexProperty().addListener(superListener);
+		add = classControlPanel.getButton();
+		add.setOnAction(event -> addItem());
 
-		roleClassTypeCB.setValue(RoleClass.UNASSIGNED);
-		roleSuperClassTypeCB.setValue(RoleSuperClass.UNASSIGNED);
-
-		getControlPane().add(classLB, 0, 1);
-		getControlPane().add(roleClassTypeCB, 1, 1);
-		getControlPane().add(superLB, 3, 1);
-		getControlPane().add(roleSuperClassTypeCB, 4, 1);
-		getControlPane().add(getAddBT(), 5, 0);
-
-		getAddBT().setOnAction(event -> addItem());
-
-		return getControlPane();
+		return controlPane;
 	}
 
-	/**
-	 * ChangeListener pro určení indexu prvku z comboBoxu pro Class. Zavolá
-	 * metody pro mapování Class na Super Class
-	 */
-	ChangeListener<Number> classListener = new ChangeListener<Number>() {
-
-		@Override
-		public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-
-			setClassIndex(newValue.intValue());
-			setSuperIndex(getSwitcher().roleClassToSupperClass(getClassIndex()));
-			if (getSuperIndex() == -1) {
-				roleSuperClassTypeCB.setDisable(false);
-				roleSuperClassTypeCB.setValue(RoleSuperClass.values()[0]);
-				superIndex = 0;
-			} else {
-				roleSuperClassTypeCB.setDisable(true);
-				roleSuperClassTypeCB.setValue(RoleSuperClass.values()[getSuperIndex()]);
-			}
-		}
-	};
-	/**
-	 * ChangeListener pro určení indexu prvku z comboBoxu pro Super Class
-	 */
-	ChangeListener<Number> superListener = new ChangeListener<Number>() {
-
-		@Override
-		public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-
-			setSuperIndex(newValue.intValue());
-		}
-	};
 
 	@Override
 	public void addItem() {
-		String nameST = getNameTF().getText();
-		String classST;
+		String nameST =  classControlPanel.getName();
+
 		int id = formController.createTableItem(SegmentType.RoleType);
 		String idName = id + "_" + nameST;
 
-		if (roleClassTypeCB.getValue() == null || getClassIndex() == 0) {
-			classST = RoleClass.UNASSIGNED.name();
-		} else {
-			classST = roleClassTypeCB.getValue().name();
-		}
-		String superST = RoleSuperClass.values()[superIndex].name();
+		String classST = classControlPanel.getClassName();
+		String superST = classControlPanel.getSuperClassName();
 
 		ClassTable type = new ClassTable(idName, classST, superST, id);
 
-		getTableTV().getItems().add(type);
-		getTableTV().sort();
+		tableTV.getItems().add(type);
+		tableTV.sort();
 		formDataController.saveDataFromRoleTypeForm(nameST, type);
 	}
 

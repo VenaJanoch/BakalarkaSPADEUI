@@ -39,7 +39,7 @@ public class MilestoneNullValueTest {
             FormController formController = warmUp.getFormController();
 
             formController.createTableItem(SegmentType.Milestone);
-            formDataController.saveDataFromMilestoneForm("", new ArrayList<>(), new MilestoneTable("", "", 0));
+            formDataController.saveDataFromMilestoneForm("","", new ArrayList<>(), new MilestoneTable("","", "", 0));
             milestone = project.getMilestones().get(0);
         }
 

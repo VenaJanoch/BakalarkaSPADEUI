@@ -6,14 +6,6 @@ package services;
  */
 public class ClassSwitcher {
 
-	/** Globální proměnné třídy */
-	private Control control;
-
-	public ClassSwitcher(Control control) {
-		this.control = control;
-
-	}
-
 	/**
 	 * Rozhodovací metoda pro mapování Role Class na Super Class
 	 * 
@@ -175,4 +167,23 @@ public class ClassSwitcher {
 		}
 	}
 
+	public int ClassToSuperClass(SegmentType segmentType, int classIndex) {
+		switch (segmentType){
+			case RoleType:
+				return roleClassToSupperClass(classIndex);
+			case Severity:
+				return -1 ;
+			case Priority:
+				return priorityClassToSupperClass(classIndex);
+			case Resolution:
+				return resolutionClassToSupperClass(classIndex);
+			case Relation:
+				return relationClassToSupperClass(classIndex);
+			case Status:
+				return statusClassToSupperClass(classIndex);
+			case Type:
+				return typeClassToSupperClass(classIndex);
+		}
+		return 0;
+	}
 }

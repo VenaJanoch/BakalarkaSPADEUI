@@ -3,9 +3,7 @@ package Controllers;
 import javafx.collections.ObservableList;
 import model.IdentificatorCreater;
 import services.SegmentLists;
-import tables.BasicTable;
-import tables.MilestoneTable;
-import tables.RoleTable;
+import tables.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +24,7 @@ public class DataPreparer {
         return id + "_" + name;
     }
 
-    private String prepareDependencyArray(List dependencyArray, ObservableList observableList){
+    public String prepareDependencyArray(List dependencyArray, ObservableList observableList){
         String dependency = "";
         if (dependencyArray != null) {
             dependency = prepareIndexForTable(dependencyArray, observableList).toString();
@@ -35,7 +33,7 @@ public class DataPreparer {
         return dependency;
     }
 
-    private String prepareDependency(int dependencyIndex, ObservableList observableList){
+    public String prepareDependency(int dependencyIndex, ObservableList observableList){
         String dependency = "";
         if (dependency != null || dependencyIndex != -1) {
             dependency = observableList.get(dependencyIndex + 1).toString();
@@ -44,12 +42,12 @@ public class DataPreparer {
         return dependency;
     }
 
-    public MilestoneTable prepareMilestoneTable(String nameST, int id, List criterionArray, ObservableList observableList) {
+    public MilestoneTable prepareMilestoneTable(String nameST, String description, int id, List criterionArray, ObservableList observableList) {
 
         String idName = prepareTableName(nameST, id);
         String criterion = prepareDependencyArray(criterionArray, observableList);
 
-        return new MilestoneTable(idName, criterion, id);
+        return new MilestoneTable(idName, description, criterion, id);
     }
 
     public RoleTable prepareRoleTable(String name, String description, int id, int type, ObservableList<BasicTable> roleTypeObservable) {
@@ -57,6 +55,22 @@ public class DataPreparer {
         String typeName = prepareDependency(type, roleTypeObservable) ;
         return new RoleTable(idName, description, typeName,id);
     }
+
+    public CPRTable prepareCPRTable(String name, int roleIndex, int id, ObservableList<BasicTable> roleObservable) {
+        String idName = prepareTableName(name, id);
+        String roleName = prepareDependency(roleIndex, roleObservable) ;
+        return new CPRTable(idName, roleName, id);
+    }
+
+    public BranchTable prepareBranchTable(String name, boolean main, int id) {
+        String idName = prepareTableName(name, id);
+        String mainST = "NO";
+        if (main) {
+            mainST = "YES";
+        }
+        return new BranchTable(idName, mainST, main, id);
+    }
+
 
     public String createTableItemIdName(int id, String name){
         return id + "_" + prepareStringForForm(name);
@@ -121,4 +135,4 @@ public class DataPreparer {
     }
 
 
-}
+ }

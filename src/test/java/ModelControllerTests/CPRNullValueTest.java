@@ -34,7 +34,7 @@ public class CPRNullValueTest {
 
 
             formController.createTableItem(SegmentType.ConfigPersonRelation);
-            formDataController.saveDataFromCPR("", 0,1, new CPRTable("","",0));
+            formDataController.saveDataFromCPR("", 0, new CPRTable("","",0));
             cpr = project.getCpr().get(0);
         }
 
@@ -54,8 +54,8 @@ public class CPRNullValueTest {
             assertSame(0, cpr.getPersonIndex());
         }
 
-        @Test
-        public void testConfigIndex() {
-            assertSame(0, cpr.getConfigurationIndex() );
-        }
+       // @Test
+       // public void testConfigIndex() {
+       //     assertSame(0, cpr.getConfigurationIndex() );
+       // }
 }

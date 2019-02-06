@@ -2,6 +2,7 @@ package abstractform;
 
 import Controllers.FormController;
 import Controllers.FormDataController;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
@@ -10,6 +11,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.SplitPane;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import services.Constans;
@@ -21,19 +23,17 @@ import services.SegmentType;
  * @author Václav Janoch
  */
 
-public class Table2BasicForm extends BasicForm {
+public abstract class Table2BasicForm extends BasicForm {
     /**
      * Globální proměnné třídy
      */
-    private Label nameLB;
-    private TextField nameTF;
-    private BorderPane mainPanel;
+    protected BorderPane mainPanel;
     private Scene scena;
-    private BorderPane internalPanel;
-    private GridPane controlPane;
-    private Button addBT;
+    protected BorderPane internalPanel;
     private Button submitBT;
     private SplitPane splitPane;
+    protected Button add;
+    protected EventHandler<MouseEvent> OnMousePressedEventHandler;
 
     /**
      * Konstruktor třídy Zinicializuje globální proměnné třídy
@@ -46,6 +46,7 @@ public class Table2BasicForm extends BasicForm {
         this.setMinWidth(Constans.twoFormWidth);
     }
 
+    abstract protected void setEventHandler();
 
     @Override
     void createForm() {
@@ -74,35 +75,16 @@ public class Table2BasicForm extends BasicForm {
         mainPanel = new BorderPane();
         mainPanel.setPadding(new Insets(5));
 
-        controlPane = new GridPane();
         internalPanel = new BorderPane();
-
-        internalPanel.setBottom(controlPane);
-
         splitPane = new SplitPane();
         splitPane.setMinWidth(10);
         internalPanel.setRight(splitPane);
 
+        mainPanel.setCenter(internalPanel);
+
         submitBT = new Button("OK");
         submitBT.setId("formSubmit");
         submitBT.setAlignment(Pos.BOTTOM_CENTER);
-
-        nameLB = new Label("Name: ");
-        nameTF = new TextField();
-        nameTF.setId("formName");
-        addBT = new Button("Add");
-
-        addBT.setPrefWidth(60);
-        addBT.setPrefHeight(60);
-
-        controlPane.add(nameLB, 0, 0);
-        controlPane.add(nameTF, 1, 0);
-
-        controlPane.setHgap(3);
-        controlPane.setVgap(3);
-
-        controlPane.setAlignment(Pos.CENTER);
-        controlPane.setPadding(new Insets(5));
 
         mainPanel.setBottom(submitBT);
         mainPanel.setAlignment(submitBT, Pos.TOP_RIGHT);
@@ -111,30 +93,6 @@ public class Table2BasicForm extends BasicForm {
     }
 
     /**** Getrs and Setrs ***/
-
-    public TextField getNameTF() {
-        return nameTF;
-    }
-
-    public void setNameTF(TextField nameTF) {
-        this.nameTF = nameTF;
-    }
-
-    public GridPane getControlPane() {
-        return controlPane;
-    }
-
-    public void setControlPane(GridPane controlPane) {
-        this.controlPane = controlPane;
-    }
-
-    public Button getAddBT() {
-        return addBT;
-    }
-
-    public void setAddBT(Button addBT) {
-        this.addBT = addBT;
-    }
 
     public Button getSubmitBT() {
         return submitBT;
@@ -158,14 +116,6 @@ public class Table2BasicForm extends BasicForm {
 
     public void setInternalPanel(BorderPane internalPanel) {
         this.internalPanel = internalPanel;
-    }
-
-    public Label getNameLB() {
-        return nameLB;
-    }
-
-    public void setNameLB(Label nameLB) {
-        this.nameLB = nameLB;
     }
 
 }

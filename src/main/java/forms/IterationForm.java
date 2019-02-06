@@ -29,6 +29,7 @@ import services.CanvasType;
 import services.Control;
 import services.DeleteControl;
 import services.SegmentType;
+import tables.BasicTable;
 
 /**
  * Třída představující formulář pro segment Iteration, odděděná od třídy
@@ -44,7 +45,7 @@ public class IterationForm extends Date2DescBasicForm implements ISegmentForm {
 	 */
 	private Label configLB;
 
-	private ChoiceBox<String> configCB;
+	private ChoiceBox<BasicTable> configCB;
 
 	private int chooseConfigID;
 
@@ -142,11 +143,11 @@ public class IterationForm extends Date2DescBasicForm implements ISegmentForm {
 
 	/*** Getrs and Setrs ***/
 
-	public ChoiceBox<String> getConfigCB() {
+	public ChoiceBox<BasicTable> getConfigCB() {
 		return configCB;
 	}
 
-	public void setConfigCB(ChoiceBox<String> configCB) {
+	public void setConfigCB(ChoiceBox<BasicTable> configCB) {
 		this.configCB = configCB;
 	}
 

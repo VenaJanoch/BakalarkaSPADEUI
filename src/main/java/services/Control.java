@@ -49,7 +49,7 @@ public class Control {
 	public Control() {
 
 
-		classSwitcher = new ClassSwitcher(this);
+		classSwitcher = new ClassSwitcher();
 
 		formControl = new FormControl(); // Prendat jinam nemuze byt v modelu
 
