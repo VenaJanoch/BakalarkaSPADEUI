@@ -63,13 +63,8 @@ public class RoleControlPanel extends DescriptionControlPanel {
         descriptionTF.setText(roleData[1]);
 
         button.setOnAction(event ->{
-            roleTable.setName(id + "_" + nameTF.getText());
-            roleTable.setDescription(descriptionTF.getText());
-            formDataController.editDataFromRole(nameTF.getText(), roleTable, roleTypeIndex, id);
-            tableView.refresh();
-            nameTF.setText("");
-            descriptionTF.setText("");
-            tableView.getSelectionModel().clearSelection();
+            formDataController.editDataFromRole(nameTF.getText(), descriptionTF.getText(), roleTable, roleTypeIndex, id);
+            clearPanel(tableView);
             this.close();
         });
 
@@ -91,13 +86,16 @@ public class RoleControlPanel extends DescriptionControlPanel {
         }
     };
 
-    public void clearSelection() {
-        roleTypeCB.getSelectionModel().clearSelection();
-    }
-
     public int getRoleTypeIndex() {
         return roleTypeIndex;
     }
 
 
+    public void clearPanel(TableView<RoleTable> tableView) {
+        roleTypeCB.getSelectionModel().clearSelection();
+        tableView.refresh();
+        nameTF.setText("");
+        descriptionTF.setText("");
+        tableView.getSelectionModel().clearSelection();
+    }
 }

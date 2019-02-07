@@ -176,6 +176,7 @@ public class BranchForm extends TableBasicForm implements ISegmentTableForm {
         tableTV.sort();
 
         formDataController.saveDataFromBranch(nameST,branch);
+        branchoneControlPanel.clearPanel(tableTV);
     }
 
 

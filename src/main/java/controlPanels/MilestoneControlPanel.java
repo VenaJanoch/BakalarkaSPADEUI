@@ -29,7 +29,6 @@ public class MilestoneControlPanel extends DescriptionControlPanel {
 
     private Label criteriaLB;
     private CheckComboBox<BasicTable> criteriaCB;
-    private ObservableList<BasicTable> criterionArray;
     private ObservableList<Integer> criterionIndex;
 
     public MilestoneControlPanel(String buttonName, FormDataController formDataController, FormController formController){
@@ -58,7 +57,6 @@ public class MilestoneControlPanel extends DescriptionControlPanel {
 
             public void onChanged(ListChangeListener.Change<? extends BasicTable> c) {
                 criterionIndex = criteriaCB.getCheckModel().getCheckedIndices();
-                criterionArray = criteriaCB.getCheckModel().getCheckedItems();
             }
         });
 
@@ -91,11 +89,7 @@ public class MilestoneControlPanel extends DescriptionControlPanel {
 
             formDataController.editDataFromMilestone(nameTF.getText(), milestoneTable, criterionList, id);
 
-            nameTF.setText("");
-            descriptionTF.setText("");
-
-            tableView.refresh();
-            tableView.getSelectionModel().clearSelection();
+            clearPanelCB(tableView);
             this.close();
         });
 
@@ -112,7 +106,11 @@ public class MilestoneControlPanel extends DescriptionControlPanel {
     }
 
 
-    public void clearCriteriaCB() {
+    public void clearPanelCB(TableView tableView) {
+        nameTF.setText("");
+        descriptionTF.setText("");
         criteriaCB.getCheckModel().clearChecks();
+        tableView.refresh();
+        tableView.getSelectionModel().clearSelection();
     }
 }

@@ -3,6 +3,7 @@ package forms;
 import Controllers.FormController;
 import Controllers.FormDataController;
 import abstractform.Table2BasicForm;
+import com.sun.org.apache.bcel.internal.generic.TABLESWITCH;
 import controlPanels.RoleControlPanel;
 import interfaces.ISegmentTableForm;
 import javafx.collections.FXCollections;
@@ -44,13 +45,7 @@ public class RoleForm extends Table2BasicForm implements ISegmentTableForm {
 	/**
 	 * Globální proměnné třídy
 	 */
-	private Label roleTypeLB;
-	private Label descriptionLB;
-
-	private TextField descriptionTF;
-	private ChoiceBox<BasicTable> roleTypeCB;
 	private TableView<RoleTable> tableTV;
-	private ClassSwitcher classSwitcher;
 	private RoleTypeForm roleTForm;
 	private Label formName;
 
@@ -163,7 +158,7 @@ public class RoleForm extends Table2BasicForm implements ISegmentTableForm {
 			}
 			else{
 				ArrayList<BasicTable> list = new ArrayList<>(selection);
-				formDataController.deleteRole(list, getTableTV());
+				formDataController.deleteRole(list, tableTV);
 			}
 		}
 
@@ -192,33 +187,10 @@ public class RoleForm extends Table2BasicForm implements ISegmentTableForm {
 		tableTV.getItems().add(role);
 		tableTV.sort();
 		formDataController.saveDataFromRoleForm(nameST, roleIndex, role);
-		roleControlPanel.clearSelection();
-	}
-
-	/*** Getrs and Setrs ***/
-
-	public ChoiceBox<BasicTable> getRoleTypeCB() {
-		return roleTypeCB;
-	}
-
-	public void setRoleTypeCB(ChoiceBox<BasicTable> roleTypeCB) {
-		this.roleTypeCB = roleTypeCB;
+		roleControlPanel.clearPanel(tableTV);
 	}
 
 	public TableView<RoleTable> getTableTV() {
 		return tableTV;
 	}
-
-	public void setTableTV(TableView<RoleTable> tableTV) {
-		this.tableTV = tableTV;
-	}
-
-	public RoleTypeForm getRoleTForm() {
-		return roleTForm;
-	}
-
-	public void setRoleTForm(RoleTypeForm roleTForm) {
-		this.roleTForm = roleTForm;
-	}
-
 }

@@ -76,8 +76,17 @@ public class DataPreparer {
         return id + "_" + prepareStringForForm(name);
     }
 
+    public ArrayList<Integer> prepareIndiciesForForm(List<Integer> indicies){
+        ArrayList<Integer> formIndicies =  new ArrayList<>();
+
+        for(int i : indicies){
+            formIndicies.add(prepareIndexForForm(i));
+        }
+        return formIndicies;
+    }
+
     public int prepareIndexForForm(Integer index){
-        if((Integer)index == null){
+        if(index == null){
             return 0;
         }
         return index + 1;

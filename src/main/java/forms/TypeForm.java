@@ -152,6 +152,7 @@ public class TypeForm extends TableClassBasicForm implements ISegmentTableForm {
 		tableTV.getItems().add(table);
 		tableTV.sort();
 		formDataController.saveDataFromTypeForm(nameST, table);
+		classControlPanel.clearPanel(tableTV);
 	}
 
 	@Override

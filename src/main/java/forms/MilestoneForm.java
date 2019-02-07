@@ -188,7 +188,7 @@ public class MilestoneForm extends Table2BasicForm implements ISegmentTableForm 
 		tableTV.sort();
 
 		formDataController.saveDataFromMilestoneForm(nameST, descriptionST, criterionList, milestone);
-		milestoneControlPanel.clearCriteriaCB();
+		milestoneControlPanel.clearPanelCB(tableTV);
 	}
 
 	public TableView<MilestoneTable> getTableTV() {

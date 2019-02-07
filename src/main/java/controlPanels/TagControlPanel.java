@@ -48,13 +48,17 @@ public class TagControlPanel extends NameControlPanel {
 
         nameTF.setText(tagData);
         button.setOnAction(event ->{
-            tagTable.setName(id + "_" + nameTF.getText());
             formDataController.editDataFromTag(nameTF.getText(), tagTable, configId, id);
-            tableView.refresh();
-            nameTF.setText("");
+            clearPanel(tableView);
             this.close();
         });
 
         this.show();
+    }
+
+    public void clearPanel(TableView<TagTable> tableView) {
+        tableView.refresh();
+        tableView.getSelectionModel().clearSelection();
+        nameTF.setText("");
     }
 }

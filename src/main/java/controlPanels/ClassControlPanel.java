@@ -99,16 +99,8 @@ public class ClassControlPanel extends NameControlPanel {
 
         button.setOnAction(event ->{
 
-            classTable.setName(id + "_" + nameTF.getText());
-            classTable.setClassType(getClassName());
-            classTable.setSuperType(getSuperClassName());
-
-            formDataController.editDataFromClass(segmentType, nameTF.getText(), classTable);
-
-            nameTF.setText("");
-
-            tableView.refresh();
-            tableView.getSelectionModel().clearSelection();
+            formDataController.editDataFromClass(segmentType, nameTF.getText(), getClassName(), getSuperClassName(), classTable, id);
+            clearPanel(tableView);
             this.close();
         });
 
@@ -150,11 +142,6 @@ public class ClassControlPanel extends NameControlPanel {
         }
     };
 
-    public void clearComboBoxs() {
-        superClassCB.getSelectionModel().clearSelection();
-        classCB.getSelectionModel().clearSelection();
-    }
-
     public String getClassName() {
         if (classCB.getValue() == null || classIndex == 0) {
             return classCB.getItems().get(0).toString(); //   RoleClass.UNASSIGNED.name();
@@ -165,5 +152,14 @@ public class ClassControlPanel extends NameControlPanel {
 
     public String getSuperClassName() {
      return RoleSuperClass.values()[superIndex].name();
+    }
+
+    public void clearPanel(TableView<ClassTable> tableView) {
+        superClassCB.getSelectionModel().clearSelection();
+        classCB.getSelectionModel().clearSelection();
+        nameTF.setText("");
+
+        tableView.refresh();
+        tableView.getSelectionModel().clearSelection();
     }
 }

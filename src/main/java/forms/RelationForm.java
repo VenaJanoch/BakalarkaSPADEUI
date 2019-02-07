@@ -142,6 +142,7 @@ public class RelationForm extends TableClassBasicForm implements ISegmentTableFo
 		tableTV.getItems().add(table);
 		tableTV.sort();
 		formDataController.saveDataFromRelationForm(nameST, table);
+		classControlPanel.clearPanel(tableTV);
 	}
 
 	@Override

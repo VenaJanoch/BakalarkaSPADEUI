@@ -118,4 +118,5 @@ public abstract class Table2BasicForm extends BasicForm {
         this.internalPanel = internalPanel;
     }
 
+
 }

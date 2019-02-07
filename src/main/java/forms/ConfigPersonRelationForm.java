@@ -177,6 +177,7 @@ public class ConfigPersonRelationForm extends TableBasicForm implements ISegment
 		tableTV.getItems().add(cpr);
 		tableTV.sort();
 		formDataController.saveDataFromCPR(nameST, roleIndex, cpr);
+		cprControlPanel.clearPanel(tableTV);
 	}
 
 	/** Getrs and Setrs ***/

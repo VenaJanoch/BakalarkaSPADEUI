@@ -157,6 +157,7 @@ public class TagForm extends TableBasicForm implements ISegmentTableForm {
 
 		tableTV.getItems().add(tag);
 		tableTV.sort();
+		tagControlPanel.clearPanel(tableTV);
 
 	}
 

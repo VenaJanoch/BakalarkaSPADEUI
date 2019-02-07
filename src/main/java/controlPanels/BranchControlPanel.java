@@ -93,9 +93,7 @@ public class BranchControlPanel extends NameControlPanel {
 
         button.setOnAction(event ->{
             formDataController.editDataFromBranch(nameTF.getText(), isMainBranch, branchTable);
-            nameTF.setText("");
-            tableView.refresh();
-            tableView.getSelectionModel().clearSelection();
+            clearPanel(tableView);
             this.close();
         });
 
@@ -103,7 +101,16 @@ public class BranchControlPanel extends NameControlPanel {
 
     }
 
+    public void clearPanel(TableView<BranchTable> tableView) {
+        nameTF.setText("");
+        tableView.refresh();
+        tableView.getSelectionModel().clearSelection();
+        rbYes.setSelected(true);
+    }
+
     public boolean isMain() {
         return isMain;
     }
+
+
 }

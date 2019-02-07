@@ -150,6 +150,7 @@ public class SeverityForm extends TableClassBasicForm implements ISegmentTableFo
 		tableTV.getItems().add(table);
 		tableTV.sort();
 		formDataController.saveDataFromSeverity(nameST, table);
+		classControlPanel.clearPanel(tableTV);
 	}
 
 	@Override

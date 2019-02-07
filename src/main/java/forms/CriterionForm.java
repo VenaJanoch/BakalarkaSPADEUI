@@ -179,6 +179,7 @@ public class CriterionForm extends TableBasicForm implements ISegmentTableForm {
 		tableTV.getItems().add(criterion);
 		tableTV.sort();
 		formDataController.saveDataFromCriterionForm(nameST, criterion);
+		criterionControlPanel.clearPanel(tableTV);
 	}
 
 	public TableView<CriterionTable> getTableTV() {

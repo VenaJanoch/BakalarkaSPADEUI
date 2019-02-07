@@ -146,6 +146,7 @@ public class StatusForm extends TableClassBasicForm implements ISegmentTableForm
 		tableTV.getItems().add(table);
 		tableTV.sort();
 		formDataController.saveDataFromStatusForm(nameST, table);
+		classControlPanel.clearPanel(tableTV);
 	}
 
 	@Override

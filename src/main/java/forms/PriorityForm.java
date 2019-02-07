@@ -149,6 +149,7 @@ public class PriorityForm extends TableClassBasicForm implements ISegmentTableFo
 		tableTV.getItems().add(table);
 		tableTV.sort();
 		formDataController.saveDataFromPriority(nameST, table);
+		classControlPanel.clearPanel(tableTV);
 	}
 
 	@Override

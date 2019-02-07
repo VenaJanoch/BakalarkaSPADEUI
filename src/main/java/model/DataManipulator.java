@@ -1133,10 +1133,21 @@ public class DataManipulator {
 
     public String[] getCriterionData(int id) {
         String[] data = new String[2];
-        Criterion criterion = project.getCriterions().get(id);
+        Criterion criterion = project.getCriterions().get(getCriterionIndexInProject(id));
         data[0] = criterion.getName();
         data[1] = criterion.getDescription();
         return data;
+    }
+
+    private int getCriterionIndexInProject(int id) {
+        List<Criterion> items = project.getCriterions();
+        for ( int i = 0; i < items.size(); i++){
+
+            if (items.get(i).getId() == id){
+                return i;
+            }
+        }
+        return -1;
     }
 
     public String[] getMilestoneData(int id) {
@@ -1155,7 +1166,7 @@ public class DataManipulator {
 
     public String[] getRoleData(int id) {
         String[] data = new String[3];
-        Role role = project.getRoles().get(id);
+        Role role = project.getRoles().get(getRoleIndexInProject(id));
         data[0] = role.getName();
         data[1] = role.getDescription();
         data[2] = role.getType().toString();
@@ -1165,7 +1176,7 @@ public class DataManipulator {
 
     public String[] getRoleTypeData(int id) {
         String[] data = new String[3];
-        RoleType roleType = project.getRoleType().get(id);
+        RoleType roleType = project.getRoleType().get(getRoleTypeIndexInProject(id));
         data[0] = roleType.getName();
         data[1] = roleType.getRoleClass();
         data[2] = roleType.getRoleSuperClass();
@@ -1175,7 +1186,7 @@ public class DataManipulator {
 
     public String[] getSeverityData(int id) {
         String[] data = new String[3];
-        Severity severity = project.getSeverity().get(id);
+        Severity severity = project.getSeverity().get(getSeverityTypeIndexInProject(id));
         data[0] = severity.getName();
         data[1] = severity.getSeverityClass();
         data[2] = severity.getSeveritySuperClass();
@@ -1184,7 +1195,7 @@ public class DataManipulator {
 
     public String[] getPriorityData(int id) {
         String[] data = new String[3];
-        Priority priority = project.getPriority().get(id);
+        Priority priority = project.getPriority().get(getPriorityTypeIndexInProject(id));
         data[0] = priority.getName();
         data[1] = priority.getPriorityClass();
         data[2] = priority.getPrioritySuperClass();
@@ -1193,7 +1204,7 @@ public class DataManipulator {
 
     public String[] getStatusData(int id) {
         String[] data = new String[3];
-        Status status = project.getStatus().get(id);
+        Status status = project.getStatus().get(getStatusTypeIndexInProject(id));
         data[0] = status.getName();
         data[1] = status.getStatusClass();
         data[2] = status.getStatusSuperClass();
@@ -1202,7 +1213,7 @@ public class DataManipulator {
 
     public String[] getTypeData(int id) {
         String[] data = new String[3];
-        Type type = project.getTypes().get(id);
+        Type type = project.getTypes().get(getTypeTypeIndexInProject(id));
         data[0] = type.getName();
         data[1] = type.getTypeClass();
         data[2] = type.getTypeSuperClass();
@@ -1212,7 +1223,7 @@ public class DataManipulator {
 
     public String[] getRelationData(int id) {
         String[] data = new String[3];
-        Relation relation = project.getRelation().get(id);
+        Relation relation = project.getRelation().get(getRelationIndexInProject(id));
         data[0] = relation.getName();
         data[1] = relation.getRelationClass();
         data[2] = relation.getRelationSuperClass();
@@ -1221,7 +1232,7 @@ public class DataManipulator {
 
     public String[] getResolutionData(int id) {
         String[] data = new String[3];
-        Resolution resolution = project.getResolution().get(id);
+        Resolution resolution = project.getResolution().get(getResolutionIndexInProject(id));
         data[0] = resolution.getName();
         data[1] = resolution.getResolutionClass();
         data[2] = resolution.getResolutionSuperClass();

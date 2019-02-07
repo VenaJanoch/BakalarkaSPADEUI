@@ -256,6 +256,7 @@ public class FormDataController {
     }
 
     public void editDataFromCPR(String nameST, int roleIndex, CPRTable cprTable) {
+
         String nameForManipulator = InputController.fillTextMapper(nameST);
         int roleManipulatorId = dataPreparer.prepareIndexForManipulator(roleIndex);
         int cprId = cprTable.getId();
@@ -292,12 +293,15 @@ public class FormDataController {
         lists.getCriterionObservable().add(criterionTable);
     }
 
-    public void editDataFromCriterion(String nameST, CriterionTable criterionTable, int indexInList){
+    public void editDataFromCriterion(String nameST, String description, CriterionTable criterionTable, int id){
+
+        criterionTable.setName(id + "_" + nameST);
+        criterionTable.setDescription(description);
+
         String nameForManipulator = InputController.fillTextMapper(nameST);
         String descForManipulator = InputController.fillTextMapper(criterionTable.getDescription());
         dataManipulator.editDataInCriterion(nameForManipulator, descForManipulator, criterionTable.getId());
-        lists.getCriterionObservable().remove(indexInList + 1);
-        lists.getCriterionObservable().add(indexInList + 1, criterionTable);
+        lists.updateListItem(SegmentType.Criterion, id, criterionTable);
     }
 
     public void deleteCriterion(ArrayList<BasicTable> selection, TableView tableView) {
@@ -334,7 +338,7 @@ public class FormDataController {
         dataManipulator.editDataInMilestone(nameForManipulator, descForManipulator, criterionIndex, milestoneTable.getId());
 
         ArrayList<Integer> criterionIndicies = dataManipulator.getCriterionIds(criterionIndex);
-        milestoneTable.setCriterion(dataPreparer.prepareDependencyArray(criterionIndicies, lists.getCriterionObservable()));
+        milestoneTable.setCriterion(dataPreparer.prepareDependencyArray(criterionIndex, lists.getCriterionObservable()));
 
         lists.updateListItem(SegmentType.Milestone, id, milestoneTable);
 
@@ -383,9 +387,9 @@ public class FormDataController {
         dataManipulator.addDataToSeverity(nameForManipulator, tableItem.getClassType(), tableItem.getSuperType(), tableItem.getId());
         lists.getSeverityTypeObservable().add(tableItem);
     }
-    private void editDataFromSeverity(String nameST, ClassTable classTable) {
+    private void editDataFromSeverity(String nameST, String className, String superClassName,  ClassTable classTable, int id) {
         String nameForManipulator = InputController.fillTextMapper(nameST);
-        dataManipulator.editDataInSeverity(nameForManipulator, classTable.getClassType(), classTable.getSuperType(),classTable.getId());
+        dataManipulator.editDataInSeverity(nameForManipulator, className, superClassName,id);
         lists.updateListItem(SegmentType.Severity, classTable.getId(), classTable);
     }
 
@@ -453,10 +457,13 @@ public class FormDataController {
         mapperTableToObject.mapTableToObject(SegmentType.Role, roleTypeIndex, new TableToObjectInstanc(roleTable.getName(), roleTable.getId(), SegmentType.Role));
 }
 
-    public void editDataFromRole(String nameST, RoleTable roleTable, int roleTypeIndex, int id) {
+    public void editDataFromRole(String nameST, String description, RoleTable roleTable, int roleTypeIndex, int id) {
+
+        roleTable.setName(id + "_" + nameST);
+        roleTable.setDescription(description);
 
         String nameForManipulator = InputController.fillTextMapper(nameST);
-        String descForManipulator = InputController.fillTextMapper(roleTable.getDescription());
+        String descForManipulator = InputController.fillTextMapper(description);
         int typeFormManipulator = dataPreparer.prepareIndexForManipulator(roleTypeIndex);
 
         dataManipulator.editDataInRole(nameForManipulator, descForManipulator, typeFormManipulator, roleTable.getId());
@@ -495,23 +502,6 @@ public class FormDataController {
 
       }
 
-    public boolean deleteRole(ArrayList<Integer> roleTypeIndexes){
-
-        ArrayList<Integer> tableIndices = lists.removeItemFromObservableList(SegmentType.Role, roleTypeIndexes);
-        RoleForm milestoneForm = (RoleForm) formController.getForms().get(Constans.roleFormIndex);
-        TableView<RoleTable> tv = milestoneForm.getTableTV();
-        for(int i : tableIndices){
-            tv.getSelectionModel().select(i);
-        }
-        dataManipulator.removeRole(tv.getSelectionModel().getSelectedIndices());
-        ObservableList<RoleTable> selection = FXCollections
-                .observableArrayList(tv.getSelectionModel().getSelectedItems());
-        tv.getItems().removeAll(selection);
-        tv.getSelectionModel().clearSelection();
-
-        return false;
-    }
-
     public void saveDataFromRoleTypeForm(String nameST, ClassTable classTable) {
 
         String nameForManipulator = InputController.fillTextMapper(nameST);
@@ -519,9 +509,13 @@ public class FormDataController {
         lists.getRoleTypeObservable().add(classTable);
     }
 
-    private void editDataFromRoleType(String nameST, ClassTable classTable) {
+    private void editDataFromRoleType(String nameST, String className, String superClassName, ClassTable classTable, int id) {
+        classTable.setName(id + "_" + nameST);
+        classTable.setClassType(className);
+        classTable.setSuperType(superClassName);
+
         String nameForManipulator = InputController.fillTextMapper(nameST);
-        dataManipulator.editDataInRoleType(nameForManipulator, classTable.getClassType(), classTable.getSuperType(),classTable.getId());
+        dataManipulator.editDataInRoleType(nameForManipulator, className, superClassName,id);
         lists.updateListItem(SegmentType.RoleType, classTable.getId(), classTable);
     }
 
@@ -547,6 +541,7 @@ public class FormDataController {
     }
 
     public void editDataFromTag(String tag, TagTable tagTable, int configFormId, int id) {
+            tagTable.setName(id + "_" + tag);
             int configurationId = identificatorCreater.getConfigurationIndex(configFormId);
             dataManipulator.editTagInConfiguration(tag, configurationId, id);
             tagTable.setTag(tag);
@@ -664,7 +659,9 @@ public class FormDataController {
     }
 
     public List getCriterionFromMilestone(int id) {
-        return dataManipulator.getCriterionFromMilestone(id);
+        List<Integer> criterion = dataManipulator.getCriterionFromMilestone(id);
+
+        return dataPreparer.prepareIndiciesForForm(criterion);
     }
 
     public String[] getRoleStringData(int id) {
@@ -692,63 +689,63 @@ public class FormDataController {
         }
     }
 
-    public void editDataFromClass(SegmentType segmentType, String name, ClassTable classTable) {
+    public void editDataFromClass(SegmentType segmentType, String name, String className, String superClassName,  ClassTable classTable, int id) {
         switch (segmentType){
             case RoleType:
-                editDataFromRoleType(name, classTable);
+                editDataFromRoleType(name, className, superClassName, classTable, id);
                 break;
             case Severity:
-                editDataFromSeverity(name, classTable);
+                editDataFromSeverity(name, className, superClassName, classTable, id);
                 break;
             case Priority:
-                editDataFromPriority(name, classTable);
+                editDataFromPriority(name, className, superClassName, classTable, id);
                 break;
             case Status:
-                editDataFromStatus(name, classTable);
+                editDataFromStatus(name, className, superClassName, classTable, id);
                 break;
             case Type:
-                editDataFromType(name, classTable);
+                editDataFromType(name, className, superClassName, classTable, id);
                 break;
             case Relation:
-                editDataFromRelation(name, classTable);
+                editDataFromRelation(name, className, superClassName, classTable, id);
                 break;
             case Resolution:
-                editDataFromResolution(name, classTable);
+                editDataFromResolution(name, className, superClassName, classTable, id);
                 break;
             default:
         }
     }
 
-    private void editDataFromResolution(String name, ClassTable classTable) {
+    private void editDataFromResolution(String name, String className, String superClassName,  ClassTable classTable, int id) {
         String nameForManipulator = InputController.fillTextMapper(name);
-        dataManipulator.editDataInResolution(nameForManipulator, classTable.getClassType(), classTable.getSuperType(),classTable.getId());
+        dataManipulator.editDataInResolution(nameForManipulator, className, superClassName, id);
         lists.updateListItem(SegmentType.Resolution, classTable.getId(), classTable);
 
     }
 
-    private void editDataFromRelation(String name, ClassTable classTable) {
+    private void editDataFromRelation(String name, String className, String superClassName,  ClassTable classTable, int id) {
         String nameForManipulator = InputController.fillTextMapper(name);
-        dataManipulator.editDataInRelation(nameForManipulator, classTable.getClassType(), classTable.getSuperType(),classTable.getId());
+        dataManipulator.editDataInRelation(nameForManipulator, className, superClassName, id);
         lists.updateListItem(SegmentType.Relation, classTable.getId(), classTable);
 
     }
 
-    private void editDataFromType(String name, ClassTable classTable) {
+    private void editDataFromType(String name, String className, String superClassName,  ClassTable classTable, int id) {
         String nameForManipulator = InputController.fillTextMapper(name);
-        dataManipulator.editDataInType(nameForManipulator, classTable.getClassType(), classTable.getSuperType(),classTable.getId());
+        dataManipulator.editDataInType(nameForManipulator, className, superClassName,id);
         lists.updateListItem(SegmentType.Type, classTable.getId(), classTable);
 
     }
 
-    private void editDataFromStatus(String name, ClassTable classTable) {
+    private void editDataFromStatus(String name, String className, String superClassName,  ClassTable classTable, int id) {
         String nameForManipulator = InputController.fillTextMapper(name);
-        dataManipulator.editDataInStatus(nameForManipulator, classTable.getClassType(), classTable.getSuperType(),classTable.getId());
+        dataManipulator.editDataInStatus(nameForManipulator, className, superClassName,id);
         lists.updateListItem(SegmentType.Status, classTable.getId(), classTable);
     }
 
-    private void editDataFromPriority(String nameST, ClassTable classTable) {
+    private void editDataFromPriority(String nameST, String className, String superClassName,  ClassTable classTable, int id) {
         String nameForManipulator = InputController.fillTextMapper(nameST);
-        dataManipulator.editDataInPriority(nameForManipulator, classTable.getClassType(), classTable.getSuperType(),classTable.getId());
+        dataManipulator.editDataInPriority(nameForManipulator, className, superClassName, id);
         lists.updateListItem(SegmentType.Priority, classTable.getId(), classTable);
     }
 

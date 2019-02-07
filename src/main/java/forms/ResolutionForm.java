@@ -149,6 +149,7 @@ public class ResolutionForm extends TableClassBasicForm implements ISegmentTable
 		tableTV.sort();
 
 		formDataController.saveDataFromResolutionForm(nameST, table);
+		classControlPanel.clearPanel(tableTV);
 	}
 
 	@Override

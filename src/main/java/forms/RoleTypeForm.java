@@ -152,6 +152,7 @@ public class RoleTypeForm extends TableClassBasicForm implements ISegmentTableFo
 		tableTV.getItems().add(type);
 		tableTV.sort();
 		formDataController.saveDataFromRoleTypeForm(nameST, type);
+		classControlPanel.clearPanel(tableTV);
 	}
 
 	@Override

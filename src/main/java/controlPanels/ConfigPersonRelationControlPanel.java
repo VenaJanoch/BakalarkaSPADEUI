@@ -74,9 +74,7 @@ public class ConfigPersonRelationControlPanel extends NameControlPanel {
 
         button.setOnAction(event ->{
             formDataController.editDataFromCPR(nameTF.getText(), this.roleIndex, cprTable);
-            nameTF.setText("");
-            tableView.refresh();
-            tableView.getSelectionModel().clearSelection();
+            clearPanel(tableView);
             this.close();
         });
 
@@ -100,5 +98,12 @@ public class ConfigPersonRelationControlPanel extends NameControlPanel {
 
     public int getRoleIndex() {
         return roleIndex;
+    }
+
+    public void clearPanel(TableView<CPRTable> tableView) {
+        nameTF.setText("");
+        tableView.refresh();
+        tableView.getSelectionModel().clearSelection();
+        roleCB.getSelectionModel().clearSelection();
     }
 }

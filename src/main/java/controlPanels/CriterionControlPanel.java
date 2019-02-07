@@ -47,12 +47,8 @@ public class CriterionControlPanel extends DescriptionControlPanel {
         nameTF.setText(criterionData[0]);
         descriptionTF.setText(criterionData[1]);
         button.setOnAction(event ->{
-            criterionTable.setName(id + "_" + nameTF.getText());
-            criterionTable.setDescription(descriptionTF.getText());
-            formDataController.editDataFromCriterion(nameTF.getText(), criterionTable, id);
-            tableView.refresh();
-            nameTF.setText("");
-            descriptionTF.setText("");
+            formDataController.editDataFromCriterion(nameTF.getText(), descriptionTF.getText(), criterionTable, id);
+            clearPanel(tableView);
             this.close();
         });
 
@@ -64,4 +60,10 @@ public class CriterionControlPanel extends DescriptionControlPanel {
         return nameTF;
     }
 
+    public void clearPanel(TableView tableView) {
+        tableView.getSelectionModel().clearSelection();
+        tableView.refresh();
+        nameTF.setText("");
+        descriptionTF.setText("");
+    }
 }
