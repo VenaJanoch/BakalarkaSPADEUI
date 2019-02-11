@@ -42,7 +42,7 @@ public class WindowController {
         this.dataManipulator = new DataManipulator(processGenerator, identificatorCreater);
         this.fileManipulator = new FileManipulator(processGenerator, dataManipulator);
         this.alerts = new Alerts(fileManipulator);
-        this.applicationController = new ApplicationController(fileManipulator, dataManipulator, alerts, identificatorCreater, segmentLists);
+        this.applicationController = new ApplicationController(dataManipulator, identificatorCreater, segmentLists);
         this.formFillController = applicationController.getFormFillController();
 
     }

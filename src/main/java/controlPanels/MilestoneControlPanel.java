@@ -4,6 +4,9 @@ import Controllers.FormController;
 import Controllers.FormDataController;
 import abstractControlPane.ControlPanel;
 import abstractControlPane.DescriptionControlPanel;
+import interfaces.IDeleteFormController;
+import interfaces.IEditFormController;
+import interfaces.IFormDataController;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
@@ -31,8 +34,8 @@ public class MilestoneControlPanel extends DescriptionControlPanel {
     private CheckComboBox<BasicTable> criteriaCB;
     private ObservableList<Integer> criterionIndex;
 
-    public MilestoneControlPanel(String buttonName, FormDataController formDataController, FormController formController){
-        super(buttonName, formDataController, formController);
+    public MilestoneControlPanel(String buttonName, IFormDataController formDataController, IEditFormController editFormController, FormController formController){
+        super(buttonName, formDataController,editFormController, formController);
         criterionIndex = FXCollections.observableArrayList();
     }
 
@@ -87,7 +90,7 @@ public class MilestoneControlPanel extends DescriptionControlPanel {
             milestoneTable.setDescription(descriptionTF.getText());
             ArrayList<Integer> criterionList = new ArrayList<>(criterionIndex);
 
-            formDataController.editDataFromMilestone(nameTF.getText(), milestoneTable, criterionList, id);
+            editFormController.editDataFromMilestone(nameTF.getText(), milestoneTable, criterionList, id);
 
             clearPanelCB(tableView);
             this.close();

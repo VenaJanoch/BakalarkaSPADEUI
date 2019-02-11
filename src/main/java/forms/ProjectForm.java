@@ -17,6 +17,9 @@ import abstractform.BasicForm;
 import abstractform.Date2DescBasicForm;
 import graphics.CanvasItem;
 import graphics.DragAndDropCanvas;
+import interfaces.IDeleteFormController;
+import interfaces.IEditFormController;
+import interfaces.IFormDataController;
 import interfaces.ISegmentForm;
 import javafx.event.EventHandler;
 import javafx.geometry.HPos;
@@ -43,8 +46,8 @@ public class ProjectForm extends Date2DescBasicForm implements ISegmentForm {
      * <p>
      * Project
      */
-    public ProjectForm(FormController formController, FormDataController formDataController, SegmentType type) {
-        super(formController, formDataController, type);
+    public ProjectForm(FormController formController, IFormDataController formDataController, IEditFormController editFormController, IDeleteFormController deleteFormController, SegmentType type) {
+        super(formController, formDataController, editFormController, deleteFormController, type);
 
         getMainPanel().setMinSize(Constans.littleformWidth, Constans.littleformHeight);
         getMainPanel().setMaxSize(Constans.littleformWidth, Constans.littleformHeight);

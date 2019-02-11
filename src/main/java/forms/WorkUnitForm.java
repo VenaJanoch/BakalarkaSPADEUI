@@ -16,6 +16,9 @@ import abstractform.BasicForm;
 import abstractform.DescriptionBasicForm;
 import graphics.CanvasItem;
 import graphics.InfoBoxSegment;
+import interfaces.IDeleteFormController;
+import interfaces.IEditFormController;
+import interfaces.IFormDataController;
 import interfaces.ISegmentForm;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -79,8 +82,8 @@ public class WorkUnitForm extends DescriptionBasicForm implements ISegmentForm {
 	 * Konstruktor třídy. Zinicializuje globální proměnné tříd Nastaví velikost
 	 * okna a reakci na uzavření formulář
 	 */
-	public WorkUnitForm(FormController formController, FormDataController formDataController, CanvasController canvasController, SegmentType type, int indexForm) {
-		super(formController, formDataController, canvasController, type);
+	public WorkUnitForm(FormController formController, IFormDataController formDataController, IEditFormController editFormController, IDeleteFormController deleteFormController, CanvasController canvasController, SegmentType type, int indexForm) {
+		super(formController, formDataController, editFormController, deleteFormController, canvasController, type);
 		getMainPanel().setMinSize(Constans.workUnitformWidth, Constans.workUnitformHeight);
 		getMainPanel().setMaxSize(Constans.workUnitformWidth, Constans.workUnitformHeight);
 		this.indexForm = indexForm;
@@ -171,7 +174,7 @@ public class WorkUnitForm extends DescriptionBasicForm implements ISegmentForm {
 
 	@Override
 	public void deleteItem() {
-		formController.deleteWorkUnit(indexForm);
+		deleteFormController.deleteWorkUnit(indexForm);
 	}
 
 	/**

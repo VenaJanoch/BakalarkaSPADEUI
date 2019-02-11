@@ -8,6 +8,9 @@ import SPADEPAC.WorkUnitStatusClass;
 import SPADEPAC.WorkUnitStatusSuperClass;
 import abstractform.TableClassBasicForm;
 import controlPanels.ClassControlPanel;
+import interfaces.IDeleteFormController;
+import interfaces.IEditFormController;
+import interfaces.IFormDataController;
 import interfaces.ISegmentTableForm;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -47,11 +50,11 @@ public class StatusForm extends TableClassBasicForm implements ISegmentTableForm
 	 * potvrzovací tlačítko
 	 *
 	 */
-	public StatusForm(FormController formController, FormDataController formDataController, SegmentType type) {
-		super(formController, formDataController, type);
+	public StatusForm(FormController formController, IFormDataController formDataController, IEditFormController editFormController, IDeleteFormController deleteFormController, SegmentType type) {
+		super(formController, formDataController, editFormController, deleteFormController, type);
 
-		classControlPanel = new ClassControlPanel("Add", SegmentType.Status, formDataController, formController);
-		editClassControlPanel = new ClassControlPanel("Edit", SegmentType.Status, formDataController, formController);
+		classControlPanel = new ClassControlPanel("Add", SegmentType.Status, formDataController, editFormController, formController);
+		editClassControlPanel = new ClassControlPanel("Edit", SegmentType.Status, formDataController, editFormController, formController);
 		int i = 0;
 		for(WorkUnitStatusClass classItem : WorkUnitStatusClass.values()){
 			classArray[i] = classItem.name();
@@ -116,7 +119,7 @@ public class StatusForm extends TableClassBasicForm implements ISegmentTableForm
 			}
 			else{
 				ArrayList<BasicTable> list = new ArrayList<>(selection);
-				formDataController.deleteStatus(list, tableTV);
+				deleteFormController.deleteStatus(list, tableTV);
 			}
 		}
 

@@ -4,6 +4,9 @@ import Controllers.CanvasController;
 import Controllers.FormController;
 import Controllers.FormDataController;
 import graphics.DragAndDropItemPanel;
+import interfaces.IDeleteFormController;
+import interfaces.IEditFormController;
+import interfaces.IFormDataController;
 import javafx.geometry.HPos;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
@@ -17,16 +20,16 @@ import services.SegmentType;
  */
 public class DateBasicForm extends BasicForm {
 
-	private Label dateLB;
-	private DatePicker dateDP;
+	protected Label dateLB;
+	protected DatePicker dateDP;
 
 	/**
 	 * Konstruktor třídy
 	 */
-	public DateBasicForm(FormController formController, FormDataController formDataController, CanvasController canvasController,
+	public DateBasicForm(FormController formController, IFormDataController formDataController, IEditFormController editFormController, IDeleteFormController deleteFormController, CanvasController canvasController,
 						 DragAndDropItemPanel dgItemPanel, SegmentType type) {
 
-		super(formController, formDataController, canvasController, dgItemPanel, type);
+		super(formController, formDataController, editFormController, deleteFormController, canvasController, dgItemPanel, type);
 		createForm();
 	}
 
@@ -34,8 +37,8 @@ public class DateBasicForm extends BasicForm {
 	/**
 	 * Přetížený konstruktor třídy
 	 */
-	public DateBasicForm(FormController formController, FormDataController formDataController, SegmentType type) {
-		super(formController, formDataController, type);
+	public DateBasicForm(FormController formController, IFormDataController formDataController, IEditFormController editFormController, IDeleteFormController deleteFormController, SegmentType type) {
+		super(formController, formDataController, editFormController, deleteFormController, type);
 		createForm();
 	}
 
@@ -52,20 +55,9 @@ public class DateBasicForm extends BasicForm {
 
 	
 	/** Getrs and Setrs **/
-	public Label getDateLB() {
-		return dateLB;
-	}
-
-	public void setDateLB(Label dateLB) {
-		this.dateLB = dateLB;
-	}
 
 	public DatePicker getDateDP() {
 		return dateDP;
-	}
-
-	public void setDateDP(DatePicker dateDP) {
-		this.dateDP = dateDP;
 	}
 
 }

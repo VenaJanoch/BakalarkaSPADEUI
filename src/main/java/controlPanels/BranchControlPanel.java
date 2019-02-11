@@ -3,6 +3,8 @@ package controlPanels;
 import Controllers.FormController;
 import Controllers.FormDataController;
 import abstractControlPane.NameControlPanel;
+import interfaces.IEditFormController;
+import interfaces.IFormDataController;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -23,8 +25,8 @@ public class BranchControlPanel extends NameControlPanel {
     private RadioButton rbYes;
     private RadioButton rbNo;
 
-    public BranchControlPanel(String buttonName, FormDataController formDataController, FormController formController){
-        super(buttonName, formDataController, formController);
+    public BranchControlPanel(String buttonName, IFormDataController formDataController, IEditFormController editFormController, FormController formController){
+        super(buttonName, formDataController, editFormController, formController);
     }
 
     @Override
@@ -92,7 +94,7 @@ public class BranchControlPanel extends NameControlPanel {
         }
 
         button.setOnAction(event ->{
-            formDataController.editDataFromBranch(nameTF.getText(), isMainBranch, branchTable);
+            editFormController.editDataFromBranch(nameTF.getText(), isMainBranch, branchTable);
             clearPanel(tableView);
             this.close();
         });

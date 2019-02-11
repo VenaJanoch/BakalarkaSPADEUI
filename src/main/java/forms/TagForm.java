@@ -7,6 +7,9 @@ import abstractControlPane.NameControlPanel;
 import abstractform.TableBasicForm;
 import controlPanels.MilestoneControlPanel;
 import controlPanels.TagControlPanel;
+import interfaces.IDeleteFormController;
+import interfaces.IEditFormController;
+import interfaces.IFormDataController;
 import interfaces.ISegmentTableForm;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -49,11 +52,11 @@ public class TagForm extends TableBasicForm implements ISegmentTableForm {
 	 * Konstruktor třídy. Zinicializuje globální proměnné tříd Nastaví velikost
 	 * formuláře
 	 */
-	public TagForm(FormController formController, FormDataController formDataController, SegmentType type, int configFormId) {
+	public TagForm(FormController formController, IFormDataController formDataController, IEditFormController editFormController, IDeleteFormController deleteFormController, SegmentType type, int configFormId) {
 
-		super(formController, formDataController, type);
-		tagControlPanel = new TagControlPanel("Add", formDataController);
-		editTagControlPanel = new TagControlPanel("Edit", formDataController);
+		super(formController, formDataController, editFormController, deleteFormController, type);
+		tagControlPanel = new TagControlPanel("Add", formDataController, editFormController);
+		editTagControlPanel = new TagControlPanel("Edit", formDataController, editFormController);
 		editTagControlPanel.createControlPanel();
 
 		this.setTitle("Edit Tags");
@@ -126,7 +129,7 @@ public class TagForm extends TableBasicForm implements ISegmentTableForm {
 			} else {
 				list = Alerts.showDeleteItemTagAlert(getTableTV(), selection);
 				if (list != null) {
-					 formDataController.deleteTag(configId, list);
+					 deleteFormController.deleteTag(configId, list);
 				}
 
 			}

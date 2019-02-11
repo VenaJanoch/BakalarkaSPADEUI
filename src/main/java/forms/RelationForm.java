@@ -5,6 +5,9 @@ import Controllers.FormDataController;
 import SPADEPAC.*;
 import abstractform.TableClassBasicForm;
 import controlPanels.ClassControlPanel;
+import interfaces.IDeleteFormController;
+import interfaces.IEditFormController;
+import interfaces.IFormDataController;
 import interfaces.ISegmentTableForm;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -45,12 +48,12 @@ public class RelationForm extends TableClassBasicForm implements ISegmentTableFo
 	 * Zinicializuje globální proměnné třídy
 	 * Nastaví reakci na potvrzovací tlačítko
 	 */
-	public RelationForm(FormController formController, FormDataController formDataController, SegmentType type) {
-		super(formController, formDataController, type);
+	public RelationForm(FormController formController, IFormDataController formDataController, IEditFormController editFormController, IDeleteFormController deleteFormController, SegmentType type) {
+		super(formController, formDataController, editFormController, deleteFormController, type);
 		this.setTitle("Edit Relations");
 		
-		classControlPanel = new ClassControlPanel("Add", SegmentType.Severity, formDataController, formController);
-		editClassControlPanel = new ClassControlPanel("Edit", SegmentType.Severity, formDataController, formController);
+		classControlPanel = new ClassControlPanel("Add", SegmentType.Severity, formDataController, editFormController, formController);
+		editClassControlPanel = new ClassControlPanel("Edit", SegmentType.Severity, formDataController, editFormController, formController);
 		int i = 0;
 		for(WorkUnitRelationClass classItem : WorkUnitRelationClass.values()){
 			classArray[i] = classItem.name();
@@ -111,7 +114,7 @@ public class RelationForm extends TableClassBasicForm implements ISegmentTableFo
 			}
 			else{
 				ArrayList<BasicTable> list = new ArrayList<>(selection);
-				formDataController.deleteRelation(list, tableTV);
+				deleteFormController.deleteRelation(list, tableTV);
 			}
 		}
 

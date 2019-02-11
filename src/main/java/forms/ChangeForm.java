@@ -11,6 +11,9 @@ import abstractform.BasicForm;
 import abstractform.DescriptionBasicForm;
 import graphics.CanvasItem;
 import graphics.InfoBoxSegment;
+import interfaces.IDeleteFormController;
+import interfaces.IEditFormController;
+import interfaces.IFormDataController;
 import interfaces.ISegmentForm;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -48,8 +51,8 @@ public class ChangeForm extends DescriptionBasicForm implements ISegmentForm {
      * Konstruktor třídy Zinicializuje globální proměnné třídy Nastaví velikost
      * formuláře a reakci na uzavření formuláře
      */
-    public ChangeForm(FormController formController, FormDataController formDataController, SegmentType type, int indexForm) {
-        super(formController, formDataController, type);
+    public ChangeForm(FormController formController, IFormDataController formDataController, IEditFormController editFormController, IDeleteFormController deleteFormController, SegmentType type, int indexForm) {
+        super(formController, formDataController, editFormController, deleteFormController, type);
 
         this.newChange = true;
         this.indexForm = indexForm;
@@ -95,7 +98,7 @@ public class ChangeForm extends DescriptionBasicForm implements ISegmentForm {
 
     @Override
     public void deleteItem() {
-        formController.deleteChange(indexForm);
+        deleteFormController.deleteChange(indexForm);
     }
 
     public void fillForm() {

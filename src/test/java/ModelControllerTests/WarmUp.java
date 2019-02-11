@@ -25,14 +25,14 @@ public class WarmUp {
         data =  new DataManipulator(processGenerator,idCreator);
         FileManipulator file = new FileManipulator(processGenerator,data);
         Alerts alerts = new Alerts(file);
-        ApplicationController ap = new ApplicationController(file, data, alerts, idCreator, lists);
+        ApplicationController ap = new ApplicationController(data, idCreator, lists);
         DeleteControl deleteControl = new DeleteControl(new SegmentLists(), mapperTableToObject, idCreator);
         DataPreparer dataPreparer = new DataPreparer(idCreator);
-        formController = new FormController(idCreator, data, ap, lists, deleteControl, dataPreparer);
+        formController = new FormController(idCreator, data, ap, lists, dataPreparer);
         for(int i = 0; i < 12; i++){
             formController.getForms().add(null);
         }
-        this.formDataController = new FormDataController(formController, deleteControl, lists, mapperTableToObject, data, idCreator, dataPreparer);
+        this.formDataController = new FormDataController(formController, lists, mapperTableToObject, data, idCreator, dataPreparer);
     }
 
     public SegmentLists getLists() {

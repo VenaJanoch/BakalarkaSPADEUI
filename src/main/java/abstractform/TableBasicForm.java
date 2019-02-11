@@ -2,6 +2,9 @@ package abstractform;
 
 import Controllers.FormController;
 import Controllers.FormDataController;
+import interfaces.IDeleteFormController;
+import interfaces.IEditFormController;
+import interfaces.IFormDataController;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -38,8 +41,8 @@ public abstract class TableBasicForm extends BasicForm {
     /**
      * Konstruktor třídy Zinicializuje globální proměnné třídy
      */
-    public TableBasicForm(FormController formController, FormDataController formDataController, SegmentType type) {
-        super(formController, formDataController, type);
+    public TableBasicForm(FormController formController, IFormDataController formDataController, IEditFormController editFormController, IDeleteFormController deleteFormController, SegmentType type) {
+        super(formController, formDataController, editFormController, deleteFormController, type);
         this.setScene(creatSceneProject());
     }
 

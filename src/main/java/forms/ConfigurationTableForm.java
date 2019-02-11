@@ -5,6 +5,9 @@ import Controllers.FormDataController;
 import abstractform.BasicForm;
 import abstractform.Table2BasicForm;
 import graphics.CanvasItem;
+import interfaces.IDeleteFormController;
+import interfaces.IEditFormController;
+import interfaces.IFormDataController;
 import interfaces.ISegmentTableForm;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -57,8 +60,8 @@ public class ConfigurationTableForm extends Table2BasicForm implements ISegmentT
 	 *
 	 */
 
-	public ConfigurationTableForm(FormController formController, FormDataController formDataController, SegmentType type) {
-		super(formController, formDataController, type);
+	public ConfigurationTableForm(FormController formController, IFormDataController formDataController, IEditFormController editFormController, IDeleteFormController deleteFormController, SegmentType type) {
+		super(formController, formDataController, editFormController, deleteFormController, type);
 
 		createForm();
 		getSubmitBT().setOnAction(event -> setActionSubmitButton());
@@ -156,7 +159,7 @@ public class ConfigurationTableForm extends Table2BasicForm implements ISegmentT
 			}
 			else{
 				ArrayList<BasicTable> list = new ArrayList<>(selection);
-				formDataController.deleteConfiguration(list, getTableTV());
+				deleteFormController.deleteConfiguration(list, getTableTV());
 			}
 		}
 

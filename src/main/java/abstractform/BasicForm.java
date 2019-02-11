@@ -7,6 +7,9 @@ import Controllers.FormController;
 import Controllers.FormDataController;
 import graphics.DragAndDropCanvas;
 import graphics.DragAndDropItemPanel;
+import interfaces.IDeleteFormController;
+import interfaces.IEditFormController;
+import interfaces.IFormDataController;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -33,16 +36,13 @@ public abstract class BasicForm extends Stage {
     /**
      * Globální proměnné třídy
      */
-    private BorderPane mainPanel;
+    protected BorderPane mainPanel;
     protected Scene scena;
-    //	private Alerts alerts;
-//	private String name;
     private Label nameLB;
     private Label formName;
-    private TextField nameTF;
-    private Button submitButton;
+    protected TextField nameTF;
+    protected Button submitButton;
 
-    private ArrayList<HBox> infoParts;
     private GridPane infoPart;
     private HBox buttonBox;
 
@@ -56,24 +56,28 @@ public abstract class BasicForm extends Stage {
     protected int indexForm;
 
     protected FormController formController;
-    protected FormDataController formDataController;
+    protected IFormDataController formDataController;
+    protected IEditFormController editFormController;
+    protected IDeleteFormController deleteFormController;
+
     protected CanvasController canvasController;
 
     /**
      * Konstruktor třídy pro formuláře s vlastním plátnem Zinicializuje globální
      * proměnné třídy
      */
-    public BasicForm(FormController formController, FormDataController formDataController, CanvasController canvasController, DragAndDropItemPanel dgItem, SegmentType type) {
-        this(formController, formDataController, canvasController, type);
+    public BasicForm(FormController formController, IFormDataController formDataController, IEditFormController editFormController, IDeleteFormController deleteFormController,
+                     CanvasController canvasController, DragAndDropItemPanel dgItem, SegmentType type) {
+        this(formController, formDataController, editFormController, deleteFormController, canvasController, type);
         this.setTitle("Edit " + type.name() + " Form");
         this.dgItem = dgItem;
         this.dragBox = new BorderPane();
         this.mainPanel = new BorderPane();
-        this.setScene(creatSceneCanvas());
+        this.setScene(createSceneCanvas());
     }
 
-    public BasicForm(FormController formController, FormDataController formDataController, CanvasController canvasController, SegmentType type) {
-        this(formController, formDataController, type);
+    public BasicForm(FormController formController, IFormDataController formDataController, IEditFormController editFormController, IDeleteFormController deleteFormController, CanvasController canvasController, SegmentType type) {
+        this(formController, formDataController, editFormController, deleteFormController, type);
         this.canvasController = canvasController;
         this.canvas = canvasController.getCanvas();
     }
@@ -82,13 +86,15 @@ public abstract class BasicForm extends Stage {
      * Konstruktor třídy pro prvky bez plátna
      */
 
-    public BasicForm(FormController formController, FormDataController formDataController, SegmentType type) {
+    public BasicForm(FormController formController, IFormDataController formDataController, IEditFormController editFormController, IDeleteFormController deleteFormController, SegmentType type) {
         super();
         this.setTitle("Edit " + type.name());
         mainPanel = new BorderPane();
         this.formController = formController;
         this.formDataController = formDataController;
-        this.setScene(creatSceneProject());
+        this.editFormController = editFormController;
+        this.deleteFormController = deleteFormController;
+        this.setScene(createSceneProject());
         this.setMinHeight(Constans.formHeight);
         this.setMinWidth(Constans.formWidth);
         this.segmentType = type;
@@ -102,7 +108,7 @@ public abstract class BasicForm extends Stage {
      *
      * @return Scene
      */
-    private Scene creatSceneCanvas() {
+    private Scene createSceneCanvas() {
 
         scena = new Scene(createPanelCanvas());
 
@@ -114,7 +120,7 @@ public abstract class BasicForm extends Stage {
      *
      * @return Scene
      */
-    private Scene creatSceneProject() {
+    private Scene createSceneProject() {
 
         scena = new Scene(creatPanelProject());
 
@@ -208,10 +214,6 @@ public abstract class BasicForm extends Stage {
 
     public GridPane getInfoPart() {
         return infoPart;
-    }
-
-    public DragAndDropCanvas getCanvas() {
-        return canvas;
     }
 
     public Label getNameLB() {

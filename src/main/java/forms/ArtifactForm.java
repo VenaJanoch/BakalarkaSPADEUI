@@ -12,6 +12,9 @@ import abstractform.BasicForm;
 import abstractform.DateDescBasicForm;
 import graphics.CanvasItem;
 import graphics.InfoBoxSegment;
+import interfaces.IDeleteFormController;
+import interfaces.IEditFormController;
+import interfaces.IFormDataController;
 import interfaces.ISegmentForm;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -55,8 +58,8 @@ public class ArtifactForm extends DateDescBasicForm implements ISegmentForm {
      * Konstruktor třídy Zinicializuje globální proměnné tříd Nastaví velikost
      * okna a reakci na uzavření formuláři
      */
-    public ArtifactForm(FormController formController, FormDataController formDataController, SegmentType type, int indexForm) {
-        super(formController, formDataController, type);
+    public ArtifactForm(FormController formController, IFormDataController formDataController, IEditFormController editFormController, IDeleteFormController deleteFormController,SegmentType type, int indexForm) {
+        super(formController, formDataController, editFormController, deleteFormController, type);
         this.indexForm = indexForm;
 
         getMainPanel().setMinSize(Constans.littleformWidth, Constans.littleformHeight);
@@ -161,7 +164,7 @@ public class ArtifactForm extends DateDescBasicForm implements ISegmentForm {
     @Override
     public void deleteItem() {
 
-        formController.deleteArtifact(indexForm);
+        deleteFormController.deleteArtifact(indexForm);
 
     }
 

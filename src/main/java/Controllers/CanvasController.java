@@ -31,7 +31,7 @@ public class CanvasController {
 
     private int newFormIndex;
 
-    public CanvasController(CanvasType canvasType, ApplicationController applicationController) { // todo je potreba canvasType? Smazat
+    public CanvasController(CanvasType canvasType, ApplicationController applicationController) {
 
         this.canvas = new DragAndDropCanvas(this);
         this.canvasType = canvasType;
@@ -75,7 +75,7 @@ public class CanvasController {
 
     public CanvasItem addCanvasItemFromPanel(String segment, double x, double y) {
 
-        SegmentType type = Control.findSegmentType(segment);
+        SegmentType type = findSegmentType(segment);
 
         CanvasItem canvasItem = addCanvasItemFromPanel(type, x, y);
         return canvasItem;
@@ -254,6 +254,27 @@ public class CanvasController {
 
     public void clearCanvas() {
         canvas.clearCanvas();
+    }
+
+    /**
+     * Pomocná metoda pro určení výčtového typu SegmentType pomocí Stringu
+     *
+     * @param segmentName
+     *            String s názvem segmentu
+     * @return SegmentType
+     */
+    public SegmentType findSegmentType(String segmentName) {
+
+        for (int i = 0; i < SegmentType.values().length; i++) {
+
+            if (SegmentType.values()[i].name().equals(segmentName)) {
+
+                return SegmentType.values()[i];
+            }
+
+        }
+        return null;
+
     }
 
     /** Getrs and Setrs **/

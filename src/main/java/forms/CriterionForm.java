@@ -4,6 +4,9 @@ import Controllers.FormController;
 import Controllers.FormDataController;
 import abstractform.TableBasicForm;
 import controlPanels.CriterionControlPanel;
+import interfaces.IDeleteFormController;
+import interfaces.IEditFormController;
+import interfaces.IFormDataController;
 import interfaces.ISegmentTableForm;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -51,10 +54,11 @@ public class CriterionForm extends TableBasicForm implements ISegmentTableForm {
 	 *
 	 */
 
-	 public CriterionForm(FormController formController, FormDataController formDataController, SegmentType type) {
-		super(formController, formDataController, type);
-		criterionControlPanel = new CriterionControlPanel("Add", formDataController);
-		editCriterionControlPanel = new CriterionControlPanel("Edit", formDataController);
+	 public CriterionForm(FormController formController, IFormDataController formDataController, IEditFormController editFormController, IDeleteFormController deleteFormController,
+						  SegmentType type) {
+		super(formController, formDataController, editFormController, deleteFormController, type);
+		criterionControlPanel = new CriterionControlPanel("Add", formDataController, editFormController);
+		editCriterionControlPanel = new CriterionControlPanel("Edit", formDataController, editFormController);
 		editCriterionControlPanel.createControlPanel();
 		getSubmitButton().setVisible(false);
 		 setEventHandler();
@@ -128,7 +132,7 @@ public class CriterionForm extends TableBasicForm implements ISegmentTableForm {
 			}
 			else{
 				ArrayList<BasicTable> list = new ArrayList<>(selection);
-				formDataController.deleteCriterion(list, getTableTV());
+				deleteFormController.deleteCriterion(list, getTableTV());
 			}
 		}
 	}

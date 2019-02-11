@@ -13,6 +13,9 @@ import graphics.CanvasItem;
 import graphics.DragAndDropCanvas;
 import graphics.DragAndDropItemPanel;
 import graphics.InfoBoxSegment;
+import interfaces.IDeleteFormController;
+import interfaces.IEditFormController;
+import interfaces.IFormDataController;
 import interfaces.ISegmentForm;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -55,10 +58,10 @@ public class IterationForm extends Date2DescBasicForm implements ISegmentForm {
 	 * @param indexForm
 	 *            DeleteControl
 	 */
-	public IterationForm(FormController formController, FormDataController formDataController, CanvasController canvas, DragAndDropItemPanel dgItemPanel,
+	public IterationForm(FormController formController, IFormDataController formDataController, IEditFormController editFormController, IDeleteFormController deleteFormController, CanvasController canvas, DragAndDropItemPanel dgItemPanel,
 						 SegmentType type, int indexForm) {
 
-		super(formController, formDataController ,canvas, dgItemPanel, type);
+		super(formController, formDataController, editFormController, deleteFormController, canvas, dgItemPanel, type);
 		this.indexForm = indexForm;
 		this.setOnCloseRequest(e -> {
 
@@ -137,7 +140,7 @@ public class IterationForm extends Date2DescBasicForm implements ISegmentForm {
 	@Override
 	public void deleteItem() {
 
-		formController.deleteIterationForm(indexForm);
+		deleteFormController.deleteIterationForm(indexForm);
 
 	}
 

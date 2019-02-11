@@ -7,6 +7,9 @@ import abstractform.BasicForm;
 import abstractform.TableBasicForm;
 import controlPanels.BranchControlPanel;
 import controlPanels.MilestoneControlPanel;
+import interfaces.IDeleteFormController;
+import interfaces.IEditFormController;
+import interfaces.IFormDataController;
 import interfaces.ISegmentTableForm;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -59,11 +62,11 @@ public class BranchForm extends TableBasicForm implements ISegmentTableForm {
      * Konstruktor třídy Zinicializuje globální proměnné tříd Nastaví velikost
      * formuláře
      */
-    public BranchForm(FormController formController, FormDataController formDataController, SegmentType type) {
-        super(formController, formDataController, type);
+    public BranchForm(FormController formController, IFormDataController formDataController, IEditFormController editFormController, IDeleteFormController deleteFormController, SegmentType type) {
+        super(formController, formDataController, editFormController, deleteFormController, type);
 
-        branchoneControlPanel = new BranchControlPanel("Add", formDataController, formController);
-        editBranchControlPanel = new BranchControlPanel("Edit", formDataController, formController);
+        branchoneControlPanel = new BranchControlPanel("Add", formDataController, editFormController, formController);
+        editBranchControlPanel = new BranchControlPanel("Edit", formDataController, editFormController, formController);
         editBranchControlPanel.createControlPanel();
 
 
@@ -148,7 +151,7 @@ public class BranchForm extends TableBasicForm implements ISegmentTableForm {
             }
             else{
                 ArrayList<BasicTable> list = new ArrayList<>(selection);
-                formDataController.deleteBranch(list, getTableTV());
+                deleteFormController.deleteBranch(list, getTableTV());
             }
         }
 

@@ -6,6 +6,9 @@ import Controllers.FormDataController;
 import graphics.CanvasItem;
 import graphics.DragAndDropCanvas;
 import graphics.DragAndDropItemPanel;
+import interfaces.IDeleteFormController;
+import interfaces.IEditFormController;
+import interfaces.IFormDataController;
 import javafx.geometry.HPos;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -33,10 +36,10 @@ public class DescriptionBasicForm extends BasicForm {
 	 * Konstruktor třídy
 	 *
 	 */
-	public DescriptionBasicForm(FormController formController, FormDataController formDataController, CanvasController canvasController,
+	public DescriptionBasicForm(FormController formController, IFormDataController formDataController, IEditFormController editFormController, IDeleteFormController deleteFormController, CanvasController canvasController,
 								DragAndDropItemPanel dgItem, SegmentType type) {
 
-		super(formController, formDataController, canvasController, dgItem, type);
+		super(formController, formDataController, editFormController, deleteFormController, canvasController, dgItem, type);
 		createForm();
 	}
 
@@ -44,18 +47,18 @@ public class DescriptionBasicForm extends BasicForm {
 	 * Konstruktor třídy
 	 *
 	 */
-	public DescriptionBasicForm(FormController formController, FormDataController formDataController, CanvasController canvasController, SegmentType type) {
+	public DescriptionBasicForm(FormController formController, IFormDataController formDataController, IEditFormController editFormController, IDeleteFormController deleteFormController, CanvasController canvasController, SegmentType type) {
 
-		super(formController, formDataController, canvasController, type);
+		super(formController, formDataController, editFormController, deleteFormController, canvasController, type);
 		createForm();
 	}
 
 	/**
 	 * Přetížený konstruktor třídy
 	 */
-	public DescriptionBasicForm(FormController formController, FormDataController formDataController, SegmentType type) {
+	public DescriptionBasicForm(FormController formController, IFormDataController formDataController, IEditFormController editFormController, IDeleteFormController deleteFormController, SegmentType type) {
 
-		super(formController, formDataController, type);
+		super(formController, formDataController, editFormController, deleteFormController, type);
 		createForm();
 	}
 

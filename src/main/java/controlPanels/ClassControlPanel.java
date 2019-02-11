@@ -5,6 +5,9 @@ import Controllers.FormDataController;
 import SPADEPAC.RoleClass;
 import SPADEPAC.RoleSuperClass;
 import abstractControlPane.NameControlPanel;
+import interfaces.IDeleteFormController;
+import interfaces.IEditFormController;
+import interfaces.IFormDataController;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -34,8 +37,8 @@ public class ClassControlPanel extends NameControlPanel {
     protected int classIndex;
     protected int superIndex;
 
-    public ClassControlPanel(String buttonName, SegmentType segmentType, FormDataController formDataController, FormController formController){
-        super(buttonName, formDataController, formController);
+    public ClassControlPanel(String buttonName, SegmentType segmentType, IFormDataController formDataController, IEditFormController editFormController, FormController formController){
+        super(buttonName, formDataController, editFormController, formController);
         classIndex = 0;
         superIndex = 0;
         switcher = new ClassSwitcher();
@@ -99,7 +102,7 @@ public class ClassControlPanel extends NameControlPanel {
 
         button.setOnAction(event ->{
 
-            formDataController.editDataFromClass(segmentType, nameTF.getText(), getClassName(), getSuperClassName(), classTable, id);
+            editFormController.editDataFromClass(segmentType, nameTF.getText(), getClassName(), getSuperClassName(), classTable, id);
             clearPanel(tableView);
             this.close();
         });

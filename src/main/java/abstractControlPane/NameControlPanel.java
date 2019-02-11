@@ -2,11 +2,14 @@ package abstractControlPane;
 
 import Controllers.FormController;
 import Controllers.FormDataController;
+import interfaces.IEditFormController;
+import interfaces.IFormDataController;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import sun.text.normalizer.ICUData;
 import tables.BasicTable;
 
 public abstract class NameControlPanel extends ControlPanel {
@@ -14,16 +17,14 @@ public abstract class NameControlPanel extends ControlPanel {
     protected Label nameLB;
     protected TextField nameTF;
 
-    public NameControlPanel(String buttonText, FormDataController formDataController, FormController formController) {
-        super(buttonText, formDataController, formController);
+    public NameControlPanel(String buttonText, IFormDataController formDataController, IEditFormController editFormController, FormController formController) {
+        super(buttonText, formDataController, editFormController, formController);
         createBasicPanel();
-
     }
 
-    public NameControlPanel(String buttonText, FormDataController formDataController) {
-        super(buttonText, formDataController);
+    public NameControlPanel(String buttonText, IFormDataController formDataController, IEditFormController editFormController) {
+        super(buttonText, formDataController, editFormController);
         createBasicPanel();
-
     }
 
     protected void createBasicPanel() {

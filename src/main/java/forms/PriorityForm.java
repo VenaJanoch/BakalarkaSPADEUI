@@ -5,6 +5,9 @@ import Controllers.FormDataController;
 import SPADEPAC.*;
 import abstractform.TableClassBasicForm;
 import controlPanels.ClassControlPanel;
+import interfaces.IDeleteFormController;
+import interfaces.IEditFormController;
+import interfaces.IFormDataController;
 import interfaces.ISegmentTableForm;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -47,12 +50,12 @@ public class PriorityForm extends TableClassBasicForm implements ISegmentTableFo
 	 * Zinicializuje globální proměnné třídy
 	 * Nastaví reakci na potvrzovací tlačítko
 	 */
-	public PriorityForm(FormController formController, FormDataController formDataController, SegmentType type) {
-		super(formController, formDataController, type);
+	public PriorityForm(FormController formController, IFormDataController formDataController, IEditFormController editFormController, IDeleteFormController deleteFormController, SegmentType type) {
+		super(formController, formDataController, editFormController, deleteFormController, type);
 		this.setTitle("Edit Priority");
 
-		classControlPanel = new ClassControlPanel("Add", SegmentType.Priority, formDataController, formController);
-		editClassControlPanel = new ClassControlPanel("Edit", SegmentType.Priority, formDataController, formController);
+		classControlPanel = new ClassControlPanel("Add", SegmentType.Priority, formDataController, editFormController, formController);
+		editClassControlPanel = new ClassControlPanel("Edit", SegmentType.Priority, formDataController, editFormController, formController);
 		int i = 0;
 		for(WorkUnitPriorityClass classItem : WorkUnitPriorityClass.values()){
 			classArray[i] = classItem.name();
@@ -117,7 +120,7 @@ public class PriorityForm extends TableClassBasicForm implements ISegmentTableFo
 			}
 			else{
 				ArrayList<BasicTable> list = new ArrayList<>(selection);
-				formDataController.deletePriority(list, tableTV);
+				deleteFormController.deletePriority(list, tableTV);
 			}
 		}
 

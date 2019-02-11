@@ -8,6 +8,9 @@ import SPADEPAC.WorkUnitTypeClass;
 import SPADEPAC.WorkUnitTypeSuperClass;
 import abstractform.TableClassBasicForm;
 import controlPanels.ClassControlPanel;
+import interfaces.IDeleteFormController;
+import interfaces.IEditFormController;
+import interfaces.IFormDataController;
 import interfaces.ISegmentTableForm;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -52,11 +55,11 @@ public class TypeForm extends TableClassBasicForm implements ISegmentTableForm {
 	 * potvrzovací tlačítko
 	 *
 	 */
-	public TypeForm(FormController formController, FormDataController formDataController, SegmentType type) {
-		super(formController, formDataController, type);
+	public TypeForm(FormController formController, IFormDataController formDataController, IEditFormController editFormController, IDeleteFormController deleteFormController, SegmentType type) {
+		super(formController, formDataController, editFormController, deleteFormController, type);
 
-		classControlPanel = new ClassControlPanel("Add", SegmentType.Type, formDataController, formController);
-		editClassControlPanel = new ClassControlPanel("Edit", SegmentType.Type, formDataController, formController);
+		classControlPanel = new ClassControlPanel("Add", SegmentType.Type, formDataController, editFormController, formController);
+		editClassControlPanel = new ClassControlPanel("Edit", SegmentType.Type, formDataController, editFormController, formController);
 		int i = 0;
 		for(WorkUnitTypeClass classItem : WorkUnitTypeClass.values()){
 			classArray[i] = classItem.name();
@@ -119,7 +122,7 @@ public class TypeForm extends TableClassBasicForm implements ISegmentTableForm {
 			}
 			else{
 				ArrayList<BasicTable> list = new ArrayList<>(selection);
-				formDataController.deleteType(list, getTableTV());
+				deleteFormController.deleteType(list, getTableTV());
 			}
 		}
 

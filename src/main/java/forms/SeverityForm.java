@@ -8,6 +8,9 @@ import SPADEPAC.WorkUnitSeverityClass;
 import SPADEPAC.WorkUnitSeveritySuperClass;
 import abstractform.TableClassBasicForm;
 import controlPanels.ClassControlPanel;
+import interfaces.IDeleteFormController;
+import interfaces.IEditFormController;
+import interfaces.IFormDataController;
 import interfaces.ISegmentTableForm;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -49,11 +52,11 @@ public class SeverityForm extends TableClassBasicForm implements ISegmentTableFo
 	 * potvrzovací tlačítko
 	 *
 	 */
-	public SeverityForm(FormController formController, FormDataController formDataController, SegmentType type) {
-		super(formController, formDataController, type);
+	public SeverityForm(FormController formController, IFormDataController formDataController, IEditFormController editFormController, IDeleteFormController deleteFormController, SegmentType type) {
+		super(formController, formDataController, editFormController, deleteFormController, type);
 
-		classControlPanel = new ClassControlPanel("Add", SegmentType.Severity, formDataController, formController);
-		editClassControlPanel = new ClassControlPanel("Edit", SegmentType.Severity, formDataController, formController);
+		classControlPanel = new ClassControlPanel("Add", SegmentType.Severity, formDataController, editFormController, formController);
+		editClassControlPanel = new ClassControlPanel("Edit", SegmentType.Severity, formDataController, editFormController, formController);
 		int i = 0;
 		for(WorkUnitSeverityClass classItem : WorkUnitSeverityClass.values()){
 			classArray[i] = classItem.name();
@@ -118,7 +121,7 @@ public class SeverityForm extends TableClassBasicForm implements ISegmentTableFo
 			}
 			else{
 				ArrayList<BasicTable> list = new ArrayList<>(selection);
-				formDataController.deleteSeverity(list, tableTV);
+				deleteFormController.deleteSeverity(list, tableTV);
 			}
 		}
 

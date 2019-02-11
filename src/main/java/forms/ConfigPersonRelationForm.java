@@ -9,6 +9,9 @@ import abstractform.TableBasicForm;
 import controlPanels.ClassControlPanel;
 import controlPanels.ConfigPersonRelationControlPanel;
 import controlPanels.MilestoneControlPanel;
+import interfaces.IDeleteFormController;
+import interfaces.IEditFormController;
+import interfaces.IFormDataController;
 import interfaces.ISegmentTableForm;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -64,11 +67,11 @@ public class ConfigPersonRelationForm extends TableBasicForm implements ISegment
 	 *
 	 */
 	
-	public ConfigPersonRelationForm(FormController formController, FormDataController formDataController, SegmentType type) {
-		super(formController, formDataController, type);
+	public ConfigPersonRelationForm(FormController formController, IFormDataController formDataController, IEditFormController editFormController, IDeleteFormController deleteFormController, SegmentType type) {
+		super(formController, formDataController, editFormController, deleteFormController, type);
 
-		cprControlPanel = new ConfigPersonRelationControlPanel("Add", formDataController, formController);
-		editCPRControlPanel = new ConfigPersonRelationControlPanel("Edit", formDataController, formController);
+		cprControlPanel = new ConfigPersonRelationControlPanel("Add", formDataController, editFormController, formController);
+		editCPRControlPanel = new ConfigPersonRelationControlPanel("Edit", formDataController, editFormController, formController);
 		editCPRControlPanel.createControlPanel();
 
 		setEventHandler();
@@ -147,7 +150,7 @@ public class ConfigPersonRelationForm extends TableBasicForm implements ISegment
 			}
 			else{
 				ArrayList<BasicTable> list = new ArrayList<>(selection);
-				formDataController.deleteCPR(list, getTableTV());
+				deleteFormController.deleteCPR(list, getTableTV());
 			}
 		}
 

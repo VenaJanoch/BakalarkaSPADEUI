@@ -3,6 +3,9 @@ package controlPanels;
 import Controllers.FormDataController;
 import abstractControlPane.DescriptionControlPanel;
 import abstractControlPane.NameControlPanel;
+import interfaces.IDeleteFormController;
+import interfaces.IEditFormController;
+import interfaces.IFormDataController;
 import javafx.scene.Scene;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -14,8 +17,8 @@ import tables.TagTable;
 public class TagControlPanel extends NameControlPanel {
 
 
-    public TagControlPanel(String buttonName, FormDataController formDataController){
-        super(buttonName, formDataController);
+    public TagControlPanel(String buttonName, IFormDataController formDataController, IEditFormController editFormController){
+        super(buttonName, formDataController, editFormController);
     }
 
     @Override
@@ -48,7 +51,7 @@ public class TagControlPanel extends NameControlPanel {
 
         nameTF.setText(tagData);
         button.setOnAction(event ->{
-            formDataController.editDataFromTag(nameTF.getText(), tagTable, configId, id);
+            editFormController.editDataFromTag(nameTF.getText(), tagTable, configId, id);
             clearPanel(tableView);
             this.close();
         });

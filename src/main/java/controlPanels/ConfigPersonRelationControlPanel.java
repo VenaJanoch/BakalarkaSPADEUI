@@ -5,6 +5,8 @@ import Controllers.FormDataController;
 import SPADEPAC.RoleClass;
 import SPADEPAC.RoleSuperClass;
 import abstractControlPane.NameControlPanel;
+import interfaces.IEditFormController;
+import interfaces.IFormDataController;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -25,8 +27,8 @@ public class ConfigPersonRelationControlPanel extends NameControlPanel {
 
     protected int roleIndex;
 
-    public ConfigPersonRelationControlPanel(String buttonName, FormDataController formDataController, FormController formController){
-        super(buttonName, formDataController, formController);
+    public ConfigPersonRelationControlPanel(String buttonName, IFormDataController formDataController, IEditFormController editFormController, FormController formController){
+        super(buttonName, formDataController, editFormController, formController);
         roleIndex = 0;
     }
 
@@ -73,7 +75,7 @@ public class ConfigPersonRelationControlPanel extends NameControlPanel {
         roleCB.getSelectionModel().select(roleIndex);
 
         button.setOnAction(event ->{
-            formDataController.editDataFromCPR(nameTF.getText(), this.roleIndex, cprTable);
+            editFormController.editDataFromCPR(nameTF.getText(), this.roleIndex, cprTable);
             clearPanel(tableView);
             this.close();
         });

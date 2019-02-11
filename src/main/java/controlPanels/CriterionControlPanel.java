@@ -3,6 +3,8 @@ package controlPanels;
 import Controllers.FormDataController;
 import abstractControlPane.ControlPanel;
 import abstractControlPane.DescriptionControlPanel;
+import interfaces.IEditFormController;
+import interfaces.IFormDataController;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -18,8 +20,8 @@ import tables.CriterionTable;
 public class CriterionControlPanel extends DescriptionControlPanel {
 
 
-    public CriterionControlPanel(String buttonName, FormDataController formDataController){
-        super(buttonName, formDataController);
+    public CriterionControlPanel(String buttonName, IFormDataController formDataController, IEditFormController editFormController){
+        super(buttonName, formDataController, editFormController);
     }
 
     /**
@@ -47,7 +49,7 @@ public class CriterionControlPanel extends DescriptionControlPanel {
         nameTF.setText(criterionData[0]);
         descriptionTF.setText(criterionData[1]);
         button.setOnAction(event ->{
-            formDataController.editDataFromCriterion(nameTF.getText(), descriptionTF.getText(), criterionTable, id);
+            editFormController.editDataFromCriterion(nameTF.getText(), descriptionTF.getText(), criterionTable, id);
             clearPanel(tableView);
             this.close();
         });

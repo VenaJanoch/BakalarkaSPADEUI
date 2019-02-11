@@ -3,6 +3,9 @@ package forms;
 import Controllers.FormController;
 import Controllers.FormDataController;
 import controlPanels.MilestoneControlPanel;
+import interfaces.IDeleteFormController;
+import interfaces.IEditFormController;
+import interfaces.IFormDataController;
 import javafx.event.EventHandler;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
@@ -58,12 +61,12 @@ public class MilestoneForm extends Table2BasicForm implements ISegmentTableForm 
 	 *
 	 *
 	 */
-	public MilestoneForm(FormController formController, FormDataController formDataController, SegmentType type) {
+	public MilestoneForm(FormController formController, IFormDataController formDataController, IEditFormController editFormController, IDeleteFormController deleteFormController, SegmentType type) {
 
-		super(formController, formDataController, type);
+		super(formController, formDataController, editFormController, deleteFormController, type);
 
-		milestoneControlPanel = new MilestoneControlPanel("Add", formDataController, formController);
-		editMilestoneControlPanel = new MilestoneControlPanel("Edit", formDataController, formController);
+		milestoneControlPanel = new MilestoneControlPanel("Add", formDataController, editFormController, formController);
+		editMilestoneControlPanel = new MilestoneControlPanel("Edit", formDataController, editFormController, formController);
 		editMilestoneControlPanel.createControlPanel();
 		setEventHandler();
 		createForm();
@@ -155,7 +158,7 @@ public class MilestoneForm extends Table2BasicForm implements ISegmentTableForm 
 			}
 			else{
 				ArrayList<BasicTable> list = new ArrayList<>(selection);
-				formDataController.deleteMilestone(list, getTableTV());
+				deleteFormController.deleteMilestone(list, getTableTV());
 			}
 		}
 

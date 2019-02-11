@@ -171,24 +171,51 @@ public class DataManipulator {
         project.getPhases().add(phase);
     }
 
-    public void removePhase(int formIdentificator) {
-        int index = identificatorCreater.getPhaseIndex(formIdentificator);
-        project.getPhases().remove(index);
-        project.getPhases().add(index, null);
+    public void removePhase(int id) {
+        project.getPhases().remove(getPhaseIndexInProject(id));
+
+    }
+    private int getPhaseIndexInProject(int id) {
+        List<Phase> items = project.getPhases();
+        for (int i = 0; i < items.size(); i++){
+
+            if (items.get(i).getId() == id){
+                return i;
+            }
+        }
+        return -1;
     }
 
-    public void removeIteration(int formIdentificator) {
-        int index = identificatorCreater.getIterationIndex(formIdentificator);
-        project.getIterations().remove(index);
-        project.getIterations().add(index, null);
+    public void removeIteration(int id) {
+        project.getIterations().remove(getIterationIndexInProject(id));
+
     }
 
-    public void removeActivity(int formIdentificator) {
-        int index = identificatorCreater.getActivityIndex(formIdentificator);
-        project.getActivities().remove(index);
-        project.getActivities().add(index, null);
+    private int getIterationIndexInProject(int id) {
+        List<Iteration> items = project.getIterations();
+        for (int i = 0; i < items.size(); i++){
+
+            if (items.get(i).getId() == id){
+                return i;
+            }
+        }
+        return -1;
     }
 
+    public void removeActivity(int id) {
+        project.getActivities().remove(getActivityIndexInProject(id));
+    }
+
+    private int getActivityIndexInProject(int id) {
+        List<Activity> items = project.getActivities();
+        for (int i = 0; i < items.size(); i++){
+
+            if (items.get(i).getId() == id){
+                return i;
+            }
+        }
+        return -1;
+    }
 
 
     public void createNewIteration() {

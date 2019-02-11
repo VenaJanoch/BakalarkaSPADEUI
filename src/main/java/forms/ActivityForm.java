@@ -10,6 +10,9 @@ import abstractform.DescriptionBasicForm;
 import graphics.CanvasItem;
 import graphics.DragAndDropItemPanel;
 import graphics.InfoBoxSegment;
+import interfaces.IDeleteFormController;
+import interfaces.IEditFormController;
+import interfaces.IFormDataController;
 import interfaces.ISegmentForm;
 import javafx.event.EventHandler;
 import javafx.geometry.HPos;
@@ -35,10 +38,10 @@ public class ActivityForm extends DescriptionBasicForm implements ISegmentForm {
 	 * ukončení formuláře
 	 *
 	 */
-	public ActivityForm(FormController formController, FormDataController formDataController, CanvasController canvasController,
+	public ActivityForm(FormController formController, IFormDataController formDataController, IEditFormController editFormController, IDeleteFormController deleteFormController, CanvasController canvasController,
 						DragAndDropItemPanel dgItemPanel, SegmentType type, int indexForm) {
 
-		super(formController, formDataController, canvasController, dgItemPanel, type);
+		super(formController, formDataController, editFormController, deleteFormController, canvasController, dgItemPanel, type);
 		this. indexForm = indexForm;
 		this.setOnCloseRequest(e -> {
 
@@ -81,7 +84,7 @@ public class ActivityForm extends DescriptionBasicForm implements ISegmentForm {
 
 	@Override
 	public void deleteItem() {
-		formController.deleteActivityForm(indexForm);
+		deleteFormController.deleteActivityForm(indexForm);
 	}
 
 }

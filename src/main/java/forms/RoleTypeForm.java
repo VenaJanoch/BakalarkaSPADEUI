@@ -7,6 +7,9 @@ import SPADEPAC.RoleSuperClass;
 import SPADEPAC.RoleType;
 import abstractform.TableClassBasicForm;
 import controlPanels.ClassControlPanel;
+import interfaces.IDeleteFormController;
+import interfaces.IEditFormController;
+import interfaces.IFormDataController;
 import interfaces.ISegmentTableForm;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -51,11 +54,11 @@ public class RoleTypeForm extends TableClassBasicForm implements ISegmentTableFo
 	 * potvrzovací tlačítko
 	 *
 	 */
-	public RoleTypeForm(FormController formController, FormDataController formDataController, SegmentType type) {
-		super(formController, formDataController, type);
+	public RoleTypeForm(FormController formController, IFormDataController formDataController, IEditFormController editFormController, IDeleteFormController deleteFormController, SegmentType type) {
+		super(formController, formDataController, editFormController, deleteFormController, type);
 
-		classControlPanel = new ClassControlPanel("Add", SegmentType.RoleType, formDataController, formController);
-		editClassControlPanel = new ClassControlPanel("Edit", SegmentType.RoleType, formDataController, formController);
+		classControlPanel = new ClassControlPanel("Add", SegmentType.RoleType, formDataController, editFormController, formController);
+		editClassControlPanel = new ClassControlPanel("Edit", SegmentType.RoleType, formDataController, editFormController, formController);
 		int i = 0;
 		for(RoleClass roleClass : RoleClass.values()){
 			classArray[i] = roleClass.name();
@@ -119,7 +122,7 @@ public class RoleTypeForm extends TableClassBasicForm implements ISegmentTableFo
 			}
 			else{
 				ArrayList<BasicTable> list = new ArrayList<>(selection);
-				formDataController.deleteRoleType(list, tableTV);
+				deleteFormController.deleteRoleType(list, tableTV);
 				}
 		}
 

@@ -13,6 +13,9 @@ import abstractform.DateDescBasicForm;
 import graphics.CanvasItem;
 import graphics.DragAndDropCanvas;
 import graphics.DragAndDropItemPanel;
+import interfaces.IDeleteFormController;
+import interfaces.IEditFormController;
+import interfaces.IFormDataController;
 import interfaces.ISegmentForm;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -48,9 +51,9 @@ public class PhaseForm extends DateDescBasicForm implements ISegmentForm {
 	 *
 	 * @param indexForm
 	 */
-	public PhaseForm(FormController formController, FormDataController formDataController, CanvasController canvasController, DragAndDropItemPanel dgItemPanel, SegmentType type, int indexForm) {
+	public PhaseForm(FormController formController, IFormDataController formDataController, IEditFormController editFormController, IDeleteFormController deleteFormController, CanvasController canvasController, DragAndDropItemPanel dgItemPanel, SegmentType type, int indexForm) {
 
-		super(formController, formDataController, canvasController, dgItemPanel, type);
+		super(formController, formDataController, editFormController, deleteFormController, canvasController, dgItemPanel, type);
 		this. indexForm = indexForm;
 		this.setOnCloseRequest(e -> {
 			e.consume();
@@ -145,7 +148,7 @@ public class PhaseForm extends DateDescBasicForm implements ISegmentForm {
 	@Override
 	public void deleteItem() {
 
-		formController.deletePhaseForm(indexForm);
+		deleteFormController.deletePhaseForm(indexForm);
 
 	}
 

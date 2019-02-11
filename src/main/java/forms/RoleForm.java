@@ -5,6 +5,9 @@ import Controllers.FormDataController;
 import abstractform.Table2BasicForm;
 import com.sun.org.apache.bcel.internal.generic.TABLESWITCH;
 import controlPanels.RoleControlPanel;
+import interfaces.IDeleteFormController;
+import interfaces.IEditFormController;
+import interfaces.IFormDataController;
 import interfaces.ISegmentTableForm;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -57,11 +60,11 @@ public class RoleForm extends Table2BasicForm implements ISegmentTableForm {
 	 * potvrzovacímu tlačítku
 	 *
 	 */
-	public RoleForm(FormController formController, FormDataController formDataController, SegmentType type) {
-		super(formController, formDataController, type);
+	public RoleForm(FormController formController, IFormDataController formDataController, IEditFormController editFormController, IDeleteFormController deleteFormController, SegmentType type) {
+		super(formController, formDataController, editFormController, deleteFormController, type);
 
-		roleControlPanel = new RoleControlPanel("Add", formDataController, formController);
-		editRoleControlPanel = new RoleControlPanel("Edit", formDataController, formController);
+		roleControlPanel = new RoleControlPanel("Add", formDataController, editFormController, formController);
+		editRoleControlPanel = new RoleControlPanel("Edit", formDataController, editFormController, formController);
 		editRoleControlPanel.createControlPanel();
 
 		setEventHandler();
@@ -157,7 +160,7 @@ public class RoleForm extends Table2BasicForm implements ISegmentTableForm {
 			}
 			else{
 				ArrayList<BasicTable> list = new ArrayList<>(selection);
-				formDataController.deleteRole(list, tableTV);
+				deleteFormController.deleteRole(list, tableTV);
 			}
 		}
 

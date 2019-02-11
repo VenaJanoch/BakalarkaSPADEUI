@@ -11,6 +11,9 @@ import Controllers.FormDataController;
 import graphics.CanvasItem;
 import graphics.DragAndDropCanvas;
 import graphics.DragAndDropItemPanel;
+import interfaces.IDeleteFormController;
+import interfaces.IEditFormController;
+import interfaces.IFormDataController;
 import javafx.geometry.HPos;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
@@ -32,19 +35,19 @@ public class Date2DescBasicForm extends DateDescBasicForm {
 	/**
 	 * Konstruktor Třídy
 	 */
-	public Date2DescBasicForm(FormController formController, FormDataController formDataController, SegmentType type) {
+	public Date2DescBasicForm(FormController formController, IFormDataController formDataController, IEditFormController editFormController, IDeleteFormController deleteFormController, SegmentType type) {
 
-		super(formController,formDataController, type);
+		super(formController,formDataController, editFormController, deleteFormController, type);
 		fillFormDate2();
 	}
 
 	/**
 	 * Přetížený konstruktor
 	 */
-	public Date2DescBasicForm(FormController formController, FormDataController formDataController, CanvasController canvasController,
+	public Date2DescBasicForm(FormController formController, IFormDataController formDataController, IEditFormController editFormController, IDeleteFormController deleteFormController, CanvasController canvasController,
 							  DragAndDropItemPanel dgItemPanel, SegmentType type) {
 
-		super(formController, formDataController, canvasController, dgItemPanel, type);
+		super(formController, formDataController, editFormController, deleteFormController, canvasController, dgItemPanel, type);
 		fillFormDate2();
 	}
 

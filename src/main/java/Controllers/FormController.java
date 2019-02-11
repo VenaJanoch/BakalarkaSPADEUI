@@ -1,5 +1,7 @@
 package Controllers;
 
+import SPADEPAC.ConfigPersonRelation;
+import SPADEPAC.Configuration;
 import SPADEPAC.Milestone;
 import SPADEPAC.Role;
 import abstractform.BasicForm;
@@ -7,6 +9,9 @@ import forms.ConfigurationForm;
 import forms.*;
 import graphics.CanvasItem;
 import graphics.DragAndDropItemPanel;
+import interfaces.IDeleteFormController;
+import interfaces.IEditFormController;
+import interfaces.IFormDataController;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.control.ComboBox;
@@ -46,16 +51,16 @@ public class FormController {
     private RoleTypeForm roleTypeForm;
 
     private ApplicationController applicationController;
-    private DeleteControl deleteControl;
     private SegmentLists segmentLists;
-    private FormDataController formDataController;
-
+    private IFormDataController formDataController;
+    private IEditFormController editFormController;
+    private IDeleteFormController deleteFormController;
     private int lastConfigurationFormIndex = -1;
 
     private FormFillController formFillController;
     private DataPreparer dataPreparer;
     public FormController(IdentificatorCreater identificatorCreater, DataManipulator dataManipulator,
-                          ApplicationController applicationController, SegmentLists segmentLists, DeleteControl deleteControl, DataPreparer dataPreparer) {
+                          ApplicationController applicationController, SegmentLists segmentLists, DataPreparer dataPreparer) {
 
         this.segmentLists = segmentLists;
         this.dataPreparer = dataPreparer;
@@ -66,78 +71,59 @@ public class FormController {
         this.dataManipulator = dataManipulator;
         this.identificatorCreater = identificatorCreater;
 
-        this.deleteControl = deleteControl;
-
         }
 
-    public void initBasicForms(FormDataController formDataController){
+    public void initBasicForms(IFormDataController formDataController, IEditFormController editFormController, IDeleteFormController deleteFormController){
 
         this.formDataController = formDataController;
+        this.editFormController = editFormController;
+        this.deleteFormController = deleteFormController;
 
-        projectForm = new ProjectForm(this, formDataController, SegmentType.Project);
+        projectForm = new ProjectForm(this, formDataController, editFormController, deleteFormController, SegmentType.Project);
         forms.add(Constans.projectFormIndex, projectForm);
 
-        criterionForm = new CriterionForm(this, formDataController, SegmentType.Criterion);
+        criterionForm = new CriterionForm(this, formDataController, editFormController, deleteFormController, SegmentType.Criterion);
         forms.add(criterionForm);
 
         milestoneForm = new MilestoneForm(
-                this, formDataController,  SegmentType.Milestone);
+                this, formDataController, editFormController, deleteFormController,  SegmentType.Milestone);
         forms.add(Constans.milestoneFormIndex, milestoneForm);
 
-        roleTypeForm = new RoleTypeForm(this, formDataController, SegmentType.RoleType);
+        roleTypeForm = new RoleTypeForm(this, formDataController, editFormController, deleteFormController, SegmentType.RoleType);
         forms.add(roleTypeForm);
 
-        roleForm = new RoleForm(this, formDataController,SegmentType.Role);
+        roleForm = new RoleForm(this, formDataController, editFormController, deleteFormController, SegmentType.Role);
         forms.add(Constans.roleFormIndex, roleForm);
 
-        CPRForm = new ConfigPersonRelationForm(this, formDataController,SegmentType.ConfigPersonRelation);
+        CPRForm = new ConfigPersonRelationForm(this, formDataController, editFormController, deleteFormController, SegmentType.ConfigPersonRelation);
         forms.add(Constans.cprFormIndex, CPRForm);
 
-        priorityForm = new PriorityForm(this, formDataController,SegmentType.Priority);
+        priorityForm = new PriorityForm(this, formDataController, editFormController, deleteFormController, SegmentType.Priority);
         forms.add(Constans.priorityFormIndex, priorityForm);
 
-        severityForm = new SeverityForm(this, formDataController,SegmentType.Severity);
+        severityForm = new SeverityForm(this, formDataController, editFormController, deleteFormController, SegmentType.Severity);
         forms.add(Constans.severityFormIndex, severityForm);
 
-        relationForm = new RelationForm(this, formDataController,SegmentType.Relation);
+        relationForm = new RelationForm(this, formDataController, editFormController, deleteFormController, SegmentType.Relation);
         forms.add(Constans.relationFormIndex, relationForm);
 
-        resolutionForm = new ResolutionForm(this, formDataController,SegmentType.Resolution);
+        resolutionForm = new ResolutionForm(this, formDataController, editFormController, deleteFormController, SegmentType.Resolution);
         forms.add(Constans.resolutionormIndex, resolutionForm);
 
-        statusForm = new StatusForm(this, formDataController,SegmentType.Status);
+        statusForm = new StatusForm(this, formDataController, editFormController, deleteFormController, SegmentType.Status);
         forms.add(Constans.statusFormIndex, statusForm);
 
-        typeForm = new TypeForm(this, formDataController,SegmentType.Type);
+        typeForm = new TypeForm(this, formDataController, editFormController, deleteFormController, SegmentType.Type);
         forms.add(Constans.wuTypeFormIndex, typeForm);
 
 
-        branchFrom = new BranchForm(this, formDataController,SegmentType.Branch);
+        branchFrom = new BranchForm(this, formDataController, editFormController, deleteFormController, SegmentType.Branch);
         forms.add(Constans.branchIndex, branchFrom);
 
         forms.add(Constans.configurationFormIndex, null);
-        confTableForm = new ConfigurationTableForm(this,formDataController,SegmentType.Configuration);
+        confTableForm = new ConfigurationTableForm(this, formDataController, editFormController, deleteFormController, SegmentType.Configuration);
         forms.remove(Constans.configurationFormIndex);
         forms.add(Constans.configurationFormIndex, confTableForm);
-    }
-
-    public void deleteIterationForm(int formIdentificator) {
-
-        if (!forms.get(formIdentificator).isSave()) {
-            forms.remove(formIdentificator);
-            forms.add(formIdentificator, null);
-        }
-
-        dataManipulator.removeIteration(formIdentificator);
-    }
-
-    public void deletePhaseForm(int formIdentificator) {
-
-        if (!forms.get(formIdentificator).isSave()) {
-            forms.remove(formIdentificator);
-            forms.add(formIdentificator, null);
-        }
-        dataManipulator.removePhase(formIdentificator);
     }
 
 
@@ -179,7 +165,7 @@ public class FormController {
     public int createNewArtifactFormWithoutManipulator(){
         int index = identificatorCreater.createArtifactID();
 
-        ArtifactForm artifactForm = new ArtifactForm(this, formDataController,  SegmentType.Artifact, index);
+        ArtifactForm artifactForm = new ArtifactForm(this, formDataController, editFormController, deleteFormController,  SegmentType.Artifact, index);
         forms.add(index, artifactForm);
         return index;
 
@@ -193,7 +179,7 @@ public class FormController {
     public int createNewChangeFormWithoutManipulator(){
 
         int index = identificatorCreater.createChangeID();
-        ChangeForm changeForm = new ChangeForm(this, formDataController, SegmentType.Change, index);
+        ChangeForm changeForm = new ChangeForm(this, formDataController, editFormController, deleteFormController, SegmentType.Change, index);
         forms.add(index, changeForm);
         return index;
     }
@@ -208,7 +194,7 @@ public class FormController {
     public int createNewConfiguratioFormWithoutManipulator(){
         lastConfigurationFormIndex = identificatorCreater.createConfigurationID();
         CanvasController canvasController = new CanvasController(CanvasType.Configuration, applicationController);
-        ConfigurationForm configurationForm = new ConfigurationForm(this, formDataController,  canvasController,
+        ConfigurationForm configurationForm = new ConfigurationForm(this, formDataController, editFormController, deleteFormController,  canvasController,
                 new DragAndDropItemPanel(canvasController, Constans.configurationDragTextIndexs), SegmentType.Configuration,
                 segmentLists.getCPRObservable(), segmentLists.getBranchObservable(), segmentLists.getRoleObservable(), lastConfigurationFormIndex);
         forms.add(configurationForm);
@@ -226,7 +212,7 @@ public class FormController {
         int index = identificatorCreater.createWorkUnitID();
 
         CanvasController canvasController = new CanvasController(canvasType, applicationController);
-        WorkUnitForm workUnitForm = new WorkUnitForm(this, formDataController, canvasController, SegmentType.WorkUnit, index);
+        WorkUnitForm workUnitForm = new WorkUnitForm(this, formDataController, editFormController, deleteFormController, canvasController, SegmentType.WorkUnit, index);
         forms.add(index, workUnitForm);
 
         workUnitForm.getAsigneeRoleCB().setItems(segmentLists.getRoleObservable());
@@ -250,7 +236,7 @@ public class FormController {
     public int createNewActivityFormWithoutManipulator(){
         int index = identificatorCreater.createActivityID();
         CanvasController canvasController = new CanvasController(CanvasType.Activity, applicationController);
-        ActivityForm activityForm = new ActivityForm(this, formDataController,  canvasController, new DragAndDropItemPanel(canvasController,
+        ActivityForm activityForm = new ActivityForm(this, formDataController, editFormController, deleteFormController,  canvasController, new DragAndDropItemPanel(canvasController,
                 Constans.activityDragTextIndexs), SegmentType.Activity, index);
         forms.add(index, activityForm);
 
@@ -267,7 +253,7 @@ public class FormController {
 
         int index = identificatorCreater.createPhaseID();
         CanvasController canvasController = new CanvasController(CanvasType.Phase, applicationController);
-        PhaseForm phaseForm = new PhaseForm(this, formDataController,  canvasController, new DragAndDropItemPanel(canvasController,
+        PhaseForm phaseForm = new PhaseForm(this, formDataController, editFormController, deleteFormController,  canvasController, new DragAndDropItemPanel(canvasController,
                 Constans.phaseDragTextIndexs ), SegmentType.Phase, index);
         forms.add(index, phaseForm);
 
@@ -288,7 +274,7 @@ public class FormController {
 
         CanvasController canvasController = new CanvasController(CanvasType.Iteration, applicationController);
 
-        IterationForm iterationForm = new IterationForm(this, formDataController,  canvasController, new DragAndDropItemPanel(canvasController,
+        IterationForm iterationForm = new IterationForm(this, formDataController, editFormController, deleteFormController,  canvasController, new DragAndDropItemPanel(canvasController,
                 Constans.iterationDragTextIndexs),SegmentType.Iteration, index);
         forms.add(index, iterationForm);
 
@@ -347,6 +333,20 @@ public class FormController {
                 roleTableView.sort();
                 roleTableView.refresh();
                 break;
+            case ConfigPersonRelation:
+                List<ConfigPersonRelation> cprlist = dataManipulator.getProject().getCpr();
+                ConfigPersonRelationForm cprForm = (ConfigPersonRelationForm) form;
+                TableView cprTableView = cprForm.getTableTV();
+                cprTableView.getItems().clear();
+                for (int i = 0; i < cprlist.size(); i++) {
+                    ConfigPersonRelation cpr = cprlist.get(i);
+                    CPRTable cprTable = dataPreparer.prepareCPRTable(cpr.getName(), cpr.getPersonIndex(), cpr.getId(), segmentLists.getRoleObservable());
+                    cprTableView.getItems().add(cprTable);
+
+                }
+                cprTableView.sort();
+                cprTableView.refresh();
+                break;
             default:
 
         }
@@ -356,7 +356,6 @@ public class FormController {
         form.toFront();
 
     }
-
 
     public boolean isFormFill(int formIdentificator) {
        return forms.get(formIdentificator).isSave();
@@ -423,27 +422,9 @@ public class FormController {
         dataManipulator.createWorkUnitRelation(startIndex, endIndex);
     }
 
-    public ObservableList<BasicTable> getCriterionObservable() {
-        return segmentLists.getCriterionObservable();
-    }
-
-    public ObservableList<BasicTable> getRoleObservable() {
-        return segmentLists.getRoleObservable();
-    }
-
-    public ObservableList<BasicTable> getRoleTypeObservable() {
-       return segmentLists.getRoleTypeObservable();
-    }
 
 
-    public void deleteActivityForm(int indexForm) {
 
-        if (!forms.get(indexForm).isSave()) {
-            forms.remove(indexForm);
-            forms.add(indexForm, null);
-        }
-        dataManipulator.removeActivity(indexForm);
-    }
 
     public void setItemColor(int indexForm, boolean isExist) {
 
@@ -453,42 +434,6 @@ public class FormController {
         } else {
             item.getSegmentInfo().setRectangleColor(Constans.rectangleBorderColor);
         }
-
-    }
-
-    public void deleteWorkUnit(ArrayList<Integer> indicesForm) {
-
-        for(int i : indicesForm){
-            deleteWorkUnit(identificatorCreater.getWorkUnitIndex(i));
-        }
-    }
-
-    public void deleteWorkUnit(int indexForm) {
-
-        if (!forms.get(indexForm).isSave()) {
-            forms.remove(indexForm);
-            forms.add(indexForm, null);
-        }
-        dataManipulator.removeWorkUnit(identificatorCreater.getWorkUnitIndexMaper().get(indexForm));
-    }
-
-
-    public void deleteChange(int indexForm) {
-        if (!forms.get(indexForm).isSave()) {
-            forms.remove(indexForm);
-            forms.add(indexForm, null);
-        }
-        dataManipulator.removeChange(indexForm);
-
-    }
-
-    public void deleteArtifact(int indexForm) {
-        if (!forms.get(indexForm).isSave()) {
-            forms.remove(indexForm);
-            forms.add(indexForm, null);
-        }
-
-        dataManipulator.removeArtifact(indexForm);
 
     }
 
@@ -581,9 +526,7 @@ public class FormController {
     }
 
 
-    public Map<Integer, CanvasItem> getCanvasItemList() {
-        return canvasItemList;
-    }
+
 
     public void upDateComboBox(ComboBox<BasicTable> cb, int position){
         cb.getSelectionModel().select(position);
@@ -681,5 +624,22 @@ public class FormController {
     public void setFormFillController(FormFillController formFillController) {
         this.formFillController = formFillController;
     }
+
+    public Map<Integer, CanvasItem> getCanvasItemList() {
+        return canvasItemList;
+    }
+
+    public ObservableList<BasicTable> getCriterionObservable() {
+        return segmentLists.getCriterionObservable();
+    }
+
+    public ObservableList<BasicTable> getRoleObservable() {
+        return segmentLists.getRoleObservable();
+    }
+
+    public ObservableList<BasicTable> getRoleTypeObservable() {
+        return segmentLists.getRoleTypeObservable();
+    }
+
 }
 

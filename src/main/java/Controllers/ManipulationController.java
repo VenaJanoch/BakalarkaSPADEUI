@@ -3,6 +3,7 @@ package Controllers;
 import graphics.CanvasItem;
 import graphics.DragAndDropCanvas;
 import graphics.NodeLink;
+import interfaces.IDeleteFormController;
 import services.*;
 
 public class ManipulationController {
@@ -20,18 +21,18 @@ public class ManipulationController {
     private boolean isCopy;
 
     private NodeLink link;
-    ;
 
     private FormController formController;
     private FormFillController formFillController;
+    private IDeleteFormController deleteFormController;
 
     /**
      * Konstruktor třídy Zinicializuje globální proměnné třídy
      * instance třídy control
      */
-    public ManipulationController(FormController formController) {
+    public ManipulationController(IDeleteFormController deleteFormController) {
 
-        this.formController = formController;
+        this.deleteFormController = deleteFormController;
         isCut = false;
     }
 
@@ -137,52 +138,22 @@ public class ManipulationController {
     public void deleteForm(int formIndex, SegmentType segmentType){
         switch (segmentType){
             case Phase:
-                formController.deletePhaseForm(formIndex);
+                deleteFormController.deletePhaseForm(formIndex);
                 break;
             case Iteration:
-                formController.deleteIterationForm(formIndex);
+                deleteFormController.deleteIterationForm(formIndex);
                 break;
             case Activity:
-                formController.deleteActivityForm(formIndex);
+                deleteFormController.deleteActivityForm(formIndex);
                 break;
             case WorkUnit:
-                formController.deleteWorkUnit(formIndex);
-                break;
-            case Milestone:
-                break;
-            case Criterion:
-                break;
-            case Configuration:
-                 break;
-            case ConfigPersonRelation:
-                break;
-            case Branch:
+                deleteFormController.deleteWorkUnit(formIndex);
                 break;
             case Change:
-                formController.deleteChange(formIndex);
+                deleteFormController.deleteChange(formIndex);
                 break;
             case Artifact:
-                formController.deleteArtifact (formIndex);
-                break;
-            case Role:
-                break;
-            case Tag:
-                break;
-            case Project:
-                break;
-            case Priority:
-                break;
-            case Severity:
-                break;
-            case RoleType:
-                break;
-            case Relation:
-                break;
-            case Resolution:
-                break;
-            case Status:
-                break;
-            case Type:
+                deleteFormController.deleteArtifact (formIndex);
                 break;
             default:
                 break;

@@ -4,6 +4,9 @@ import Controllers.CanvasController;
 import Controllers.FormController;
 import Controllers.FormDataController;
 import graphics.DragAndDropItemPanel;
+import interfaces.IDeleteFormController;
+import interfaces.IEditFormController;
+import interfaces.IFormDataController;
 import javafx.geometry.HPos;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
@@ -24,17 +27,17 @@ public class DateDescBasicForm extends DescriptionBasicForm {
     /**
      * Konstruktor třídy
      */
-    public DateDescBasicForm(FormController formController, FormDataController formDataController, CanvasController canvasController, DragAndDropItemPanel dgItemPanel, SegmentType type) {
+    public DateDescBasicForm(FormController formController, IFormDataController formDataController, IEditFormController editFormController, IDeleteFormController deleteFormController, CanvasController canvasController, DragAndDropItemPanel dgItemPanel, SegmentType type) {
 
-        super(formController, formDataController, canvasController, dgItemPanel, type);
+        super(formController, formDataController, editFormController, deleteFormController, canvasController, dgItemPanel, type);
         fillFormDate();
     }
 
     /**
      * Přetížený konstruktor třídy
      */
-    public DateDescBasicForm(FormController formController, FormDataController formDataController, SegmentType type) {
-        super(formController, formDataController, type);
+    public DateDescBasicForm(FormController formController, IFormDataController formDataController, IEditFormController editFormController, IDeleteFormController deleteFormController, SegmentType type) {
+        super(formController, formDataController, editFormController, deleteFormController, type);
         fillFormDate();
     }
 

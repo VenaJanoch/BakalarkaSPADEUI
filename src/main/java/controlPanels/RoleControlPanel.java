@@ -3,6 +3,9 @@ package controlPanels;
 import Controllers.FormController;
 import Controllers.FormDataController;
 import abstractControlPane.DescriptionControlPanel;
+import interfaces.IDeleteFormController;
+import interfaces.IEditFormController;
+import interfaces.IFormDataController;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.Scene;
@@ -19,8 +22,8 @@ public class RoleControlPanel extends DescriptionControlPanel {
     protected ChoiceBox<BasicTable> roleTypeCB;
     protected int roleTypeIndex;
 
-    public RoleControlPanel(String buttonName, FormDataController formDataController, FormController formController){
-        super(buttonName, formDataController, formController);
+    public RoleControlPanel(String buttonName, IFormDataController formDataController, IEditFormController editFormController, FormController formController){
+        super(buttonName, formDataController, editFormController, formController);
         this.roleTypeIndex = 0;
     }
 
@@ -63,7 +66,7 @@ public class RoleControlPanel extends DescriptionControlPanel {
         descriptionTF.setText(roleData[1]);
 
         button.setOnAction(event ->{
-            formDataController.editDataFromRole(nameTF.getText(), descriptionTF.getText(), roleTable, roleTypeIndex, id);
+            editFormController.editDataFromRole(nameTF.getText(), descriptionTF.getText(), roleTable, roleTypeIndex, id);
             clearPanel(tableView);
             this.close();
         });

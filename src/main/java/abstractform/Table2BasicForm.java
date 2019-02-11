@@ -2,6 +2,9 @@ package abstractform;
 
 import Controllers.FormController;
 import Controllers.FormDataController;
+import interfaces.IDeleteFormController;
+import interfaces.IEditFormController;
+import interfaces.IFormDataController;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -38,9 +41,9 @@ public abstract class Table2BasicForm extends BasicForm {
     /**
      * Konstruktor třídy Zinicializuje globální proměnné třídy
      */
-    public Table2BasicForm(FormController formController, FormDataController formDataController, SegmentType type) {
+    public Table2BasicForm(FormController formController, IFormDataController formDataController, IEditFormController editFormController, IDeleteFormController deleteFormController, SegmentType type) {
 
-        super(formController, formDataController, type);
+        super(formController, formDataController, editFormController, deleteFormController, type);
         this.setScene(creatScene());
         this.setMinHeight(Constans.twoFormHeight);
         this.setMinWidth(Constans.twoFormWidth);
@@ -98,10 +101,6 @@ public abstract class Table2BasicForm extends BasicForm {
         return submitBT;
     }
 
-    public void setSubmitBT(Button submitBT) {
-        this.submitBT = submitBT;
-    }
-
     public BorderPane getMainPanel() {
         return mainPanel;
     }
@@ -109,14 +108,5 @@ public abstract class Table2BasicForm extends BasicForm {
     public void setMainPanel(BorderPane mainPanel) {
         this.mainPanel = mainPanel;
     }
-
-    public BorderPane getInternalPanel() {
-        return internalPanel;
-    }
-
-    public void setInternalPanel(BorderPane internalPanel) {
-        this.internalPanel = internalPanel;
-    }
-
 
 }

@@ -2,8 +2,8 @@ package abstractControlPane;
 
 import Controllers.FormController;
 import Controllers.FormDataController;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
+import interfaces.IEditFormController;
+import interfaces.IFormDataController;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -14,15 +14,13 @@ public abstract class DescriptionControlPanel extends NameControlPanel {
     protected Label descriptionLB;
     protected TextField descriptionTF;
 
-
-
-    public DescriptionControlPanel(String buttonText, FormDataController formDataController, FormController formController) {
-        super(buttonText, formDataController, formController);
+    public DescriptionControlPanel(String buttonText, IFormDataController formDataController, IEditFormController editFormController, FormController formController) {
+        super(buttonText, formDataController, editFormController, formController);
         createBaseControlPanel();
     }
 
-    public DescriptionControlPanel(String buttonText, FormDataController formDataController) {
-        super(buttonText, formDataController);
+    public DescriptionControlPanel(String buttonText, IFormDataController formDataController, IEditFormController editFormController) {
+        super(buttonText, formDataController, editFormController);
         createBaseControlPanel();
     }
 

@@ -10,6 +10,9 @@ import Controllers.FormDataController;
 import abstractform.DateBasicForm;
 import forms.TagForm;
 import graphics.DragAndDropItemPanel;
+import interfaces.IDeleteFormController;
+import interfaces.IEditFormController;
+import interfaces.IFormDataController;
 import javafx.collections.FXCollections;
 import org.controlsfx.control.CheckComboBox;
 
@@ -80,17 +83,17 @@ public class ConfigurationForm extends DateBasicForm implements ISegmentForm {
      * Konstruktor třídy Zinicializuje globální proměnné tříd Nastaví reakci na
      * uzavření okna
      */
-    public ConfigurationForm(FormController formController, FormDataController formDataController, CanvasController canvasController,
+    public ConfigurationForm(FormController formController, IFormDataController formDataController, IEditFormController editFormController, IDeleteFormController deleteFormController, CanvasController canvasController,
                              DragAndDropItemPanel dgItemPanel, SegmentType type, ObservableList<BasicTable> cprList, ObservableList<BasicTable> branchList,
                              ObservableList<BasicTable> roleList, int indexForm) {
 
-        super(formController, formDataController, canvasController, dgItemPanel, type);
+        super(formController, formDataController, editFormController, deleteFormController, canvasController, dgItemPanel, type);
         this.cprList = cprList;
         this.branchList = branchList;
         this.roleList = roleList;
         this.indexForm = indexForm;
 
-        this.tagForm = new TagForm(formController, formDataController,SegmentType.Tag, indexForm);
+        this.tagForm = new TagForm(formController, formDataController, editFormController, deleteFormController, SegmentType.Tag, indexForm);
         isNew = true;
         isRelease = true;
 
