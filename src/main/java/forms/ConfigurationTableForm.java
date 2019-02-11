@@ -61,7 +61,6 @@ public class ConfigurationTableForm extends Table2BasicForm implements ISegmentT
 		super(formController, formDataController, type);
 
 		createForm();
-		setEventHandler();
 		getSubmitBT().setOnAction(event -> setActionSubmitButton());
 	}
 
@@ -75,8 +74,7 @@ public class ConfigurationTableForm extends Table2BasicForm implements ISegmentT
 		formName = new Label("Configuration form");
 		formName.setFont(Font.font(25));
 
-		getInternalPanel().setCenter(getTable());
-		getInternalPanel().setLeft(new SplitPane());
+		internalPanel.setCenter(getTable());
 
 		mainPanel.setTop(formName);
 		mainPanel.setAlignment(formName, Pos.TOP_CENTER);
@@ -95,7 +93,7 @@ public class ConfigurationTableForm extends Table2BasicForm implements ISegmentT
 
 		int id  = formController.createNewForm(SegmentType.Configuration, null);
 		getSubmitButton().setText("Add");
-		mainPanel.setCenter(formController.getMainPanelFromForm(id));
+		mainPanel.setLeft(formController.getMainPanelFromForm(id));
 }
 
 	@Override
@@ -140,8 +138,8 @@ public class ConfigurationTableForm extends Table2BasicForm implements ISegmentT
 
 			ConfigTable config = tableTV.getSelectionModel().getSelectedItems().get(0);
 			if (config != null) {
-				int id = config.getIdProperty().intValue();
-				mainPanel.setCenter(formController.getMainPanelFromForm(id));
+				int id = config.getId();
+				mainPanel.setLeft(formController.getConfigurationMainPanelFromSegmentId(id));
 			}
 		}
 	};

@@ -27,4 +27,16 @@ public class TableToObjectInstanc {
     public String toString() {
         return getName();
     }
+
+    @Override
+    public boolean equals(Object object) { {
+        boolean sameSame = false;
+
+        if (object != null && object instanceof TableToObjectInstanc)
+        {
+            sameSame = this.id == ((TableToObjectInstanc) object).id;
+        }
+        return sameSame;
+    }
+    }
 }

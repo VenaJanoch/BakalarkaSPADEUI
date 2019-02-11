@@ -86,7 +86,7 @@ public class FormFillController {
             isRelease = "NO";
         }
 
-        ConfigTable table = new ConfigTable(idName, isRelease, formId);
+        ConfigTable table = new ConfigTable(idName, isRelease, formId, id);
 
         configTable.getTableTV().getItems().add(table);
         segmentLists.getConfigObservable().add(table);
@@ -108,7 +108,7 @@ public class FormFillController {
             addDataToConfigurationTable(i, id, configuration, form);
         }
         id = formController.createNewForm(SegmentType.Configuration, CanvasType.Configuration);
-        form.getMainPanel().setCenter(formController.getMainPanelFromForm(id));
+        form.getMainPanel().setLeft(formController.getMainPanelFromForm(id));
 
     }
     public void fillConfigurationWithoutCreateId(Configuration configuration, int id){

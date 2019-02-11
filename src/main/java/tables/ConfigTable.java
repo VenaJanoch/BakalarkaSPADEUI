@@ -8,23 +8,26 @@ import javafx.beans.property.StringProperty;
 
 public class ConfigTable extends BasicTable {
 
-	/** Globální proměnné třídy **/
-	private StringProperty release;
-	private IntegerProperty id;
-
-	
 	/**
-	 * Konstruktor třídy 
-	 * Zinicializuje globální proměnné třídy 
-	 * @param name jméno configurace
+	 * Globální proměnné třídy
+	 **/
+	private StringProperty release;
+	private IntegerProperty formIndex;
+
+
+	/**
+	 * Konstruktor třídy
+	 * Zinicializuje globální proměnné třídy
+	 *
+	 * @param name    jméno configurace
 	 * @param release hodnota release
-	 * @param id identikace 
+	 * @param id      identikace
 	 */
-	public ConfigTable(String name, String release, int id) {
+	public ConfigTable(String name, String release, int formIndex, int id) {
 		super(name, id);
 		this.release = new SimpleStringProperty(release);
-		this.id = new SimpleIntegerProperty(id);
-		
+		this.formIndex = new SimpleIntegerProperty(formIndex);
+
 	}
 
 	/**
@@ -35,8 +38,10 @@ public class ConfigTable extends BasicTable {
 
 		return getName();
 	}
-	
-	/** Getrs and Setrs **/
+
+	/**
+	 * Getrs and Setrs
+	 **/
 
 	public final String getRelease() {
 		return release.get();
@@ -49,11 +54,6 @@ public class ConfigTable extends BasicTable {
 
 
 	public IntegerProperty getIdProperty() {
-		return id;
-	}
-
-
-	public void setIdProperty(IntegerProperty id) {
-		this.id = id;
+		return formIndex;
 	}
 }

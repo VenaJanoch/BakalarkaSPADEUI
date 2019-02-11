@@ -5,11 +5,9 @@ import javafx.event.EventHandler;
 import javafx.scene.Cursor;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.input.*;
-import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
 import services.*;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -118,7 +116,7 @@ public class CanvasController {
 
     public String createSegmentId(SegmentType type, int formIndex) {
 
-        int id = formController.getSegmetIdFromFromId(type,formIndex);
+        int id = formController.getSegmetIdFromFormId(type,formIndex);
         String number = String.format("%03d", id);
 
         return type.name() +  "_" +  number;

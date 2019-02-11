@@ -98,15 +98,14 @@ public class RoleForm extends Table2BasicForm implements ISegmentTableForm {
 		formName = new Label("Role Form");
 		formName.setFont(Font.font(25));
 
-		getInternalPanel().setTop(formName);
-		getInternalPanel().setAlignment(formName, Pos.CENTER);
+		internalPanel.setTop(formName);
+		internalPanel.setAlignment(formName, Pos.CENTER);
 
-		getInternalPanel().setCenter(getTable());
-		getInternalPanel().setBottom(createControlPane());
+		internalPanel.setCenter(getTable());
+		internalPanel.setBottom(createControlPane());
 
 		roleTForm = (RoleTypeForm) formController.getForms().get(Constans.roleTypeIndex);
-		getMainPanel().setCenter(getInternalPanel());
-		getMainPanel().setRight(roleTForm.getMainPanel());
+		mainPanel.setRight(roleTForm.getMainPanel());
 
 	}
 

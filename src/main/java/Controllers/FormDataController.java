@@ -16,8 +16,6 @@ import java.util.*;
 
 public class FormDataController {
 
-    private FormControl formControl;
-    private ApplicationController applicationController;
     private DeleteControl deleteControl;
     private SegmentLists lists;
     private DataManipulator dataManipulator;
@@ -31,14 +29,12 @@ public class FormDataController {
                        SegmentLists lists, MapperTableToObject mapperTableToObject, DataManipulator dataManipulator,
                               IdentificatorCreater identificatorCreater, DataPreparer dataPreparer){
         this.formController = formController;
-        this.formControl = new FormControl();
         this.deleteControl = deleteControl;
         this.lists = lists;
         this.dataManipulator = dataManipulator;
         this.identificatorCreater = identificatorCreater;
         this.mapperTableToObject = mapperTableToObject;
         this.dataPreparer = dataPreparer;
-
     }
 
     
@@ -47,16 +43,19 @@ public class FormDataController {
                                          int indexForm) {
         String nameForManipulator = InputController.fillTextMapper(actName);
         String descriptionForManipulator = InputController.fillTextMapper(desc);
-        int phaseIndex = identificatorCreater.getPhaseIndex(indexForm);
+        int phaseId = identificatorCreater.getPhaseIndex(indexForm);
 
         int[] coords = formController.getCoordsFromItem(indexForm);
         int milestoneIndexForManipulator = dataPreparer.prepareIndexForManipulator(milestoneIndex);
-        dataManipulator.addDataToPhase(nameForManipulator, endDateL, descriptionForManipulator, dataPreparer.prepareIndexForManipulator(confIndex),
-               milestoneIndexForManipulator , coords[0], coords[1], dataPreparer.prepareCanvasItemIndexForManipulator(itemIndexList.keySet()), phaseIndex);
-       formController.setNameToItem(indexForm, nameForManipulator);
+        int configurationIndexFromManipulator = dataPreparer.prepareIndexForManipulator(confIndex);
 
-       mapperTableToObject.mapTableToObject(SegmentType.Phase, milestoneIndexForManipulator, new TableToObjectInstanc(actName, phaseIndex,
-                SegmentType.Phase));
+        dataManipulator.addDataToPhase(nameForManipulator, endDateL, descriptionForManipulator, configurationIndexFromManipulator,
+               milestoneIndexForManipulator , coords[0], coords[1], dataPreparer.prepareCanvasItemIndexForManipulator(itemIndexList.keySet()), phaseId);
+        formController.setNameToItem(indexForm, nameForManipulator);
+
+        String segmentId = formController.getSegmentIdentificator(indexForm);
+        mapperTableToObject.mapTableToPhase(milestoneIndexForManipulator, configurationIndexFromManipulator, segmentId , phaseId);
+
         return true;
     }
 
@@ -67,10 +66,15 @@ public class FormDataController {
         String descriptionForManipulator = InputController.fillTextMapper(desc);
 
         int[] coords = formController.getCoordsFromItem(indexForm);
+        int configurationIdForManipulator = dataPreparer.prepareIndexForManipulator(chooseConfigID);
+        int iterationId = identificatorCreater.getIterationIndex(indexForm);
 
-        dataManipulator.addDataToIteration(nameForManipulator,startDate, endDate, descriptionForManipulator, dataPreparer.prepareIndexForManipulator(chooseConfigID),
+        dataManipulator.addDataToIteration(nameForManipulator,startDate, endDate, descriptionForManipulator, configurationIdForManipulator ,
                 coords[0], coords[1], dataPreparer.prepareCanvasItemIndexForManipulator(itemIndexList.keySet()), identificatorCreater.getIterationIndex(indexForm));
         formController.setNameToItem(indexForm, nameForManipulator);
+
+        String segmentId = formController.getSegmentIdentificator(indexForm);
+        mapperTableToObject.mapTableToObject(SegmentType.Iteration, configurationIdForManipulator, new TableToObjectInstanc(segmentId, iterationId, SegmentType.Iteration));
         return true;
     }
 
@@ -124,6 +128,8 @@ public class FormDataController {
 
     public boolean saveDataFromConfiguration(String actName, LocalDate createDate, boolean isRelease, int authorIndex, ArrayList<Integer> branchIndex,
                                           ArrayList<Integer> cprIndex, Map<Integer,CanvasItem> itemIndexList, boolean isNew, int indexForm) {
+
+
         String nameForManipulator = InputController.fillTextMapper(actName);
         ArrayList artefactList = new ArrayList();
         ArrayList changeList = new ArrayList();
@@ -146,10 +152,10 @@ public class FormDataController {
         dataManipulator.addDataToConfiguration(nameForManipulator, createDate, isRelease, authorIndex , branchIndex,cprIndex,
                 artefactList, changeList, configIndex );
         String idName = identificatorCreater.getConfigurationIndex(indexForm) + "_" + actName;
-        ConfigTable configTable = new ConfigTable(idName, release, configIndex);
+        ConfigTable configTable = new ConfigTable(idName, release, indexForm, configIndex);
         if (isNew){
             lists.getConfigObservable().add(configTable);
-            formController.setNewItemToConfigurationTable(idName, release, indexForm);
+            formController.setNewItemToConfigurationTable(idName, release, indexForm, configIndex);
         }else{
             lists.getConfigObservable().remove(configIndex + 1);
             lists.getConfigObservable().add(configIndex + 1, configTable);
@@ -160,7 +166,6 @@ public class FormDataController {
         ArrayList<Integer> branchIndicies = dataManipulator.getBranchIndices(branchIndex);
         ArrayList<Integer> cprIndicies = dataManipulator.getCPRIndices(cprIndex);
         int roleIndex = dataManipulator.getRoleId(authorIndex);
-
         mapperTableToObject.mapTableToConfiguration(roleIndex, branchIndicies, cprIndicies, idName, configIndex);
         return true;
     }
@@ -645,6 +650,7 @@ public class FormDataController {
             tableView.getItems().removeAll(selection);
             tableView.getSelectionModel().clearSelection();
 
+            formController.setConfigurationFormToTableForm();
         }
 
 

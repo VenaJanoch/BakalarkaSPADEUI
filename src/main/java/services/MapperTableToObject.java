@@ -48,7 +48,7 @@ public class MapperTableToObject {
         this.configurationToCPRMapper = new HashMap<>();
         this.configurationToBranchMapper = new HashMap<>();
         this.phaseToMilestone = new HashMap<>();
-        this.phaseToMilestone = new HashMap<>();
+        this.phaseToConfigurationMapper = new HashMap<>();
         this.iterationToConfigurationMapper = new HashMap<>();
 
 
@@ -96,8 +96,8 @@ public class MapperTableToObject {
             case Configuration:
                 addInstanceToMap(index, lists.getRoleObservable(), instanc, configurationToRoleMapper);
                 break;
-            case Phase:
-                addInstanceToMap(index, lists.getMilestoneObservable(), instanc, phaseToMilestone);
+            case Iteration:
+                addInstanceToMap(index, lists.getConfigObservable(), instanc, iterationToConfigurationMapper);
                 break;
             default:
 
@@ -119,6 +119,11 @@ public class MapperTableToObject {
         addInstanceToMap(roleIndex, lists.getRoleObservable(), new TableToObjectInstanc(configName, configIndex, SegmentType.Configuration), configurationToRoleMapper);
         addInstanceToMap(cprIndicies, lists.getCPRObservable(), new TableToObjectInstanc(configName, configIndex, SegmentType.Configuration), configurationToCPRMapper);
         addInstanceToMap(branches, lists.getBranchObservable(), new TableToObjectInstanc(configName, configIndex, SegmentType.Configuration), configurationToBranchMapper);
+    }
+
+    public void mapTableToPhase(int milestoneId, int configurationId, String phaseName, int phaseId){
+        addInstanceToMap(milestoneId, lists.getMilestoneObservable(), new TableToObjectInstanc(phaseName, phaseId, SegmentType.Phase), phaseToMilestone);
+        addInstanceToMap(configurationId, lists.getConfigObservable(), new TableToObjectInstanc(phaseName, phaseId, SegmentType.Phase), phaseToConfigurationMapper);
     }
 
 

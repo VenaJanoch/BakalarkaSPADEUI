@@ -50,7 +50,7 @@ public class FormController {
     private SegmentLists segmentLists;
     private FormDataController formDataController;
 
-    private int lastConfigurationIndex = -1;
+    private int lastConfigurationFormIndex = -1;
 
     private FormFillController formFillController;
     private DataPreparer dataPreparer;
@@ -206,14 +206,14 @@ public class FormController {
     }
 
     public int createNewConfiguratioFormWithoutManipulator(){
-        lastConfigurationIndex = identificatorCreater.createConfigurationID();
+        lastConfigurationFormIndex = identificatorCreater.createConfigurationID();
         CanvasController canvasController = new CanvasController(CanvasType.Configuration, applicationController);
         ConfigurationForm configurationForm = new ConfigurationForm(this, formDataController,  canvasController,
                 new DragAndDropItemPanel(canvasController, Constans.configurationDragTextIndexs), SegmentType.Configuration,
-                segmentLists.getCPRObservable(), segmentLists.getBranchObservable(), segmentLists.getRoleObservable(), lastConfigurationIndex);
+                segmentLists.getCPRObservable(), segmentLists.getBranchObservable(), segmentLists.getRoleObservable(), lastConfigurationFormIndex);
         forms.add(configurationForm);
 
-        return  lastConfigurationIndex;
+        return lastConfigurationFormIndex;
     }
 
     private int createNewWorkUnitForm(CanvasType canvasType) {
@@ -376,6 +376,11 @@ public class FormController {
         item.setNameText(name);
     }
 
+    public String getSegmentIdentificator(int indexForm){
+        CanvasItem item = canvasItemList.get(indexForm);
+        return item.getSegmentIdentificator();
+    }
+
     public void removeCanvasItemFromList(int id) {
         canvasItemList.put(id,null);
     }
@@ -487,13 +492,19 @@ public class FormController {
 
     }
 
-    public Node getMainPanelFromForm(int id) {
+    public Node getMainPanelFromForm(int formId) {
 
-        return forms.get(id).getMainPanel();
+        return forms.get(formId).getMainPanel();
 
     }
 
-    public int getSegmetIdFromFromId(SegmentType type, int formIndex) {
+    public Node getConfigurationMainPanelFromSegmentId(int id) {
+
+        return getMainPanelFromForm(identificatorCreater.getConfigurationFormIndex(id));
+
+    }
+
+    public int getSegmetIdFromFormId(SegmentType type, int formIndex) {
 
         switch (type) {
             case Phase:
@@ -554,8 +565,8 @@ public class FormController {
         return forms;
     }
 
-    public void setNewItemToConfigurationTable(String actName, String isRelease, int id) {
-        ConfigTable configTable = new ConfigTable(actName, isRelease, id);
+    public void setNewItemToConfigurationTable(String actName, String isRelease, int formIndex, int id) {
+        ConfigTable configTable = new ConfigTable(actName, isRelease, formIndex, id);
         ConfigurationTableForm configurationTableForm = (ConfigurationTableForm) forms.get(Constans.configurationFormIndex);
         configurationTableForm.getTableTV().getItems().add(configTable);
         configurationTableForm.getTableTV().sort();
@@ -566,7 +577,7 @@ public class FormController {
 
     public void setConfigurationFormToTableForm(){
         ConfigurationTableForm configurationTableForm = (ConfigurationTableForm) forms.get(Constans.configurationFormIndex);
-        configurationTableForm.getMainPanel().setCenter(getMainPanelFromForm(lastConfigurationIndex));
+        configurationTableForm.getMainPanel().setLeft(getMainPanelFromForm(lastConfigurationFormIndex));
     }
 
 

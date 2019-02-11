@@ -516,7 +516,7 @@ public class DataManipulator {
 
     public void removeConfiguration(ObservableList<Integer> indexList){
         for(int i = indexList.size() -1; i >= 0; i-- ){
-            project.getMilestones().remove((int)indexList.get(i));
+            project.getConfiguration().remove((int)indexList.get(i));
         }
     }
 
@@ -1008,7 +1008,11 @@ public class DataManipulator {
     }
 
     public int getRoleId(int roleIndex){
-        return project.getRoles().get(roleIndex).getId();
+        int index = roleIndex;
+        if(roleIndex != -1){
+            index = project.getRoleType().get(roleIndex).getId();
+        }
+        return index;
     }
 
     public int roleTypeIndex(int typeFormManipulator) {

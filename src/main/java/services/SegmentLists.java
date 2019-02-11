@@ -83,7 +83,7 @@ public class SegmentLists {
     public void createLists() {
 
         configObservable = FXCollections.observableArrayList();
-        configObservable.add(new ConfigTable("", "", -1));
+        configObservable.add(new ConfigTable("", "", -1, -1));
 
         roleObservable = FXCollections.observableArrayList();
         roleObservable.add(new RoleTable("","","",-1));
