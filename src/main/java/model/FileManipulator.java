@@ -25,14 +25,13 @@ public class FileManipulator {
 
     private FileChooser fileChooser;
     private ProcessGenerator procesGener;
-    private DataManipulator dataManipulator;
+    private DataModel dataModel;
     private boolean firstSave;
     private boolean save = false;
 
 
-    public FileManipulator(ProcessGenerator processGener, DataManipulator dataManipulator) {
-        this.procesGener = processGener;
-        this.dataManipulator = dataManipulator;
+    public FileManipulator( DataModel dataModel) {
+        this.dataModel = dataModel;
 
         configureFileChooser();
         firstSave = true;
@@ -61,7 +60,7 @@ public class FileManipulator {
             firstSave = false;
             save = true;
         } else {
-            procesGener.saveProcess(XMLProcessFile, dataManipulator.getProject());
+            dataModel.saveProcess(XMLProcessFile);
         }
 
     }
@@ -78,7 +77,7 @@ public class FileManipulator {
             XMLProcessFile = fileChooser.showSaveDialog(new Stage());
 
             if (XMLProcessFile != null) {
-                procesGener.saveProcess(XMLProcessFile, dataManipulator.getProject());
+                dataModel.saveProcess(XMLProcessFile);
             }
         } else {
             save = false;
@@ -102,9 +101,6 @@ public class FileManipulator {
         return null;
     }
 
-    public void parseProject(File xmlProject){
-        dataManipulator.setProject(procesGener.readProcess(xmlProject));
-    }
 
 }
 

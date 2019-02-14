@@ -9,27 +9,27 @@ import tables.TagTable;
 
 import java.util.ArrayList;
 
-public interface IDeleteFormController {
+  public interface IDeleteFormController {
 
-    public void deleteActivityForm(int indexForm);
-    public void deleteWorkUnit(ArrayList<Integer> indicesForm);
-    public void deleteWorkUnit(int indexForm);
-    public void deleteChange(int indexForm);
-    public void deleteArtifact(int indexForm);
-    public void deleteIterationForm(int formIdentificator);
-    public void deletePhaseForm(int formIdentificator);
-    public void deleteConfiguration(ArrayList<BasicTable> selection, TableView<ConfigTable> tableView);
-    public void deleteType(ArrayList<BasicTable> selection, TableView view);
-    public void deleteStatus(ArrayList<BasicTable> selection, TableView view);
-    public void deleteTag(int configId, ObservableList<TagTable> list);
-    public void deleteRoleType(ArrayList<BasicTable> selection, TableView tableView);
-    public void deleteRole(ArrayList<BasicTable> selection, TableView tableView);
-    public void deleteRelation(ArrayList<BasicTable> list, TableView<ClassTable> view);
-    public void deleteResolution(ArrayList<BasicTable> selection, TableView view);
-    public void deleteSeverity(ArrayList<BasicTable> selection, TableView<ClassTable> view);
-    public void deletePriority(ArrayList<BasicTable> selection, TableView<ClassTable> view);
-    public void deleteMilestone(ArrayList<BasicTable> selection, TableView tableView);
-    public void deleteCriterion(ArrayList<BasicTable> selection, TableView tableView);
-    public void deleteCPR(ArrayList<BasicTable> selection, TableView view);
-    public void deleteBranch(ArrayList<BasicTable> selection, TableView view);
+      void deleteActivityForm(int indexForm);
+      void deleteWorkUnit(ArrayList<Integer> indicesForm);
+      void deleteWorkUnit(int indexForm);
+      void deleteChange(int indexForm);
+      void deleteArtifact(int indexForm);
+      void deleteIterationForm(int formIdentificator);
+      void deletePhaseForm(int formIdentificator);
+      void deleteConfiguration(ArrayList<BasicTable> selection, TableView<ConfigTable> tableView);
+      void deleteType(ArrayList<BasicTable> selection, TableView view);
+      void deleteStatus(ArrayList<BasicTable> selection, TableView view);
+      void deleteTag(int configId, ObservableList<TagTable> list);
+      void deleteRoleType(ArrayList<BasicTable> selection, TableView tableView);
+      void deleteRole(ArrayList<BasicTable> selection, TableView tableView);
+      void deleteRelation(ArrayList<BasicTable> list, TableView<ClassTable> view);
+      void deleteResolution(ArrayList<BasicTable> selection, TableView view);
+      void deleteSeverity(ArrayList<BasicTable> selection, TableView<ClassTable> view);
+      void deletePriority(ArrayList<BasicTable> selection, TableView<ClassTable> view);
+      void deleteMilestone(ArrayList<BasicTable> selection, TableView tableView);
+      void deleteCriterion(ArrayList<BasicTable> selection, TableView tableView);
+      void deleteCPR(ArrayList<BasicTable> selection, TableView view);
+      void deleteBranch(ArrayList<BasicTable> selection, TableView view);
 }

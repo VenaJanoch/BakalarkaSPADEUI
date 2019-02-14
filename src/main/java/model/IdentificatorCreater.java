@@ -1,5 +1,7 @@
 package model;
 
+import SPADEPAC.Iteration;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -41,10 +43,53 @@ public class IdentificatorCreater {
     private Map<Integer, Integer> workUnitSegmentIndexToFormMaper = new HashMap<>();
     private Map<Integer, Integer> phaseIndexMaper = new HashMap<>();
     private Map<Integer, Integer> iterationIndexMaper = new HashMap<>();
-    private Map<Integer, Integer> activityIndexMaper = new HashMap<>();
-    private Map<Integer, Integer> configurationFormToIndexMaper = new HashMap<>();
-    private Map<Integer, Integer> configurationIndexToFormMaper = new HashMap<>();
+    private Map<Integer, Integer> activityFormToIdMapper = new HashMap<>();
+    private Map<Integer, Integer> configurationFormToIndexMapper = new HashMap<>();
+    private Map<Integer, Integer> configurationIndexToFormMapper = new HashMap<>();
 
+    public void setDataToConfigurationMappers(int formIndex, int segmentId){
+        configurationIndexToFormMapper.put(segmentId, formIndex);
+        configurationFormToIndexMapper.put(formIndex, segmentId);
+        configID++;
+    }
+    
+    public void setDataToActivityMapper(int formIndex, int segmentId){
+        activityFormToIdMapper.put(formIndex, segmentId);
+        activityID++;
+    }
+
+    public void setDataToIterationMapper(int formIndex, int segmentId){
+        iterationIndexMaper.put(formIndex, segmentId);
+        iterationID++;
+    }
+
+    public void setDataToPhaseMapper(int formIndex, int segmentId){
+        phaseIndexMaper.put(formIndex, segmentId);
+        phaseID++;
+    }
+
+    public void setDataToWorkUnitsMappers(int formIndex, int segmentId){
+        workUnitIndexMaper.put(formIndex, segmentId);
+        workUnitSegmentIndexToFormMaper.put(segmentId, formIndex);
+        workUnitID++;
+    }
+
+    public void setDataToArtifactMappers(int formIndex, int segmentId){
+        artifactIndexMaper.put(formIndex, segmentId);
+        artifactSegmentIndexToFormMaper.put(segmentId, formIndex);
+        artifactID++;
+
+    }
+
+    public void setDataToChangeMappers(int formIndex, int segmentId){
+        changeIndexMaper.put(formIndex, segmentId);
+        changeSegmentIndexToFormMaper.put(segmentId, formIndex);
+        changeID++;
+    }
+    
+    
+    
+    
     /**
      * Metody pro inkrementaci počtu daného prvku
      */
@@ -125,7 +170,7 @@ public class IdentificatorCreater {
     public int createActivityID() {
 
         activityID++;
-        activityIndexMaper.put(index, activityID);
+        activityFormToIdMapper.put(index, activityID);
         index++;
         return index - 1;
     }
@@ -182,8 +227,8 @@ public class IdentificatorCreater {
 
     public int createConfigurationID() {
         configID++;
-        configurationFormToIndexMaper.put(index, configID);
-        configurationIndexToFormMaper.put(configID, index);
+        configurationFormToIndexMapper.put(index, configID);
+        configurationIndexToFormMapper.put(configID, index);
         index++;
         return index - 1;
     }
@@ -215,15 +260,15 @@ public class IdentificatorCreater {
     }
 
     public Integer getActivityIndex(int formIdentificator) {
-        return activityIndexMaper.get(formIdentificator);
+        return activityFormToIdMapper.get(formIdentificator);
     }
 
     public Integer getConfigurationFormIndex(int index) {
-        return configurationIndexToFormMaper.get(index);
+        return configurationIndexToFormMapper.get(index);
     }
 
     public Integer getConfigurationIndex(int formIdentificator) {
-        return configurationFormToIndexMaper.get(formIdentificator);
+        return configurationFormToIndexMapper.get(formIdentificator);
     }
 
 
@@ -258,4 +303,6 @@ public class IdentificatorCreater {
     public Map<Integer, Integer> getArtifactSegmentIndexToFormMaper() {
         return artifactSegmentIndexToFormMaper;
     }
+    
+    
 }

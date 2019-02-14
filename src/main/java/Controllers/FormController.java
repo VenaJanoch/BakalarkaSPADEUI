@@ -12,11 +12,13 @@ import graphics.DragAndDropItemPanel;
 import interfaces.IDeleteFormController;
 import interfaces.IEditFormController;
 import interfaces.IFormDataController;
+import interfaces.ISaveDataModel;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableView;
 import model.DataManipulator;
+import model.DataModel;
 import model.IdentificatorCreater;
 import org.controlsfx.control.CheckComboBox;
 import services.*;
@@ -55,11 +57,15 @@ public class FormController {
     private IFormDataController formDataController;
     private IEditFormController editFormController;
     private IDeleteFormController deleteFormController;
+    private DataModel dataModel;
+    private ISaveDataModel saveDataModel;
+
     private int lastConfigurationFormIndex = -1;
 
     private FormFillController formFillController;
     private DataPreparer dataPreparer;
-    public FormController(IdentificatorCreater identificatorCreater, DataManipulator dataManipulator,
+
+    public FormController(IdentificatorCreater identificatorCreater, DataModel dataModel,
                           ApplicationController applicationController, SegmentLists segmentLists, DataPreparer dataPreparer) {
 
         this.segmentLists = segmentLists;
@@ -68,7 +74,9 @@ public class FormController {
         this.forms = new ArrayList<>();
         this.canvasItemList = new HashMap<>();
 
-        this.dataManipulator = dataManipulator;
+        this.dataModel = dataModel;
+        this.saveDataModel = dataModel.getSaveDataModel();
+
         this.identificatorCreater = identificatorCreater;
 
         }
@@ -157,14 +165,15 @@ public class FormController {
     }
 
     private int createNewArtifactForm() {
-        dataManipulator.createNewArtifact();
+
         int index = createNewArtifactFormWithoutManipulator();
+        saveDataModel.createNewArtifact(identificatorCreater.getArtifactIndex(index));
         return  index;
     }
 
     public int createNewArtifactFormWithoutManipulator(){
-        int index = identificatorCreater.createArtifactID();
 
+        int index = identificatorCreater.createArtifactID();
         ArtifactForm artifactForm = new ArtifactForm(this, formDataController, editFormController, deleteFormController,  SegmentType.Artifact, index);
         forms.add(index, artifactForm);
         return index;
@@ -172,8 +181,10 @@ public class FormController {
     }
 
     private int createNewChangeForm() {
-        dataManipulator.createNewChance();
+
         int index = createNewChangeFormWithoutManipulator();
+        saveDataModel.createNewChance(identificatorCreater.getChangeIndex(index));
+
         return  index;
     }
     public int createNewChangeFormWithoutManipulator(){
@@ -186,8 +197,8 @@ public class FormController {
 
     private int createNewConfigurationForm() {
 
-        dataManipulator.createNewConfiguration();
         int index = createNewConfiguratioFormWithoutManipulator();
+        saveDataModel.createNewConfiguration(identificatorCreater.getConfigurationIndex(index));
         return  index;
     }
 
@@ -203,8 +214,8 @@ public class FormController {
     }
 
     private int createNewWorkUnitForm(CanvasType canvasType) {
-        dataManipulator.createNewWorkUnit();
         int index = createNewWorkUnitFormWithoutManipulator(canvasType);
+        saveDataModel.createNewWorkUnit(identificatorCreater.getWorkUnitIndex(index));
         return index;
     }
 
@@ -228,8 +239,9 @@ public class FormController {
 
     private int createNewActivityForm() {
 
-        dataManipulator.createNewActivity();
         int index = createNewActivityFormWithoutManipulator();
+        saveDataModel.createNewActivity(identificatorCreater.getActivityIndex(index));
+
         return index;
     }
 
@@ -244,8 +256,8 @@ public class FormController {
     }
 
     private int createNewPhaseForm(){
-        dataManipulator.createNewPhase();
         int index = createNewPhaseFormWithoutManipulator();
+        saveDataModel.createNewPhase(identificatorCreater.getPhaseIndex(index));
         return  index;
     }
 
@@ -264,8 +276,9 @@ public class FormController {
 
     int createNewIterationForm(){
 
-        dataManipulator.createNewIteration();
         int index = createNewIterationFormWithoutManipulator();
+        saveDataModel.createNewIteration(identificatorCreater.getIterationIndex(index));
+
         return index;
     }
 
@@ -304,7 +317,7 @@ public class FormController {
                 break;
             case Milestone:
 
-                List<Milestone> milestones = dataManipulator.getProject().getMilestones();
+                List<Milestone> milestones = dataModel.getMilestones();
                 MilestoneForm milestoneForm = (MilestoneForm) form;
                 TableView tableView = milestoneForm.getTableTV();
                 tableView.getItems().clear();
@@ -319,7 +332,7 @@ public class FormController {
                 break;
             case Role:
 
-                List<Role> roles = dataManipulator.getProject().getRoles();
+                List<Role> roles = dataModel.getRoles();
                 RoleForm roleForm = (RoleForm) form;
                 TableView roleTableView = roleForm.getTableTV();
                 roleTableView.getItems().clear();
@@ -334,7 +347,7 @@ public class FormController {
                 roleTableView.refresh();
                 break;
             case ConfigPersonRelation:
-                List<ConfigPersonRelation> cprlist = dataManipulator.getProject().getCpr();
+                List<ConfigPersonRelation> cprlist = dataModel.getCpr();
                 ConfigPersonRelationForm cprForm = (ConfigPersonRelationForm) form;
                 TableView cprTableView = cprForm.getTableTV();
                 cprTableView.getItems().clear();
@@ -411,7 +424,7 @@ public class FormController {
             changeIndex = changeEndIndex;
         }
 
-        dataManipulator.createChangeArtifactRelation(artifactIndex,changeIndex);
+        saveDataModel.createChangeArtifactRelation(artifactIndex,changeIndex);
     }
 
     public void createWorkUnitRelation(int startSegmentId, int endSegmentId) {
@@ -419,7 +432,7 @@ public class FormController {
         Integer startIndex = identificatorCreater.getWorkUnitIndex(startSegmentId);
         Integer endIndex = identificatorCreater.getWorkUnitIndex(endSegmentId);
 
-        dataManipulator.createWorkUnitRelation(startIndex, endIndex);
+        saveDataModel.createWorkUnitRelation(startIndex, endIndex);
     }
 
 

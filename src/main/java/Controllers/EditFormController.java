@@ -1,10 +1,10 @@
 package Controllers;
 
-import abstractform.BasicForm;
+import interfaces.IEditDataModel;
 import interfaces.IEditFormController;
 import model.DataManipulator;
+import model.DataModel;
 import model.IdentificatorCreater;
-import services.DeleteControl;
 import services.MapperTableToObject;
 import services.SegmentLists;
 import services.SegmentType;
@@ -14,16 +14,18 @@ import java.util.ArrayList;
 
 public class EditFormController implements IEditFormController {
 
-    private DataManipulator dataManipulator;
+    private IEditDataModel dataManipulator;
+    private DataModel dataModel;
     private IdentificatorCreater identificatorCreater;
     private MapperTableToObject mapperTableToObject;
     private SegmentLists segmentLists;
     private DataPreparer dataPreparer;
 
 
-    public EditFormController(DataManipulator dataManipulator, IdentificatorCreater identificatorCreater,
+    public EditFormController(DataModel dataModel, IdentificatorCreater identificatorCreater,
                               MapperTableToObject mapperTableToObject, SegmentLists segmentLists, DataPreparer dataPreparer) {
-        this.dataManipulator = dataManipulator;
+        this.dataModel = dataModel;
+        this.dataManipulator = dataModel.getEditDataModel();
         this.identificatorCreater = identificatorCreater;
         this.mapperTableToObject = mapperTableToObject;
         this.segmentLists = segmentLists;
@@ -120,7 +122,7 @@ public class EditFormController implements IEditFormController {
         dataManipulator.editDataInRole(nameForManipulator, descForManipulator, typeFormManipulator, roleTable.getId());
         segmentLists.updateListItem(SegmentType.Role, id, roleTable);
 
-        int roleType = dataManipulator.roleTypeIndex(typeFormManipulator);
+        int roleType = dataModel.getRoleTypeIndex(typeFormManipulator);
         mapperTableToObject.updateValueList(roleType, mapperTableToObject.getRoleToRoleTypeMapper(),
                 roleTable.getId(), roleTable.getName());
 
@@ -139,7 +141,7 @@ public class EditFormController implements IEditFormController {
         criterionIndex = dataPreparer.prepareIndicesForManipulator(criterionIndex);
         dataManipulator.editDataInMilestone(nameForManipulator, descForManipulator, criterionIndex, milestoneTable.getId());
 
-        ArrayList<Integer> criterionIndicies = dataManipulator.getCriterionIds(criterionIndex);
+        ArrayList<Integer> criterionIndicies = dataModel.getCriterionIds(criterionIndex);
         milestoneTable.setCriterion(dataPreparer.prepareDependencyArray(criterionIndex, segmentLists.getCriterionObservable()));
 
         segmentLists.updateListItem(SegmentType.Milestone, id, milestoneTable);
@@ -168,7 +170,7 @@ public class EditFormController implements IEditFormController {
         String cprName = cprId + "_" + nameST;
         cprTable.setName(cprName);
         cprTable.setRole(dataPreparer.prepareDependency(roleManipulatorId, segmentLists.getRoleObservable()));
-        int roleId = dataManipulator.getRoleId(roleManipulatorId);
+        int roleId = dataModel.getRoleId(roleManipulatorId);
         segmentLists.updateListItem(SegmentType.ConfigPersonRelation, cprId, cprTable);
 
         mapperTableToObject.updateValueList(roleId, mapperTableToObject.getRoleMaps().get(3), cprId, cprName);

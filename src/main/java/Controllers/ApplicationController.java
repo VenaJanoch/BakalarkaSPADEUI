@@ -2,6 +2,7 @@ package Controllers;
 
 import javafx.stage.Stage;
 import model.DataManipulator;
+import model.DataModel;
 import model.FileManipulator;
 import model.IdentificatorCreater;
 import services.Alerts;
@@ -23,18 +24,18 @@ public class ApplicationController {
     private DeleteFormController deleteFormController;
     private EditFormController editFormController;
 
-    public ApplicationController(DataManipulator dataManipulator, IdentificatorCreater identificatorCreater, SegmentLists segmentLists){
+    public ApplicationController(DataModel dataModel, IdentificatorCreater identificatorCreater, SegmentLists segmentLists){
         this.mapperTableToObject = new MapperTableToObject(segmentLists);
         this.dataPreparer = new DataPreparer(identificatorCreater);
         this.deleteControl = new DeleteControl(segmentLists, mapperTableToObject, identificatorCreater);
-        this.formController = new FormController(identificatorCreater, dataManipulator, this, segmentLists, dataPreparer);
-        this.formDataController = new FormDataController(formController, segmentLists, mapperTableToObject, dataManipulator, identificatorCreater, dataPreparer);
-        this.deleteFormController = new DeleteFormController(formController, dataManipulator, identificatorCreater, mapperTableToObject, deleteControl, segmentLists);
-        this.editFormController = new EditFormController(dataManipulator, identificatorCreater, mapperTableToObject, segmentLists, dataPreparer);
+        this.formController = new FormController(identificatorCreater, dataModel, this, segmentLists, dataPreparer);
+        this.formDataController = new FormDataController(formController, segmentLists, mapperTableToObject, dataModel, identificatorCreater, dataPreparer);
+        this.deleteFormController = new DeleteFormController(formController, dataModel, identificatorCreater, mapperTableToObject, deleteControl, segmentLists);
+        this.editFormController = new EditFormController(dataModel, identificatorCreater, mapperTableToObject, segmentLists, dataPreparer);
         this.manipulationController = new ManipulationController(deleteFormController);
-        this.linkControl = new LinkControl(formController, identificatorCreater, segmentLists, dataManipulator, manipulationController);
+        this.linkControl = new LinkControl(formController, identificatorCreater, segmentLists, dataModel, manipulationController);
         this.canvasItemController = new CanvasItemController(linkControl, formController, manipulationController);
-        this.formFillController = new FormFillController(formController,dataManipulator,canvasItemController, identificatorCreater,dataPreparer, segmentLists,
+        this.formFillController = new FormFillController(formController, dataModel, canvasItemController, identificatorCreater,dataPreparer, segmentLists,
                  linkControl, formController.getCanvasItemList());
         formController.initBasicForms(formDataController, editFormController, deleteFormController);
         formController.setFormFillController(formFillController);

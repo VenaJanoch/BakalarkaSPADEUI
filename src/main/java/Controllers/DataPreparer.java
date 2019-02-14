@@ -143,5 +143,13 @@ public class DataPreparer {
         return indices;
     }
 
+    public ArrayList<Integer> prepareIndexForMultiComboBox(List<Integer> indexs) {
+
+        ArrayList<Integer> values = new ArrayList();
+        for (int i : indexs){
+            values.add(prepareIndexForForm(i));
+        }
+        return values;
+    }
 
  }

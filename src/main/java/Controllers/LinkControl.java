@@ -8,8 +8,10 @@ import java.util.Map;
 import graphics.ChangeArtifactLink;
 import graphics.NodeLink;
 import graphics.WorkUnitLink;
+import interfaces.IDeleteDataModel;
 import javafx.geometry.Point2D;
 import model.DataManipulator;
+import model.DataModel;
 import model.IdentificatorCreater;
 import services.*;
 
@@ -32,6 +34,7 @@ public class LinkControl {
     private SegmentLists segmentLists;
 
     private DataManipulator dataManipulator;
+    private IDeleteDataModel deleteDataModel;
 
     private Map<Integer, List<Integer>> startLinkIdMap;
     private Map<Integer, List<Integer>> endLinkIdMap;
@@ -41,11 +44,12 @@ public class LinkControl {
      * Konstruktor třídy Zinicializuje globální proměnné třídy
      */
     public LinkControl(FormController formController, IdentificatorCreater identificatorCreater, SegmentLists segmentLists,
-                       DataManipulator dataManipulator, ManipulationController manipulationController) {
+            DataModel dataModel, ManipulationController manipulationController) {
         this.segmentLists = segmentLists;
         this.identificatorCreater = identificatorCreater;
         this.formController = formController;
-        this.dataManipulator = dataManipulator;
+        this.deleteDataModel = dataModel.getDeleteDataModel();
+        this.dataManipulator = dataModel.getDataManipulator();
         this.startLinkIdMap = new HashMap<>();
         this.endLinkIdMap = new HashMap<>();
         this.manipulationController = manipulationController;
@@ -205,16 +209,15 @@ public class LinkControl {
 
         segmentLists.removeArrow(arrowId);
 
-        dataManipulator.removeArtifactChangeLink(artifactID, changeID);
+        deleteDataModel.removeArtifactChangeLink(artifactID, changeID);
     }
 
     /**
      * Smaže spojnici ze seznamu a odmaže spojení z Work Unit a Work Unit
      */
     public void deleteWorkUnitArrow(LinkController linkController) {
-
         segmentLists.removeArrow(linkController.getLinkId());
-        dataManipulator.removeWorkUnitRelation(linkController.getStartItemId(), linkController.getEndItemId());
+        deleteDataModel.removeWorkUnitRelation(linkController.getStartItemId(), linkController.getEndItemId());
     }
 
     /**

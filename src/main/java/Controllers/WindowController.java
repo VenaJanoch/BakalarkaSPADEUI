@@ -6,6 +6,7 @@ import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import model.DataManipulator;
+import model.DataModel;
 import model.FileManipulator;
 import model.IdentificatorCreater;
 import services.Alerts;
@@ -20,7 +21,7 @@ public class WindowController {
     private Stage primaryStage;
     private boolean isClose;
     private FileManipulator fileManipulator;
-    private DataManipulator dataManipulator;
+    private DataModel dataModel;
     private FormFillController formFillController;
     private ApplicationController applicationController;
     private Alerts alerts;
@@ -39,10 +40,10 @@ public class WindowController {
         SegmentLists segmentLists = new SegmentLists();
         ProcessGenerator processGenerator = new ProcessGenerator();
         IdentificatorCreater identificatorCreater = new IdentificatorCreater();
-        this.dataManipulator = new DataManipulator(processGenerator, identificatorCreater);
-        this.fileManipulator = new FileManipulator(processGenerator, dataManipulator);
+        this.dataModel = new DataModel(processGenerator);
+        this.fileManipulator = new FileManipulator(dataModel);
         this.alerts = new Alerts(fileManipulator);
-        this.applicationController = new ApplicationController(dataManipulator, identificatorCreater, segmentLists);
+        this.applicationController = new ApplicationController(dataModel, identificatorCreater, segmentLists);
         this.formFillController = applicationController.getFormFillController();
 
     }
@@ -61,17 +62,6 @@ public class WindowController {
             fileManipulator.saveAsFile();
     }
 
-    public void openProccesXMLAction() {
-
-        File xmlFile = fileManipulator.loadFile();
-       if(xmlFile != null){
-           createNewProcessAction();
-           fileManipulator.parseProject(xmlFile);
-           formFillController.createFormsFromData();
-       }
-
-    }
-
     public void createNewProcessAction() {
 
         initApplication();
@@ -81,8 +71,18 @@ public class WindowController {
 
     }
 
+    public void openProccesXMLAction() {
+
+        File xmlFile = fileManipulator.loadFile();
+        if(xmlFile != null){
+            createNewProcessAction();
+            dataModel.parseProject(xmlFile);
+            formFillController.createFormsFromData();
+        }
+    }
+
     public void validationAction() {
-        dataManipulator.validate();
+        dataModel.validate();
     }
 
     public void closeProjectWindow() {
