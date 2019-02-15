@@ -1,6 +1,5 @@
 package interfaces;
 
-import Controllers.InputController;
 import services.SegmentType;
 import tables.*;
 

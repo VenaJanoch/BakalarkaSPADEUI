@@ -1,10 +1,7 @@
 package abstractform;
 
-import Controllers.CanvasController;
-import Controllers.FormController;
-import Controllers.FormDataController;
-import graphics.CanvasItem;
-import graphics.DragAndDropCanvas;
+import controllers.CanvasController;
+import controllers.FormController;
 import graphics.DragAndDropItemPanel;
 import interfaces.IDeleteFormController;
 import interfaces.IEditFormController;
@@ -12,13 +9,7 @@ import interfaces.IFormDataController;
 import javafx.geometry.HPos;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import services.CanvasType;
-import services.Control;
-import services.DeleteControl;
 import services.SegmentType;
-import sun.text.resources.FormatData;
-
-import java.text.Normalizer;
 
 /**
  * Třída odděděná ze třídy BasicForm přidávající vstupní pole pro Description

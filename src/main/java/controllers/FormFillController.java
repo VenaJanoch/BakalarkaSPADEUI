@@ -1,4 +1,4 @@
-package Controllers;
+package controllers;
 
 import SPADEPAC.*;
 import abstractform.BasicForm;
@@ -140,8 +140,8 @@ public class FormFillController {
 
     public void fillChangeForm(int oldFormId, CanvasController canvasController){
         int newFormId = formController.createNewForm(SegmentType.Change, canvasController.getCanvasType());
-        int changeId = identificatorCreater.getChangeIndex(oldFormId);
-        int newChangeId = identificatorCreater.getChangeIndex(newFormId);
+        int changeId = identificatorCreater.getChangeId(oldFormId);
+        int newChangeId = identificatorCreater.getChangeId(newFormId);
         dataManipulator.copyDataFromChange(changeId, newChangeId);
         fillChangeForm(newChangeId, newFormId, canvasController);
     }
@@ -412,8 +412,8 @@ public class FormFillController {
 
     public void addExistPhaseFormToCanvas(int oldFormId){
         int id = formController.createNewForm(SegmentType.Phase, CanvasType.Phase);
-        int phaseId = identificatorCreater.getPhaseIndex(oldFormId);
-        int newPhaseId = identificatorCreater.getPhaseIndex(id);
+        int phaseId = identificatorCreater.getPhaseId(oldFormId);
+        int newPhaseId = identificatorCreater.getPhaseId(id);
         dataManipulator.copyDataFromPhase(phaseId, newPhaseId);
         addExistPhaseFormToCanvas(newPhaseId, id);
 
@@ -421,14 +421,14 @@ public class FormFillController {
 
     public void addExistPhaseFormToCanvas(int segmentId, int formId){
         Phase phase = fillPhaseForm(segmentId, formId);
+        identificatorCreater.setDataToPhaseMapper(formId, phase.getId());
         projectCanvasController.addCanvasItemFromExistData(SegmentType.Phase, formId, phase.getName(), phase.getCoordinates().getXCoordinate(),
                 phase.getCoordinates().getYCoordinate());
 
     }
 
     public Phase fillPhaseForm(int segmentId, int formId){
-        Phase phase = project.getPhases().get(segmentId);
-        identificatorCreater.setDataToPhaseMapper(formId, phase.getId());
+        Phase phase = dataModel.getPhase(segmentId);
 
         PhaseForm phaseForm = (PhaseForm) forms.get(formId);
         int milestoneIndex = dataPreparer.prepareIndexForForm(phase.getMilestoneIndex());
@@ -450,7 +450,8 @@ public class FormFillController {
         for (int i = 0; i < project.getPhases().size(); i++){
 
          int id = formController.createNewPhaseFormWithoutManipulator();
-         addExistPhaseFormToCanvas(i, id);
+         Phase phase = project.getPhases().get(i);
+         addExistPhaseFormToCanvas(phase.getId(), id);
 
         }
     }
@@ -465,10 +466,8 @@ public class FormFillController {
 
 
     public WorkUnit fillWorkUnitForm(int segmentId, int formId){
-        WorkUnit workUnit = project.getWorkUnits().get(segmentId);
+        WorkUnit workUnit = dataModel.getWorkUnit(segmentId);
         WorkUnitForm workUnitForm = (WorkUnitForm) forms.get(formId);
-
-        identificatorCreater.setDataToWorkUnitsMappers(formId, workUnit.getId());
 
         int assigneIndex = dataPreparer.prepareIndexForForm(workUnit.getAssigneeIndex());
         int authorIndex = dataPreparer.prepareIndexForForm(workUnit.getAuthorIndex());
@@ -504,7 +503,8 @@ public class FormFillController {
 
         for (int i = 0; i < workUnitsIndexs.size(); i++){
             int id = formController.createNewWorkUnitFormWithoutManipulator(canvasType);
-            addExistWorkUnitFormToCanvas(workUnitsIndexs.get(i), id, canvasController);
+            WorkUnit workUnit = project.getWorkUnits().get(workUnitsIndexs.get(i));
+            addExistWorkUnitFormToCanvas(workUnit.getId() , id, canvasController);
 
         }
 
@@ -512,6 +512,7 @@ public class FormFillController {
 
     private void addExistWorkUnitFormToCanvas(int segmentId, int formId, CanvasController canvasController){
         WorkUnit workUnit = fillWorkUnitForm(segmentId, formId);
+        identificatorCreater.setDataToWorkUnitsMappers(formId, workUnit.getId());
         canvasController.addCanvasItemFromExistData(SegmentType.WorkUnit, formId, workUnit.getName(), workUnit.getCoordinates().getXCoordinate(),
                 workUnit.getCoordinates().getYCoordinate());
     }
@@ -554,8 +555,8 @@ public class FormFillController {
     public void addExistActivityFormToCanvas(int oldFormId){
 
         int id = formController.createNewForm(SegmentType.Activity, CanvasType.Activity);
-        int activityId = identificatorCreater.getActivityIndex(oldFormId);
-        int newActivityId = identificatorCreater.getActivityIndex(id);
+        int activityId = identificatorCreater.getActivityId(oldFormId);
+        int newActivityId = identificatorCreater.getActivityId(id);
         dataManipulator.copyDataFromActivity(activityId, newActivityId);
         addExistActivityFormToCanvas(newActivityId, id);
 
@@ -564,13 +565,14 @@ public class FormFillController {
     public void addExistActivityFormToCanvas(int segmentId, int formId){
 
         Activity activity = fillActivityForm(segmentId, formId);
+        identificatorCreater.setDataToActivityMapper(formId, activity.getId());
         projectCanvasController.addCanvasItemFromExistData(SegmentType.Activity, formId, activity.getName(), activity.getCoordinates().getXCoordinate(),
                 activity.getCoordinates().getYCoordinate());
     }
 
     public Activity fillActivityForm(int segmentId, int formId){
-        Activity activity = project.getActivities().get(segmentId);
-        identificatorCreater.setDataToActivityMapper(formId, activity.getId());
+        Activity activity = dataModel.getActivity(segmentId);
+
         ActivityForm activityForm = (ActivityForm) forms.get(formId);
         String name = dataPreparer.prepareStringForForm(activity.getName());
         String description = dataPreparer.prepareStringForForm(activity.getDescription());
@@ -589,7 +591,8 @@ public class FormFillController {
         for (int i = 0; i < project.getActivities().size(); i++){
 
             int id = formController.createNewActivityFormWithoutManipulator();
-            addExistActivityFormToCanvas(i, id);
+            Activity activity = project.getActivities().get(i);
+            addExistActivityFormToCanvas(activity.getId(), id);
 
         }
     }
@@ -599,29 +602,31 @@ public class FormFillController {
         for (int i = 0; i < project.getIterations().size(); i++){
 
             int id = formController.createNewIterationFormWithoutManipulator();
-            addExistIterationFormToCanvas(i, id);
+            Iteration iteration = project.getIterations().get(i);
+            addExistIterationFormToCanvas(iteration.getId(), id);
 
         }
     }
 
     public void addExistIterationFormToCanvas(int segmentId, int formId){
         Iteration iteration = fillIterationForm(segmentId, formId);
+        identificatorCreater.setDataToIterationMapper(formId, iteration.getId());
         projectCanvasController.addCanvasItemFromExistData(SegmentType.Iteration, formId, iteration.getName(), iteration.getCoordinates().getXCoordinate(),
                 iteration.getCoordinates().getYCoordinate());
     }
 
     public void addExistIterationFormToCanvas(int oldFormId){
         int id = formController.createNewForm(SegmentType.Iteration, CanvasType.Iteration);
-        int iteratationId = identificatorCreater.getIterationIndex(oldFormId);
-        int newIterationId = identificatorCreater.getIterationIndex(id);
+        int iteratationId = identificatorCreater.getIterationId(oldFormId);
+        int newIterationId = identificatorCreater.getIterationId(id);
         dataManipulator.copyDataFromIteration(iteratationId, newIterationId);
         addExistIterationFormToCanvas(newIterationId, id);
     }
 
     public Iteration fillIterationForm(int segmentId, int formId){
-        Iteration iteration = project.getIterations().get(segmentId);
+        Iteration iteration = dataModel.getIteration(segmentId);
         IterationForm iterationForm = (IterationForm) forms.get(formId);
-        identificatorCreater.setDataToIterationMapper(formId, iteration.getId());
+
         String name = dataPreparer.prepareStringForForm(iteration.getName());
         String description = dataPreparer.prepareStringForForm(iteration.getDescription());
         int confiIndex =  dataPreparer.prepareIndexForForm(iteration.getConfiguration());

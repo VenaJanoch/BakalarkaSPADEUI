@@ -1,20 +1,14 @@
 package abstractform;
 
-import Controllers.FormController;
-import Controllers.FormDataController;
+import controllers.FormController;
 import interfaces.IDeleteFormController;
 import interfaces.IEditFormController;
 import interfaces.IFormDataController;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
-import services.ClassSwitcher;
-import services.Control;
-import services.DeleteControl;
-import model.IdentificatorCreater;
 import services.SegmentType;
 import tables.ClassTable;
 import javafx.geometry.Insets;
-import javafx.scene.control.Label;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;

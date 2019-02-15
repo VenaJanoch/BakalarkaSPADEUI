@@ -1,9 +1,7 @@
 package forms;
 
-import Controllers.FormController;
-import Controllers.FormDataController;
+import controllers.FormController;
 import abstractform.Table2BasicForm;
-import com.sun.org.apache.bcel.internal.generic.TABLESWITCH;
 import controlPanels.RoleControlPanel;
 import interfaces.IDeleteFormController;
 import interfaces.IEditFormController;
@@ -15,12 +13,10 @@ import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
-import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.input.KeyCode;

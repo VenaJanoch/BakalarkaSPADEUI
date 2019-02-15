@@ -1,8 +1,7 @@
-package Controllers;
+package controllers;
 
 import interfaces.IEditDataModel;
 import interfaces.IEditFormController;
-import model.DataManipulator;
 import model.DataModel;
 import model.IdentificatorCreater;
 import services.MapperTableToObject;
@@ -94,7 +93,7 @@ public class EditFormController implements IEditFormController {
 
     public void editDataFromTag(String tag, TagTable tagTable, int configFormId, int id) {
         tagTable.setName(id + "_" + tag);
-        int configurationId = identificatorCreater.getConfigurationIndex(configFormId);
+        int configurationId = identificatorCreater.getConfigurationId(configFormId);
         dataManipulator.editTagInConfiguration(tag, configurationId, id);
         tagTable.setTag(tag);
         tagTable.setName(tag);

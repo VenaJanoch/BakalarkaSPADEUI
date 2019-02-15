@@ -1,7 +1,7 @@
 package graphics;
 
-import Controllers.CanvasController;
-import Controllers.CanvasItemController;
+import controllers.CanvasController;
+import controllers.CanvasItemController;
 import javafx.geometry.Point2D;
 import javafx.scene.control.Tooltip;
 import javafx.scene.layout.AnchorPane;

@@ -1,18 +1,16 @@
-package Controllers;
+package controllers;
 
 import XML.ProcessGenerator;
 import graphics.MainWindow;
 import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import model.DataManipulator;
 import model.DataModel;
 import model.FileManipulator;
 import model.IdentificatorCreater;
 import services.Alerts;
 import services.SegmentLists;
 
-import javax.xml.crypto.Data;
 import java.io.File;
 
 public class WindowController {

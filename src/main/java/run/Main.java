@@ -1,16 +1,8 @@
 package run;
 
-import Controllers.ApplicationController;
-import XML.ProcessGenerator;
-import graphics.MainWindow;
 import javafx.application.Application;
 import javafx.stage.Stage;
-import model.DataManipulator;
-import model.FileManipulator;
-import model.IdentificatorCreater;
-import services.Alerts;
-import Controllers.WindowController;
-import services.SegmentLists;
+import controllers.WindowController;
 
 
 public class Main extends Application {

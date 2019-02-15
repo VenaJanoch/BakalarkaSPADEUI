@@ -1,11 +1,7 @@
 package forms;
 
-import Controllers.FormController;
-import Controllers.FormDataController;
-import SPADEPAC.Configuration;
-import abstractControlPane.NameControlPanel;
+import controllers.FormController;
 import abstractform.TableBasicForm;
-import controlPanels.MilestoneControlPanel;
 import controlPanels.TagControlPanel;
 import interfaces.IDeleteFormController;
 import interfaces.IEditFormController;
@@ -19,7 +15,6 @@ import javafx.scene.Node;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.input.KeyCode;
@@ -28,8 +23,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import services.*;
-import model.IdentificatorCreater;
-import tables.MilestoneTable;
 import tables.TagTable;
 
 /**

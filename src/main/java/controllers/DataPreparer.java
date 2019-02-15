@@ -1,8 +1,7 @@
-package Controllers;
+package controllers;
 
 import javafx.collections.ObservableList;
 import model.IdentificatorCreater;
-import services.SegmentLists;
 import tables.*;
 
 import java.util.ArrayList;
@@ -35,7 +34,7 @@ public class DataPreparer {
 
     public String prepareDependency(int dependencyIndex, ObservableList observableList){
         String dependency = "";
-        if (dependency != null || dependencyIndex != -1) {
+        if (dependencyIndex != -1) {
             dependency = observableList.get(dependencyIndex + 1).toString();
         }
 

@@ -1,4 +1,4 @@
-package Controllers;
+package controllers;
 
 import javafx.geometry.Point2D;
 import services.Constans;

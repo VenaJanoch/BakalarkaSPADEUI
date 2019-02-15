@@ -2,16 +2,9 @@ package forms;
 
 import java.time.LocalDate;
 
-import Controllers.FormController;
-import Controllers.FormDataController;
-import SPADEPAC.Artifact;
+import controllers.FormController;
 import SPADEPAC.ArtifactClass;
-import SPADEPAC.Configuration;
-import SPADEPAC.ObjectFactory;
-import abstractform.BasicForm;
 import abstractform.DateDescBasicForm;
-import graphics.CanvasItem;
-import graphics.InfoBoxSegment;
 import interfaces.IDeleteFormController;
 import interfaces.IEditFormController;
 import interfaces.IFormDataController;
@@ -19,19 +12,12 @@ import interfaces.ISegmentForm;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
-import javafx.event.EventHandler;
 import javafx.geometry.HPos;
-import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
-import javafx.scene.control.TextField;
-import javafx.stage.WindowEvent;
 import services.Alerts;
 import services.Constans;
-import services.Control;
-import services.DeleteControl;
 import services.SegmentType;
 
 /**

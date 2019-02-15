@@ -1,27 +1,8 @@
 package model;
 
-import Controllers.LinkControl;
 import SPADEPAC.*;
 import XML.ProcessGenerator;
-import forms.*;
-import interfaces.ISaveDataModel;
-import javafx.collections.ObservableList;
-import javafx.scene.control.ComboBox;
-import services.*;
-import tables.BasicTable;
-import tables.BranchTable;
-import tables.MilestoneTable;
-import tables.RoleTable;
 
-import javax.swing.text.html.HTML;
-import javax.xml.datatype.DatatypeConfigurationException;
-import javax.xml.datatype.DatatypeFactory;
-import javax.xml.datatype.XMLGregorianCalendar;
-import java.io.File;
-import java.time.Instant;
-import java.time.LocalDate;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
 import java.util.*;
 
 public class DataManipulator{

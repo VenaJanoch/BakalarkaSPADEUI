@@ -1,25 +1,14 @@
 package forms;
 
-import Controllers.CanvasController;
-import Controllers.FormController;
-import Controllers.FormDataController;
+import controllers.CanvasController;
+import controllers.FormController;
 import SPADEPAC.Activity;
-import SPADEPAC.ObjectFactory;
-import abstractform.BasicForm;
 import abstractform.DescriptionBasicForm;
-import graphics.CanvasItem;
 import graphics.DragAndDropItemPanel;
-import graphics.InfoBoxSegment;
 import interfaces.IDeleteFormController;
 import interfaces.IEditFormController;
 import interfaces.IFormDataController;
 import interfaces.ISegmentForm;
-import javafx.event.EventHandler;
-import javafx.geometry.HPos;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
-import javafx.stage.WindowEvent;
 import services.*;
 
 /**

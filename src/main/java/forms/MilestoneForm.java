@@ -1,7 +1,6 @@
 package forms;
 
-import Controllers.FormController;
-import Controllers.FormDataController;
+import controllers.FormController;
 import controlPanels.MilestoneControlPanel;
 import interfaces.IDeleteFormController;
 import interfaces.IEditFormController;
@@ -9,12 +8,10 @@ import interfaces.IFormDataController;
 import javafx.event.EventHandler;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
-import org.controlsfx.control.CheckComboBox;
 
 import abstractform.Table2BasicForm;
 import interfaces.ISegmentTableForm;
 import javafx.collections.FXCollections;
-import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -28,7 +25,6 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
 import services.*;
 import tables.BasicTable;
-import tables.CriterionTable;
 import tables.MilestoneTable;
 
 import java.util.ArrayList;

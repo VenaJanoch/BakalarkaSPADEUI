@@ -1,4 +1,4 @@
-package Controllers;
+package controllers;
 
 import graphics.*;
 import javafx.event.EventHandler;

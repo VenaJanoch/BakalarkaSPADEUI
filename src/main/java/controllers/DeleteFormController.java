@@ -1,4 +1,4 @@
-package Controllers;
+package controllers;
 
 import abstractform.BasicForm;
 import interfaces.IDeleteDataModel;
@@ -6,7 +6,6 @@ import interfaces.IDeleteFormController;
 import interfaces.IEditDataModel;
 import javafx.collections.ObservableList;
 import javafx.scene.control.TableView;
-import model.DataManipulator;
 import model.DataModel;
 import model.IdentificatorCreater;
 import services.*;
@@ -68,7 +67,6 @@ public class DeleteFormController implements IDeleteFormController {
         deleteDataModel.removeWorkUnit(identificatorCreater.getWorkUnitIndexMaper().get(indexForm));
     }
 
-
     public void deleteChange(int indexForm) {
         if (!forms.get(indexForm).isSave()) {
             forms.remove(indexForm);
@@ -95,7 +93,7 @@ public class DeleteFormController implements IDeleteFormController {
             forms.add(formIdentificator, null);
         }
 
-        deleteDataModel.removeIteration(identificatorCreater.getIterationIndex(formIdentificator));
+        deleteDataModel.removeIteration(identificatorCreater.getIterationId(formIdentificator));
     }
 
     public void deletePhaseForm(int formIdentificator) {
@@ -104,26 +102,25 @@ public class DeleteFormController implements IDeleteFormController {
             forms.remove(formIdentificator);
             forms.add(formIdentificator, null);
         }
-        deleteDataModel.removePhase(identificatorCreater.getPhaseIndex(formIdentificator));
+        deleteDataModel.removePhase(identificatorCreater.getPhaseId(formIdentificator));
     }
 
     public void deleteConfiguration(ArrayList<BasicTable> selection, TableView<ConfigTable> tableView) {
 
         if (Alerts.showDeleteItemCascadeAlert(selection, mapperTableToObject.getConfigurationMap())) {
-            ArrayList indexList = deleteControl.findIndicesForDelete(selection);
+            ArrayList idList = deleteControl.findIndicesForDelete(selection);
+
+            editDataModel.updateItemList(SegmentType.Phase, SegmentType.Configuration, idList);
+            editDataModel.updateItemList(SegmentType.Iteration, SegmentType.Configuration, idList);
+
+            mapperTableToObject.updateValueList(mapperTableToObject.getConfigurationToCPRMapper(), idList);
+            mapperTableToObject.updateValueList(mapperTableToObject.getConfigurationToBranchMapper(), idList);
+            mapperTableToObject.updateValueList(mapperTableToObject.getConfigurationToRoleMapper(), idList);
+
+            mapperTableToObject.deleteFromConfigurationMaps(idList);
             deleteDataModel.removeConfiguration(tableView.getSelectionModel().getSelectedIndices());
-            segmentLists.removeItemFromObservableList(SegmentType.Configuration, indexList);
+            segmentLists.removeItemFromObservableList(SegmentType.Configuration, idList);
 
-            ArrayList phaseListData = deleteControl.findIndicesForDeleteData(SegmentType.Phase, indexList);
-            ArrayList iterationListData = deleteControl.findIndicesForDeleteData(SegmentType.Iteration, indexList);
-
-            editDataModel.updateItemList(SegmentType.Phase, SegmentType.Configuration, phaseListData);
-            editDataModel.updateItemList(SegmentType.Iteration, SegmentType.Configuration, iterationListData);
-
-            mapperTableToObject.deleteFromConfigurationMaps(indexList);
-            mapperTableToObject.updateValueList(mapperTableToObject.getConfigurationToCPRMapper(), indexList);
-            mapperTableToObject.updateValueList(mapperTableToObject.getConfigurationToBranchMapper(), indexList);
-            mapperTableToObject.updateValueList(mapperTableToObject.getConfigurationToRoleMapper(), indexList);
             tableView.getItems().removeAll(selection);
             tableView.getSelectionModel().clearSelection();
 
@@ -153,7 +150,7 @@ public class DeleteFormController implements IDeleteFormController {
             deleteDataModel.removeStatus(statusListObservable);
             segmentLists.removeItemFromObservableList(SegmentType.Status, indexList);
 
-            editDataModel.updateItemList(SegmentType.WorkUnit,SegmentType.Status, new ArrayList<>(statusListObservable));
+            editDataModel.updateItemList(SegmentType.WorkUnit, SegmentType.Status, new ArrayList<>(statusListObservable));
             mapperTableToObject.deleteFromMap( mapperTableToObject.getStatusToWUMapper(), indexList);
 
             view.getItems().removeAll(selection);
@@ -171,13 +168,15 @@ public class DeleteFormController implements IDeleteFormController {
 
     public void deleteRoleType(ArrayList<BasicTable> selection, TableView tableView) {
         if(Alerts.showDeleteItemCascadeAlert(selection, mapperTableToObject.getRoleToRoleTypeMapper())){
-            ArrayList<Integer> indexList = deleteControl.findIndicesForDelete(selection);
+            ArrayList<Integer> idList = deleteControl.findIndicesForDelete(selection);
             ObservableList roleTypeListObservable = tableView.getSelectionModel().getSelectedIndices();
+
+            editDataModel.updateItemList(SegmentType.Role, SegmentType.RoleType, idList);
+            mapperTableToObject.deleteFromMap(mapperTableToObject.getRoleToRoleTypeMapper(), idList);
+
             deleteDataModel.removeRoleType(roleTypeListObservable);
-            segmentLists.removeItemFromObservableList(SegmentType.RoleType, indexList);
-            // ArrayList roleList = deleteControl.findIndicesForDelete(SegmentType.Role, indexList); //TODO Mozna spatne nejede pres ..DeleteData
-            editDataModel.updateItemList(SegmentType.Role, SegmentType.RoleType, new ArrayList<>(roleTypeListObservable));
-            mapperTableToObject.deleteFromMap( mapperTableToObject.getRoleToRoleTypeMapper(), indexList);
+            segmentLists.removeItemFromObservableList(SegmentType.RoleType, idList);
+
             tableView.getItems().removeAll(selection);
             tableView.getSelectionModel().clearSelection();
             formController.showForm(Constans.roleFormIndex);
@@ -187,24 +186,20 @@ public class DeleteFormController implements IDeleteFormController {
     public void deleteRole(ArrayList<BasicTable> selection, TableView tableView) {
 
         if(Alerts.showDeleteItemCascadeAlert(selection, mapperTableToObject.getRoleMaps())){
-            ArrayList indexList = deleteControl.findIndicesForDelete(selection);
+            ArrayList idList = deleteControl.findIndicesForDelete(selection);
+
+            editDataModel.updateItemList(SegmentType.WorkUnit, SegmentType.Role, idList);
+            editDataModel.updateItemList(SegmentType.Configuration, SegmentType.Role, idList);
+            editDataModel.updateItemList(SegmentType.Artifact, SegmentType.Role, idList);
+            editDataModel.updateItemList(SegmentType.ConfigPersonRelation, SegmentType.Role, idList);
+
+            mapperTableToObject.deleteFromRoleMaps(idList);
+            mapperTableToObject.updateValueList( mapperTableToObject.getRoleToRoleTypeMapper(), idList);
+
             deleteDataModel.removeRole(tableView.getSelectionModel().getSelectedIndices());
-            segmentLists.removeItemFromObservableList(SegmentType.Role, indexList);
-
-            ArrayList wuListData = deleteControl.findIndicesForDeleteData(SegmentType.WorkUnit, indexList);
-            ArrayList cprListData = deleteControl.findIndicesForDeleteData(SegmentType.ConfigPersonRelation, indexList);
-            ArrayList configurationListData = deleteControl.findIndicesForDeleteData(SegmentType.Configuration, indexList);
-            ArrayList artifactListData = deleteControl.findIndicesForDeleteData(SegmentType.Artifact, indexList);
-
-            editDataModel.updateItemList(SegmentType.WorkUnit,SegmentType.Role, wuListData);
-            editDataModel.updateItemList(SegmentType.ConfigPersonRelation,SegmentType.Role, cprListData);
-            editDataModel.updateItemList(SegmentType.Configuration,SegmentType.Role, configurationListData);
-            editDataModel.updateItemList(SegmentType.Artifact,SegmentType.Role, artifactListData);
-
-            mapperTableToObject.deleteFromRoleMaps(indexList);
-            mapperTableToObject.updateValueList( mapperTableToObject.getRoleToRoleTypeMapper(), indexList);
-
+            segmentLists.removeItemFromObservableList(SegmentType.Role, idList);
             tableView.getSelectionModel().clearSelection();
+
             formController.showForm(Constans.roleFormIndex);
 
 
@@ -222,13 +217,14 @@ public class DeleteFormController implements IDeleteFormController {
 
     public void deleteResolution(ArrayList<BasicTable> selection, TableView view) {
         if(Alerts.showDeleteItemCascadeAlert(selection, mapperTableToObject.getResolutionToWUMapper())){
-            ArrayList indexList = deleteControl.findIndicesForDelete(selection);
+            ArrayList idList = deleteControl.findIndicesForDelete(selection);
             ObservableList resolutionListObservable = view.getSelectionModel().getSelectedIndices();
-            deleteDataModel.removeResolution(resolutionListObservable);
-            segmentLists.removeItemFromObservableList(SegmentType.Resolution, indexList);
 
-            editDataModel.updateItemList(SegmentType.WorkUnit,SegmentType.Resolution, new ArrayList<>(resolutionListObservable));
-            mapperTableToObject.deleteFromMap( mapperTableToObject.getResolutionToWUMapper(), indexList);
+            editDataModel.updateItemList(SegmentType.WorkUnit, SegmentType.Resolution, idList);
+            mapperTableToObject.deleteFromMap(mapperTableToObject.getResolutionToWUMapper(), idList);
+
+            deleteDataModel.removeResolution(resolutionListObservable);
+            segmentLists.removeItemFromObservableList(SegmentType.Resolution, idList);
 
             view.getItems().removeAll(selection);
             view.getSelectionModel().clearSelection();
@@ -237,13 +233,14 @@ public class DeleteFormController implements IDeleteFormController {
 
     public void deleteSeverity(ArrayList<BasicTable> selection, TableView<ClassTable> view) {
         if(Alerts.showDeleteItemCascadeAlert(selection, mapperTableToObject.getSeverityToWUMapper())){
-            ArrayList indexList = deleteControl.findIndicesForDelete(selection);
+            ArrayList idList = deleteControl.findIndicesForDelete(selection);
             ObservableList severityObservableList = view.getSelectionModel().getSelectedIndices();
-            deleteDataModel.removeSeverity(severityObservableList);
-            segmentLists.removeItemFromObservableList(SegmentType.Severity, indexList);
 
-            editDataModel.updateItemList(SegmentType.WorkUnit, SegmentType.Severity, new ArrayList<>(indexList));
-            mapperTableToObject.deleteFromMap( mapperTableToObject.getSeverityToWUMapper(), indexList);
+            editDataModel.updateItemList(SegmentType.WorkUnit, SegmentType.Severity, idList);
+            mapperTableToObject.deleteFromMap( mapperTableToObject.getSeverityToWUMapper(), idList);
+
+            deleteDataModel.removeSeverity(severityObservableList);
+            segmentLists.removeItemFromObservableList(SegmentType.Severity, idList);
 
             view.getItems().removeAll(selection);
             view.getSelectionModel().clearSelection();
@@ -252,12 +249,14 @@ public class DeleteFormController implements IDeleteFormController {
 
     public void deletePriority(ArrayList<BasicTable> selection, TableView<ClassTable> view) {
         if(Alerts.showDeleteItemCascadeAlert(selection, mapperTableToObject.getPriorityToWUMapper())){
-            ArrayList indexList = deleteControl.findIndicesForDelete(selection);
+            ArrayList idList = deleteControl.findIndicesForDelete(selection);
             ObservableList priorityObservableList = view.getSelectionModel().getSelectedIndices();
+
+            editDataModel.updateItemList(SegmentType.WorkUnit,SegmentType.Priority, idList);
+            mapperTableToObject.deleteFromMap( mapperTableToObject.getPriorityToWUMapper(), idList);
+
             deleteDataModel.removePriority(priorityObservableList);
-            segmentLists.removeItemFromObservableList(SegmentType.Priority, indexList);
-            editDataModel.updateItemList(SegmentType.WorkUnit,SegmentType.Priority, new ArrayList<>(priorityObservableList));
-            mapperTableToObject.deleteFromMap( mapperTableToObject.getPriorityToWUMapper(), indexList);
+            segmentLists.removeItemFromObservableList(SegmentType.Priority, idList);
 
             view.getItems().removeAll(selection);
             view.getSelectionModel().clearSelection();
@@ -267,14 +266,16 @@ public class DeleteFormController implements IDeleteFormController {
     public void deleteMilestone(ArrayList<BasicTable> selection, TableView tableView) {
 
         if(Alerts.showDeleteItemCascadeAlert(selection, mapperTableToObject.getPhaseToMilestone())){
-            ArrayList<Integer> indexList = deleteControl.findIndicesForDelete(selection);
-            segmentLists.removeItemFromObservableList(SegmentType.Milestone, indexList);
-            ArrayList phaseDataList = deleteControl.findIndicesForDeleteData(SegmentType.Phase, indexList);
-            ObservableList milestoneListObservable = tableView.getSelectionModel().getSelectedIndices();
-            deleteDataModel.removeMilestone(milestoneListObservable);
-            editDataModel.updateItemList(SegmentType.Phase,SegmentType.Milestone, phaseDataList);
-            mapperTableToObject.deleteFromMap(mapperTableToObject.getPhaseToMilestone(), indexList);
-            mapperTableToObject.updateValueList( mapperTableToObject.getMilestoneToCriterionMapper(), indexList);
+            ArrayList<Integer> idList = deleteControl.findIndicesForDelete(selection);
+
+            editDataModel.updateItemList(SegmentType.Phase,SegmentType.Milestone, idList);
+
+            mapperTableToObject.deleteFromMap(mapperTableToObject.getPhaseToMilestone(), idList);
+            mapperTableToObject.updateValueList( mapperTableToObject.getMilestoneToCriterionMapper(), idList);
+
+            deleteDataModel.removeMilestone(tableView.getSelectionModel().getSelectedIndices());
+            segmentLists.removeItemFromObservableList(SegmentType.Milestone, idList);
+
             tableView.getSelectionModel().clearSelection();
             formController.showForm(Constans.milestoneFormIndex);
         }
@@ -282,12 +283,15 @@ public class DeleteFormController implements IDeleteFormController {
 
     public void deleteCriterion(ArrayList<BasicTable> selection, TableView tableView) {
         if(Alerts.showDeleteItemCascadeAlert(selection, mapperTableToObject.getMilestoneToCriterionMapper())){
-            ArrayList indexList = deleteControl.findIndicesForDelete(selection);
+            ArrayList idList = deleteControl.findIndicesForDelete(selection);
             ObservableList criterionListObservable = tableView.getSelectionModel().getSelectedIndices();
+
+            editDataModel.updateItemList(SegmentType.Milestone, SegmentType.Criterion, idList);
+            mapperTableToObject.deleteFromMap(mapperTableToObject.getMilestoneToCriterionMapper(), idList);
+
             deleteDataModel.removeCriterion(criterionListObservable);
-            segmentLists.removeItemFromObservableList(SegmentType.Criterion, indexList);
-            editDataModel.updateItemList(SegmentType.Milestone, SegmentType.Criterion, new ArrayList<>(criterionListObservable));
-            mapperTableToObject.deleteFromMap(mapperTableToObject.getMilestoneToCriterionMapper(), indexList);
+            segmentLists.removeItemFromObservableList(SegmentType.Criterion, idList);
+
             tableView.getItems().removeAll(selection);
             tableView.getSelectionModel().clearSelection();
             formController.showForm(Constans.milestoneFormIndex);
@@ -297,13 +301,14 @@ public class DeleteFormController implements IDeleteFormController {
     public void deleteCPR(ArrayList<BasicTable> selection, TableView view) {
 
         if(Alerts.showDeleteItemCascadeAlert(selection, mapperTableToObject.getConfigurationToCPRMapper())){
-            ArrayList indexList = deleteControl.findIndicesForDelete(selection);
+            ArrayList idList = deleteControl.findIndicesForDelete(selection);
             ObservableList cprListObservable = view.getSelectionModel().getSelectedIndices();
-            deleteDataModel.removeCPR(cprListObservable);
-            segmentLists.removeItemFromObservableList(SegmentType.ConfigPersonRelation, indexList);
 
-            editDataModel.updateItemList(SegmentType.Configuration, SegmentType.ConfigPersonRelation, new ArrayList<>(cprListObservable));
-            mapperTableToObject.deleteFromMap( mapperTableToObject.getCPRToRoleMapper(), indexList);
+            editDataModel.updateItemList(SegmentType.Configuration, SegmentType.ConfigPersonRelation, idList);
+            mapperTableToObject.deleteFromMap( mapperTableToObject.getCPRToRoleMapper(), idList);
+
+            deleteDataModel.removeCPR(cprListObservable);
+            segmentLists.removeItemFromObservableList(SegmentType.ConfigPersonRelation, idList);
 
             view.getSelectionModel().clearSelection();
             formController.showForm(Constans.cprFormIndex);
@@ -312,13 +317,14 @@ public class DeleteFormController implements IDeleteFormController {
 
     public void deleteBranch(ArrayList<BasicTable> selection, TableView view) {
         if(Alerts.showDeleteItemCascadeAlert(selection, mapperTableToObject.getConfigurationToBranchMapper())){
-            ArrayList indexList = deleteControl.findIndicesForDelete(selection);
+            ArrayList idList = deleteControl.findIndicesForDelete(selection);
             ObservableList branchListObservable = view.getSelectionModel().getSelectedIndices();
-            deleteDataModel.removeCPR(branchListObservable);
-            segmentLists.removeItemFromObservableList(SegmentType.Branch, indexList);
 
-            editDataModel.updateItemList(SegmentType.Configuration, SegmentType.Branch, new ArrayList<>(branchListObservable));
-            mapperTableToObject.deleteFromMap( mapperTableToObject.getConfigurationToBranchMapper(), indexList);
+            editDataModel.updateItemList(SegmentType.Configuration, SegmentType.Branch, idList);
+            mapperTableToObject.deleteFromMap( mapperTableToObject.getConfigurationToBranchMapper(), idList);
+
+            deleteDataModel.removeBranch(branchListObservable);
+            segmentLists.removeItemFromObservableList(SegmentType.Branch, idList);
 
             view.getItems().removeAll(selection);
             view.getSelectionModel().clearSelection();

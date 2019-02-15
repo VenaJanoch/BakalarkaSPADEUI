@@ -1,6 +1,5 @@
 package graphics;
 
-import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
@@ -11,9 +10,8 @@ import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import services.Alerts;
 import services.Constans;
-import Controllers.WindowController;
+import controllers.WindowController;
 
 /**
  * Třídy definující hlavní menu aplikace

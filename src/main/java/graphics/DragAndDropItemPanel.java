@@ -1,9 +1,6 @@
 package graphics;
 
-import Controllers.CanvasController;
-import Controllers.WindowController;
-import abstractform.BasicForm;
-import javafx.event.EventHandler;
+import controllers.CanvasController;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;

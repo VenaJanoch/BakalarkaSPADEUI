@@ -1,18 +1,11 @@
 package controlPanels;
 
-import Controllers.FormDataController;
-import abstractControlPane.ControlPanel;
 import abstractControlPane.DescriptionControlPanel;
 import interfaces.IEditFormController;
 import interfaces.IFormDataController;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import tables.BasicTable;
 import tables.CriterionTable;

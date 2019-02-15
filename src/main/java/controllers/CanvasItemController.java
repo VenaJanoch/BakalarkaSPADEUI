@@ -1,4 +1,4 @@
-package Controllers;
+package controllers;
 
 import graphics.CanvasItem;
 import javafx.geometry.Point2D;

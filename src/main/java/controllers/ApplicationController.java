@@ -1,11 +1,7 @@
-package Controllers;
+package controllers;
 
-import javafx.stage.Stage;
-import model.DataManipulator;
 import model.DataModel;
-import model.FileManipulator;
 import model.IdentificatorCreater;
-import services.Alerts;
 import services.DeleteControl;
 import services.MapperTableToObject;
 import services.SegmentLists;

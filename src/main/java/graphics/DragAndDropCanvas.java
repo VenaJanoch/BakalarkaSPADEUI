@@ -1,21 +1,15 @@
 package graphics;
 
-import Controllers.CanvasController;
-import javafx.event.Event;
-import javafx.event.EventHandler;
+import controllers.CanvasController;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseButton;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.input.TransferMode;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.paint.Color;
-import services.CanvasType;
 import services.Constans;
 
 

@@ -1,7 +1,7 @@
 package graphics;
 
-import Controllers.CanvasController;
-import Controllers.ManipulationController;
+import controllers.CanvasController;
+import controllers.ManipulationController;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
@@ -12,7 +12,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
 import services.Constans;
-import Controllers.LinkControl;
+import controllers.LinkControl;
 import tables.BasicTable;
 
 /**

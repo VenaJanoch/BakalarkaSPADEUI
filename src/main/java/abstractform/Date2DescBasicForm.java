@@ -3,13 +3,8 @@
  */
 package abstractform;
 
-import java.time.LocalDate;
-
-import Controllers.CanvasController;
-import Controllers.FormController;
-import Controllers.FormDataController;
-import graphics.CanvasItem;
-import graphics.DragAndDropCanvas;
+import controllers.CanvasController;
+import controllers.FormController;
 import graphics.DragAndDropItemPanel;
 import interfaces.IDeleteFormController;
 import interfaces.IEditFormController;
@@ -17,9 +12,6 @@ import interfaces.IFormDataController;
 import javafx.geometry.HPos;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
-import services.CanvasType;
-import services.Control;
-import services.DeleteControl;
 import services.SegmentType;
 
 /**

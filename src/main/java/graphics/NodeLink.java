@@ -1,14 +1,14 @@
 package graphics;
 
-import Controllers.CanvasController;
-import Controllers.LinkController;
-import Controllers.ManipulationController;
+import controllers.CanvasController;
+import controllers.LinkController;
+import controllers.ManipulationController;
 import javafx.geometry.Point2D;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Polygon;
-import Controllers.LinkControl;
+import controllers.LinkControl;
 
 /**
  * /** Třída vykreslující spojení mezi Change a Artifact

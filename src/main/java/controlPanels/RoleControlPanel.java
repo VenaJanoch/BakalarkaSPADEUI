@@ -1,9 +1,7 @@
 package controlPanels;
 
-import Controllers.FormController;
-import Controllers.FormDataController;
+import controllers.FormController;
 import abstractControlPane.DescriptionControlPanel;
-import interfaces.IDeleteFormController;
 import interfaces.IEditFormController;
 import interfaces.IFormDataController;
 import javafx.beans.value.ChangeListener;
@@ -85,7 +83,7 @@ public class RoleControlPanel extends DescriptionControlPanel {
         public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
 
             roleTypeIndex = newValue.intValue();
-
+            int pom = roleTypeIndex;
         }
     };
 

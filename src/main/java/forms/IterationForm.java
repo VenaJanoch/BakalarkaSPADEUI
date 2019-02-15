@@ -1,36 +1,21 @@
 package forms;
 
-import java.text.Normalizer;
 import java.time.LocalDate;
 
-import Controllers.CanvasController;
-import Controllers.FormController;
-import Controllers.FormDataController;
-import SPADEPAC.Iteration;
-import abstractform.BasicForm;
+import controllers.CanvasController;
+import controllers.FormController;
 import abstractform.Date2DescBasicForm;
-import graphics.CanvasItem;
-import graphics.DragAndDropCanvas;
 import graphics.DragAndDropItemPanel;
-import graphics.InfoBoxSegment;
 import interfaces.IDeleteFormController;
 import interfaces.IEditFormController;
 import interfaces.IFormDataController;
 import interfaces.ISegmentForm;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.event.EventHandler;
 import javafx.geometry.HPos;
-import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
-import javafx.stage.WindowEvent;
 import services.Alerts;
-import services.CanvasType;
-import services.Control;
-import services.DeleteControl;
 import services.SegmentType;
 import tables.BasicTable;
 

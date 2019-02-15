@@ -1,17 +1,12 @@
 package controlPanels;
 
-import Controllers.FormDataController;
-import abstractControlPane.DescriptionControlPanel;
 import abstractControlPane.NameControlPanel;
-import interfaces.IDeleteFormController;
 import interfaces.IEditFormController;
 import interfaces.IFormDataController;
 import javafx.scene.Scene;
 import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import tables.BasicTable;
-import tables.CriterionTable;
 import tables.TagTable;
 
 public class TagControlPanel extends NameControlPanel {

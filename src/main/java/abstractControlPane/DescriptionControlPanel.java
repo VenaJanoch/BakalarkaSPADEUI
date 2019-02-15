@@ -1,7 +1,6 @@
 package abstractControlPane;
 
-import Controllers.FormController;
-import Controllers.FormDataController;
+import controllers.FormController;
 import interfaces.IEditFormController;
 import interfaces.IFormDataController;
 import javafx.scene.control.Label;

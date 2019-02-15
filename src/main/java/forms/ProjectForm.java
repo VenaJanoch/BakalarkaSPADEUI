@@ -1,35 +1,14 @@
 package forms;
 
-import java.time.Instant;
 import java.time.LocalDate;
-import java.time.ZoneId;
-import java.util.Date;
-import java.util.List;
-
-import Controllers.FormController;
-import Controllers.FormDataController;
-import SPADEPAC.Activity;
-import SPADEPAC.Iteration;
-import SPADEPAC.Phase;
-import SPADEPAC.Project;
-import SPADEPAC.WorkUnit;
-import abstractform.BasicForm;
+import controllers.FormController;
 import abstractform.Date2DescBasicForm;
-import graphics.CanvasItem;
-import graphics.DragAndDropCanvas;
 import interfaces.IDeleteFormController;
 import interfaces.IEditFormController;
 import interfaces.IFormDataController;
 import interfaces.ISegmentForm;
-import javafx.event.EventHandler;
-import javafx.geometry.HPos;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
-import javafx.stage.WindowEvent;
 import services.Alerts;
 import services.Constans;
-import services.Control;
 import services.SegmentType;
 
 /**

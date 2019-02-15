@@ -1,7 +1,6 @@
 package forms;
 
-import Controllers.FormController;
-import Controllers.FormDataController;
+import controllers.FormController;
 import abstractform.TableBasicForm;
 import controlPanels.CriterionControlPanel;
 import interfaces.IDeleteFormController;
@@ -12,7 +11,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -23,11 +21,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import services.Alerts;
-import services.Control;
-import services.DeleteControl;
-import model.IdentificatorCreater;
 import services.SegmentType;
-import sun.text.resources.FormatData;
 import tables.*;
 
 import java.util.ArrayList;

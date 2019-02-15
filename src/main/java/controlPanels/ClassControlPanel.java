@@ -1,11 +1,9 @@
 package controlPanels;
 
-import Controllers.FormController;
-import Controllers.FormDataController;
+import controllers.FormController;
 import SPADEPAC.RoleClass;
 import SPADEPAC.RoleSuperClass;
 import abstractControlPane.NameControlPanel;
-import interfaces.IDeleteFormController;
 import interfaces.IEditFormController;
 import interfaces.IFormDataController;
 import javafx.beans.value.ChangeListener;
@@ -20,8 +18,6 @@ import services.ClassSwitcher;
 import services.SegmentType;
 import tables.BasicTable;
 import tables.ClassTable;
-
-import java.util.List;
 
 public class ClassControlPanel extends NameControlPanel {
 

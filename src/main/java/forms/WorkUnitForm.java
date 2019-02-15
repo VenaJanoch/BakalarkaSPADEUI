@@ -1,39 +1,19 @@
 package forms;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-
-import Controllers.CanvasController;
-import Controllers.FormController;
-import Controllers.FormDataController;
-import SPADEPAC.RoleClass;
-import SPADEPAC.WorkUnit;
-import SPADEPAC.WorkUnitPriorityClass;
-import SPADEPAC.WorkUnitPrioritySuperClass;
-import SPADEPAC.WorkUnitSeverityClass;
-import SPADEPAC.WorkUnitTypeClass;
-import abstractform.BasicForm;
+import controllers.CanvasController;
+import controllers.FormController;
 import abstractform.DescriptionBasicForm;
-import graphics.CanvasItem;
-import graphics.InfoBoxSegment;
 import interfaces.IDeleteFormController;
 import interfaces.IEditFormController;
 import interfaces.IFormDataController;
 import interfaces.ISegmentForm;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.event.EventHandler;
 import javafx.geometry.HPos;
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
-import javafx.stage.WindowEvent;
 import services.*;
 import tables.BasicTable;
 

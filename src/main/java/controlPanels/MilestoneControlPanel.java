@@ -1,28 +1,20 @@
 package controlPanels;
 
-import Controllers.FormController;
-import Controllers.FormDataController;
-import abstractControlPane.ControlPanel;
+import controllers.FormController;
 import abstractControlPane.DescriptionControlPanel;
-import interfaces.IDeleteFormController;
 import interfaces.IEditFormController;
 import interfaces.IFormDataController;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import org.controlsfx.control.CheckComboBox;
 import services.Constans;
 import tables.BasicTable;
-import tables.CriterionTable;
 import tables.MilestoneTable;
 
 import java.util.ArrayList;

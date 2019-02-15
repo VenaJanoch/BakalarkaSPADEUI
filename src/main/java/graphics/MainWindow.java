@@ -1,12 +1,11 @@
 package graphics;
 
-import Controllers.ApplicationController;
-import Controllers.CanvasController;
-import Controllers.FormController;
-import Controllers.WindowController;
+import controllers.ApplicationController;
+import controllers.CanvasController;
+import controllers.FormController;
+import controllers.WindowController;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;

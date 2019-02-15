@@ -1,17 +1,10 @@
 package forms;
 
 import java.time.LocalDate;
-import java.util.List;
 
-import Controllers.CanvasController;
-import Controllers.FormController;
-import Controllers.FormDataController;
-import SPADEPAC.ObjectFactory;
-import SPADEPAC.Phase;
-import abstractform.BasicForm;
+import controllers.CanvasController;
+import controllers.FormController;
 import abstractform.DateDescBasicForm;
-import graphics.CanvasItem;
-import graphics.DragAndDropCanvas;
 import graphics.DragAndDropItemPanel;
 import interfaces.IDeleteFormController;
 import interfaces.IEditFormController;
@@ -22,7 +15,6 @@ import javafx.beans.value.ObservableValue;
 import javafx.geometry.HPos;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
-import org.junit.experimental.theories.FromDataPoints;
 import services.*;
 import tables.BasicTable;
 

@@ -1,25 +1,18 @@
 package controlPanels;
 
-import Controllers.FormController;
-import Controllers.FormDataController;
-import SPADEPAC.RoleClass;
-import SPADEPAC.RoleSuperClass;
+import controllers.FormController;
 import abstractControlPane.NameControlPanel;
 import interfaces.IEditFormController;
 import interfaces.IFormDataController;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.collections.FXCollections;
 import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
 import javafx.scene.layout.GridPane;
-import services.ClassSwitcher;
-import services.SegmentType;
 import tables.BasicTable;
 import tables.CPRTable;
-import tables.ClassTable;
 
 public class ConfigPersonRelationControlPanel extends NameControlPanel {
     private Label roleLB;

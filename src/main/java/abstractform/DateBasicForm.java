@@ -1,8 +1,7 @@
 package abstractform;
 
-import Controllers.CanvasController;
-import Controllers.FormController;
-import Controllers.FormDataController;
+import controllers.CanvasController;
+import controllers.FormController;
 import graphics.DragAndDropItemPanel;
 import interfaces.IDeleteFormController;
 import interfaces.IEditFormController;
@@ -10,7 +9,6 @@ import interfaces.IFormDataController;
 import javafx.geometry.HPos;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 import services.SegmentType;
 
 /**

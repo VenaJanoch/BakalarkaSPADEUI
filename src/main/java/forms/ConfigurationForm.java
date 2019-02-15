@@ -2,13 +2,10 @@ package forms;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.List;
 
-import Controllers.CanvasController;
-import Controllers.FormController;
-import Controllers.FormDataController;
+import controllers.CanvasController;
+import controllers.FormController;
 import abstractform.DateBasicForm;
-import forms.TagForm;
 import graphics.DragAndDropItemPanel;
 import interfaces.IDeleteFormController;
 import interfaces.IEditFormController;
@@ -16,15 +13,11 @@ import interfaces.IFormDataController;
 import javafx.collections.FXCollections;
 import org.controlsfx.control.CheckComboBox;
 
-import SPADEPAC.Configuration;
-import abstractform.BasicForm;
-import graphics.CanvasItem;
 import interfaces.ISegmentForm;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
-import javafx.event.EventHandler;
 import javafx.geometry.HPos;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -33,9 +26,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleGroup;
-import javafx.stage.WindowEvent;
 import services.*;
-import model.IdentificatorCreater;
 import tables.BasicTable;
 
 /**

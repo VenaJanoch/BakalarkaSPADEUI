@@ -1,9 +1,8 @@
 package graphics;
 
-import Controllers.CanvasController;
+import controllers.CanvasController;
 import javafx.scene.control.Button;
 import javafx.scene.input.ClipboardContent;
-import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
 import javafx.scene.text.Font;

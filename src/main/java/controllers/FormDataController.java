@@ -1,4 +1,4 @@
-package Controllers;
+package controllers;
 
 import forms.ConfigurationTableForm;
 import graphics.CanvasItem;
@@ -33,6 +33,7 @@ public class FormDataController implements IFormDataController {
                               IdentificatorCreater identificatorCreater, DataPreparer dataPreparer){
         this.formController = formController;
         this.lists = lists;
+        this.dataModel = dataModel;
         this.saveDataModel = dataModel.getSaveDataModel();
         this.dataManipulator = dataModel.getDataManipulator();
         this.editDataModel = dataModel.getEditDataModel();
@@ -47,7 +48,7 @@ public class FormDataController implements IFormDataController {
                                          int indexForm) {
         String nameForManipulator = InputController.fillTextMapper(actName);
         String descriptionForManipulator = InputController.fillTextMapper(desc);
-        int phaseId = identificatorCreater.getPhaseIndex(indexForm);
+        int phaseId = identificatorCreater.getPhaseId(indexForm);
 
         int[] coords = formController.getCoordsFromItem(indexForm);
         int milestoneIndexForManipulator = dataPreparer.prepareIndexForManipulator(milestoneIndex);
@@ -71,10 +72,10 @@ public class FormDataController implements IFormDataController {
 
         int[] coords = formController.getCoordsFromItem(indexForm);
         int configurationIdForManipulator = dataPreparer.prepareIndexForManipulator(chooseConfigID);
-        int iterationId = identificatorCreater.getIterationIndex(indexForm);
+        int iterationId = identificatorCreater.getIterationId(indexForm);
 
         editDataModel.editDataInIteration(nameForManipulator,startDate, endDate, descriptionForManipulator, configurationIdForManipulator ,
-                coords[0], coords[1], dataPreparer.prepareCanvasItemIndexForManipulator(itemIndexList.keySet()), identificatorCreater.getIterationIndex(indexForm));
+                coords[0], coords[1], dataPreparer.prepareCanvasItemIndexForManipulator(itemIndexList.keySet()), identificatorCreater.getIterationId(indexForm));
         formController.setNameToItem(indexForm, nameForManipulator);
 
         String segmentId = formController.getSegmentIdentificator(indexForm);
@@ -89,8 +90,9 @@ public class FormDataController implements IFormDataController {
         int[] coords = formController.getCoordsFromItem(indexForm);
 
         editDataModel.editDataInActivity(nameForManipulator, descriptionForManipulator, coords[0], coords[1], dataPreparer.prepareCanvasItemIndexForManipulator(mapOfItemOnCanvas.keySet()),
-                identificatorCreater.getActivityIndex(indexForm));
-        formController.setNameToItem(indexForm, nameForManipulator);
+                identificatorCreater.getActivityId(indexForm));
+        String segmentId = formController.getSegmentIdentificator(indexForm);
+        formController.setNameToItem(indexForm, segmentId);
         return true;
 
     }
@@ -120,13 +122,20 @@ public class FormDataController implements IFormDataController {
 
         formController.setItemColor(indexForm, selected);
 
-        editDataModel.editDataInWorkUnit(nameForManipulator, descriptionForManipulator ,categoryForManipulator, dataPreparer.prepareIndexForManipulator(assigneIndex),
-                dataPreparer.prepareIndexForManipulator(authorIndex), dataPreparer.prepareIndexForManipulator(priorityIndex), dataPreparer.prepareIndexForManipulator(severityIndex),
-                dataPreparer.prepareIndexForManipulator(typeIndex), dataPreparer.prepareIndexForManipulator(resolutionIndex), dataPreparer.prepareIndexForManipulator(statusIndex),
-                coords[0], coords[1], estimateForDataManipulator, selected, identificatorCreater.getWorkUnitIndex(indexForm), isProjectCanvas);
+        int assigneForManipulator = dataPreparer.prepareIndexForManipulator(assigneIndex);
+        int authorForManipulator = dataPreparer.prepareIndexForManipulator(authorIndex);
+        int priorityForManipulator = dataPreparer.prepareIndexForManipulator(priorityIndex);
+        int severityForManipulator = dataPreparer.prepareIndexForManipulator(severityIndex);
+        int typeForManipulator = dataPreparer.prepareIndexForManipulator(typeIndex);
+        int resolutionForManipulator = dataPreparer.prepareIndexForManipulator(resolutionIndex);
+        int statusForManipulator = dataPreparer.prepareIndexForManipulator(statusIndex);
+        editDataModel.editDataInWorkUnit(nameForManipulator, descriptionForManipulator ,categoryForManipulator, assigneForManipulator, authorForManipulator,
+                priorityForManipulator ,severityForManipulator ,typeForManipulator,resolutionForManipulator , statusForManipulator , coords[0], coords[1],
+                estimateForDataManipulator, selected, identificatorCreater.getWorkUnitIndex(indexForm), isProjectCanvas);
         formController.setNameToItem(indexForm, nameForManipulator);
-
-        mapperTableToObject.mapTableToWU(assigneIndex, authorIndex, priorityIndex, severityIndex, typeIndex, resolutionIndex, statusIndex, indexForm, nameForManipulator);
+        String segmentId = formController.getSegmentIdentificator(indexForm);
+        mapperTableToObject.mapTableToWU(assigneForManipulator, authorForManipulator, priorityForManipulator, severityForManipulator, typeForManipulator,
+                resolutionForManipulator, statusForManipulator, indexForm, segmentId);
         return  true;
     }
 
@@ -152,10 +161,10 @@ public class FormDataController implements IFormDataController {
         if(isRelease){
             release = "YES";
         }
-        int configIndex = identificatorCreater.getConfigurationIndex(indexForm);
+        int configIndex = identificatorCreater.getConfigurationId(indexForm);
         editDataModel.editDataInConfiguration(nameForManipulator, createDate, isRelease, authorIndex , branchIndex,cprIndex,
                 artefactList, changeList, configIndex );
-        String idName = identificatorCreater.getConfigurationIndex(indexForm) + "_" + actName;
+        String idName = identificatorCreater.getConfigurationId(indexForm) + "_" + actName;
         ConfigTable configTable = new ConfigTable(idName, release, indexForm, configIndex);
         if (isNew){
             lists.getConfigObservable().add(configTable);
@@ -194,7 +203,7 @@ public class FormDataController implements IFormDataController {
         int[] coords = formController.getCoordsFromItem(indexForm);
 
         formController.setItemColor(indexForm, selected);
-        editDataModel.editDataInChange(nameForManipulator, descForManipulator, coords[0], coords[1], selected, identificatorCreater.getChangeIndex(indexForm));
+        editDataModel.editDataInChange(nameForManipulator, descForManipulator, coords[0], coords[1], selected, identificatorCreater.getChangeId(indexForm));
         formController.setNameToItem(indexForm, nameForManipulator);
         return true;
     }
@@ -226,18 +235,18 @@ public class FormDataController implements IFormDataController {
 
 
 
-    public void saveDataFromCPR(String nameST, int roleIndex, CPRTable cprTable) {
-        mapperTableToObject.mapTableToObject(SegmentType.ConfigPersonRelation, roleIndex,
-                new TableToObjectInstanc(cprTable.getName(), cprTable.getId(), SegmentType.ConfigPersonRelation));
+    public void saveDataFromCPR(String nameST, int roleListIndex, CPRTable cprTable) {
+
         String nameForManipulator = InputController.fillTextMapper(nameST);
-
-        saveDataModel.createNewCPR(nameForManipulator, dataPreparer.prepareIndexForManipulator(roleIndex), cprTable.getId());
+        int roleIndexFormManipulator = dataPreparer.prepareIndexForManipulator(roleListIndex);
+        saveDataModel.createNewCPR(nameForManipulator, roleIndexFormManipulator, cprTable.getId());
         lists.getCPRObservable().add(cprTable);
+
+        int roleId = dataModel.getRoleId(roleIndexFormManipulator);
+        mapperTableToObject.mapTableToObject(SegmentType.ConfigPersonRelation, roleId,
+                new TableToObjectInstanc(cprTable.getName(), cprTable.getId(), SegmentType.ConfigPersonRelation));
+
     }
-
-
-
-
 
     public void saveDataFromCriterionForm(String nameST, CriterionTable criterionTable) {
         String nameForManipulator = InputController.fillTextMapper(nameST);
@@ -245,10 +254,6 @@ public class FormDataController implements IFormDataController {
         saveDataModel.createNewCriterion(nameForManipulator, descForManipulator, criterionTable.getId());
         lists.getCriterionObservable().add(criterionTable);
     }
-
-
-
-
 
     public void saveDataFromMilestoneForm(String nameST, String description, ArrayList<Integer> criterionIndex, MilestoneTable milestoneTable) {
 
@@ -262,26 +267,17 @@ public class FormDataController implements IFormDataController {
                 SegmentType.Milestone));
 }
 
-
-
-
-
     public void saveDataFromPriority(String nameST, ClassTable tableItem) {
         String nameForManipulator = InputController.fillTextMapper(nameST);
         saveDataModel.createNewPriority(nameForManipulator, tableItem.getClassType(), tableItem.getSuperType(), tableItem.getId());
         lists.getPriorityTypeObservable().add(tableItem);
     }
 
-
-
     public void saveDataFromSeverity(String nameST, ClassTable tableItem) {
         String nameForManipulator = InputController.fillTextMapper(nameST);
         saveDataModel.createNewSeverity(nameForManipulator, tableItem.getClassType(), tableItem.getSuperType(), tableItem.getId());
         lists.getSeverityTypeObservable().add(tableItem);
     }
-
-
-
 
     public void saveDataFromResolutionForm(String nameST, ClassTable classTable) {
 
@@ -290,16 +286,12 @@ public class FormDataController implements IFormDataController {
         lists.getResolutionTypeObservable().add(classTable);
     }
 
-
-
     public void saveDataFromRelationForm(String nameST, ClassTable classTable) {
 
         String nameForManipulator = InputController.fillTextMapper(nameST);
         saveDataModel.createNewRelation(nameForManipulator, classTable.getClassType(), classTable.getSuperType(), classTable.getId());
         lists.getRelationTypeObservable().add(classTable);
     }
-
-
 
     public void saveDataFromRoleForm(String nameST, int typeIndex, RoleTable roleTable) {
         String nameForManipulator = InputController.fillTextMapper(nameST);
@@ -313,9 +305,6 @@ public class FormDataController implements IFormDataController {
         mapperTableToObject.mapTableToObject(SegmentType.Role, roleTypeIndex, new TableToObjectInstanc(roleTable.getName(), roleTable.getId(), SegmentType.Role));
 }
 
-
-
-
     public void saveDataFromRoleTypeForm(String nameST, ClassTable classTable) {
 
         String nameForManipulator = InputController.fillTextMapper(nameST);
@@ -323,18 +312,11 @@ public class FormDataController implements IFormDataController {
         lists.getRoleTypeObservable().add(classTable);
     }
 
-
-
-
     public void saveDataFromTagForm(String tag, int configId, int id) {
         String tagForManipulator = InputController.fillTextMapper(tag);
 
         saveDataModel.addTagToConfiguration(tagForManipulator, configId, id);
     }
-
-
-
-
 
     public void saveDataFromStatusForm(String nameST, ClassTable classTable) {
 
@@ -343,16 +325,12 @@ public class FormDataController implements IFormDataController {
         lists.getStatusTypeObservable().add(classTable);
     }
 
-
     public void saveDataFromTypeForm(String nameST, ClassTable classTable) {
 
         String nameForManipulator = InputController.fillTextMapper(nameST);
         saveDataModel.createNewType(nameForManipulator, classTable.getClassType(), classTable.getSuperType(), classTable.getId());
         lists.getTypeObservable().add(classTable);
     }
-
-
-
 
     public void saveDataFromProjectFrom(String nameST, LocalDate endDate, LocalDate startDate, String desc) {
         String nameForManipulator = InputController.fillTextMapper(nameST);
@@ -433,7 +411,7 @@ public class FormDataController implements IFormDataController {
 
 
     public String getTagData(int id, int configFormId) {
-        return dataManipulator.getTagStringData(id, identificatorCreater.getConfigurationIndex(configFormId));
+        return dataManipulator.getTagStringData(id, identificatorCreater.getConfigurationId(configFormId));
     }
 
 

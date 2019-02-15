@@ -1,10 +1,10 @@
 package graphics;
 
-import Controllers.CanvasController;
-import Controllers.ManipulationController;
+import controllers.CanvasController;
+import controllers.ManipulationController;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
-import Controllers.LinkControl;
+import controllers.LinkControl;
 
 public class ChangeArtifactLink extends NodeLink {
     /**

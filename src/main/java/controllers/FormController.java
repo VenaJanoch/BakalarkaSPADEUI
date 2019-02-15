@@ -1,7 +1,6 @@
-package Controllers;
+package controllers;
 
 import SPADEPAC.ConfigPersonRelation;
-import SPADEPAC.Configuration;
 import SPADEPAC.Milestone;
 import SPADEPAC.Role;
 import abstractform.BasicForm;
@@ -183,7 +182,7 @@ public class FormController {
     private int createNewChangeForm() {
 
         int index = createNewChangeFormWithoutManipulator();
-        saveDataModel.createNewChance(identificatorCreater.getChangeIndex(index));
+        saveDataModel.createNewChance(identificatorCreater.getChangeId(index));
 
         return  index;
     }
@@ -198,7 +197,7 @@ public class FormController {
     private int createNewConfigurationForm() {
 
         int index = createNewConfiguratioFormWithoutManipulator();
-        saveDataModel.createNewConfiguration(identificatorCreater.getConfigurationIndex(index));
+        saveDataModel.createNewConfiguration(identificatorCreater.getConfigurationId(index));
         return  index;
     }
 
@@ -240,7 +239,7 @@ public class FormController {
     private int createNewActivityForm() {
 
         int index = createNewActivityFormWithoutManipulator();
-        saveDataModel.createNewActivity(identificatorCreater.getActivityIndex(index));
+        saveDataModel.createNewActivity(identificatorCreater.getActivityId(index));
 
         return index;
     }
@@ -257,7 +256,7 @@ public class FormController {
 
     private int createNewPhaseForm(){
         int index = createNewPhaseFormWithoutManipulator();
-        saveDataModel.createNewPhase(identificatorCreater.getPhaseIndex(index));
+        saveDataModel.createNewPhase(identificatorCreater.getPhaseId(index));
         return  index;
     }
 
@@ -277,7 +276,7 @@ public class FormController {
     int createNewIterationForm(){
 
         int index = createNewIterationFormWithoutManipulator();
-        saveDataModel.createNewIteration(identificatorCreater.getIterationIndex(index));
+        saveDataModel.createNewIteration(identificatorCreater.getIterationId(index));
 
         return index;
     }
@@ -299,21 +298,21 @@ public class FormController {
         BasicForm form = forms.get(formIdentificator);
         switch (form.getSegmentType()){
             case Phase:
-                formFillController.fillPhaseForm(identificatorCreater.getPhaseIndex(formIdentificator), formIdentificator);
+                formFillController.fillPhaseForm(identificatorCreater.getPhaseId(formIdentificator), formIdentificator);
                 break;
             case Iteration:
-                formFillController.fillIterationForm(identificatorCreater.getIterationIndex(formIdentificator), formIdentificator);
+                formFillController.fillIterationForm(identificatorCreater.getIterationId(formIdentificator), formIdentificator);
                 break;
             case Activity:
-                formFillController.fillActivityForm(identificatorCreater.getActivityIndex(formIdentificator), formIdentificator);
+                formFillController.fillActivityForm(identificatorCreater.getActivityId(formIdentificator), formIdentificator);
                 break;
             case WorkUnit:
                 formFillController.fillWorkUnitForm(identificatorCreater.getWorkUnitIndex(formIdentificator), formIdentificator);
                 break;
             case Change:
-                //  formFillController.fillChangeForm(identificatorCreater.getIterationIndex(formIdentificator), formIdentificator);break;
+                //  formFillController.fillChangeForm(identificatorCreater.getIterationId(formIdentificator), formIdentificator);break;
             case Artifact:
-                //  formFillController.fillArtifactForm(identificatorCreater.getIterationIndex(formIdentificator), formIdentificator);
+                //  formFillController.fillArtifactForm(identificatorCreater.getIterationId(formIdentificator), formIdentificator);
                 break;
             case Milestone:
 
@@ -406,8 +405,8 @@ public class FormController {
         Integer artifactStartIndex = identificatorCreater.getArtifactIndex(startId);
         Integer artifactEndIndex = identificatorCreater.getArtifactIndex(endId);
 
-        Integer changeStartIndex = identificatorCreater.getChangeIndex(startId);
-        Integer changeEndIndex = identificatorCreater.getChangeIndex(endId);
+        Integer changeStartIndex = identificatorCreater.getChangeId(startId);
+        Integer changeEndIndex = identificatorCreater.getChangeId(endId);
 
         int artifactIndex;
         int changeIndex;
@@ -466,17 +465,17 @@ public class FormController {
 
         switch (type) {
             case Phase:
-                return identificatorCreater.getPhaseIndex(formIndex);
+                return identificatorCreater.getPhaseId(formIndex);
             case Iteration:
-                return identificatorCreater.getIterationIndex(formIndex);
+                return identificatorCreater.getIterationId(formIndex);
             case Activity:
-                return identificatorCreater.getActivityIndex(formIndex);
+                return identificatorCreater.getActivityId(formIndex);
             case WorkUnit:
                 return identificatorCreater.getWorkUnitIndex(formIndex);
             case Configuration:
-                return identificatorCreater.getConfigurationIndex(formIndex);
+                return identificatorCreater.getConfigurationId(formIndex);
             case Change:
-                return identificatorCreater.getChangeIndex(formIndex);
+                return identificatorCreater.getChangeId(formIndex);
             case Artifact:
                 return identificatorCreater.getArtifactIndex(formIndex);
             default:

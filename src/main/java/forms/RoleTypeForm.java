@@ -1,36 +1,26 @@
 package forms;
 
-import Controllers.FormController;
-import Controllers.FormDataController;
+import controllers.FormController;
 import SPADEPAC.RoleClass;
 import SPADEPAC.RoleSuperClass;
-import SPADEPAC.RoleType;
 import abstractform.TableClassBasicForm;
 import controlPanels.ClassControlPanel;
 import interfaces.IDeleteFormController;
 import interfaces.IEditFormController;
 import interfaces.IFormDataController;
 import interfaces.ISegmentTableForm;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import services.Alerts;
-import services.Control;
-import services.DeleteControl;
-import model.IdentificatorCreater;
 import services.SegmentType;
 import tables.BasicTable;
 import tables.ClassTable;
-import tables.MilestoneTable;
 
 import java.util.ArrayList;
 

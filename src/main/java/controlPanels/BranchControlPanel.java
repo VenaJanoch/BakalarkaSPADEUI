@@ -1,19 +1,16 @@
 package controlPanels;
 
-import Controllers.FormController;
-import Controllers.FormDataController;
+import controllers.FormController;
 import abstractControlPane.NameControlPanel;
 import interfaces.IEditFormController;
 import interfaces.IFormDataController;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.collections.FXCollections;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import tables.BasicTable;
 import tables.BranchTable;
-import tables.CPRTable;
 
 public class BranchControlPanel extends NameControlPanel {
 

@@ -31,6 +31,7 @@ public class DataModel {
     private ObjectFactory objF;
 
     public DataModel(ProcessGenerator processGenerator){
+        this.objF = new ObjectFactory();
         this.project = objF.createProject();
         this.processGenerator = processGenerator;
         this.editDataModel = new EditDataModel(project, this);
@@ -530,7 +531,7 @@ public class DataModel {
     public int getRoleId(int roleIndex){
         int index = roleIndex;
         if(roleIndex != -1){
-            index = project.getRoleType().get(roleIndex).getId();
+            index = project.getRoles().get(roleIndex).getId();
         }
         return index;
     }
@@ -655,5 +656,46 @@ public class DataModel {
     public ObjectFactory getObjF() {
         return objF;
     }
+
+    public int getConfigurationId(int index) {
+        return project.getConfiguration().get(index).getId();
+    }
+
+    public int getRoleTypeId(int index) {
+        
+        return project.getRoleType().get(index).getId();
+    }
+
+    public int getPriorityId(int index) {
+        
+        return project.getPriority().get(index).getId();        
+    }
+
+    public int getSeverityId(int index) {
+
+        return project.getSeverity().get(index).getId();
+    }
+
+    public int getTypeId(int index) {
+
+        return project.getTypes().get(index).getId();
+    }
+
+    public int getResolutionId(int index) {
+
+        return project.getResolution().get(index).getId();
+    }
+
+    public int getRelationId(int index) {
+
+        return project.getRelation().get(index).getId();
+    }
+
+    public int getStatusId(int index) {
+
+        return project.getStatus().get(index).getId();
+    }
+
+
 }
 

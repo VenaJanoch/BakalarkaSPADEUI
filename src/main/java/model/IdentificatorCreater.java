@@ -238,7 +238,7 @@ public class IdentificatorCreater {
         return tagID;
     }
 
-    public Integer getChangeIndex(int formIndex) {
+    public Integer getChangeId(int formIndex) {
 
         return getChangeIndexMaper().get(formIndex);
     }
@@ -251,15 +251,15 @@ public class IdentificatorCreater {
         return getWorkUnitIndexMaper().get(startSegmentId);
     }
 
-    public Integer getPhaseIndex(int formIndex) {
+    public Integer getPhaseId(int formIndex) {
         return phaseIndexMaper.get(formIndex);
     }
 
-    public Integer getIterationIndex(int formIdentificator) {
+    public Integer getIterationId(int formIdentificator) {
         return iterationIndexMaper.get(formIdentificator);
     }
 
-    public Integer getActivityIndex(int formIdentificator) {
+    public Integer getActivityId(int formIdentificator) {
         return activityFormToIdMapper.get(formIdentificator);
     }
 
@@ -267,7 +267,7 @@ public class IdentificatorCreater {
         return configurationIndexToFormMapper.get(index);
     }
 
-    public Integer getConfigurationIndex(int formIdentificator) {
+    public Integer getConfigurationId(int formIdentificator) {
         return configurationFormToIndexMapper.get(formIdentificator);
     }
 
