@@ -3,6 +3,7 @@ package ModelControllerTests;
 import SPADEPAC.Iteration;
 import XML.ProcessGenerator;
 import model.DataManipulator;
+import model.DataModel;
 import model.IdentificatorCreater;
 import org.junit.Before;
 import org.junit.Test;
@@ -25,20 +26,18 @@ public class IterationValueTest {
     @Before
     public void setUp() throws Exception {
 
-        IdentificatorCreater idCreator = new IdentificatorCreater();
-        ProcessGenerator processGenerator = new ProcessGenerator();
-        DataManipulator data = new DataManipulator(processGenerator, idCreator);
         this.lists = new SegmentLists();
-
-        itemSet.add(1);
+          itemSet.add(1);
         itemSet.add(2);
         itemSet.add(3);
         date = LocalDate.of(2018, 10, 10);
 
-        data.createNewIteration();
-        data.addDataToIteration("Jmeno", date,date,"desc", 0,67, 98, itemSet, 0);
+        WarmUp warmUp = new WarmUp();
+        DataModel dataModel = warmUp.getDataModel();
 
-        iteration = data.getProject().getIterations().get(0);
+        dataModel.getSaveDataModel().createNewIteration(2);
+        iteration = dataModel.getIteration(2);
+        dataModel.addDataToIteration(iteration,"Jmeno", date,date,"desc", 0,67, 98, itemSet);
     }
 
     @Test

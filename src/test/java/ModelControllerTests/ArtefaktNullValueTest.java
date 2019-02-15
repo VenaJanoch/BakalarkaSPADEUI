@@ -1,20 +1,10 @@
 package ModelControllerTests;
 
-import Controllers.ApplicationController;
-import Controllers.FormController;
-import Controllers.FormDataController;
 import SPADEPAC.Artifact;
-import SPADEPAC.Branch;
-import XML.ProcessGenerator;
-import model.DataManipulator;
-import model.FileManipulator;
-import model.IdentificatorCreater;
+import model.DataModel;
 import org.junit.Before;
 import org.junit.Test;
-import services.Alerts;
-import services.DeleteControl;
 import services.SegmentLists;
-import services.SegmentType;
 
 import java.time.LocalDate;
 
@@ -28,18 +18,17 @@ public class ArtefaktNullValueTest {
         @Before
         public void setUp() throws Exception {
 
-            IdentificatorCreater idCreator = new IdentificatorCreater();
-            ProcessGenerator processGenerator = new ProcessGenerator();
-            DataManipulator data =  new DataManipulator(processGenerator,idCreator);
             this.lists =  new SegmentLists();
 
             date = LocalDate.of(2018,10, 10);
 
-            data.createNewArtifact();
-            data.addDataToArtifact(null, null, null, true, 0,0,0,
-                    0,0);
+            WarmUp warmUp = new WarmUp();
+            DataModel dataModel = warmUp.getDataModel();
 
-            artifact = data.getProject().getArtifacts().get(0);
+            dataModel.getSaveDataModel().createNewArtifact(2);
+            artifact = dataModel.getArtifact(2);
+            dataModel.addDataToArtifact(artifact,null, null, null, true, 0,0,0,
+                    0);
         }
 
         @Test

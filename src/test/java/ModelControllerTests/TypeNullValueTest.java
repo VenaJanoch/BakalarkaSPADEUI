@@ -1,20 +1,12 @@
 package ModelControllerTests;
 
-import Controllers.ApplicationController;
-import Controllers.FormController;
-import Controllers.FormDataController;
-import SPADEPAC.Project;
+import controllers.FormController;
+import controllers.FormDataController;
 import SPADEPAC.Type;
 import SPADEPAC.WorkUnitTypeClass;
 import SPADEPAC.WorkUnitTypeSuperClass;
-import XML.ProcessGenerator;
-import model.DataManipulator;
-import model.FileManipulator;
-import model.IdentificatorCreater;
 import org.junit.Before;
 import org.junit.Test;
-import services.Alerts;
-import services.DeleteControl;
 import services.SegmentLists;
 import services.SegmentType;
 import tables.ClassTable;
@@ -30,14 +22,14 @@ public class TypeNullValueTest {
         public void setUp() throws Exception {
 
             WarmUp warmUp = new WarmUp();
+            lists = warmUp.getLists();
             FormDataController formDataController = warmUp.getFormDataController();
-            Project project = warmUp.getData().getProject();
             FormController formController = warmUp.getFormController();
 
             formController.createTableItem(SegmentType.Type);
             formDataController.saveDataFromTypeForm("", new ClassTable("", WorkUnitTypeClass.UNASSIGNED.name(), WorkUnitTypeSuperClass.UNASSIGNED.name()
                     ,0));
-            type = project.getTypes().get(0);
+            type = warmUp.getDataModel().getType(0);
         }
 
         @Test
@@ -47,7 +39,7 @@ public class TypeNullValueTest {
 
         @Test
         public void testIdName() {
-        assertEquals("", lists.getTypeObservable().get(0));
+        assertEquals("", lists.getTypeObservable().get(0).getName());
     }
 
 

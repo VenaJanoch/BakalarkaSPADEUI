@@ -1,20 +1,12 @@
 package ModelControllerTests;
 
-import Controllers.ApplicationController;
-import Controllers.FormController;
-import Controllers.FormDataController;
-import SPADEPAC.Project;
+import controllers.FormController;
+import controllers.FormDataController;
 import SPADEPAC.Resolution;
 import SPADEPAC.WorkUnitResolutionClass;
 import SPADEPAC.WorkUnitResolutionsSuperClass;
-import XML.ProcessGenerator;
-import model.DataManipulator;
-import model.FileManipulator;
-import model.IdentificatorCreater;
 import org.junit.Before;
 import org.junit.Test;
-import services.Alerts;
-import services.DeleteControl;
 import services.SegmentLists;
 import services.SegmentType;
 import tables.ClassTable;
@@ -30,14 +22,14 @@ public class ResolutionNullValueTest {
     public void setUp() throws Exception {
 
         WarmUp warmUp = new WarmUp();
+        lists = warmUp.getLists();
         FormDataController formDataController = warmUp.getFormDataController();
-        Project project = warmUp.getData().getProject();
         FormController formController = warmUp.getFormController();
 
         formController.createTableItem(SegmentType.Resolution);
         formDataController.saveDataFromResolutionForm("", new ClassTable("", WorkUnitResolutionClass.UNASSIGNED.name(), WorkUnitResolutionsSuperClass.UNASSIGNED.name()
                 ,0));
-        resolution = project.getResolution().get(0);
+        resolution = warmUp.getDataModel().getResolution(0);
     }
 
     @Test
@@ -47,7 +39,7 @@ public class ResolutionNullValueTest {
 
     @Test
     public void testIdName() {
-        assertEquals("", lists.getResolutionTypeObservable().get(0));
+        assertEquals("", lists.getResolutionTypeObservable().get(0).getName());
     }
 
 

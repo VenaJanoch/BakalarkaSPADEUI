@@ -1,17 +1,10 @@
 package ModelControllerTests;
 
-import Controllers.ApplicationController;
-import Controllers.FormController;
-import Controllers.FormDataController;
+import controllers.FormController;
+import controllers.FormDataController;
 import SPADEPAC.*;
-import XML.ProcessGenerator;
-import model.DataManipulator;
-import model.FileManipulator;
-import model.IdentificatorCreater;
 import org.junit.Before;
 import org.junit.Test;
-import services.Alerts;
-import services.DeleteControl;
 import services.SegmentLists;
 import services.SegmentType;
 import tables.ClassTable;
@@ -26,14 +19,14 @@ public class PriorityNullValueTest {
         public void setUp() throws Exception {
 
             WarmUp warmUp = new WarmUp();
+            lists = warmUp.getLists();
             FormDataController formDataController = warmUp.getFormDataController();
-            Project project = warmUp.getData().getProject();
             FormController formController = warmUp.getFormController();
 
             formController.createTableItem(SegmentType.Priority);
             formDataController.saveDataFromPriority("", new ClassTable("", WorkUnitPriorityClass.UNASSIGNED.name(), WorkUnitPrioritySuperClass.UNASSIGNED.name()
                     ,0));
-            priority = project.getPriority().get(0);
+            priority = warmUp.getDataModel().getPriority(0);
         }
 
         @Test
@@ -43,7 +36,7 @@ public class PriorityNullValueTest {
 
         @Test
         public void testIdName() {
-        assertEquals("", lists.getPriorityTypeObservable().get(0));
+        assertEquals("", lists.getPriorityTypeObservable().get(0).getName());
     }
 
 

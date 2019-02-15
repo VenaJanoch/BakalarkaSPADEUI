@@ -1,20 +1,12 @@
 package ModelControllerTests;
 
-import Controllers.ApplicationController;
-import Controllers.FormController;
-import Controllers.FormDataController;
-import SPADEPAC.Project;
+import controllers.FormController;
+import controllers.FormDataController;
 import SPADEPAC.Status;
 import SPADEPAC.WorkUnitStatusClass;
 import SPADEPAC.WorkUnitStatusSuperClass;
-import XML.ProcessGenerator;
-import model.DataManipulator;
-import model.FileManipulator;
-import model.IdentificatorCreater;
 import org.junit.Before;
 import org.junit.Test;
-import services.Alerts;
-import services.DeleteControl;
 import services.SegmentLists;
 import services.SegmentType;
 import tables.ClassTable;
@@ -30,15 +22,16 @@ public class StatusNullValueTest {
         public void setUp() throws Exception {
 
             WarmUp warmUp = new WarmUp();
+            lists = warmUp.getLists();
             FormDataController formDataController = warmUp.getFormDataController();
-            Project project = warmUp.getData().getProject();
             FormController formController = warmUp.getFormController();
+
 
 
             formController.createTableItem(SegmentType.Status);
             formDataController.saveDataFromStatusForm("", new ClassTable("", WorkUnitStatusClass.UNASSIGNED.name(), WorkUnitStatusSuperClass.UNASSIGNED.name()
                     ,0));
-            status = project.getStatus().get(0);
+            status = warmUp.getDataModel().getStatus(0);
         }
 
         @Test
@@ -48,7 +41,7 @@ public class StatusNullValueTest {
 
         @Test
         public void testIdName() {
-        assertEquals("", lists.getStatusTypeObservable().get(0));
+        assertEquals("", lists.getStatusTypeObservable().get(0).getName());
     }
 
 

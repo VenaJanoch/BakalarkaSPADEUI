@@ -1,20 +1,12 @@
 package ModelControllerTests;
 
-import Controllers.ApplicationController;
-import Controllers.FormController;
-import Controllers.FormDataController;
-import SPADEPAC.Project;
+import controllers.FormController;
+import controllers.FormDataController;
 import SPADEPAC.Type;
 import SPADEPAC.WorkUnitTypeClass;
 import SPADEPAC.WorkUnitTypeSuperClass;
-import XML.ProcessGenerator;
-import model.DataManipulator;
-import model.FileManipulator;
-import model.IdentificatorCreater;
 import org.junit.Before;
 import org.junit.Test;
-import services.Alerts;
-import services.DeleteControl;
 import services.SegmentLists;
 import services.SegmentType;
 import tables.ClassTable;
@@ -30,25 +22,25 @@ public class TypeValueTest {
         public void setUp() throws Exception {
 
             WarmUp warmUp = new WarmUp();
+            lists = warmUp.getLists();
             FormDataController formDataController = warmUp.getFormDataController();
-            Project project = warmUp.getData().getProject();
             FormController formController = warmUp.getFormController();
 
 
             formController.createTableItem(SegmentType.Type);
-            formDataController.saveDataFromTypeForm("", new ClassTable("", WorkUnitTypeClass.BUG.name(), WorkUnitTypeSuperClass.CREATION.name()
+            formDataController.saveDataFromTypeForm("Jmeno1", new ClassTable("0_Jmeno1", WorkUnitTypeClass.BUG.name(), WorkUnitTypeSuperClass.CREATION.name()
                     ,0));
-            type = project.getTypes().get(0);
+            type = warmUp.getDataModel().getType(0);
         }
 
         @Test
         public void testName() {
-            assertNull(type.getName(), null );
+            assertEquals("Jmeno1", type.getName() );
         }
 
         @Test
         public void testIdName() {
-        assertEquals("", lists.getTypeObservable().get(1));
+        assertEquals("0_Jmeno1", lists.getTypeObservable().get(1).getName());
     }
 
 

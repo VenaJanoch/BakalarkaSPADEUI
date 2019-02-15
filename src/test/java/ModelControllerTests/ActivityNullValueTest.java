@@ -4,6 +4,7 @@ import SPADEPAC.Activity;
 import SPADEPAC.Artifact;
 import XML.ProcessGenerator;
 import model.DataManipulator;
+import model.DataModel;
 import model.IdentificatorCreater;
 import org.junit.Before;
 import org.junit.Test;
@@ -25,19 +26,17 @@ public class ActivityNullValueTest {
     @Before
     public void setUp() throws Exception {
 
-        IdentificatorCreater idCreator = new IdentificatorCreater();
-        ProcessGenerator processGenerator = new ProcessGenerator();
-        DataManipulator data = new DataManipulator(processGenerator, idCreator);
         this.lists = new SegmentLists();
 
         date = LocalDate.of(2018, 10, 10);
 
-        data.createNewActivity();
+        WarmUp warmUp = new WarmUp();
+        DataModel dataModel = warmUp.getDataModel();
 
-        data.addDataToActivity(null, null, 0, 0, new ArrayList<>(), 0);
-
-        activity = data.getProject().getActivities().get(0);
-    }
+        dataModel.getSaveDataModel().createNewActivity(2);
+        activity = dataModel.getActivity(2);
+        dataModel.addDataToActivity(activity ,null, null, 0, 0, new ArrayList<>());
+        }
 
     @Test
     public void testName() {

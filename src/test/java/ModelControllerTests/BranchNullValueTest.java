@@ -1,19 +1,10 @@
 package ModelControllerTests;
 
-import Controllers.ApplicationController;
-import Controllers.FormController;
-import Controllers.FormDataController;
+import controllers.FormController;
+import controllers.FormDataController;
 import SPADEPAC.Branch;
-import SPADEPAC.Criterion;
-import SPADEPAC.Project;
-import XML.ProcessGenerator;
-import model.DataManipulator;
-import model.FileManipulator;
-import model.IdentificatorCreater;
 import org.junit.Before;
 import org.junit.Test;
-import services.Alerts;
-import services.DeleteControl;
 import services.SegmentLists;
 import services.SegmentType;
 import tables.BranchTable;
@@ -30,12 +21,12 @@ public class BranchNullValueTest {
         public void setUp() throws Exception {
 
             WarmUp warmUp = new WarmUp();
+            lists = warmUp.getLists();
             FormDataController formDataController = warmUp.getFormDataController();
-            Project project = warmUp.getData().getProject();
             FormController formController = warmUp.getFormController();
             formController.createTableItem(SegmentType.Branch);
             formDataController.saveDataFromBranch("", new BranchTable("","YES", true, 0));
-            branch = project.getBranches().get(0);
+            branch = warmUp.getDataModel().getBranch(0);
         }
 
         @Test
@@ -45,7 +36,7 @@ public class BranchNullValueTest {
 
         @Test
         public void testIdName() {
-        assertEquals("", lists.getCriterionObservable().get(0));
+        assertEquals("", lists.getCriterionObservable().get(0).getName());
     }
 
 

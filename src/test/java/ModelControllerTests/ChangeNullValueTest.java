@@ -4,6 +4,7 @@ import SPADEPAC.Activity;
 import SPADEPAC.Change;
 import XML.ProcessGenerator;
 import model.DataManipulator;
+import model.DataModel;
 import model.IdentificatorCreater;
 import org.junit.Before;
 import org.junit.Test;
@@ -23,18 +24,17 @@ public class ChangeNullValueTest {
     @Before
     public void setUp() throws Exception {
 
-        IdentificatorCreater idCreator = new IdentificatorCreater();
-        ProcessGenerator processGenerator = new ProcessGenerator();
-        DataManipulator data = new DataManipulator(processGenerator, idCreator);
         this.lists = new SegmentLists();
 
         date = LocalDate.of(2018, 10, 10);
 
-        data.createNewChance();
+        WarmUp warmUp = new WarmUp();
+        DataModel dataModel = warmUp.getDataModel();
 
-        data.addDataToChange(null, null, 0, 0, false, 0);
+        dataModel.getSaveDataModel().createNewChance(2);
+        change = dataModel.getChange(2);
+        dataModel.addDataToChange(change,null, null, 0, 0, false);
 
-        change = data.getProject().getChanges().get(0);
     }
 
     @Test

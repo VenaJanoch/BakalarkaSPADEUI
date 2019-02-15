@@ -1,20 +1,9 @@
 package ModelControllerTests;
 
-import Controllers.ApplicationController;
-import Controllers.FormController;
-import Controllers.FormDataController;
-import SPADEPAC.Project;
 import SPADEPAC.WorkUnit;
-import XML.ProcessGenerator;
-import model.DataManipulator;
-import model.FileManipulator;
-import model.IdentificatorCreater;
 import org.junit.Before;
 import org.junit.Test;
-import services.Alerts;
-import services.DeleteControl;
 import services.SegmentLists;
-import services.SegmentType;
 
 import static org.junit.Assert.*;
 
@@ -27,14 +16,11 @@ public class WorkUnitNullValueTest {
     public void setUp() throws Exception {
 
         WarmUp warmUp = new WarmUp();
-        FormDataController formDataController = warmUp.getFormDataController();
-        Project project = warmUp.getData().getProject();
-        FormController formController = warmUp.getFormController();
-
-        warmUp.getData().createNewWorkUnit();
-        warmUp.getData().addDataToWorkUnit(null,null, null, 0, 0, 0, 0,
+        warmUp.getDataModel().getSaveDataModel().createNewWorkUnit(2);
+        workUnit = warmUp.getDataModel().getWorkUnit(2);
+        warmUp.getDataModel().addDataToWorkUnit(workUnit, null,null, null, 0, 0, 0, 0,
                 0, 0, 0, 0, 0, -1, true, 0, false);
-        workUnit = project.getWorkUnits().get(0);
+
     }
 
     @Test

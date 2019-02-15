@@ -4,6 +4,7 @@ import SPADEPAC.Change;
 import SPADEPAC.Configuration;
 import XML.ProcessGenerator;
 import model.DataManipulator;
+import model.DataModel;
 import model.IdentificatorCreater;
 import org.junit.Before;
 import org.junit.Test;
@@ -25,19 +26,17 @@ public class ConfigurationNullValueTest {
     @Before
     public void setUp() throws Exception {
 
-        IdentificatorCreater idCreator = new IdentificatorCreater();
-        ProcessGenerator processGenerator = new ProcessGenerator();
-        DataManipulator data = new DataManipulator(processGenerator, idCreator);
         this.lists = new SegmentLists();
 
         date = LocalDate.of(2018, 10, 10);
 
-        data.createNewConfiguration();
+        WarmUp warmUp = new WarmUp();
+        DataModel dataModel = warmUp.getDataModel();
 
-        data.addDataToConfiguration(null, null, false,0,new ArrayList<>(), new ArrayList<>(),
-                new ArrayList(), new ArrayList(), 0);
-
-        configuration = data.getProject().getConfiguration().get(0);
+        dataModel.getSaveDataModel().createNewConfiguration(2);
+        configuration = dataModel.getConfiguration(2);
+        dataModel.addDataToConfiguration(configuration, null, null, false,0,new ArrayList<>(), new ArrayList<>(),
+                new ArrayList(), new ArrayList());
     }
 
     @Test

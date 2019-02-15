@@ -1,22 +1,9 @@
 package ModelControllerTests;
 
-import Controllers.ApplicationController;
-import Controllers.FormController;
-import Controllers.FormDataController;
-import SPADEPAC.Configuration;
+import controllers.FormDataController;
 import SPADEPAC.Project;
-import SPADEPAC.WorkUnitStatusClass;
-import SPADEPAC.WorkUnitStatusSuperClass;
-import XML.ProcessGenerator;
-import model.DataManipulator;
-import model.FileManipulator;
-import model.IdentificatorCreater;
 import org.junit.Before;
 import org.junit.Test;
-import services.Alerts;
-import services.DeleteControl;
-import services.SegmentLists;
-import services.SegmentType;
 
 import java.time.LocalDate;
 
@@ -34,7 +21,7 @@ public class ProjectNullValueTest {
 
         WarmUp warmUp = new WarmUp();
         FormDataController formDataController = warmUp.getFormDataController();
-        project = warmUp.getData().getProject();
+        project = warmUp.getDataModel().getProject();
 
         date = LocalDate.of(2018, 10, 10);
         formDataController.saveDataFromProjectFrom("", null,null ,"");

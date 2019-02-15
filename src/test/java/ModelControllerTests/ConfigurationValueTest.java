@@ -3,6 +3,7 @@ package ModelControllerTests;
 import SPADEPAC.Configuration;
 import XML.ProcessGenerator;
 import model.DataManipulator;
+import model.DataModel;
 import model.IdentificatorCreater;
 import org.junit.Before;
 import org.junit.Test;
@@ -25,21 +26,30 @@ public class ConfigurationValueTest {
     @Before
     public void setUp() throws Exception {
 
-        IdentificatorCreater idCreator = new IdentificatorCreater();
-        ProcessGenerator processGenerator = new ProcessGenerator();
-        DataManipulator data = new DataManipulator(processGenerator, idCreator);
         this.lists = new SegmentLists();
 
-        data.createNewConfiguration();
+
+        WarmUp warmUp = new WarmUp();
+        DataModel dataModel = warmUp.getDataModel();
+
         itemSet = new ArrayList();
         itemSet.add(1);
         itemSet.add(2);
         itemSet.add(3);
         date = LocalDate.of(2018, 10, 10);
-        data.addDataToConfiguration("Jmeno1", date, true,2 ,itemSet, itemSet,
-                itemSet, itemSet, 0);
-        configuration = data.getProject().getConfiguration().get(0);
+
+        dataModel.getSaveDataModel().createNewConfiguration(2);
+        configuration = dataModel.getConfiguration(2);
+        dataModel.addDataToConfiguration(configuration,"Jmeno1", date, true,2 ,itemSet, itemSet,
+                itemSet, itemSet);
+
     }
+
+    @Test
+    public void testId() {
+        assertSame(2,configuration.getId());
+    }
+
 
     @Test
     public void testName() {

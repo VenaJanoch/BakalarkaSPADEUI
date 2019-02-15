@@ -3,6 +3,7 @@ package ModelControllerTests;
 import SPADEPAC.Phase;
 import XML.ProcessGenerator;
 import model.DataManipulator;
+import model.DataModel;
 import model.IdentificatorCreater;
 import org.junit.Before;
 import org.junit.Test;
@@ -25,20 +26,25 @@ public class PhaseValueTest {
     @Before
     public void setUp() throws Exception {
 
-        IdentificatorCreater idCreator = new IdentificatorCreater();
-        ProcessGenerator processGenerator = new ProcessGenerator();
-        DataManipulator data = new DataManipulator(processGenerator, idCreator);
         this.lists = new SegmentLists();
+        WarmUp warmUp = new WarmUp();
+        DataModel dataModel = warmUp.getDataModel();
 
         itemSet.add(1);
         itemSet.add(2);
         itemSet.add(3);
         date = LocalDate.of(2018, 10, 10);
 
-        data.createNewPhase();
-        data.addDataToPhase("Jmeno", date,"desc", 2,3,67, 98, itemSet, 0);
+        dataModel.getSaveDataModel().createNewPhase(2);
+        phase = dataModel.getPhase(2);
+        dataModel.addDataToPhase(phase, "Jmeno", date,"desc", 2,3,67, 98, itemSet);
 
-        phase = data.getProject().getPhases().get(0);
+
+    }
+
+    @Test
+    public void testId() {
+        assertSame(2, phase.getId());
     }
 
     @Test

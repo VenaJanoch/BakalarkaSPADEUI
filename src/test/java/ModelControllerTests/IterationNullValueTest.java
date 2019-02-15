@@ -4,6 +4,7 @@ import SPADEPAC.Activity;
 import SPADEPAC.Iteration;
 import XML.ProcessGenerator;
 import model.DataManipulator;
+import model.DataModel;
 import model.IdentificatorCreater;
 import org.junit.Before;
 import org.junit.Test;
@@ -26,19 +27,16 @@ public class IterationNullValueTest {
     @Before
     public void setUp() throws Exception {
 
-        IdentificatorCreater idCreator = new IdentificatorCreater();
-        ProcessGenerator processGenerator = new ProcessGenerator();
-        DataManipulator data = new DataManipulator(processGenerator, idCreator);
+        WarmUp warmUp = new WarmUp();
+        DataModel dataModel = warmUp.getDataModel();
         this.lists = new SegmentLists();
 
         date = LocalDate.of(2018, 10, 10);
 
-        data.createNewIteration();
-
-        data.addDataToIteration(null, null, null, null, 0,0, 0, new ArrayList<>(),0);
-
-        iteration = data.getProject().getIterations().get(0);
-    }
+        dataModel.getSaveDataModel().createNewIteration(2);
+        iteration = dataModel.getIteration(2);
+        dataModel.addDataToIteration(iteration, null, null, null, null, 0,0, 0, new ArrayList<>());
+        }
 
     @Test
     public void testName() {

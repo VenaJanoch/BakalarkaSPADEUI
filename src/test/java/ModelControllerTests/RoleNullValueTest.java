@@ -1,18 +1,10 @@
 package ModelControllerTests;
 
-import Controllers.ApplicationController;
-import Controllers.FormController;
-import Controllers.FormDataController;
-import SPADEPAC.Project;
+import controllers.FormController;
+import controllers.FormDataController;
 import SPADEPAC.Role;
-import XML.ProcessGenerator;
-import model.DataManipulator;
-import model.FileManipulator;
-import model.IdentificatorCreater;
 import org.junit.Before;
 import org.junit.Test;
-import services.Alerts;
-import services.DeleteControl;
 import services.SegmentLists;
 import services.SegmentType;
 import tables.RoleTable;
@@ -28,14 +20,14 @@ public class RoleNullValueTest {
         public void setUp() throws Exception {
 
             WarmUp warmUp = new WarmUp();
+            lists = warmUp.getLists();
             FormDataController formDataController = warmUp.getFormDataController();
-            Project project = warmUp.getData().getProject();
             FormController formController = warmUp.getFormController();
 
 
             formController.createTableItem(SegmentType.Role);
             formDataController.saveDataFromRoleForm("",0, new RoleTable("", "","", 0));
-            role = project.getRoles().get(0);
+            role = warmUp.getDataModel().getRole(0);
         }
 
         @Test
@@ -45,6 +37,6 @@ public class RoleNullValueTest {
 
         @Test
         public void testIdName() {
-        assertEquals("", lists.getRoleTypeObservable().get(0));
+        assertEquals("", lists.getRoleTypeObservable().get(0).getName());
     }
 }

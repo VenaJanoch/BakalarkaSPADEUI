@@ -4,6 +4,7 @@ import SPADEPAC.Artifact;
 import SPADEPAC.ArtifactClass;
 import XML.ProcessGenerator;
 import model.DataManipulator;
+import model.DataModel;
 import model.IdentificatorCreater;
 import org.junit.Before;
 import org.junit.Test;
@@ -22,19 +23,21 @@ public class ArtefaktValueTest {
     @Before
     public void setUp() throws Exception {
 
-        IdentificatorCreater idCreator = new IdentificatorCreater();
-        ProcessGenerator processGenerator = new ProcessGenerator();
-        DataManipulator data = new DataManipulator(processGenerator, idCreator);
         this.lists = new SegmentLists();
 
         date = LocalDate.of(2018, 10, 10);
 
-        data.createNewArtifact();
-        data.addDataToArtifact("Jmeno", "desc", date, false, 67, 98, 7,
-                0, 0);
+        WarmUp warmUp = new WarmUp();
+        DataModel dataModel = warmUp.getDataModel();
 
-        artifact = data.getProject().getArtifacts().get(0);
+        dataModel.getSaveDataModel().createNewArtifact(2);
+        artifact = dataModel.getArtifact(2);
+        dataModel.addDataToArtifact(artifact,"Jmeno", "desc", date, false, 67, 98, 7,
+                0);
     }
+
+    @Test
+    public void testId(){assertSame(2, artifact.getId());}
 
     @Test
     public void testName() {

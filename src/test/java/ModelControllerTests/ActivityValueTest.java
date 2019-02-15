@@ -5,6 +5,7 @@ import SPADEPAC.Artifact;
 import SPADEPAC.ArtifactClass;
 import XML.ProcessGenerator;
 import model.DataManipulator;
+import model.DataModel;
 import model.IdentificatorCreater;
 import org.junit.Before;
 import org.junit.Test;
@@ -26,18 +27,17 @@ public class ActivityValueTest {
     @Before
     public void setUp() throws Exception {
 
-        IdentificatorCreater idCreator = new IdentificatorCreater();
-        ProcessGenerator processGenerator = new ProcessGenerator();
-        DataManipulator data = new DataManipulator(processGenerator, idCreator);
         this.lists = new SegmentLists();
 
         itemSet.add(1);
         itemSet.add(2);
         itemSet.add(3);
-        data.createNewActivity();
-        data.addDataToActivity("Jmeno", "desc", 67, 98, itemSet, 0);
+        WarmUp warmUp = new WarmUp();
+        DataModel dataModel = warmUp.getDataModel();
 
-        activity = data.getProject().getActivities().get(0);
+        dataModel.getSaveDataModel().createNewActivity(2);
+        activity = dataModel.getActivity(2);
+        dataModel.addDataToActivity(activity,"Jmeno", "desc", 67, 98, itemSet);
     }
 
     @Test

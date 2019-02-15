@@ -1,17 +1,10 @@
 package ModelControllerTests;
 
-import Controllers.ApplicationController;
-import Controllers.FormController;
-import Controllers.FormDataController;
+import controllers.FormController;
+import controllers.FormDataController;
 import SPADEPAC.Project;
-import XML.ProcessGenerator;
-import model.DataManipulator;
-import model.FileManipulator;
-import model.IdentificatorCreater;
 import org.junit.Before;
 import org.junit.Test;
-import services.Alerts;
-import services.DeleteControl;
 import services.SegmentLists;
 
 import java.time.LocalDate;
@@ -30,7 +23,7 @@ public class ProjectValueTest {
 
         WarmUp warmUp = new WarmUp();
         FormDataController formDataController = warmUp.getFormDataController();
-        Project project = warmUp.getData().getProject();
+        project = warmUp.getDataModel().getProject();
         FormController formController = warmUp.getFormController();
 
         date = LocalDate.of(2018, 10, 10);

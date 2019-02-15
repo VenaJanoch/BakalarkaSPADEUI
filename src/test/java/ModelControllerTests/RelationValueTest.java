@@ -1,20 +1,12 @@
 package ModelControllerTests;
 
-import Controllers.ApplicationController;
-import Controllers.FormController;
-import Controllers.FormDataController;
-import SPADEPAC.Project;
+import controllers.FormController;
+import controllers.FormDataController;
 import SPADEPAC.Relation;
 import SPADEPAC.WorkUnitRelationClass;
 import SPADEPAC.WorkUnitRelationSuperClass;
-import XML.ProcessGenerator;
-import model.DataManipulator;
-import model.FileManipulator;
-import model.IdentificatorCreater;
 import org.junit.Before;
 import org.junit.Test;
-import services.Alerts;
-import services.DeleteControl;
 import services.SegmentLists;
 import services.SegmentType;
 import tables.ClassTable;
@@ -30,14 +22,14 @@ public class RelationValueTest {
     public void setUp() throws Exception {
 
         WarmUp warmUp = new WarmUp();
+        lists = warmUp.getLists();
         FormDataController formDataController = warmUp.getFormDataController();
-        Project project = warmUp.getData().getProject();
         FormController formController = warmUp.getFormController();
 
         formController.createTableItem(SegmentType.Relation);
         formDataController.saveDataFromRelationForm("Jmeno1", new ClassTable("0_Jmeno1", WorkUnitRelationClass.CHILD.name(),
                 WorkUnitRelationSuperClass.CAUSAL.name(),0));
-        relation = project.getRelation().get(0);
+        relation = warmUp.getDataModel().getRelation(0);
     }
 
     @Test
@@ -47,7 +39,7 @@ public class RelationValueTest {
 
     @Test
     public void testIdName() {
-        assertEquals("", lists.getRelationTypeObservable().get(0));
+        assertEquals("0_Jmeno1", lists.getRelationTypeObservable().get(1).getName());
     }
 
 
