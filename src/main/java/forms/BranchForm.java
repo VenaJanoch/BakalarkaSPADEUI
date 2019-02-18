@@ -138,7 +138,7 @@ public class BranchForm extends TableBasicForm implements ISegmentTableForm {
             }
             else{
                 ArrayList<BasicTable> list = new ArrayList<>(selection);
-                deleteFormController.deleteBranch(list, getTableTV());
+                deleteFormController.deleteBranchDialog(list, getTableTV());
             }
         }
 

@@ -126,7 +126,7 @@ public class CriterionForm extends TableBasicForm implements ISegmentTableForm {
 			}
 			else{
 				ArrayList<BasicTable> list = new ArrayList<>(selection);
-				deleteFormController.deleteCriterion(list, getTableTV());
+				deleteFormController.deleteCriterionWithDialog(list, getTableTV());
 			}
 		}
 	}

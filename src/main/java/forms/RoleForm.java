@@ -156,7 +156,7 @@ public class RoleForm extends Table2BasicForm implements ISegmentTableForm {
 			}
 			else{
 				ArrayList<BasicTable> list = new ArrayList<>(selection);
-				deleteFormController.deleteRole(list, tableTV);
+				deleteFormController.deleteRoleWithDialog(list, tableTV);
 			}
 		}
 

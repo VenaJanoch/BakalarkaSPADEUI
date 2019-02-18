@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF8" standalone="yes"?>
+<Project name="TestovaciProjekt" description="Projekt pro testovani" endDate="2018-12-11+01:00" startDate="2018-12-12+01:00" xsi:noNamespaceSchemaLocation="SPADE2.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <workUnits name="u1" description="description" estimatedTime="1.0" exist="true">
+        <priorityIndex>-1</priorityIndex>
+        <severityIndex>-1</severityIndex>
+        <category>fd</category>
+        <typeIndex>-1</typeIndex>
+        <resolutionIndex>-1</resolutionIndex>
+        <statusIndex>-1</statusIndex>
+        <assigneeIndex>-1</assigneeIndex>
+        <authorIndex>-1</authorIndex>
+        <coordinates XCoordinate="0" YCoordinate="0"/>
+    </workUnits>
+    <workUnits estimatedTime="-1.0" exist="true">
+        <priorityIndex>-1</priorityIndex>
+        <severityIndex>-1</severityIndex>
+        <typeIndex>-1</typeIndex>
+        <resolutionIndex>-1</resolutionIndex>
+        <statusIndex>-1</statusIndex>
+        <assigneeIndex>-1</assigneeIndex>
+        <authorIndex>-1</authorIndex>
+        <coordinates XCoordinate="141" YCoordinate="127"/>
+    </workUnits>
+    <workUnits name="w4" estimatedTime="-1.0" exist="true">
+        <priorityIndex>-1</priorityIndex>
+        <severityIndex>-1</severityIndex>
+        <typeIndex>-1</typeIndex>
+        <resolutionIndex>-1</resolutionIndex>
+        <statusIndex>-1</statusIndex>
+        <assigneeIndex>-1</assigneeIndex>
+        <authorIndex>-1</authorIndex>
+        <coordinates XCoordinate="0" YCoordinate="0"/>
+    </workUnits>
+    <workUnits name="wg" description="fd" estimatedTime="-1.0" exist="false">
+        <priorityIndex>1</priorityIndex>
+        <severityIndex>0</severityIndex>
+        <typeIndex>1</typeIndex>
+        <resolutionIndex>0</resolutionIndex>
+        <statusIndex>0</statusIndex>
+        <assigneeIndex>0</assigneeIndex>
+        <authorIndex>1</authorIndex>
+        <coordinates XCoordinate="12" YCoordinate="101"/>
+    </workUnits>
+    <workUnits estimatedTime="-1.0" exist="true">
+        <priorityIndex>-1</priorityIndex>
+        <severityIndex>-1</severityIndex>
+        <typeIndex>-1</typeIndex>
+        <resolutionIndex>-1</resolutionIndex>
+        <statusIndex>-1</statusIndex>
+        <assigneeIndex>-1</assigneeIndex>
+        <authorIndex>-1</authorIndex>
+        <coordinates XCoordinate="262" YCoordinate="135"/>
+    </workUnits>
+    <workUnits name="fdq" estimatedTime="-1.0" exist="true">
+        <priorityIndex>-1</priorityIndex>
+        <severityIndex>-1</severityIndex>
+        <typeIndex>-1</typeIndex>
+        <resolutionIndex>-1</resolutionIndex>
+        <statusIndex>-1</statusIndex>
+        <assigneeIndex>-1</assigneeIndex>
+        <authorIndex>-1</authorIndex>
+        <coordinates XCoordinate="52" YCoordinate="141"/>
+    </workUnits>
+    <workUnits name="fda`" description="fda" estimatedTime="-1.0" exist="true">
+        <priorityIndex>-1</priorityIndex>
+        <severityIndex>-1</severityIndex>
+        <typeIndex>-1</typeIndex>
+        <resolutionIndex>-1</resolutionIndex>
+        <statusIndex>-1</statusIndex>
+        <assigneeIndex>-1</assigneeIndex>
+        <authorIndex>-1</authorIndex>
+        <coordinates XCoordinate="338" YCoordinate="136"/>
+    </workUnits>
+    <workUnits name="36" description="32" estimatedTime="-1.0" exist="true">
+        <priorityIndex>-1</priorityIndex>
+        <severityIndex>-1</severityIndex>
+        <typeIndex>-1</typeIndex>
+        <resolutionIndex>-1</resolutionIndex>
+        <statusIndex>-1</statusIndex>
+        <assigneeIndex>-1</assigneeIndex>
+        <authorIndex>-1</authorIndex>
+        <coordinates XCoordinate="669" YCoordinate="412"/>
+    </workUnits>
+    <workUnits name="35" description="36" estimatedTime="-1.0" exist="true">
+        <priorityIndex>-1</priorityIndex>
+        <severityIndex>-1</severityIndex>
+        <typeIndex>-1</typeIndex>
+        <resolutionIndex>-1</resolutionIndex>
+        <statusIndex>-1</statusIndex>
+        <assigneeIndex>-1</assigneeIndex>
+        <authorIndex>-1</authorIndex>
+        <coordinates XCoordinate="482" YCoordinate="410"/>
+    </workUnits>
+    <workUnits name="w34" description="3536" estimatedTime="-1.0" exist="true">
+        <priorityIndex>-1</priorityIndex>
+        <severityIndex>-1</severityIndex>
+        <typeIndex>-1</typeIndex>
+        <resolutionIndex>-1</resolutionIndex>
+        <statusIndex>-1</statusIndex>
+        <assigneeIndex>-1</assigneeIndex>
+        <authorIndex>-1</authorIndex>
+        <coordinates XCoordinate="283" YCoordinate="400"/>
+    </workUnits>
+    <workUnits name="w33" description="34" estimatedTime="-1.0" exist="true">
+        <priorityIndex>-1</priorityIndex>
+        <severityIndex>-1</severityIndex>
+        <typeIndex>-1</typeIndex>
+        <resolutionIndex>-1</resolutionIndex>
+        <statusIndex>-1</statusIndex>
+        <assigneeIndex>-1</assigneeIndex>
+        <authorIndex>-1</authorIndex>
+        <coordinates XCoordinate="92" YCoordinate="403"/>
+    </workUnits>
+    <workUnitIndexs>10</workUnitIndexs>
+    <workUnitIndexs>9</workUnitIndexs>
+    <workUnitIndexs>8</workUnitIndexs>
+    <workUnitIndexs>7</workUnitIndexs>
+    <phases endDate="2018-12-19+01:00" name="phase1" description="description">
+        <configuration>0</configuration>
+        <workUnits>0</workUnits>
+        <workUnits>1</workUnits>
+        <milestoneIndex>-1</milestoneIndex>
+        <coordinates XCoordinate="120" YCoordinate="196"/>
+    </phases>
+    <phases endDate="2018-12-14+01:00" name="phase2" description="df">
+        <configuration>-1</configuration>
+        <workUnits>2</workUnits>
+        <milestoneIndex>1</milestoneIndex>
+        <coordinates XCoordinate="99" YCoordinate="117"/>
+    </phases>
+    <iterations name="it2" description="fd" endDate="2018-12-07+01:00" startDate="2018-12-07+01:00">
+        <configuration>1</configuration>
+        <workUnits>3</workUnits>
+        <workUnits>4</workUnits>
+        <coordinates XCoordinate="382" YCoordinate="132"/>
+    </iterations>
+    <activities name="ac2" description="fe">
+        <workUnits>5</workUnits>
+        <workUnits>6</workUnits>
+        <coordinates XCoordinate="0" YCoordinate="0"/>
+    </activities>
+    <roles description="fdf" name="r1">
+        <type>-1</type>
+    </roles>
+    <roles description="fdf" name="r2">
+        <type>1</type>
+    </roles>
+    <branches name="br" isMain="false"/>
+    <branches name="br1" isMain="false"/>
+    <changes name="ch1" descriptoin="d" exist="true">
+        <artifactIndex>1</artifactIndex>
+        <coordinates XCoordinate="5" YCoordinate="76"/>
+    </changes>
+    <changes name="ch2" descriptoin="des" exist="false">
+        <artifactIndex>0</artifactIndex>
+        <coordinates XCoordinate="0" YCoordinate="0"/>
+    </changes>
+    <artifacts name="art1" descriptoin="ds" created="2018-12-04T00:00:00.000+01:00" exist="true">
+        <authorIndex>-1</authorIndex>
+        <mimeType>FILE</mimeType>
+        <coordinates XCoordinate="185" YCoordinate="60"/>
+        <changeIndex>1</changeIndex>
+    </artifacts>
+    <artifacts name="ar2" descriptoin="dd" created="2018-12-19T00:00:00.000+01:00" exist="false">
+        <authorIndex>-1</authorIndex>
+        <mimeType>FILE</mimeType>
+        <coordinates XCoordinate="187" YCoordinate="159"/>
+        <changeIndex>0</changeIndex>
+    </artifacts>
+    <milestones name="ml1">
+        <criteriaIndexs>0</criteriaIndexs>
+        <criteriaIndexs>1</criteriaIndexs>
+    </milestones>
+    <milestones name="ml2">
+        <criteriaIndexs>1</criteriaIndexs>
+        <criteriaIndexs>2</criteriaIndexs>
+    </milestones>
+    <criterions name="cr1" description="cr1d"/>
+    <criterions name="cr2" description="cr2d"/>
+    <cpr name="CPR1">
+        <personIndex>-1</personIndex>
+        <configurationIndex>-1</configurationIndex>
+    </cpr>
+    <cpr name="CPR2">
+        <personIndex>0</personIndex>
+        <configurationIndex>-1</configurationIndex>
+    </cpr>
+    <configuration name="ds" create="2018-12-04+01:00" isRelease="true">
+        <authorIndex>-1</authorIndex>
+        <artifactsIndexs>1</artifactsIndexs>
+        <artifactsIndexs>0</artifactsIndexs>
+        <changesIndexs>1</changesIndexs>
+        <changesIndexs>0</changesIndexs>
+    </configuration>
+    <configuration name="dsd" isRelease="true">
+        <authorIndex>-1</authorIndex>
+    </configuration>
+    <configuration/>
+    <links ChangeIndex="0" ArtifactIndex="1" Type="Config"/>
+    <links ChangeIndex="1" ArtifactIndex="0" Type="Config"/>
+    <links leftUnitIndex="0" rightUnitIndex="1" relationIndex="1" Type="WorkUnit"/>
+    <links leftUnitIndex="3" rightUnitIndex="4" Type="WorkUnit"/>
+    <links leftUnitIndex="5" rightUnitIndex="6" relationIndex="1" Type="WorkUnit"/>
+    <links leftUnitIndex="10" rightUnitIndex="9" relationIndex="1" Type="WorkUnit"/>
+    <links leftUnitIndex="9" rightUnitIndex="8" relationIndex="1" Type="WorkUnit"/>
+    <links leftUnitIndex="9" rightUnitIndex="7" relationIndex="2" Type="WorkUnit"/>
+    <links leftUnitIndex="7" rightUnitIndex="10" relationIndex="1" Type="WorkUnit"/>
+    <priority name="p1" priorityClass="LOWEST" prioritySuperClass="LOW"/>
+    <priority name="p2" priorityClass="NORMAL" prioritySuperClass="NORMAL"/>
+    <severity name="s1" severityClass="CRITICAL" severitySuperClass="MINOR"/>
+    <severity name="s2" severityClass="MAJOR" severitySuperClass="MINOR"/>
+    <status name="st1" statusClass="UNASSIGNED" statusSuperClass="UNASSIGNED"/>
+    <status name="st2" statusClass="UNASSIGNED" statusSuperClass="CLOSED"/>
+    <relation name="r1" relationClass="COPIED_FROM" relationSuperClass="SIMILARITY"/>
+    <relation name="r3" relationClass="PRECEDES" relationSuperClass="TEMPORAL"/>
+    <resolution name="resolution1" resolutionClass="UNASSIGNED" resolutionSuperClass="UNASSIGNED"/>
+    <resolution name="resolution2" resolutionClass="WONT_FIX" resolutionSuperClass="FINISHED"/>
+    <roleType name="RoleType1" RoleClass="UNASSIGNED" RoleSuperClass="UNASSIGNED"/>
+    <roleType name="RoleType2" RoleClass="STAKEHOLDER" RoleSuperClass="STAKEHOLDER"/>
+    <types name="fda" typeClass="UNASSIGNED" typeSuperClass="UNASSIGNED"/>
+    <types name="fda" typeClass="UNASSIGNED" typeSuperClass="UNASSIGNED"/>
+</Project>

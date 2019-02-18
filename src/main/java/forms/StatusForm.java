@@ -110,7 +110,7 @@ public class StatusForm extends TableClassBasicForm implements ISegmentTableForm
 			}
 			else{
 				ArrayList<BasicTable> list = new ArrayList<>(selection);
-				deleteFormController.deleteStatus(list, tableTV);
+				deleteFormController.deleteStatusWithDialog(list, tableTV);
 			}
 		}
 

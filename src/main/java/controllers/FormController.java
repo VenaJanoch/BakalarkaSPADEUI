@@ -182,7 +182,7 @@ public class FormController {
     private int createNewChangeForm() {
 
         int index = createNewChangeFormWithoutManipulator();
-        saveDataModel.createNewChance(identificatorCreater.getChangeId(index));
+        saveDataModel.createNewChange(identificatorCreater.getChangeId(index));
 
         return  index;
     }

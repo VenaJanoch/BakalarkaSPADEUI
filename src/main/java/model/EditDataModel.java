@@ -247,6 +247,27 @@ public class EditDataModel implements IEditDataModel {
                         break;
                     default:
                 }
+                break;
+            case Iteration:
+                switch (elementType ) {
+                    case Configuration:
+                        for (Iteration segment : project.getIterations()) {
+
+                            int type = segment.getConfiguration();
+                            int configurationId = dataModel.getConfigurationId(type);
+                            for(int deleteId : elementIdList){
+                                int deleteIndexInProject = dataModel.getConfigurationIndexInProject(deleteId);
+                                if( configurationId == deleteId ){
+                                    segment.setConfiguration(-1);
+                                }else if(type > deleteIndexInProject ){
+                                    segment.setConfiguration(type - 1);
+                                }
+                            }
+                        }
+                        break;
+                    default:
+                }
+                break;
             case Configuration:
 
                 switch (elementType ) {
@@ -275,6 +296,7 @@ public class EditDataModel implements IEditDataModel {
                         for (Configuration segment : project.getConfiguration()) {
                             updateElementListFromSegment(elementIdList, segment.getBranchesIndexs());
                         }
+                        break;
                     default:
                 }
             default:

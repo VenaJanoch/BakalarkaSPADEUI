@@ -112,7 +112,7 @@ public class ResolutionForm extends TableClassBasicForm implements ISegmentTable
 			}
 			else{
 				ArrayList<BasicTable> list = new ArrayList<>(selection);
-				deleteFormController.deleteResolution(list, tableTV);
+				deleteFormController.deleteResolutionWithDialog(list, tableTV);
 			}
 		}
 

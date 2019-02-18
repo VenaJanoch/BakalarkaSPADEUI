@@ -44,6 +44,7 @@ public class FormFillController {
                               Map<Integer,CanvasItem> canvasItemList){
         this.formController = formController;
         this.forms = formController.getForms();
+        this.project = dataModel.getProject();
         this.dataModel = dataModel;
         this.dataManipulator = dataModel.getDataManipulator();
         this.canvasItemController = canvasItemController;
@@ -52,11 +53,12 @@ public class FormFillController {
         this.linkControl = linkControl;
         this.canvasItemList = canvasItemList;
         this.dataPreparer = dataPreparer;
-        this.project = dataModel.getProject();
+
     }
 
 
     public void createFormsFromData(){
+        this.project = dataModel.getProject();
         fillProjectForm();
         fillCriterionForm();
         fillMilestoneForm();

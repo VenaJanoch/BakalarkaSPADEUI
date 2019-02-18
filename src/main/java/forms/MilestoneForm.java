@@ -154,7 +154,7 @@ public class MilestoneForm extends Table2BasicForm implements ISegmentTableForm 
 			}
 			else{
 				ArrayList<BasicTable> list = new ArrayList<>(selection);
-				deleteFormController.deleteMilestone(list, getTableTV());
+				deleteFormController.deleteMilestoneWithDialog(list, getTableTV());
 			}
 		}
 

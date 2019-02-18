@@ -76,7 +76,7 @@ public class SaveDataModel implements ISaveDataModel {
         project.getConfiguration().add(configuration);
     }
 
-    public void createNewChance(int id) {
+    public void createNewChange(int id) {
         Change change = objF.createChange();
         change.setId(id);
         project.getChanges().add(change);

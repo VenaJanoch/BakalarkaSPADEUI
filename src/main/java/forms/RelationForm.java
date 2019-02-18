@@ -107,7 +107,7 @@ public class RelationForm extends TableClassBasicForm implements ISegmentTableFo
 			}
 			else{
 				ArrayList<BasicTable> list = new ArrayList<>(selection);
-				deleteFormController.deleteRelation(list, tableTV);
+				deleteFormController.deleteRelationWithDialog(list, tableTV);
 			}
 		}
 

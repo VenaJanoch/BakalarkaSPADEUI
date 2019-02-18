@@ -112,7 +112,7 @@ public class PriorityForm extends TableClassBasicForm implements ISegmentTableFo
 			}
 			else{
 				ArrayList<BasicTable> list = new ArrayList<>(selection);
-				deleteFormController.deletePriority(list, tableTV);
+				deleteFormController.deletePriorityWithDialog(list, tableTV);
 			}
 		}
 

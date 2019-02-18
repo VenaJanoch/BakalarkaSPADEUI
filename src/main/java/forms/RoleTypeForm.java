@@ -112,7 +112,7 @@ public class RoleTypeForm extends TableClassBasicForm implements ISegmentTableFo
 			}
 			else{
 				ArrayList<BasicTable> list = new ArrayList<>(selection);
-				deleteFormController.deleteRoleType(list, tableTV);
+				deleteFormController.deleteRoleTypeWithDialog(list, tableTV);
 				}
 		}
 

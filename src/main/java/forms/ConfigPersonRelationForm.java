@@ -135,7 +135,7 @@ public class ConfigPersonRelationForm extends TableBasicForm implements ISegment
 			}
 			else{
 				ArrayList<BasicTable> list = new ArrayList<>(selection);
-				deleteFormController.deleteCPR(list, getTableTV());
+				deleteFormController.deleteCPRWithDialog(list, getTableTV());
 			}
 		}
 

@@ -112,7 +112,7 @@ public class SeverityForm extends TableClassBasicForm implements ISegmentTableFo
 			}
 			else{
 				ArrayList<BasicTable> list = new ArrayList<>(selection);
-				deleteFormController.deleteSeverity(list, tableTV);
+				deleteFormController.deleteSeverityWithDialog(list, tableTV);
 			}
 		}
 

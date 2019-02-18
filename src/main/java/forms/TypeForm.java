@@ -113,7 +113,7 @@ public class TypeForm extends TableClassBasicForm implements ISegmentTableForm {
 			}
 			else{
 				ArrayList<BasicTable> list = new ArrayList<>(selection);
-				deleteFormController.deleteType(list, getTableTV());
+				deleteFormController.deleteTypeWithDialog(list, getTableTV());
 			}
 		}
 
