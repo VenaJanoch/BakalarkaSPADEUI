@@ -43,7 +43,6 @@ public class ConfigPersonRelationForm extends TableBasicForm implements ISegment
 	 */
 
 	private TableView<CPRTable> tableTV;
-	private ConfigPersonRelationControlPanel cprControlPanel;
 	private ConfigPersonRelationControlPanel editCPRControlPanel;
 	/**
 	 * Konstruktor třídy
@@ -55,13 +54,12 @@ public class ConfigPersonRelationForm extends TableBasicForm implements ISegment
 	public ConfigPersonRelationForm(FormController formController, IFormDataController formDataController, IEditFormController editFormController, IDeleteFormController deleteFormController, SegmentType type) {
 		super(formController, formDataController, editFormController, deleteFormController, type);
 
-		cprControlPanel = new ConfigPersonRelationControlPanel("Add", formDataController, editFormController, formController);
 		editCPRControlPanel = new ConfigPersonRelationControlPanel("Edit", formDataController, editFormController, formController);
 		editCPRControlPanel.createControlPanel();
 
 		setEventHandler();
 		createForm();
-		getSubmitButton().setOnAction(event -> setActionSubmitButton());
+		setActionSubmitButton();
 
 	}
 
@@ -72,27 +70,45 @@ public class ConfigPersonRelationForm extends TableBasicForm implements ISegment
 				@Override
 				public void handle(MouseEvent t) {
 					if(t.getClickCount() == 2) {
-						CPRTable cprTable = tableTV.getSelectionModel().getSelectedItems().get(0);
-						if (cprTable != null) {
-							editCPRControlPanel.showEditControlPanel(cprTable, tableTV);
-						}
+						showEditPanel();
 					}
 				}
 			};
 		}
 
 	@Override
-	public void setActionSubmitButton() {
-		close();
+	public void createForm() {
+
+		this.setCenter(getTable());
 	}
 
 	@Override
-	public void createForm() {
+	public void deleteSelected(KeyEvent event) {
 
-		getFormName().setText("Configuration Person Relation Form");
+		if (event.getCode() == KeyCode.DELETE) {
+			deleteItem(tableTV);
+		}
+	}
 
-		getMainPanel().setCenter(getTable());
-		getMainPanel().setBottom(createControlPane());
+	@Override
+	public GridPane createControlPane() {
+		return null;
+	}
+
+	private void showEditPanel(){
+		CPRTable cprTable = tableTV.getSelectionModel().getSelectedItems().get(0);
+		if (cprTable != null) {
+			editCPRControlPanel.showEditControlPanel(cprTable, tableTV);
+			formController.showEditControlPanel(editCPRControlPanel);
+		}
+	}
+
+
+	@Override
+	public void setActionSubmitButton() {
+		addButton.setOnAction(event -> addItem());
+		removeButton.setOnAction(event -> deleteItem(tableTV));
+		editButton.setOnAction(event -> showEditPanel());
 	}
 
 	@Override
@@ -125,47 +141,18 @@ public class ConfigPersonRelationForm extends TableBasicForm implements ISegment
 		return tableTV;
 	}
 
-	@Override
-	public void deleteSelected(KeyEvent event) {
-		ObservableList<CPRTable> selection = FXCollections
-				.observableArrayList(tableTV.getSelectionModel().getSelectedItems());
-		if (event.getCode() == KeyCode.DELETE) {
-			if (selection.size() == 0) {
-				Alerts.showNoItemsDeleteAlert();
-			}
-			else{
-				ArrayList<BasicTable> list = new ArrayList<>(selection);
-				deleteFormController.deleteCPRWithDialog(list, getTableTV());
-			}
-		}
-
-	}
-
-	@Override
-	public GridPane createControlPane() {
-
-		GridPane controlPane = cprControlPanel.createControlPanel();
-
-		add = cprControlPanel.getButton();
-		add.setOnAction(event -> addItem());
-
-		return controlPane;
-	}
-
-
 
 	@Override
 	public void addItem() {
 
-		String nameST = cprControlPanel.getName();
+		String nameST = ""; // cprControlPanel.getName();
 		int id = formController.createTableItem(SegmentType.ConfigPersonRelation);
-		int roleIndex = cprControlPanel.getRoleIndex();
+		int roleIndex = 0;// cprControlPanel.getRoleIndex();
 		CPRTable cpr = formDataController.prepareCPRToTable(nameST, roleIndex, id);
 
 		tableTV.getItems().add(cpr);
 		tableTV.sort();
 		formDataController.saveDataFromCPR(nameST, roleIndex, cpr);
-		cprControlPanel.clearPanel(tableTV);
 	}
 
 	/** Getrs and Setrs ***/

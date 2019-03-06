@@ -1,5 +1,6 @@
 package controllers;
 
+import controlPanels.CriterionControlPanel;
 import forms.ConfigurationTableForm;
 import graphics.CanvasItem;
 import interfaces.IEditDataModel;

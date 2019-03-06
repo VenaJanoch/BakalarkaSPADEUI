@@ -1,8 +1,6 @@
 package graphics;
 
-import controllers.CanvasController;
-import controllers.FormController;
-import controllers.WindowController;
+import controllers.*;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -31,6 +29,7 @@ public class DragAndDropPanel extends BorderPane {
 	private FormController formController;
 	private WindowController windowController;
 	private CanvasController canvasController;
+	private SelectItemController selectItemController;
 
 	/**
 	 * Konstruktor třídy
@@ -38,19 +37,20 @@ public class DragAndDropPanel extends BorderPane {
 	 *
 	 */
 	
-	public DragAndDropPanel(FormController formController, WindowController windowController, CanvasController canvasController) {
+	public DragAndDropPanel(FormController formController, WindowController windowController, CanvasController canvasController,
+							DrawerPanelController drawerPanelController, SelectItemController selectItemController) {
 
 		super();
 		this.formController = formController;
 		this.windowController = windowController;
 		this.canvasController = canvasController;
-
+		this.selectItemController = selectItemController;
 		this.setPrefWidth(Constans.width);
 		this.buttonBox = new HBox(5);
 		this.setPadding(new Insets(10));
 		this.setBackground(new Background(new BackgroundFill(Color.BROWN, CornerRadii.EMPTY, Insets.EMPTY)));
 		this.setId("panelTable");
-		items = new DragAndDropItemPanel(canvasController, Constans.projectDragTextIndexs);
+		items = new DragAndDropItemPanel(canvasController, Constans.projectDragTextIndexs, drawerPanelController, selectItemController);
 		this.setAlignment(items, Pos.BOTTOM_LEFT);
 
 		addButtons = new Button[Constans.addButtonCount];

@@ -1,5 +1,6 @@
 package controllers;
 
+import com.jfoenix.controls.JFXDrawer;
 import graphics.*;
 import javafx.event.EventHandler;
 import javafx.scene.Cursor;
@@ -31,6 +32,11 @@ public class CanvasController {
 
     private int newFormIndex;
 
+    public CanvasController(CanvasType canvasType, JFXDrawer leftDrawerPanel, JFXDrawer rightDrawerPanel, ApplicationController applicationController) {
+        this(canvasType, applicationController);
+        this.canvas = new DragAndDropCanvas(this);//, leftDrawerPanel, rightDrawerPanel);
+        }
+
     public CanvasController(CanvasType canvasType, ApplicationController applicationController) {
 
         this.canvas = new DragAndDropCanvas(this);
@@ -41,8 +47,8 @@ public class CanvasController {
         this.itemContexMenu = new ItemContexMenu(manipulationController,this,canvasItemController);
         this.formController = applicationController.getFormController();
         this.linkButton = new ToggleButton();
-    }
 
+    }
 
     public void keyPressAction(KeyEvent event) {
         if (Constans.controlV.match(event)) {

@@ -1,5 +1,6 @@
 package graphics;
 
+import com.jfoenix.controls.JFXDrawer;
 import controllers.CanvasController;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -42,7 +43,6 @@ public class DragAndDropCanvas extends ScrollPane {
 
 		super();
 		this.canvasController = canvasController;
-
 		this.canvas = new AnchorPane();
 
 		canvas.setMinWidth(Constans.canvasMaxWidth);
@@ -83,6 +83,19 @@ public class DragAndDropCanvas extends ScrollPane {
 		});
 
 	}
+
+	/**
+	 * Konstruktor třídy Zinicializuje Globální proměnné třídy a nastaví reakce
+	 * na detekci drag and drop
+	 */
+	//public DragAndDropCanvas(CanvasController canvasController, JFXDrawer leftDrawerPanel , JFXDrawer rightDrawerPanel) {
+	//	this(canvasController);
+
+	//	canvas.getChildren().addAll(leftDrawerPanel, rightDrawerPanel);
+
+
+	//}
+
 
 	public void clearCanvas(){
 		canvas.getChildren().clear();

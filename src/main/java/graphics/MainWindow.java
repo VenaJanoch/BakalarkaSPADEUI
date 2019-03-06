@@ -1,15 +1,14 @@
 package graphics;
 
-import controllers.ApplicationController;
-import controllers.CanvasController;
-import controllers.FormController;
-import controllers.WindowController;
+import com.jfoenix.controls.JFXDrawer;
+import com.jfoenix.controls.JFXDrawersStack;
+import controllers.*;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import services.*;
+import sun.plugin.javascript.navig.Anchor;
 
 /**
  * Třída s hlavní layoutem aplikace
@@ -28,18 +27,24 @@ public class MainWindow extends Stage {
     private DragAndDropPanel dragAndDrop;
     private WindowController windowController;
     private FormController formController;
+     private JFXDrawersStack drawersStack;
+    private DrawerPanelController drawerPanelController;
+    private SelectItemController selectItemController;
 
     /**
      * Konstruktor třídy Nastaví reakci na uzavírání aplikace
      *
      * @param
      */
-    public MainWindow(WindowController windowController, ApplicationController applicationController) {
+    public MainWindow(WindowController windowController, JFXDrawersStack drawersStack, DrawerPanelController drawerPanelController,
+                      SelectItemController selectItemController, ApplicationController applicationController) {
         super();
         this.windowController = windowController;
+        this.selectItemController = selectItemController;
         this.canvasController = new CanvasController(CanvasType.Project, applicationController);
+        this.drawersStack = drawersStack;
         this.formController = applicationController.getFormController();
-
+        this.drawerPanelController = drawerPanelController;
         this.setTitle(Constans.mainWindowTitle);
 
         windowController.closeProjectWindow();
@@ -67,15 +72,15 @@ public class MainWindow extends Stage {
     private Parent creatPanel() {
         mainPanel = new BorderPane();
         menu = new MenuPanel(windowController);
-
-        dragAndDrop = new DragAndDropPanel(formController, windowController, canvasController);
+        dragAndDrop = new DragAndDropPanel(formController, windowController, canvasController, drawerPanelController, selectItemController);
 
         VBox topPanel = new VBox();
         mainPanel.setId("main");
         topPanel.getChildren().addAll(menu, dragAndDrop);
         mainPanel.setTop(topPanel);
-        // mainPanel.setRight(dragAndDrop);
-        mainPanel.setCenter(canvasController.getCanvas());
+
+        drawersStack.setContent(canvasController.getCanvas());
+        mainPanel.setCenter(drawersStack);
 
         return mainPanel;
     }

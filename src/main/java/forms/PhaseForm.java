@@ -47,7 +47,7 @@ public class PhaseForm extends DateDescBasicForm implements ISegmentForm {
 
 		super(formController, formDataController, editFormController, deleteFormController, canvasController, dgItemPanel, type);
 		this. indexForm = indexForm;
-		this.setOnCloseRequest(e -> {
+		/*this.setOnCloseRequest(e -> {
 			e.consume();
 			int result = Alerts.showSaveSegment();
 			if (result == 1) {
@@ -55,7 +55,7 @@ public class PhaseForm extends DateDescBasicForm implements ISegmentForm {
 			} else if (result == 0) {
 				this.close();
 			}
-		});
+		});*/
 		getSubmitButton().setOnAction(event -> setActionSubmitButton());
 		fillForm();
 
@@ -76,7 +76,7 @@ public class PhaseForm extends DateDescBasicForm implements ISegmentForm {
 	public void setActionSubmitButton() {
 		closeForm();
 		if(isSave){
-			close();
+		//	close();
 		}
 
 	}

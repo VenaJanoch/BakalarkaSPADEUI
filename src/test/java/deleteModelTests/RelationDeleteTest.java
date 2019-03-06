@@ -69,10 +69,10 @@ public class RelationDeleteTest {
 
     }
 
-    @Test
-    public void testRemoveFromWorkUnit() {
-        assertSame(-1, workUnit.getRelationIndex());
-    }
+//    @Test
+//    public void testRemoveFromWorkUnit() {
+//        assertSame(-1, workUnit.getRelationIndex());
+//   }
 
 
 }

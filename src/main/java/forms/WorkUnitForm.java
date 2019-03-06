@@ -64,10 +64,10 @@ public class WorkUnitForm extends DescriptionBasicForm implements ISegmentForm {
 	 */
 	public WorkUnitForm(FormController formController, IFormDataController formDataController, IEditFormController editFormController, IDeleteFormController deleteFormController, CanvasController canvasController, SegmentType type, int indexForm) {
 		super(formController, formDataController, editFormController, deleteFormController, canvasController, type);
-		getMainPanel().setMinSize(Constans.workUnitformWidth, Constans.workUnitformHeight);
-		getMainPanel().setMaxSize(Constans.workUnitformWidth, Constans.workUnitformHeight);
+		this.setMinSize(Constans.workUnitformWidth, Constans.workUnitformHeight);
+		this.setMaxSize(Constans.workUnitformWidth, Constans.workUnitformHeight);
 		this.indexForm = indexForm;
-		this.setOnCloseRequest(e -> {
+		/*this.setOnCloseRequest(e -> {
 
 			e.consume();
 			int result = Alerts.showSaveSegment();
@@ -76,7 +76,7 @@ public class WorkUnitForm extends DescriptionBasicForm implements ISegmentForm {
 			} else if (result == 0) {
 				this.close();
 			}
-		});
+		});*/
 
 		getSubmitButton().setOnAction(event -> setActionSubmitButton());
 		createForm();
@@ -98,7 +98,7 @@ public class WorkUnitForm extends DescriptionBasicForm implements ISegmentForm {
 
 		closeForm();
 		if(isSave){
-			close();
+			//close();
 		}
 	}
 

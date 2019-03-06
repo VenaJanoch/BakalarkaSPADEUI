@@ -53,8 +53,8 @@ public class ClassControlPanel extends NameControlPanel {
      * @return Scene
      */
     private void creatSceneCanvas() {
-        mainPanel.setCenter(controlPane);
-        this.setScene(new Scene(mainPanel));
+
+      //  this.setScene(new Scene(mainPanel));
 
     }
 
@@ -81,13 +81,11 @@ public class ClassControlPanel extends NameControlPanel {
         controlPane.add(superClassCB, 4, 1);
         controlPane.add(button, 5, 0);
 
-
-        creatSceneCanvas();
         return controlPane;
     }
 
 
-    public void showEditControlPanel(BasicTable basicTable, SegmentType segmentType, TableView tableView) {
+    public void showEditControlPanel(BasicTable basicTable, TableView tableView) {
         ClassTable classTable = (ClassTable) basicTable;
         int id = classTable.getId();
         String[] classData = formDataController.getClassStringData(segmentType, id);
@@ -97,13 +95,12 @@ public class ClassControlPanel extends NameControlPanel {
         superClassCB.getSelectionModel().select(classData[2]);
 
         button.setOnAction(event ->{
-
             editFormController.editDataFromClass(segmentType, nameTF.getText(), getClassName(), getSuperClassName(), classTable, id);
             clearPanel(tableView);
-            this.close();
+         //  this.close();
         });
 
-        this.show();
+        // this.show();
 
     }
 
@@ -150,14 +147,10 @@ public class ClassControlPanel extends NameControlPanel {
     }
 
     public String getSuperClassName() {
-     return RoleSuperClass.values()[superIndex].name();
+     return superClassList[superIndex];
     }
 
     public void clearPanel(TableView<ClassTable> tableView) {
-        superClassCB.getSelectionModel().clearSelection();
-        classCB.getSelectionModel().clearSelection();
-        nameTF.setText("");
-
         tableView.refresh();
         tableView.getSelectionModel().clearSelection();
     }

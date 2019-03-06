@@ -1,9 +1,15 @@
 package graphics;
 
 import controllers.CanvasController;
+import controllers.DrawerPanelController;
+import controllers.SelectItemController;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
+import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.SplitPane;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.input.KeyCode;
@@ -27,21 +33,34 @@ public class DragAndDropItemPanel extends HBox {
     private ToggleButton linkButton;
     private int[] itemArray;
     private CanvasController canvasController;
+    private ComboBox<String> formBox;
+    private DrawerPanelController drawerPanelController;
+    private SelectItemController selectItemController;
 
     /**
      * Konstruktor třídy Zinicializuje globální proměnné třídy
      *
      * @param itemArray int[]
      */
-    public DragAndDropItemPanel(int[] itemArray) {
+    public DragAndDropItemPanel(int[] itemArray, DrawerPanelController drawerPanelController, SelectItemController selectItemController) {
         super(5);
         this.setPrefWidth(Constans.width);
         this.setPadding(new Insets(5));
         this.itemArray = itemArray;
+        this.drawerPanelController = drawerPanelController;
+        this.selectItemController = selectItemController;
+        ObservableList<String> itemsList = FXCollections.observableArrayList();
+
+        for(String item : Constans.addItemNames){
+            itemsList.add(item);
+        }
+
+        this.formBox = new ComboBox<>(itemsList);
+        selectItemController.setBox(formBox);
         this.setId("dgItem");
 
         dragSegmnets = new DragSegmentButton[itemArray.length];
-
+        this.getChildren().add(formBox);
     }
 
     /**
@@ -50,8 +69,8 @@ public class DragAndDropItemPanel extends HBox {
      *
      * @param itemArray int[]
      */
-    public DragAndDropItemPanel(CanvasController canvasController, int[] itemArray) {
-        this(itemArray);
+    public DragAndDropItemPanel(CanvasController canvasController, int[] itemArray, DrawerPanelController drawerPanelController, SelectItemController selectItemController) {
+        this(itemArray, drawerPanelController, selectItemController);
         this.canvasController = canvasController;
         createDragItems();
     }

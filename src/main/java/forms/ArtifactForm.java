@@ -48,10 +48,10 @@ public class ArtifactForm extends DateDescBasicForm implements ISegmentForm {
         super(formController, formDataController, editFormController, deleteFormController, type);
         this.indexForm = indexForm;
 
-        getMainPanel().setMinSize(Constans.littleformWidth, Constans.littleformHeight);
-        getMainPanel().setMaxSize(Constans.littleformWidth, Constans.littleformHeight);
+        this.setMinSize(Constans.littleformWidth, Constans.littleformHeight);
+        this.setMaxSize(Constans.littleformWidth, Constans.littleformHeight);
 
-        this.setOnCloseRequest(e -> {
+      /*  this.setOnCloseRequest(e -> {
 
             e.consume();
             int result = Alerts.showSaveSegment();
@@ -61,7 +61,7 @@ public class ArtifactForm extends DateDescBasicForm implements ISegmentForm {
                 this.close();
             }
         });
-
+       */
         getSubmitButton().setOnAction(event -> setActionSubmitButton());
         createForm();
 
@@ -83,7 +83,7 @@ public class ArtifactForm extends DateDescBasicForm implements ISegmentForm {
 
         closeForm();
         if (isSave) {
-            close();
+           // close();
         }
 
     }

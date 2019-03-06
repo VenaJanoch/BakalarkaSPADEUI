@@ -28,23 +28,23 @@ public class ProjectForm extends Date2DescBasicForm implements ISegmentForm {
     public ProjectForm(FormController formController, IFormDataController formDataController, IEditFormController editFormController, IDeleteFormController deleteFormController, SegmentType type) {
         super(formController, formDataController, editFormController, deleteFormController, type);
 
-        getMainPanel().setMinSize(Constans.littleformWidth, Constans.littleformHeight);
-        getMainPanel().setMaxSize(Constans.littleformWidth, Constans.littleformHeight);
+        this.setMinSize(Constans.littleformWidth, Constans.littleformHeight);
+        this.setMaxSize(Constans.littleformWidth, Constans.littleformHeight);
 
-        this.setOnCloseRequest(e -> {
+      //  this.setOnCloseRequest(e -> {
 
-            e.consume();
-            int result = Alerts.showSaveSegment();
-            if (result == 1) {
-                setActionSubmitButton();
-            } else if (result == 0) {
-                this.close();
-            }
-        });
+       //     e.consume();
+            //int result = Alerts.showSaveSegment();
+            //if (result == 1) {
+            //    setActionSubmitButton();
+            //} else if (result == 0) {
+       //        this.close();
+        //    }
+      //  });
 
         getSubmitButton().setOnAction(event -> setActionSubmitButton());
-        fillForm();
-        getFormName().setText(getTitle());
+       fillForm();
+        getFormName().setText(type.name());
     }
 
     @Override
@@ -61,8 +61,8 @@ public class ProjectForm extends Date2DescBasicForm implements ISegmentForm {
     @Override
     public void setActionSubmitButton() {
         closeForm();
-        close();
-    }
+      //  close();
+}
 
     @Override
     public void deleteItem() {

@@ -1,5 +1,6 @@
 package controllers;
 
+import com.jfoenix.controls.JFXDrawer;
 import model.DataModel;
 import model.IdentificatorCreater;
 import services.DeleteControl;
@@ -20,11 +21,14 @@ public class ApplicationController {
     private DeleteFormController deleteFormController;
     private EditFormController editFormController;
 
-    public ApplicationController(DataModel dataModel, IdentificatorCreater identificatorCreater, SegmentLists segmentLists){
+
+    public ApplicationController(DataModel dataModel, IdentificatorCreater identificatorCreater, SegmentLists segmentLists,
+                                 DrawerPanelController drawerPanelController, SelectItemController selectItemController){
         this.mapperTableToObject = new MapperTableToObject(segmentLists);
         this.dataPreparer = new DataPreparer(identificatorCreater);
         this.deleteControl = new DeleteControl(segmentLists, mapperTableToObject, identificatorCreater);
-        this.formController = new FormController(identificatorCreater, dataModel, this, segmentLists, dataPreparer);
+        this.formController = new FormController(identificatorCreater, dataModel, this, segmentLists, dataPreparer, drawerPanelController,
+                selectItemController);
         this.formDataController = new FormDataController(formController, segmentLists, mapperTableToObject, dataModel, identificatorCreater, dataPreparer);
         this.deleteFormController = new DeleteFormController(formController, dataModel, identificatorCreater, mapperTableToObject, deleteControl, segmentLists);
         this.editFormController = new EditFormController(dataModel, identificatorCreater, mapperTableToObject, segmentLists, dataPreparer);
@@ -33,7 +37,7 @@ public class ApplicationController {
         this.canvasItemController = new CanvasItemController(linkControl, formController, manipulationController);
         this.formFillController = new FormFillController(formController, dataModel, canvasItemController, identificatorCreater,dataPreparer, segmentLists,
                  linkControl, formController.getCanvasItemList());
-        formController.initBasicForms(formDataController, editFormController, deleteFormController);
+      formController.initBasicForms(formDataController, editFormController, deleteFormController);
         formController.setFormFillController(formFillController);
         this.manipulationController.setFormFillController(formFillController);
     }

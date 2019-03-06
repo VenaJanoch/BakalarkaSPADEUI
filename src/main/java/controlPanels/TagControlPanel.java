@@ -27,7 +27,7 @@ public class TagControlPanel extends NameControlPanel {
      * @return Scene
      */
     private void creatSceneCanvas() {
-        this.setScene(new Scene(controlPane));
+     //   this.setScene(new Scene(controlPane));
 
     }
 
@@ -48,10 +48,10 @@ public class TagControlPanel extends NameControlPanel {
         button.setOnAction(event ->{
             editFormController.editDataFromTag(nameTF.getText(), tagTable, configId, id);
             clearPanel(tableView);
-            this.close();
+          //  this.close();
         });
 
-        this.show();
+      //  this.show();
     }
 
     public void clearPanel(TableView<TagTable> tableView) {

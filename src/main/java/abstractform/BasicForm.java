@@ -15,6 +15,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -28,15 +29,14 @@ import services.SegmentType;
  *
  * @author Václav Janoch
  */
-public abstract class BasicForm extends Stage {
+public abstract class BasicForm extends BorderPane {
 
     /**
      * Globální proměnné třídy
      */
-    protected BorderPane mainPanel;
-    protected Scene scena;
+
     private Label nameLB;
-    private Label formName;
+    protected Label formName;
     protected TextField nameTF;
     protected Button submitButton;
 
@@ -66,11 +66,11 @@ public abstract class BasicForm extends Stage {
     public BasicForm(FormController formController, IFormDataController formDataController, IEditFormController editFormController, IDeleteFormController deleteFormController,
                      CanvasController canvasController, DragAndDropItemPanel dgItem, SegmentType type) {
         this(formController, formDataController, editFormController, deleteFormController, canvasController, type);
-        this.setTitle("Edit " + type.name() + " Form");
+        this.formName.setText(type.name() + " Form");
         this.dgItem = dgItem;
         this.dragBox = new BorderPane();
-        this.mainPanel = new BorderPane();
-        this.setScene(createSceneCanvas());
+        createPanelCanvas();
+
     }
 
     public BasicForm(FormController formController, IFormDataController formDataController, IEditFormController editFormController, IDeleteFormController deleteFormController, CanvasController canvasController, SegmentType type) {
@@ -83,60 +83,39 @@ public abstract class BasicForm extends Stage {
      * Konstruktor třídy pro prvky bez plátna
      */
 
-    public BasicForm(FormController formController, IFormDataController formDataController, IEditFormController editFormController, IDeleteFormController deleteFormController, SegmentType type) {
+    public BasicForm(FormController formController, IFormDataController formDataController, IEditFormController editFormController,
+                     IDeleteFormController deleteFormController, SegmentType type) {
         super();
-        this.setTitle("Edit " + type.name());
-        mainPanel = new BorderPane();
+       // this.setTitle("Edit " + type.name());
+
         this.formController = formController;
         this.formDataController = formDataController;
         this.editFormController = editFormController;
         this.deleteFormController = deleteFormController;
-        this.setScene(createSceneProject());
+        this.segmentType = type;
+        creatPanelProject();
         this.setMinHeight(Constans.formHeight);
         this.setMinWidth(Constans.formWidth);
-        this.segmentType = type;
+
     }
 
 
     abstract void createForm();
 
-    /**
-     * Vytvoří scénu s formulářem
-     *
-     * @return Scene
-     */
-    private Scene createSceneCanvas() {
-
-        scena = new Scene(createPanelCanvas());
-
-        return scena;
-    }
-
-    /**
-     * Vytvoří scénu pro formulář projektu
-     *
-     * @return Scene
-     */
-    private Scene createSceneProject() {
-
-        scena = new Scene(creatPanelProject());
-
-        return scena;
-    }
 
     /**
      * Vytvoří rozložení prvků pro plátno ve formuláři
      *
      * @return BorderPane
      */
-    private Parent createPanelCanvas() {
+    private void createPanelCanvas() {
         creatPanelProject();
         dragBox.setTop(dgItem);
         dragBox.setCenter(canvas);
 
-        mainPanel.setCenter(dragBox);
-        mainPanel.setLeft(infoPart);
-        return mainPanel;
+        this.setCenter(dragBox);
+        this.setLeft(infoPart);
+
     }
 
     /**
@@ -144,11 +123,11 @@ public abstract class BasicForm extends Stage {
      *
      * @return BorderPane
      */
-    private Parent creatPanelProject() {
+    private void creatPanelProject() {
 
-        mainPanel.setPadding(new Insets(5));
+        this.setPadding(new Insets(5));
         buttonBox = new HBox(5);
-        mainPanel.setMinSize(Constans.formWidth, Constans.formHeight);
+        this.setMinSize(Constans.formWidth, Constans.formHeight);
         infoPart = new GridPane();
         infoPart.setAlignment(Pos.CENTER);
         infoPart.setVgap(10);
@@ -161,12 +140,12 @@ public abstract class BasicForm extends Stage {
         submitButton.setId("formSubmit");
         nameLB.setAlignment(Pos.CENTER_RIGHT);
 
-        formName = new Label();
+        formName = new Label("Form " + segmentType.name());
         formName.setAlignment(Pos.CENTER);
         formName.setFont(Font.font(25));
         formName.setId("formID");
-        mainPanel.setAlignment(formName, Pos.CENTER);
-        mainPanel.setTop(formName);
+        this.setAlignment(formName, Pos.CENTER);
+        this.setTop(formName);
 
         HBox nameBox = new HBox(5);
         nameBox.getChildren().addAll(nameLB, nameTF);
@@ -179,10 +158,8 @@ public abstract class BasicForm extends Stage {
         infoPart.add(nameTF, 1, 0);
         infoPart.setHalignment(nameLB, HPos.RIGHT);
 
-        mainPanel.setCenter(infoPart);
-        mainPanel.setBottom(buttonBox);
-
-        return mainPanel;
+        this.setCenter(infoPart);
+        this.setBottom(buttonBox);
     }
 
     /**
@@ -191,10 +168,6 @@ public abstract class BasicForm extends Stage {
 
     public boolean isSave() {
         return isSave;
-    }
-
-    public BorderPane getMainPanel() {
-        return mainPanel;
     }
 
     public Label getFormName() {

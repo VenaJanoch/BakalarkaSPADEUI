@@ -48,7 +48,7 @@ public class IterationForm extends Date2DescBasicForm implements ISegmentForm {
 
 		super(formController, formDataController, editFormController, deleteFormController, canvas, dgItemPanel, type);
 		this.indexForm = indexForm;
-		this.setOnCloseRequest(e -> {
+		/*this.setOnCloseRequest(e -> {
 
 			e.consume();
 			int result = Alerts.showSaveSegment();
@@ -57,7 +57,7 @@ public class IterationForm extends Date2DescBasicForm implements ISegmentForm {
 			} else if (result == 0) {
 				this.close();
 			}
-		});
+		});*/
 
 		getSubmitButton().setOnAction(event -> setActionSubmitButton());
 		createForm();
@@ -85,7 +85,7 @@ public class IterationForm extends Date2DescBasicForm implements ISegmentForm {
 	public void setActionSubmitButton() {
 		closeForm();
 		if (isSave){
-			close();
+			//close();
 		}
 	}
 

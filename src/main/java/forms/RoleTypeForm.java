@@ -31,10 +31,8 @@ import java.util.ArrayList;
  * @author Václav Janoch
  *
  */
-public class RoleTypeForm extends TableClassBasicForm implements ISegmentTableForm {
+public class RoleTypeForm extends TableClassBasicForm{
 
-	private ClassControlPanel classControlPanel;
-	private ClassControlPanel editClassControlPanel;
 	private String[] classArray = new String[RoleClass.values().length];
 	private String[] superClassArray = new String[RoleSuperClass.values().length];
 
@@ -47,8 +45,7 @@ public class RoleTypeForm extends TableClassBasicForm implements ISegmentTableFo
 	public RoleTypeForm(FormController formController, IFormDataController formDataController, IEditFormController editFormController, IDeleteFormController deleteFormController, SegmentType type) {
 		super(formController, formDataController, editFormController, deleteFormController, type);
 
-		classControlPanel = new ClassControlPanel("Add", SegmentType.RoleType, formDataController, editFormController, formController);
-		editClassControlPanel = new ClassControlPanel("Edit", SegmentType.RoleType, formDataController, editFormController, formController);
+		editClassControlPanelTCB = new ClassControlPanel("Edit", SegmentType.RoleType, formDataController, editFormController, formController);
 		int i = 0;
 		for(RoleClass roleClass : RoleClass.values()){
 			classArray[i] = roleClass.name();
@@ -60,97 +57,11 @@ public class RoleTypeForm extends TableClassBasicForm implements ISegmentTableFo
 			i++;
 		}
 
-		editClassControlPanel.createControlPanel(classArray, superClassArray);
+		editClassControlPanelTCB.createControlPanel(classArray, superClassArray);
 
 		setEventHandler();
 		createForm();
-		getSubmitButton().setVisible(false);
-
-	}
-
-	protected void setEventHandler(){
-		OnMousePressedEventHandler = new EventHandler<MouseEvent>() {
-
-			@Override
-			public void handle(MouseEvent t) {
-				if(t.getClickCount() == 2) {
-					ClassTable classTable = tableTV.getSelectionModel().getSelectedItems().get(0);
-					if (classTable != null) {
-						editClassControlPanel.showEditControlPanel(classTable, SegmentType.RoleType, tableTV);
-					}
-				}
-			}
-		};
-	}
-
-
-	@Override
-	public void createForm() {
-
-		getFormName().setText("Role Classification Type Form");
-
-		getMainPanel().setCenter(getTable());
-		getMainPanel().setBottom(createControlPane());
-
-	}
-
-	@Override
-	public Node getTable() {
-		tableTV.setOnKeyReleased(event -> deleteSelected(event));
-		tableTV.setOnMousePressed(OnMousePressedEventHandler);
-		return tableTV;
-	}
-
-	@Override
-	public void deleteSelected(KeyEvent event) {
-		ObservableList<ClassTable> selection = FXCollections
-				.observableArrayList(tableTV.getSelectionModel().getSelectedItems());
-
-		if (event.getCode() == KeyCode.DELETE) {
-			if (selection.size() == 0) {
-				Alerts.showNoItemsDeleteAlert();
-			}
-			else{
-				ArrayList<BasicTable> list = new ArrayList<>(selection);
-				deleteFormController.deleteRoleTypeWithDialog(list, tableTV);
-				}
-		}
-
-	}
-
-	@Override
-	public GridPane createControlPane() {
-
-		GridPane controlPane = classControlPanel.createControlPanel(classArray, superClassArray);
-
-		add = classControlPanel.getButton();
-		add.setOnAction(event -> addItem());
-
-		return controlPane;
-	}
-
-
-	@Override
-	public void addItem() {
-		String nameST =  classControlPanel.getName();
-
-		int id = formController.createTableItem(SegmentType.RoleType);
-		String idName = id + "_" + nameST;
-
-		String classST = classControlPanel.getClassName();
-		String superST = classControlPanel.getSuperClassName();
-
-		ClassTable type = new ClassTable(idName, classST, superST, id);
-
-		tableTV.getItems().add(type);
-		tableTV.sort();
-		formDataController.saveDataFromRoleTypeForm(nameST, type);
-		classControlPanel.clearPanel(tableTV);
-	}
-
-	@Override
-	public void setActionSubmitButton() {
-		close();
+		setActionSubmitButton();
 
 	}
 

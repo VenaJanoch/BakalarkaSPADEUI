@@ -1,6 +1,8 @@
 package controllers;
 
 import XML.ProcessGenerator;
+import com.jfoenix.controls.JFXDrawer;
+import com.jfoenix.controls.JFXDrawersStack;
 import graphics.MainWindow;
 import javafx.application.Platform;
 import javafx.scene.Scene;
@@ -21,14 +23,18 @@ public class WindowController {
     private FileManipulator fileManipulator;
     private DataModel dataModel;
     private FormFillController formFillController;
+    private DrawerPanelController drawerPanelController;
+    private SelectItemController selectItemController;
     private ApplicationController applicationController;
     private Alerts alerts;
-    MainWindow mainWindow;
-
+    private MainWindow mainWindow;
+    private JFXDrawer leftDrawer;
+    private JFXDrawer rightDrawer;
+    private JFXDrawersStack drawersStack;
     public WindowController(Stage primaryStage){
         this.primaryStage = primaryStage;
         initApplication();
-        this.mainWindow = new MainWindow(this, applicationController);
+        this.mainWindow = new MainWindow(this, drawersStack, drawerPanelController, selectItemController, applicationController);
         setSceneToPrimaryStage(mainWindow.getScene(), mainWindow.getTitle());
         applicationController.getFormFillController().setProjectCanvasController(mainWindow.getCanvasController());
         primaryStage.setMaximized(true);
@@ -41,8 +47,17 @@ public class WindowController {
         this.dataModel = new DataModel(processGenerator);
         this.fileManipulator = new FileManipulator(dataModel);
         this.alerts = new Alerts(fileManipulator);
-        this.applicationController = new ApplicationController(dataModel, identificatorCreater, segmentLists);
+        this.leftDrawer = new JFXDrawer();
+        this.rightDrawer = new JFXDrawer();
+        this.drawersStack = new JFXDrawersStack();
+        leftDrawer.setId("LEFT");
+        rightDrawer.setId("RIGHT");
+        this.drawerPanelController = new DrawerPanelController(leftDrawer, rightDrawer, drawersStack);
+        this.selectItemController = new SelectItemController(drawerPanelController);
+        this.applicationController = new ApplicationController(dataModel, identificatorCreater, segmentLists, drawerPanelController, selectItemController );
+        selectItemController.setFormController(applicationController.getFormController());
         this.formFillController = applicationController.getFormFillController();
+
 
     }
 
@@ -63,7 +78,7 @@ public class WindowController {
     public void createNewProcessAction() {
 
         initApplication();
-        this.mainWindow = new MainWindow(this, applicationController);
+        this.mainWindow = new MainWindow(this, drawersStack, drawerPanelController, selectItemController, applicationController);
         setSceneToPrimaryStage(mainWindow.getScene(), mainWindow.getTitle());
         applicationController.getFormFillController().setProjectCanvasController(mainWindow.getCanvasController());
 

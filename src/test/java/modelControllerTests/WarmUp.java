@@ -1,9 +1,8 @@
 package modelControllerTests;
 
-import controllers.ApplicationController;
-import controllers.DataPreparer;
-import controllers.FormController;
-import controllers.FormDataController;
+import com.jfoenix.controls.JFXDrawer;
+import com.jfoenix.controls.JFXDrawersStack;
+import controllers.*;
 import XML.ProcessGenerator;
 import model.DataManipulator;
 import model.DataModel;
@@ -29,10 +28,13 @@ public class WarmUp {
 
         FileManipulator file = new FileManipulator(dataModel);
         Alerts alerts = new Alerts(file);
-        ApplicationController ap = new ApplicationController(dataModel, idCreator, lists);
+        DrawerPanelController drawerPanelController = new DrawerPanelController(new JFXDrawer(), new JFXDrawer(), new JFXDrawersStack());
+        SelectItemController selectItemController = new SelectItemController(drawerPanelController);
+        ApplicationController ap = new ApplicationController(dataModel, idCreator, lists, drawerPanelController, selectItemController);
         DeleteControl deleteControl = new DeleteControl(new SegmentLists(), mapperTableToObject, idCreator);
         DataPreparer dataPreparer = new DataPreparer(idCreator);
-        formController = new FormController(idCreator, dataModel, ap, lists, dataPreparer);
+        formController = new FormController(idCreator, dataModel, ap, lists, dataPreparer, drawerPanelController, selectItemController);
+        selectItemController.setFormController(formController);
         for(int i = 0; i < 12; i++){
             formController.getForms().add(null);
         }

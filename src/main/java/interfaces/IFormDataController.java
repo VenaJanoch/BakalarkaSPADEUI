@@ -1,5 +1,6 @@
 package interfaces;
 
+import controlPanels.CriterionControlPanel;
 import graphics.CanvasItem;
 import javafx.collections.ObservableList;
 import services.CanvasType;
@@ -51,4 +52,4 @@ import java.util.Map;
       String[] getBranchStringData(int id);
       String getTagData(int id, int configFormId);
 
-}
+ }

@@ -25,6 +25,7 @@ import javafx.scene.layout.GridPane;
 import services.*;
 import tables.BasicTable;
 import tables.BranchTable;
+import tables.CriterionTable;
 
 import java.util.ArrayList;
 
@@ -41,7 +42,6 @@ public class BranchForm extends TableBasicForm implements ISegmentTableForm {
      */
 
     private TableView<BranchTable> tableTV;
-    private BranchControlPanel branchoneControlPanel;
     private BranchControlPanel editBranchControlPanel;
 
 
@@ -52,16 +52,12 @@ public class BranchForm extends TableBasicForm implements ISegmentTableForm {
     public BranchForm(FormController formController, IFormDataController formDataController, IEditFormController editFormController, IDeleteFormController deleteFormController, SegmentType type) {
         super(formController, formDataController, editFormController, deleteFormController, type);
 
-        branchoneControlPanel = new BranchControlPanel("Add", formDataController, editFormController, formController);
-        editBranchControlPanel = new BranchControlPanel("Edit", formDataController, editFormController, formController);
-        editBranchControlPanel.createControlPanel();
+       editBranchControlPanel = new BranchControlPanel("Edit", formDataController, editFormController, formController);
+       editBranchControlPanel.createControlPanel();
 
-
-        getMainPanel().setMinSize(Constans.littleformWidth, Constans.littleformHeight);
-        getMainPanel().setMaxSize(Constans.littleformWidth, Constans.littleformHeight);
 
         setEventHandler();
-        getSubmitButton().setOnAction(event -> setActionSubmitButton());
+        setActionSubmitButton();
         createForm();
 
     }
@@ -73,25 +69,30 @@ public class BranchForm extends TableBasicForm implements ISegmentTableForm {
             @Override
             public void handle(MouseEvent t) {
                 if(t.getClickCount() == 2) {
-                    BranchTable branchTable = tableTV.getSelectionModel().getSelectedItems().get(0);
-                    if (branchTable != null) {
-                        editBranchControlPanel.showEditControlPanel(branchTable, tableTV);
-                    }
+                    showEditPanel();
                 }
             }
         };
     }
 
+    private void showEditPanel(){
+        BranchTable branchTable = tableTV.getSelectionModel().getSelectedItems().get(0);
+        if (branchTable != null) {
+            editBranchControlPanel.showEditControlPanel(branchTable, tableTV);
+        }
+    }
+
     @Override
     public void setActionSubmitButton() {
-        close();
+        addButton.setOnAction(event -> addItem());
+        removeButton.setOnAction(event -> deleteItem(tableTV));
+        editButton.setOnAction(event -> showEditPanel());
     }
 
     @Override
     public void createForm() {
-        getFormName().setText("Branch Form");
-        getMainPanel().setCenter(getTable());
-        getMainPanel().setBottom(createControlPane());
+        this.setCenter(getTable());
+
     }
 
     @Override
@@ -127,19 +128,9 @@ public class BranchForm extends TableBasicForm implements ISegmentTableForm {
 
     @Override
     public void deleteSelected(KeyEvent event) {
-        ObservableList<BranchTable> selection = FXCollections
-                .observableArrayList(tableTV.getSelectionModel().getSelectedItems());
-
-
 
         if (event.getCode() == KeyCode.DELETE) {
-            if (selection.size() == 0) {
-                Alerts.showNoItemsDeleteAlert();
-            }
-            else{
-                ArrayList<BasicTable> list = new ArrayList<>(selection);
-                deleteFormController.deleteBranchDialog(list, getTableTV());
-            }
+            deleteItem(tableTV);
         }
 
     }
@@ -147,26 +138,22 @@ public class BranchForm extends TableBasicForm implements ISegmentTableForm {
     @Override
     public GridPane createControlPane() {
 
-        GridPane controlPane = branchoneControlPanel.createControlPanel();
 
-        add = branchoneControlPanel.getButton();
-        add.setOnAction(event -> addItem());
 
-        return controlPane;
+        return null;
     }
 
     @Override
     public void addItem() {
 
-        String nameST = branchoneControlPanel.getName();
+        String nameST = ""; //branchoneControlPanel.getName();
         int id = formController.createTableItem(SegmentType.Branch);
 
-        BranchTable branch = formDataController.prepareBranchToTable(nameST, branchoneControlPanel.isMain(), id);
+        BranchTable branch = formDataController.prepareBranchToTable(nameST, true, id);
         tableTV.getItems().add(branch);
         tableTV.sort();
 
         formDataController.saveDataFromBranch(nameST,branch);
-        branchoneControlPanel.clearPanel(tableTV);
     }
 
 

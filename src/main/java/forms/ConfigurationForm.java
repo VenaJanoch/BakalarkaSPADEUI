@@ -91,7 +91,7 @@ public class ConfigurationForm extends DateBasicForm implements ISegmentForm {
         branchIndex = new ArrayList<>();
         cprIndex = FXCollections.observableArrayList();
 
-        this.setOnCloseRequest(event -> Alerts.showSaveSegment());
+       // this.setOnCloseRequest(event -> Alerts.showSaveSegment());
 
         getSubmitButton().setText("Add");
         getSubmitButton().setOnAction(event -> setActionSubmitButton());
@@ -118,7 +118,7 @@ public class ConfigurationForm extends DateBasicForm implements ISegmentForm {
         if(isSave){
             isNew = false;
             getSubmitButton().setText("Ok");
-            close();
+           // close();
 
         }
 
@@ -157,7 +157,7 @@ public class ConfigurationForm extends DateBasicForm implements ISegmentForm {
 
 
         addTag = new Button("Add Tag");
-        addTag.setOnAction(event -> tagForm.show());
+      //  addTag.setOnAction(event -> tagForm.show());
 
         fillInfoPart();
     }

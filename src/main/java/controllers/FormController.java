@@ -3,7 +3,10 @@ package controllers;
 import SPADEPAC.ConfigPersonRelation;
 import SPADEPAC.Milestone;
 import SPADEPAC.Role;
+import abstractControlPane.ControlPanel;
 import abstractform.BasicForm;
+import com.jfoenix.controls.JFXDrawer;
+import controlPanels.CriterionControlPanel;
 import forms.ConfigurationForm;
 import forms.*;
 import graphics.CanvasItem;
@@ -16,6 +19,7 @@ import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableView;
+import javafx.scene.layout.AnchorPane;
 import model.DataManipulator;
 import model.DataModel;
 import model.IdentificatorCreater;
@@ -35,6 +39,13 @@ public class FormController {
 
     private ArrayList<BasicForm> forms;
     private Map<Integer,CanvasItem> canvasItemList;
+
+    private PhaseForm phaseForm;
+    private IterationForm iterationForm;
+    private ActivityForm activityForm;
+    private WorkUnitForm workUnitForm;
+    private ChangeForm changeForm;
+    private ArtifactForm artifactForm;
 
     private MilestoneForm milestoneForm;
     private ConfigPersonRelationForm CPRForm;
@@ -63,10 +74,14 @@ public class FormController {
 
     private FormFillController formFillController;
     private DataPreparer dataPreparer;
-
+    private DrawerPanelController drawerPanelController;
+    private SelectItemController selectItemController;
     public FormController(IdentificatorCreater identificatorCreater, DataModel dataModel,
-                          ApplicationController applicationController, SegmentLists segmentLists, DataPreparer dataPreparer) {
+                          ApplicationController applicationController, SegmentLists segmentLists, DataPreparer dataPreparer,
+                          DrawerPanelController drawerPanelController, SelectItemController selectItemController) {
 
+        this.drawerPanelController = drawerPanelController;
+        this.selectItemController = selectItemController;
         this.segmentLists = segmentLists;
         this.dataPreparer = dataPreparer;
         this.applicationController = applicationController;
@@ -88,22 +103,36 @@ public class FormController {
 
         projectForm = new ProjectForm(this, formDataController, editFormController, deleteFormController, SegmentType.Project);
         forms.add(Constans.projectFormIndex, projectForm);
+        CanvasController canvasController = new CanvasController(CanvasType.Phase, applicationController);
+        phaseForm =new PhaseForm(this, formDataController, editFormController, deleteFormController, canvasController ,
+                new DragAndDropItemPanel(canvasController, Constans.phaseDragTextIndexs, drawerPanelController, selectItemController), SegmentType.Phase, Constans.phaseFormIndex);
+        forms.add(phaseForm);
 
-        criterionForm = new CriterionForm(this, formDataController, editFormController, deleteFormController, SegmentType.Criterion);
-        forms.add(criterionForm);
+        iterationForm = new IterationForm(this, formDataController, editFormController, deleteFormController,  canvasController, new DragAndDropItemPanel(canvasController,
+                Constans.iterationDragTextIndexs, drawerPanelController, selectItemController),SegmentType.Iteration, Constans.iterationFormIndex);
+        forms.add(iterationForm);
+
+        activityForm =  new ActivityForm(this, formDataController, editFormController, deleteFormController,  canvasController, new DragAndDropItemPanel(canvasController,
+                Constans.activityDragTextIndexs, drawerPanelController, selectItemController), SegmentType.Activity, Constans.activityFormIndex);
+        forms.add(activityForm);
+
+        workUnitForm = new WorkUnitForm(this, formDataController, editFormController, deleteFormController, canvasController,
+                SegmentType.WorkUnit, Constans.workUnitFormIndex);
+        forms.add(workUnitForm);
 
         milestoneForm = new MilestoneForm(
                 this, formDataController, editFormController, deleteFormController,  SegmentType.Milestone);
         forms.add(Constans.milestoneFormIndex, milestoneForm);
 
-        roleTypeForm = new RoleTypeForm(this, formDataController, editFormController, deleteFormController, SegmentType.RoleType);
-        forms.add(roleTypeForm);
-
-        roleForm = new RoleForm(this, formDataController, editFormController, deleteFormController, SegmentType.Role);
-        forms.add(Constans.roleFormIndex, roleForm);
+        criterionForm = new CriterionForm(this, formDataController, editFormController, deleteFormController, SegmentType.Criterion);
+        forms.add(criterionForm);
 
         CPRForm = new ConfigPersonRelationForm(this, formDataController, editFormController, deleteFormController, SegmentType.ConfigPersonRelation);
         forms.add(Constans.cprFormIndex, CPRForm);
+
+        roleTypeForm = new RoleTypeForm(this, formDataController, editFormController, deleteFormController, SegmentType.RoleType);
+        forms.add(roleTypeForm);
+
 
         priorityForm = new PriorityForm(this, formDataController, editFormController, deleteFormController, SegmentType.Priority);
         forms.add(Constans.priorityFormIndex, priorityForm);
@@ -123,7 +152,6 @@ public class FormController {
         typeForm = new TypeForm(this, formDataController, editFormController, deleteFormController, SegmentType.Type);
         forms.add(Constans.wuTypeFormIndex, typeForm);
 
-
         branchFrom = new BranchForm(this, formDataController, editFormController, deleteFormController, SegmentType.Branch);
         forms.add(Constans.branchIndex, branchFrom);
 
@@ -131,6 +159,9 @@ public class FormController {
         confTableForm = new ConfigurationTableForm(this, formDataController, editFormController, deleteFormController, SegmentType.Configuration);
         forms.remove(Constans.configurationFormIndex);
         forms.add(Constans.configurationFormIndex, confTableForm);
+
+        roleForm = new RoleForm(this, formDataController, editFormController, deleteFormController, SegmentType.Role);
+        forms.add(roleForm);
     }
 
 
@@ -205,7 +236,7 @@ public class FormController {
         lastConfigurationFormIndex = identificatorCreater.createConfigurationID();
         CanvasController canvasController = new CanvasController(CanvasType.Configuration, applicationController);
         ConfigurationForm configurationForm = new ConfigurationForm(this, formDataController, editFormController, deleteFormController,  canvasController,
-                new DragAndDropItemPanel(canvasController, Constans.configurationDragTextIndexs), SegmentType.Configuration,
+                new DragAndDropItemPanel(canvasController, Constans.configurationDragTextIndexs, drawerPanelController, selectItemController), SegmentType.Configuration,
                 segmentLists.getCPRObservable(), segmentLists.getBranchObservable(), segmentLists.getRoleObservable(), lastConfigurationFormIndex);
         forms.add(configurationForm);
 
@@ -248,7 +279,7 @@ public class FormController {
         int index = identificatorCreater.createActivityID();
         CanvasController canvasController = new CanvasController(CanvasType.Activity, applicationController);
         ActivityForm activityForm = new ActivityForm(this, formDataController, editFormController, deleteFormController,  canvasController, new DragAndDropItemPanel(canvasController,
-                Constans.activityDragTextIndexs), SegmentType.Activity, index);
+                Constans.activityDragTextIndexs, drawerPanelController, selectItemController), SegmentType.Activity, index);
         forms.add(index, activityForm);
 
         return  index;
@@ -265,7 +296,7 @@ public class FormController {
         int index = identificatorCreater.createPhaseID();
         CanvasController canvasController = new CanvasController(CanvasType.Phase, applicationController);
         PhaseForm phaseForm = new PhaseForm(this, formDataController, editFormController, deleteFormController,  canvasController, new DragAndDropItemPanel(canvasController,
-                Constans.phaseDragTextIndexs ), SegmentType.Phase, index);
+                Constans.phaseDragTextIndexs, drawerPanelController, selectItemController), SegmentType.Phase, index);
         forms.add(index, phaseForm);
 
         phaseForm.getConfigCB().setItems(segmentLists.getConfigObservable());
@@ -287,7 +318,7 @@ public class FormController {
         CanvasController canvasController = new CanvasController(CanvasType.Iteration, applicationController);
 
         IterationForm iterationForm = new IterationForm(this, formDataController, editFormController, deleteFormController,  canvasController, new DragAndDropItemPanel(canvasController,
-                Constans.iterationDragTextIndexs),SegmentType.Iteration, index);
+                Constans.iterationDragTextIndexs, drawerPanelController, selectItemController),SegmentType.Iteration, index);
         forms.add(index, iterationForm);
 
         iterationForm.getConfigCB().setItems(segmentLists.getConfigObservable());
@@ -364,8 +395,8 @@ public class FormController {
         }
 
 
-        form.show();
-        form.toFront();
+       // form.show();
+       // form.toFront();
 
     }
 
@@ -451,7 +482,7 @@ public class FormController {
 
     public Node getMainPanelFromForm(int formId) {
 
-        return forms.get(formId).getMainPanel();
+        return forms.get(formId);
 
     }
 
@@ -653,5 +684,12 @@ public class FormController {
         return segmentLists.getRoleTypeObservable();
     }
 
+    public BasicForm getForm(int formiIndex) {
+        return forms.get(formiIndex);
+    }
+
+    public void showEditControlPanel(ControlPanel editControlPanel) {
+        drawerPanelController.showRightPanel(editControlPanel);
+    }
 }
 

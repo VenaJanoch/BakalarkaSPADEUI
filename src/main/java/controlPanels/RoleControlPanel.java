@@ -25,16 +25,7 @@ public class RoleControlPanel extends DescriptionControlPanel {
         this.roleTypeIndex = 0;
     }
 
-    /**
-     * Vytvoří scénu s formulářem
-     *
-     * @return Scene
-     */
-    private void creatSceneCanvas() {
-        mainPanel.setCenter(controlPane);
-        this.setScene(new Scene(mainPanel));
 
-    }
 
     public GridPane createControlPanel(){
         roleTypeLB = new Label("Type: ");
@@ -50,7 +41,6 @@ public class RoleControlPanel extends DescriptionControlPanel {
         controlPane.add(roleTypeCB, 5, 0);
         controlPane.add(button, 6, 0);
 
-        creatSceneCanvas();
         return controlPane;
     }
 
@@ -66,10 +56,10 @@ public class RoleControlPanel extends DescriptionControlPanel {
         button.setOnAction(event ->{
             editFormController.editDataFromRole(nameTF.getText(), descriptionTF.getText(), roleTable, roleTypeIndex, id);
             clearPanel(tableView);
-            this.close();
+          //  this.close();
         });
 
-        this.show();
+      //  this.show();
 
     }
 

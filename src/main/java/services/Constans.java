@@ -1,5 +1,7 @@
 package services;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
@@ -63,6 +65,8 @@ public class Constans {
     public static final String[] addButtonsNames = {"Project", "Add Milestone", "Add Role", "Add Config-role",
             "Add Priority", "Add Severity", "Add Relation", "Add Resolution", "Add Status", "Add Type", "Add Branch",
             "Add Configuration"};
+
+
 
     /**
      * Konstanta pro určení symbolu tlačítka
@@ -173,18 +177,30 @@ public class Constans {
     public static final KeyCode delete = KeyCode.DELETE;
     public static final String linkPicture = "link.svn";
 
+    public static final String[] addItemNames = {"Project", "Phase", "Iteration", "Activity", "Work Unit", "Milestone", "Criterion", "Config-role",
+            "Role Type", "Priority", "Severity", "Relation", "Resolution", "Status", "Type", "Branch"};
+
+
     public static final int projectFormIndex = 0;
-    public static final int criterionFormIndex = 1;
-    public static final int milestoneFormIndex = 2;
-    public static final int roleTypeIndex = 3;
-    public static final int roleFormIndex = 4;
-    public static final int cprFormIndex = 5;
-    public static final int priorityFormIndex = 6;
-    public static final int severityFormIndex = 7;
-    public static final int relationFormIndex = 8;
-    public static final int resolutionormIndex = 9;
-    public static final int statusFormIndex = 10;
-    public static final int wuTypeFormIndex = 11;
-    public static final int branchIndex = 12;
-    public static final int configurationFormIndex = 13;
+    public static final int phaseFormIndex = 1;
+    public static final int iterationFormIndex = 2;
+    public static final int activityFormIndex = 3;
+    public static final int workUnitFormIndex = 4;
+    public static final int milestoneFormIndex = 5;
+    public static final int criterionFormIndex = 6;
+    public static final int cprFormIndex = 7;
+    public static final int roleTypeIndex = 8;
+    public static final int priorityFormIndex = 9;
+    public static final int severityFormIndex = 10;
+    public static final int relationFormIndex = 11;
+    public static final int resolutionormIndex = 12;
+    public static final int statusFormIndex = 13;
+    public static final int wuTypeFormIndex = 14;
+    public static final int branchIndex = 15;
+    public static final int configurationFormIndex = 16;
+
+    public static final int roleFormIndex = 17;
+
+
+    public static final double rightDrawerWidth = 450;
 }

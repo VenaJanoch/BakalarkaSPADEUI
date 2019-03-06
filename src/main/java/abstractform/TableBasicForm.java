@@ -4,6 +4,8 @@ import controllers.FormController;
 import interfaces.IDeleteFormController;
 import interfaces.IEditFormController;
 import interfaces.IFormDataController;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -11,10 +13,16 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.text.Font;
 import services.*;
+import tables.BasicTable;
+import tables.CriterionTable;
+
+import java.util.ArrayList;
 
 /**
  * Třída umoznující vytvoření tabulkového formuláře
@@ -26,10 +34,12 @@ public abstract class TableBasicForm extends BasicForm {
     /**
      * Globální proměnné třídy
      **/
-    private BorderPane mainPanel;
-    private Scene scena;
-    protected Button add;
-    private Button submitButton;
+   // private BorderPane mainPanel;
+   // private Scene scena;
+    protected Button addButton;
+    protected Button removeButton;
+    protected Button editButton;
+
     private Label formName;
     protected EventHandler<MouseEvent> OnMousePressedEventHandler;
 
@@ -38,20 +48,9 @@ public abstract class TableBasicForm extends BasicForm {
      */
     public TableBasicForm(FormController formController, IFormDataController formDataController, IEditFormController editFormController, IDeleteFormController deleteFormController, SegmentType type) {
         super(formController, formDataController, editFormController, deleteFormController, type);
-        this.setScene(creatSceneProject());
+       creatPanel();
     }
 
-    /**
-     * Vytvoří scénu pro formulář projektu
-     *
-     * @return Scene
-     */
-    private Scene creatSceneProject() {
-
-        scena = new Scene(creatPanel(), Constans.formWidth, Constans.formHeight);
-
-        return scena;
-    }
 
     abstract protected void setEventHandler();
 
@@ -61,6 +60,21 @@ public abstract class TableBasicForm extends BasicForm {
 
     }
 
+    public void deleteItem(TableView tableTV){
+        ObservableList<CriterionTable> selection = FXCollections
+                .observableArrayList(tableTV.getSelectionModel().getSelectedItems());
+
+        if (selection.size() == 0) {
+            Alerts.showNoItemsDeleteAlert();
+        }
+        else{
+            ArrayList<BasicTable> list = new ArrayList<>(selection);
+            deleteFormController.deleteCriterionWithDialog(list, tableTV);
+        }
+    }
+
+
+
     /**
      * Vytvoří a rozloží základní prvky ve formuláři
      *
@@ -68,29 +82,18 @@ public abstract class TableBasicForm extends BasicForm {
      */
     private Parent creatPanel() {
 
-        mainPanel = new BorderPane();
-        mainPanel.setPadding(new Insets(5));
+        this.setPadding(new Insets(5));
 
-        submitButton = new Button("OK");
-
-        formName = new Label();
-        formName.setAlignment(Pos.CENTER);
-        formName.setFont(Font.font(25));
-        formName.setId("formID");
-
-        mainPanel.setAlignment(formName, Pos.CENTER);
-        mainPanel.setRight(submitButton);
-        mainPanel.setAlignment(submitButton, Pos.BOTTOM_CENTER);
-        mainPanel.setTop(formName);
-
-        return mainPanel;
+        HBox buttonPanel = new HBox(25);
+        addButton = new Button("+");
+        removeButton = new Button("-");
+        editButton = new Button("Edit");
+        buttonPanel.getChildren().addAll(addButton, removeButton, editButton);
+        this.setBottom(buttonPanel);
+        return this;
     }
 
     /*** Getrs and Setrs ***/
-
-    public BorderPane getMainPanel() {
-        return mainPanel;
-    }
 
 
     public Button getSubmitButton() {

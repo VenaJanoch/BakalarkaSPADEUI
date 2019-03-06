@@ -57,7 +57,7 @@ public class ConfigurationTableForm extends Table2BasicForm implements ISegmentT
 		super(formController, formDataController, editFormController, deleteFormController, type);
 
 		createForm();
-		getSubmitBT().setOnAction(event -> setActionSubmitButton());
+	//	getSubmitBT().setOnAction(event -> setActionSubmitButton());
 	}
 
 	@Override
@@ -70,14 +70,14 @@ public class ConfigurationTableForm extends Table2BasicForm implements ISegmentT
 		formName = new Label("Configuration form");
 		formName.setFont(Font.font(25));
 
-		internalPanel.setCenter(getTable());
+//		internalPanel.setCenter(getTable());
 
-		mainPanel.setTop(formName);
-		mainPanel.setAlignment(formName, Pos.TOP_CENTER);
+		//mainPanel.setTop(formName);
+		//mainPanel.setAlignment(formName, Pos.TOP_CENTER);
 
-		createConfigItem();
-		getNameTF().setVisible(false);
-		getNameLB().setVisible(false);
+	//	createConfigItem();
+	//	getNameTF().setVisible(false);
+	//	getNameLB().setVisible(false);
 	}
 
 	/**
@@ -171,7 +171,7 @@ public class ConfigurationTableForm extends Table2BasicForm implements ISegmentT
 
 	@Override
 	public void setActionSubmitButton() {
-		close();
+		//close();
 
 	}
 

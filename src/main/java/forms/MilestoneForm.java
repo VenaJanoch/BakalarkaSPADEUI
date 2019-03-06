@@ -1,5 +1,6 @@
 package forms;
 
+import abstractform.TableBasicForm;
 import controllers.FormController;
 import controlPanels.MilestoneControlPanel;
 import interfaces.IDeleteFormController;
@@ -37,7 +38,7 @@ import java.util.ArrayList;
  * @author Václav Janoch
  *
  */
-public class MilestoneForm extends Table2BasicForm implements ISegmentTableForm {
+public class MilestoneForm extends TableBasicForm implements ISegmentTableForm {
 
 	/**
 	 * Globální proměnné třídy
@@ -49,7 +50,6 @@ public class MilestoneForm extends Table2BasicForm implements ISegmentTableForm 
 
 	private CriterionForm criterionForm;
 
-	private MilestoneControlPanel milestoneControlPanel;
 	private MilestoneControlPanel editMilestoneControlPanel;
 
 	/**
@@ -61,12 +61,12 @@ public class MilestoneForm extends Table2BasicForm implements ISegmentTableForm 
 
 		super(formController, formDataController, editFormController, deleteFormController, type);
 
-		milestoneControlPanel = new MilestoneControlPanel("Add", formDataController, editFormController, formController);
 		editMilestoneControlPanel = new MilestoneControlPanel("Edit", formDataController, editFormController, formController);
 		editMilestoneControlPanel.createControlPanel();
 		setEventHandler();
 		createForm();
-		getSubmitBT().setOnAction(event -> setActionSubmitButton());
+		setActionSubmitButton();
+
 	}
 
 	protected void setEventHandler(){
@@ -75,35 +75,31 @@ public class MilestoneForm extends Table2BasicForm implements ISegmentTableForm 
 			@Override
 			public void handle(MouseEvent t) {
 				if(t.getClickCount() == 2) {
-					MilestoneTable milestoneTable = tableTV.getSelectionModel().getSelectedItems().get(0);
-					if (milestoneTable != null) {
-						editMilestoneControlPanel.showEditControlPanel(milestoneTable, tableTV);
-					}
+					showEditPanel();
 				}
 			}
 		};
 	}
 
+	public void showEditPanel(){
+		MilestoneTable milestoneTable = tableTV.getSelectionModel().getSelectedItems().get(0);
+		if (milestoneTable != null) {
+			editMilestoneControlPanel.showEditControlPanel(milestoneTable, tableTV);
+			formController.showEditControlPanel(editMilestoneControlPanel);
+		}
+	}
+
 	@Override
 	public void createForm() {
 
-		formName = new Label("Milestone Form");
-		formName.setFont(Font.font(25));
-
-		internalPanel.setTop(formName);
-		internalPanel.setAlignment(formName, Pos.CENTER);
-
-		internalPanel.setCenter(getTable());
-		internalPanel.setBottom(createControlPane());
-
-		criterionForm = (CriterionForm) formController.getForms().get(Constans.criterionFormIndex);
-		setEventHandler();
-		mainPanel.setRight(criterionForm.getMainPanel());
+	this.setCenter(getTable());
 	}
 
 	@Override
 	public void setActionSubmitButton() {
-		close();
+		addButton.setOnAction(event -> addItem());
+		removeButton.setOnAction(event -> deleteItem(tableTV));
+		editButton.setOnAction(event -> showEditPanel());
 
 	}
 
@@ -145,17 +141,9 @@ public class MilestoneForm extends Table2BasicForm implements ISegmentTableForm 
 
 	@Override
 	public void deleteSelected(KeyEvent event) {
-		ObservableList<MilestoneTable> selection = FXCollections
-				.observableArrayList(tableTV.getSelectionModel().getSelectedItems());
 
 		if (event.getCode() == KeyCode.DELETE) {
-			if (selection.size() == 0) {
-				Alerts.showNoItemsDeleteAlert();
-			}
-			else{
-				ArrayList<BasicTable> list = new ArrayList<>(selection);
-				deleteFormController.deleteMilestoneWithDialog(list, getTableTV());
-			}
+			deleteItem(tableTV);
 		}
 
 	}
@@ -163,31 +151,26 @@ public class MilestoneForm extends Table2BasicForm implements ISegmentTableForm 
 	@Override
 	public GridPane createControlPane() {
 
-		GridPane controlPane = milestoneControlPanel.createControlPanel();
 
-		add = milestoneControlPanel.getButton();
-		add.setOnAction(event -> addItem());
-
-		return controlPane;
+		return null;
 
 	}
 
 	@Override
 	public void addItem() {
 
-		String nameST = milestoneControlPanel.getName();
-		String descriptionST = milestoneControlPanel.getDescriptionText();
+		String nameST = "";//milestoneControlPanel.getName();
+		String descriptionST = ""; // milestoneControlPanel.getDescriptionText();
 
 		int id = formController.createTableItem(SegmentType.Milestone);
 
-		ArrayList criterionList = new ArrayList<>(milestoneControlPanel.getCriterionIndex());
+		ArrayList criterionList = new ArrayList<>();//new ArrayList<>(milestoneControlPanel.getCriterionIndex());
 		MilestoneTable milestone = formDataController.prepareMilestoneToTable(nameST, descriptionST, id, criterionList);
 
 		tableTV.getItems().add(milestone);
 		tableTV.sort();
 
 		formDataController.saveDataFromMilestoneForm(nameST, descriptionST, criterionList, milestone);
-		milestoneControlPanel.clearPanelCB(tableTV);
 	}
 
 	public TableView<MilestoneTable> getTableTV() {

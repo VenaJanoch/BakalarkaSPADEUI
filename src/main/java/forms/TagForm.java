@@ -52,7 +52,7 @@ public class TagForm extends TableBasicForm implements ISegmentTableForm {
 		editTagControlPanel = new TagControlPanel("Edit", formDataController, editFormController);
 		editTagControlPanel.createControlPanel();
 
-		this.setTitle("Edit Tags");
+	//this.setTitle("Edit Tags");
 		this.configId = configFormId;
 		createForm();
 		setEventHandler();
@@ -135,8 +135,8 @@ public class TagForm extends TableBasicForm implements ISegmentTableForm {
 
 		GridPane controlPane = tagControlPanel.createControlPanel();
 
-		add = tagControlPanel.getButton();
-		add.setOnAction(event -> addItem());
+		addButton = tagControlPanel.getButton();
+		addButton.setOnAction(event -> addItem());
 
 		return controlPane;
 	}
@@ -159,7 +159,7 @@ public class TagForm extends TableBasicForm implements ISegmentTableForm {
 
 	@Override
 	public void setActionSubmitButton() {
-		close();
+	//	close();
 
 	}
 
@@ -170,8 +170,8 @@ public class TagForm extends TableBasicForm implements ISegmentTableForm {
 
 		getSubmitButton().setOnAction(event -> setActionSubmitButton());
 
-		getMainPanel().setCenter(getTable());
-		getMainPanel().setBottom(createControlPane());
+		this.setCenter(getTable());
+		this.setBottom(createControlPane());
 
 	}
 

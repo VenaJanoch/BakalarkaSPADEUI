@@ -32,7 +32,7 @@ public class ActivityForm extends DescriptionBasicForm implements ISegmentForm {
 
 		super(formController, formDataController, editFormController, deleteFormController, canvasController, dgItemPanel, type);
 		this. indexForm = indexForm;
-		this.setOnCloseRequest(e -> {
+		/*this.setOnCloseRequest(e -> {
 
 			e.consume();
 			int result = Alerts.showSaveSegment();
@@ -42,7 +42,7 @@ public class ActivityForm extends DescriptionBasicForm implements ISegmentForm {
 				this.close();
 			}
 		});
-
+		*/
 		getSubmitButton().setOnAction(event -> setActionSubmitButton());
 		createForm();
 
@@ -64,7 +64,7 @@ public class ActivityForm extends DescriptionBasicForm implements ISegmentForm {
 	@Override
 	public void setActionSubmitButton() {
 		closeForm();
-		close();
+		//close();
 	}
 
 	public void createForm() {

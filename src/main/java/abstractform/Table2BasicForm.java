@@ -27,7 +27,7 @@ public abstract class Table2BasicForm extends BasicForm {
      * Globální proměnné třídy
      */
     protected BorderPane mainPanel;
-    private Scene scena;
+    //private Scene scena;
     protected BorderPane internalPanel;
     private Button submitBT;
     private SplitPane splitPane;
@@ -40,7 +40,7 @@ public abstract class Table2BasicForm extends BasicForm {
     public Table2BasicForm(FormController formController, IFormDataController formDataController, IEditFormController editFormController, IDeleteFormController deleteFormController, SegmentType type) {
 
         super(formController, formDataController, editFormController, deleteFormController, type);
-        this.setScene(creatScene());
+        //this.setScene(creatScene());
         this.setMinHeight(Constans.twoFormHeight);
         this.setMinWidth(Constans.twoFormWidth);
     }
@@ -52,17 +52,6 @@ public abstract class Table2BasicForm extends BasicForm {
 
     }
 
-    /**
-     * Vytvoří scénu s formulářem
-     *
-     * @return Scene
-     */
-    private Scene creatScene() {
-
-        scena = new Scene(creatPanel(), Constans.twoFormWidth, Constans.twoFormHeight);
-
-        return scena;
-    }
 
     /**
      * Vytvoří a rozloží základní prvky ve formuláři

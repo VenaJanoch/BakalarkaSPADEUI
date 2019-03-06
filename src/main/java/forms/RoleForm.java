@@ -1,5 +1,6 @@
 package forms;
 
+import abstractform.TableBasicForm;
 import controllers.FormController;
 import abstractform.Table2BasicForm;
 import controlPanels.RoleControlPanel;
@@ -27,6 +28,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
 import services.*;
 import tables.BasicTable;
+import tables.CriterionTable;
 import tables.RoleTable;
 
 import java.util.ArrayList;
@@ -39,7 +41,7 @@ import java.util.ArrayList;
  * @author Václav Janoch
  *
  */
-public class RoleForm extends Table2BasicForm implements ISegmentTableForm {
+public class RoleForm extends TableBasicForm implements ISegmentTableForm {
 
 	/**
 	 * Globální proměnné třídy
@@ -48,7 +50,6 @@ public class RoleForm extends Table2BasicForm implements ISegmentTableForm {
 	private RoleTypeForm roleTForm;
 	private Label formName;
 
-	private RoleControlPanel roleControlPanel;
 	private RoleControlPanel editRoleControlPanel;
 
 	/**
@@ -59,14 +60,19 @@ public class RoleForm extends Table2BasicForm implements ISegmentTableForm {
 	public RoleForm(FormController formController, IFormDataController formDataController, IEditFormController editFormController, IDeleteFormController deleteFormController, SegmentType type) {
 		super(formController, formDataController, editFormController, deleteFormController, type);
 
-		roleControlPanel = new RoleControlPanel("Add", formDataController, editFormController, formController);
 		editRoleControlPanel = new RoleControlPanel("Edit", formDataController, editFormController, formController);
 		editRoleControlPanel.createControlPanel();
 
 		setEventHandler();
 		createForm();
-		getSubmitBT().setOnAction(event -> setActionSubmitButton());
+		setActionSubmitButton();
 
+	}
+
+	@Override
+	public void createForm() {
+
+		this.setCenter(getTable());
 	}
 
 	@Override
@@ -76,37 +82,12 @@ public class RoleForm extends Table2BasicForm implements ISegmentTableForm {
 			@Override
 			public void handle(MouseEvent t) {
 				if(t.getClickCount() == 2) {
-					RoleTable roleTable = tableTV.getSelectionModel().getSelectedItems().get(0);
-					if (roleTable != null) {
-						editRoleControlPanel.showEditControlPanel(roleTable, tableTV);
-					}
+					showEditPanel();
 				}
 			}
 		};
 	}
 
-	@Override
-	public void setActionSubmitButton() {
-		close();
-
-	}
-
-	@Override
-	public void createForm() {
-
-		formName = new Label("Role Form");
-		formName.setFont(Font.font(25));
-
-		internalPanel.setTop(formName);
-		internalPanel.setAlignment(formName, Pos.CENTER);
-
-		internalPanel.setCenter(getTable());
-		internalPanel.setBottom(createControlPane());
-
-		roleTForm = (RoleTypeForm) formController.getForms().get(Constans.roleTypeIndex);
-		mainPanel.setRight(roleTForm.getMainPanel());
-
-	}
 
 	@Override
 	public Node getTable() {
@@ -147,45 +128,45 @@ public class RoleForm extends Table2BasicForm implements ISegmentTableForm {
 
 	@Override
 	public void deleteSelected(KeyEvent event) {
-		ObservableList<RoleTable> selection = FXCollections
-				.observableArrayList(tableTV.getSelectionModel().getSelectedItems());
 
 		if (event.getCode() == KeyCode.DELETE) {
-			if (selection.size() == 0) {
-				Alerts.showNoItemsDeleteAlert();
-			}
-			else{
-				ArrayList<BasicTable> list = new ArrayList<>(selection);
-				deleteFormController.deleteRoleWithDialog(list, tableTV);
-			}
+			deleteItem(tableTV);
 		}
-
 	}
 
 	@Override
 	public GridPane createControlPane() {
+		return null;
+	}
 
-		GridPane controlPanel = roleControlPanel.createControlPanel();
+	private void showEditPanel(){
+		RoleTable roleTable = tableTV.getSelectionModel().getSelectedItems().get(0);
+		if (roleTable != null) {
+			editRoleControlPanel.showEditControlPanel(roleTable, tableTV);
+			formController.showEditControlPanel(editRoleControlPanel);
+		}
+	}
 
-		add = roleControlPanel.getButton();
-		add.setOnAction(event -> addItem());
 
-		return controlPanel;
+	@Override
+	public void setActionSubmitButton() {
+		addButton.setOnAction(event -> addItem());
+		removeButton.setOnAction(event -> deleteItem(tableTV));
+		editButton.setOnAction(event -> showEditPanel());
 	}
 
 
 	@Override
 	public void addItem() {
-		String nameST = roleControlPanel.getName();
-		String descritpST = roleControlPanel.getDescriptionText();
-		int roleIndex = roleControlPanel.getRoleTypeIndex();
+		String nameST = ""; // roleControlPanel.getName();
+		String descritpST = ""; //roleControlPanel.getDescriptionText();
+		int roleIndex = 0;// roleControlPanel.getRoleTypeIndex();
 		int id = formController.createTableItem(SegmentType.Role);
 
 		RoleTable role = formDataController.prepareRoleToTable(nameST, descritpST, id, roleIndex );
 		tableTV.getItems().add(role);
 		tableTV.sort();
 		formDataController.saveDataFromRoleForm(nameST, roleIndex, role);
-		roleControlPanel.clearPanel(tableTV);
 	}
 
 	public TableView<RoleTable> getTableTV() {

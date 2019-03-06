@@ -31,16 +31,7 @@ public class BranchControlPanel extends NameControlPanel {
 
     }
 
-    /**
-     * Vytvoří scénu s formulářem
-     *
-     * @return Scene
-     */
-    private void creatSceneCanvas() {
-        mainPanel.setCenter(controlPane);
-        this.setScene(new Scene(mainPanel));
 
-    }
 
     public GridPane createControlPanel(){
         isMainLB = new Label("Main");
@@ -72,7 +63,6 @@ public class BranchControlPanel extends NameControlPanel {
         controlPane.add(rbNo, 4, 0);
         controlPane.add(button, 5, 0);
 
-        creatSceneCanvas();
         return controlPane;
     }
 
@@ -93,10 +83,10 @@ public class BranchControlPanel extends NameControlPanel {
         button.setOnAction(event ->{
             editFormController.editDataFromBranch(nameTF.getText(), isMainBranch, branchTable);
             clearPanel(tableView);
-            this.close();
+       //     this.close();
         });
 
-        this.show();
+     //   this.show();
 
     }
 

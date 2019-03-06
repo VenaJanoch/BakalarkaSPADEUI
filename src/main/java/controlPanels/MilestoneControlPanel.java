@@ -37,8 +37,8 @@ public class MilestoneControlPanel extends DescriptionControlPanel {
      * @return Scene
      */
     private void creatSceneCanvas() {
-        mainPanel.setCenter(controlPane);
-        this.setScene(new Scene(mainPanel));
+
+      //  this.setScene(new Scene(mainPanel));
 
     }
 
@@ -58,8 +58,6 @@ public class MilestoneControlPanel extends DescriptionControlPanel {
         controlPane.add(criteriaLB, 4, 0);
         controlPane.add(criteriaCB, 5, 0);
         controlPane.add(button, 6, 0);
-
-        creatSceneCanvas();
         return controlPane;
     }
 
@@ -85,10 +83,10 @@ public class MilestoneControlPanel extends DescriptionControlPanel {
             editFormController.editDataFromMilestone(nameTF.getText(), milestoneTable, criterionList, id);
 
             clearPanelCB(tableView);
-            this.close();
+           // this.close();
         });
 
-        this.show();
+      //  this.show();
 
     }
 

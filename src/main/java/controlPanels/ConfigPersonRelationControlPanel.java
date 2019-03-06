@@ -30,16 +30,6 @@ public class ConfigPersonRelationControlPanel extends NameControlPanel {
 
     }
 
-    /**
-     * Vytvoří scénu s formulářem
-     *
-     * @return Scene
-     */
-    private void creatSceneCanvas() {
-        mainPanel.setCenter(controlPane);
-        this.setScene(new Scene(mainPanel));
-
-    }
 
     public GridPane createControlPanel(){
 
@@ -53,7 +43,6 @@ public class ConfigPersonRelationControlPanel extends NameControlPanel {
         controlPane.add(roleCB, 3, 0);
         controlPane.add(button, 4, 0);
 
-        creatSceneCanvas();
         return controlPane;
     }
 
@@ -70,10 +59,10 @@ public class ConfigPersonRelationControlPanel extends NameControlPanel {
         button.setOnAction(event ->{
             editFormController.editDataFromCPR(nameTF.getText(), this.roleIndex, cprTable);
             clearPanel(tableView);
-            this.close();
+           // this.close();
         });
 
-        this.show();
+      //  this.show();
 
     }
 

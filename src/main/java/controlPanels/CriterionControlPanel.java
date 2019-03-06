@@ -23,7 +23,7 @@ public class CriterionControlPanel extends DescriptionControlPanel {
      * @return Scene
      */
     private void creatSceneCanvas() {
-        this.setScene(new Scene(controlPane));
+      //  this.setScene(new Scene(controlPane));
 
     }
 
@@ -44,10 +44,10 @@ public class CriterionControlPanel extends DescriptionControlPanel {
         button.setOnAction(event ->{
             editFormController.editDataFromCriterion(nameTF.getText(), descriptionTF.getText(), criterionTable, id);
             clearPanel(tableView);
-            this.close();
+           // this.close();
         });
 
-        this.show();
+       // this.show();
     }
 
 

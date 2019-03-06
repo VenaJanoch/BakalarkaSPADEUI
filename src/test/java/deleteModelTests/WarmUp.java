@@ -1,6 +1,8 @@
 package deleteModelTests;
 
 import XML.ProcessGenerator;
+import com.jfoenix.controls.JFXDrawer;
+import com.jfoenix.controls.JFXDrawersStack;
 import controllers.*;
 import model.*;
 import services.Alerts;
@@ -26,12 +28,14 @@ public class WarmUp {
         ProcessGenerator processGenerator = new ProcessGenerator();
         dataModel = new DataModel(processGenerator);
         data =  new DataManipulator(processGenerator, dataModel);
-
-        ApplicationController ap = new ApplicationController(dataModel, idCreator, lists);
+        DrawerPanelController drawerPanelController = new DrawerPanelController(new JFXDrawer(), new JFXDrawer(), new JFXDrawersStack());
+        SelectItemController selectItemController = new SelectItemController(drawerPanelController);
+        ApplicationController ap = new ApplicationController(dataModel, idCreator, lists, drawerPanelController, selectItemController);
 
         DataPreparer dataPreparer = new DataPreparer(idCreator);
-        formController = new FormController(idCreator, dataModel, ap, lists, dataPreparer);
+        formController = new FormController(idCreator, dataModel, ap, lists, dataPreparer, drawerPanelController, selectItemController);
         editFormController = new EditFormController(dataModel, idCreator, mapperTableToObject, lists, dataPreparer);
+        selectItemController.setFormController(formController);
         deleteFormController = new DeleteFormController(formController, dataModel , idCreator, mapperTableToObject,
                 new DeleteControl(lists, mapperTableToObject, idCreator), lists);
         for(int i = 0; i < 12; i++){

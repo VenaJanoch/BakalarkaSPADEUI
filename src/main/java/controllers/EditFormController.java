@@ -32,6 +32,10 @@ public class EditFormController implements IEditFormController {
     }
 
     public void editDataFromClass(SegmentType segmentType, String name, String className, String superClassName, ClassTable classTable, int id) {
+        classTable.setName(id + "_" + name);
+        classTable.setClassType(className);
+        classTable.setSuperType(superClassName);
+
         switch (segmentType) {
             case RoleType:
                 editDataFromRoleType(name, className, superClassName, classTable, id);
@@ -100,14 +104,13 @@ public class EditFormController implements IEditFormController {
     }
 
     private void editDataFromRoleType(String nameST, String className, String superClassName, ClassTable classTable, int id) {
-        classTable.setName(id + "_" + nameST);
-        classTable.setClassType(className);
-        classTable.setSuperType(superClassName);
 
         String nameForManipulator = InputController.fillTextMapper(nameST);
         dataManipulator.editDataInRoleType(nameForManipulator, className, superClassName, id);
         segmentLists.updateListItem(SegmentType.RoleType, classTable.getId(), classTable);
     }
+
+
 
     public void editDataFromRole(String nameST, String description, RoleTable roleTable, int roleTypeIndex, int id) {
 
