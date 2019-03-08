@@ -132,9 +132,20 @@ public class Alerts {
     public static boolean showDeleteItemCascadeAlert(ObservableList<String> deleteList){
 
         Alert alert = new Alert(AlertType.CONFIRMATION);
+        alert.setGraphic(new ListView<>(deleteList));
+        return deleteItemDialog(alert);
+    }
+
+    public static boolean showDeleteItemCascadeAlert(ArrayList<BasicTable>  deleteList){
+        ObservableList list = FXCollections.observableList(deleteList);
+        Alert alert = new Alert(AlertType.CONFIRMATION);
+        alert.setGraphic(new ListView<BasicTable>(list));
+        return deleteItemDialog(alert);
+    }
+
+    private static boolean deleteItemDialog(Alert alert){
         alert.setTitle("Deleting selection");
         alert.setHeaderText("Do you want to delete selected elements?");
-        alert.setGraphic(new ListView<>(deleteList));
 
         Optional<ButtonType> result = alert.showAndWait();
         if (result.get() == ButtonType.OK) {
@@ -142,6 +153,7 @@ public class Alerts {
         }
 
         return false;
+
     }
 
     //(ArrayList<BasicTable> selection, Map<Integer, ArrayList<TableToObjectInstanc>> mapper ) {

@@ -27,7 +27,7 @@ public class ActivityDeleteTest {
         warmUp.getDataModel().getEditDataModel().editDataInActivity("", "", new ArrayList<>(), 0);
         warmUp.getDataModel().getEditDataModel().editDataInActivity("", "", new ArrayList<>(), 1);
 
-        warmUp.getDataModel().getDeleteDataModel().removeActivity(0);
+     //   warmUp.getDataModel().getDeleteDataModel().removeActivity(0);
 
         project = dataModel.getProject();
     }

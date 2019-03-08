@@ -69,7 +69,7 @@ public abstract class TableBasicForm extends BasicForm {
         }
         else{
             ArrayList<BasicTable> list = new ArrayList<>(selection);
-            deleteFormController.deleteCriterionWithDialog(list, tableTV); //todo prenastavit na vsechny prvky
+            deleteFormController.deleteItemWithDialog(list, tableTV, getSegmentType()); //todo prenastavit na vsechny prvky
         }
     }
 

@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
   public interface IDeleteDataModel {
 
-      void removeChange(int id);
+      void removeChange(ObservableList<Integer> indexList);
       void removeType(ObservableList<Integer> indexList);
       void removeStatus(ObservableList<Integer> indexList);
       void removeTag(ArrayList<Integer> indexList, int configId);
@@ -24,9 +24,9 @@ import java.util.ArrayList;
       void removeArtifactChangeLink(int artifactID, int changeID);
       void removeArtifact(int id);
       void removeConfiguration(ObservableList<Integer> indexList);
-      void removeWorkUnit(int id);
-      void removeActivity(int id);
+      void removeWorkUnit(ObservableList<Integer> indexList);
+      void removeActivity(ObservableList<Integer> indexList);
       void removeWorkUnitRelation(int startItemId, int endItemId);
-      void removeIteration(int id);
-      void removePhase(int id);
+      void removeIteration(ObservableList<Integer> indexList);
+      void removePhase(ObservableList<Integer> indexList);
 }

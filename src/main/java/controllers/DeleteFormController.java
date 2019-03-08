@@ -42,38 +42,70 @@ public class DeleteFormController implements IDeleteFormController {
     }
     
     
-    public void deleteActivityForm(int indexForm) {
+    private void deleteActivityForm(ObservableList activityList, ArrayList<BasicTable> selection) {
 
-        if (!forms.get(indexForm).isSave()) {
-            forms.remove(indexForm);
-            forms.add(indexForm, null);
-        }
-        deleteDataModel.removeActivity(indexForm);
+        ArrayList indexList = deleteControl.findIndicesForDelete(selection);
+        deleteDataModel.removeActivity(activityList);
+        segmentLists.removeItemFromObservableList(SegmentType.Activity, indexList);
     }
 
+    public void deleteActivityWithDialog(ArrayList<BasicTable> selection, TableView view) {
+        if(Alerts.showDeleteItemCascadeAlert(selection)){
+
+            ObservableList phaseListObservable = view.getSelectionModel().getSelectedIndices();
+
+            deleteActivityForm(phaseListObservable, selection);
+
+            view.getItems().removeAll(selection);
+            view.getSelectionModel().clearSelection();
+        }
+    }
+    
     public void deleteWorkUnit(ArrayList<Integer> indicesForm) {
 
         for(int i : indicesForm){
-            deleteWorkUnit(identificatorCreater.getWorkUnitIndex(i));
+      //      deleteWorkUnit(identificatorCreater.getWorkUnitIndex(i));
         }
     }
 
-    public void deleteWorkUnit(int indexForm) {
+    private void deleteWorkUnit(ObservableList workUnitList, ArrayList<BasicTable> selection) {
 
-        if (!forms.get(indexForm).isSave()) {
-            forms.remove(indexForm);
-            forms.add(indexForm, null);
-        }
-        deleteDataModel.removeWorkUnit(identificatorCreater.getWorkUnitIndexMaper().get(indexForm));
+        ArrayList indexList = deleteControl.findIndicesForDelete(selection);
+        deleteDataModel.removeWorkUnit(workUnitList);
+        segmentLists.removeItemFromObservableList(SegmentType.WorkUnit, indexList);    
     }
 
-    public void deleteChange(int indexForm) {
-        if (!forms.get(indexForm).isSave()) {
-            forms.remove(indexForm);
-            forms.add(indexForm, null);
-        }
-        deleteDataModel.removeChange(indexForm);
+    public void deleteWorkUnitWithDialog(ArrayList<BasicTable> selection, TableView view) {
+        if(Alerts.showDeleteItemCascadeAlert(selection)){
 
+            ObservableList phaseListObservable = view.getSelectionModel().getSelectedIndices();
+
+            deleteWorkUnit(phaseListObservable, selection);
+
+            view.getItems().removeAll(selection);
+            view.getSelectionModel().clearSelection();
+        }
+    }
+    
+
+    private void deleteChange(ObservableList changeList, ArrayList<BasicTable> selection) {
+
+        ArrayList indexList = deleteControl.findIndicesForDelete(selection);
+        deleteDataModel.removeChange(changeList);
+        segmentLists.removeItemFromObservableList(SegmentType.Change, indexList);
+
+    }
+
+    public void deleteChangeWithDialog(ArrayList<BasicTable> selection, TableView view) {
+        if(Alerts.showDeleteItemCascadeAlert(selection)){
+
+            ObservableList phaseListObservable = view.getSelectionModel().getSelectedIndices();
+
+            deleteChange(phaseListObservable, selection);
+
+            view.getItems().removeAll(selection);
+            view.getSelectionModel().clearSelection();
+        }
     }
 
     public void deleteArtifact(int indexForm) {
@@ -85,24 +117,44 @@ public class DeleteFormController implements IDeleteFormController {
         deleteDataModel.removeArtifact(indexForm);
 
     }
+    
 
-    public void deleteIterationForm(int formIdentificator) {
+    private void deleteIterationForm(ObservableList iterationList, ArrayList<BasicTable> selection) {
 
-        if (!forms.get(formIdentificator).isSave()) {
-            forms.remove(formIdentificator);
-            forms.add(formIdentificator, null);
-        }
-
-        deleteDataModel.removeIteration(identificatorCreater.getIterationId(formIdentificator));
+        ArrayList indexList = deleteControl.findIndicesForDelete(selection);
+        deleteDataModel.removeIteration(iterationList);
+        segmentLists.removeItemFromObservableList(SegmentType.Iteration, indexList);
     }
 
-    public void deletePhaseForm(int formIdentificator) {
+    public void deleteIterationWithDialog(ArrayList<BasicTable> selection, TableView view) {
+        if(Alerts.showDeleteItemCascadeAlert(selection)){
 
-        if (!forms.get(formIdentificator).isSave()) {
-            forms.remove(formIdentificator);
-            forms.add(formIdentificator, null);
+            ObservableList phaseListObservable = view.getSelectionModel().getSelectedIndices();
+
+            deleteIterationForm(phaseListObservable, selection);
+
+            view.getItems().removeAll(selection);
+            view.getSelectionModel().clearSelection();
         }
-        deleteDataModel.removePhase(identificatorCreater.getPhaseId(formIdentificator));
+    }
+    
+    private void deletePhaseWithDialog(ArrayList<BasicTable> selection, TableView view) {
+        if(Alerts.showDeleteItemCascadeAlert(selection)){
+
+            ObservableList phaseListObservable = view.getSelectionModel().getSelectedIndices();
+
+            deletePhaseForm(phaseListObservable, selection);
+
+            view.getItems().removeAll(selection);
+            view.getSelectionModel().clearSelection();
+        }
+    }
+
+    public void deletePhaseForm(ObservableList phaseList, ArrayList<BasicTable> selection) {
+
+        ArrayList indexList = deleteControl.findIndicesForDelete(selection);
+        deleteDataModel.removePhase(phaseList);
+        segmentLists.removeItemFromObservableList(SegmentType.Phase, indexList);
     }
 
     public void deleteConfigurationWithDialog(ArrayList<BasicTable> selection, TableView<ConfigTable> tableView) {
@@ -394,6 +446,61 @@ public class DeleteFormController implements IDeleteFormController {
 
             view.getItems().removeAll(selection);
             view.getSelectionModel().clearSelection();
+        }
+
+    }
+
+    @Override
+    public void deleteItemWithDialog(ArrayList<BasicTable> list, TableView tableTV, SegmentType segmentType) {
+        switch (segmentType){
+            case Phase:
+                deletePhaseWithDialog(list, tableTV);
+            break;
+            case Iteration:
+                deleteIterationWithDialog(list, tableTV);
+                break;
+            case Activity:
+                deleteActivityWithDialog(list, tableTV);
+                break;
+            case WorkUnit:
+                deleteWorkUnitWithDialog(list, tableTV);
+                break;
+            case Milestone:
+                deleteMilestoneWithDialog(list, tableTV);
+                break;
+            case Criterion:
+                deleteCriterionWithDialog(list, tableTV);
+                break;
+            case ConfigPersonRelation:
+                deleteCPRWithDialog(list, tableTV);
+                break;
+            case RoleType:
+                deleteRoleTypeWithDialog(list, tableTV);
+                break;
+            case Priority:
+                deletePriorityWithDialog(list, tableTV);
+                break;
+            case Severity:
+                deleteSeverityWithDialog(list, tableTV);
+                break;
+            case Status:
+                deleteStatusWithDialog(list, tableTV);
+                break;
+            case Type:
+                deleteTypeWithDialog(list, tableTV);
+                break;
+            case Resolution:
+                deleteResolutionWithDialog(list, tableTV);
+                break;
+            case Relation:
+                deleteRelationWithDialog(list, tableTV);
+                break;
+            case Change:
+                deleteChangeWithDialog(list, tableTV);
+                break;
+            case Branch:
+                deleteBranchDialog(list, tableTV);
+                break;
         }
 
     }

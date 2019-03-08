@@ -2,6 +2,7 @@ package interfaces;
 
 import javafx.collections.ObservableList;
 import javafx.scene.control.TableView;
+import services.SegmentType;
 import tables.BasicTable;
 import tables.ClassTable;
 import tables.ConfigTable;
@@ -11,13 +12,13 @@ import java.util.ArrayList;
 
   public interface IDeleteFormController {
 
-      void deleteActivityForm(int indexForm);
+      void deleteActivityWithDialog(ArrayList<BasicTable> selection, TableView tableView);
       void deleteWorkUnit(ArrayList<Integer> indicesForm);
-      void deleteWorkUnit(int indexForm);
-      void deleteChange(int indexForm);
+      void deleteWorkUnitWithDialog(ArrayList<BasicTable> selection, TableView tableView);
+      void deleteChangeWithDialog(ArrayList<BasicTable> selection, TableView tableView);
       void deleteArtifact(int indexForm);
-      void deleteIterationForm(int formIdentificator);
-      void deletePhaseForm(int formIdentificator);
+      void deleteIterationWithDialog(ArrayList<BasicTable> selection, TableView tableView);
+      void deletePhaseForm(ObservableList phaseList, ArrayList<BasicTable> selection);
       void deleteConfigurationWithDialog(ArrayList<BasicTable> selection, TableView<ConfigTable> tableView);
       void deleteTypeWithDialog(ArrayList<BasicTable> selection, TableView view);
       void deleteStatusWithDialog(ArrayList<BasicTable> selection, TableView view);
@@ -32,4 +33,6 @@ import java.util.ArrayList;
       void deleteCriterionWithDialog(ArrayList<BasicTable> selection, TableView tableView);
       void deleteCPRWithDialog(ArrayList<BasicTable> selection, TableView view);
       void deleteBranchDialog(ArrayList<BasicTable> selection, TableView view);
-}
+
+      void deleteItemWithDialog(ArrayList<BasicTable> list, TableView tableTV, SegmentType segmentType);
+  }

@@ -115,12 +115,16 @@ public class DeleteDataModel implements IDeleteDataModel {
         }
     }
 
-    public void removeWorkUnit(int id) {
-        project.getWorkUnits().remove(dataModel.getWUIndexInProject(id));
+    public void removeWorkUnit(ObservableList<Integer> indexList) {
+            for(int i = indexList.size() -1; i >= 0; i-- ){
+                project.getWorkUnits().remove((int)indexList.get(i));
+            }
     }
 
-    public void removeActivity(int id) {
-        project.getActivities().remove(dataModel.getActivityIndexInProject(id));
+    public void removeActivity(ObservableList<Integer> indexList) {
+        for(int i = indexList.size() -1; i >= 0; i-- ){
+            project.getActivities().remove((int)indexList.get(i));
+        }
     }
 
     public void removeWorkUnitRelation(int startItemId, int endItemId) {
@@ -129,17 +133,22 @@ public class DeleteDataModel implements IDeleteDataModel {
         project.getWorkUnits().get(endItemId).setRelationIndex(null);
 
     }
-    public void removeIteration(int id) {
-        project.getIterations().remove(dataModel.getIterationIndexInProject(id));
-
+    public void removeIteration(ObservableList<Integer> indexList) {
+        for(int i = indexList.size() -1; i >= 0; i-- ){
+            project.getIterations().remove((int)indexList.get(i));
+        }
     }
 
-    public void removePhase(int id) {
-        project.getPhases().remove(dataModel.getPhaseIndexInProject(id));
+    public void removePhase(ObservableList<Integer> indexList) {
+        for(int i = indexList.size() -1; i >= 0; i-- ){
+            project.getPhases().remove((int)indexList.get(i));
+        }
     }
 
-    public void removeChange(int id) {
-        project.getChanges().remove(dataModel.getChangeIndexInProject(id));
+    public void removeChange(ObservableList<Integer> indexList) {
+        for(int i = indexList.size() -1; i >= 0; i-- ){
+            project.getChanges().remove((int)indexList.get(i));
+        }
     }
 
 }

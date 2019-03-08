@@ -29,7 +29,7 @@ public class WorkUnitDeleteTest {
         dataModel.getEditDataModel().editDataInWorkUnit("Milestone", "", "",
                 0, 0, 0, 0, 0, 0, 0,0,
                 true, 1);
-        warmUp.getDataModel().getDeleteDataModel().removeWorkUnit(0);
+    //    warmUp.getDataModel().getDeleteDataModel().removeWorkUnit(0);
 
         project = dataModel.getProject();
     }

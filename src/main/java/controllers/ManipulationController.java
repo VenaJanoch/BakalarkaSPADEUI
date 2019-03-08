@@ -137,21 +137,6 @@ public class ManipulationController {
 
     public void deleteForm(int formIndex, SegmentType segmentType){
         switch (segmentType){
-            case Phase:
-                deleteFormController.deletePhaseForm(formIndex);
-                break;
-            case Iteration:
-                deleteFormController.deleteIterationForm(formIndex);
-                break;
-            case Activity:
-                deleteFormController.deleteActivityForm(formIndex);
-                break;
-            case WorkUnit:
-                deleteFormController.deleteWorkUnit(formIndex);
-                break;
-            case Change:
-                deleteFormController.deleteChange(formIndex);
-                break;
             case Artifact:
                 deleteFormController.deleteArtifact (formIndex);
                 break;

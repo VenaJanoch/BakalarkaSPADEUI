@@ -28,7 +28,7 @@ public class IterationDeleteTest {
                  new ArrayList<>(), 0);
         warmUp.getDataModel().getEditDataModel().editDataInIteration("", null, null, "", 0,
                 new ArrayList<>(), 1);
-        warmUp.getDataModel().getDeleteDataModel().removeIteration(0);
+      //  warmUp.getDataModel().getDeleteDataModel().removeIteration(0);
 
         project = dataModel.getProject();
     }
