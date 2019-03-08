@@ -39,9 +39,9 @@ public class ConfigPersonRelationControlPanel extends NameControlPanel {
         roleCB = new ComboBox<>(formDataController.getRoleList());
         roleCB.getSelectionModel().selectedIndexProperty().addListener(roleListener);
 
-        controlPane.add(roleLB, 2, 0);
-        controlPane.add(roleCB, 3, 0);
-        controlPane.add(button, 4, 0);
+        controlPane.add(roleLB, 0, 1);
+        controlPane.add(roleCB, 1, 1);
+        controlPane.add(button, 1, 2);
 
         return controlPane;
     }

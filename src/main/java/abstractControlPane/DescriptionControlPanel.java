@@ -23,20 +23,18 @@ public abstract class DescriptionControlPanel extends NameControlPanel {
         createBaseControlPanel();
     }
 
-    protected void createBaseControlPanel() {
+    public void createBaseControlPanel() {
 
         descriptionLB = new Label("Description: ");
         descriptionTF = new TextField();
 
-        controlPane.add(descriptionLB, 2, 0);
-        controlPane.add(descriptionTF, 3, 0);
+        controlPane.add(descriptionLB, 0, 1);
+        controlPane.add(descriptionTF, 1, 1);
 
     }
 
 
-   protected abstract void showEditControlPanel(BasicTable basicTable, TableView tableView);
+    protected abstract void showEditControlPanel(BasicTable basicTable, TableView tableView);
+    protected abstract void addItemsToControlPanel();
 
-    public String getDescriptionText() {
-        return descriptionTF.getText();
-    }
 }

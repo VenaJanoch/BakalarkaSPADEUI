@@ -23,7 +23,7 @@ public class WorkUnitValueTest {
         warmUp.getDataModel().getSaveDataModel().createNewWorkUnit(2);
         workUnit = warmUp.getDataModel().getWorkUnit(2);
         warmUp.getDataModel().addDataToWorkUnit( workUnit,"Jmeno","Desc", "Category", 2, 2, 2, 2,
-                2, 2, 2, 56, 65, 23, false, 0, false);
+                2, 2, 2, 56, false, 0);
 
     }
 

@@ -52,4 +52,18 @@ import java.util.Map;
       String[] getBranchStringData(int id);
       String getTagData(int id, int configFormId);
 
+     String[] getPhaseStringData(int id);
+
+     List<Integer> getWorkUnitFromSegment(int id, SegmentType phase);
+
+     String[] getIterationStringData(int id);
+
+      String[] getActivityStringData(int id);
+
+     String[] getChangeStringData(int id);
+
+     String[] getArtifactStringData(int id);
+
+     String[] getWorkUnitStringData(int id);
+
  }

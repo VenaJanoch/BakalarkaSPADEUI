@@ -33,10 +33,8 @@ public class ArtifactDeleteTest {
 
         warmUp.getDataModel().getSaveDataModel().createNewArtifact(0);
         warmUp.getDataModel().getSaveDataModel().createNewArtifact(1);
-        warmUp.getDataModel().getEditDataModel().editDataInArtifact("", "", null, true, 0,
-                0, 0, 0, 0);
-        warmUp.getDataModel().getEditDataModel().editDataInArtifact("", "", null, true, 0,
-                0, 0, 0, 1);
+        warmUp.getDataModel().getEditDataModel().editDataInArtifact("", "", null, true,  0, 0, 0);
+        warmUp.getDataModel().getEditDataModel().editDataInArtifact("", "", null, true,  0, 0, 1);
         warmUp.getDataModel().getDeleteDataModel().removeArtifact(0);
 
         project = dataModel.getProject();

@@ -2,22 +2,34 @@ package forms;
 
 import java.time.LocalDate;
 
+import abstractform.TableBasicForm;
+import controlPanels.IterationControlPanel;
+import controlPanels.PhaseControlPanel;
 import controllers.CanvasController;
 import controllers.FormController;
 import abstractform.Date2DescBasicForm;
 import graphics.DragAndDropItemPanel;
-import interfaces.IDeleteFormController;
-import interfaces.IEditFormController;
-import interfaces.IFormDataController;
-import interfaces.ISegmentForm;
+import interfaces.*;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.event.EventHandler;
 import javafx.geometry.HPos;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Label;
+import javafx.geometry.Insets;
+import javafx.scene.Node;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
 import services.Alerts;
+import services.CanvasType;
 import services.SegmentType;
 import tables.BasicTable;
+import tables.IterationTable;
+import tables.PhaseTable;
 
 /**
  * Třída představující formulář pro segment Iteration, odděděná od třídy
@@ -26,16 +38,13 @@ import tables.BasicTable;
  * @author Václav Janoch
  *
  */
-public class IterationForm extends Date2DescBasicForm implements ISegmentForm {
+public class IterationForm extends TableBasicForm implements ISegmentTableForm {
 
 	/**
 	 * Globální proměnné třídy
 	 */
-	private Label configLB;
-
-	private ChoiceBox<BasicTable> configCB;
-
-	private int chooseConfigID;
+	private TableView<IterationTable> tableTV;
+	private IterationControlPanel editControlPanel;
 
 	/**
 	 * Konstruktor třídy Zinicializuje globální proměnné tříd Nastaví reakci na
@@ -46,97 +55,109 @@ public class IterationForm extends Date2DescBasicForm implements ISegmentForm {
 	public IterationForm(FormController formController, IFormDataController formDataController, IEditFormController editFormController, IDeleteFormController deleteFormController, CanvasController canvas, DragAndDropItemPanel dgItemPanel,
 						 SegmentType type, int indexForm) {
 
-		super(formController, formDataController, editFormController, deleteFormController, canvas, dgItemPanel, type);
-		this.indexForm = indexForm;
-		/*this.setOnCloseRequest(e -> {
-
-			e.consume();
-			int result = Alerts.showSaveSegment();
-			if (result == 1) {
-				setActionSubmitButton();
-			} else if (result == 0) {
-				this.close();
-			}
-		});*/
-
-		getSubmitButton().setOnAction(event -> setActionSubmitButton());
+		super(formController, formDataController, editFormController, deleteFormController, type);
+		editControlPanel = new IterationControlPanel("Edit", formDataController, editFormController, formController);
+		setEventHandler();
 		createForm();
+		setActionSubmitButton();
 
 	}
-	public void setDataToForm(String name, String description, LocalDate startDate, LocalDate endDate, int configurationIndex) {
-		getNameTF().setText(name);
-		getDescriptionTF().setText(description);
-		dateDP.setValue(startDate);
-		date2DP.setValue(endDate);
-		configCB.getSelectionModel().select(configurationIndex);
+	@Override
+	protected void setEventHandler() {
+		OnMousePressedEventHandler = new EventHandler<MouseEvent>() {
+
+			@Override
+			public void handle(MouseEvent t) {
+				if(t.getClickCount() == 2) {
+					showEditPanel();
+				}
+			}
+		};
+	}
+
+
+
+
+	@Override
+	public void createForm() {
+
+		this.setCenter(getTable());
+
 	}
 
 	@Override
-	public void closeForm() {
+	public Node getTable() {
+		tableTV = new TableView<IterationTable>();
 
-		String actName = getNameTF().getText();
-		LocalDate startDate = dateDP.getValue();
-		LocalDate endDate = dateDP.getValue();
-		String desc = getDescriptionTF().getText();
-		isSave = formDataController.saveDataFromIterationForm(actName, startDate,endDate,desc, chooseConfigID, canvasController.getListOfItemOnCanvas(), indexForm);
+		TableColumn<IterationTable, String> nameColumn = new TableColumn<IterationTable, String>("Name");
+		TableColumn<IterationTable, String> configurationColumn = new TableColumn<IterationTable, String>("Configuration");
+
+		nameColumn.setCellValueFactory(new PropertyValueFactory("name"));
+		nameColumn.setMinWidth(150);
+		nameColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+
+		configurationColumn.setCellValueFactory(new PropertyValueFactory("configuration"));
+		configurationColumn.setMinWidth(150);
+		configurationColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+
+
+		tableTV.getColumns().addAll(nameColumn, configurationColumn);
+		tableTV.setOnMousePressed(OnMousePressedEventHandler);
+		tableTV.setEditable(false);
+
+		tableTV.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+
+		tableTV.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+
+		tableTV.setOnKeyReleased(event -> deleteSelected(event));
+
+		BorderPane.setMargin(tableTV, new Insets(5));
+
+		return tableTV;
 	}
 
 	@Override
-	public void setActionSubmitButton() {
-		closeForm();
-		if (isSave){
-			//close();
+	public void deleteSelected(KeyEvent event) {
+
+		if (event.getCode() == KeyCode.DELETE) {
+			deleteItem(tableTV);
+		}
+	}
+
+	@Override
+	public GridPane createControlPane() {
+		return null;
+	}
+
+	private void showEditPanel(){
+		IterationTable table = tableTV.getSelectionModel().getSelectedItems().get(0);
+		if (table != null) {
+			editControlPanel.showEditControlPanel(table, tableTV);
+			formController.showEditControlPanel(editControlPanel);
 		}
 	}
 
 
-	public void createForm() {
-
-		configLB = new Label("Configuration: ");
-		configCB = new ChoiceBox<>();
-
-		configCB.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
-
-			@Override
-			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-
-				chooseConfigID = newValue.intValue();
-
-			}
-		});
-
-		fillInfoPart();
-	}
-
-	/**
-	 * Pomocná metoda pro přidání prvků do GridPane
-	 */
-	private void fillInfoPart() {
-
-		dateLB.setText("Start-Date");
-		date2LB.setText("End-Date");
-
-		getInfoPart().add(configLB, 0, 4);
-		getInfoPart().setHalignment(configLB, HPos.RIGHT);
-		getInfoPart().add(configCB, 1, 4);
-
+	@Override
+	public void setActionSubmitButton() {
+		addButton.setOnAction(event -> addItem());
+		removeButton.setOnAction(event -> deleteItem(tableTV));
+		editButton.setOnAction(event -> showEditPanel());
 	}
 
 	@Override
-	public void deleteItem() {
+	public void addItem() {
+		String nameST = "";// criterionControlPanel.getName();
 
-		deleteFormController.deleteIterationForm(indexForm);
+		int id = formController.createTableItem(SegmentType.Iteration);
+		String idName = id + "_" + nameST;
 
+		IterationTable table = new IterationTable(idName, "", id);
+
+		tableTV.getItems().add(table);
+		tableTV.sort();
+		int lastItem = tableTV.getItems().size();
+		tableTV.getSelectionModel().select(lastItem - 1);
+		showEditPanel();
 	}
-
-	/*** Getrs and Setrs ***/
-
-	public ChoiceBox<BasicTable> getConfigCB() {
-		return configCB;
-	}
-
-	public void setConfigCB(ChoiceBox<BasicTable> configCB) {
-		this.configCB = configCB;
-	}
-
 }

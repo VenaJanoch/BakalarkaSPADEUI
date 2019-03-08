@@ -32,7 +32,7 @@ public class PhaseValueTest {
 
         dataModel.getSaveDataModel().createNewPhase(2);
         phase = dataModel.getPhase(2);
-        dataModel.addDataToPhase(phase, "Jmeno", date,"desc", 2,3,67, 98, itemSet);
+        dataModel.addDataToPhase(phase, "Jmeno", date,"desc", 2,3, itemSet);
 
 
     }

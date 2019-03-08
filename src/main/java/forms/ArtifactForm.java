@@ -2,23 +2,33 @@ package forms;
 
 import java.time.LocalDate;
 
+import abstractform.TableBasicForm;
+import controlPanels.ArtifactControlPanel;
+import controlPanels.PhaseControlPanel;
 import controllers.FormController;
 import SPADEPAC.ArtifactClass;
 import abstractform.DateDescBasicForm;
-import interfaces.IDeleteFormController;
-import interfaces.IEditFormController;
-import interfaces.IFormDataController;
-import interfaces.ISegmentForm;
+import interfaces.*;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
+import javafx.event.EventHandler;
 import javafx.geometry.HPos;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.RadioButton;
+import javafx.geometry.Insets;
+import javafx.scene.Node;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
 import services.Alerts;
 import services.Constans;
 import services.SegmentType;
+import tables.ArtifactTable;
+import tables.PhaseTable;
 
 /**
  * Třída představující formulář pro segment Artifact, odděděná od třídy
@@ -26,175 +36,122 @@ import services.SegmentType;
  *
  * @author Václav Janoch
  */
-public class ArtifactForm extends DateDescBasicForm implements ISegmentForm {
-    /**
-     * Globální proměnné třídy
-     */
-    private Label authorRoleLB;
-    private Label mineTypeLB;
+public class ArtifactForm extends TableBasicForm implements ISegmentTableForm {
 
-    private ComboBox<String> authorRoleCB;
-    private ComboBox<ArtifactClass> mineTypeCB;
-    private RadioButton existRB;
 
-    private int typeIndex;
-    private int authorIndex;
+    private TableView<ArtifactTable> tableTV;
+    private ArtifactControlPanel editControlPanel;
+
 
     /**
      * Konstruktor třídy Zinicializuje globální proměnné tříd Nastaví velikost
      * okna a reakci na uzavření formuláři
      */
-    public ArtifactForm(FormController formController, IFormDataController formDataController, IEditFormController editFormController, IDeleteFormController deleteFormController,SegmentType type, int indexForm) {
+    public ArtifactForm(FormController formController, IFormDataController formDataController, IEditFormController editFormController,
+                        IDeleteFormController deleteFormController,SegmentType type) {
         super(formController, formDataController, editFormController, deleteFormController, type);
-        this.indexForm = indexForm;
 
-        this.setMinSize(Constans.littleformWidth, Constans.littleformHeight);
-        this.setMaxSize(Constans.littleformWidth, Constans.littleformHeight);
-
-      /*  this.setOnCloseRequest(e -> {
-
-            e.consume();
-            int result = Alerts.showSaveSegment();
-            if (result == 1) {
-                setActionSubmitButton();
-            } else if (result == 0) {
-                this.close();
-            }
-        });
-       */
-        getSubmitButton().setOnAction(event -> setActionSubmitButton());
+        editControlPanel = new ArtifactControlPanel("Edit", formDataController, editFormController, formController);
+        setEventHandler();
         createForm();
+        setActionSubmitButton();
+    }
+
+    @Override
+    protected void setEventHandler() {
+        OnMousePressedEventHandler = new EventHandler<MouseEvent>() {
+
+            @Override
+            public void handle(MouseEvent t) {
+                if (t.getClickCount() == 2) {
+                    showEditPanel();
+                }
+            }
+        };
+    }
+
+
+    @Override
+    public void createForm() {
+
+        this.setCenter(getTable());
 
     }
 
     @Override
-    public void closeForm() {
+    public Node getTable() {
+        tableTV = new TableView<ArtifactTable>();
 
-        String actName = getNameTF().getText();
-        LocalDate createdDate = dateDP.getValue();
-        String type = ArtifactClass.values()[typeIndex].name();
-        String desc = getDescriptionTF().getText();
+        TableColumn<ArtifactTable, String> nameColumn = new TableColumn<ArtifactTable, String>("Name");
+        TableColumn<ArtifactTable, String> descriptionColumn = new TableColumn<ArtifactTable, String>("Description");
 
-        isSave = formDataController.saveDataFromArtifact(actName, createdDate, type, desc, authorIndex, typeIndex, existRB.isSelected(), indexForm);
+        nameColumn.setCellValueFactory(new PropertyValueFactory("name"));
+        nameColumn.setMinWidth(150);
+        nameColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+
+        descriptionColumn.setCellValueFactory(new PropertyValueFactory("description"));
+        descriptionColumn.setMinWidth(150);
+        descriptionColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+
+
+        tableTV.getColumns().addAll(nameColumn, descriptionColumn);
+        tableTV.setOnMousePressed(OnMousePressedEventHandler);
+        tableTV.setEditable(false);
+
+        tableTV.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+
+        tableTV.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+
+        tableTV.setOnKeyReleased(event -> deleteSelected(event));
+
+        BorderPane.setMargin(tableTV, new Insets(5));
+
+        return tableTV;
     }
+
+    @Override
+    public void deleteSelected(KeyEvent event) {
+
+        if (event.getCode() == KeyCode.DELETE) {
+            deleteItem(tableTV);
+        }
+    }
+
+    @Override
+    public GridPane createControlPane() {
+        return null;
+    }
+
+    private void showEditPanel() {
+        ArtifactTable artifactTable = tableTV.getSelectionModel().getSelectedItems().get(0);
+        if (artifactTable != null) {
+            editControlPanel.showEditControlPanel(artifactTable, tableTV);
+            formController.showEditControlPanel(editControlPanel);
+        }
+    }
+
 
     @Override
     public void setActionSubmitButton() {
-
-        closeForm();
-        if (isSave) {
-           // close();
-        }
-
-    }
-
-    public void createForm() {
-
-        dateLB.setText("Created: ");
-
-        authorRoleLB = new Label("Author: ");
-        authorRoleCB = new ComboBox<String>();
-        authorRoleCB.setVisibleRowCount(5);
-        authorRoleCB.getSelectionModel().selectedIndexProperty().addListener(roleListenerAut);
-
-        mineTypeLB = new Label("Mine Type: ");
-        mineTypeCB = new ComboBox<ArtifactClass>(FXCollections.observableArrayList(ArtifactClass.values()));
-        mineTypeCB.getSelectionModel().selectedIndexProperty().addListener(typeListener);
-        mineTypeCB.setVisibleRowCount(5);
-        existRB = new RadioButton("Exist");
-        existRB.setSelected(true);
-
-        fillInfoPart();
-    }
-
-    /**
-     * ChangeListener pro určení indexu prvku z comboBoxu pro Role
-     */
-    ChangeListener<Number> roleListenerAut = new ChangeListener<Number>() {
-
-        @Override
-        public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-            authorIndex = newValue.intValue();
-
-        }
-    };
-
-    /**
-     * ChangeListener pro určení indexu prvku z comboBoxu pro Type
-     */
-    ChangeListener<Number> typeListener = new ChangeListener<Number>() {
-
-        @Override
-        public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-
-            typeIndex = newValue.intValue();
-
-        }
-    };
-
-    /**
-     * Pomocná metoda pro naplnění GridPane prvky
-     */
-    private void fillInfoPart() {
-
-        getInfoPart().add(authorRoleLB, 0, 3);
-        getInfoPart().setHalignment(authorRoleLB, HPos.RIGHT);
-        getInfoPart().add(authorRoleCB, 1, 3);
-        getInfoPart().add(mineTypeLB, 0, 4);
-        getInfoPart().setHalignment(mineTypeLB, HPos.RIGHT);
-        getInfoPart().add(mineTypeCB, 1, 4);
-        getInfoPart().add(existRB, 1, 5);
-
+        addButton.setOnAction(event -> addItem());
+        removeButton.setOnAction(event -> deleteItem(tableTV));
+        editButton.setOnAction(event -> showEditPanel());
     }
 
     @Override
-    public void deleteItem() {
+    public void addItem() {
+        String nameST = "";// criterionControlPanel.getName();
 
-        deleteFormController.deleteArtifact(indexForm);
+        int id = formController.createTableItem(SegmentType.Artifact);
+        String idName = id + "_" + nameST;
 
+        ArtifactTable table = new ArtifactTable(idName, "", id);
+        tableTV.getItems().add(table);
+        tableTV.sort();
+
+        int lastItem = tableTV.getItems().size();
+        tableTV.getSelectionModel().select(lastItem - 1);
+        showEditPanel();
     }
 
-    /**
-     * Getrs and Setrs
-     ***/
-
-    public ComboBox<String> getAuthorRoleCB() {
-        return authorRoleCB;
-    }
-
-    public void setAuthorRoleCB(ComboBox<String> authorRoleCB) {
-        this.authorRoleCB = authorRoleCB;
-    }
-
-    public ComboBox<ArtifactClass> getMineTypeCB() {
-        return mineTypeCB;
-    }
-
-    public void setMineTypeCB(ComboBox<ArtifactClass> mineTypeCB) {
-        this.mineTypeCB = mineTypeCB;
-    }
-
-    public RadioButton getExistRB() {
-        return existRB;
-    }
-
-    public void setExistRB(RadioButton existRB) {
-        this.existRB = existRB;
-    }
-
-    public void setDataToForm(String name, String descriptoin, int authorIndex, LocalDate createDate, String mimeType, boolean isExist) {
-        getNameTF().setText(name);
-        getDescriptionTF().setText(descriptoin);
-        authorRoleCB.getSelectionModel().select(authorIndex);
-        dateDP.setValue(createDate);
-        int i = 0;
-        for (; i < ArtifactClass.values().length; i++) {
-            if (ArtifactClass.values()[i].equals(mimeType)) {
-                break;
-            }
-        }
-        mineTypeCB.getSelectionModel().select(i);
-        existRB.setSelected(isExist);
-        isSave = true;
-    }
 }

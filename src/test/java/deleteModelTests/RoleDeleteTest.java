@@ -57,9 +57,9 @@ public class RoleDeleteTest {
         formDataController.saveDataFromCPR("Jmeno1", 1, new CPRTable("0_Jmeno1","1", 0));
 
         dataModel.getEditDataModel().editDataInWorkUnit("Milestone", "", "",
-                0, 0, 0, 0, 0, 0, 0,0, 0,
-                0.0, true, 0, true);
-        dataModel.getEditDataModel().editDataInArtifact("", "", null, false,  0, 0, 0, 0, 0);
+                0, 0, 0, 0, 0, 0, 0,0,
+                true, 0);
+        dataModel.getEditDataModel().editDataInArtifact("", "", null, false,  0,0, 0);
         dataModel.getEditDataModel().editDataInConfiguration("", null, false, 0,  new ArrayList<>(), list,
                 new ArrayList<>(), new ArrayList<>(), 0);
 

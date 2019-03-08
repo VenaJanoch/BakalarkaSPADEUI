@@ -29,7 +29,7 @@ public class PhaseNullValueTest {
 
         dataModel.getSaveDataModel().createNewPhase(0);
         phase = dataModel.getPhase(0);
-        dataModel.addDataToPhase(phase, null, null, null, 0, 0,0, 0, new ArrayList<>());
+        dataModel.addDataToPhase(phase, null, null, null, 0, 0, new ArrayList<>());
 
     }
 

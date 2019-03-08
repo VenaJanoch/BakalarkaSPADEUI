@@ -1,29 +1,7 @@
 package services;
 
 import java.util.ArrayList;
-import java.util.List;
 
-import SPADEPAC.Artifact;
-import SPADEPAC.Branch;
-import SPADEPAC.Change;
-import SPADEPAC.ConfigPersonRelation;
-import SPADEPAC.Configuration;
-import SPADEPAC.Criterion;
-import SPADEPAC.Link;
-import SPADEPAC.Milestone;
-import SPADEPAC.Priority;
-import SPADEPAC.Project;
-import SPADEPAC.Relation;
-import SPADEPAC.Resolution;
-import SPADEPAC.Role;
-import SPADEPAC.RoleType;
-import SPADEPAC.Severity;
-import SPADEPAC.Status;
-import SPADEPAC.Type;
-import SPADEPAC.WorkUnit;
-import forms.ConfigPersonRelationForm;
-import forms.MilestoneForm;
-import forms.RoleForm;
 import graphics.ChangeArtifactLink;
 import graphics.NodeLink;
 import graphics.WorkUnitLink;
@@ -37,6 +15,8 @@ public class SegmentLists {
      * Globální proměnné třídy
      **/
     private ObservableList<BasicTable> configObservable;
+
+    private ObservableList<BasicTable> workUnitsObservable;
 
     private ObservableList<BasicTable> branchObservable;
 
@@ -84,6 +64,10 @@ public class SegmentLists {
 
         configObservable = FXCollections.observableArrayList();
         configObservable.add(new ConfigTable("", "", -1, -1));
+
+        workUnitsObservable = FXCollections.observableArrayList();
+        workUnitsObservable.add(new WorkUnitTable("", -1));
+
 
         roleObservable = FXCollections.observableArrayList();
         roleObservable.add(new RoleTable("","","",-1));
@@ -408,4 +392,7 @@ public class SegmentLists {
     }
 
 
+    public ObservableList<BasicTable> getWorkUnitsObservable() {
+        return workUnitsObservable;
+    }
 }

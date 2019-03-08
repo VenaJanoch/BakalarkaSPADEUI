@@ -29,7 +29,7 @@ public class ChangeNullValueTest {
 
         dataModel.getSaveDataModel().createNewChange(2);
         change = dataModel.getChange(2);
-        dataModel.addDataToChange(change,null, null, 0, 0, false);
+        dataModel.addDataToChange(change,null, null,  false);
 
     }
 

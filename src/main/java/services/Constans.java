@@ -49,7 +49,8 @@ public class Constans {
     /**
      * Konstanty určující tlačítka pro formulářová plátna
      */
-    public static final int[] projectDragTextIndexs = {0, 1, 2, 3};
+
+    public static final int[] projectDragTextIndexs = {11, 6, 21, 22, 10};
     public static final int[] phaseDragTextIndexs = {3};
     public static final int[] iterationDragTextIndexs = {3};
     public static final int[] activityDragTextIndexs = {3};
@@ -178,7 +179,7 @@ public class Constans {
     public static final String linkPicture = "link.svn";
 
     public static final String[] addItemNames = {"Project", "Phase", "Iteration", "Activity", "Work Unit", "Milestone", "Criterion", "Config-role",
-            "Role Type", "Priority", "Severity", "Relation", "Resolution", "Status", "Type", "Branch"};
+            "Role Type", "Priority", "Severity", "Relation", "Resolution", "Status", "Type", "Branch", "Change", "Artifact"};
 
 
     public static final int projectFormIndex = 0;
@@ -197,9 +198,11 @@ public class Constans {
     public static final int statusFormIndex = 13;
     public static final int wuTypeFormIndex = 14;
     public static final int branchIndex = 15;
-    public static final int configurationFormIndex = 16;
+    public static final int changeFormIndex = 16;
+    public static final int artifactFormIndex = 17;
+    public static final int configurationFormIndex = 18;
+    public static final int roleFormIndex = 19;
 
-    public static final int roleFormIndex = 17;
 
 
     public static final double rightDrawerWidth = 450;

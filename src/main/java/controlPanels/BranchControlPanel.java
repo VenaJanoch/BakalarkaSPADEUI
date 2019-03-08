@@ -58,10 +58,10 @@ public class BranchControlPanel extends NameControlPanel {
 
             }
         });
-        controlPane.add(isMainLB, 2, 0);
-        controlPane.add(rbYes, 3, 0);
-        controlPane.add(rbNo, 4, 0);
-        controlPane.add(button, 5, 0);
+        controlPane.add(isMainLB, 0, 1);
+        controlPane.add(rbYes, 1, 1);
+        controlPane.add(rbNo, 0, 2);
+        controlPane.add(button, 1, 2);
 
         return controlPane;
     }

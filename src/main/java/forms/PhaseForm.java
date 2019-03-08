@@ -2,167 +2,165 @@ package forms;
 
 import java.time.LocalDate;
 
+import abstractform.TableBasicForm;
+import controlPanels.CriterionControlPanel;
+import controlPanels.PhaseControlPanel;
 import controllers.CanvasController;
 import controllers.FormController;
 import abstractform.DateDescBasicForm;
 import graphics.DragAndDropItemPanel;
-import interfaces.IDeleteFormController;
-import interfaces.IEditFormController;
-import interfaces.IFormDataController;
-import interfaces.ISegmentForm;
+import interfaces.*;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.event.EventHandler;
 import javafx.geometry.HPos;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Label;
+import javafx.geometry.Insets;
+import javafx.scene.Node;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
 import services.*;
 import tables.BasicTable;
+import tables.CriterionTable;
+import tables.PhaseTable;
 
 /**
  * Třída představující formulář pro segment Phase, odděděná od třídy
  * DeteDescBasicForm a implementující ISegmentForm
- * 
- * @author Václav Janoch
  *
+ * @author Václav Janoch
  */
-public class PhaseForm extends DateDescBasicForm implements ISegmentForm {
-	/**
-	 * Globální proměnné třídy
-	 */
-	private Label configLB;
-	private Label milestoneLB;
-
-	private ChoiceBox<BasicTable> configCB;
-	private ChoiceBox<BasicTable> milestoneCB;
-	private int milestoneIndex;
-	private int configIndex;
-
-	/**
-	 * Konstruktor třídy Zinicializuje globální proměnné tříd Nastaví reakci na
-	 * uzavření okna formuláře
-	 *
-	 * @param indexForm
-	 */
-	public PhaseForm(FormController formController, IFormDataController formDataController, IEditFormController editFormController, IDeleteFormController deleteFormController, CanvasController canvasController, DragAndDropItemPanel dgItemPanel, SegmentType type, int indexForm) {
-
-		super(formController, formDataController, editFormController, deleteFormController, canvasController, dgItemPanel, type);
-		this. indexForm = indexForm;
-		/*this.setOnCloseRequest(e -> {
-			e.consume();
-			int result = Alerts.showSaveSegment();
-			if (result == 1) {
-				setActionSubmitButton();
-			} else if (result == 0) {
-				this.close();
-			}
-		});*/
-		getSubmitButton().setOnAction(event -> setActionSubmitButton());
-		fillForm();
-
-	}
-	
-	@Override
-	public void closeForm() {
-
-		String actName = getNameTF().getText();
-		LocalDate endDateL = dateDP.getValue();
-		String desc = getDescriptionTF().getText();
-
-		isSave = formDataController.saveDataFromPhaseForm(actName, endDateL, desc, configIndex, milestoneIndex, canvasController.getListOfItemOnCanvas(), indexForm);
-
-	}
-
-	@Override
-	public void setActionSubmitButton() {
-		closeForm();
-		if(isSave){
-		//	close();
-		}
-
-	}
-
-	public void fillForm() {
-		dateLB.setText("End-Date");
-
-		configLB = new Label("Configuration: ");
-		configCB = new ChoiceBox<>();
-
-		configCB.getSelectionModel().selectedIndexProperty().addListener(configListener);
-
-		milestoneLB = new Label("Milestone: ");
-		milestoneCB = new ChoiceBox<>();
-		milestoneCB.getSelectionModel().selectedIndexProperty().addListener(milestoneListener);
-		fillInfoPart();
-	}
-
-	/**
-	 * ChangeListener pro určení indexu prvku z comboBoxu pro Milestone
-	 */
-	ChangeListener<Number> milestoneListener = new ChangeListener<Number>() {
-
-		@Override
-		public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-
-			milestoneIndex = newValue.intValue();
-
-		}
-	};
-
-	/**
-	 * ChangeListener pro určení indexu prvku z comboBoxu pro Configuration
-	 */
-	ChangeListener<Number> configListener = new ChangeListener<Number>() {
-
-		@Override
-		public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-
-			configIndex = newValue.intValue();
-
-		}
-	};
-
-	/**
-	 * Pomocná metoda pro vyplnění prvků do GridPane
-	 */
-
-	private void fillInfoPart() {
-
-		getInfoPart().add(configLB, 0, 3);
-		getInfoPart().setHalignment(configLB, HPos.RIGHT);
-		getInfoPart().add(configCB, 1, 3);
-
-		getInfoPart().add(milestoneLB, 0, 4);
-		getInfoPart().setHalignment(milestoneLB, HPos.RIGHT);
-		getInfoPart().add(milestoneCB, 1, 4);
-
-	}
-
-	@Override
-	public void deleteItem() {
-
-		deleteFormController.deletePhaseForm(indexForm);
-
-	}
-
-	public void setDataToForm(String name, LocalDate endDate, String description, Integer milestoneIndex, Integer configuration) {
-		getNameTF().setText(name);
-		getDescriptionTF().setText(description);
-		dateDP.setValue(endDate);
-		getMilestoneCB().getSelectionModel().select(milestoneIndex);
-		getConfigCB().getSelectionModel().select(configuration);
-
-	}
-
-	/**
-	 * Getrs and Setrs
-	 */
-	public ChoiceBox<BasicTable> getConfigCB() {
-		return configCB;
-	}
-
-	public ChoiceBox<BasicTable> getMilestoneCB() {
-		return milestoneCB;
-	}
+public class PhaseForm extends TableBasicForm implements ISegmentTableForm {
 
 
+    private TableView<PhaseTable> tableTV;
+    private PhaseControlPanel editControlPanel;
+
+
+    /**
+     * Konstruktor třídy Zinicializuje globální proměnné tříd Nastaví reakci na
+     * uzavření okna formuláře
+     *
+     * @param indexForm
+     */
+    public PhaseForm(FormController formController, IFormDataController formDataController, IEditFormController editFormController, IDeleteFormController deleteFormController, CanvasController canvasController, DragAndDropItemPanel dgItemPanel, SegmentType type, int indexForm) {
+
+        super(formController, formDataController, editFormController, deleteFormController, type);
+
+        editControlPanel = new PhaseControlPanel("Edit", formDataController, editFormController, formController);
+        setEventHandler();
+        createForm();
+        setActionSubmitButton();
+    }
+
+    @Override
+    protected void setEventHandler() {
+        OnMousePressedEventHandler = new EventHandler<MouseEvent>() {
+
+            @Override
+            public void handle(MouseEvent t) {
+                if (t.getClickCount() == 2) {
+                    showEditPanel();
+                }
+            }
+        };
+    }
+
+
+    @Override
+    public void createForm() {
+
+        this.setCenter(getTable());
+
+    }
+
+    @Override
+    public Node getTable() {
+        tableTV = new TableView<PhaseTable>();
+
+        TableColumn<PhaseTable, String> nameColumn = new TableColumn<PhaseTable, String>("Name");
+        TableColumn<PhaseTable, String> milestoneColumn = new TableColumn<PhaseTable, String>("Milestone");
+        TableColumn<PhaseTable, String> configurationColumn = new TableColumn<PhaseTable, String>("Configuration");
+
+        nameColumn.setCellValueFactory(new PropertyValueFactory("name"));
+        nameColumn.setMinWidth(150);
+        nameColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+
+        milestoneColumn.setCellValueFactory(new PropertyValueFactory("milestone"));
+        milestoneColumn.setMinWidth(150);
+        milestoneColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+
+        configurationColumn.setCellValueFactory(new PropertyValueFactory("configuration"));
+        configurationColumn.setMinWidth(150);
+        configurationColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+
+
+        tableTV.getColumns().addAll(nameColumn, milestoneColumn, configurationColumn);
+        tableTV.setOnMousePressed(OnMousePressedEventHandler);
+        tableTV.setEditable(false);
+
+        tableTV.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+
+        tableTV.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+
+        tableTV.setOnKeyReleased(event -> deleteSelected(event));
+
+        BorderPane.setMargin(tableTV, new Insets(5));
+
+        return tableTV;
+    }
+
+    @Override
+    public void deleteSelected(KeyEvent event) {
+
+        if (event.getCode() == KeyCode.DELETE) {
+            deleteItem(tableTV);
+        }
+    }
+
+    @Override
+    public GridPane createControlPane() {
+        return null;
+    }
+
+    private void showEditPanel() {
+        PhaseTable phaseTable = tableTV.getSelectionModel().getSelectedItems().get(0);
+        if (phaseTable != null) {
+            editControlPanel.showEditControlPanel(phaseTable, tableTV);
+            formController.showEditControlPanel(editControlPanel);
+        }
+    }
+
+
+    @Override
+    public void setActionSubmitButton() {
+        addButton.setOnAction(event -> addItem());
+        removeButton.setOnAction(event -> deleteItem(tableTV));
+        editButton.setOnAction(event -> showEditPanel());
+    }
+
+    @Override
+    public void addItem() {
+        String nameST = "";// criterionControlPanel.getName();
+
+        int id = formController.createTableItem(SegmentType.Phase);
+        String idName = id + "_" + nameST;
+
+        PhaseTable table = new PhaseTable(idName, "", "", id);
+        tableTV.getItems().add(table);
+        tableTV.sort();
+
+        int lastItem = tableTV.getItems().size();
+        tableTV.getSelectionModel().select(lastItem - 1);
+        showEditPanel();
+    }
+
+    public PhaseControlPanel getEditControlPanel() {
+        return editControlPanel;
+    }
 }

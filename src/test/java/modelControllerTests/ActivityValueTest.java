@@ -29,7 +29,7 @@ public class ActivityValueTest {
 
         dataModel.getSaveDataModel().createNewActivity(2);
         activity = dataModel.getActivity(2);
-        dataModel.addDataToActivity(activity,"Jmeno", "desc", 67, 98, itemSet);
+        dataModel.addDataToActivity(activity,"Jmeno", "desc", itemSet);
     }
 
     @Test

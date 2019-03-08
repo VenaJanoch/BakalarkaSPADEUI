@@ -27,7 +27,7 @@ public class RoleControlPanel extends DescriptionControlPanel {
 
 
 
-    public GridPane createControlPanel(){
+    protected void addItemsToControlPanel(){
         roleTypeLB = new Label("Type: ");
         roleTypeCB = new ChoiceBox<>(formController.getRoleTypeObservable());
         roleTypeCB.getSelectionModel().selectedIndexProperty().addListener(roleListener);
@@ -40,8 +40,6 @@ public class RoleControlPanel extends DescriptionControlPanel {
         controlPane.add(roleTypeLB, 4, 0);
         controlPane.add(roleTypeCB, 5, 0);
         controlPane.add(button, 6, 0);
-
-        return controlPane;
     }
 
     @Override

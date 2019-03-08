@@ -61,7 +61,6 @@ public class RoleForm extends TableBasicForm implements ISegmentTableForm {
 		super(formController, formDataController, editFormController, deleteFormController, type);
 
 		editRoleControlPanel = new RoleControlPanel("Edit", formDataController, editFormController, formController);
-		editRoleControlPanel.createControlPanel();
 
 		setEventHandler();
 		createForm();

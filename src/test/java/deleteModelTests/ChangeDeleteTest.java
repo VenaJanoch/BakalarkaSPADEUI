@@ -22,8 +22,8 @@ public class ChangeDeleteTest {
 
         warmUp.getDataModel().getSaveDataModel().createNewChange(0);
         warmUp.getDataModel().getSaveDataModel().createNewChange(1);
-        warmUp.getDataModel().getEditDataModel().editDataInChange("", "", 0,0, true, 0);
-        warmUp.getDataModel().getEditDataModel().editDataInChange("", "", 0,0, true, 0);
+        warmUp.getDataModel().getEditDataModel().editDataInChange("", "", true, 0);
+        warmUp.getDataModel().getEditDataModel().editDataInChange("", "", true, 0);
         warmUp.getDataModel().getDeleteDataModel().removeChange(0);
 
         project = dataModel.getProject();

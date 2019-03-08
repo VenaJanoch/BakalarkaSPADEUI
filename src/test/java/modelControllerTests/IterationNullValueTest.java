@@ -30,7 +30,7 @@ public class IterationNullValueTest {
 
         dataModel.getSaveDataModel().createNewIteration(2);
         iteration = dataModel.getIteration(2);
-        dataModel.addDataToIteration(iteration, null, null, null, null, 0,0, 0, new ArrayList<>());
+        dataModel.addDataToIteration(iteration, null, null, null, null, 0, new ArrayList<>());
         }
 
     @Test

@@ -4,6 +4,7 @@ import com.sun.xml.internal.bind.v2.runtime.reflect.opt.Const;
 import controllers.FormController;
 import interfaces.IEditFormController;
 import interfaces.IFormDataController;
+import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -49,7 +50,7 @@ public abstract class ControlPanel extends BorderPane {
 
         controlPane.setHgap(3);
         controlPane.setVgap(3);
-
+        controlPane.setHalignment(button, HPos.RIGHT);
         controlPane.setAlignment(Pos.CENTER);
         controlPane.setPadding(new Insets(5));
         this.setCenter(controlPane);

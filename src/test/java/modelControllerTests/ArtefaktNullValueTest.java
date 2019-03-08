@@ -27,8 +27,7 @@ public class ArtefaktNullValueTest {
 
             dataModel.getSaveDataModel().createNewArtifact(2);
             artifact = dataModel.getArtifact(2);
-            dataModel.addDataToArtifact(artifact,null, null, null, true, 0,0,0,
-                    0);
+            dataModel.addDataToArtifact(artifact,null, null, null, true, 0,0);
         }
 
         @Test

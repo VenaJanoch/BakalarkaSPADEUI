@@ -61,7 +61,7 @@ public abstract class TableBasicForm extends BasicForm {
     }
 
     public void deleteItem(TableView tableTV){
-        ObservableList<CriterionTable> selection = FXCollections
+        ObservableList selection = FXCollections
                 .observableArrayList(tableTV.getSelectionModel().getSelectedItems());
 
         if (selection.size() == 0) {
@@ -69,7 +69,7 @@ public abstract class TableBasicForm extends BasicForm {
         }
         else{
             ArrayList<BasicTable> list = new ArrayList<>(selection);
-            deleteFormController.deleteCriterionWithDialog(list, tableTV);
+            deleteFormController.deleteCriterionWithDialog(list, tableTV); //todo prenastavit na vsechny prvky
         }
     }
 

@@ -19,7 +19,7 @@ public class WorkUnitNullValueTest {
         warmUp.getDataModel().getSaveDataModel().createNewWorkUnit(2);
         workUnit = warmUp.getDataModel().getWorkUnit(2);
         warmUp.getDataModel().addDataToWorkUnit(workUnit, null,null, null, 0, 0, 0, 0,
-                0, 0, 0, 0, 0, -1, true, 0, false);
+                0, 0, 0, 0, true,0);
 
     }
 

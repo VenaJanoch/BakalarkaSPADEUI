@@ -25,11 +25,10 @@ public class WorkUnitDeleteTest {
         warmUp.getDataModel().getSaveDataModel().createNewWorkUnit(0);
         warmUp.getDataModel().getSaveDataModel().createNewWorkUnit(1);
         dataModel.getEditDataModel().editDataInWorkUnit("Milestone", "", "",
-                0, 0, 0, 0, 0, 0, 0,0, 0,
-                0.0, true, 0, true);
+                0, 0, 0, 0, 0, 0, 0,0, true, 0);
         dataModel.getEditDataModel().editDataInWorkUnit("Milestone", "", "",
-                0, 0, 0, 0, 0, 0, 0,0, 0,
-                0.0, true, 1, true);
+                0, 0, 0, 0, 0, 0, 0,0,
+                true, 1);
         warmUp.getDataModel().getDeleteDataModel().removeWorkUnit(0);
 
         project = dataModel.getProject();

@@ -161,7 +161,7 @@ public class FormFillController {
         String name = dataPreparer.prepareStringForForm(change.getName());
         String description = dataPreparer.prepareStringForForm(change.getDescriptoin());
 
-        form.setDataToForm(name, description, isExist);
+       // form.setDataToForm(name, description, isExist);
 
         canvasController.addCanvasItemFromExistData(SegmentType.Change, formId, change.getName(), change.getCoordinates().getXCoordinate(),
                 change.getCoordinates().getYCoordinate(), isExist);
@@ -200,7 +200,7 @@ public class FormFillController {
             isExist = true;
         }
 
-        form.setDataToForm(name, description, authorIndex, createDate, artifact.getMimeType(), isExist);
+       // form.setDataToForm(name, description, authorIndex, createDate, artifact.getMimeType(), isExist);
 
         canvasController.addCanvasItemFromExistData(SegmentType.Artifact, formId, artifact.getName(), artifact.getCoordinates().getXCoordinate(),
                 artifact.getCoordinates().getYCoordinate(), isExist);
@@ -437,7 +437,7 @@ public class FormFillController {
         int configurationIndex = dataPreparer.prepareIndexForForm(phase.getConfiguration());
         String name = dataPreparer.prepareStringForForm(phase.getName());
         String description = dataPreparer.prepareStringForForm(phase.getDescription());
-        phaseForm.setDataToForm(name, convertDateFromXML(phase.getEndDate()), description, milestoneIndex, configurationIndex);
+       // TODO prededelat na tabulkovy formular phaseForm.setDataToForm(name, convertDateFromXML(phase.getEndDate()), description, milestoneIndex, configurationIndex);
 
         CanvasController canvasController = phaseForm.getCanvasController();
         canvasController.clearCanvas();
@@ -494,8 +494,8 @@ public class FormFillController {
             isExist = true;
         }
 
-        workUnitForm.setDataToForm(name, assigneIndex,authorIndex, category, description,estimate ,
-                priorityIndex, resolutionIndex, severityIndex, statusIndex, typeIndex, isExist);
+      //  workUnitForm.setDataToForm(name, assigneIndex,authorIndex, category, description,estimate ,
+       //         priorityIndex, resolutionIndex, severityIndex, statusIndex, typeIndex, isExist);
         return workUnit;
 
     }
@@ -578,7 +578,7 @@ public class FormFillController {
         ActivityForm activityForm = (ActivityForm) forms.get(formId);
         String name = dataPreparer.prepareStringForForm(activity.getName());
         String description = dataPreparer.prepareStringForForm(activity.getDescription());
-        activityForm.setDataToForm(name, description);
+       // activityForm.setDataToForm(name, description);
 
         CanvasController canvasController = activityForm.getCanvasController();
         canvasController.clearCanvas();
@@ -633,8 +633,8 @@ public class FormFillController {
         String description = dataPreparer.prepareStringForForm(iteration.getDescription());
         int confiIndex =  dataPreparer.prepareIndexForForm(iteration.getConfiguration());
 
-        iterationForm.setDataToForm(name, description, convertDateFromXML(iteration.getStartDate()), convertDateFromXML(iteration.getEndDate()),
-                confiIndex);
+       // iterationForm.setDataToForm(name, description, convertDateFromXML(iteration.getStartDate()), convertDateFromXML(iteration.getEndDate()),
+          //      confiIndex);
 
         CanvasController canvasController = iterationForm.getCanvasController();
         canvasController.clearCanvas();

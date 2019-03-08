@@ -153,6 +153,10 @@ public class ConfigPersonRelationForm extends TableBasicForm implements ISegment
 		tableTV.getItems().add(cpr);
 		tableTV.sort();
 		formDataController.saveDataFromCPR(nameST, roleIndex, cpr);
+
+		int lastItem = tableTV.getItems().size();
+		tableTV.getSelectionModel().select(lastItem - 1);
+		showEditPanel();
 	}
 
 	/** Getrs and Setrs ***/

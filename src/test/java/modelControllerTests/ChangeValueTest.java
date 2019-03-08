@@ -32,7 +32,7 @@ public class ChangeValueTest {
 
         dataModel.getSaveDataModel().createNewChange(2);
         change = dataModel.getChange(2);
-        dataModel.addDataToChange(change,"Jmeno", "desc", 67, 98, true);
+        dataModel.addDataToChange(change,"Jmeno", "desc", true);
 
     }
 

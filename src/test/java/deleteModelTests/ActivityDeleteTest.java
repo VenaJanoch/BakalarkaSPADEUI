@@ -24,8 +24,8 @@ public class ActivityDeleteTest {
 
         warmUp.getDataModel().getSaveDataModel().createNewActivity(0);
         warmUp.getDataModel().getSaveDataModel().createNewActivity(1);
-        warmUp.getDataModel().getEditDataModel().editDataInActivity("", "", 0, 0, new ArrayList<>(), 0);
-        warmUp.getDataModel().getEditDataModel().editDataInActivity("", "", 0, 0, new ArrayList<>(), 1);
+        warmUp.getDataModel().getEditDataModel().editDataInActivity("", "", new ArrayList<>(), 0);
+        warmUp.getDataModel().getEditDataModel().editDataInActivity("", "", new ArrayList<>(), 1);
 
         warmUp.getDataModel().getDeleteDataModel().removeActivity(0);
 

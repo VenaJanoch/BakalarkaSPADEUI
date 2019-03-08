@@ -62,7 +62,6 @@ public class MilestoneForm extends TableBasicForm implements ISegmentTableForm {
 		super(formController, formDataController, editFormController, deleteFormController, type);
 
 		editMilestoneControlPanel = new MilestoneControlPanel("Edit", formDataController, editFormController, formController);
-		editMilestoneControlPanel.createControlPanel();
 		setEventHandler();
 		createForm();
 		setActionSubmitButton();
@@ -171,6 +170,10 @@ public class MilestoneForm extends TableBasicForm implements ISegmentTableForm {
 		tableTV.sort();
 
 		formDataController.saveDataFromMilestoneForm(nameST, descriptionST, criterionList, milestone);
+
+		int lastItem = tableTV.getItems().size();
+		tableTV.getSelectionModel().select(lastItem - 1);
+		showEditPanel();
 	}
 
 	public TableView<MilestoneTable> getTableTV() {

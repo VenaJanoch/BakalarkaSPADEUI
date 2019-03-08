@@ -54,13 +54,13 @@ public class DragAndDropPanel extends BorderPane {
 		this.setAlignment(items, Pos.BOTTOM_LEFT);
 
 		addButtons = new Button[Constans.addButtonCount];
-		createButtons();
-		createAction();
+		//createButtons();
+		//createAction();
 
-		buttonBox.getChildren().addAll(addButtons);
+//		buttonBox.getChildren().addAll(addButtons);
 
-		buttonBox.setPadding(new Insets(0,0,0,5));
-		this.setTop(buttonBox);
+//		buttonBox.setPadding(new Insets(0,0,0,5));
+//		this.setTop(buttonBox);
 
 		this.setCenter(items);
 

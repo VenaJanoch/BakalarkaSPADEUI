@@ -42,11 +42,6 @@ public class ClassControlPanel extends NameControlPanel {
 
     }
 
-    @Override
-    protected void createBaseControlPanel() {
-
-    }
-
     /**
      * Vytvoří scénu s formulářem
      *
@@ -77,9 +72,9 @@ public class ClassControlPanel extends NameControlPanel {
 
         controlPane.add(classLB, 0, 1);
         controlPane.add(classCB, 1, 1);
-        controlPane.add(superLB, 3, 1);
-        controlPane.add(superClassCB, 4, 1);
-        controlPane.add(button, 5, 0);
+        controlPane.add(superLB, 0, 2);
+        controlPane.add(superClassCB, 1, 2);
+        controlPane.add(button, 1, 3);
 
         return controlPane;
     }
@@ -153,5 +148,10 @@ public class ClassControlPanel extends NameControlPanel {
     public void clearPanel(TableView<ClassTable> tableView) {
         tableView.refresh();
         tableView.getSelectionModel().clearSelection();
+    }
+
+    @Override
+    protected void createBaseControlPanel() {
+
     }
 }

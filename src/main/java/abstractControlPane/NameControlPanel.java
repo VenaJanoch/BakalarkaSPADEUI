@@ -30,7 +30,7 @@ public abstract class NameControlPanel extends ControlPanel {
         nameTF.setId("formName");
 
     }
-    abstract protected void createBaseControlPanel();
+    protected abstract void createBaseControlPanel();
 
     public String getName() {
         return nameTF.getText();

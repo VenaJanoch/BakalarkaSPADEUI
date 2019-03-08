@@ -15,22 +15,13 @@ public class CriterionControlPanel extends DescriptionControlPanel {
 
     public CriterionControlPanel(String buttonName, IFormDataController formDataController, IEditFormController editFormController){
         super(buttonName, formDataController, editFormController);
+        addItemsToControlPanel();
     }
 
-    /**
-     * Vytvoří scénu s formulářem
-     *
-     * @return Scene
-     */
-    private void creatSceneCanvas() {
-      //  this.setScene(new Scene(controlPane));
 
-    }
 
-    public GridPane createControlPanel(){
-        controlPane.add(button, 4, 0);
-        creatSceneCanvas();
-        return controlPane;
+    public void addItemsToControlPanel(){
+        controlPane.add(button, 1, 2);
     }
 
 

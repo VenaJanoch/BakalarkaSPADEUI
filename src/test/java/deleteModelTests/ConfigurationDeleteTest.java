@@ -38,12 +38,11 @@ public class ConfigurationDeleteTest {
 
 
         dataModel.getSaveDataModel().createNewPhase(0);
-        dataModel.getEditDataModel().editDataInPhase("Test", null, "", 0, 0, 0,
-                0, new ArrayList<>(), 0);
+        dataModel.getEditDataModel().editDataInPhase("Test", null, "", 0, 0, new ArrayList<>(),
+                0);
 
         dataModel.getSaveDataModel().createNewIteration(0);
-        dataModel.getEditDataModel().editDataInIteration("Test", null, null,"", 0, 0, 0,
-                 new ArrayList<>(), 0);
+        dataModel.getEditDataModel().editDataInIteration("Test", null, null,"",0, new ArrayList<>(), 0);
 
         ArrayList<Integer> list = new ArrayList<>();
         list.add(0);

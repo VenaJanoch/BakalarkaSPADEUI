@@ -54,8 +54,7 @@ public class MilestoneDeleteTest {
         ArrayList<BasicTable> basicTables = new ArrayList<>();
         basicTables.add(new BasicTable("Table", 0));
         dataModel.getSaveDataModel().createNewPhase(0);
-        dataModel.getEditDataModel().editDataInPhase("Test", null, "", 0, 0, 0,
-                0, new ArrayList<>(), 0);
+        dataModel.getEditDataModel().editDataInPhase("Test", null, "", 0, 0,  new ArrayList<>(), 0);
 
 
         deleteFormController.deleteMilestone(observableList, basicTables);

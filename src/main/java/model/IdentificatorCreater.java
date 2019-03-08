@@ -155,7 +155,7 @@ public class IdentificatorCreater {
         phaseID++;
         phaseIndexMaper.put(index, phaseID);
         index++;
-        return index - 1;
+        return phaseID;
 
     }
 
@@ -164,7 +164,7 @@ public class IdentificatorCreater {
         iterationID++;
         iterationIndexMaper.put(index, iterationID);
         index++;
-        return index - 1;
+        return iterationID;
     }
 
     public int createActivityID() {
@@ -172,7 +172,7 @@ public class IdentificatorCreater {
         activityID++;
         activityFormToIdMapper.put(index, activityID);
         index++;
-        return index - 1;
+        return activityID;
     }
 
     public int createWorkUnitID() {
@@ -181,7 +181,7 @@ public class IdentificatorCreater {
         workUnitIndexMaper.put(index, workUnitID);
         workUnitSegmentIndexToFormMaper.put(workUnitID, index);
         index++;
-        return index - 1;
+        return workUnitID;
     }
 
     public int createMilestoneID() {
@@ -209,7 +209,7 @@ public class IdentificatorCreater {
         changeIndexMaper.put(index, changeID);
         changeSegmentIndexToFormMaper.put(changeID, index);
         index++;
-        return index - 1;
+        return changeID;
     }
 
     public int createArtifactID() {
@@ -217,7 +217,7 @@ public class IdentificatorCreater {
         artifactIndexMaper.put(index, artifactID);
         artifactSegmentIndexToFormMaper.put(artifactID, index);
         index++;
-        return index - 1;
+        return artifactID;
     }
 
     public int createCPRID() {

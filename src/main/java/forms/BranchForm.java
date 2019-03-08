@@ -154,6 +154,11 @@ public class BranchForm extends TableBasicForm implements ISegmentTableForm {
         tableTV.sort();
 
         formDataController.saveDataFromBranch(nameST,branch);
+
+        int lastItem = tableTV.getItems().size();
+        tableTV.getSelectionModel().select(lastItem - 1);
+        showEditPanel();
+
     }
 
 

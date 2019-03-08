@@ -24,10 +24,8 @@ public class PhaseDeleteTest {
 
         warmUp.getDataModel().getSaveDataModel().createNewPhase(0);
         warmUp.getDataModel().getSaveDataModel().createNewPhase(1);
-        warmUp.getDataModel().getEditDataModel().editDataInPhase("",  null ,"", 0, 0, 0,
-                0, new ArrayList<>(), 0);
-        warmUp.getDataModel().getEditDataModel().editDataInPhase("",  null ,"", 0, 0, 0,
-                0, new ArrayList<>(), 1);
+        warmUp.getDataModel().getEditDataModel().editDataInPhase("",  null ,"", 0, 0,  new ArrayList<>(), 0);
+        warmUp.getDataModel().getEditDataModel().editDataInPhase("",  null ,"", 0, 0,  new ArrayList<>(), 1);
         warmUp.getDataModel().getDeleteDataModel().removePhase(0);
 
         project = dataModel.getProject();

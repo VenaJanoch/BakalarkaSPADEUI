@@ -7,6 +7,7 @@ import interfaces.IFormDataController;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
+import javafx.geometry.HPos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -29,20 +30,11 @@ public class MilestoneControlPanel extends DescriptionControlPanel {
     public MilestoneControlPanel(String buttonName, IFormDataController formDataController, IEditFormController editFormController, FormController formController){
         super(buttonName, formDataController,editFormController, formController);
         criterionIndex = FXCollections.observableArrayList();
+        addItemsToControlPanel();
     }
 
-    /**
-     * Vytvoří scénu s formulářem
-     *
-     * @return Scene
-     */
-    private void creatSceneCanvas() {
 
-      //  this.setScene(new Scene(mainPanel));
-
-    }
-
-    public GridPane createControlPanel(){
+    protected void addItemsToControlPanel(){
 
         criteriaLB = new Label("Criteria: ");
         criteriaCB = new CheckComboBox<BasicTable>(formController.getCriterionObservable());
@@ -55,10 +47,10 @@ public class MilestoneControlPanel extends DescriptionControlPanel {
             }
         });
 
-        controlPane.add(criteriaLB, 4, 0);
-        controlPane.add(criteriaCB, 5, 0);
-        controlPane.add(button, 6, 0);
-        return controlPane;
+        controlPane.add(criteriaLB, 0, 2);
+        controlPane.add(criteriaCB, 1, 2);
+        controlPane.add(button, 1, 3);
+
     }
 
     @Override

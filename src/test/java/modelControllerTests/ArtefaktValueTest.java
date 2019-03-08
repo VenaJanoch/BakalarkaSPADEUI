@@ -29,7 +29,7 @@ public class ArtefaktValueTest {
 
         dataModel.getSaveDataModel().createNewArtifact(2);
         artifact = dataModel.getArtifact(2);
-        dataModel.addDataToArtifact(artifact,"Jmeno", "desc", date, false, 67, 98, 7,
+        dataModel.addDataToArtifact(artifact,"Jmeno", "desc", date, false,7,
                 0);
     }
 

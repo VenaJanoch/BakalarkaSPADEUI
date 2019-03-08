@@ -31,41 +31,40 @@ public class EditDataModel implements IEditDataModel {
         dataModel.addDataToBranch(branch, nameForManipulator, isMainBranch);
     }
 
-    public void editDataInArtifact(String nameForManipulator, String descForManipulator, LocalDate createdDate, boolean isCreate, int x, int y, int authorIndex, int typeIndex,
+    public void editDataInArtifact(String nameForManipulator, String descForManipulator, LocalDate createdDate, boolean isCreate, int authorIndex, int typeIndex,
                                    int id){
         Artifact artifact = dataModel.getArtifact(id);
-        dataModel.addDataToArtifact(artifact, nameForManipulator, descForManipulator, createdDate, isCreate, x, y, authorIndex, typeIndex);
+        dataModel.addDataToArtifact(artifact, nameForManipulator, descForManipulator, createdDate, isCreate, authorIndex, typeIndex);
     }
 
-    public void editDataInChange(String nameForManipulator, String descForManipulator, int x, int y, boolean selected, int id){
+    public void editDataInChange(String nameForManipulator, String descForManipulator, boolean selected, int id){
         Change change =dataModel.getChange(id);
-        dataModel.addDataToChange(change, nameForManipulator, descForManipulator, x, y, selected);
+        dataModel.addDataToChange(change, nameForManipulator, descForManipulator, selected);
     }
 
-    public void editDataInPhase(String actName, LocalDate endDateL, String desc, int confIndex, int milestoneIndex, int x, int y,
-                                ArrayList<Integer> itemIndexList, int id){
+    public void editDataInPhase(String actName, LocalDate endDateL, String desc, int confIndex, int milestoneIndex, ArrayList<Integer> itemIndexList, int id){
         Phase phase =  dataModel.getPhase(id);
-        dataModel.addDataToPhase(phase, actName, endDateL, desc, confIndex, milestoneIndex, x, y, itemIndexList);
+        dataModel.addDataToPhase(phase, actName, endDateL, desc, confIndex, milestoneIndex, itemIndexList);
     }
 
     public void editDataInIteration(String nameForManipulator, LocalDate startDate, LocalDate endDate, String descriptionForManipulator,
-                                    int configIndex, int x, int y, ArrayList<Integer> itemIndexList, int id) {
+                                    int configIndex, ArrayList<Integer> itemIndexList, int id) {
         Iteration iteration = dataModel.getIteration(id);
-        dataModel.addDataToIteration(iteration, nameForManipulator, startDate, endDate, descriptionForManipulator, configIndex, x, y, itemIndexList);
+        dataModel.addDataToIteration(iteration, nameForManipulator, startDate, endDate, descriptionForManipulator, configIndex, itemIndexList);
     }
 
-    public void editDataInActivity(String nameForManipulator, String descriptionForManipulator, int x, int y, ArrayList<Integer> setOfItemOnCanvas, int id) {
+    public void editDataInActivity(String nameForManipulator, String descriptionForManipulator, ArrayList<Integer> setOfItemOnCanvas, int id) {
         Activity activity = dataModel.getActivity(id);
-        dataModel.addDataToActivity(activity, nameForManipulator, descriptionForManipulator, x, y, setOfItemOnCanvas);
+        dataModel.addDataToActivity(activity, nameForManipulator, descriptionForManipulator, setOfItemOnCanvas);
 
     }
 
     public void editDataInWorkUnit(String nameForManipulator,String description, String categoryForManipulator, int assigneIndex, int authorIndex,
                                    int priorityIndex, int severityIndex, int typeIndex, int resolutionIndex, int statusIndex,
-                                   int x, int y, double estimateForDataManipulator,boolean isExist, int id, boolean isProjectCanvas) {
+                                   double estimateForDataManipulator,boolean isExist, int id) {
         WorkUnit workUnit = dataModel.getWorkUnit(id);
         dataModel.addDataToWorkUnit(workUnit, nameForManipulator, description, categoryForManipulator, assigneIndex, authorIndex, priorityIndex, severityIndex,
-                typeIndex, resolutionIndex, statusIndex, x, y, estimateForDataManipulator, isExist, id, isProjectCanvas);
+                typeIndex, resolutionIndex, statusIndex, estimateForDataManipulator, isExist, id);
     }
 
     public void editDataInConfiguration(String actName, LocalDate createDate, boolean isRelease, int authorIndex,

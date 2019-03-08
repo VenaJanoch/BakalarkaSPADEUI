@@ -2,13 +2,17 @@ package controllers;
 
 import interfaces.IEditDataModel;
 import interfaces.IEditFormController;
+import javafx.scene.control.ComboBox;
+import jdk.internal.org.objectweb.asm.tree.IntInsnNode;
 import model.DataModel;
 import model.IdentificatorCreater;
+import services.CanvasType;
 import services.MapperTableToObject;
 import services.SegmentLists;
 import services.SegmentType;
 import tables.*;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class EditFormController implements IEditFormController {
@@ -194,6 +198,123 @@ public class EditFormController implements IEditFormController {
 
         segmentLists.updateListItem(SegmentType.Branch, branchId, branchTable);
     }
+
+    @Override
+    public void editDataFromPhase(String name, String description, LocalDate endDate, int milestonId, int configurationId, ArrayList<Integer> workUnits,
+                                  PhaseTable phaseTable, int id) {
+        String nameForManipulator = InputController.fillTextMapper(name);
+        String descriptionForManipulator = "NotExist";
+        if(description != null){
+            descriptionForManipulator = InputController.fillTextMapper(description);
+        }
+        int configIdForManipulator = segmentLists.getConfigObservable().get(configurationId).getId();
+        int milestoneForManipulator = segmentLists.getMilestoneObservable().get(milestonId).getId();
+        ArrayList<Integer> workUnitsForManipulator = dataPreparer.prepareIndicesForManipulator(workUnits);
+        dataManipulator.editDataInPhase(nameForManipulator, endDate, descriptionForManipulator, configIdForManipulator, milestoneForManipulator,
+                workUnitsForManipulator, id);
+
+        String phaseName = id + "_" + name;
+        phaseTable.setName(phaseName);
+        phaseTable.setConfiguration(segmentLists.getConfigObservable().get(configurationId).getName());
+        phaseTable.setMilestone(segmentLists.getMilestoneObservable().get(milestonId).getName());
+
+    }
+
+    @Override
+    public void editDataFromIteration(String name, String description, LocalDate startDate, LocalDate endDate, int configurationId, ArrayList<Integer> workUnits, IterationTable iterationTable,
+                                      int id) {
+        String nameForManipulator = InputController.fillTextMapper(name);
+        String descriptionForManipulator = "NotExist";
+        if(description != null){
+            descriptionForManipulator = InputController.fillTextMapper(description);
+        }
+        int configIdForManipulator = segmentLists.getConfigObservable().get(configurationId).getId();
+
+        ArrayList<Integer> workUnitsForManipulator = dataPreparer.prepareIndicesForManipulator(workUnits);
+        dataManipulator.editDataInIteration(nameForManipulator, startDate, endDate, descriptionForManipulator, configIdForManipulator, workUnitsForManipulator, id);
+
+        String iterationName = id + "_" + name;
+        iterationTable.setName(iterationName);
+        iterationTable.setConfiguration(segmentLists.getConfigObservable().get(configurationId).getName());
+            }
+
+    @Override
+    public void editDataFromActivity(String name, String description, ArrayList<Integer> workUnits, ActivityTable activityTable,
+                                      int id) {
+        String nameForManipulator = InputController.fillTextMapper(name);
+        String descriptionForManipulator = "NotExist";
+        if(description != null){
+            descriptionForManipulator = InputController.fillTextMapper(description);
+            activityTable.setDescription(descriptionForManipulator);
+        }
+
+        ArrayList<Integer> workUnitsForManipulator = dataPreparer.prepareIndicesForManipulator(workUnits);
+        dataManipulator.editDataInActivity(nameForManipulator, descriptionForManipulator, workUnitsForManipulator, id);
+
+        String activityName = id + "_" + name;
+        activityTable.setName(activityName);
+
+    }
+
+    @Override
+    public void editDataFromChange(String name, String description, boolean exist, ChangeTable changeTable,
+                                     int id) {
+        String nameForManipulator = InputController.fillTextMapper(name);
+        String descriptionForManipulator = "NotExist";
+        if(description != null){
+            descriptionForManipulator = InputController.fillTextMapper(description);
+            changeTable.setDescription(descriptionForManipulator);
+        }
+
+        dataManipulator.editDataInChange(nameForManipulator, descriptionForManipulator, exist, id);
+
+        String changeName = id + "_" + name;
+        changeTable.setName(changeName);
+
+    }
+
+    @Override
+    public void editDataFromArtifact(String name, String description, boolean exist, int roleIndex, int typeIndex, LocalDate localDate, ArtifactTable artifactTable,
+                                   int id) {
+        String nameForManipulator = InputController.fillTextMapper(name);
+        String descriptionForManipulator = "NotExist";
+        if(description != null){
+            descriptionForManipulator = InputController.fillTextMapper(description);
+            artifactTable.setDescription(descriptionForManipulator);
+        }
+
+        dataManipulator.editDataInArtifact(nameForManipulator, descriptionForManipulator, localDate, exist, roleIndex, typeIndex, id);
+
+        String artifactName = id + "_" + name;
+        artifactTable.setName(artifactName);
+
+    }
+    @Override
+    public void editDataFromWorkUnit(String name, String description, String estimatedTime, int priorityIndex, int severityIndex, int resolutionIndex,
+                                     int statusIndex, String category, int typeIndex, int assigneIndex, int authorIndex, boolean selected, WorkUnitTable workUnitTable, int id) {
+
+        String nameForManipulator = InputController.fillTextMapper(name);
+        String categoryForManipulator = InputController.fillTextMapper(category);
+        String descriptionForManipulator = InputController.fillTextMapper(description);
+
+        Double estimateForDataManipulator = -1.0;
+
+        if (!estimatedTime.equals("")) {
+            estimateForDataManipulator = InputController.isDoubleNumber(estimatedTime);
+        }
+
+        int assigneForManipulator = dataPreparer.prepareIndexForManipulator(assigneIndex);
+        int authorForManipulator = dataPreparer.prepareIndexForManipulator(authorIndex);
+        int priorityForManipulator = dataPreparer.prepareIndexForManipulator(priorityIndex);
+        int severityForManipulator = dataPreparer.prepareIndexForManipulator(severityIndex);
+        int typeForManipulator = dataPreparer.prepareIndexForManipulator(typeIndex);
+        int resolutionForManipulator = dataPreparer.prepareIndexForManipulator(resolutionIndex);
+        int statusForManipulator = dataPreparer.prepareIndexForManipulator(statusIndex);
+        dataManipulator.editDataInWorkUnit(nameForManipulator, descriptionForManipulator ,categoryForManipulator, assigneForManipulator, authorForManipulator,
+                priorityForManipulator ,severityForManipulator, typeForManipulator,resolutionForManipulator , statusForManipulator, estimateForDataManipulator, selected, id);
+        workUnitTable.setName(id + "_" + name);
+    }
+
 
 }
 

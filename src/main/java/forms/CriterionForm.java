@@ -50,7 +50,6 @@ public class CriterionForm extends TableBasicForm implements ISegmentTableForm {
 						  SegmentType type) {
 		super(formController, formDataController, editFormController, deleteFormController, type);
 		editCriterionControlPanel = new CriterionControlPanel("Edit", formDataController, editFormController);
-		editCriterionControlPanel.createControlPanel();
 		setEventHandler();
 		createForm();
 		setActionSubmitButton();
@@ -150,7 +149,10 @@ public class CriterionForm extends TableBasicForm implements ISegmentTableForm {
 		tableTV.getItems().add(criterion);
 		tableTV.sort();
 		formDataController.saveDataFromCriterionForm(nameST, criterion);
-	}
+		int lastItem = tableTV.getItems().size();
+		tableTV.getSelectionModel().select(lastItem - 1);
+		showEditPanel();
+	 }
 
 	public TableView<CriterionTable> getTableTV() {
 		return tableTV;

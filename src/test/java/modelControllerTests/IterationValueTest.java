@@ -32,7 +32,7 @@ public class IterationValueTest {
 
         dataModel.getSaveDataModel().createNewIteration(2);
         iteration = dataModel.getIteration(2);
-        dataModel.addDataToIteration(iteration,"Jmeno", date,date,"desc", 0,67, 98, itemSet);
+        dataModel.addDataToIteration(iteration,"Jmeno", date,date,"desc", 0, itemSet);
     }
 
     @Test

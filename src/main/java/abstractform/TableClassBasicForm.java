@@ -141,6 +141,10 @@ public abstract class TableClassBasicForm extends TableBasicForm implements ISeg
 		tableTV.getItems().add(table);
 		tableTV.sort();
 
+		int lastItem = tableTV.getItems().size();
+		tableTV.getSelectionModel().select(lastItem - 1);
+		showEditPanel();
+
 	}
 
 	public void saveData(SegmentType segmentType, String nameST, ClassTable table) {

@@ -29,7 +29,7 @@ public class ActivityNullValueTest {
 
         dataModel.getSaveDataModel().createNewActivity(2);
         activity = dataModel.getActivity(2);
-        dataModel.addDataToActivity(activity ,null, null, 0, 0, new ArrayList<>());
+        dataModel.addDataToActivity(activity ,null, null, new ArrayList<>());
         }
 
     @Test

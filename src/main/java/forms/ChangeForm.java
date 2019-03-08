@@ -1,16 +1,27 @@
 package forms;
 
+import abstractform.TableBasicForm;
+import controlPanels.ActivityControlPanel;
+import controlPanels.ChangeControlPanel;
 import controllers.FormController;
 import abstractform.DescriptionBasicForm;
-import interfaces.IDeleteFormController;
-import interfaces.IEditFormController;
-import interfaces.IFormDataController;
-import interfaces.ISegmentForm;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.RadioButton;
+import interfaces.*;
+import javafx.event.EventHandler;
+import javafx.geometry.Insets;
+import javafx.scene.Node;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
 import services.Alerts;
 import services.Constans;
 import services.SegmentType;
+import tables.ActivityTable;
+import tables.ChangeTable;
 
 /**
  * Třída představující formulář pro element Change, odděděná od třídy BasicForm
@@ -18,82 +29,120 @@ import services.SegmentType;
  *
  * @author Václav Janoch
  */
-public class ChangeForm extends DescriptionBasicForm implements ISegmentForm {
+public class ChangeForm extends TableBasicForm implements ISegmentTableForm {
 
     /**
      * Globální proměnné třídy
      */
-    private ComboBox<String> changeCB;
-    private RadioButton existRB;
-
-    private boolean newChange;
+    private TableView<ChangeTable> tableTV;
+    private ChangeControlPanel editControlPanel;
 
     /**
      * Konstruktor třídy Zinicializuje globální proměnné třídy Nastaví velikost
      * formuláře a reakci na uzavření formuláře
      */
-    public ChangeForm(FormController formController, IFormDataController formDataController, IEditFormController editFormController, IDeleteFormController deleteFormController, SegmentType type, int indexForm) {
+    public ChangeForm(FormController formController, IFormDataController formDataController, IEditFormController editFormController,
+                      IDeleteFormController deleteFormController, SegmentType type) {
         super(formController, formDataController, editFormController, deleteFormController, type);
+        editControlPanel = new ChangeControlPanel("Edit", formDataController, editFormController, formController);
+        setEventHandler();
+        createForm();
+        setActionSubmitButton();
+    }
 
-        this.newChange = true;
-        this.indexForm = indexForm;
+    @Override
+    protected void setEventHandler() {
+        OnMousePressedEventHandler = new EventHandler<MouseEvent>() {
 
-        this.setMinSize(Constans.littleformWidth, Constans.littleformHeight);
-        this.setMaxSize(Constans.littleformWidth, Constans.littleformHeight);
-
-       /* this.setOnCloseRequest(e -> {
-
-            e.consume();
-            int result = Alerts.showSaveSegment();
-            if (result == 1) {
-                setActionSubmitButton();
-            } else if (result == 0) {
-                this.close();
+            @Override
+            public void handle(MouseEvent t) {
+                if(t.getClickCount() == 2) {
+                    showEditPanel();
+                }
             }
-        });*/
+        };
+    }
 
-        getSubmitButton().setOnAction(event -> setActionSubmitButton());
-        fillForm();
+    @Override
+    public void createForm() {
+
+        this.setCenter(getTable());
 
     }
 
     @Override
-    public void closeForm() {
+    public Node getTable() {
+        tableTV = new TableView<ChangeTable>();
 
-        String actName = getNameTF().getText();
-        String desc = getDescriptionTF().getText();
+        TableColumn<ChangeTable, String> nameColumn = new TableColumn<ChangeTable, String>("Name");
+        TableColumn<ChangeTable, String> descriptionColumn = new TableColumn<ChangeTable, String>("Description");
 
-        isSave = formDataController.saveDataFromChange(actName, desc, existRB.isSelected(), indexForm);
+        nameColumn.setCellValueFactory(new PropertyValueFactory("name"));
+        nameColumn.setMinWidth(150);
+        nameColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+
+        descriptionColumn.setCellValueFactory(new PropertyValueFactory("description"));
+        descriptionColumn.setMinWidth(150);
+        descriptionColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+
+
+        tableTV.getColumns().addAll(nameColumn, descriptionColumn);
+        tableTV.setOnMousePressed(OnMousePressedEventHandler);
+        tableTV.setEditable(false);
+
+        tableTV.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+
+        tableTV.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+
+        tableTV.setOnKeyReleased(event -> deleteSelected(event));
+
+        BorderPane.setMargin(tableTV, new Insets(5));
+
+        return tableTV;
     }
+
+    @Override
+    public void deleteSelected(KeyEvent event) {
+
+        if (event.getCode() == KeyCode.DELETE) {
+            deleteItem(tableTV);
+        }
+    }
+
+    @Override
+    public GridPane createControlPane() {
+        return null;
+    }
+
+    private void showEditPanel(){
+        ChangeTable table = tableTV.getSelectionModel().getSelectedItems().get(0);
+        if (table != null) {
+            editControlPanel.showEditControlPanel(table, tableTV);
+            formController.showEditControlPanel(editControlPanel);
+        }
+    }
+
 
     @Override
     public void setActionSubmitButton() {
-
-        closeForm();
-        if (isSave) {
-          //  close();
-        }
-
-
+        addButton.setOnAction(event -> addItem());
+        removeButton.setOnAction(event -> deleteItem(tableTV));
+        editButton.setOnAction(event -> showEditPanel());
     }
 
     @Override
-    public void deleteItem() {
-        deleteFormController.deleteChange(indexForm);
-    }
+    public void addItem() {
+        String nameST = "";// criterionControlPanel.getName();
 
-    public void fillForm() {
+        int id = formController.createTableItem(SegmentType.Change);
+        String idName = id + "_" + nameST;
 
-        existRB = new RadioButton("Exist");
-        existRB.setSelected(true);
-        getInfoPart().add(existRB, 1, 3);
+        ChangeTable table = new ChangeTable(idName, "", id);
 
-    }
-
-    public void setDataToForm(String name, String descriptoin, boolean isExist) {
-        getNameTF().setText(name);
-        getDescriptionTF().setText(descriptoin);
-        existRB.setSelected(isExist);
-        isSave = true;
+        tableTV.getItems().add(table);
+        tableTV.sort();
+        int lastItem = tableTV.getItems().size();
+        tableTV.getSelectionModel().select(lastItem - 1);
+        showEditPanel();
     }
 }

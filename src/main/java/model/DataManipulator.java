@@ -266,4 +266,194 @@ public class DataManipulator{
         Configuration configuration = dataModel.getConfiguration(configId);
         return configuration.getTags().get(id);
     }
+
+    public String[] getPhaseStringData(int id) {
+        String[] data = new String[6];
+        Phase phase = dataModel.getPhase(id);;
+        data[0] = phase.getName();
+        data[1] = phase.getDescription();
+        if(phase.getConfiguration() != null){
+            data[2] = phase.getConfiguration().toString();
+        }
+
+        if(phase.getMilestoneIndex() != null){
+            data[3] = phase.getMilestoneIndex().toString();
+        }
+
+        if(phase.getEndDate() != null){
+            data[4] = phase.getEndDate().toString();
+        }
+
+        if(phase.getWorkUnits() != null){
+            data[5] = phase.getWorkUnits().toString();
+        }
+
+
+        return data;
+    }
+
+    public List<Integer> getWorkUnitFromPhase(int phaseId) {
+
+        Phase phase = dataModel.getPhase(phaseId);
+        return phase.getWorkUnits();
+    }
+
+    public List<Integer> getWorkUnitFromIteration(int iterationId) {
+
+        Iteration iteration = dataModel.getIteration(iterationId);
+        return iteration.getWorkUnits();
+    }
+
+    public List<Integer> getWorkUnitFromActivity(int activityId) {
+
+        Activity activity = dataModel.getActivity(activityId);
+        return activity.getWorkUnits();
+    }
+
+    public String[] getIterationStringData(int id) {
+        String[] data = new String[6];
+        Iteration iteration = dataModel.getIteration(id);;
+        data[0] = iteration.getName();
+        if(iteration.getDescription() != null){
+            data[1] = iteration.getDescription();
+        }
+
+        if(iteration.getConfiguration() != null){
+            data[2] = iteration.getConfiguration().toString();
+        }
+
+        if(iteration.getStartDate() != null){
+            data[3] = iteration.getStartDate().toString();
+        }
+
+        if(iteration.getEndDate() != null){
+            data[4] = iteration.getEndDate().toString();
+        }
+
+        if(iteration.getWorkUnits() != null){
+            data[5] = iteration.getWorkUnits().toString();
+        }
+
+
+        return data;
+    }
+
+    public String[] getActivityStringData(int id) {
+        String[] data = new String[3];
+        Activity activity = dataModel.getActivity(id);;
+        data[0] = activity.getName();
+        
+        if(activity.getDescription() != null){
+            data[1] = activity.getDescription();
+        }
+
+        if(activity.getWorkUnits() != null){
+            data[2] = activity.getWorkUnits().toString();
+        }
+
+
+        return data;
+    }
+
+    public String[] getChangeStringData(int id) {
+
+        String[] data = new String[3];
+        Change change = dataModel.getChange(id);;
+        data[0] = change.getName();
+
+        if(change.getDescriptoin() != null){
+            data[1] = change.getDescriptoin();
+        }
+
+        if(change.isExist() != null){
+            data[2] = change.isExist().toString();
+        }
+
+
+        return data;
+    }
+
+    public String[] getArtifactStringData(int id) {
+        String[] data = new String[7];
+        Artifact artifact = dataModel.getArtifact(id);;
+        data[0] = artifact.getName();
+
+        if(artifact.getDescriptoin() != null){
+            data[1] = artifact.getDescriptoin();
+        }
+
+        if(artifact.getDescriptoin() != null){
+            data[2] = artifact.getDescriptoin();
+        }
+
+        if(artifact.getAuthorIndex() != null){
+            data[3] = artifact.getAuthorIndex().toString();
+        }
+
+        if(artifact.getMimeType() != null){
+            data[4] = artifact.getMimeType();
+        }
+
+        if(artifact.getCreated() != null){
+            data[5] = artifact.getCreated().toString();
+        }
+        if(artifact.isExist() != null){
+            data[6] = artifact.isExist().toString();
+        }
+
+        return data;
+    }
+
+    public String[] getWorkUnitStringData(int id) {
+
+        String[] data = new String[12];
+        WorkUnit workUnit = dataModel.getWorkUnit(id);;
+        data[0] = workUnit.getName();
+
+        if(workUnit.getDescription() != null){
+            data[1] = workUnit.getDescription();
+        }
+
+        if(workUnit.getEstimatedTime() != null){
+            data[2] = workUnit.getEstimatedTime().toString();
+        }
+
+        if(workUnit.getPriorityIndex() != null){
+            data[3] = workUnit.getPriorityIndex().toString();
+        }
+
+        if(workUnit.getSeverityIndex() != null){
+            data[4] = workUnit.getSeverityIndex().toString();
+        }
+
+        if(workUnit.getResolutionIndex() != null){
+            data[5] = workUnit.getResolutionIndex().toString();
+        }
+
+        if(workUnit.getStatusIndex() != null){
+            data[6] = workUnit.getStatusIndex().toString();
+        }
+
+        if(workUnit.getCategory() != null){
+            data[7] = workUnit.getCategory();
+        }
+
+        if(workUnit.getTypeIndex() != null){
+            data[8] = workUnit.getTypeIndex().toString();
+        }
+
+        if(workUnit.getAssigneeIndex() != null){
+            data[9] = workUnit.getAssigneeIndex().toString();
+        }
+
+        if(workUnit.getAuthorIndex() != null){
+            data[10] = workUnit.getAuthorIndex().toString();
+        }
+        if(workUnit.isExist() != null){
+            data[11] = workUnit.isExist().toString();
+        }
+
+        return data;
+        
+    }
 }

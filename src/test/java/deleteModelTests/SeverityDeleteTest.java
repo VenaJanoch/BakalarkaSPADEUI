@@ -45,8 +45,7 @@ public class SeverityDeleteTest {
 
             dataModel.getSaveDataModel().createNewWorkUnit(0);
             dataModel.getEditDataModel().editDataInWorkUnit("Milestone", "", "",
-                    0, 0, 0, 0, 0, 0, 0,0, 0,
-                    0.0, true, 0, true);
+                    0, 0, 0, 0, 0, 0, 0,0, true, 0);
 
             ArrayList<BasicTable> basicTables = new ArrayList<>();
             basicTables.add(new BasicTable("Table",0));

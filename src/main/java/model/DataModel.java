@@ -361,70 +361,60 @@ public class DataModel {
         branch.setIsMain(isMain);
     }
 
-    public void addDataToArtifact(Artifact artifact, String nameForManipulator, String descForManipulator, LocalDate createdDate, boolean isCreate, int x, int y, int authorIndex, int typeIndex) {
+    public void addDataToArtifact(Artifact artifact, String nameForManipulator, String descForManipulator, LocalDate createdDate, boolean isCreate, int authorIndex, int typeIndex) {
         artifact.setName(nameForManipulator);
         artifact.setAuthorIndex(authorIndex);
-        artifact.setCoordinates(createCoords(x, y));
         artifact.setCreated(convertDate(createdDate));
         artifact.setDescriptoin(descForManipulator);
         artifact.setExist(isCreate);
         artifact.setMimeType(ArtifactClass.values()[typeIndex].name());
     }
 
-    public void addDataToChange(Change change, String nameForManipulator, String descForManipulator, int x, int y, boolean selected) {
-        change.setCoordinates(createCoords(x, y));
+    public void addDataToChange(Change change, String nameForManipulator, String descForManipulator, boolean selected) {
         change.setDescriptoin(descForManipulator);
         change.setName(nameForManipulator);
         change.setExist(selected);
     }
 
-    public void addDataToPhase(Phase phase, String actName, LocalDate endDateL, String desc, int confIndex, int milestoneIndex, int x, int y,
+    public void addDataToPhase(Phase phase, String actName, LocalDate endDateL, String desc, int confIndex, int milestoneIndex,
                                ArrayList<Integer> itemIndexList) {
         phase.setEndDate(convertDate(endDateL));
-        phase.setConfiguration(confIndex);
+        phase.setConfiguration(getConfigurationIndexInProject(confIndex));
         phase.setDescription(desc);
-        phase.setMilestoneIndex(milestoneIndex);
+        phase.setMilestoneIndex(getMilestoneIndexInProject(milestoneIndex));
         phase.setName(actName);
         phase.getWorkUnits().clear();
         phase.getWorkUnits().addAll(itemIndexList);
-        phase.setCoordinates(createCoords(x,y));
     }
 
     public void addDataToIteration(Iteration iteration, String nameForManipulator, LocalDate startDate, LocalDate endDate, String descriptionForManipulator,
-                                   int configIndex, int x, int y, ArrayList<Integer> itemIndexList) {
+                                   int configIndex, ArrayList<Integer> itemIndexList) {
         iteration.setConfiguration(configIndex);
         iteration.setDescription(descriptionForManipulator);
         iteration.setEndDate(convertDate(endDate));
         iteration.setStartDate(convertDate(startDate));
         iteration.setName(nameForManipulator);
-        iteration.setCoordinates(createCoords(x,y));
         iteration.getWorkUnits().clear();
         iteration.getWorkUnits().addAll(itemIndexList);
 
     }
 
 
-    public void addDataToActivity(Activity activity, String nameForManipulator, String descriptionForManipulator, int x, int y, ArrayList<Integer> setOfItemOnCanvas) {
+    public void addDataToActivity(Activity activity, String nameForManipulator, String descriptionForManipulator, ArrayList<Integer> setOfItemOnCanvas) {
 
         activity.setDescription(descriptionForManipulator);
         activity.setName(nameForManipulator);
-        activity.setCoordinates(createCoords(x, y));
         activity.getWorkUnits().addAll(setOfItemOnCanvas);
 
     }
 
     public void addDataToWorkUnit(WorkUnit workUnit, String nameForManipulator,String description, String categoryForManipulator, int assigneIndex, int authorIndex,
                                   int priorityIndex, int severityIndex, int typeIndex, int resolutionIndex, int statusIndex,
-                                  int x, int y, double estimateForDataManipulator,boolean isExist, int id, boolean isProjectCanvas) {
-
-        if(isProjectCanvas){
-            project.getWorkUnitIndexs().add(id);
-        }
+                                  double estimateForDataManipulator,boolean isExist, int id) {
 
         workUnit.setAssigneeIndex(assigneIndex);
         workUnit.setAuthorIndex(authorIndex);
         workUnit.setCategory(categoryForManipulator);
-        workUnit.setCoordinates(createCoords(x, y));
         workUnit.setDescription(description);
         workUnit.setEstimatedTime(estimateForDataManipulator);
         workUnit.setExist(isExist);
