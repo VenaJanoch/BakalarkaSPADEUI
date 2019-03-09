@@ -1,6 +1,8 @@
 package controlPanels;
 
 import abstractControlPane.DateDescControlPanel;
+import abstractControlPane.WorkUnitControlPanel;
+import abstractControlPane.WorkUnitDateControlPanel;
 import controllers.FormController;
 import interfaces.IEditFormController;
 import interfaces.IFormDataController;
@@ -26,73 +28,31 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PhaseControlPanel extends DateDescControlPanel {
+public class PhaseControlPanel extends WorkUnitDateControlPanel {
 
     /**
      * Globální proměnné třídy
      */
     private Label configLB;
     private Label milestoneLB;
-    private Label workUnitLB;
 
     private ChoiceBox<BasicTable> configCB;
     private ChoiceBox<BasicTable> milestoneCB;
-    private CheckComboBox<BasicTable> workUnitCB;
 
     private int milestoneIndex = 0;
     private int configIndex = 0;
-    private ObservableList<Integer> workUnitIndicies;
-    private SegmentLists segmentLists;
 
+    private boolean isShowConfig;
+    private Button configButton;
+
+    private boolean isShowMilestone;
+    private Button milestoneButton;
+
+    
     public PhaseControlPanel(String buttonName, IFormDataController formDataController,
                              IEditFormController editFormController, FormController formController){
         super(buttonName, formDataController, editFormController, formController);
-        workUnitIndicies = FXCollections.observableArrayList();
-        this.segmentLists = formController.getSegmentLists();
-        createControlPanel();
-    }
-
-    public GridPane createControlPanel(){
-
-        dateLB.setText("End-Date");
-
-        configLB = new Label("Configuration: ");
-        configCB = new ChoiceBox<>();
-        configCB.getSelectionModel().selectedIndexProperty().addListener(configListener);
-
-        milestoneLB = new Label("Milestone: ");
-        milestoneCB = new ChoiceBox<>();
-        milestoneCB.getSelectionModel().selectedIndexProperty().addListener(milestoneListener);
-
-        workUnitLB = new Label("Work Unit: ");
-        workUnitCB = new CheckComboBox<>(segmentLists.getWorkUnitsObservable());
-        workUnitCB.setMaxWidth(Constans.checkComboBox);
-
-        workUnitCB.getCheckModel().getCheckedItems().addListener(new ListChangeListener<BasicTable>() {
-
-            public void onChanged(ListChangeListener.Change<? extends BasicTable> c) {
-                workUnitIndicies = workUnitCB.getCheckModel().getCheckedIndices();
-            }
-        });
-
-        configCB.setItems(segmentLists.getConfigObservable());
-        milestoneCB.setItems(segmentLists.getMilestoneObservable());
-
-        controlPane.add(configLB, 0, 3);
-        controlPane.setHalignment(configLB, HPos.LEFT);
-        controlPane.add(configCB, 1, 3);
-
-        controlPane.add(milestoneLB, 0, 4);
-        controlPane.setHalignment(milestoneLB, HPos.LEFT);
-        controlPane.add(milestoneCB, 1, 4);
-
-        controlPane.add(workUnitLB, 0, 5);
-        controlPane.setHalignment(workUnitLB, HPos.LEFT);
-        controlPane.add(workUnitCB, 1, 5);
-
-        controlPane.add(button, 2, 6);
-
-        return controlPane;
+        addItemsToControlPanel();
     }
 
     /**
@@ -175,6 +135,71 @@ public class PhaseControlPanel extends DateDescControlPanel {
 
             clearPanelCB(tableView);
         });
+    }
+    
+    
+    private void setExitButtonsActions(){
+        isShowConfig = false;
+        configButton = new Button("+");
+        configButton.setOnAction(event -> {
+            if (!isShowConfig){
+                configCB.setVisible(true);
+                isShowConfig  = true;
+                configButton.setText("-");
+            }else{
+                configCB.setVisible(false);
+                configCB.getSelectionModel().clearSelection();
+                isShowConfig = false;
+                configButton.setText("+");
+            }
+        });
+
+        isShowMilestone = false;
+        milestoneButton = new Button("+");
+        milestoneButton.setOnAction(event -> {
+            if (!isShowMilestone){
+                milestoneCB.setVisible(true);
+                isShowMilestone  = true;
+                milestoneButton.setText("-");
+            }else{
+                milestoneCB.setVisible(false);
+                milestoneCB.getSelectionModel().clearSelection();
+                isShowMilestone = false;
+                milestoneButton.setText("+");
+            }
+        });
+    }
+
+    @Override
+    protected void addItemsToControlPanel() {
+
+        dateLB.setText("End-Date");
+
+        setExitButtonsActions();
+
+        configLB = new Label("Configuration: ");
+        configCB = new ChoiceBox<>();
+        configCB.getSelectionModel().selectedIndexProperty().addListener(configListener);
+        configCB.setVisible(false);
+
+        milestoneLB = new Label("Milestone: ");
+        milestoneCB = new ChoiceBox<>();
+        milestoneCB.getSelectionModel().selectedIndexProperty().addListener(milestoneListener);
+        milestoneCB.setVisible(false);
+        configCB.setItems(segmentLists.getConfigObservable());
+        milestoneCB.setItems(segmentLists.getMilestoneObservable());
+
+        controlPane.add(configLB, 1, 4);
+        controlPane.setHalignment(configLB, HPos.LEFT);
+        controlPane.add(configCB, 2, 4);
+        controlPane.add(configButton, 0, 4);
+
+        controlPane.add(milestoneLB, 1, 5);
+        controlPane.setHalignment(milestoneLB, HPos.LEFT);
+        controlPane.add(milestoneCB, 2, 5);
+        controlPane.add(milestoneButton, 0, 5);
+        controlPane.add(button, 2, 6);
+
     }
 
     public Button getButton() {

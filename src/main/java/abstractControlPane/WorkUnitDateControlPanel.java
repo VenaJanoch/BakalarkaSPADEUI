@@ -3,11 +3,19 @@ package abstractControlPane;
 import controllers.FormController;
 import interfaces.IEditFormController;
 import interfaces.IFormDataController;
+import javafx.collections.ListChangeListener;
+import javafx.collections.ObservableList;
 import javafx.geometry.HPos;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
+import javafx.scene.control.TableView;
+import org.controlsfx.control.CheckComboBox;
+import services.Constans;
+import services.SegmentLists;
 import tables.BasicTable;
 
-public abstract class DateDescControlPanel extends DescriptionControlPanel {
+public abstract class WorkUnitDateControlPanel extends WorkUnitControlPanel {
 
     protected Label dateLB;
     protected DatePicker dateDP;
@@ -15,17 +23,18 @@ public abstract class DateDescControlPanel extends DescriptionControlPanel {
     private Button dateButton;
     private boolean isShowDate;
 
-    public DateDescControlPanel(String buttonText, IFormDataController formDataController, IEditFormController editFormController, FormController formController) {
+    public WorkUnitDateControlPanel(String buttonText, IFormDataController formDataController, IEditFormController editFormController, FormController formController) {
         super(buttonText, formDataController, editFormController, formController);
-        addItemsToControlPanel();
+        addItemsToControlPanel3();
     }
 
-    public DateDescControlPanel(String buttonText, IFormDataController formDataController, IEditFormController editFormController) {
+    public WorkUnitDateControlPanel(String buttonText, IFormDataController formDataController, IEditFormController editFormController) {
         super(buttonText, formDataController, editFormController);
-        addItemsToControlPanel();
+        addItemsToControlPanel3();
     }
 
-    protected void addItemsToControlPanel() {
+    protected void addItemsToControlPanel3() {
+
 
         dateLB = new Label("Created: ");
         dateDP = new DatePicker();
@@ -47,10 +56,10 @@ public abstract class DateDescControlPanel extends DescriptionControlPanel {
             }
         });
 
-        controlPane.add(dateLB, 1, 2);
+        controlPane.add(dateLB, 1, 3);
         controlPane.setHalignment(dateLB, HPos.LEFT);
-        controlPane.add(dateDP, 2, 2);
-        controlPane.add(dateButton, 0, 2);
+        controlPane.add(dateDP, 2, 3);
+        controlPane.add(dateButton, 0, 3);
 
     }
 

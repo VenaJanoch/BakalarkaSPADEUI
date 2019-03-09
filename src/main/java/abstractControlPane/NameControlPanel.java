@@ -24,8 +24,8 @@ public abstract class NameControlPanel extends ControlPanel {
     protected void createBasicPanel() {
         nameLB = new Label("Name");
         nameTF = new TextField();
-        controlPane.add(nameLB, 0, 0);
-        controlPane.add(nameTF, 1, 0);
+        controlPane.add(nameLB, 1, 0);
+        controlPane.add(nameTF, 2, 0);
         nameLB = new Label("Name: ");
         nameTF.setId("formName");
 

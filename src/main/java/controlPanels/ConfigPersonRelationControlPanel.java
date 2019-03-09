@@ -6,7 +6,7 @@ import interfaces.IEditFormController;
 import interfaces.IFormDataController;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
@@ -20,14 +20,37 @@ public class ConfigPersonRelationControlPanel extends NameControlPanel {
 
     protected int roleIndex;
 
+    private boolean isShowRole;
+    private Button roleButton;
+
+
     public ConfigPersonRelationControlPanel(String buttonName, IFormDataController formDataController, IEditFormController editFormController, FormController formController){
         super(buttonName, formDataController, editFormController, formController);
+        createControlPanel();
         roleIndex = 0;
     }
 
     @Override
     protected void createBaseControlPanel() {
 
+    }
+
+
+    private void setExitButtonsActions(){
+        isShowRole = false;
+        roleButton = new Button("+");
+        roleButton.setOnAction(event -> {
+            if (!isShowRole){
+                roleCB.setVisible(true);
+                isShowRole = true;
+                roleButton.setText("-");
+            }else{
+                roleCB.setVisible(false);
+                roleCB.getSelectionModel().clearSelection();
+                isShowRole = false;
+                roleButton.setText("+");
+            }
+        });
     }
 
 
@@ -38,10 +61,13 @@ public class ConfigPersonRelationControlPanel extends NameControlPanel {
 
         roleCB = new ComboBox<>(formDataController.getRoleList());
         roleCB.getSelectionModel().selectedIndexProperty().addListener(roleListener);
+        roleCB.setVisible(false);
+        setExitButtonsActions();
 
-        controlPane.add(roleLB, 0, 1);
-        controlPane.add(roleCB, 1, 1);
-        controlPane.add(button, 1, 2);
+        controlPane.add(roleButton, 0, 1);
+        controlPane.add(roleLB, 1, 1);
+        controlPane.add(roleCB, 2, 1);
+        controlPane.add(button, 2, 2);
 
         return controlPane;
     }

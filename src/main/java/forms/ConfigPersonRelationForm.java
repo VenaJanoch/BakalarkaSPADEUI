@@ -55,7 +55,6 @@ public class ConfigPersonRelationForm extends TableBasicForm implements ISegment
 		super(formController, formDataController, editFormController, deleteFormController, type);
 
 		editCPRControlPanel = new ConfigPersonRelationControlPanel("Edit", formDataController, editFormController, formController);
-		editCPRControlPanel.createControlPanel();
 
 		setEventHandler();
 		createForm();

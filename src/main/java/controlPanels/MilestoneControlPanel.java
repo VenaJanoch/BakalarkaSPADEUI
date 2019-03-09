@@ -27,6 +27,10 @@ public class MilestoneControlPanel extends DescriptionControlPanel {
     private CheckComboBox<BasicTable> criteriaCB;
     private ObservableList<Integer> criterionIndex;
 
+
+    private boolean isShowcriterion;
+    private Button criterionButton;
+
     public MilestoneControlPanel(String buttonName, IFormDataController formDataController, IEditFormController editFormController, FormController formController){
         super(buttonName, formDataController,editFormController, formController);
         criterionIndex = FXCollections.observableArrayList();
@@ -39,7 +43,8 @@ public class MilestoneControlPanel extends DescriptionControlPanel {
         criteriaLB = new Label("Criteria: ");
         criteriaCB = new CheckComboBox<BasicTable>(formController.getCriterionObservable());
         criteriaCB.setMaxWidth(Constans.checkComboBox);
-
+        criteriaCB.setVisible(false);
+        setExitButtonsActions();
         criteriaCB.getCheckModel().getCheckedItems().addListener(new ListChangeListener<BasicTable>() {
 
             public void onChanged(ListChangeListener.Change<? extends BasicTable> c) {
@@ -47,9 +52,28 @@ public class MilestoneControlPanel extends DescriptionControlPanel {
             }
         });
 
-        controlPane.add(criteriaLB, 0, 2);
-        controlPane.add(criteriaCB, 1, 2);
-        controlPane.add(button, 1, 3);
+        controlPane.add(criterionButton, 0, 2);
+        controlPane.add(criteriaLB, 1, 2);
+        controlPane.add(criteriaCB, 2, 2);
+        controlPane.add(button, 2, 3);
+
+    }
+
+    private void setExitButtonsActions(){
+        isShowcriterion = false;
+        criterionButton = new Button("+");
+        criterionButton.setOnAction(event -> {
+            if (!isShowcriterion){
+                criteriaCB.setVisible(true);
+                isShowcriterion  = true;
+                criterionButton.setText("-");
+            }else{
+                criteriaCB.setVisible(false);
+                criteriaCB.getCheckModel().clearChecks();
+                isShowcriterion = false;
+                criterionButton.setText("+");
+            }
+        });
 
     }
 

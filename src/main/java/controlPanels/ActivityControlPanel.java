@@ -1,53 +1,30 @@
 package controlPanels;
 
-import abstractControlPane.DateDescControlPanel;
-import abstractControlPane.DescriptionControlPanel;
 import controllers.FormController;
 import interfaces.IEditFormController;
 import interfaces.IFormDataController;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.collections.FXCollections;
-import javafx.collections.ListChangeListener;
-import javafx.collections.ObservableList;
-import javafx.geometry.HPos;
 import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
-import javafx.scene.layout.GridPane;
-import org.controlsfx.control.CheckComboBox;
-import services.Constans;
-import services.SegmentLists;
 import services.SegmentType;
 import tables.ActivityTable;
 import tables.BasicTable;
-import tables.PhaseTable;
+import abstractControlPane.WorkUnitControlPanel;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ActivityControlPanel extends DescriptionControlPanel {
+public class ActivityControlPanel extends WorkUnitControlPanel {
 
     /**
      * Globální proměnné třídy
      */
 
-    private Label workUnitLB;
 
-    private CheckComboBox<BasicTable> workUnitCB;
-
-    private ObservableList<Integer> workUnitIndicies;
-    private SegmentLists segmentLists;
     private ActivityTable activityTable;
-
-
+    
     public ActivityControlPanel(String buttonName, IFormDataController formDataController,
                                 IEditFormController editFormController, FormController formController){
         super(buttonName, formDataController, editFormController, formController);
-        workUnitIndicies = FXCollections.observableArrayList();
-        this.segmentLists = formController.getSegmentLists();
         addItemsToControlPanel();
     }
 
@@ -75,22 +52,8 @@ public class ActivityControlPanel extends DescriptionControlPanel {
 
     @Override
     protected void addItemsToControlPanel() {
-        workUnitLB = new Label("Work Unit: ");
-        workUnitCB = new CheckComboBox<>(segmentLists.getWorkUnitsObservable());
-        workUnitCB.setMaxWidth(Constans.checkComboBox);
 
-        workUnitCB.getCheckModel().getCheckedItems().addListener(new ListChangeListener<BasicTable>() {
-
-            public void onChanged(Change<? extends BasicTable> c) {
-                workUnitIndicies = workUnitCB.getCheckModel().getCheckedIndices();
-            }
-        });
-
-        controlPane.add(workUnitLB, 0, 3);
-        controlPane.setHalignment(workUnitLB, HPos.LEFT);
-        controlPane.add(workUnitCB, 1, 3);
-
-        controlPane.add(button, 2, 4);
+        controlPane.add(button, 2, 3);
 
     }
 

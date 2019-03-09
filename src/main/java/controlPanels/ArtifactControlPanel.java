@@ -12,15 +12,10 @@ import javafx.geometry.HPos;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import services.SegmentLists;
-import services.SegmentType;
 import tables.ArtifactTable;
 import tables.BasicTable;
-import tables.ChangeTable;
-import tables.PhaseTable;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 
 public class ArtifactControlPanel extends DateDescControlPanel {
 
@@ -42,6 +37,12 @@ public class ArtifactControlPanel extends DateDescControlPanel {
 
     private ArtifactTable artifactTable;
 
+    private boolean isShowRole;
+    private Button roleButton;
+
+    private boolean isShowType;
+    private Button typeButton;
+
     public ArtifactControlPanel(String buttonName, IFormDataController formDataController,
                                 IEditFormController editFormController, FormController formController){
         super(buttonName, formDataController, editFormController, formController);
@@ -57,30 +58,67 @@ public class ArtifactControlPanel extends DateDescControlPanel {
         roleLB = new Label("Author: ");
         roleCB = new ChoiceBox<>();
         roleCB.getSelectionModel().selectedIndexProperty().addListener(typeListener);
-
+        roleCB.setVisible(false);
         typeLB = new Label("Mine Type: ");
         typeCB = new ComboBox<ArtifactClass>(FXCollections.observableArrayList(ArtifactClass.values()));
         typeCB.getSelectionModel().selectedIndexProperty().addListener(roleListener);
-
+        typeCB.setVisible(false);
      
         roleCB.setItems(segmentLists.getRoleObservable());
 
         existRB = new RadioButton("Exist");
         existRB.setSelected(true);
-        
-        controlPane.add(roleLB, 0, 3);
-        controlPane.setHalignment(roleLB, HPos.LEFT);
-        controlPane.add(roleCB, 1, 3);
 
-        controlPane.add(typeLB, 0, 4);
+        setExitButtonsActions();
+
+        controlPane.add(roleButton, 0, 3);
+        controlPane.add(roleLB, 1, 3);
+        controlPane.setHalignment(roleLB, HPos.LEFT);
+        controlPane.add(roleCB, 2, 3);
+
+        controlPane.add(typeButton, 0, 4);
+        controlPane.add(typeLB, 1, 4);
         controlPane.setHalignment(typeLB, HPos.LEFT);
-        controlPane.add(typeCB, 1, 4);
+        controlPane.add(typeCB, 2, 4);
 
         controlPane.add(existRB, 0, 5);
         controlPane.add(button, 2, 6);
 
         return controlPane;
     }
+
+    private void setExitButtonsActions(){
+        isShowRole = false;
+        roleButton = new Button("+");
+        roleButton.setOnAction(event -> {
+            if (!isShowRole){
+                roleCB.setVisible(true);
+                isShowRole = true;
+                roleButton.setText("-");
+            }else{
+                roleCB.setVisible(false);
+                roleCB.getSelectionModel().clearSelection();
+                isShowRole = false;
+                roleButton.setText("+");
+            }
+        });
+
+        isShowType = false;
+        typeButton = new Button("+");
+        typeButton.setOnAction(event -> {
+            if (!isShowType){
+                typeCB.setVisible(true);
+                isShowType = true;
+                typeButton.setText("-");
+            }else{
+                typeCB.setVisible(false);
+                typeCB.getSelectionModel().clearSelection();
+                isShowType = false;
+                typeButton.setText("+");
+            }
+        });
+    }
+
 
     /**
      * ChangeListener pro určení indexu prvku z comboBoxu pro Milestone

@@ -9,7 +9,7 @@ import interfaces.IFormDataController;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
-import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
@@ -32,6 +32,12 @@ public class ClassControlPanel extends NameControlPanel {
 
     protected int classIndex;
     protected int superIndex;
+
+    private boolean isShowClass;
+    private Button classButton;
+
+    private boolean isShowSuperClass;
+    private Button superClassButton;
 
     public ClassControlPanel(String buttonName, SegmentType segmentType, IFormDataController formDataController, IEditFormController editFormController, FormController formController){
         super(buttonName, formDataController, editFormController, formController);
@@ -63,22 +69,59 @@ public class ClassControlPanel extends NameControlPanel {
 
         classCB = new ComboBox<>(FXCollections.observableArrayList(classList));
         classCB.getSelectionModel().selectedIndexProperty().addListener(classListener);
-
+        classCB.setVisible(false);
         superClassCB = new ComboBox<>(FXCollections.observableArrayList(superClassList));
         superClassCB.getSelectionModel().selectedIndexProperty().addListener(superListener);
-
+        superClassCB.setVisible(false);
         classCB.setValue(RoleClass.UNASSIGNED);
         superClassCB.setValue(RoleSuperClass.UNASSIGNED);
 
-        controlPane.add(classLB, 0, 1);
-        controlPane.add(classCB, 1, 1);
-        controlPane.add(superLB, 0, 2);
-        controlPane.add(superClassCB, 1, 2);
+        setExitButtonsActions();
+
+        controlPane.add(classButton, 0, 1);
+        controlPane.add(classLB, 1, 1);
+        controlPane.add(classCB, 2, 1);
+
+        controlPane.add(superClassButton, 0, 2);
+        controlPane.add(superLB, 1, 2);
+        controlPane.add(superClassCB, 2, 2);
+
         controlPane.add(button, 1, 3);
 
         return controlPane;
     }
 
+    private void setExitButtonsActions(){
+        isShowClass = false;
+        classButton = new Button("+");
+        classButton.setOnAction(event -> {
+            if (!isShowClass){
+                classCB.setVisible(true);
+                isShowClass = true;
+                classButton.setText("-");
+            }else{
+                classCB.setVisible(false);
+                classCB.getSelectionModel().clearSelection();
+                isShowClass = false;
+                classButton.setText("+");
+            }
+        });
+
+        isShowSuperClass = false;
+        superClassButton = new Button("+");
+        superClassButton.setOnAction(event -> {
+            if (!isShowSuperClass){
+                superClassCB.setVisible(true);
+                isShowSuperClass = true;
+                superClassButton.setText("-");
+            }else{
+                superClassCB.setVisible(false);
+                superClassCB.getSelectionModel().clearSelection();
+                isShowSuperClass = false;
+                superClassButton.setText("+");
+            }
+        });
+    }
 
     public void showEditControlPanel(BasicTable basicTable, TableView tableView) {
         ClassTable classTable = (ClassTable) basicTable;
