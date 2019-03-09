@@ -21,8 +21,8 @@ public class Constans {
     public static final int height = 800;
     public static final int offset = 12;
 
-    public static final int formWidth = 850;
-    public static final int formHeight = 650;
+    public static final int formWidth = 550;
+    public static final int formHeight = 550;
     public static final int workUnitformWidth = 350;
     public static final int workUnitformHeight = 550;
     public static final double littleformWidth = 350;
@@ -206,4 +206,6 @@ public class Constans {
 
 
     public static final double rightDrawerWidth = 450;
+    public static final double tableControlButtonWidth = 70;
+    public static final double tableControlButtonHeight = 70;
 }

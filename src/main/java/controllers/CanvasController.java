@@ -99,23 +99,27 @@ public class CanvasController {
 
        newFormIndex = getFormIndexFromNewForm(type, canvasType);
         String segmentId = createSegmentId(type, newFormIndex);
-        CanvasItem item = canvasItemController.createCanvasItem(type,segmentId,newFormIndex,"New", x, y, this);
+        CanvasItem item = canvasItemController.createCanvasItem(type,segmentId,newFormIndex,"New", 1, x, y, this);
         canvas.getCanvas().getChildren().add(item);
         listOfItemOnCanvas.put(newFormIndex, item);
         return item;
 
     }
 
-    public CanvasItem addCanvasItemFromExistData(SegmentType type, int formIndex, String name, double x, double y){
+    public void setInstanceCountToItem(int itemIndex, int instanceCount){
+        listOfItemOnCanvas.get(itemIndex).setInstanceCountToItem(instanceCount);
+    }
+
+    public CanvasItem addCanvasItemFromExistData(SegmentType type, int formIndex, String name, double x, double y, int instanceCount){
         String segmentId = createSegmentId(type, formIndex);
-        CanvasItem item = canvasItemController.createCanvasItem(type,segmentId,formIndex,name, x, y, this);
+        CanvasItem item = canvasItemController.createCanvasItem(type,segmentId,formIndex,name, instanceCount, x, y, this);
         canvas.getCanvas().getChildren().add(item);
         listOfItemOnCanvas.put(formIndex, item);
         return item;
     }
 
-    public CanvasItem addCanvasItemFromExistData(SegmentType type, int formIndex, String name, double x, double y, boolean isExist){
-        CanvasItem item  =  addCanvasItemFromExistData(type, formIndex, name, x,  y);
+    public CanvasItem addCanvasItemFromExistData(SegmentType type, int formIndex, String name, double x, double y, int instanceCount, boolean isExist){
+        CanvasItem item  =  addCanvasItemFromExistData(type, formIndex, name, x,  y, instanceCount);
         formController.setItemColor(formIndex, isExist);
         return item;
     }
@@ -137,7 +141,7 @@ public class CanvasController {
     public void addCopyCanvasItemToCanvas(SegmentType segmentType, double x, double y) {
 
         int formIndex = getFormIndexFromNewForm(segmentType, canvasType);
-        CanvasItem item = canvasItemController.createCanvasItem(segmentType,"d",formIndex,"New", x, y, this);
+        CanvasItem item = canvasItemController.createCanvasItem(segmentType,"d",formIndex,"New", 5, x, y, this);
         canvas.getCanvas().getChildren().add(item);
     }
 

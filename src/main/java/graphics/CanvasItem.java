@@ -32,6 +32,7 @@ public class CanvasItem extends AnchorPane {
 
 	private String segmentIdentificator;
 	private int formIdentificator;
+	private int instanceCount;
 
 	/**
 	 * Konstruktor třídy. Zinicializuje globální proměnné třídy. Získá
@@ -44,11 +45,12 @@ public class CanvasItem extends AnchorPane {
 	 * @param x
 	 * @param y
 	 */
-	public CanvasItem(SegmentType type, String segmentIdentificator,int formIdentificator, String name, int isCreated, double x,
+	public CanvasItem(SegmentType type, String segmentIdentificator,int formIdentificator, String name, int instanceCount, int isCreated, double x,
 			double y, CanvasController canvasController, CanvasItemController canvasItemController) {
 
 		this.canvasController = canvasController;
 		this.canvasItemController = canvasItemController;
+		this.instanceCount = instanceCount;
 		this.setOnMousePressed(event -> canvasItemController.setClicFromDragPoint(event, this, canvasController));
 		this.setOnMouseDragged(event -> canvasItemController.setDragFromDragPoint(event,this, canvasController));
 		this.setOnMouseReleased(event -> setPosition(canvasItemController.canvasItemPositionControl(getTranslateX(), getTranslateY())));
@@ -58,7 +60,7 @@ public class CanvasItem extends AnchorPane {
 		this.setTranslateX(x);
 		this.setTranslateY(y);
 
-		this.segmentInfo = new InfoBoxSegment(this, type, name);
+		this.segmentInfo = new InfoBoxSegment(this, type, name, Integer.toString(instanceCount));
 
 		//this.canvasItemController.connectItemWithForm(isCreated);
 		this.segmentIdentificator = segmentIdentificator;
@@ -74,6 +76,10 @@ public class CanvasItem extends AnchorPane {
 		this.setMaxHeight(segmentInfo.getHeight());
 		this.setMaxWidth(segmentInfo.getLength());
 		this.getChildren().add(segmentInfo);
+	}
+
+	public void setInstanceCountToItem(int instanceCount){
+		segmentInfo.getInstanceCount().setText(Integer.toString(instanceCount));
 	}
 
 

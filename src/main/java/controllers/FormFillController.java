@@ -164,7 +164,7 @@ public class FormFillController {
        // form.setDataToForm(name, description, isExist);
 
         canvasController.addCanvasItemFromExistData(SegmentType.Change, formId, change.getName(), change.getCoordinates().getXCoordinate(),
-                change.getCoordinates().getYCoordinate(), isExist);
+                change.getCoordinates().getYCoordinate(), 1, isExist); //todo upravit pocet instanci
    }
 
     private void fillChangeForm(List<Integer> changeIndexs, CanvasController canvasController) {
@@ -203,7 +203,7 @@ public class FormFillController {
        // form.setDataToForm(name, description, authorIndex, createDate, artifact.getMimeType(), isExist);
 
         canvasController.addCanvasItemFromExistData(SegmentType.Artifact, formId, artifact.getName(), artifact.getCoordinates().getXCoordinate(),
-                artifact.getCoordinates().getYCoordinate(), isExist);
+                artifact.getCoordinates().getYCoordinate(), 1, isExist); //todo upravit pocet instanci
 
     }
 
@@ -425,7 +425,7 @@ public class FormFillController {
         Phase phase = fillPhaseForm(segmentId, formId);
         identificatorCreater.setDataToPhaseMapper(formId, phase.getId());
         projectCanvasController.addCanvasItemFromExistData(SegmentType.Phase, formId, phase.getName(), phase.getCoordinates().getXCoordinate(),
-                phase.getCoordinates().getYCoordinate());
+                phase.getCoordinates().getYCoordinate(), 1);//todo upravit pocet instanci
 
     }
 
@@ -516,7 +516,7 @@ public class FormFillController {
         WorkUnit workUnit = fillWorkUnitForm(segmentId, formId);
         identificatorCreater.setDataToWorkUnitsMappers(formId, workUnit.getId());
         canvasController.addCanvasItemFromExistData(SegmentType.WorkUnit, formId, workUnit.getName(), workUnit.getCoordinates().getXCoordinate(),
-                workUnit.getCoordinates().getYCoordinate());
+                workUnit.getCoordinates().getYCoordinate(), 1); //todo upravit pocet instanci
     }
 
     public void fillLink(){
@@ -569,7 +569,7 @@ public class FormFillController {
         Activity activity = fillActivityForm(segmentId, formId);
         identificatorCreater.setDataToActivityMapper(formId, activity.getId());
         projectCanvasController.addCanvasItemFromExistData(SegmentType.Activity, formId, activity.getName(), activity.getCoordinates().getXCoordinate(),
-                activity.getCoordinates().getYCoordinate());
+                activity.getCoordinates().getYCoordinate(), 1); //todo upravit pocet instanci
     }
 
     public Activity fillActivityForm(int segmentId, int formId){
@@ -614,7 +614,7 @@ public class FormFillController {
         Iteration iteration = fillIterationForm(segmentId, formId);
         identificatorCreater.setDataToIterationMapper(formId, iteration.getId());
         projectCanvasController.addCanvasItemFromExistData(SegmentType.Iteration, formId, iteration.getName(), iteration.getCoordinates().getXCoordinate(),
-                iteration.getCoordinates().getYCoordinate());
+                iteration.getCoordinates().getYCoordinate(), 1);
     }
 
     public void addExistIterationFormToCanvas(int oldFormId){

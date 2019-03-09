@@ -3,6 +3,8 @@ package graphics;
 import javafx.scene.Group;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import services.Constans;
 import services.SegmentType;
@@ -18,6 +20,7 @@ public class InfoBoxSegment extends Group {
 	private Rectangle topRectangle;
 	private Rectangle botomRectangle;
 	private Text segmentName;
+	private Text instanceCount;
 	private Text name;
 	private double length;
 	private CanvasItem canItem;
@@ -34,18 +37,21 @@ public class InfoBoxSegment extends Group {
 	 * @param name
 	 *            {@link String}
 	 */
-	public InfoBoxSegment(CanvasItem canItem, SegmentType type, String name) {
+	public InfoBoxSegment(CanvasItem canItem, SegmentType type, String name, String instanceCount) {
 		super();
 		this.canItem = canItem;
 		this.name = new Text(name);
 
 		this.segmentName = new Text(type.name());
+		this.instanceCount = new Text(instanceCount);
+		this.instanceCount.setFill(Color.RED);
+		this.instanceCount.setFont(Font.font(null, FontWeight.BOLD, 25));
 		this.length = Constans.minCanvasItemWidth;
 
 		this.topRectangle = new Rectangle(length, Constans.infoBoxHeightRectangle);
 		this.botomRectangle = new Rectangle(length, Constans.infoBoxHeightRectangle);
 		height = Constans.infoBoxHeight;
-		this.getChildren().addAll(topRectangle, botomRectangle, this.segmentName, this.name);
+		this.getChildren().addAll(topRectangle, botomRectangle, this.segmentName, this.name, this.instanceCount);
 
 		createBlock();
 
@@ -88,6 +94,9 @@ public class InfoBoxSegment extends Group {
 
 		name.setTranslateX(Constans.offset);
 		name.setTranslateY(33);
+
+		instanceCount.setTranslateX(botomRectangle.getWidth() + Constans.offset);
+		instanceCount.setTranslateY(topRectangle.getHeight() + botomRectangle.getHeight() + Constans.offset);
 
 		height = botomRectangle.getHeight();
 
@@ -187,4 +196,7 @@ public class InfoBoxSegment extends Group {
 		this.height = height;
 	}
 
+	public Text getInstanceCount() {
+		return instanceCount;
+	}
 }

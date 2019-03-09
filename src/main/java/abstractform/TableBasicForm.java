@@ -85,9 +85,15 @@ public abstract class TableBasicForm extends BasicForm {
         this.setPadding(new Insets(5));
 
         HBox buttonPanel = new HBox(25);
+        buttonPanel.setAlignment(Pos.CENTER);
+        buttonPanel.setMinHeight(100);
         addButton = new Button("+");
+        addButton.setMinSize(Constans.tableControlButtonWidth, Constans.tableControlButtonHeight);
+        addButton.setMinHeight(70);
         removeButton = new Button("-");
+        removeButton.setMinSize(Constans.tableControlButtonWidth, Constans.tableControlButtonHeight);
         editButton = new Button("Edit");
+        editButton.setMinSize(Constans.tableControlButtonWidth, Constans.tableControlButtonHeight);
         buttonPanel.getChildren().addAll(addButton, removeButton, editButton);
         this.setBottom(buttonPanel);
         return this;

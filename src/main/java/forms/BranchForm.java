@@ -79,6 +79,7 @@ public class BranchForm extends TableBasicForm implements ISegmentTableForm {
         BranchTable branchTable = tableTV.getSelectionModel().getSelectedItems().get(0);
         if (branchTable != null) {
             editBranchControlPanel.showEditControlPanel(branchTable, tableTV);
+            formController.showEditControlPanel(editBranchControlPanel);
         }
     }
 
@@ -113,7 +114,7 @@ public class BranchForm extends TableBasicForm implements ISegmentTableForm {
 
         tableTV.getColumns().addAll(nameColumn, mainColumn);
 
-        tableTV.setEditable(true);
+        tableTV.setEditable(false);
         tableTV.setOnMousePressed(OnMousePressedEventHandler);
         tableTV.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 

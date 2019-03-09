@@ -47,9 +47,6 @@ public class RoleForm extends TableBasicForm implements ISegmentTableForm {
 	 * Globální proměnné třídy
 	 */
 	private TableView<RoleTable> tableTV;
-	private RoleTypeForm roleTForm;
-	private Label formName;
-
 	private RoleControlPanel editRoleControlPanel;
 
 	/**

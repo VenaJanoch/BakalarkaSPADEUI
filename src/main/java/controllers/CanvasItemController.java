@@ -23,12 +23,14 @@ public class CanvasItemController {
         this.formController = formController;
     }
 
-    public CanvasItem createCanvasItem(SegmentType type, String segmentIdentificator, int formIndex, String name, double x, double y, CanvasController canvasController) {
+    public CanvasItem createCanvasItem(SegmentType type, String segmentIdentificator, int formIndex, String name, int instanceCount, double x, double y,
+                                       CanvasController canvasController) {
 
         linkControl.createLinkInstanceInMap(formIndex);
         this.type = type;
 
-        CanvasItem item = new CanvasItem(type, segmentIdentificator, formIndex, name, 0, x, y, canvasController, this);
+        CanvasItem item = new CanvasItem(type, segmentIdentificator, formIndex, name, instanceCount, 0, x, y,
+                canvasController, this);
         formController.addCanvasItemToList(formIndex, item);
         return item;
     }
