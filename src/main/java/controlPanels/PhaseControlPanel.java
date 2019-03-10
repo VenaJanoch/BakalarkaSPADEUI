@@ -4,6 +4,7 @@ import abstractControlPane.DateDescControlPanel;
 import abstractControlPane.WorkUnitControlPanel;
 import abstractControlPane.WorkUnitDateControlPanel;
 import controllers.FormController;
+import graphics.ComboBoxItem;
 import interfaces.IEditFormController;
 import interfaces.IFormDataController;
 import javafx.beans.value.ChangeListener;
@@ -12,10 +13,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.geometry.HPos;
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import org.controlsfx.control.CheckComboBox;
 import services.Constans;
@@ -33,53 +31,17 @@ public class PhaseControlPanel extends WorkUnitDateControlPanel {
     /**
      * Globální proměnné třídy
      */
-    private Label configLB;
-    private Label milestoneLB;
 
-    private ChoiceBox<BasicTable> configCB;
-    private ChoiceBox<BasicTable> milestoneCB;
-
-    private int milestoneIndex = 0;
-    private int configIndex = 0;
-
-    private boolean isShowConfig;
-    private Button configButton;
-
-    private boolean isShowMilestone;
-    private Button milestoneButton;
-
-    
+    private ComboBoxItem configCB;
+    private ComboBoxItem milestoneCB;
+    private SegmentLists segmentLists;
     public PhaseControlPanel(String buttonName, IFormDataController formDataController,
                              IEditFormController editFormController, FormController formController){
         super(buttonName, formDataController, editFormController, formController);
+        segmentLists = formController.getSegmentLists();
         addItemsToControlPanel();
+
     }
-
-    /**
-     * ChangeListener pro určení indexu prvku z comboBoxu pro Milestone
-     */
-    ChangeListener<Number> milestoneListener = new ChangeListener<Number>() {
-
-        @Override
-        public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-
-            milestoneIndex = newValue.intValue();
-
-        }
-    };
-
-    /**
-     * ChangeListener pro určení indexu prvku z comboBoxu pro Configuration
-     */
-    ChangeListener<Number> configListener = new ChangeListener<Number>() {
-
-        @Override
-        public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-
-            configIndex = newValue.intValue();
-
-        }
-    };
 
     @Override
     public void showEditControlPanel(BasicTable basicTable, TableView tableView) {
@@ -88,117 +50,83 @@ public class PhaseControlPanel extends WorkUnitDateControlPanel {
         String[] milestoneData = formDataController.getPhaseStringData(id);
 
         nameTF.setText(milestoneData[0]);
+
+        descriptionTF.setShowItem(false);
         if (milestoneData[1] != null){
-            descriptionTF.setText(milestoneData[1]);
+            descriptionTF.setShowItem(true);
+            descriptionTF.setTextToTextField(milestoneData[1]);
         }
 
+        configCB.setShowItem(false);
         if(milestoneData[2] != null){
-            configCB.getSelectionModel().select(Integer.parseInt(milestoneData[2]));
+            configCB.setShowItem(true);
+            configCB.selectItemInComboBox(Integer.parseInt(milestoneData[2]));
         }
 
+        milestoneCB.setShowItem(false);
         if(milestoneData[3] != null){
-            milestoneCB.getSelectionModel().select(Integer.parseInt(milestoneData[3]));
+            milestoneCB.setShowItem(true);
+            milestoneCB.selectItemInComboBox(Integer.parseInt(milestoneData[3]));
         }
 
+        dateDP.setShowItem(false);
         if(milestoneData[4] != null){
-            dateDP.setValue(LocalDate.parse(milestoneData[4]));
+            dateDP.setShowItem(true);
+            dateDP.setDateToPicker(LocalDate.parse(milestoneData[4]));
         }
 
         List<Integer> workUnits = formDataController.getWorkUnitFromSegment(id, SegmentType.Phase);
-        if(workUnits != null){
-            for(int i : workUnits){
-                workUnitCB.getCheckModel().check(i);
-            }
+        workUnitCB.setShowItem(false);
+        if (workUnits.size() != 0){
+            workUnitCB.setShowItem(true);
+            workUnitCB.selectItemsInComboBox(workUnits);
         }
 
 
         button.setOnAction(event ->{
 
             phaseTable.setName(id + "_" + nameTF.getText());
-            if (configCB.getValue() != null){
-                phaseTable.setConfiguration(configCB.getValue().getName());
+            if (configCB.getItemCB() != null){
+                phaseTable.setConfiguration(segmentLists.getConfigObservable().get(configCB.getItemIndex()).getName());
             }
 
-            if (milestoneCB.getValue() != null){
-                phaseTable.setMilestone(milestoneCB.getValue().getName());
+            if (milestoneCB.getItemCB() != null){
+                phaseTable.setMilestone(segmentLists.getMilestoneObservable().get(milestoneCB.getItemIndex()).getName());
             }
             String desc = "null";
-            if (descriptionTF.getText() != null){
-                desc = descriptionTF.getText();
+            if (descriptionTF.getTextFromTextField() != null){
+                desc = descriptionTF.getTextFromTextField();
             }
 
             LocalDate date = LocalDate.of(1900,1,1);
-            if(dateDP.getValue() != null){
-                date = dateDP.getValue();
+            if(dateDP.getDateFromDatePicker() != null){
+                date = dateDP.getDateFromDatePicker();
             }
-            editFormController.editDataFromPhase(nameTF.getText(), desc ,date, milestoneIndex, configIndex, new ArrayList<>(workUnitIndicies), phaseTable, id);
+            editFormController.editDataFromPhase(nameTF.getText(), desc ,date, milestoneCB.getItemIndex(), configCB.getItemIndex()
+                    , new ArrayList<>(workUnitCB.getItemIndicies()), phaseTable, id);
 
             clearPanelCB(tableView);
         });
     }
-    
-    
-    private void setExitButtonsActions(){
-        isShowConfig = false;
-        configButton = new Button("+");
-        configButton.setOnAction(event -> {
-            if (!isShowConfig){
-                configCB.setVisible(true);
-                isShowConfig  = true;
-                configButton.setText("-");
-            }else{
-                configCB.setVisible(false);
-                configCB.getSelectionModel().clearSelection();
-                isShowConfig = false;
-                configButton.setText("+");
-            }
-        });
-
-        isShowMilestone = false;
-        milestoneButton = new Button("+");
-        milestoneButton.setOnAction(event -> {
-            if (!isShowMilestone){
-                milestoneCB.setVisible(true);
-                isShowMilestone  = true;
-                milestoneButton.setText("-");
-            }else{
-                milestoneCB.setVisible(false);
-                milestoneCB.getSelectionModel().clearSelection();
-                isShowMilestone = false;
-                milestoneButton.setText("+");
-            }
-        });
-    }
-
     @Override
     protected void addItemsToControlPanel() {
 
-        dateLB.setText("End-Date");
+        dateDP.setItemNameLB("End-Date");
 
-        setExitButtonsActions();
+        configCB = new ComboBoxItem("Configuration: ", segmentLists.getConfigObservable());
+        milestoneCB = new ComboBoxItem("Milestone: ", segmentLists.getMilestoneObservable());
 
-        configLB = new Label("Configuration: ");
-        configCB = new ChoiceBox<>();
-        configCB.getSelectionModel().selectedIndexProperty().addListener(configListener);
-        configCB.setVisible(false);
+        controlPane.add(configCB.getItemNameLB(), 1, 4);
+        controlPane.setHalignment(configCB.getItemNameLB(), HPos.LEFT);
+        controlPane.add(configCB.getItemCB(), 2, 4);
+        controlPane.add(configCB.getItemButton(), 0, 4);
 
-        milestoneLB = new Label("Milestone: ");
-        milestoneCB = new ChoiceBox<>();
-        milestoneCB.getSelectionModel().selectedIndexProperty().addListener(milestoneListener);
-        milestoneCB.setVisible(false);
-        configCB.setItems(segmentLists.getConfigObservable());
-        milestoneCB.setItems(segmentLists.getMilestoneObservable());
-
-        controlPane.add(configLB, 1, 4);
-        controlPane.setHalignment(configLB, HPos.LEFT);
-        controlPane.add(configCB, 2, 4);
-        controlPane.add(configButton, 0, 4);
-
-        controlPane.add(milestoneLB, 1, 5);
-        controlPane.setHalignment(milestoneLB, HPos.LEFT);
-        controlPane.add(milestoneCB, 2, 5);
-        controlPane.add(milestoneButton, 0, 5);
+        controlPane.add(milestoneCB.getItemNameLB(), 1, 5);
+        controlPane.setHalignment(milestoneCB.getItemNameLB(), HPos.LEFT);
+        controlPane.add(milestoneCB.getItemCB(), 2, 5);
+        controlPane.add(milestoneCB.getItemButton(), 0, 5);
         controlPane.add(button, 2, 6);
+
 
     }
 
@@ -211,11 +139,4 @@ public class PhaseControlPanel extends WorkUnitDateControlPanel {
         tableView.getSelectionModel().clearSelection();
     }
 
-    public ChoiceBox<BasicTable> getConfigCB() {
-        return configCB;
-    }
-
-    public ChoiceBox<BasicTable> getMilestoneCB() {
-        return milestoneCB;
-    }
 }

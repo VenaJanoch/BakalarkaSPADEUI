@@ -299,7 +299,7 @@ public class EditFormController implements IEditFormController {
 
         Double estimateForDataManipulator = -1.0;
 
-        if (!estimatedTime.equals("")) {
+        if (estimatedTime != null && !estimatedTime.equals("")) {
             estimateForDataManipulator = InputController.isDoubleNumber(estimatedTime);
         }
 

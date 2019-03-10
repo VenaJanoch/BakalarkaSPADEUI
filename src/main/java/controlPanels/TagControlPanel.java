@@ -31,10 +31,9 @@ public class TagControlPanel extends NameControlPanel {
 
     }
 
-    public GridPane createControlPanel(){
-        controlPane.add(button, 4, 0);
+    public void createControlPanel(){
+        controlPane.getChildren().add(button);
         creatSceneCanvas();
-        return controlPane;
     }
 
 

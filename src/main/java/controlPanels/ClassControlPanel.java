@@ -4,6 +4,7 @@ import controllers.FormController;
 import SPADEPAC.RoleClass;
 import SPADEPAC.RoleSuperClass;
 import abstractControlPane.NameControlPanel;
+import graphics.ComboBoxItem;
 import interfaces.IEditFormController;
 import interfaces.IFormDataController;
 import javafx.beans.value.ChangeListener;
@@ -21,106 +22,50 @@ import tables.ClassTable;
 
 public class ClassControlPanel extends NameControlPanel {
 
-    private Label classLB;
-    private Label superLB;
-    private ComboBox classCB;
-    private ComboBox superClassCB;
+    private ComboBoxItem classCB;
+    private ComboBoxItem superClassCB;
     private ClassSwitcher switcher;
     private String[] classList;
     private String[] superClassList;
     private SegmentType segmentType;
 
-    protected int classIndex;
-    protected int superIndex;
-
-    private boolean isShowClass;
-    private Button classButton;
-
-    private boolean isShowSuperClass;
-    private Button superClassButton;
+    private int classIndex;
+    private int superIndex;
 
     public ClassControlPanel(String buttonName, SegmentType segmentType, IFormDataController formDataController, IEditFormController editFormController, FormController formController){
         super(buttonName, formDataController, editFormController, formController);
-        classIndex = 0;
-        superIndex = 0;
         switcher = new ClassSwitcher();
         this.segmentType = segmentType;
 
     }
 
-    /**
-     * Vytvoří scénu s formulářem
-     *
-     * @return Scene
-     */
-    private void creatSceneCanvas() {
 
-      //  this.setScene(new Scene(mainPanel));
-
-    }
-
-    public GridPane createControlPanel(String[] classList, String[] superClassList){
+    public void createControlPanel(String[] classList, String[] superClassList){
 
         this.classList = classList;
         this.superClassList = superClassList;
 
-        classLB = new Label("Class: ");
-        superLB = new Label("Super Class: ");
 
-        classCB = new ComboBox<>(FXCollections.observableArrayList(classList));
-        classCB.getSelectionModel().selectedIndexProperty().addListener(classListener);
-        classCB.setVisible(false);
-        superClassCB = new ComboBox<>(FXCollections.observableArrayList(superClassList));
-        superClassCB.getSelectionModel().selectedIndexProperty().addListener(superListener);
-        superClassCB.setVisible(false);
-        classCB.setValue(RoleClass.UNASSIGNED);
-        superClassCB.setValue(RoleSuperClass.UNASSIGNED);
+        classCB = new ComboBoxItem("Class: ", FXCollections.observableArrayList(classList));
 
-        setExitButtonsActions();
+        superClassCB = new ComboBoxItem("Super class: ", FXCollections.observableArrayList(superClassList));
 
-        controlPane.add(classButton, 0, 1);
-        controlPane.add(classLB, 1, 1);
-        controlPane.add(classCB, 2, 1);
+        classCB.selectItemInComboBox(0);
+        superClassCB.selectItemInComboBox(0);
 
-        controlPane.add(superClassButton, 0, 2);
-        controlPane.add(superLB, 1, 2);
-        controlPane.add(superClassCB, 2, 2);
+        controlPane.add(classCB.getItemButton(), 0, 1);
+        controlPane.add(classCB.getItemNameLB(), 1, 1);
+        controlPane.add(classCB.getItemCB(), 2, 1);
+        classCB.selectItemInComboBox(0);
+        superClassCB.selectItemInComboBox(0);
+
+        controlPane.add(superClassCB.getItemButton(), 0, 2);
+        controlPane.add(superClassCB.getItemNameLB(), 1, 2);
+        controlPane.add(superClassCB.getItemCB(), 2, 2);
 
         controlPane.add(button, 1, 3);
 
-        return controlPane;
-    }
 
-    private void setExitButtonsActions(){
-        isShowClass = false;
-        classButton = new Button("+");
-        classButton.setOnAction(event -> {
-            if (!isShowClass){
-                classCB.setVisible(true);
-                isShowClass = true;
-                classButton.setText("-");
-            }else{
-                classCB.setVisible(false);
-                classCB.getSelectionModel().clearSelection();
-                isShowClass = false;
-                classButton.setText("+");
-            }
-        });
-
-        isShowSuperClass = false;
-        superClassButton = new Button("+");
-        superClassButton.setOnAction(event -> {
-            if (!isShowSuperClass){
-                superClassCB.setVisible(true);
-                isShowSuperClass = true;
-                superClassButton.setText("-");
-            }else{
-                superClassCB.setVisible(false);
-                superClassCB.getSelectionModel().clearSelection();
-                isShowSuperClass = false;
-                superClassButton.setText("+");
-            }
-        });
     }
 
     public void showEditControlPanel(BasicTable basicTable, TableView tableView) {
@@ -129,16 +74,14 @@ public class ClassControlPanel extends NameControlPanel {
         String[] classData = formDataController.getClassStringData(segmentType, id);
 
         nameTF.setText(classData[0]);
-        classCB.getSelectionModel().select(classData[1]);
-        superClassCB.getSelectionModel().select(classData[2]);
+
+        classCB.selectItemInComboBox(classData[1]);
 
         button.setOnAction(event ->{
             editFormController.editDataFromClass(segmentType, nameTF.getText(), getClassName(), getSuperClassName(), classTable, id);
             clearPanel(tableView);
-         //  this.close();
         });
 
-        // this.show();
 
     }
 
@@ -156,11 +99,11 @@ public class ClassControlPanel extends NameControlPanel {
             superIndex = switcher.ClassToSuperClass(segmentType, classIndex);
             if (superIndex == -1) {
                 superClassCB.setDisable(false);
-                superClassCB.setValue(superClassList[0]);
+                superClassCB.selectItemInComboBox(superClassList[0]);
                 superIndex = 0;
             } else {
                 superClassCB.setDisable(true);
-                superClassCB.setValue(superClassList[superIndex]);
+                superClassCB.selectItemInComboBox(superClassList[superIndex]);
             }
         }
     };
@@ -177,10 +120,10 @@ public class ClassControlPanel extends NameControlPanel {
     };
 
     public String getClassName() {
-        if (classCB.getValue() == null || classIndex == 0) {
-            return classCB.getItems().get(0).toString(); //   RoleClass.UNASSIGNED.name();
+        if (classIndex == 0) {
+            return classList[0]; //   RoleClass.UNASSIGNED.name();
         } else {
-            return classCB.getValue().toString();
+            return classList[classIndex];
         }
     }
 

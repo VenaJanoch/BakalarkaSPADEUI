@@ -31,9 +31,7 @@ public abstract class Date2DescControlPanel extends DateControlPanel {
         date2DP = new DatePicker();
         date2DP.setId("DP2");
 
-        controlPane.add(date2LB, 0, 3);
-        controlPane.setHalignment(date2LB, HPos.RIGHT);
-        controlPane.add(date2DP, 1, 3);
+        controlPane.getChildren().add(date2DP);
 
     }
 

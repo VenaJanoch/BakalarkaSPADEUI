@@ -3,6 +3,7 @@ package controlPanels;
 import SPADEPAC.ArtifactClass;
 import abstractControlPane.DateDescControlPanel;
 import controllers.FormController;
+import graphics.ComboBoxItem;
 import interfaces.IEditFormController;
 import interfaces.IFormDataController;
 import javafx.beans.value.ChangeListener;
@@ -22,26 +23,15 @@ public class ArtifactControlPanel extends DateDescControlPanel {
     /**
      * Globální proměnné třídy
      */
-    private Label roleLB;
-    private Label typeLB;
 
-    private ChoiceBox<BasicTable> roleCB;
-    private ComboBox<ArtifactClass> typeCB;
-
-    private int roleIndex = 0;
-    private int typeIndex = 0;
+    private ComboBoxItem roleCB;
+    private ComboBoxItem typeCB;
 
     private RadioButton existRB;
     private boolean exist;
     private SegmentLists segmentLists;
 
     private ArtifactTable artifactTable;
-
-    private boolean isShowRole;
-    private Button roleButton;
-
-    private boolean isShowType;
-    private Button typeButton;
 
     public ArtifactControlPanel(String buttonName, IFormDataController formDataController,
                                 IEditFormController editFormController, FormController formController){
@@ -51,100 +41,30 @@ public class ArtifactControlPanel extends DateDescControlPanel {
         createControlPanel();
     }
 
-    public GridPane createControlPanel(){
+    public void createControlPanel(){
 
-        dateLB.setText("Created: ");
+        dateDP.setItemNameLB("Created: ");
 
-        roleLB = new Label("Author: ");
-        roleCB = new ChoiceBox<>();
-        roleCB.getSelectionModel().selectedIndexProperty().addListener(typeListener);
-        roleCB.setVisible(false);
-        typeLB = new Label("Mine Type: ");
-        typeCB = new ComboBox<ArtifactClass>(FXCollections.observableArrayList(ArtifactClass.values()));
-        typeCB.getSelectionModel().selectedIndexProperty().addListener(roleListener);
-        typeCB.setVisible(false);
-     
-        roleCB.setItems(segmentLists.getRoleObservable());
+        roleCB = new ComboBoxItem("Author: ", formController.getRoleObservable());
+        typeCB = new ComboBoxItem("Mine Type: ", FXCollections.observableArrayList(ArtifactClass.values()));
 
         existRB = new RadioButton("Exist");
         existRB.setSelected(true);
 
-        setExitButtonsActions();
+        controlPane.add(roleCB.getItemButton(), 0, 3);
+        controlPane.add(roleCB.getItemNameLB(), 1, 3);
+        controlPane.setHalignment(roleCB.getItemNameLB(), HPos.LEFT);
+        controlPane.add(roleCB.getItemCB(), 2, 3);
 
-        controlPane.add(roleButton, 0, 3);
-        controlPane.add(roleLB, 1, 3);
-        controlPane.setHalignment(roleLB, HPos.LEFT);
-        controlPane.add(roleCB, 2, 3);
-
-        controlPane.add(typeButton, 0, 4);
-        controlPane.add(typeLB, 1, 4);
-        controlPane.setHalignment(typeLB, HPos.LEFT);
-        controlPane.add(typeCB, 2, 4);
+        controlPane.add(typeCB.getItemButton(), 0, 4);
+        controlPane.add(typeCB.getItemNameLB(), 1, 4);
+        controlPane.setHalignment(typeCB.getItemCB(), HPos.LEFT);
 
         controlPane.add(existRB, 0, 5);
         controlPane.add(button, 2, 6);
 
-        return controlPane;
+
     }
-
-    private void setExitButtonsActions(){
-        isShowRole = false;
-        roleButton = new Button("+");
-        roleButton.setOnAction(event -> {
-            if (!isShowRole){
-                roleCB.setVisible(true);
-                isShowRole = true;
-                roleButton.setText("-");
-            }else{
-                roleCB.setVisible(false);
-                roleCB.getSelectionModel().clearSelection();
-                isShowRole = false;
-                roleButton.setText("+");
-            }
-        });
-
-        isShowType = false;
-        typeButton = new Button("+");
-        typeButton.setOnAction(event -> {
-            if (!isShowType){
-                typeCB.setVisible(true);
-                isShowType = true;
-                typeButton.setText("-");
-            }else{
-                typeCB.setVisible(false);
-                typeCB.getSelectionModel().clearSelection();
-                isShowType = false;
-                typeButton.setText("+");
-            }
-        });
-    }
-
-
-    /**
-     * ChangeListener pro určení indexu prvku z comboBoxu pro Milestone
-     */
-    ChangeListener<Number> roleListener = new ChangeListener<Number>() {
-
-        @Override
-        public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-
-            roleIndex = newValue.intValue();
-
-        }
-    };
-
-    /**
-     * ChangeListener pro určení indexu prvku z comboBoxu pro Configuration
-     */
-    ChangeListener<Number> typeListener = new ChangeListener<Number>() {
-
-        @Override
-        public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-
-            typeIndex = newValue.intValue();
-
-        }
-    };
 
     @Override
     public void showEditControlPanel(BasicTable basicTable, TableView tableView) {
@@ -153,20 +73,28 @@ public class ArtifactControlPanel extends DateDescControlPanel {
         String[] artifactData = formDataController.getArtifactStringData(id);
 
         nameTF.setText(artifactData[0]);
+        descriptionTF.setShowItem(false);
         if (artifactData[1] != null){
-            descriptionTF.setText(artifactData[1]);
+            descriptionTF.setTextToTextField(artifactData[1]);
+            descriptionTF.setShowItem(true);
         }
 
+        roleCB.setShowItem(false);
         if(artifactData[2] != null){
-            roleCB.getSelectionModel().select(Integer.parseInt(artifactData[2]));
+            roleCB.selectItemInComboBox(Integer.parseInt(artifactData[2]));
+            roleCB.setShowItem(true);
         }
 
+        typeCB.setShowItem(false);
         if(artifactData[3] != null){
-            typeCB.getSelectionModel().select(Integer.parseInt(artifactData[3]));
+            typeCB.selectItemInComboBox(Integer.parseInt(artifactData[3]));
+            typeCB.setShowItem(false);
         }
 
+        typeCB.setShowItem(false);
         if(artifactData[4] != null){
-            dateDP.setValue(LocalDate.parse(artifactData[4]));
+            dateDP.setDateToPicker(LocalDate.parse(artifactData[4]));
+            dateDP.setShowItem(false);
         }
 
         exist = Boolean.valueOf(artifactData[5]);
@@ -180,18 +108,18 @@ public class ArtifactControlPanel extends DateDescControlPanel {
         artifactTable.setName(id + "_" + nameTF.getText());
 
         String desc = "null";
-        if (descriptionTF.getText() != null){
-            desc = descriptionTF.getText();
+        if (descriptionTF.getTextFromTextField() != null){
+            desc = descriptionTF.getTextFromTextField();
         }
 
         LocalDate date = LocalDate.of(1900,1,1);
-        if(dateDP.getValue() != null){
-            date = dateDP.getValue();
+        if(dateDP.getDateFromDatePicker() != null){
+            date = dateDP.getDateFromDatePicker();
         }
 
         exist = existRB.isSelected();
 
-        editFormController.editDataFromArtifact(nameTF.getText(), desc , exist, roleIndex, typeIndex, date, artifactTable, id);
+        editFormController.editDataFromArtifact(nameTF.getText(), desc , exist, roleCB.getItemIndex(), typeCB.getItemIndex(), date, artifactTable, id);
 
         clearPanelCB(tableView);
     }

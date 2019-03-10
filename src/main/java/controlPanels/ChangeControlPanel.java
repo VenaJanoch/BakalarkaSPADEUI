@@ -48,7 +48,7 @@ public class ChangeControlPanel extends DescriptionControlPanel {
 
         nameTF.setText(changeData[0]);
         if (changeData[1] != null){
-            descriptionTF.setText(changeData[1]);
+            descriptionTF.setTextToTextField(changeData[1]);
         }
 
         exist = Boolean.valueOf(changeData[2]);
@@ -73,8 +73,10 @@ public class ChangeControlPanel extends DescriptionControlPanel {
         changeTable.setName(id + "_" + nameTF.getText());
 
         String desc = "null";
-        if (descriptionTF.getText() != null){
-            desc = descriptionTF.getText();
+        descriptionTF.setShowItem(false);
+        if (descriptionTF.getTextFromTextField() != null){
+            desc = descriptionTF.getTextFromTextField();
+            descriptionTF.setShowItem(true);
         }
 
         exist = existRB.isSelected();

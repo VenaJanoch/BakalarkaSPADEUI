@@ -22,6 +22,7 @@ public class CriterionControlPanel extends DescriptionControlPanel {
 
     public void addItemsToControlPanel(){
         controlPane.add(button, 1, 2);
+
     }
 
 
@@ -31,14 +32,15 @@ public class CriterionControlPanel extends DescriptionControlPanel {
         String[] criterionData = formDataController.getCriterionData(id);
 
         nameTF.setText(criterionData[0]);
-        descriptionTF.setText(criterionData[1]);
+        descriptionTF.setShowItem(false);
+        if (criterionData[1] != null){
+            descriptionTF.setTextToTextField(criterionData[1]);
+            descriptionTF.setShowItem(true);
+        }
         button.setOnAction(event ->{
-            editFormController.editDataFromCriterion(nameTF.getText(), descriptionTF.getText(), criterionTable, id);
+            editFormController.editDataFromCriterion(nameTF.getText(), descriptionTF.getTextFromTextField(), criterionTable, id);
             clearPanel(tableView);
-           // this.close();
         });
-
-       // this.show();
     }
 
 
@@ -50,6 +52,6 @@ public class CriterionControlPanel extends DescriptionControlPanel {
         tableView.getSelectionModel().clearSelection();
         tableView.refresh();
         nameTF.setText("");
-        descriptionTF.setText("");
+        descriptionTF.setTextToTextField("");
     }
 }

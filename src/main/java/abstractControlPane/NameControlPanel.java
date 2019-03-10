@@ -5,6 +5,7 @@ import interfaces.IEditFormController;
 import interfaces.IFormDataController;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.HBox;
 
 public abstract class NameControlPanel extends ControlPanel {
 
@@ -24,15 +25,23 @@ public abstract class NameControlPanel extends ControlPanel {
     protected void createBasicPanel() {
         nameLB = new Label("Name");
         nameTF = new TextField();
+        nameTF.setId("formName");
+
         controlPane.add(nameLB, 1, 0);
         controlPane.add(nameTF, 2, 0);
-        nameLB = new Label("Name: ");
-        nameTF.setId("formName");
 
     }
     protected abstract void createBaseControlPanel();
 
     public String getName() {
         return nameTF.getText();
+    }
+
+    public Label getNameLB() {
+        return nameLB;
+    }
+
+    public TextField getNameTF() {
+        return nameTF;
     }
 }

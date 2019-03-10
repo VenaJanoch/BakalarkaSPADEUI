@@ -1,6 +1,7 @@
 package abstractControlPane;
 
 import controllers.FormController;
+import graphics.CheckComboBoxItem;
 import interfaces.IEditFormController;
 import interfaces.IFormDataController;
 import javafx.collections.ListChangeListener;
@@ -17,19 +18,12 @@ import tables.BasicTable;
 
 public abstract class WorkUnitControlPanel extends DescriptionControlPanel {
 
-    private Label workUnitLB;
-
-    protected CheckComboBox<BasicTable> workUnitCB;
-
-    protected ObservableList<Integer> workUnitIndicies;
-
-    protected SegmentLists segmentLists;
-    private boolean isShowWorkUnit;
-    private Button workUnitButton;
+    private SegmentLists segmentLists;
+    protected CheckComboBoxItem workUnitCB;
 
     public WorkUnitControlPanel(String buttonText, IFormDataController formDataController, IEditFormController editFormController, FormController formController) {
         super(buttonText, formDataController, editFormController, formController);
-        this.segmentLists = formController.getSegmentLists();
+        segmentLists = formController.getSegmentLists();
         addItemsToControlPanel2();
     }
 
@@ -41,39 +35,17 @@ public abstract class WorkUnitControlPanel extends DescriptionControlPanel {
     protected void addItemsToControlPanel2() {
 
 
-        workUnitLB = new Label("Work Unit: ");
-        workUnitCB = new CheckComboBox<>(segmentLists.getWorkUnitsObservable());
-        workUnitCB.setMaxWidth(Constans.checkComboBox);
-        workUnitCB.setVisible(false);
-        workUnitCB.getCheckModel().getCheckedItems().addListener(new ListChangeListener<BasicTable>() {
+        workUnitCB = new CheckComboBoxItem("Work units: ", segmentLists.getWorkUnitsObservable());
 
-            public void onChanged(Change<? extends BasicTable> c) {
-                workUnitIndicies = workUnitCB.getCheckModel().getCheckedIndices();
-            }
-        });
+        controlPane.add(workUnitCB.getItemButton(), 0, 2);
+        controlPane.add(workUnitCB.getItemNameLB(), 1, 2);
+        controlPane.setHalignment(workUnitCB.getItemNameLB(), HPos.LEFT);
+        controlPane.add(workUnitCB.getItemCB(), 2, 2);
 
-        isShowWorkUnit = false;
-        workUnitButton = new Button("+");
-        workUnitButton.setOnAction(event -> {
-            if (!isShowWorkUnit){
-                workUnitCB.setVisible(true);
-                isShowWorkUnit  = true;
-                workUnitButton.setText("-");
-            }else{
-                workUnitCB.setVisible(false);
-                workUnitCB.getCheckModel().check(0);
-                isShowWorkUnit = false;
-                workUnitButton.setText("+");
-            }
-        });
-        controlPane.add(workUnitLB, 1, 2);
-        controlPane.setHalignment(workUnitLB, HPos.LEFT);
-        controlPane.add(workUnitCB, 2, 2);
-        controlPane.add(workUnitButton, 0, 2);
+
     }
 
 
     protected abstract void showEditControlPanel(BasicTable basicTable, TableView tableView);
-
 
 }

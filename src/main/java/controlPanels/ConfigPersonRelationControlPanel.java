@@ -2,6 +2,7 @@ package controlPanels;
 
 import controllers.FormController;
 import abstractControlPane.NameControlPanel;
+import graphics.ComboBoxItem;
 import interfaces.IEditFormController;
 import interfaces.IFormDataController;
 import javafx.beans.value.ChangeListener;
@@ -15,19 +16,12 @@ import tables.BasicTable;
 import tables.CPRTable;
 
 public class ConfigPersonRelationControlPanel extends NameControlPanel {
-    private Label roleLB;
-    private ComboBox roleCB;
-
-    protected int roleIndex;
-
-    private boolean isShowRole;
-    private Button roleButton;
+    private ComboBoxItem roleCB;
 
 
     public ConfigPersonRelationControlPanel(String buttonName, IFormDataController formDataController, IEditFormController editFormController, FormController formController){
         super(buttonName, formDataController, editFormController, formController);
         createControlPanel();
-        roleIndex = 0;
     }
 
     @Override
@@ -36,40 +30,17 @@ public class ConfigPersonRelationControlPanel extends NameControlPanel {
     }
 
 
-    private void setExitButtonsActions(){
-        isShowRole = false;
-        roleButton = new Button("+");
-        roleButton.setOnAction(event -> {
-            if (!isShowRole){
-                roleCB.setVisible(true);
-                isShowRole = true;
-                roleButton.setText("-");
-            }else{
-                roleCB.setVisible(false);
-                roleCB.getSelectionModel().clearSelection();
-                isShowRole = false;
-                roleButton.setText("+");
-            }
-        });
-    }
+    public void createControlPanel(){
 
 
-    public GridPane createControlPanel(){
+        roleCB = new ComboBoxItem("Role: ", formController.getRoleObservable());
 
-
-        roleLB = new Label("Role: ");
-
-        roleCB = new ComboBox<>(formDataController.getRoleList());
-        roleCB.getSelectionModel().selectedIndexProperty().addListener(roleListener);
-        roleCB.setVisible(false);
-        setExitButtonsActions();
-
-        controlPane.add(roleButton, 0, 1);
-        controlPane.add(roleLB, 1, 1);
-        controlPane.add(roleCB, 2, 1);
+        controlPane.add(roleCB.getItemButton(), 0, 1);
+        controlPane.add(roleCB.getItemNameLB(), 1, 1);
+        controlPane.add(roleCB.getItemCB(), 2, 1);
         controlPane.add(button, 2, 2);
 
-        return controlPane;
+
     }
 
 
@@ -79,41 +50,24 @@ public class ConfigPersonRelationControlPanel extends NameControlPanel {
         String[] classData = formDataController.getCPRStringData(id);
 
         nameTF.setText(classData[0]);
-        int roleIndex = Integer.parseInt(classData[1]);
-        roleCB.getSelectionModel().select(roleIndex);
 
-        button.setOnAction(event ->{
-            editFormController.editDataFromCPR(nameTF.getText(), this.roleIndex, cprTable);
-            clearPanel(tableView);
-           // this.close();
-        });
-
-      //  this.show();
-
-    }
-
-
-    /**
-     * ChangeListener pro určení indexu prvku z comboBoxu pro Role
-     */
-    ChangeListener<Number> roleListener = new ChangeListener<Number>() {
-
-        @Override
-        public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-
-            roleIndex = newValue.intValue();
-
+        roleCB.setShowItem(false);
+        if (classData[1] != null){
+            int roleIndex = Integer.parseInt(classData[1]);
+            roleCB.selectItemInComboBox(roleIndex);
+            roleCB.setShowItem(true);
         }
-    };
+        button.setOnAction(event ->{
+            editFormController.editDataFromCPR(nameTF.getText(), roleCB.getItemIndex(), cprTable);
+            clearPanel(tableView);
 
-    public int getRoleIndex() {
-        return roleIndex;
+        });
     }
+
+
 
     public void clearPanel(TableView<CPRTable> tableView) {
-        nameTF.setText("");
         tableView.refresh();
         tableView.getSelectionModel().clearSelection();
-        roleCB.getSelectionModel().clearSelection();
     }
 }

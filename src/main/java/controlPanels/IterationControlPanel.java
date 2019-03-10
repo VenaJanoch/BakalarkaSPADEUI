@@ -1,13 +1,18 @@
 package controlPanels;
 
+import abstractControlPane.DateControlPanel;
+import abstractControlPane.DateDescControlPanel;
 import abstractControlPane.WorkUnitDateControlPanel;
 import controllers.FormController;
+import graphics.ComboBoxItem;
+import graphics.DateItem;
 import interfaces.IEditFormController;
 import interfaces.IFormDataController;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.geometry.HPos;
 import javafx.scene.control.*;
+import services.SegmentLists;
 import services.SegmentType;
 import tables.BasicTable;
 import tables.IterationTable;
@@ -22,40 +27,18 @@ public class IterationControlPanel extends WorkUnitDateControlPanel {
      * Globální proměnné třídy
      */
 
-    private Label configLB;
-    private Label endDateLB;
-
-    private ChoiceBox<BasicTable> configCB;
-
-    private DatePicker endDateDP;
-
-    private int configIndex = 0;
+    private ComboBoxItem configCB;
+    private DateItem endDateDP;
+    private SegmentLists segmentLists;
     private IterationTable iterationTable;
-
-    private boolean isShowConfig;
-    private Button configButton;
-
-    private boolean isShowDate;
-    private Button dateButton;
 
     public IterationControlPanel(String buttonName, IFormDataController formDataController,
                                  IEditFormController editFormController, FormController formController){
         super(buttonName, formDataController, editFormController, formController);
+        segmentLists = formController.getSegmentLists();
         addItemsToControlPanel();
     }
 
-    /**
-     * ChangeListener pro určení indexu prvku z comboBoxu pro Configuration
-     */
-    ChangeListener<Number> configListener = new ChangeListener<Number>() {
-
-        @Override
-        public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-
-            configIndex = newValue.intValue();
-
-        }
-    };
 
     @Override
     public void showEditControlPanel(BasicTable basicTable, TableView tableView) {
@@ -65,27 +48,35 @@ public class IterationControlPanel extends WorkUnitDateControlPanel {
 
         nameTF.setText(iterationData[0]);
 
+        descriptionTF.setShowItem(false);
         if (iterationData[1] != null){
-            descriptionTF.setText(iterationData[1]);
+            descriptionTF.setShowItem(true);
+            descriptionTF.setTextToTextField(iterationData[1]);
         }
 
+        configCB.setShowItem(false);
         if(iterationData[2] != null){
-            configCB.getSelectionModel().select(Integer.parseInt(iterationData[2]));
+            configCB.setShowItem(true);
+            configCB.selectItemInComboBox(Integer.parseInt(iterationData[2]));
         }
 
+        dateDP.setShowItem(false);
         if(iterationData[3] != null){
-            dateDP.setValue(LocalDate.parse(iterationData[3]));
+            dateDP.setShowItem(true);
+            dateDP.setDateToPicker(LocalDate.parse(iterationData[3]));
         }
 
+        endDateDP.setShowItem(false);
         if(iterationData[4] != null){
-            endDateDP.setValue(LocalDate.parse(iterationData[4]));
+            endDateDP.setShowItem(true);
+            endDateDP.setDateToPicker(LocalDate.parse(iterationData[4]));
         }
 
         List<Integer> workUnits = formDataController.getWorkUnitFromSegment(id, SegmentType.Iteration);
-        if(workUnits != null){
-            for(int i : workUnits){
-                workUnitCB.getCheckModel().check(i);
-            }
+        workUnitCB.setShowItem(false);
+        if(workUnits.size() != 0){
+                workUnitCB.selectItemsInComboBox(workUnits);
+                workUnitCB.setShowItem(true);
         }
 
 
@@ -94,91 +85,51 @@ public class IterationControlPanel extends WorkUnitDateControlPanel {
 
     @Override
     protected void addItemsToControlPanel() {
-        dateLB.setText("Start-Date");
-        endDateLB = new Label("End-Data");
-        endDateDP = new DatePicker();
-        endDateDP.setVisible(false);
-        setExitButtonsActions();
 
-        configLB = new Label("Configuration: ");
-        configCB = new ChoiceBox<>();
-        configCB.getSelectionModel().selectedIndexProperty().addListener(configListener);
-        configCB.setVisible(false);
-        configCB.setItems(segmentLists.getConfigObservable());
+        endDateDP = new DateItem("End-Date");
+        configCB = new ComboBoxItem("Configuration: ", segmentLists.getConfigObservable());
 
-        controlPane.add(endDateLB, 1, 4);
-        controlPane.setHalignment(endDateLB, HPos.LEFT);
-        controlPane.add(endDateDP, 2, 4);
-        controlPane.add(dateButton, 0 ,4);
 
-        controlPane.add(configButton, 0, 5);
-        controlPane.add(configLB, 1, 5);
-        controlPane.setHalignment(configLB, HPos.LEFT);
-        controlPane.add(configCB, 2, 5);
+        controlPane.add(endDateDP.getItemNameLB(), 1, 4);
+        controlPane.setHalignment(endDateDP.getItemNameLB(), HPos.LEFT);
+        controlPane.add(endDateDP.getItemDate(), 2, 4);
+        controlPane.add(endDateDP.getItemButton(), 0 ,4);
+
+        controlPane.add(configCB.getItemButton(), 0, 5);
+        controlPane.add(configCB.getItemNameLB(), 1, 5);
+        controlPane.setHalignment(configCB.getItemNameLB(), HPos.LEFT);
+        controlPane.add(configCB.getItemCB(), 2, 5);
 
         controlPane.add(button, 2, 6);
+
     }
 
     public void saveDataFromPanel(BasicTable table, TableView tableView){
         int id = table.getId();
         iterationTable.setName(id + "_" + nameTF.getText());
-        if (configCB.getValue() != null){
-            iterationTable.setConfiguration(configCB.getValue().getName());
+        if (configCB.getItemIndex() != -1){
+            iterationTable.setConfiguration(segmentLists.getConfigObservable().get(configCB.getItemIndex()).getName());
         }
 
         String desc = "null";
-        if (descriptionTF.getText() != null){
-            desc = descriptionTF.getText();
+        if (descriptionTF.getTextFromTextField() != null){
+            desc = descriptionTF.getTextFromTextField();
         }
 
         LocalDate date = LocalDate.of(1900,1,1);
-        if(dateDP.getValue() != null){
-            date = dateDP.getValue();
+        if(dateDP.getDateFromDatePicker() != null){
+            date = dateDP.getDateFromDatePicker();
         }
 
         LocalDate date2 = LocalDate.of(1900,1,1);
-        if(endDateDP.getValue() != null){
-            date = endDateDP.getValue();
+        if(endDateDP.getDateFromDatePicker() != null){
+            date = endDateDP.getDateFromDatePicker();
         }
-        editFormController.editDataFromIteration(nameTF.getText(), desc ,date, date2, configIndex, new ArrayList<Integer>(workUnitIndicies),
+        editFormController.editDataFromIteration(nameTF.getText(), desc ,date, date2, configCB.getItemIndex(), new ArrayList<Integer>(workUnitCB.getItemIndicies()),
                 iterationTable, id);
 
         clearPanelCB(tableView);
     }
-
-    private void setExitButtonsActions(){
-        isShowConfig = false;
-        configButton = new Button("+");
-        configButton.setOnAction(event -> {
-            if (!isShowConfig){
-                configCB.setVisible(true);
-                isShowConfig  = true;
-                configButton.setText("-");
-            }else{
-                configCB.setVisible(false);
-                configCB.getSelectionModel().clearSelection();
-                isShowConfig = false;
-                configButton.setText("+");
-            }
-        });
-
-        isShowDate = false;
-        dateButton = new Button("+");
-        dateButton.setOnAction(event -> {
-            if (!isShowDate){
-                endDateDP.setVisible(true);
-                isShowDate = true;
-                dateButton.setText("-");
-            }else{
-                endDateDP.setVisible(false);
-                endDateDP.setValue(null);
-                isShowDate = false;
-                dateButton.setText("+");
-            }
-        });
-    }
-
-
     public Button getButton() {
         return button;
     }
@@ -188,7 +139,7 @@ public class IterationControlPanel extends WorkUnitDateControlPanel {
         tableView.getSelectionModel().clearSelection();
     }
 
-    public ChoiceBox<BasicTable> getConfigCB() {
-        return configCB;
+    public ComboBox<BasicTable> getConfigCB() {
+        return configCB.getItemCB();
     }
 }

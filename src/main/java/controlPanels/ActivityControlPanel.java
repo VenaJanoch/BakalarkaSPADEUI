@@ -35,15 +35,17 @@ public class ActivityControlPanel extends WorkUnitControlPanel {
         String[] milestoneData = formDataController.getActivityStringData(id);
 
         nameTF.setText(milestoneData[0]);
+        descriptionTF.setShowItem(false);
         if (milestoneData[1] != null){
-            descriptionTF.setText(milestoneData[1]);
+            descriptionTF.setTextToTextField(milestoneData[1]);
+            descriptionTF.setShowItem(true);
         }
 
+        workUnitCB.setShowItem(false);
         List<Integer> workUnits = formDataController.getWorkUnitFromSegment(id, SegmentType.Activity);
-        if(workUnits != null){
-            for(int i : workUnits){
-                workUnitCB.getCheckModel().check(i);
-            }
+        if (workUnits.size() != 0){
+            workUnitCB.selectItemsInComboBox(workUnits);
+            workUnitCB.setShowItem(true);
         }
 
 
@@ -55,6 +57,7 @@ public class ActivityControlPanel extends WorkUnitControlPanel {
 
         controlPane.add(button, 2, 3);
 
+
     }
 
     public void saveDataFromPanel(BasicTable table, TableView tableView){
@@ -62,12 +65,12 @@ public class ActivityControlPanel extends WorkUnitControlPanel {
         activityTable.setName(id + "_" + nameTF.getText());
 
         String desc = "null";
-        if (descriptionTF.getText() != null){
-            desc = descriptionTF.getText();
+        if (descriptionTF.getTextFromTextField() != null){
+            desc = descriptionTF.getTextFromTextField();
         }
 
 
-        editFormController.editDataFromActivity(nameTF.getText(), desc , new ArrayList<Integer>(workUnitIndicies), activityTable, id);
+        editFormController.editDataFromActivity(nameTF.getText(), desc , new ArrayList<Integer>(workUnitCB.getItemIndicies()), activityTable, id);
 
         clearPanelCB(tableView);
     }

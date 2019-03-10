@@ -9,6 +9,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import tables.BasicTable;
 import tables.BranchTable;
 
@@ -33,7 +34,7 @@ public class BranchControlPanel extends NameControlPanel {
 
 
 
-    public GridPane createControlPanel(){
+    public void createControlPanel(){
         isMainLB = new Label("Main");
 
         rbYes = new RadioButton("Yes");
@@ -58,12 +59,12 @@ public class BranchControlPanel extends NameControlPanel {
 
             }
         });
+
         controlPane.add(isMainLB, 0, 1);
         controlPane.add(rbYes, 1, 1);
         controlPane.add(rbNo, 0, 2);
         controlPane.add(button, 1, 2);
 
-        return controlPane;
     }
 
 

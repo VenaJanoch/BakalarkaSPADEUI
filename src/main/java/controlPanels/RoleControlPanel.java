@@ -2,6 +2,7 @@ package controlPanels;
 
 import controllers.FormController;
 import abstractControlPane.DescriptionControlPanel;
+import graphics.ComboBoxItem;
 import interfaces.IEditFormController;
 import interfaces.IFormDataController;
 import javafx.beans.value.ChangeListener;
@@ -15,31 +16,24 @@ import tables.RoleTable;
 
 public class RoleControlPanel extends DescriptionControlPanel {
 
-    protected Label typeLB;
-    protected Label roleTypeLB;
-    protected ChoiceBox<BasicTable> roleTypeCB;
-    protected int roleTypeIndex;
+    protected ComboBoxItem roleTypeCB;
 
     public RoleControlPanel(String buttonName, IFormDataController formDataController, IEditFormController editFormController, FormController formController){
         super(buttonName, formDataController, editFormController, formController);
-        this.roleTypeIndex = 0;
+
     }
 
 
 
     protected void addItemsToControlPanel(){
-        roleTypeLB = new Label("Type: ");
-        roleTypeCB = new ChoiceBox<>(formController.getRoleTypeObservable());
-        roleTypeCB.getSelectionModel().selectedIndexProperty().addListener(roleListener);
-        roleTypeCB.setMaxWidth(Constans.checkComboBox);
-        descriptionLB = new Label("Description: ");
-        descriptionTF = new TextField();
+        roleTypeCB = new ComboBoxItem("Type: ",formController.getRoleTypeObservable());
 
-        controlPane.add(descriptionLB, 2, 0);
-        controlPane.add(descriptionTF, 3, 0);
-        controlPane.add(roleTypeLB, 4, 0);
-        controlPane.add(roleTypeCB, 5, 0);
-        controlPane.add(button, 6, 0);
+        controlPane.add(roleTypeCB.getItemNameLB(), 2, 2);
+        controlPane.add(roleTypeCB.getItemCB(), 2, 2);
+        controlPane.add(roleTypeCB.getItemButton(), 0, 2);
+        controlPane.add(button, 2, 3);
+
+
     }
 
     @Override
@@ -47,44 +41,28 @@ public class RoleControlPanel extends DescriptionControlPanel {
         RoleTable roleTable = (RoleTable) basicTable;
         int id = roleTable.getId();
         String[] roleData = formDataController.getRoleStringData(id);
-        roleTypeCB.getSelectionModel().select(Integer.parseInt(roleData[2]));
-        nameTF.setText(roleData[0]);
-        descriptionTF.setText(roleData[1]);
+        roleTypeCB.setShowItem(false);
+        if (roleData[2] != null){
+            roleTypeCB.setShowItem(true);
+            roleTypeCB.selectItemInComboBox(Integer.parseInt(roleData[2]));
+        }
 
+        nameTF.setText(roleData[0]);        descriptionTF.setShowItem(false);
+        if (roleData[1] != null){
+            descriptionTF.setShowItem(true);
+            descriptionTF.setTextToTextField(roleData[1]);
+        }
         button.setOnAction(event ->{
-            editFormController.editDataFromRole(nameTF.getText(), descriptionTF.getText(), roleTable, roleTypeIndex, id);
+            editFormController.editDataFromRole(nameTF.getText(), descriptionTF.getTextFromTextField(), roleTable, roleTypeCB.getItemIndex(), id);
             clearPanel(tableView);
-          //  this.close();
         });
 
-      //  this.show();
 
-    }
-
-
-    /**
-     * ChangeListener pro určení indexu prvku z comboBoxu pro Role-Type
-     */
-    ChangeListener<Number> roleListener = new ChangeListener<Number>() {
-
-        @Override
-        public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-
-            roleTypeIndex = newValue.intValue();
-            int pom = roleTypeIndex;
-        }
-    };
-
-    public int getRoleTypeIndex() {
-        return roleTypeIndex;
     }
 
 
     public void clearPanel(TableView<RoleTable> tableView) {
-        roleTypeCB.getSelectionModel().clearSelection();
         tableView.refresh();
-        nameTF.setText("");
-        descriptionTF.setText("");
         tableView.getSelectionModel().clearSelection();
     }
 }

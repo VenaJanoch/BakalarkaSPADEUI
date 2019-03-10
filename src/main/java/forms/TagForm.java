@@ -133,12 +133,13 @@ public class TagForm extends TableBasicForm implements ISegmentTableForm {
 	@Override
 	public GridPane createControlPane() {
 
-		GridPane controlPane = tagControlPanel.createControlPanel();
-
-		addButton = tagControlPanel.getButton();
-		addButton.setOnAction(event -> addItem());
-
-		return controlPane;
+//		GridPane controlPane = tagControlPanel.createControlPanel();
+//
+//		addButton = tagControlPanel.getButton();
+//		addButton.setOnAction(event -> addItem());
+//
+//		return controlPane;
+		return null;
 	}
 
 	@Override
