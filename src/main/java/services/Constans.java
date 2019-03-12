@@ -32,8 +32,8 @@ public class Constans {
     public static final int twoFormWidth = 1250;
     public static final int twoFormHeight = 850;
 
-    public static final double minCanvasItemWidth = 125;
-    public static final double maxCanvasItemWidth = 125;
+    public static final double minCanvasItemWidth = 155;
+    public static final double maxCanvasItemWidth = 155;
 
     /**
      * Konstanta pro nastavení počtu segmentů a elementů
@@ -179,7 +179,7 @@ public class Constans {
     public static final String linkPicture = "link.svn";
 
     public static final String[] addItemNames = {"Project", "Phase", "Iteration", "Activity", "Work Unit", "Milestone", "Criterion", "Config-role",
-            "Role Type", "Priority", "Severity", "Relation", "Resolution", "Status", "Type", "Branch", "Change", "Artifact"};
+            "Role Type", "Priority", "Severity", "Relation", "Resolution", "Status", "Type", "Branch", "Change", "VCSTag"};
 
 
     public static final int projectFormIndex = 0;
@@ -198,10 +198,11 @@ public class Constans {
     public static final int statusFormIndex = 13;
     public static final int wuTypeFormIndex = 14;
     public static final int branchIndex = 15;
-    public static final int changeFormIndex = 16;
-    public static final int artifactFormIndex = 17;
-    public static final int configurationFormIndex = 18;
-    public static final int roleFormIndex = 19;
+    public static final int VCSTagIndex = 16;
+    public static final int changeFormIndex = 17;
+    public static final int artifactFormIndex = 18;
+    public static final int configurationFormIndex = 19;
+    public static final int roleFormIndex = 20;
 
 
 

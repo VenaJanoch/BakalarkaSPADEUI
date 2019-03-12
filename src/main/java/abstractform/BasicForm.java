@@ -1,5 +1,6 @@
 package abstractform;
 
+import abstractControlPane.ControlPanel;
 import controllers.CanvasController;
 import controllers.FormController;
 import graphics.DragAndDropCanvas;
@@ -58,6 +59,7 @@ public abstract class BasicForm extends BorderPane {
     protected IDeleteFormController deleteFormController;
 
     protected CanvasController canvasController;
+    protected ControlPanel controlPanel;
 
     /**
      * Konstruktor třídy pro formuláře s vlastním plátnem Zinicializuje globální
@@ -196,5 +198,13 @@ public abstract class BasicForm extends BorderPane {
 
     public SegmentType getSegmentType() {
         return segmentType;
+    }
+
+    public ControlPanel getControlPanel() {
+        return controlPanel;
+    }
+
+    public void setControlPanel(ControlPanel controlPanel) {
+        this.controlPanel = controlPanel;
     }
 }

@@ -61,6 +61,12 @@
                         maxOccurs="unbounded"/>
             <xs:element name="types" type="Type" minOccurs="0"
                         maxOccurs="unbounded"/>
+            <xs:element name="vcsTag" type="VCSTag" minOccurs="0"
+                        maxOccurs="unbounded"/>
+            <xs:element name="commit" type="Commit" minOccurs="0"
+                        maxOccurs="unbounded"/>
+            <xs:element name="commitConfiguration" type="CommitedConfiguration" minOccurs="0"
+                        maxOccurs="unbounded"/>
         </xs:sequence>
         <xs:attribute name="name" type="xs:string"/>
         <xs:attribute name="description" type="xs:string"/>
@@ -118,6 +124,36 @@
         <xs:attribute name="description" type="xs:string"/>
         <xs:attribute name="id" type="xs:int"/>
     </xs:complexType>
+
+    <xs:complexType name="CommitedConfiguration">
+
+        <xs:attribute name="name" type="xs:string"/>
+        <xs:attribute name="commitedDay" type="xs:date"/>
+        <xs:attribute name="id" type="xs:int"/>
+    </xs:complexType>
+
+    <xs:complexType name="VCSTag">
+
+        <xs:attribute name="name" type="xs:string"/>
+        <xs:attribute name="description" type="xs:string"/>
+        <xs:attribute name="id" type="xs:int"/>
+    </xs:complexType>
+
+    <xs:complexType name="Commit">
+        <xs:sequence>
+            <xs:element name="cprs" type="xs:int" minOccurs="0"
+                        maxOccurs="unbounded"/>
+            <xs:element name="branch" type="xs:int" minOccurs="0"
+                        maxOccurs="unbounded"/>
+            <xs:element name="tags" type="xs:int" minOccurs="0"
+                        maxOccurs="unbounded"/>
+        </xs:sequence>
+        <xs:attribute name="name" type="xs:string"/>
+        <xs:attribute name="commitedDay" type="xs:date"/>
+        <xs:attribute name="release" type="xs:boolean"/>
+        <xs:attribute name="id" type="xs:int"/>
+    </xs:complexType>
+
 
     <xs:complexType name="WorkUnit">
         <xs:sequence>

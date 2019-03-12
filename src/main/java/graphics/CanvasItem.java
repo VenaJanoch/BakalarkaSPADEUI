@@ -51,7 +51,7 @@ public class CanvasItem extends AnchorPane {
 		this.canvasController = canvasController;
 		this.canvasItemController = canvasItemController;
 		this.instanceCount = instanceCount;
-		this.setOnMousePressed(event -> canvasItemController.setClicFromDragPoint(event, this, canvasController));
+		this.setOnMousePressed(event -> canvasItemController.setClicFromDragPoint(event, this, canvasController, type));
 		this.setOnMouseDragged(event -> canvasItemController.setDragFromDragPoint(event,this, canvasController));
 		this.setOnMouseReleased(event -> setPosition(canvasItemController.canvasItemPositionControl(getTranslateX(), getTranslateY())));
 

@@ -1,8 +1,8 @@
 package forms;
 
+import controlPanels.VCSTagControlPanel;
 import controllers.FormController;
 import abstractform.TableBasicForm;
-import controlPanels.TagControlPanel;
 import interfaces.IDeleteFormController;
 import interfaces.IEditFormController;
 import interfaces.IFormDataController;
@@ -37,8 +37,8 @@ public class TagForm extends TableBasicForm implements ISegmentTableForm {
 	 * Globální proměnné třídy
 	 */
 	private TableView<TagTable> tableTV;
-	private TagControlPanel tagControlPanel;
-	private TagControlPanel editTagControlPanel;
+	private VCSTagControlPanel tagControlPanel;
+	private VCSTagControlPanel editTagControlPanel;
 	private int configId;
 
 	/**
@@ -48,9 +48,9 @@ public class TagForm extends TableBasicForm implements ISegmentTableForm {
 	public TagForm(FormController formController, IFormDataController formDataController, IEditFormController editFormController, IDeleteFormController deleteFormController, SegmentType type, int configFormId) {
 
 		super(formController, formDataController, editFormController, deleteFormController, type);
-		tagControlPanel = new TagControlPanel("Add", formDataController, editFormController);
-		editTagControlPanel = new TagControlPanel("Edit", formDataController, editFormController);
-		editTagControlPanel.createControlPanel();
+//		tagControlPanel = new VCSTagControlPanel("Add", formDataController, editFormController);
+//		editTagControlPanel = new VCSTagControlPanel("Edit", formDataController, editFormController);
+//		editTagControlPanel.createControlPanel();
 
 	//this.setTitle("Edit Tags");
 		this.configId = configFormId;
@@ -67,7 +67,7 @@ public class TagForm extends TableBasicForm implements ISegmentTableForm {
 				if(t.getClickCount() == 2) {
 					TagTable tagTable = tableTV.getSelectionModel().getSelectedItems().get(0);
 					if (tagTable != null) {
-						editTagControlPanel.showEditControlPanel(tagTable, configId, tableTV);
+		//				editTagControlPanel.showEditControlPanel(tagTable, configId, tableTV);
 					}
 				}
 			}
@@ -154,7 +154,7 @@ public class TagForm extends TableBasicForm implements ISegmentTableForm {
 
 		tableTV.getItems().add(tag);
 		tableTV.sort();
-		tagControlPanel.clearPanel(tableTV);
+	//	tagControlPanel.clearPanel(tableTV);
 
 	}
 

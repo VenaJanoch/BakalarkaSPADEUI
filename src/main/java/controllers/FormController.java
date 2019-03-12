@@ -3,10 +3,10 @@ package controllers;
 import SPADEPAC.ConfigPersonRelation;
 import SPADEPAC.Milestone;
 import SPADEPAC.Role;
+import SPADEPAC.VCSTag;
 import abstractControlPane.ControlPanel;
 import abstractform.BasicForm;
-import com.jfoenix.controls.JFXDrawer;
-import controlPanels.CriterionControlPanel;
+import controlPanels.*;
 import forms.ConfigurationForm;
 import forms.*;
 import graphics.CanvasItem;
@@ -19,7 +19,6 @@ import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableView;
-import javafx.scene.layout.AnchorPane;
 import model.DataManipulator;
 import model.DataModel;
 import model.IdentificatorCreater;
@@ -38,6 +37,8 @@ public class FormController {
     private IdentificatorCreater identificatorCreater;
 
     private ArrayList<BasicForm> forms;
+    private ArrayList<ControlPanel> controlPanels;
+
     private Map<Integer,CanvasItem> canvasItemList;
 
     private PhaseForm phaseForm;
@@ -45,7 +46,7 @@ public class FormController {
     private ActivityForm activityForm;
     private WorkUnitForm workUnitForm;
     private ChangeForm changeForm;
-    private ArtifactForm artifactForm;
+    private VCSTagForm VCSTagForm;
 
     private MilestoneForm milestoneForm;
     private ConfigPersonRelationForm CPRForm;
@@ -86,6 +87,7 @@ public class FormController {
         this.dataPreparer = dataPreparer;
         this.applicationController = applicationController;
         this.forms = new ArrayList<>();
+        this.controlPanels = new ArrayList<>();
         this.canvasItemList = new HashMap<>();
 
         this.dataModel = dataModel;
@@ -158,15 +160,10 @@ public class FormController {
         changeForm = new ChangeForm(this, formDataController, editFormController, deleteFormController, SegmentType.Change);
         forms.add(changeForm);
 
-        artifactForm = new ArtifactForm(this, formDataController, editFormController, deleteFormController, SegmentType.Artifact);
-        forms.add(artifactForm);
+        VCSTagForm = new VCSTagForm(this, formDataController, editFormController, deleteFormController, SegmentType.VCSTag);
+        forms.add(VCSTagForm);
 
-        forms.add(Constans.configurationFormIndex, null);
-        confTableForm = new ConfigurationTableForm(this, formDataController, editFormController, deleteFormController, SegmentType.Configuration);
-        forms.remove(Constans.configurationFormIndex);
-        forms.add(Constans.configurationFormIndex, confTableForm);
 
-        roleForm = new RoleForm(this, formDataController, editFormController, deleteFormController, SegmentType.Role);
         forms.add(roleForm);
 
 
@@ -184,24 +181,101 @@ public class FormController {
 
             switch (type) {
                 case Configuration:
-                    return createNewConfigurationForm();
+                    return createNewConfigurationPanel();
+                case Role:
+                    return createNewRolePanel();
+                case Artifact:
+                    return createNewArtifactPanel();
+                case Commit:
+                    return createNewCommitPanel();
+                case CommittedConfiguration:
+                    return createNewCommitedConfigurationPanel();
                 default:
                     return -1;
             }
 
     }
 
-    private int createNewArtifactForm(int id) {
-
-        saveDataModel.createNewArtifact(id);
-        return  id;
+    private int createNewCommitPanel() {
+        int formIndex = createNewCommitFormWithoutManipulator();
+        int id = identificatorCreater.getCommitId(formIndex);
+        saveDataModel.createNewCommit(id);
+        return formIndex;
     }
 
-    public int createNewArtifactFormWithoutManipulator(){
+    public int createNewCommitFormWithoutManipulator(){
 
+        int index = identificatorCreater.createCommitID();
+        int id = identificatorCreater.getCommitId(index);
+        CommitTable commitTable = new CommitTable(id + "_", "", true, id);
+
+        CommitControlPanel commitControlPanel = new CommitControlPanel(
+                "Edit", formDataController, editFormController,this, commitTable, id, index);
+
+        controlPanels.add(commitControlPanel);
+        return index;
+    }
+
+    private int createNewCommitedConfigurationPanel() {
+        int formIndex = createNewCommitedConfigurationPanelFormWithoutManipulator();
+        int id = identificatorCreater.getCommitedConfigurationId(formIndex);
+        saveDataModel.createNewCommitedConfiguration(id);
+        return formIndex;
+    }
+
+    public int createNewCommitedConfigurationPanelFormWithoutManipulator(){
+
+        int index = identificatorCreater.createCommiedConfigurationtID();
+        int id = identificatorCreater.getCommitedConfigurationId(index);
+        CommitedConfigurationTable commitTable = new CommitedConfigurationTable(id + "_","",id);
+
+        CommitedConfigurationControlPanel commitControlPanel = new CommitedConfigurationControlPanel(
+                "Edit", formDataController, editFormController,this, commitTable, id, index);
+
+        controlPanels.add(commitControlPanel);
+        return index;
+    }
+    
+    private int createNewRolePanel() {
+        int formIndex = createNewRoleFormWithoutManipulator();
+        int id = identificatorCreater.getRoleIndexMaper().get(formIndex);
+        saveDataModel.crateNewRole(id);
+        return formIndex;
+    }
+
+    public int createNewRoleFormWithoutManipulator(){
+
+        int index = identificatorCreater.createRoleID();
+        int id = identificatorCreater.getRoleIndexMaper().get(index);
+        RoleTable roleTable = new RoleTable(id + "_", "", "", id);
+
+        RoleControlPanel roleControlPanel = new RoleControlPanel(
+                "Edit", formDataController, editFormController,this, roleTable, id, index);
+
+        segmentLists.getRoleObservable().add(roleTable);
+        controlPanels.add(roleControlPanel);
+        return index;
+
+    }
+
+    private int createNewArtifactPanel() {
+        int formIndex = createNewArtifactFormWithoutManipulator();
+        int id = identificatorCreater.getArtifactIndexMaper().get(formIndex);
+        saveDataModel.createNewArtifact(id);
+        return formIndex;
+    }
+    
+
+    public int createNewArtifactFormWithoutManipulator(){
         int index = identificatorCreater.createArtifactID();
-        ArtifactForm artifactForm = new ArtifactForm(this, formDataController, editFormController, deleteFormController,  SegmentType.Artifact);
-        forms.add(index, artifactForm);
+        int id = identificatorCreater.getArtifactIndexMaper().get(index);
+        ArtifactTable artifactTable = new ArtifactTable(id + "_", "", id);
+
+        ArtifactControlPanel artifactControlPanel = new ArtifactControlPanel(
+                "Edit", formDataController, editFormController,this, artifactTable, id, index);
+
+        segmentLists.getArtifactObservable().add(artifactTable);
+        controlPanels.add(artifactControlPanel);
         return index;
 
     }
@@ -219,22 +293,24 @@ public class FormController {
         return index;
     }
 
-    private int createNewConfigurationForm() {
-
-        int index = createNewConfiguratioFormWithoutManipulator();
-        saveDataModel.createNewConfiguration(identificatorCreater.getConfigurationId(index));
-        return  index;
+    private int createNewConfigurationPanel() {
+        int formIndex = createNewConfiguratioFormWithoutManipulator();
+        int id = identificatorCreater.getConfigurationId(formIndex);
+        saveDataModel.createNewConfiguration(id);
+        return formIndex;
     }
 
     public int createNewConfiguratioFormWithoutManipulator(){
-        lastConfigurationFormIndex = identificatorCreater.createConfigurationID();
-        CanvasController canvasController = new CanvasController(CanvasType.Configuration, applicationController);
-        ConfigurationForm configurationForm = new ConfigurationForm(this, formDataController, editFormController, deleteFormController,  canvasController,
-                new DragAndDropItemPanel(canvasController, Constans.configurationDragTextIndexs, drawerPanelController, selectItemController), SegmentType.Configuration,
-                segmentLists.getCPRObservable(), segmentLists.getBranchObservable(), segmentLists.getRoleObservable(), lastConfigurationFormIndex);
-        forms.add(configurationForm);
+        int index = identificatorCreater.createConfigurationID();
+        int id = identificatorCreater.getConfigurationId(index);
+        ConfigTable configTable = new ConfigTable(id + "_", "", index, id);
 
-        return lastConfigurationFormIndex;
+        ConfigurationControlPanel roleControlPanel = new ConfigurationControlPanel(
+                "Edit", formDataController, editFormController,this, configTable, id, index);
+
+        segmentLists.getConfigObservable().add(configTable);
+        controlPanels.add(roleControlPanel);
+        return index;
     }
 
     private int createNewWorkUnitForm(int id) {
@@ -308,7 +384,7 @@ public class FormController {
         BasicForm form = forms.get(formIdentificator);
         switch (form.getSegmentType()){
             case Phase:
-                formFillController.fillPhaseForm(identificatorCreater.getPhaseId(formIdentificator), formIdentificator);
+                formFillController.fillPhaseForm(identificatorCreater.getRoleId(formIdentificator), formIdentificator);
                 break;
             case Iteration:
                 formFillController.fillIterationForm(identificatorCreater.getIterationId(formIdentificator), formIdentificator);
@@ -392,8 +468,9 @@ public class FormController {
         return coords;
     }
 
-    public void setNameToItem(int indexForm, String name) {
-        CanvasItem item = canvasItemList.get(indexForm);
+    public void setNameToItem(int index, String name) {
+
+        CanvasItem item = canvasItemList.get(index);
         item.setNameText(name);
     }
 
@@ -474,18 +551,18 @@ public class FormController {
     public int getSegmetIdFromFormId(SegmentType type, int formIndex) {
 
         switch (type) {
-            case Phase:
-                return identificatorCreater.getPhaseId(formIndex);
+            case Role:
+                return identificatorCreater.getRoleId(formIndex);
             case Iteration:
                 return identificatorCreater.getIterationId(formIndex);
             case Activity:
                 return identificatorCreater.getActivityId(formIndex);
-            case WorkUnit:
-                return identificatorCreater.getWorkUnitIndex(formIndex);
+            case CommittedConfiguration:
+                return identificatorCreater.getCommitedConfigurationId(formIndex);
             case Configuration:
                 return identificatorCreater.getConfigurationId(formIndex);
-            case Change:
-                return identificatorCreater.getChangeId(formIndex);
+            case Commit:
+                return identificatorCreater.getCommitId(formIndex);
             case Artifact:
                 return identificatorCreater.getArtifactIndex(formIndex);
             default:
@@ -501,6 +578,10 @@ public class FormController {
                 id = identificatorCreater.createWorkUnitID();
                 createNewWorkUnitForm(id);
                 return id;
+            case VCSTag:
+                id = identificatorCreater.createVCSTagID();
+                createNewVCSTagForm(id);
+                return id;
             case Iteration:
                 id = identificatorCreater.createIterationID();
                 createNewIterationForm(id);
@@ -508,10 +589,6 @@ public class FormController {
             case Activity:
                 id = identificatorCreater.createActivityID();
                 createNewActivityForm(id);
-                return id;
-            case Artifact:
-                id = identificatorCreater.createArtifactID();
-                createNewArtifactForm(id);
                 return id;
             case Change:
                 id = identificatorCreater.createChangeID();
@@ -550,6 +627,11 @@ public class FormController {
             default:
                 return -1;
         }
+    }
+
+    private int createNewVCSTagForm(int id) {
+        saveDataModel.createNewVCSTag(id);
+        return  id;
     }
 
 
@@ -675,6 +757,13 @@ public class FormController {
 
     public void showEditControlPanel(ControlPanel editControlPanel) {
         drawerPanelController.showRightPanel(editControlPanel);
+    }
+
+    public void showEditControlPanel(SegmentType segmentType, int formIndex) {
+
+        ControlPanel panel = controlPanels.get(formIndex);
+
+        drawerPanelController.showRightPanel(panel);
     }
 
     public SegmentLists getSegmentLists() {

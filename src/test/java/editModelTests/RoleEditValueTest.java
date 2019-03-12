@@ -39,8 +39,8 @@ public class RoleEditValueTest {
             formDataController.saveDataFromRoleForm("Test", 1, new RoleTable("0_Test", "desc","1",0));
 
             EditFormController editFormController  = warmUp.getEditFormController();
-            editFormController.editDataFromRole("Jmeno", "desc", new RoleTable("0_Jmeno", "desc","2", 0), 2,
-                    0);
+            editFormController.editDataFromRole("Jmeno", "desc", 2,
+                    new RoleTable("0_Jmeno", "desc","2", 0),0);
 
             role = warmUp.getDataModel().getRole(0);
         }

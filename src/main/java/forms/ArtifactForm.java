@@ -51,7 +51,7 @@ public class ArtifactForm extends TableBasicForm implements ISegmentTableForm {
                         IDeleteFormController deleteFormController,SegmentType type) {
         super(formController, formDataController, editFormController, deleteFormController, type);
 
-        editControlPanel = new ArtifactControlPanel("Edit", formDataController, editFormController, formController);
+        editControlPanel = new ArtifactControlPanel("Edit", formDataController, editFormController, formController, null, 0,0);
         setEventHandler();
         createForm();
         setActionSubmitButton();

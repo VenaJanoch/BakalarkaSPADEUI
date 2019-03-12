@@ -3,6 +3,8 @@ package model;
 import SPADEPAC.*;
 import XML.ProcessGenerator;
 import interfaces.ISaveDataModel;
+import tables.CommitTable;
+import tables.CommitedConfigurationTable;
 
 import java.util.ArrayList;
 
@@ -144,11 +146,10 @@ public class SaveDataModel implements ISaveDataModel {
 
     }
 
-    public void crateNewRole(String nameForManipulator, String descForManipulator, int type, int id) {
+    public void crateNewRole(int id) {
 
         Role role = objF.createRole();
         role.setId(id);
-        dataModel.addDatToRole(role, nameForManipulator, descForManipulator, type);
         project.getRoles().add(role);
     }
 
@@ -189,4 +190,24 @@ public class SaveDataModel implements ISaveDataModel {
         project.getTypes().add(type);
     }
 
+    @Override
+    public void createNewVCSTag(int id) {
+        VCSTag vcsTag = objF.createVCSTag();
+        vcsTag.setId(id);
+        project.getVcsTag().add(vcsTag);
+    }
+
+    @Override
+    public void createNewCommit(int id) {
+        Commit commit = objF.createCommit();
+        commit.setId(id);
+        project.getCommit().add(commit);
+    }
+
+    @Override
+    public void createNewCommitedConfiguration(int id) {
+        CommitedConfiguration commitedConfiguration = objF.createCommitedConfiguration();
+        commitedConfiguration.setId(id);
+        project.getCommitConfiguration().add(commitedConfiguration);
+    }
 }

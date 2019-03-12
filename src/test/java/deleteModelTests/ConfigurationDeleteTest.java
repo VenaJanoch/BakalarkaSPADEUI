@@ -32,9 +32,9 @@ public class ConfigurationDeleteTest {
         warmUp.getDataModel().getSaveDataModel().createNewConfiguration(0);
         warmUp.getDataModel().getSaveDataModel().createNewConfiguration(1);
         warmUp.getDataModel().getEditDataModel().editDataInConfiguration("", null,true, 0, new ArrayList<>(), new ArrayList<>(),
-                new ArrayList<>(), new ArrayList<>(),0);
+                 new ArrayList<>(),0);
         warmUp.getDataModel().getEditDataModel().editDataInConfiguration("", null,true, 0, new ArrayList<>(), new ArrayList<>(),
-                new ArrayList<>(), new ArrayList<>(),1);
+                 new ArrayList<>(),1);
 
 
         dataModel.getSaveDataModel().createNewPhase(0);

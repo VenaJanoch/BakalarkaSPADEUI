@@ -61,7 +61,7 @@ public class RoleDeleteTest {
                 true, 0);
         dataModel.getEditDataModel().editDataInArtifact("", "", null, false,  0,0, 0);
         dataModel.getEditDataModel().editDataInConfiguration("", null, false, 0,  new ArrayList<>(), list,
-                new ArrayList<>(), new ArrayList<>(), 0);
+                 new ArrayList<>(), 0);
 
 
         deleteFormController.deleteRole(observableList, basicTables);

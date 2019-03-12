@@ -36,7 +36,7 @@ public class ConfigurationValueTest {
         dataModel.getSaveDataModel().createNewConfiguration(2);
         configuration = dataModel.getConfiguration(2);
         dataModel.addDataToConfiguration(configuration,"Jmeno1", date, true,2 ,itemSet, itemSet,
-                itemSet, itemSet);
+                itemSet);
 
     }
 

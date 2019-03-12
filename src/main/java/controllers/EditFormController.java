@@ -2,6 +2,7 @@ package controllers;
 
 import interfaces.IEditDataModel;
 import interfaces.IEditFormController;
+import javafx.collections.ObservableList;
 import javafx.scene.control.ComboBox;
 import jdk.internal.org.objectweb.asm.tree.IntInsnNode;
 import model.DataModel;
@@ -116,21 +117,20 @@ public class EditFormController implements IEditFormController {
 
 
 
-    public void editDataFromRole(String nameST, String description, RoleTable roleTable, int roleTypeIndex, int id) {
+    public void editDataFromRole(String nameST, String description, int roleTypeIndex, RoleTable roleTable, int id) {
 
-        roleTable.setName(id + "_" + nameST);
-        roleTable.setDescription(description);
 
         String nameForManipulator = InputController.fillTextMapper(nameST);
         String descForManipulator = InputController.fillTextMapper(description);
         int typeFormManipulator = dataPreparer.prepareIndexForManipulator(roleTypeIndex);
-
-        dataManipulator.editDataInRole(nameForManipulator, descForManipulator, typeFormManipulator, roleTable.getId());
+        int roleId = identificatorCreater.getRoleIndexMaper().get(id);
+        dataManipulator.editDataInRole(nameForManipulator, descForManipulator, typeFormManipulator, roleId);
         segmentLists.updateListItem(SegmentType.Role, id, roleTable);
-
+        String roleName = id + nameST;
         int roleType = dataModel.getRoleTypeIndex(typeFormManipulator);
         mapperTableToObject.updateValueList(roleType, mapperTableToObject.getRoleToRoleTypeMapper(),
-                roleTable.getId(), roleTable.getName());
+               id, roleName);
+
 
     }
 
@@ -236,7 +236,7 @@ public class EditFormController implements IEditFormController {
         String iterationName = id + "_" + name;
         iterationTable.setName(iterationName);
         iterationTable.setConfiguration(segmentLists.getConfigObservable().get(configurationId).getName());
-            }
+    }
 
     @Override
     public void editDataFromActivity(String name, String description, ArrayList<Integer> workUnits, ActivityTable activityTable,
@@ -315,6 +315,51 @@ public class EditFormController implements IEditFormController {
         workUnitTable.setName(id + "_" + name);
     }
 
+    @Override
+    public void editDataFromConfiguration(String name, LocalDate createDate, int autohorIndex, boolean isRelease, ObservableList<Integer> cprsIndicies,
+                                          ObservableList<Integer> branchIndicies, ObservableList<Integer> changeIndicies, int configId) {
+        String nameForManipulator = InputController.fillTextMapper(name);
+
+        int roleIdForManipulator = segmentLists.getRoleObservable().get(autohorIndex).getId();
+
+        ArrayList<Integer> cprsForManipulator = dataPreparer.prepareIndicesForManipulator(cprsIndicies);
+        ArrayList<Integer> branchesForManipulator = dataPreparer.prepareIndicesForManipulator(branchIndicies);
+        ArrayList<Integer> changesForManipulator = dataPreparer.prepareIndicesForManipulator(changeIndicies);
+
+        dataManipulator.editDataInConfiguration(nameForManipulator, createDate, isRelease, roleIdForManipulator,
+                cprsForManipulator, branchesForManipulator, changesForManipulator, configId);
+    }
+
+    @Override
+    public void editDataFromVCSTag(String name, String description, VCSTagTable tagTable, int id){
+        String nameForManipulator = InputController.fillTextMapper(name);
+        String descriptionForManipulator = "NotExist";
+        if(description != null){
+            descriptionForManipulator = InputController.fillTextMapper(description);
+            tagTable.setDescription(descriptionForManipulator);
+        }
+
+        dataManipulator.editDataInVCSTag(nameForManipulator, descriptionForManipulator, id);
+
+        String artifactName = id + "_" + name;
+        tagTable.setName(artifactName);
+    }
+
+    @Override
+    public void editDataFromCommit(String name, boolean release, int id) {
+        String nameForManipulator = InputController.fillTextMapper(name);
+
+        dataManipulator.editDataInCommit(nameForManipulator, release, id);
+
+    }
+
+    @Override
+    public void editDataFromCommitedConfiguration(String name, LocalDate dateFromDatePicker, int commitedConfigurationId) {
+        String nameForManipulator = InputController.fillTextMapper(name);
+
+        dataManipulator.editDataInCommitedConfiguration(nameForManipulator, dateFromDatePicker, commitedConfigurationId);
+
+    }
 
 }
 

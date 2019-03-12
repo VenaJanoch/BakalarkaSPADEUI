@@ -66,4 +66,15 @@ import java.util.Map;
 
      String[] getWorkUnitStringData(int id);
 
+     String[] getConfigurationStringData(int configId);
+
+     List<Integer> getCPRFromConfiguration(int configId);
+     List<Integer> getBranchesFromConfiguration(int configId);
+     List<Integer> getChangesFromConfiguration(int configId);
+
+     String[] getVCSTagStringData(int tagId);
+
+     String[] getCommitStringData(int commitId);
+
+     String[] getCommitedConfigurationStringData(int commitedConfigurationId);
  }

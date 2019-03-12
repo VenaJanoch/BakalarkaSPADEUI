@@ -62,7 +62,7 @@ public class CanvasItemController {
      *
      * @param t
      */
-    public void setClicFromDragPoint(MouseEvent t, CanvasItem item, CanvasController canvasController) {
+    public void setClicFromDragPoint(MouseEvent t, CanvasItem item, CanvasController canvasController, SegmentType segmentType) {
 
         manipulation.setChooseCanvasItem(item);
 
@@ -76,7 +76,7 @@ public class CanvasItemController {
 
                 if (t.getClickCount() == 2) {
 
-                    formController.showForm(item.getFormIdentificator());
+                    formController.showEditControlPanel(segmentType, item.getFormIdentificator());
 
                 } else if (!canvasController.isArrow()) {
 

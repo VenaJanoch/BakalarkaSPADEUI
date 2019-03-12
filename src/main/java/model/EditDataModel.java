@@ -67,10 +67,10 @@ public class EditDataModel implements IEditDataModel {
                 typeIndex, resolutionIndex, statusIndex, estimateForDataManipulator, isExist, id);
     }
 
-    public void editDataInConfiguration(String actName, LocalDate createDate, boolean isRelease, int authorIndex,
-                                        List<Integer> branches, List<Integer> cprs, ArrayList artifactIndexs, ArrayList changeIndexs, int id){
+    public void editDataInConfiguration(String actName, LocalDate createDate, boolean isRelease, int authorIndex, List<Integer> cprs,
+                                        List<Integer> branches, ArrayList changeIndexs, int id){
         Configuration configuration = dataModel.getConfiguration(id);
-        dataModel.addDataToConfiguration(configuration, actName, createDate, isRelease, authorIndex, branches, cprs, artifactIndexs, changeIndexs);
+        dataModel.addDataToConfiguration(configuration, actName, createDate, isRelease, authorIndex, branches, cprs, changeIndexs);
 
     }
 
@@ -132,6 +132,23 @@ public class EditDataModel implements IEditDataModel {
         Configuration configuration = dataModel.getConfiguration(configId);
         configuration.getTags().remove(id);
         configuration.getTags().add(id, tag);
+    }
+
+    public void editDataInVCSTag(String nameForManipulator, String descriptionForManipulator, int id){
+        VCSTag tag = dataModel.getVCSTag(id);
+        tag.setName(nameForManipulator);
+        tag.setDescription(descriptionForManipulator);
+    }
+
+    public void editDataInCommit(String nameForManipulator, boolean release, int id){
+        Commit commit = dataModel.getCommit(id);
+        commit.setName(nameForManipulator);
+        commit.setRelease(release);
+    }
+
+    public void editDataInCommitedConfiguration(String nameForManipulator, LocalDate dateFromDatePicker, int id){
+        CommitedConfiguration commitedConfiguration = dataModel.getCommitedConfiguration(id);
+        dataModel.addDataToCommitedConfiguration(commitedConfiguration, dateFromDatePicker);
     }
 
     public void updateItemList(SegmentType formType, SegmentType elementType, ArrayList<Integer> elementIdList){

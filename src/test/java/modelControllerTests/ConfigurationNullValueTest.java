@@ -32,7 +32,7 @@ public class ConfigurationNullValueTest {
         dataModel.getSaveDataModel().createNewConfiguration(2);
         configuration = dataModel.getConfiguration(2);
         dataModel.addDataToConfiguration(configuration, null, null, false,0,new ArrayList<>(), new ArrayList<>(),
-                new ArrayList(), new ArrayList());
+                new ArrayList());
     }
 
     @Test

@@ -1,6 +1,5 @@
 package controllers;
 
-import controlPanels.CriterionControlPanel;
 import forms.ConfigurationTableForm;
 import graphics.CanvasItem;
 import interfaces.IEditDataModel;
@@ -49,7 +48,7 @@ public class FormDataController implements IFormDataController {
                                          int indexForm) {
         String nameForManipulator = InputController.fillTextMapper(actName);
         String descriptionForManipulator = InputController.fillTextMapper(desc);
-        int phaseId = identificatorCreater.getPhaseId(indexForm);
+        int phaseId = identificatorCreater.getRoleId(indexForm);
 
         int[] coords = formController.getCoordsFromItem(indexForm);
         int milestoneIndexForManipulator = dataPreparer.prepareIndexForManipulator(milestoneIndex);
@@ -152,8 +151,8 @@ public class FormDataController implements IFormDataController {
         cprIndex = dataPreparer.prepareIndicesForManipulator(cprIndex);
 
         for(int index : itemIndexList.keySet()) {
-            if(identificatorCreater.getChangeIndexMaper().get(index) != null){
-                changeList.add(identificatorCreater.getChangeIndexMaper().get(index));
+            if(identificatorCreater.getRoleIndexMaper().get(index) != null){
+                changeList.add(identificatorCreater.getRoleIndexMaper().get(index));
             }else {
                 artefactList.add(identificatorCreater.getArtifactIndexMaper().get(index));
             }
@@ -164,7 +163,7 @@ public class FormDataController implements IFormDataController {
         }
         int configIndex = identificatorCreater.getConfigurationId(indexForm);
         editDataModel.editDataInConfiguration(nameForManipulator, createDate, isRelease, authorIndex , branchIndex,cprIndex,
-                artefactList, changeList, configIndex );
+                changeList, configIndex );
         String idName = identificatorCreater.getConfigurationId(indexForm) + "_" + actName;
         ConfigTable configTable = new ConfigTable(idName, release, indexForm, configIndex);
         if (isNew){
@@ -220,7 +219,7 @@ public class FormDataController implements IFormDataController {
 
         editDataModel.editDataInArtifact(nameForManipulator, descForManipulator, createdDate, selected,
                 dataPreparer.prepareIndexForManipulator(authorIndex), typeIndex, identificatorCreater.getArtifactIndex(indexForm));
-        lists.getArtifactObservable().add(actName);
+     //   lists.getArtifactObservable().add(actName);
         formController.setNameToItem(indexForm, nameForManipulator);
         return  true;
     }
@@ -299,7 +298,7 @@ public class FormDataController implements IFormDataController {
         String descForManipulator = InputController.fillTextMapper(roleTable.getDescription());
         int typeFormManipulator = dataPreparer.prepareIndexForManipulator(typeIndex);
 
-        saveDataModel.crateNewRole(nameForManipulator, descForManipulator, typeFormManipulator, roleTable.getId());
+        saveDataModel.crateNewRole(roleTable.getId());
         lists.getRoleObservable().add(roleTable);
 
         int roleTypeIndex = dataModel.getRoleTypeIndex(typeFormManipulator);
@@ -466,5 +465,37 @@ public class FormDataController implements IFormDataController {
         return dataManipulator.getWorkUnitStringData(id);
     }
 
+    @Override
+    public String[] getConfigurationStringData(int id) {
+        return dataManipulator.getConfigurationStringData(id);
+    }
 
+    @Override
+    public List<Integer> getCPRFromConfiguration(int configId) {
+        return dataManipulator.getCPRFromConfiguration(configId);
+    }
+
+    @Override
+    public List<Integer> getBranchesFromConfiguration(int configId) {
+        return dataManipulator.getBranchfromConfiguration(configId);
+    }
+    @Override
+    public List<Integer> getChangesFromConfiguration(int configId) {
+        return dataManipulator.getChangeFromConfiguration(configId);
+    }
+
+    @Override
+    public String[] getVCSTagStringData(int tagId){
+        return dataManipulator.getVCSTagStringData(tagId);
+    }
+
+    @Override
+    public String[] getCommitStringData(int commidId){
+        return dataManipulator.getCommitStringData(commidId);
+    }
+
+    @Override
+    public String[] getCommitedConfigurationStringData(int commitedId){
+        return dataManipulator.getCommitedConfigurationStringData(commitedId);
+    }
 }

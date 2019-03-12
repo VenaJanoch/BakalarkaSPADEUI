@@ -1,7 +1,5 @@
 package model;
 
-import SPADEPAC.Iteration;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -24,6 +22,9 @@ public class IdentificatorCreater {
     private int configID = -1;
     private int tagID = -1;
     private int CPRID = -1;
+    private int VCSTag = -1;
+    private int commidID = -1;
+    private int commtedConfigurationID = -1;
 
     private int priorityID = -1;
     private int severityID = -1;
@@ -33,16 +34,16 @@ public class IdentificatorCreater {
     private int typeID = -1;
     private int roleTypeID = -1;
 
-    private int index = 14;
+    private int index = 0;
 
-    private Map<Integer, Integer> changeSegmentIndexToFormMaper = new HashMap<>();
-    private Map<Integer, Integer> changeIndexMaper = new HashMap<>();
+    private Map<Integer, Integer> roleSegmentIndexToFormMaper = new HashMap<>();
+    private Map<Integer, Integer> roleIndexMaper = new HashMap<>();
     private Map<Integer, Integer> artifactSegmentIndexToFormMaper = new HashMap<>();
     private Map<Integer, Integer> artifactIndexMaper = new HashMap<>();
     private Map<Integer, Integer> workUnitIndexMaper = new HashMap<>();
     private Map<Integer, Integer> workUnitSegmentIndexToFormMaper = new HashMap<>();
-    private Map<Integer, Integer> phaseIndexMaper = new HashMap<>();
-    private Map<Integer, Integer> iterationIndexMaper = new HashMap<>();
+    private Map<Integer, Integer> commitIndexMaper = new HashMap<>();
+    private Map<Integer, Integer> commitedConfigurationIndexMaper = new HashMap<>();
     private Map<Integer, Integer> activityFormToIdMapper = new HashMap<>();
     private Map<Integer, Integer> configurationFormToIndexMapper = new HashMap<>();
     private Map<Integer, Integer> configurationIndexToFormMapper = new HashMap<>();
@@ -59,13 +60,13 @@ public class IdentificatorCreater {
     }
 
     public void setDataToIterationMapper(int formIndex, int segmentId){
-        iterationIndexMaper.put(formIndex, segmentId);
+        commitedConfigurationIndexMaper.put(formIndex, segmentId);
         iterationID++;
     }
 
-    public void setDataToPhaseMapper(int formIndex, int segmentId){
-        phaseIndexMaper.put(formIndex, segmentId);
-        phaseID++;
+    public void setDataToCommitMapper(int formIndex, int segmentId){
+        commitIndexMaper.put(formIndex, segmentId);
+        commidID++;
     }
 
     public void setDataToWorkUnitsMappers(int formIndex, int segmentId){
@@ -82,8 +83,8 @@ public class IdentificatorCreater {
     }
 
     public void setDataToChangeMappers(int formIndex, int segmentId){
-        changeIndexMaper.put(formIndex, segmentId);
-        changeSegmentIndexToFormMaper.put(segmentId, formIndex);
+        roleIndexMaper.put(formIndex, segmentId);
+        roleSegmentIndexToFormMaper.put(segmentId, formIndex);
         changeID++;
     }
     
@@ -153,8 +154,6 @@ public class IdentificatorCreater {
     public int createPhaseID() {
 
         phaseID++;
-        phaseIndexMaper.put(index, phaseID);
-        index++;
         return phaseID;
 
     }
@@ -162,25 +161,18 @@ public class IdentificatorCreater {
     public int createIterationID() {
 
         iterationID++;
-        iterationIndexMaper.put(index, iterationID);
-        index++;
         return iterationID;
     }
 
     public int createActivityID() {
 
         activityID++;
-        activityFormToIdMapper.put(index, activityID);
-        index++;
         return activityID;
     }
 
     public int createWorkUnitID() {
 
         workUnitID++;
-        workUnitIndexMaper.put(index, workUnitID);
-        workUnitSegmentIndexToFormMaper.put(workUnitID, index);
-        index++;
         return workUnitID;
     }
 
@@ -196,7 +188,10 @@ public class IdentificatorCreater {
 
     public int createRoleID() {
         roleID++;
-        return roleID;
+        roleIndexMaper.put(index, roleID);
+        roleSegmentIndexToFormMaper.put(roleID, index);
+        index++;
+        return index - 1;
     }
 
     public int createBranchID() {
@@ -206,9 +201,6 @@ public class IdentificatorCreater {
 
     public int createChangeID() {
         changeID++;
-        changeIndexMaper.put(index, changeID);
-        changeSegmentIndexToFormMaper.put(changeID, index);
-        index++;
         return changeID;
     }
 
@@ -217,12 +209,26 @@ public class IdentificatorCreater {
         artifactIndexMaper.put(index, artifactID);
         artifactSegmentIndexToFormMaper.put(artifactID, index);
         index++;
-        return artifactID;
+        return index -1;
     }
 
     public int createCPRID() {
         configPRID++;
         return configPRID;
+    }
+
+    public int createCommitID() {
+        commidID++;
+        commitIndexMaper.put(index, commidID);
+        index++;
+        return index - 1;
+    }
+
+    public int createCommiedConfigurationtID() {
+        commtedConfigurationID++;
+        commitedConfigurationIndexMaper.put(index, commtedConfigurationID);
+        index++;
+        return index - 1;
     }
 
     public int createConfigurationID() {
@@ -233,6 +239,11 @@ public class IdentificatorCreater {
         return index - 1;
     }
 
+    public int createVCSTagID() {
+        VCSTag++;
+        return VCSTag;
+    }
+
     public int createTagID() {
         tagID++;
         return tagID;
@@ -240,7 +251,15 @@ public class IdentificatorCreater {
 
     public Integer getChangeId(int formIndex) {
 
-        return getChangeIndexMaper().get(formIndex);
+        return getRoleIndexMaper().get(formIndex);
+    }
+
+    public Integer getCommitId(int formIndex) {
+        return commitIndexMaper.get(formIndex);
+    }
+
+    public Integer getCommitedConfigurationId(int formIndex) {
+        return commitedConfigurationIndexMaper.get(formIndex);
     }
 
     public Integer getArtifactIndex(int formIndex) {
@@ -251,12 +270,12 @@ public class IdentificatorCreater {
         return getWorkUnitIndexMaper().get(startSegmentId);
     }
 
-    public Integer getPhaseId(int formIndex) {
-        return phaseIndexMaper.get(formIndex);
+    public Integer getRoleId(int formIndex) {
+        return roleIndexMaper.get(formIndex);
     }
 
     public Integer getIterationId(int formIdentificator) {
-        return iterationIndexMaper.get(formIdentificator);
+        return commitedConfigurationIndexMaper.get(formIdentificator);
     }
 
     public Integer getActivityId(int formIdentificator) {
@@ -280,8 +299,8 @@ public class IdentificatorCreater {
 
     }
 
-    public Map<Integer, Integer> getChangeIndexMaper() {
-        return changeIndexMaper;
+    public Map<Integer, Integer> getRoleIndexMaper() {
+        return roleIndexMaper;
     }
 
     public Map<Integer, Integer> getArtifactIndexMaper() {
@@ -296,13 +315,13 @@ public class IdentificatorCreater {
         return workUnitSegmentIndexToFormMaper;
     }
 
-    public Map<Integer, Integer> getChangeSegmentIndexToFormMaper() {
-        return changeSegmentIndexToFormMaper;
+    public Map<Integer, Integer> getRoleSegmentIndexToFormMaper() {
+        return roleSegmentIndexToFormMaper;
     }
 
     public Map<Integer, Integer> getArtifactSegmentIndexToFormMaper() {
         return artifactSegmentIndexToFormMaper;
     }
-    
-    
+
+
 }

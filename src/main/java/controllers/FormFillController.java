@@ -414,8 +414,8 @@ public class FormFillController {
 
     public void addExistPhaseFormToCanvas(int oldFormId){
         int id = formController.createNewForm(SegmentType.Phase, CanvasType.Phase);
-        int phaseId = identificatorCreater.getPhaseId(oldFormId);
-        int newPhaseId = identificatorCreater.getPhaseId(id);
+        int phaseId = identificatorCreater.getRoleId(oldFormId);
+        int newPhaseId = identificatorCreater.getRoleId(id);
         dataManipulator.copyDataFromPhase(phaseId, newPhaseId);
         addExistPhaseFormToCanvas(newPhaseId, id);
 
@@ -423,7 +423,7 @@ public class FormFillController {
 
     public void addExistPhaseFormToCanvas(int segmentId, int formId){
         Phase phase = fillPhaseForm(segmentId, formId);
-        identificatorCreater.setDataToPhaseMapper(formId, phase.getId());
+  //      identificatorCreater.setDataToPhaseMapper(formId, phase.getId());
         projectCanvasController.addCanvasItemFromExistData(SegmentType.Phase, formId, phase.getName(), phase.getCoordinates().getXCoordinate(),
                 phase.getCoordinates().getYCoordinate(), 1);//todo upravit pocet instanci
 
@@ -524,7 +524,7 @@ public class FormFillController {
             Link link = project.getLinks().get(i);
 
             if (link.getLeftUnitIndex() == null){
-                int startIndexItem = identificatorCreater.getChangeSegmentIndexToFormMaper().get(link.getChangeIndex());
+                int startIndexItem = identificatorCreater.getRoleSegmentIndexToFormMaper().get(link.getChangeIndex());
                 int endIndexItem = identificatorCreater.getArtifactSegmentIndexToFormMaper().get(link.getArtifactIndex());
 
                 CanvasItem startItem = canvasItemList.get(startIndexItem);

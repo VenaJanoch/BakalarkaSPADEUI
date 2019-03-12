@@ -456,4 +456,81 @@ public class DataManipulator{
         return data;
         
     }
+
+    public String[] getConfigurationStringData(int id) {
+
+        String[] data = new String[4];
+        Configuration artifact = dataModel.getConfiguration(id);;
+        data[0] = artifact.getName();
+
+        if(artifact.getCreate() != null){
+            data[1] = artifact.getCreate().toString();
+        }
+
+        if(artifact.getAuthorIndex() != null){
+            data[2] = artifact.getAuthorIndex().toString();
+        }
+
+        if(artifact.isIsRelease() != null){
+            data[3] = artifact.isIsRelease().toString();
+        }
+
+        return data;
+        
+    }
+
+    public List<Integer> getCPRFromConfiguration(int configId) {
+        Configuration configuration = dataModel.getConfiguration(configId);
+        return configuration.getCPRsIndexs();
+    }
+
+    public List<Integer> getBranchfromConfiguration(int configId) {
+        Configuration configuration = dataModel.getConfiguration(configId);
+        return configuration.getBranchesIndexs();
+    }
+
+    public List<Integer> getChangeFromConfiguration(int configId) {
+        Configuration configuration = dataModel.getConfiguration(configId);
+        return configuration.getChangesIndexs();
+    }
+
+    public String[] getVCSTagStringData(int tagId) {
+        String[] data = new String[2];
+        VCSTag vcsTag = dataModel.getVCSTag(tagId);;
+        data[0] = vcsTag.getName();
+
+        if(vcsTag.getDescription() != null){
+            data[1] = vcsTag.getDescription();
+        }
+
+
+        return data;
+    }
+
+    public String[] getCommitStringData(int commitId) {
+            String[] data = new String[2];
+            Commit commit = dataModel.getCommit(commitId);;
+            data[0] = commit.getName();
+
+            if(commit.isRelease() != null){
+                data[1] = commit.isRelease().toString();
+            }
+
+
+            return data;
+    }
+
+    public String[] getCommitedConfigurationStringData(int commitedId) {
+        String[] data = new String[2];
+        CommitedConfiguration commitedConfiguration = dataModel.getCommitedConfiguration(commitedId);;
+        data[0] = commitedConfiguration.getName();
+
+        if(commitedConfiguration.getName() != null){
+            data[1] = commitedConfiguration.getCommitedDay().toString();
+        }
+
+
+        return data;
+
+    }
 }

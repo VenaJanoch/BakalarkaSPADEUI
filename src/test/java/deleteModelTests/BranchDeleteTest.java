@@ -58,7 +58,7 @@ public class BranchDeleteTest {
         basicTables.add(new BasicTable("Table", 0));
         dataModel.getSaveDataModel().createNewConfiguration(0);
         dataModel.getEditDataModel().editDataInConfiguration("Config", null, false, -1, list, new ArrayList<>(),
-                new ArrayList<>(), new ArrayList<>(), 0);
+                 new ArrayList<>(), 0);
 
         deleteFormController.deleteBranch(observableList, basicTables);
         configuration = dataModel.getConfiguration(0);

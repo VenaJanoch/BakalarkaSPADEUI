@@ -54,10 +54,11 @@ public class RoleForm extends TableBasicForm implements ISegmentTableForm {
 	 * potvrzovacímu tlačítku
 	 *
 	 */
-	public RoleForm(FormController formController, IFormDataController formDataController, IEditFormController editFormController, IDeleteFormController deleteFormController, SegmentType type) {
+	public RoleForm(FormController formController, IFormDataController formDataController, IEditFormController editFormController,
+					IDeleteFormController deleteFormController, SegmentType type) {
 		super(formController, formDataController, editFormController, deleteFormController, type);
 
-		editRoleControlPanel = new RoleControlPanel("Edit", formDataController, editFormController, formController);
+		editRoleControlPanel = new RoleControlPanel("Edit", formDataController, editFormController, formController, null,0, 0);
 
 		setEventHandler();
 		createForm();

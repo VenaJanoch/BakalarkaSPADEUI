@@ -47,7 +47,7 @@ deleteModelTests.WarmUp warmUp = new deleteModelTests.WarmUp();
             basicTables.add(new BasicTable("Branch1", 0));
             dataModel.getSaveDataModel().createNewConfiguration(0);
             dataModel.getEditDataModel().editDataInConfiguration("Table", null, false, -1, new ArrayList<>(), list,
-                    new ArrayList<>(), new ArrayList<>(), 0);
+                     new ArrayList<>(), 0);
 
             deleteFormController.deleteCPR(observableList, basicTables);
             configuration = dataModel.getConfiguration(0);

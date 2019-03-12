@@ -30,7 +30,7 @@ public class DataModel {
     private Project project;
     private ObjectFactory objF;
 
-    public DataModel(ProcessGenerator processGenerator){
+    public DataModel(ProcessGenerator processGenerator) {
         this.objF = new ObjectFactory();
         this.project = objF.createProject();
         this.processGenerator = processGenerator;
@@ -44,9 +44,9 @@ public class DataModel {
 
     public int getPhaseIndexInProject(int id) {
         List<Phase> items = project.getPhases();
-        for (int i = 0; i < items.size(); i++){
+        for (int i = 0; i < items.size(); i++) {
 
-            if (items.get(i).getId() == id){
+            if (items.get(i).getId() == id) {
                 return i;
             }
         }
@@ -55,9 +55,9 @@ public class DataModel {
 
     public int getIterationIndexInProject(int id) {
         List<Iteration> items = project.getIterations();
-        for (int i = 0; i < items.size(); i++){
+        for (int i = 0; i < items.size(); i++) {
 
-            if (items.get(i).getId() == id){
+            if (items.get(i).getId() == id) {
                 return i;
             }
         }
@@ -66,9 +66,9 @@ public class DataModel {
 
     public int getActivityIndexInProject(int id) {
         List<Activity> items = project.getActivities();
-        for (int i = 0; i < items.size(); i++){
+        for (int i = 0; i < items.size(); i++) {
 
-            if (items.get(i).getId() == id){
+            if (items.get(i).getId() == id) {
                 return i;
             }
         }
@@ -77,20 +77,20 @@ public class DataModel {
 
     public int getMilestoneIndexInProject(int id) {
         List<Milestone> items = project.getMilestones();
-        for ( int i = 0; i < items.size(); i++){
+        for (int i = 0; i < items.size(); i++) {
 
-            if (items.get(i).getId() == id){
+            if (items.get(i).getId() == id) {
                 return i;
             }
         }
         return -1;
     }
 
-    public int getRoleTypeIndexInProject(int id){
+    public int getRoleTypeIndexInProject(int id) {
         List<RoleType> roleTypes = project.getRoleType();
-        for ( int i = 0; i < roleTypes.size(); i++){
+        for (int i = 0; i < roleTypes.size(); i++) {
 
-            if (roleTypes.get(i).getId() == id){
+            if (roleTypes.get(i).getId() == id) {
                 return i;
             }
         }
@@ -99,9 +99,9 @@ public class DataModel {
 
     public int getSeverityIndexInProject(int id) {
         List<Severity> severities = project.getSeverity();
-        for ( int i = 0; i < severities.size(); i++){
+        for (int i = 0; i < severities.size(); i++) {
 
-            if (severities.get(i).getId() == id){
+            if (severities.get(i).getId() == id) {
                 return i;
             }
         }
@@ -110,9 +110,9 @@ public class DataModel {
 
     public int getPriorityIndexInProject(int id) {
         List<Priority> item = project.getPriority();
-        for ( int i = 0; i < item.size(); i++){
+        for (int i = 0; i < item.size(); i++) {
 
-            if (item.get(i).getId() == id){
+            if (item.get(i).getId() == id) {
                 return i;
             }
         }
@@ -121,9 +121,9 @@ public class DataModel {
 
     public int getStatusIndexInProject(int id) {
         List<Status> items = project.getStatus();
-        for ( int i = 0; i < items.size(); i++){
+        for (int i = 0; i < items.size(); i++) {
 
-            if (items.get(i).getId() == id){
+            if (items.get(i).getId() == id) {
                 return i;
             }
         }
@@ -132,9 +132,9 @@ public class DataModel {
 
     public int getTypeIndexInProject(int id) {
         List<Type> items = project.getTypes();
-        for ( int i = 0; i < items.size(); i++){
+        for (int i = 0; i < items.size(); i++) {
 
-            if (items.get(i).getId() == id){
+            if (items.get(i).getId() == id) {
                 return i;
             }
         }
@@ -143,9 +143,9 @@ public class DataModel {
 
     public int getRelationIndexInProject(int id) {
         List<Relation> items = project.getRelation();
-        for ( int i = 0; i < items.size(); i++){
+        for (int i = 0; i < items.size(); i++) {
 
-            if (items.get(i).getId() == id){
+            if (items.get(i).getId() == id) {
                 return i;
             }
         }
@@ -154,9 +154,9 @@ public class DataModel {
 
     public int getResolutionIndexInProject(int id) {
         List<Resolution> items = project.getResolution();
-        for ( int i = 0; i < items.size(); i++){
+        for (int i = 0; i < items.size(); i++) {
 
-            if (items.get(i).getId() == id){
+            if (items.get(i).getId() == id) {
                 return i;
             }
         }
@@ -165,9 +165,9 @@ public class DataModel {
 
     public int getRoleIndexInProject(int id) {
         List<Role> items = project.getRoles();
-        for ( int i = 0; i < items.size(); i++){
+        for (int i = 0; i < items.size(); i++) {
 
-            if (items.get(i).getId() == id){
+            if (items.get(i).getId() == id) {
                 return i;
             }
         }
@@ -177,8 +177,8 @@ public class DataModel {
     public ArrayList<Integer> getBranchIndices(ArrayList<Integer> branchIndex) {
         List<Branch> branches = project.getBranches();
         ArrayList<Integer> existBranchId = new ArrayList();
-        for( int i : branchIndex){
-            if(i != -1){
+        for (int i : branchIndex) {
+            if (i != -1) {
                 existBranchId.add(branches.get(i).getId());
             }
 
@@ -188,9 +188,9 @@ public class DataModel {
 
     public int getCPRIndexInProject(int id) {
         List<ConfigPersonRelation> items = project.getCpr();
-        for ( int i = 0; i < items.size(); i++){
+        for (int i = 0; i < items.size(); i++) {
 
-            if (items.get(i).getId() == id){
+            if (items.get(i).getId() == id) {
                 return i;
             }
         }
@@ -200,20 +200,20 @@ public class DataModel {
     public ArrayList<Integer> getCPRIndices(ArrayList<Integer> cprIndex) {
         List<ConfigPersonRelation> cprs = project.getCpr();
         ArrayList<Integer> existCprId = new ArrayList();
-        for( int i : cprIndex){
-            if(i != -1){
+        for (int i : cprIndex) {
+            if (i != -1) {
                 existCprId.add(cprs.get(i).getId());
             }
 
         }
         return existCprId;
     }
-    
+
     public int getConfigurationIndexInProject(int id) {
         List<Configuration> items = project.getConfiguration();
-        for ( int i = 0; i < items.size(); i++){
+        for (int i = 0; i < items.size(); i++) {
 
-            if (items.get(i).getId() == id){
+            if (items.get(i).getId() == id) {
                 return i;
             }
         }
@@ -222,9 +222,9 @@ public class DataModel {
 
     public int getArtifactIndexInProject(int id) {
         List<Artifact> items = project.getArtifacts();
-        for (int i = 0; i < items.size(); i++){
+        for (int i = 0; i < items.size(); i++) {
 
-            if (items.get(i).getId() == id){
+            if (items.get(i).getId() == id) {
                 return i;
             }
         }
@@ -233,9 +233,9 @@ public class DataModel {
 
     public int getChangeIndexInProject(int id) {
         List<Change> items = project.getChanges();
-        for (int i = 0; i < items.size(); i++){
+        for (int i = 0; i < items.size(); i++) {
 
-            if (items.get(i).getId() == id){
+            if (items.get(i).getId() == id) {
                 return i;
             }
         }
@@ -244,9 +244,9 @@ public class DataModel {
 
     public int getBranchIndexInProject(int id) {
         List<Branch> items = project.getBranches();
-        for ( int i = 0; i < items.size(); i++){
+        for (int i = 0; i < items.size(); i++) {
 
-            if (items.get(i).getId() == id){
+            if (items.get(i).getId() == id) {
                 return i;
             }
         }
@@ -255,103 +255,104 @@ public class DataModel {
 
     public int getCriterionIndexInProject(int id) {
         List<Criterion> items = project.getCriterions();
-        for ( int i = 0; i < items.size(); i++){
+        for (int i = 0; i < items.size(); i++) {
 
-            if (items.get(i).getId() == id){
+            if (items.get(i).getId() == id) {
                 return i;
             }
         }
         return -1;
     }
-    
+
     public int getWUIndexInProject(int id) {
         List<WorkUnit> items = project.getWorkUnits();
-        for (int i = 0; i < items.size(); i++){
+        for (int i = 0; i < items.size(); i++) {
 
-            if (items.get(i).getId() == id){
+            if (items.get(i).getId() == id) {
                 return i;
             }
         }
         return -1;
     }
 
-    public Activity getActivity(int id){
+    public Activity getActivity(int id) {
         return project.getActivities().get(getActivityIndexInProject(id));
     }
 
-    public Artifact getArtifact(int id){
+    public Artifact getArtifact(int id) {
         return project.getArtifacts().get(getArtifactIndexInProject(id));
     }
 
-    public  Branch getBranch(int id){
+    public Branch getBranch(int id) {
         return project.getBranches().get(getBranchIndexInProject(id));
     }
 
-    public Change getChange(int id){
+    public Change getChange(int id) {
         return project.getChanges().get(getChangeIndexInProject(id));
     }
 
-    public ConfigPersonRelation getConfigPersonRelation(int id){
+    public ConfigPersonRelation getConfigPersonRelation(int id) {
         return project.getCpr().get(getCPRIndexInProject(id));
     }
 
-    public Configuration getConfiguration(int id){
+    public Configuration getConfiguration(int id) {
         return project.getConfiguration().get(getConfigurationIndexInProject(id));
     }
 
-    public Criterion getCriterion(int id){
+    public Criterion getCriterion(int id) {
         return project.getCriterions().get(getCriterionIndexInProject(id));
     }
 
-    public Iteration getIteration(int id){
+    public Iteration getIteration(int id) {
         return project.getIterations().get(getIterationIndexInProject(id));
     }
 
-    public Milestone getMilestone(int id){
+    public Milestone getMilestone(int id) {
         return project.getMilestones().get(getMilestoneIndexInProject(id));
     }
 
-    public Phase getPhase(int id){
+    public Phase getPhase(int id) {
         return project.getPhases().get(getPhaseIndexInProject(id));
     }
 
-    public Priority getPriority(int id){
+    public Priority getPriority(int id) {
         return project.getPriority().get(getPriorityIndexInProject(id));
     }
 
-    public Relation getRelation(int id){
+    public Relation getRelation(int id) {
         return project.getRelation().get(getRelationIndexInProject(id));
     }
 
-    public Resolution getResolution(int id){
+    public Resolution getResolution(int id) {
         return project.getResolution().get(getResolutionIndexInProject(id));
     }
 
-    public Role getRole(int id){
+    public Role getRole(int id) {
         return project.getRoles().get(getRoleIndexInProject(id));
     }
 
-    public RoleType getRoleType(int id){
+    public RoleType getRoleType(int id) {
         return project.getRoleType().get(getRoleTypeIndexInProject(id));
     }
-    public Severity getSeverity(int id){
+
+    public Severity getSeverity(int id) {
         return project.getSeverity().get(getSeverityIndexInProject(id));
     }
 
-    public Status getStatus(int id){
+    public Status getStatus(int id) {
         return project.getStatus().get(getStatusIndexInProject(id));
     }
 
-    public Type getType(int id){
+    public Type getType(int id) {
         return project.getTypes().get(getTypeIndexInProject(id));
     }
 
-    public WorkUnit getWorkUnit(int id){
+    public WorkUnit getWorkUnit(int id) {
         return project.getWorkUnits().get(getWUIndexInProject(id));
     }
 
 
-    public void addDataToCPR(ConfigPersonRelation cpr, String nameForManipulator, int roleIndex){
+    public void addDataToCPR(ConfigPersonRelation cpr, String nameForManipulator, int roleIndex) {
         cpr.setPersonIndex(roleIndex);
         cpr.setName(nameForManipulator);
     }
@@ -399,6 +400,11 @@ public class DataModel {
 
     }
 
+    public void addDataToCommitedConfiguration(CommitedConfiguration commitedConfiguration, LocalDate startDate) {
+        commitedConfiguration.setCommitedDay(convertDate(startDate));
+
+    }
+
 
     public void addDataToActivity(Activity activity, String nameForManipulator, String descriptionForManipulator, ArrayList<Integer> setOfItemOnCanvas) {
 
@@ -408,9 +414,9 @@ public class DataModel {
 
     }
 
-    public void addDataToWorkUnit(WorkUnit workUnit, String nameForManipulator,String description, String categoryForManipulator, int assigneIndex, int authorIndex,
+    public void addDataToWorkUnit(WorkUnit workUnit, String nameForManipulator, String description, String categoryForManipulator, int assigneIndex, int authorIndex,
                                   int priorityIndex, int severityIndex, int typeIndex, int resolutionIndex, int statusIndex,
-                                  double estimateForDataManipulator,boolean isExist, int id) {
+                                  double estimateForDataManipulator, boolean isExist, int id) {
 
         workUnit.setAssigneeIndex(assigneIndex);
         workUnit.setAuthorIndex(authorIndex);
@@ -426,8 +432,8 @@ public class DataModel {
         workUnit.setResolutionIndex(resolutionIndex);
     }
 
-    public void addDataToConfiguration(Configuration configuration, String actName, LocalDate createDate, boolean isRelease, int authorIndex,
-                                       List<Integer> branches, List<Integer> cprs, ArrayList artifactIndexs, ArrayList changeIndexs) {
+    public void addDataToConfiguration(Configuration configuration, String actName, LocalDate createDate, boolean isRelease, int authorIndex, List<Integer> cprs,
+                                       List<Integer> branches, ArrayList changeIndexs) {
 
         configuration.setAuthorIndex(authorIndex);
         configuration.setCreate(convertDate(createDate));
@@ -439,9 +445,6 @@ public class DataModel {
 
         configuration.getCPRsIndexs().clear();
         configuration.getCPRsIndexs().addAll(cprs);
-
-        configuration.getArtifactsIndexs().clear();
-        configuration.getArtifactsIndexs().addAll(artifactIndexs);
 
         configuration.getChangesIndexs().clear();
         configuration.getChangesIndexs().addAll(changeIndexs);
@@ -504,7 +507,6 @@ public class DataModel {
     }
 
 
-
     public void addDataToProject(String nameForManipulator, String descForManipulator, LocalDate startDate, LocalDate endDate) {
         project.setDescription(descForManipulator);
         project.setName(nameForManipulator);
@@ -518,9 +520,9 @@ public class DataModel {
 
     }
 
-    public int getRoleId(int roleIndex){
+    public int getRoleId(int roleIndex) {
         int index = roleIndex;
-        if(roleIndex != -1){
+        if (roleIndex != -1) {
             index = project.getRoles().get(roleIndex).getId();
         }
         return index;
@@ -528,7 +530,7 @@ public class DataModel {
 
     public int getRoleTypeIndex(int typeFormManipulator) {
         int index = typeFormManipulator;
-        if(typeFormManipulator != -1){
+        if (typeFormManipulator != -1) {
             index = project.getRoleType().get(typeFormManipulator).getId();
         }
         return index;
@@ -539,8 +541,8 @@ public class DataModel {
 
         List<Criterion> criterion = project.getCriterions();
         ArrayList<Integer> existCriterionId = new ArrayList();
-        for( int i : criterionIndex){
-            if(i != -1){
+        for (int i : criterionIndex) {
+            if (i != -1) {
                 existCriterionId.add(criterion.get(i).getId());
             }
 
@@ -586,7 +588,7 @@ public class DataModel {
         return dateXML;
     }
 
-    public Coordinates createCoords(int x, int y){
+    public Coordinates createCoords(int x, int y) {
         Coordinates coord = objF.createCoordinates();
         coord.setXCoordinate(x);
         coord.setYCoordinate(y);
@@ -597,8 +599,8 @@ public class DataModel {
         processGenerator.saveProcess(xmlProcessFile, project);
     }
 
-    public void parseProject(File xmlProject){
-        project =  processGenerator.readProcess(xmlProject);
+    public void parseProject(File xmlProject) {
+        project = processGenerator.readProcess(xmlProject);
     }
 
     /**
@@ -652,13 +654,13 @@ public class DataModel {
     }
 
     public int getRoleTypeId(int index) {
-        
+
         return project.getRoleType().get(index).getId();
     }
 
     public int getPriorityId(int index) {
-        
-        return project.getPriority().get(index).getId();        
+
+        return project.getPriority().get(index).getId();
     }
 
     public int getSeverityId(int index) {
@@ -687,5 +689,46 @@ public class DataModel {
     }
 
 
-}
+    public VCSTag getVCSTag(int id) {
+        return project.getVcsTag().get(getVCSTagIndexInProject(id));
+    }
 
+    private int getVCSTagIndexInProject(int id) {
+        List<VCSTag> items = project.getVcsTag();
+        for (int i = 0; i < items.size(); i++) {
+
+            if (items.get(i).getId() == id) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    public Commit getCommit(int commitId) {
+        return project.getCommit().get(getCommitIndexInProject(commitId));
+    }
+
+    private int getCommitIndexInProject(int id) {
+        List<Commit> items = project.getCommit();
+        for (int i = 0; i < items.size(); i++) {
+            if (items.get(i).getId() == id) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    public CommitedConfiguration getCommitedConfiguration(int commitedId)  {
+        return project.getCommitConfiguration().get(getCommitedConfigurationIndexInProject(commitedId));
+    }
+
+    private int getCommitedConfigurationIndexInProject(int id) {
+        List<CommitedConfiguration> items = project.getCommitConfiguration();
+        for (int i = 0; i < items.size(); i++) {
+            if (items.get(i).getId() == id) {
+                return i;
+            }
+        }
+        return -1;
+    }
+}

@@ -20,8 +20,8 @@ public interface IEditDataModel {
       void editDataInActivity(String nameForManipulator, String descriptionForManipulator, ArrayList<Integer> setOfItemOnCanvas, int id);
       void editDataInWorkUnit(String nameForManipulator,String description, String categoryForManipulator, int assigneIndex, int authorIndex,
                                    int priorityIndex, int severityIndex, int typeIndex, int resolutionIndex, int statusIndex, double estimateForDataManipulator, boolean isExist, int id);
-      void editDataInConfiguration(String actName, LocalDate createDate, boolean isRelease, int authorIndex,
-                                        List<Integer> branches, List<Integer> cprs, ArrayList artifactIndexs, ArrayList changeIndexs, int id);
+      void editDataInConfiguration(String actName, LocalDate createDate, boolean isRelease, int authorIndex, List<Integer> cprs,
+                                        List<Integer> branches, ArrayList changeIndexs, int id);
       void editDataInCriterion(String nameForManipulator, String descForManipulator, int id);
       void editDataInPriority(String nameForManipulator, String classST, String superST, int id);
       void editDataInSeverity(String nameForManipulator, String classST, String superST, int id);
@@ -34,4 +34,10 @@ public interface IEditDataModel {
       void editDataInType(String nameForManipulator, String classST, String superST, int id);
       void updateItemList(SegmentType formType, SegmentType elementType, ArrayList<Integer> elementIndexList);
       void editTagInConfiguration(String tag, int configId, int id);
+
+    void editDataInVCSTag(String nameForManipulator, String descriptionForManipulator, int id);
+
+    void editDataInCommit(String nameForManipulator, boolean release, int id);
+
+      void editDataInCommitedConfiguration(String nameForManipulator, LocalDate dateFromDatePicker, int commitedConfigurationId);
 }

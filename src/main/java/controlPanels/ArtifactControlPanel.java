@@ -33,10 +33,14 @@ public class ArtifactControlPanel extends DateDescControlPanel {
 
     private ArtifactTable artifactTable;
 
+    private  int artifactId;
+    private  int artifactFormIndex;
     public ArtifactControlPanel(String buttonName, IFormDataController formDataController,
-                                IEditFormController editFormController, FormController formController){
+                                IEditFormController editFormController, FormController formController, ArtifactTable artifactTable, int id, int formIndex){
         super(buttonName, formDataController, editFormController, formController);
-
+        this.artifactTable = artifactTable;
+        this.artifactId = id;
+        this.artifactFormIndex = formIndex;
         this.segmentLists = formController.getSegmentLists();
         createControlPanel();
     }
@@ -58,19 +62,21 @@ public class ArtifactControlPanel extends DateDescControlPanel {
 
         controlPane.add(typeCB.getItemButton(), 0, 4);
         controlPane.add(typeCB.getItemNameLB(), 1, 4);
-        controlPane.setHalignment(typeCB.getItemCB(), HPos.LEFT);
+        controlPane.setHalignment(typeCB.getItemNameLB(), HPos.LEFT);
+        controlPane.add(typeCB.getItemCB(), 2, 4);
 
         controlPane.add(existRB, 0, 5);
         controlPane.add(button, 2, 6);
 
+        button.setOnAction(event -> saveDataFromPanel() );
 
     }
 
     @Override
     public void showEditControlPanel(BasicTable basicTable, TableView tableView) {
-        artifactTable = (ArtifactTable) basicTable;
-        int id = artifactTable.getId();
-        String[] artifactData = formDataController.getArtifactStringData(id);
+
+
+        String[] artifactData = formDataController.getArtifactStringData(artifactId);
 
         nameTF.setText(artifactData[0]);
         descriptionTF.setShowItem(false);
@@ -91,7 +97,7 @@ public class ArtifactControlPanel extends DateDescControlPanel {
             typeCB.setShowItem(false);
         }
 
-        typeCB.setShowItem(false);
+        dateDP.setShowItem(false);
         if(artifactData[4] != null){
             dateDP.setDateToPicker(LocalDate.parse(artifactData[4]));
             dateDP.setShowItem(false);
@@ -100,11 +106,10 @@ public class ArtifactControlPanel extends DateDescControlPanel {
         exist = Boolean.valueOf(artifactData[5]);
         existRB.setSelected(exist);
 
-        button.setOnAction(event -> saveDataFromPanel(basicTable, tableView) );
     }
 
-    public void saveDataFromPanel(BasicTable table, TableView tableView){
-        int id = table.getId();
+    public void saveDataFromPanel(){
+        int id = artifactId;
         artifactTable.setName(id + "_" + nameTF.getText());
 
         String desc = "null";
@@ -120,8 +125,7 @@ public class ArtifactControlPanel extends DateDescControlPanel {
         exist = existRB.isSelected();
 
         editFormController.editDataFromArtifact(nameTF.getText(), desc , exist, roleCB.getItemIndex(), typeCB.getItemIndex(), date, artifactTable, id);
-
-        clearPanelCB(tableView);
+        formController.setNameToItem(artifactFormIndex, nameTF.getText());
     }
 
 

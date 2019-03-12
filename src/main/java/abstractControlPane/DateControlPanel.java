@@ -26,7 +26,7 @@ public abstract class DateControlPanel extends NameControlPanel {
 
         dateDP = new DateItem("Date: ");
 
-        controlPane.add(dateDP.getItemButton(), 1, 1);
+        controlPane.add(dateDP.getItemButton(), 0, 1);
         controlPane.add(dateDP.getItemNameLB(), 1, 1);
         controlPane.setHalignment(dateDP.getItemNameLB(), HPos.RIGHT);
         controlPane.add(dateDP.getItemDate(), 2, 1);

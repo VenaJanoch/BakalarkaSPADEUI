@@ -26,7 +26,7 @@ public class SegmentLists {
 
     private ObservableList<BasicTable> milestoneObservable;
 
-    private ObservableList<String> artifactObservable;
+    private ObservableList<BasicTable> artifactObservable;
 
     private ObservableList<BasicTable> CPRObservable;
 
@@ -77,6 +77,7 @@ public class SegmentLists {
 
 
         artifactObservable = FXCollections.observableArrayList();
+        artifactObservable.add(new ArtifactTable("","",-1));
 
         criterionObservable = FXCollections.observableArrayList();
         criterionObservable.add(new CriterionTable("","",-1));
@@ -315,9 +316,9 @@ public class SegmentLists {
         return listIndicies;
     }
 
-    private int removeDataFromListTest(ObservableList<BasicTable> observableList, int indexList) {
+    private int removeDataFromListTest(ObservableList<BasicTable> observableList, int id) {
             for (int j = 0; j < observableList.size(); j++){
-                if(observableList.get(j).getId() == indexList){
+                if(observableList.get(j).getId() == id){
                     observableList.remove(j);
                     return j;
                 }
@@ -355,7 +356,7 @@ public class SegmentLists {
         return milestoneObservable;
     }
 
-    public ObservableList<String> getArtifactObservable() {
+    public ObservableList<BasicTable> getArtifactObservable() {
         return artifactObservable;
     }
 
