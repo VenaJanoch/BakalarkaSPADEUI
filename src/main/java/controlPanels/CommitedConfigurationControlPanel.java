@@ -43,12 +43,8 @@ public class CommitedConfigurationControlPanel extends DateControlPanel {
     public void showEditControlPanel(BasicTable basicTable, TableView tableView){
         String[] commitedData = formDataController.getCommitedConfigurationStringData(commitedConfigurationId);
 
-        nameTF.setText(commitedData[0]);
-        dateDP.setShowItem(false);
-        if(commitedData[1] != null){
-            dateDP.setShowItem(true);
-            dateDP.setDateToPicker(LocalDate.parse(commitedData[1]));
-        }
+        nameTF.setTextToTextField(commitedData[0]);
+        controlPanelController.setValueDatePicker(dateDP, commitedData, 1);
     }
 
 
@@ -62,14 +58,11 @@ public class CommitedConfigurationControlPanel extends DateControlPanel {
 
     public void saveDataFromPanel(){
 
-        LocalDate date = LocalDate.of(1900,1,1);
-        if(dateDP.getDateFromDatePicker() != null){
-            date = dateDP.getDateFromDatePicker();
-        }
+        LocalDate date = controlPanelController.checkValueFromDateItem(dateDP);
 
 
-        editFormController.editDataFromCommitedConfiguration(nameTF.getText(), dateDP.getDateFromDatePicker(), commitedConfigurationId);
-        formController.setNameToItem(commitedConfigurationFormId, nameTF.getText());
+        editFormController.editDataFromCommitedConfiguration(nameTF.getTextFromTextField(), date, commitedConfigurationId);
+        formController.setNameToItem(commitedConfigurationFormId, nameTF.getTextFromTextField());
 
     }
 

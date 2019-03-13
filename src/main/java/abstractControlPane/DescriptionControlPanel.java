@@ -28,10 +28,7 @@ public abstract class DescriptionControlPanel extends NameControlPanel {
     public void createBaseControlPanel() {
 
         descriptionTF = new TextFieldItem("Description: ");
-
-        controlPane.add(descriptionTF.getItemButton(), 0, 1);
-        controlPane.add(descriptionTF.getItemNameLB(), 1, 1);
-        controlPane.add(descriptionTF.getItemTF(), 2, 1);
+        controlPanelController.setTextItemToControlPanel(controlPane, descriptionTF, 0, 1);
     }
 
 

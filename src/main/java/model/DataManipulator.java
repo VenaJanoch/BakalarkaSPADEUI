@@ -249,7 +249,10 @@ public class DataManipulator{
         String[] data = new String[2];
         ConfigPersonRelation cpr = dataModel.getConfigPersonRelation(id);
         data[0] = cpr.getName();
-        data[1] = cpr.getPersonIndex().toString();
+        if(cpr.getPersonIndex() != null){
+            data[1] = cpr.getPersonIndex().toString();
+        }
+
         return data;
     }
 
@@ -374,7 +377,7 @@ public class DataManipulator{
     }
 
     public String[] getArtifactStringData(int id) {
-        String[] data = new String[7];
+        String[] data = new String[6];
         Artifact artifact = dataModel.getArtifact(id);;
         data[0] = artifact.getName();
 
@@ -382,8 +385,8 @@ public class DataManipulator{
             data[1] = artifact.getDescriptoin();
         }
 
-        if(artifact.getDescriptoin() != null){
-            data[2] = artifact.getDescriptoin();
+        if(artifact.getCreated() != null){
+            data[2] = artifact.getCreated().toString();
         }
 
         if(artifact.getAuthorIndex() != null){
@@ -394,11 +397,9 @@ public class DataManipulator{
             data[4] = artifact.getMimeType();
         }
 
-        if(artifact.getCreated() != null){
-            data[5] = artifact.getCreated().toString();
-        }
+
         if(artifact.isExist() != null){
-            data[6] = artifact.isExist().toString();
+            data[5] = artifact.isExist().toString();
         }
 
         return data;

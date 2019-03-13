@@ -1,6 +1,7 @@
 package abstractControlPane;
 
 import com.sun.xml.internal.bind.v2.runtime.reflect.opt.Const;
+import controllers.ControlPanelController;
 import controllers.FormController;
 import interfaces.IEditFormController;
 import interfaces.IFormDataController;
@@ -8,6 +9,7 @@ import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
@@ -15,7 +17,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import services.Constans;
 
-public abstract class ControlPanel extends BorderPane {
+public abstract class ControlPanel extends ScrollPane {
 
     protected GridPane controlPane;
     protected Button button;
@@ -24,10 +26,13 @@ public abstract class ControlPanel extends BorderPane {
     protected IEditFormController editFormController;
     protected FormController formController;
 
+    protected ControlPanelController controlPanelController;
+
 
     public ControlPanel(String buttonText, IFormDataController formDataController, IEditFormController editFormController, FormController formController){
         this(buttonText, formDataController, editFormController);
         this.formController = formController;
+        this.controlPanelController = new ControlPanelController();
 
     }
 
@@ -35,6 +40,7 @@ public abstract class ControlPanel extends BorderPane {
         super();
         this.formDataController = formDataController;
         this.editFormController = editFormController;
+        this.controlPanelController = new ControlPanelController();
         this.setWidth(Constans.rightDrawerWidth);
         createMainPanel(buttonText);
     }
@@ -54,7 +60,9 @@ public abstract class ControlPanel extends BorderPane {
         controlPane.setHalignment(button, HPos.RIGHT);
         controlPane.setAlignment(Pos.CENTER);
         controlPane.setPadding(new Insets(5));
-        this.setCenter(controlPane);
+        this.getChildren().add(controlPane);
+        this.setHbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
+        this.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
     }
 
     abstract protected void createBasicPanel();

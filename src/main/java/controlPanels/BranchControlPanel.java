@@ -16,7 +16,6 @@ import tables.BranchTable;
 public class BranchControlPanel extends NameControlPanel {
 
     private Label isMainLB;
-    private boolean isMain = true;
 
     private ToggleGroup group = new ToggleGroup();
 
@@ -45,24 +44,11 @@ public class BranchControlPanel extends NameControlPanel {
         rbNo.setToggleGroup(group);
         rbNo.setId("NoRB");
 
-        group.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
-
-            @Override
-            public void changed(ObservableValue<? extends Toggle> observable, Toggle oldValue, Toggle newValue) {
-                RadioButton chk = (RadioButton) newValue.getToggleGroup().getSelectedToggle();
-
-                if (chk.getText().contains("Yes")) {
-                    isMain = true;
-                } else {
-                   isMain = false;
-                }
-
-            }
-        });
+        group.selectedToggleProperty().addListener(controlPanelController.radioButtonListener());
 
         controlPane.add(isMainLB, 0, 1);
         controlPane.add(rbYes, 1, 1);
-        controlPane.add(rbNo, 0, 2);
+        controlPane.add(rbNo, 2, 1);
         controlPane.add(button, 1, 2);
 
     }
@@ -73,7 +59,7 @@ public class BranchControlPanel extends NameControlPanel {
         int id = basicTable.getId();
         String[] classData = formDataController.getBranchStringData(id);
 
-        nameTF.setText(classData[0]);
+        nameTF.setTextToTextField(classData[0]);
         boolean isMainBranch = Boolean.valueOf(classData[1]);
         if(isMainBranch){
             rbYes.setSelected(true);
@@ -82,25 +68,16 @@ public class BranchControlPanel extends NameControlPanel {
         }
 
         button.setOnAction(event ->{
-            editFormController.editDataFromBranch(nameTF.getText(), isMainBranch, branchTable);
+            editFormController.editDataFromBranch(nameTF.getTextFromTextField(), controlPanelController.isMain(), branchTable);
             clearPanel(tableView);
-       //     this.close();
         });
-
-     //   this.show();
-
     }
 
     public void clearPanel(TableView<BranchTable> tableView) {
-        nameTF.setText("");
         tableView.refresh();
         tableView.getSelectionModel().clearSelection();
-        rbYes.setSelected(true);
     }
 
-    public boolean isMain() {
-        return isMain;
-    }
 
 
 }

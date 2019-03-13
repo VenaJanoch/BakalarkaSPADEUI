@@ -53,15 +53,11 @@ public class ClassControlPanel extends NameControlPanel {
         classCB.selectItemInComboBox(0);
         superClassCB.selectItemInComboBox(0);
 
-        controlPane.add(classCB.getItemButton(), 0, 1);
-        controlPane.add(classCB.getItemNameLB(), 1, 1);
-        controlPane.add(classCB.getItemCB(), 2, 1);
+        controlPanelController.setComboBoxItemToControlPanel(controlPane, classCB, 0 , 1);
+        controlPanelController.setComboBoxItemToControlPanel(controlPane, superClassCB, 0 , 2);
+
         classCB.selectItemInComboBox(0);
         superClassCB.selectItemInComboBox(0);
-
-        controlPane.add(superClassCB.getItemButton(), 0, 2);
-        controlPane.add(superClassCB.getItemNameLB(), 1, 2);
-        controlPane.add(superClassCB.getItemCB(), 2, 2);
 
         controlPane.add(button, 1, 3);
 
@@ -73,12 +69,12 @@ public class ClassControlPanel extends NameControlPanel {
         int id = classTable.getId();
         String[] classData = formDataController.getClassStringData(segmentType, id);
 
-        nameTF.setText(classData[0]);
+        nameTF.setTextToTextField(classData[0]);
 
         classCB.selectItemInComboBox(classData[1]);
 
         button.setOnAction(event ->{
-            editFormController.editDataFromClass(segmentType, nameTF.getText(), getClassName(), getSuperClassName(), classTable, id);
+            editFormController.editDataFromClass(segmentType, nameTF.getTextFromTextField(), getClassName(), getSuperClassName(), classTable, id);
             clearPanel(tableView);
         });
 

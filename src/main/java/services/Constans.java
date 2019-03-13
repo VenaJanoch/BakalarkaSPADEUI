@@ -8,6 +8,8 @@ import javafx.scene.input.KeyCombination;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 
+import java.time.LocalDate;
+
 public class Constans {
 
 
@@ -181,6 +183,7 @@ public class Constans {
     public static final String[] addItemNames = {"Project", "Phase", "Iteration", "Activity", "Work Unit", "Milestone", "Criterion", "Config-role",
             "Role Type", "Priority", "Severity", "Relation", "Resolution", "Status", "Type", "Branch", "Change", "VCSTag"};
 
+    public static final String[] indicatorList = {">","<","="};
 
     public static final int projectFormIndex = 0;
     public static final int phaseFormIndex = 1;
@@ -206,7 +209,10 @@ public class Constans {
 
 
 
-    public static final double rightDrawerWidth = 450;
+    public static final double rightDrawerWidth = 470;
     public static final double tableControlButtonWidth = 70;
     public static final double tableControlButtonHeight = 70;
+    public static final int indicatorIndex = 2;
+
+    public static final LocalDate nullDate = LocalDate.of(1900,1,1);
 }

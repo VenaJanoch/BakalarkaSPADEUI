@@ -97,11 +97,10 @@ public class SaveDataModel implements ISaveDataModel {
         project.getBranches().add(branch);
     }
 
-    public void createNewCPR(String nameForManipulator, int roleIndex, int id) {
+    public void createNewCPR(int id) {
 
         ConfigPersonRelation cpr = objF.createConfigPersonRelation();
         cpr.setId(id);
-        dataModel.addDataToCPR(cpr, nameForManipulator, roleIndex);
         project.getCpr().add(cpr);
     }
 

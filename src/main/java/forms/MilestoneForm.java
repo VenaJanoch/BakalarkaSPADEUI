@@ -163,7 +163,7 @@ public class MilestoneForm extends TableBasicForm implements ISegmentTableForm {
 
 		int id = formController.createTableItem(SegmentType.Milestone);
 
-		ArrayList criterionList = new ArrayList<>();//new ArrayList<>(milestoneControlPanel.getCriterionIndex());
+		ArrayList criterionList = new ArrayList<>();//new ArrayList<>(milestoneControlPanel.getChoosedIndicies());
 		MilestoneTable milestone = formDataController.prepareMilestoneToTable(nameST, descriptionST, id, criterionList);
 
 		tableTV.getItems().add(milestone);

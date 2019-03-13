@@ -13,7 +13,6 @@ import tables.CommitTable;
 public class CommitControlPanel extends NameControlPanel {
 
     private Label releaseLB;
-    private boolean isRelease = true;
 
     private ToggleGroup group = new ToggleGroup();
 
@@ -50,20 +49,7 @@ public class CommitControlPanel extends NameControlPanel {
         rbNo.setToggleGroup(group);
         rbNo.setId("NoRB");
 
-        group.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
-
-            @Override
-            public void changed(ObservableValue<? extends Toggle> observable, Toggle oldValue, Toggle newValue) {
-                RadioButton chk = (RadioButton) newValue.getToggleGroup().getSelectedToggle();
-
-                if (chk.getText().contains("Yes")) {
-                    isRelease = true;
-                } else {
-                   isRelease = false;
-                }
-
-            }
-        });
+        group.selectedToggleProperty().addListener(controlPanelController.radioButtonListener());
 
         controlPane.add(releaseLB, 0, 1);
         controlPane.add(rbYes, 1, 1);
@@ -71,8 +57,8 @@ public class CommitControlPanel extends NameControlPanel {
         controlPane.add(button, 1, 2);
 
         button.setOnAction(event ->{
-            editFormController.editDataFromCommit(nameTF.getText(), isRelease, commitId);
-            formController.setNameToItem(commitFormId, nameTF.getText());
+            editFormController.editDataFromCommit(nameTF.getTextFromTextField(), controlPanelController.isMain(), commitId);
+            formController.setNameToItem(commitFormId, nameTF.getTextFromTextField());
         });
 
     }
@@ -82,7 +68,7 @@ public class CommitControlPanel extends NameControlPanel {
 
         String[] classData = formDataController.getCommitStringData(commitId);
 
-        nameTF.setText(classData[0]);
+        nameTF.setTextToTextField(classData[0]);
         boolean isRelease = Boolean.valueOf(classData[1]);
         if(isRelease){
             rbYes.setSelected(true);
@@ -92,15 +78,8 @@ public class CommitControlPanel extends NameControlPanel {
     }
 
     public void clearPanel(TableView<BranchTable> tableView) {
-        nameTF.setText("");
         tableView.refresh();
         tableView.getSelectionModel().clearSelection();
         rbYes.setSelected(true);
     }
-
-    public boolean isRelease() {
-        return isRelease;
-    }
-
-
 }

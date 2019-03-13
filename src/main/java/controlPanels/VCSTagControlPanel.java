@@ -32,14 +32,10 @@ public class VCSTagControlPanel extends DescriptionControlPanel {
     @Override
     public void showEditControlPanel(BasicTable basicTable, TableView tableView) {
         int id = basicTable.getId();
-        String[] milestoneData = formDataController.getVCSTagStringData(id);
+        String[] vcsTagStringData = formDataController.getVCSTagStringData(id);
 
-        nameTF.setText(milestoneData[0]);
-        descriptionTF.setShowItem(false);
-        if (milestoneData[1] != null){
-            descriptionTF.setTextToTextField(milestoneData[1]);
-            descriptionTF.setShowItem(true);
-        }
+        nameTF.setTextToTextField(vcsTagStringData[0]);
+       controlPanelController.setValueTextField(descriptionTF, vcsTagStringData, 1);
 
         button.setOnAction(event -> saveDataFromPanel(basicTable, tableView));
     }
@@ -57,12 +53,9 @@ public class VCSTagControlPanel extends DescriptionControlPanel {
         int id = tagTable.getId();
 
 
-        String desc = "null";
-        if (descriptionTF.getTextFromTextField() != null){
-            desc = descriptionTF.getTextFromTextField();
-        }
+        String desc = controlPanelController.checkValueFromTextItem(descriptionTF);
 
-        editFormController.editDataFromVCSTag(nameTF.getText(), desc, tagTable, id);
+        editFormController.editDataFromVCSTag(nameTF.getTextFromTextField(), desc, tagTable, id);
         clearPanelCB(tableView);
     }
 

@@ -37,10 +37,8 @@ public abstract class WorkUnitControlPanel extends DescriptionControlPanel {
 
         workUnitCB = new CheckComboBoxItem("Work units: ", segmentLists.getWorkUnitsObservable());
 
-        controlPane.add(workUnitCB.getItemButton(), 0, 2);
-        controlPane.add(workUnitCB.getItemNameLB(), 1, 2);
-        controlPane.setHalignment(workUnitCB.getItemNameLB(), HPos.LEFT);
-        controlPane.add(workUnitCB.getItemCB(), 2, 2);
+        controlPanelController.setCheckComboBoxItemToControlPanel(controlPane, workUnitCB, 0, 2);
+
 
 
     }

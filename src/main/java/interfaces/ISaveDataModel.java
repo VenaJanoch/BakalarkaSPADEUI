@@ -18,7 +18,7 @@ import java.util.ArrayList;
       void createNewChange(int id);
       void createNewArtifact(int id);
       void createNewBranch(String nameForManipulator, int id, boolean isMain);
-      void createNewCPR(String nameForManipulator, int roleIndex, int id);
+      void createNewCPR(int id);
       void createNewCriterion(String nameForManipulator, String descForManipulator, int id);
       void createNewPriority(String nameForManipulator, String classST, String superST, int id);
       void createNewSeverity(String nameForManipulator, String classST, String superST, int id);

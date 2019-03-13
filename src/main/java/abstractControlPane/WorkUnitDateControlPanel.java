@@ -34,13 +34,7 @@ public abstract class WorkUnitDateControlPanel extends WorkUnitControlPanel {
 
         dateDP = new DateItem("Created: ");
 
-
-        controlPane.add(dateDP.getItemButton(), 0, 3);
-        controlPane.add(dateDP.getItemNameLB(), 1, 3);
-        controlPane.setHalignment(dateDP.getItemNameLB(), HPos.LEFT);
-        controlPane.add(dateDP.getItemDate(), 2, 3);
-
-
+        controlPanelController.setDateItemToControlPanel(controlPane, dateDP, 0, 3);
     }
 
 

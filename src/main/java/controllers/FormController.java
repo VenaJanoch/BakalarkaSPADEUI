@@ -613,7 +613,9 @@ public class FormController {
             case RoleType:
                return identificatorCreater.createRoleTypeID();
             case ConfigPersonRelation:
-               return identificatorCreater.createCPRID();
+                id = identificatorCreater.createCPRID();
+                createNewCPRForm(id);
+                return id;
             case Relation:
                 return identificatorCreater.createRelationID();
             case Resolution:
@@ -627,6 +629,11 @@ public class FormController {
             default:
                 return -1;
         }
+    }
+
+    private int createNewCPRForm(int id) {
+        saveDataModel.createNewCPR(id);
+        return id;
     }
 
     private int createNewVCSTagForm(int id) {

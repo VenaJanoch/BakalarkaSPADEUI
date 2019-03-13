@@ -146,12 +146,11 @@ public class ConfigPersonRelationForm extends TableBasicForm implements ISegment
 
 		String nameST = ""; // cprControlPanel.getName();
 		int id = formController.createTableItem(SegmentType.ConfigPersonRelation);
-		int roleIndex = 0;// cprControlPanel.getRoleIndex();
+		int roleIndex = 0;
 		CPRTable cpr = formDataController.prepareCPRToTable(nameST, roleIndex, id);
 
 		tableTV.getItems().add(cpr);
 		tableTV.sort();
-		formDataController.saveDataFromCPR(nameST, roleIndex, cpr);
 
 		int lastItem = tableTV.getItems().size();
 		tableTV.getSelectionModel().select(lastItem - 1);

@@ -35,9 +35,8 @@ public class ConfigPersonRelationControlPanel extends NameControlPanel {
 
         roleCB = new ComboBoxItem("Role: ", formController.getRoleObservable());
 
-        controlPane.add(roleCB.getItemButton(), 0, 1);
-        controlPane.add(roleCB.getItemNameLB(), 1, 1);
-        controlPane.add(roleCB.getItemCB(), 2, 1);
+        controlPanelController.setComboBoxItemToControlPanel(controlPane, roleCB, 0, 1);
+
         controlPane.add(button, 2, 2);
 
 
@@ -49,16 +48,12 @@ public class ConfigPersonRelationControlPanel extends NameControlPanel {
         int id = cprTable.getId();
         String[] classData = formDataController.getCPRStringData(id);
 
-        nameTF.setText(classData[0]);
+        nameTF.setTextToTextField(classData[0]);
 
-        roleCB.setShowItem(false);
-        if (classData[1] != null){
-            int roleIndex = Integer.parseInt(classData[1]);
-            roleCB.selectItemInComboBox(roleIndex);
-            roleCB.setShowItem(true);
-        }
+        controlPanelController.setValueComboBox(roleCB, classData, 1);
+
         button.setOnAction(event ->{
-            editFormController.editDataFromCPR(nameTF.getText(), roleCB.getItemIndex(), cprTable);
+            editFormController.editDataFromCPR(nameTF.getTextFromTextField(), roleCB.getItemIndex(), cprTable);
             clearPanel(tableView);
 
         });

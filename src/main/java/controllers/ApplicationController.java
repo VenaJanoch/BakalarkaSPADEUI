@@ -31,7 +31,7 @@ public class ApplicationController {
                 selectItemController);
         this.formDataController = new FormDataController(formController, segmentLists, mapperTableToObject, dataModel, identificatorCreater, dataPreparer);
         this.deleteFormController = new DeleteFormController(formController, dataModel, identificatorCreater, mapperTableToObject, deleteControl, segmentLists);
-        this.editFormController = new EditFormController(dataModel, identificatorCreater, mapperTableToObject, segmentLists, dataPreparer);
+        this.editFormController = new EditFormController(dataModel, identificatorCreater, mapperTableToObject, segmentLists, dataPreparer, formController);
         this.manipulationController = new ManipulationController(deleteFormController);
         this.linkControl = new LinkControl(formController, identificatorCreater, segmentLists, dataModel, manipulationController);
         this.canvasItemController = new CanvasItemController(linkControl, formController, manipulationController);

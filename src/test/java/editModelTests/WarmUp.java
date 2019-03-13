@@ -39,7 +39,7 @@ public class WarmUp {
         DataPreparer dataPreparer = new DataPreparer(idCreator);
         formController = new FormController(idCreator, dataModel, ap, lists, dataPreparer, drawerPanelController, selectItemController);
         selectItemController.setFormController(formController);
-        editFormController = new EditFormController(dataModel, idCreator, mapperTableToObject, lists, dataPreparer);
+        editFormController = new EditFormController(dataModel, idCreator, mapperTableToObject, lists, dataPreparer,formController);
         for(int i = 0; i < 12; i++){
             formController.getForms().add(null);
         }

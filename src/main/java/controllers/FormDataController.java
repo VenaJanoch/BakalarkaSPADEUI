@@ -239,7 +239,7 @@ public class FormDataController implements IFormDataController {
 
         String nameForManipulator = InputController.fillTextMapper(nameST);
         int roleIndexFormManipulator = dataPreparer.prepareIndexForManipulator(roleListIndex);
-        saveDataModel.createNewCPR(nameForManipulator, roleIndexFormManipulator, cprTable.getId());
+        saveDataModel.createNewCPR( cprTable.getId());
         lists.getCPRObservable().add(cprTable);
 
         int roleId = dataModel.getRoleId(roleIndexFormManipulator);

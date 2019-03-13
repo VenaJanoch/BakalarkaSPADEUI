@@ -55,18 +55,10 @@ public class ArtifactControlPanel extends DateDescControlPanel {
         existRB = new RadioButton("Exist");
         existRB.setSelected(true);
 
-        controlPane.add(roleCB.getItemButton(), 0, 3);
-        controlPane.add(roleCB.getItemNameLB(), 1, 3);
-        controlPane.setHalignment(roleCB.getItemNameLB(), HPos.LEFT);
-        controlPane.add(roleCB.getItemCB(), 2, 3);
+        controlPanelController.setComboBoxItemToControlPanel(controlPane, typeCB,  0, 4);
 
-        controlPane.add(typeCB.getItemButton(), 0, 4);
-        controlPane.add(typeCB.getItemNameLB(), 1, 4);
-        controlPane.setHalignment(typeCB.getItemNameLB(), HPos.LEFT);
-        controlPane.add(typeCB.getItemCB(), 2, 4);
-
-        controlPane.add(existRB, 0, 5);
-        controlPane.add(button, 2, 6);
+        controlPane.add(existRB, 1, 5);
+        controlPane.add(button, 3, 6);
 
         button.setOnAction(event -> saveDataFromPanel() );
 
@@ -78,30 +70,12 @@ public class ArtifactControlPanel extends DateDescControlPanel {
 
         String[] artifactData = formDataController.getArtifactStringData(artifactId);
 
-        nameTF.setText(artifactData[0]);
-        descriptionTF.setShowItem(false);
-        if (artifactData[1] != null){
-            descriptionTF.setTextToTextField(artifactData[1]);
-            descriptionTF.setShowItem(true);
-        }
+        nameTF.setTextToTextField(artifactData[0]);
 
-        roleCB.setShowItem(false);
-        if(artifactData[2] != null){
-            roleCB.selectItemInComboBox(Integer.parseInt(artifactData[2]));
-            roleCB.setShowItem(true);
-        }
-
-        typeCB.setShowItem(false);
-        if(artifactData[3] != null){
-            typeCB.selectItemInComboBox(Integer.parseInt(artifactData[3]));
-            typeCB.setShowItem(false);
-        }
-
-        dateDP.setShowItem(false);
-        if(artifactData[4] != null){
-            dateDP.setDateToPicker(LocalDate.parse(artifactData[4]));
-            dateDP.setShowItem(false);
-        }
+        controlPanelController.setValueTextField(descriptionTF, artifactData, 1);
+        controlPanelController.setValueComboBox(roleCB, artifactData, 2);
+        controlPanelController.setValueComboBox(typeCB, artifactData, 3);
+        controlPanelController.setValueDatePicker(dateDP, artifactData, 4);
 
         exist = Boolean.valueOf(artifactData[5]);
         existRB.setSelected(exist);
@@ -110,22 +84,15 @@ public class ArtifactControlPanel extends DateDescControlPanel {
 
     public void saveDataFromPanel(){
         int id = artifactId;
-        artifactTable.setName(id + "_" + nameTF.getText());
+        artifactTable.setName(id + "_" + nameTF.getTextFromTextField());
 
-        String desc = "null";
-        if (descriptionTF.getTextFromTextField() != null){
-            desc = descriptionTF.getTextFromTextField();
-        }
-
-        LocalDate date = LocalDate.of(1900,1,1);
-        if(dateDP.getDateFromDatePicker() != null){
-            date = dateDP.getDateFromDatePicker();
-        }
+        String desc = controlPanelController.checkValueFromTextItem(descriptionTF);
+        LocalDate date = controlPanelController.checkValueFromDateItem(dateDP);
 
         exist = existRB.isSelected();
 
-        editFormController.editDataFromArtifact(nameTF.getText(), desc , exist, roleCB.getItemIndex(), typeCB.getItemIndex(), date, artifactTable, id);
-        formController.setNameToItem(artifactFormIndex, nameTF.getText());
+        editFormController.editDataFromArtifact(nameTF.getTextFromTextField(), desc , exist, roleCB.getItemIndex(), typeCB.getItemIndex(), date, artifactTable, id);
+        formController.setNameToItem(artifactFormIndex, nameTF.getTextFromTextField());
     }
 
 

@@ -1,60 +1,34 @@
 package graphics;
 
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
+import services.Constans;
 
 import java.time.LocalDate;
+import java.util.Arrays;
 
-public class DateItem extends HBox {
+public class DateItem extends ItemBox {
 
     private Label itemNameLB;
     private DatePicker itemDate;
 
-    private boolean isShowItem;
-    private Button itemButton;
-
-    private int itemIndex;
-
     public DateItem(String name){
-        super();
+        super(FXCollections.observableList(Arrays.asList(Constans.indicatorList)));
 
         itemNameLB = new Label(name);
         itemDate = new DatePicker();
         itemDate.setVisible(false);
-        setExitButtonsActions();
+        setExitButtonsActions(itemDate);
 
-        this.getChildren().addAll(itemButton, itemNameLB, itemDate);
-
-    }
-
-    private void setExitButtonsActions(){
-        isShowItem = false;
-        itemButton = new Button("+");
-        itemButton.setOnAction(event -> addButtonAction());
+        this.getChildren().addAll(itemButton, itemNameLB, indicatorCB, itemDate);
 
     }
 
-    public void addButtonAction(){
 
-        if (!isShowItem){
-            itemDate.setVisible(true);
-            isShowItem = true;
-            itemButton.setText("-");
-        }else{
-            itemDate.setVisible(false);
-            itemDate.setValue(null);
-            isShowItem = false;
-            itemButton.setText("+");
-        }
-    }
-
-    public void setShowItem(boolean showItem) {
-        isShowItem = !showItem;
-        addButtonAction();
-    }
     public void setItemNameLB(String nameLB){
         itemNameLB.setText(nameLB);
     }
@@ -63,16 +37,8 @@ public class DateItem extends HBox {
         return itemDate.getValue();
     }
 
-    public boolean isShowItem() {
-        return isShowItem;
-    }
-
     public Button getItemButton() {
         return itemButton;
-    }
-
-    public int getItemIndex() {
-        return itemIndex;
     }
 
     public void setDateToPicker(LocalDate date) {

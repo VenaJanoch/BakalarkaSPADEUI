@@ -24,7 +24,6 @@ import java.util.List;
 
 public class ConfigurationControlPanel extends DateControlPanel {
 
-    private boolean isRelease;
     private Label isReleaseLB;
 
 
@@ -48,7 +47,7 @@ public class ConfigurationControlPanel extends DateControlPanel {
     private int configIndex;
 
     public ConfigurationControlPanel(String buttonName, IFormDataController formDataController, IEditFormController editFormController,
-                                     FormController formController, ConfigTable configTable, int configId, int configIndex){
+                                     FormController formController, ConfigTable configTable, int configId, int configIndex) {
         super(buttonName, formDataController, editFormController, formController);
 
         this.segmentLists = formController.getSegmentLists();
@@ -59,8 +58,7 @@ public class ConfigurationControlPanel extends DateControlPanel {
     }
 
 
-
-    protected void addItemsToControlPanel(){
+    protected void addItemsToControlPanel() {
         authorRoleCB = new ComboBoxItem("Author: ", formController.getRoleObservable());
         dateDP.setItemNameLB("Created: ");
 
@@ -71,26 +69,18 @@ public class ConfigurationControlPanel extends DateControlPanel {
         rbYes.setToggleGroup(group);
         rbYes.setSelected(true);
 
-        cprCB = new CheckComboBoxItem("CPRs", segmentLists.getCPRObservable() );
+        group.selectedToggleProperty().addListener(controlPanelController.radioButtonListener());
+
+        cprCB = new CheckComboBoxItem("CPRs", segmentLists.getCPRObservable());
         branchCB = new CheckComboBoxItem("Branches", segmentLists.getBranchObservable());
         changeCB = new CheckComboBoxItem("Changes", segmentLists.getBranchObservable());
         addTag = new Button("Add Tag");
 
-        controlPane.add(authorRoleCB.getItemButton(), 0, 2);
-        controlPane.add(authorRoleCB.getItemNameLB(), 1, 2);
-        controlPane.add(authorRoleCB.getItemCB(), 2, 2);
-       
-        controlPane.add(cprCB.getItemButton(), 0, 3);
-        controlPane.add(cprCB.getItemNameLB(), 1, 3);
-        controlPane.add(cprCB.getItemCB(), 2, 3);
+        controlPanelController.setComboBoxItemToControlPanel(controlPane, authorRoleCB, 0, 2);
+        controlPanelController.setCheckComboBoxItemToControlPanel(controlPane, cprCB, 0, 3);
+        controlPanelController.setCheckComboBoxItemToControlPanel(controlPane, branchCB, 0, 4);
+        controlPanelController.setCheckComboBoxItemToControlPanel(controlPane, changeCB, 0, 5);
 
-        controlPane.add(branchCB.getItemButton(), 0, 4);
-        controlPane.add(branchCB.getItemNameLB(), 1, 4);
-        controlPane.add(branchCB.getItemCB(), 2, 4);
-
-        controlPane.add(changeCB.getItemButton(), 0, 5);
-        controlPane.add(changeCB.getItemNameLB(), 1, 5);
-        controlPane.add(changeCB.getItemCB(), 2, 5);
 
         controlPane.add(isReleaseLB, 0, 6);
         controlPane.add(rbYes, 1, 6);
@@ -100,10 +90,12 @@ public class ConfigurationControlPanel extends DateControlPanel {
         controlPane.add(addTag, 2, 7);
         controlPane.add(button, 2, 8);
 
-        button.setOnAction(event ->{
-            editFormController.editDataFromConfiguration(nameTF.getText(), dateDP.getDateFromDatePicker(),  authorRoleCB.getItemIndex(), isRelease, cprCB.getItemIndicies(),
-                    branchCB.getItemIndicies(), changeCB.getItemIndicies(), configId);
-            formController.setNameToItem(configIndex, nameTF.getText());
+        button.setOnAction(event -> {
+
+            LocalDate date = controlPanelController.checkValueFromDateItem(dateDP);
+            editFormController.editDataFromConfiguration(nameTF.getTextFromTextField(), date, authorRoleCB.getItemIndex(),
+                    controlPanelController.isMain(), cprCB.getChoosedIndicies(),
+                    branchCB.getChoosedIndicies(), changeCB.getChoosedIndicies(), configId);
         });
 
     }
@@ -113,46 +105,26 @@ public class ConfigurationControlPanel extends DateControlPanel {
 
         String[] configData = formDataController.getConfigurationStringData(configId);
 
-        nameTF.setText(configData[0]);
+        nameTF.setTextToTextField(configData[0]);
 
-        dateDP.setShowItem(false);
-        if(configData[1] != null){
-            dateDP.setDateToPicker(LocalDate.parse(configData[1]));
-            dateDP.setShowItem(false);
-        }
+        controlPanelController.setValueDatePicker(dateDP, configData, 1);
 
-        authorRoleCB.setShowItem(false);
-        if (configData[2] != null){
-            authorRoleCB.setShowItem(true);
-            authorRoleCB.selectItemInComboBox(Integer.parseInt(configData[2]));
-        }
+        controlPanelController.setValueComboBox(authorRoleCB, configData, 2);
 
-        cprCB.setShowItem(false);
-        List<Integer> cprs = formDataController.getCPRFromConfiguration(configId);
-        if (cprs.size() != 0){
-            cprCB.selectItemsInComboBox(cprs);
-            cprCB.setShowItem(true);
-        }
+        List<Integer> cprList = formDataController.getCPRFromConfiguration(configId);
+        controlPanelController.setValueCheckComboBox(cprCB, cprList);
 
-        branchCB.setShowItem(false);
         List<Integer> branches = formDataController.getBranchesFromConfiguration(configId);
-        if (branches.size() != 0){
-            branchCB.selectItemsInComboBox(branches);
-            branchCB.setShowItem(true);
-        }
+        controlPanelController.setValueCheckComboBox(branchCB, branches);
 
-        changeCB.setShowItem(false);
-        List<Integer> changes = formDataController.getChangesFromConfiguration(configId);
-        if (changes.size() != 0){
-            changeCB.selectItemsInComboBox(changes);
-            changeCB.setShowItem(true);
-        }
+        List<Integer> changeList = formDataController.getChangesFromConfiguration(configId);
+        controlPanelController.setValueCheckComboBox(changeCB, changeList);
 
 
-        isRelease = Boolean.valueOf(configData[3]);
-        if (isRelease){
+       boolean isRelease = Boolean.valueOf(configData[3]);
+        if (isRelease) {
             rbYes.setSelected(true);
-        }else {
+        } else {
             rbNo.setSelected(false);
         }
     }

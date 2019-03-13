@@ -1,43 +1,50 @@
 package graphics;
 
+import controllers.ItemBoxController;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
+import org.controlsfx.control.PropertySheet;
+import services.Constans;
 import services.SegmentLists;
 import tables.BasicTable;
+import tables.CommitedConfigurationTable;
 
-public class ComboBoxItem extends HBox {
+import java.util.Arrays;
+
+public class ComboBoxItem extends ItemBox {
 
     private Label itemNameLB;
     private ComboBox itemCB;
 
-    private boolean isShowItem;
-    private Button itemButton;
-
-    private int itemIndex;
+    private ComboBoxItem otherComboBoxItem;
+    private ItemBoxController itemBoxController;
 
     public ComboBoxItem(String name, ObservableList list){
-        super();
+        super(FXCollections.observableList(Arrays.asList(Constans.indicatorList)));
+
+        itemBoxController = new ItemBoxController();
 
         itemNameLB = new Label(name);
         itemCB = new ComboBox<BasicTable>();
-        itemCB.getSelectionModel().selectedIndexProperty().addListener(priorityListener);
+        itemCB.getSelectionModel().selectedIndexProperty().addListener(itemBoxController.comboBoxListener());
         itemCB.setVisibleRowCount(5);
         itemCB.setVisible(false);
         itemCB.setItems(list);
 
-        setExitButtonsActions();
+        setExitButtonsActions(itemCB);
 
-        this.getChildren().addAll(itemButton, itemNameLB, itemCB);
+        this.getChildren().addAll(itemButton, itemNameLB, indicatorCB, itemCB);
 
     }
 
     public ComboBoxItem(String name, ObservableList list, boolean isBasicTable, ChangeListener<Number> listener ) {
-        super();
+        super(FXCollections.observableList(Arrays.asList(Constans.indicatorList)));
 
         itemNameLB = new Label(name);
         itemCB = new ComboBox<String>();
@@ -45,17 +52,26 @@ public class ComboBoxItem extends HBox {
         itemCB.getSelectionModel().selectedIndexProperty().addListener(listener);
         itemCB.setItems(list);
 
-        setExitButtonsActions();
+        setExitButtonsActions(itemCB);
 
         this.getChildren().addAll(itemButton, itemNameLB, itemCB);
 
     }
 
+    public ComboBoxItem(String name, ObservableList list, ComboBoxItem comboBoxItem, ChangeListener<Number> indexListener) {
+        this(name, list);
+        otherComboBoxItem = comboBoxItem;
+        itemButton.setOnAction(event -> addButtonAction(otherComboBoxItem));
+    }
 
-    private void setExitButtonsActions(){
-        isShowItem = false;
-        itemButton = new Button("+");
-        itemButton.setOnAction(event -> addButtonAction());
+
+    public void addButtonAction(ComboBoxItem comboBoxItem){
+        addButtonAction(itemCB);
+        if (!isShowItem){
+            comboBoxItem.setShowItem(comboBoxItem.itemCB, false);
+        }else{
+            comboBoxItem.setShowItem(comboBoxItem.itemCB, true);
+        }
 
     }
 
@@ -66,26 +82,11 @@ public class ComboBoxItem extends HBox {
     public void selectItemInComboBox(String  value){
         itemCB.getSelectionModel().select(value);
     }
-    /**
-     * ChangeListener pro určení indexu prvku z comboBoxu pro Priority
-     */
-    ChangeListener<Number> priorityListener = new ChangeListener<Number>() {
-
-        @Override
-        public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-
-            itemIndex = newValue.intValue();
-
-        }
-    };
 
     public ComboBox<BasicTable> getItemCB() {
         return itemCB;
     }
 
-    public boolean isShowItem() {
-        return isShowItem;
-    }
 
     public Button getItemButton() {
         return itemButton;
@@ -95,26 +96,7 @@ public class ComboBoxItem extends HBox {
         return itemNameLB;
     }
 
-    public void addButtonAction(){
-        if (!isShowItem){
-            itemCB.setVisible(true);
-            isShowItem = true;
-            itemButton.setText("-");
-        }else{
-            itemCB.setVisible(false);
-            itemCB.getSelectionModel().clearSelection();
-            isShowItem = false;
-            itemButton.setText("+");
-        }
-    }
-
-    public void setShowItem(boolean showItem) {
-        isShowItem = !showItem;
-        addButtonAction();
-    }
-
-
     public int getItemIndex() {
-        return itemIndex;
+        return itemBoxController.getItemIndex() ;
     }
 }

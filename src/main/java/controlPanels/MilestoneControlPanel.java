@@ -12,6 +12,7 @@ import javafx.scene.control.TableView;
 import tables.BasicTable;
 import tables.MilestoneTable;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,6 +20,7 @@ public class MilestoneControlPanel extends DescriptionControlPanel {
 
     private CheckComboBoxItem criteriaCB;
 
+    private MilestoneTable milestoneTable;
 
     public MilestoneControlPanel(String buttonName, IFormDataController formDataController, IEditFormController editFormController, FormController formController){
         super(buttonName, formDataController,editFormController, formController);
@@ -29,10 +31,7 @@ public class MilestoneControlPanel extends DescriptionControlPanel {
     protected void addItemsToControlPanel(){
 
         criteriaCB = new CheckComboBoxItem("Criterion: ", formController.getCriterionObservable());
-        controlPane.add(criteriaCB.getItemButton(), 0, 2);
-        controlPane.add(criteriaCB.getItemNameLB(), 1, 2);
-        controlPane.add(criteriaCB.getItemCB(), 2, 2);
-        controlPane.add(button, 2, 3);
+        controlPanelController.setCheckComboBoxItemToControlPanel(controlPane, criteriaCB, 0, 2);
 
     }
 
@@ -40,42 +39,38 @@ public class MilestoneControlPanel extends DescriptionControlPanel {
 
     @Override
     public void showEditControlPanel(BasicTable basicTable, TableView tableView) {
-        MilestoneTable milestoneTable = (MilestoneTable) basicTable;
+        milestoneTable = (MilestoneTable) basicTable;
         int id = milestoneTable.getId();
         String[] milestoneData = formDataController.getMilestoneStringData(id);
         List<Integer> criteriaID = formDataController.getCriterionFromMilestone(id);
 
-        criteriaCB.setShowItem(false);
-        if (criteriaID != null ){
-            criteriaCB.setShowItem(true);
-            criteriaCB.selectItemsInComboBox(criteriaID);
+        controlPanelController.setValueCheckComboBox(criteriaCB, criteriaID);
+        nameTF.setTextToTextField(milestoneData[0]);
 
-        }
-        nameTF.setText(milestoneData[0]);
+        controlPanelController.setValueTextField(descriptionTF, milestoneData, 1);
 
-        descriptionTF.setShowItem(false);
-        if (milestoneData[1] != null){
-            descriptionTF.setTextToTextField(milestoneData[1]);
-            descriptionTF.setShowItem(true);
-        }
         button.setOnAction(event ->{
 
-            milestoneTable.setName(id + "_" + nameTF.getText());
-            if (descriptionTF.getTextFromTextField() != null){
-                milestoneTable.setDescription(descriptionTF.getTextFromTextField());
-            }
+            saveDataFromPanel(milestoneTable, tableView);
 
-            ArrayList<Integer> criterionList = null;
-            if (criteriaCB.getItemIndicies() != null){
-               criterionList = new ArrayList<>(criteriaCB.getItemIndicies());
-            }
-
-            editFormController.editDataFromMilestone(nameTF.getText(), milestoneTable, criterionList, id);
-
-            clearPanelCB(tableView);
 
         });
 
+    }
+
+    public void saveDataFromPanel(BasicTable table, TableView tableView){
+        int id =   table.getId();
+
+        String desc = controlPanelController.checkValueFromTextItem(descriptionTF);
+        milestoneTable.setDescription(desc);
+        ArrayList<Integer> criterionList = null;
+        if (criteriaCB.getChoosedIndicies() != null){
+            criterionList = new ArrayList<>(criteriaCB.getChoosedIndicies());
+        }
+
+        editFormController.editDataFromMilestone(nameTF.getTextFromTextField(),  milestoneTable, criterionList, id);
+
+        clearPanelCB(tableView);
     }
 
     public Button getButton() {
@@ -83,7 +78,7 @@ public class MilestoneControlPanel extends DescriptionControlPanel {
     }
 
     public ObservableList<Integer> getCriterionIndex() {
-        return criteriaCB.getItemIndicies();
+        return criteriaCB.getChoosedIndicies();
     }
 
 

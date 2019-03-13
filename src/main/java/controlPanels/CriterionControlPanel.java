@@ -31,27 +31,19 @@ public class CriterionControlPanel extends DescriptionControlPanel {
         int id = criterionTable.getId();
         String[] criterionData = formDataController.getCriterionData(id);
 
-        nameTF.setText(criterionData[0]);
-        descriptionTF.setShowItem(false);
-        if (criterionData[1] != null){
-            descriptionTF.setTextToTextField(criterionData[1]);
-            descriptionTF.setShowItem(true);
-        }
+        nameTF.setTextToTextField(criterionData[0]);
+        controlPanelController.setValueTextField(descriptionTF, criterionData, 1);
+
         button.setOnAction(event ->{
-            editFormController.editDataFromCriterion(nameTF.getText(), descriptionTF.getTextFromTextField(), criterionTable, id);
+            String description = controlPanelController.checkValueFromTextItem(descriptionTF);
+            editFormController.editDataFromCriterion(nameTF.getTextFromTextField(), description, criterionTable, id);
             clearPanel(tableView);
         });
     }
 
 
-    public TextField getNameTF() {
-        return nameTF;
-    }
-
     public void clearPanel(TableView tableView) {
         tableView.getSelectionModel().clearSelection();
         tableView.refresh();
-        nameTF.setText("");
-        descriptionTF.setTextToTextField("");
     }
 }

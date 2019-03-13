@@ -1,6 +1,9 @@
 package controllers;
 
 import services.Alerts;
+import services.Constans;
+
+import java.time.LocalDate;
 
 public class InputController {
 
@@ -58,13 +61,25 @@ public class InputController {
      */
     public static String fillTextMapper(String text) {
 
-
-        if (text == null || text.equals("")) {
-            return null;
+        if (!text.equals("null*")) {
+            return text;
         }
 
-        return text;
+        return null;
 
     }
 
+    public static String fillNameTextMapper(String name) {
+        if(name == null){
+            return "";
+        }
+        return name;
+    }
+
+    public static LocalDate checkDate(LocalDate date) {
+        if(date.equals(Constans.nullDate)){
+            return null;
+        }
+        return date;
+    }
 }

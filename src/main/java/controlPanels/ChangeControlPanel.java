@@ -46,10 +46,8 @@ public class ChangeControlPanel extends DescriptionControlPanel {
         int id = changeTable.getId();
         String[] changeData = formDataController.getChangeStringData(id);
 
-        nameTF.setText(changeData[0]);
-        if (changeData[1] != null){
-            descriptionTF.setTextToTextField(changeData[1]);
-        }
+        nameTF.setTextToTextField(changeData[0]);
+        controlPanelController.setValueTextField(descriptionTF, changeData, 1);
 
         exist = Boolean.valueOf(changeData[2]);
 
@@ -70,18 +68,13 @@ public class ChangeControlPanel extends DescriptionControlPanel {
 
     public void saveDataFromPanel(BasicTable table, TableView tableView){
         int id = table.getId();
-        changeTable.setName(id + "_" + nameTF.getText());
+        changeTable.setName(id + "_" + nameTF.getTextFromTextField());
 
-        String desc = "null";
-        descriptionTF.setShowItem(false);
-        if (descriptionTF.getTextFromTextField() != null){
-            desc = descriptionTF.getTextFromTextField();
-            descriptionTF.setShowItem(true);
-        }
+        String desc = controlPanelController.checkValueFromTextItem(descriptionTF);
 
         exist = existRB.isSelected();
 
-        editFormController.editDataFromChange(nameTF.getText(), desc , exist, changeTable, id);
+        editFormController.editDataFromChange(nameTF.getTextFromTextField(), desc , exist, changeTable, id);
 
         clearPanelCB(tableView);
     }

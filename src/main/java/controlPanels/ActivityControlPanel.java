@@ -32,21 +32,14 @@ public class ActivityControlPanel extends WorkUnitControlPanel {
     public void showEditControlPanel(BasicTable basicTable, TableView tableView) {
         activityTable = (ActivityTable) basicTable;
         int id = activityTable.getId();
-        String[] milestoneData = formDataController.getActivityStringData(id);
+        String[] activityData = formDataController.getActivityStringData(id);
 
-        nameTF.setText(milestoneData[0]);
-        descriptionTF.setShowItem(false);
-        if (milestoneData[1] != null){
-            descriptionTF.setTextToTextField(milestoneData[1]);
-            descriptionTF.setShowItem(true);
-        }
+        nameTF.setTextToTextField(activityData[0]);
 
-        workUnitCB.setShowItem(false);
+        controlPanelController.setValueTextField(descriptionTF, activityData, 1);
+
         List<Integer> workUnits = formDataController.getWorkUnitFromSegment(id, SegmentType.Activity);
-        if (workUnits.size() != 0){
-            workUnitCB.selectItemsInComboBox(workUnits);
-            workUnitCB.setShowItem(true);
-        }
+        controlPanelController.setValueCheckComboBox(workUnitCB, workUnits);
 
 
         button.setOnAction(event -> saveDataFromPanel(activityTable, tableView));
@@ -62,15 +55,8 @@ public class ActivityControlPanel extends WorkUnitControlPanel {
 
     public void saveDataFromPanel(BasicTable table, TableView tableView){
         int id = table.getId();
-        activityTable.setName(id + "_" + nameTF.getText());
-
-        String desc = "null";
-        if (descriptionTF.getTextFromTextField() != null){
-            desc = descriptionTF.getTextFromTextField();
-        }
-
-
-        editFormController.editDataFromActivity(nameTF.getText(), desc , new ArrayList<Integer>(workUnitCB.getItemIndicies()), activityTable, id);
+        String desc = controlPanelController.checkValueFromTextItem(descriptionTF);
+        editFormController.editDataFromActivity(nameTF.getTextFromTextField(), desc , new ArrayList<Integer>(workUnitCB.getChoosedIndicies()), activityTable, id);
 
         clearPanelCB(tableView);
     }
