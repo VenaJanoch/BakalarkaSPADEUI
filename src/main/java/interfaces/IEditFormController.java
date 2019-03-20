@@ -7,44 +7,75 @@ import tables.*;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 
 public interface IEditFormController {
 
-   void editDataFromClass(SegmentType segmentType, String name, String className, String superClassName, ClassTable classTable, int id);
-//    private void editDataFromResolution(String name, String className, String superClassName, ClassTable classTable, int id);
-//   private void editDataFromRelation(String name, String className, String superClassName, ClassTable classTable, int id);
-//    private void editDataFromType(String name, String className, String superClassName, ClassTable classTable, int id);
-//    private void editDataFromStatus(String name, String className, String superClassName, ClassTable classTable, int id);
-//   void editDataFromPriority(String nameST, String className, String superClassName, ClassTable classTable, int id);
-   void editDataFromTag(String tag, TagTable tagTable, int configFormId, int id);
-//    private void editDataFromRoleType(String nameST, String className, String superClassName, ClassTable classTable, int id);
-   void editDataFromRole(String nameST, String description, int roleTypeIndex, RoleTable roleTable, int id);
+   void editDataFromClass(SegmentType segmentType, ArrayList<String> name, ArrayList<Integer> nameIndicator,  ArrayList<Integer> classIndices,  ArrayList<Integer> superClassIndices, ArrayList<String> classString,  ArrayList<String> superSting
+           , ClassTable classTable, int id);
+ //   void editDataFromResolution(ArrayList<String> name, ArrayList<Integer> nameIndicator, String className, String superClassName, ClassTable classTable, int id);
+ //   void editDataFromRelation(ArrayList<String> name, ArrayList<Integer> nameIndicator, String className, String superClassName, ClassTable classTable, int id);
+ //void editDataFromType(ArrayList<String> name, ArrayList<Integer> nameIndicator, String className, String superClassName, ClassTable classTable, int id);
+// void editDataFromStatus(ArrayList<String> name, ArrayList<Integer> nameIndicator, String className, String superClassName, ClassTable classTable, int id);
+//   void editDataFromPriority(ArrayList<String> name, ArrayList<Integer> nameIndicator, String className, String superClassName, ClassTable classTable, int id);
+//   void editDataFromTag(String tag, TagTable tagTable, int configFormId, int id);
+ //void editDataFromRoleType(ArrayList<String> name, ArrayList<Integer> nameIndicator, String className, String superClassName, ClassTable classTable, int id);
+   void editDataFromRole(ArrayList<String> name, ArrayList<Integer> nameIndicator, ArrayList<String> description, ArrayList<Integer> descriptionIndicator,
+                         String count, ArrayList<Integer> roleTypeIndex, ArrayList<Integer> roleTypeIndicators, RoleTable roleTable, int id);
 //    private void editDataFromSeverity(String nameST, String className, String superClassName, ClassTable classTable, int id);
-   void editDataFromMilestone(String nameST, MilestoneTable milestoneTable, ArrayList<Integer> criterionIndex, int id);
-   void editDataFromCriterion(String nameST, String description, CriterionTable criterionTable, int id);
-   void editDataFromCPR(String nameST, int roleIndex, CPRTable cprTable);
-   void editDataFromBranch(String nameST, boolean isMainBranch, BranchTable branchTable);
+   void editDataFromMilestone(ArrayList<String> nameST, ArrayList<Integer> nameIndicators, ArrayList<String>description, ArrayList<Integer> descriptionIndicators,
+                              MilestoneTable milestoneTable, ArrayList<ArrayList<Integer>> criterionIndex,
+                              ArrayList<Integer> criterionIndicators,  int id);
+   void editDataFromCriterion(ArrayList<String> nameST, ArrayList<Integer> nameIndicators, ArrayList<String>description, ArrayList<Integer> descriptionIndicators,
+                              CriterionTable criterionTable, int id);
+   void editDataFromCPR(ArrayList<String> nameST, ArrayList<Integer> nameIndicators, ArrayList<Integer> roleIndex,
+                        ArrayList<Integer> roleIndicators, CPRTable cprTable);
+   void editDataFromBranch(ArrayList<String> nameST, ArrayList<Integer> nameIndicators,  boolean isMainBranch, BranchTable branchTable);
 
-    void editDataFromPhase(String name, String description, LocalDate endDate, int milestonIndex, int configurationIndex, ArrayList<Integer> workUnits,
+    void editDataFromPhase(ArrayList<String> actName, ArrayList<LocalDate> endDateL, ArrayList<String> desc,
+                           ArrayList<Integer> confIndex, ArrayList<Integer> milestoneIndex,  ArrayList<ArrayList<Integer>> workUnitIndexList,
+                           ArrayList<Integer> workUnitIndicators, ArrayList<Integer> nameIndicator, ArrayList<Integer> endDateIndicator,
+                           ArrayList<Integer> descIndicator, ArrayList<Integer> confIndicator, ArrayList<Integer> milestoneIndicator,
                            PhaseTable phaseTable, int id);
 
-    void editDataFromIteration(String name, String desc, LocalDate date, LocalDate date2, int configIndex, ArrayList<Integer> integers, IterationTable iterationTable, int id);
+    void editDataFromIteration(ArrayList<String> actName, ArrayList<LocalDate> endDateL,  ArrayList<LocalDate> startDateL, ArrayList<String> desc,
+                               ArrayList<Integer> confIndex,  ArrayList<ArrayList<Integer>> workUnitIndexList,
+                               ArrayList<Integer> workUnitIndicators, ArrayList<Integer> nameIndicator, ArrayList<Integer> endDateIndicator,
+                               ArrayList<Integer> startDateIndicator, ArrayList<Integer> descIndicator, ArrayList<Integer> confIndicator,
+                               IterationTable iterationTable, int id);
+    void editDataFromActivity(ArrayList<String> name, ArrayList<String> description,  ArrayList<ArrayList<Integer>> workUnits,
+                              ArrayList<Integer> nameIndicators,  ArrayList<Integer> descIndicators,  ArrayList<Integer> workUnitIndicators, ActivityTable activityTable, int id);
 
-    void editDataFromActivity(String name, String desc, ArrayList<Integer> integers, ActivityTable activityTable, int id);
+    void editDataFromChange(ArrayList<String> name, ArrayList<Integer> nameIndicator,  ArrayList<String> description,
+                            ArrayList<Integer> descriptionIndicator, boolean exist, ChangeTable changeTable,
+                            int id);
 
-    void editDataFromChange(String name, String desc, boolean exist, ChangeTable changeTable, int id);
+    void editDataFromArtifact(ArrayList<String> name, ArrayList<String> description, boolean exist,
+                              ArrayList<Integer> roleIndex, ArrayList<Integer> typeIndex, ArrayList<LocalDate> localDate,
+                              ArrayList<Integer> nameIndicator, ArrayList<Integer> descriptionIndicator,
+                              ArrayList<Integer> roleIndicator,  ArrayList<Integer> typeIndicator, ArrayList<Integer> dateIndicator,
+                              ArtifactTable artifactTable, String count, int id);
 
-    void editDataFromArtifact(String nameTFText, String description, boolean exist, int roleIndex, int typeIndex, LocalDate date, ArtifactTable artifactTable, int id);
+    void editDataFromWorkUnit(ArrayList<String> name, ArrayList<String> description, ArrayList<String> category,
+                              ArrayList<Integer> assigneIndex, ArrayList<Integer> authorIndex, ArrayList<Integer> priorityIndex, ArrayList<Integer> severityIndex,
+                              ArrayList<Integer> typeIndex, ArrayList<Integer> resolutionIndex, ArrayList<Integer> statusIndex,
+                              ArrayList<String> estimatedTime, List<Integer> nameIndicator, List<Integer> descriptionIndicator, List<Integer> categoryIndicator,
+                              ArrayList<Integer> assigneIndicator, ArrayList<Integer> authorIndicator, ArrayList<Integer> priorityIndicator, ArrayList<Integer> severityIndicator,
+                              ArrayList<Integer> typeIndicator, ArrayList<Integer> resolutionIndicator, ArrayList<Integer> statusIndicator,
+                              ArrayList<Integer> estimateIndicator, boolean isExist, WorkUnitTable workUnitTable, int id);
 
-    void editDataFromWorkUnit(String name, String description, String estimatedTime, int priorityIndex, int severityIndex, int resolutionIndex,
-                              int status, String category, int typeIndex, int assigneIndex, int authorIndex, boolean selected, WorkUnitTable workUnitTable, int id);
+    void editDataFromConfiguration(ArrayList<String> actName, ArrayList<LocalDate> createDate,
+                                   boolean isRelease, ArrayList<Integer> authorIndex, ArrayList<ArrayList<Integer>> cprs,
+                                   ArrayList<ArrayList<Integer>> branches, ArrayList<ArrayList<Integer>> changeIndexs,
+                                   ArrayList<Integer> cprIndicators, ArrayList<Integer> nameIndicator, ArrayList<Integer> createdIndicator,
+                                   ArrayList<Integer> authorIndicator, ArrayList<Integer> branchIndicator, ArrayList<Integer> changeIndicator,
+                                   String instanceCount, int configId);
 
-    void editDataFromConfiguration(String name, LocalDate createDate, int autohorIndex, boolean isRelease, ObservableList<Integer> cprsIndicies,
-                                   ObservableList<Integer> branchIndicies, ObservableList<Integer> changeIndicies, int configId);
+    void editDataFromVCSTag(ArrayList<String> name, ArrayList<String> description,
+                            ArrayList<Integer> nameIndicator, ArrayList<Integer> descriptionIndicator, VCSTagTable tagTable, int id);
 
-    void editDataFromVCSTag(String nameTFText, String desc, VCSTagTable tagTable, int id);
+    void editDataFromCommit(ArrayList<String> name, ArrayList<Integer> nameIndicator, boolean release, String count, int id);
 
-    void editDataFromCommit(String text, boolean isRelease, int id);
-
-    void editDataFromCommitedConfiguration(String nameTFText, LocalDate dateFromDatePicker, int commitedConfigurationId);
+    void editDataFromCommitedConfiguration(ArrayList<String> name, ArrayList<LocalDate>  dateFromDatePicker, ArrayList<Integer> nameIndicator,
+                                           ArrayList<Integer> dateIndicator, String count, int commitedConfigurationId);
 }

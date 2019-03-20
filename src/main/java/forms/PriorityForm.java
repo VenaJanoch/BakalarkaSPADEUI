@@ -32,8 +32,8 @@ import java.util.ArrayList;
  */
 public class PriorityForm extends TableClassBasicForm {
 
-	private String[] classArray = new String[WorkUnitPriorityClass.values().length];
-	private String[] superClassArray = new String[WorkUnitPrioritySuperClass.values().length];
+	private ArrayList<String> classArray = new ArrayList<>();
+	private ArrayList<String> superClassArray = new ArrayList<>();
 
 	/**
 	 * Konstruktor třídy
@@ -46,12 +46,12 @@ public class PriorityForm extends TableClassBasicForm {
 		editClassControlPanelTCB = new ClassControlPanel("Edit", SegmentType.Priority, formDataController, editFormController, formController);
 		int i = 0;
 		for(WorkUnitPriorityClass classItem : WorkUnitPriorityClass.values()){
-			classArray[i] = classItem.name();
+			classArray.add(classItem.name());
 			i++;
 		}
 		i = 0;
 		for(WorkUnitPrioritySuperClass superClass : WorkUnitPrioritySuperClass.values()){
-			superClassArray[i] = superClass.name();
+			superClassArray.add(superClass.name());
 			i++;
 		}
 

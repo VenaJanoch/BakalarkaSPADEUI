@@ -93,7 +93,6 @@ public class SaveDataModel implements ISaveDataModel {
     public void createNewBranch(String nameForManipulator, int id, boolean isMain) {
         Branch branch = objF.createBranch();
         branch.setId(id);
-        dataModel.addDataToBranch(branch,nameForManipulator, isMain);
         project.getBranches().add(branch);
     }
 
@@ -108,7 +107,6 @@ public class SaveDataModel implements ISaveDataModel {
 
         Criterion criterion = objF.createCriterion();
         criterion.setId(id);
-        dataModel.addDataToCriterion(criterion, nameForManipulator, descForManipulator);
         project.getCriterions().add(criterion);
     }
 
@@ -116,7 +114,6 @@ public class SaveDataModel implements ISaveDataModel {
 
         Priority priority = objF.createPriority();
         priority.setId(id);
-        dataModel.addDataToPriority(priority, nameForManipulator, classST, superST);
         project.getPriority().add(priority);
     }
 
@@ -124,7 +121,6 @@ public class SaveDataModel implements ISaveDataModel {
 
         Severity severity = objF.createSeverity();
         severity.setId(id);
-        dataModel.addDataToSeverity(severity, nameForManipulator, classST, superST);
         project.getSeverity().add(severity);
     }
 
@@ -132,7 +128,6 @@ public class SaveDataModel implements ISaveDataModel {
 
         Relation relation = objF.createRelation();
         relation.setId(id);
-        dataModel.addDataToRelation(relation, nameForManipulator, classST, superST);
         project.getRelation().add(relation);
     }
 
@@ -140,7 +135,6 @@ public class SaveDataModel implements ISaveDataModel {
 
         Resolution resolution = objF.createResolution();
         resolution.setId(id);
-        dataModel.addDataToResolution(resolution, nameForManipulator, classST, superST);
         project.getResolution().add(resolution);
 
     }
@@ -156,7 +150,6 @@ public class SaveDataModel implements ISaveDataModel {
 
         Milestone milestone = objF.createMilestone();
         milestone.setId(id);
-        dataModel.addDataToMilestone(milestone, nameForManipulator, description, criterionIndex);
         project.getMilestones().add(milestone);
     }
 
@@ -164,7 +157,7 @@ public class SaveDataModel implements ISaveDataModel {
 
         RoleType roleType = objF.createRoleType();
         roleType.setId(id);
-        dataModel.addDataToRoleType(roleType, nameForManipulator, classST, superST);
+   //     dataModel.addDataToRoleType(roleType, nameForManipulator, classST, superST);
         project.getRoleType().add(roleType);
     }
 
@@ -177,7 +170,7 @@ public class SaveDataModel implements ISaveDataModel {
 
         Status status = objF.createStatus();
         status.setId(id);
-        dataModel.addDataToStatus(status, nameForManipulator, classST, superST);
+  //      dataModel.addDataToStatus(status, nameForManipulator, classST, superST);
         project.getStatus().add(status);
     }
 
@@ -185,7 +178,7 @@ public class SaveDataModel implements ISaveDataModel {
 
         Type type = objF.createType();
         type.setId(id);
-        dataModel.addDataToType(type, nameForManipulator, classST, superST);
+  //      dataModel.addDataToType(type, nameForManipulator, classST, superST);
         project.getTypes().add(type);
     }
 

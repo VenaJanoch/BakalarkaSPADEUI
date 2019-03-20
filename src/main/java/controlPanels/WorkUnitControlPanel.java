@@ -1,31 +1,20 @@
 package controlPanels;
 
-import abstractControlPane.DateDescControlPanel;
 import abstractControlPane.DescriptionControlPanel;
-import abstractControlPane.NameControlPanel;
 import controllers.FormController;
 import controllers.WorkUnitControlPanelController;
 import graphics.ComboBoxItem;
 import graphics.TextFieldItem;
 import interfaces.IEditFormController;
 import interfaces.IFormDataController;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.collections.FXCollections;
-import javafx.collections.ListChangeListener;
-import javafx.collections.ObservableList;
-import javafx.geometry.HPos;
 import javafx.scene.control.*;
-import javafx.scene.layout.GridPane;
-import org.controlsfx.control.CheckComboBox;
-import services.Constans;
+import services.ControlPanelLineObject;
+import services.ControlPanelLineType;
+import services.ParamType;
 import services.SegmentLists;
-import services.SegmentType;
 import tables.BasicTable;
-import tables.PhaseTable;
 import tables.WorkUnitTable;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -59,44 +48,32 @@ public class WorkUnitControlPanel extends DescriptionControlPanel {
         super(buttonName, formDataController, editFormController, formController);
         this.segmentLists = formController.getSegmentLists();
         this.controller = new WorkUnitControlPanelController(this, segmentLists);
+        lineList.add(new ControlPanelLineObject("Estimated time: ", ControlPanelLineType.Text, ParamType.EstimateTime));
+        lineList.add(new ControlPanelLineObject("Category: ", ControlPanelLineType.Text, ParamType.Category));
+        lineList.add(new ControlPanelLineObject("Priority: ", ControlPanelLineType.ComboBox, ParamType.Priority));
+        lineList.add(new ControlPanelLineObject("Severity: ", ControlPanelLineType.ComboBox, ParamType.Severity));
+        lineList.add(new ControlPanelLineObject("Status: ", ControlPanelLineType.ComboBox, ParamType.Status));
+        lineList.add(new ControlPanelLineObject("Resolution: ", ControlPanelLineType.ComboBox, ParamType.Resolution));
+        lineList.add(new ControlPanelLineObject("Type: ", ControlPanelLineType.ComboBox, ParamType.Type));
+        lineList.add(new ControlPanelLineObject("Assigne: ", ControlPanelLineType.ComboBox, ParamType.AssigneeRole));
+        lineList.add(new ControlPanelLineObject("Autor: ", ControlPanelLineType.ComboBox, ParamType.Role));
+
         addItemsToControlPanel();
     }
 
     protected void addItemsToControlPanel(){
 
-        estimatedTimeTF = new TextFieldItem("Estimated Time: ");
-        priorityCB = new ComboBoxItem("Priority: ", segmentLists.getPriorityTypeObservable());
-        severityCB = new ComboBoxItem("Severity :", segmentLists.getSeverityTypeObservable());
-        categoryTF = new TextFieldItem("Category: ");
-        typeCB = new ComboBoxItem("Type :", segmentLists.getTypeObservable());
-        asigneeRoleCB = new ComboBoxItem("Asignee :", segmentLists.getRoleObservable());
-        authorRoleCB = new ComboBoxItem("Autohor: ", segmentLists.getRoleObservable());
-        resolutionCB = new ComboBoxItem("Resolution: ", segmentLists.getResolutionTypeObservable());
-        statusCB = new ComboBoxItem("Status: ", segmentLists.getStatusTypeObservable());
 
 
-        existRB = new RadioButton("Exist");
-        existRB.setSelected(true);
+        controlPanelController.createNewLine(this, lineList);
+        controlPanelController.setRadioButton(this, "Exist: ", false);
+        //addRelationButton = new Button("add Relation");
+        //addRelationButton.setOnAction(event -> controller.addRelationToPanel(button, addRelationButton, existRB));
 
-        addRelationButton = new Button("add Relation");
-        addRelationButton.setOnAction(event -> controller.addRelationToPanel(button, addRelationButton, existRB));
 
-        controlPanelController.setTextItemToControlPanel(controlPane, estimatedTimeTF, 0, 2);
-        controlPanelController.setTextItemToControlPanel(controlPane, categoryTF, 0, 3);
-        controlPanelController.setComboBoxItemToControlPanel(controlPane, priorityCB, 0, 4);
-        controlPanelController.setComboBoxItemToControlPanel(controlPane, severityCB, 0, 5);
-        controlPanelController.setComboBoxItemToControlPanel(controlPane, typeCB, 0, 6);
-        controlPanelController.setComboBoxItemToControlPanel(controlPane, resolutionCB, 0, 7);
-        controlPanelController.setComboBoxItemToControlPanel(controlPane, statusCB, 0, 8);
-        controlPanelController.setComboBoxItemToControlPanel(controlPane, asigneeRoleCB, 0, 9);
-        controlPanelController.setComboBoxItemToControlPanel(controlPane, authorRoleCB, 0, 10);
+        //controlPane.add(addRelationButton, 3,11);
 
-        controlPane.add(addRelationButton, 3,11);
-
-        controlPane.add(existRB, 2, 12);
-        controlPane.add(button, 3, 13);
-
-        controller.addRelationToPanel(button, addRelationButton, existRB);
+        //controller.addRelationToPanel(button, addRelationButton, existRB);
 
 
     }
@@ -106,23 +83,28 @@ public class WorkUnitControlPanel extends DescriptionControlPanel {
     public void showEditControlPanel(BasicTable basicTable, TableView tableView) {
         workUnitTable = (WorkUnitTable) basicTable;
         int id = workUnitTable.getId();
-        String[] milestoneData = formDataController.getWorkUnitStringData(id);
+        List[] workUnitData = formDataController.getWorkUnitStringData(id);
 
-        nameTF.setTextToTextField(milestoneData[0]);
+        controlPane.getChildren().clear();
+        addItemsToControlPanel();
 
-        controlPanelController.setValueTextField(descriptionTF, milestoneData, 1);
-        controlPanelController.setValueTextField(estimatedTimeTF, milestoneData, 2);
-        controlPanelController.setValueComboBox(priorityCB, milestoneData, 3);
-        controlPanelController.setValueComboBox(severityCB, milestoneData, 4);
-        controlPanelController.setValueComboBox(resolutionCB, milestoneData, 5);
-        controlPanelController.setValueComboBox(statusCB, milestoneData, 6);
-        controlPanelController.setValueTextField(categoryTF, milestoneData, 7);
-        controlPanelController.setValueComboBox(typeCB, milestoneData, 8);
-        controlPanelController.setValueComboBox(asigneeRoleCB, milestoneData, 9);
-        controlPanelController.setValueComboBox(authorRoleCB, milestoneData, 10);
+        controlPanelController.setValueTextField(this, lineList ,ParamType.Name, workUnitData, workUnitData[11], 0);
+        controlPanelController.setValueTextField(this, lineList ,ParamType.Description, workUnitData, workUnitData[12], 1);
+        controlPanelController.setValueTextField(this, lineList ,ParamType.EstimateTime, workUnitData, workUnitData[13], 2);
+        controlPanelController.setValueTextField(this, lineList ,ParamType.Category, workUnitData, workUnitData[14], 3);
+        controlPanelController.setValueComboBox(this, lineList ,ParamType.Priority, (ArrayList<Integer>) workUnitData[4], workUnitData[15]);
+        controlPanelController.setValueComboBox(this, lineList ,ParamType.Severity, (ArrayList<Integer>) workUnitData[5], workUnitData[16]);
+        controlPanelController.setValueComboBox(this, lineList ,ParamType.Resolution, (ArrayList<Integer>) workUnitData[6], workUnitData[17]);
+        controlPanelController.setValueComboBox(this, lineList ,ParamType.Status, (ArrayList<Integer>) workUnitData[7], workUnitData[18]);
+        controlPanelController.setValueComboBox(this, lineList ,ParamType.Type, (ArrayList<Integer>) workUnitData[8], workUnitData[19]);
+        controlPanelController.setValueComboBox(this, lineList ,ParamType.AssigneeRole, (ArrayList<Integer>) workUnitData[9], workUnitData[20]);
+        controlPanelController.setValueComboBox(this, lineList ,ParamType.Role, (ArrayList<Integer>) workUnitData[10], workUnitData[21]);
 
-        exist = Boolean.valueOf(milestoneData[11]);
-        existRB.setSelected(exist);
+        List boolList = workUnitData[22];
+        exist = false;
+        if (boolList.size() != 0){
+            exist = true;
+        }controlPanelController.setValueRadioButton(exist);
 
         button.setOnAction(event -> saveDataFromPanel(basicTable, tableView));
     }
@@ -130,17 +112,37 @@ public class WorkUnitControlPanel extends DescriptionControlPanel {
 
     public void saveDataFromPanel(BasicTable table, TableView tableView){
         int id = table.getId();
-        workUnitTable.setName(id + "_" + nameTF.getTextFromTextField());
+        ArrayList<Integer> nameIndicators = new ArrayList<>();
+        ArrayList<Integer> descIndicators = new ArrayList<>();
+        ArrayList<Integer> estimatedIndicators = new ArrayList<>();
+        ArrayList<Integer> categoryIndicators = new ArrayList<>();
+        ArrayList<Integer> priorityIndicators = new ArrayList<>();
+        ArrayList<Integer> severityIndicators = new ArrayList<>();
+        ArrayList<Integer> statusIndicators = new ArrayList<>();
+        ArrayList<Integer> resolutionIndicators = new ArrayList<>();
+        ArrayList<Integer> typeIndicators = new ArrayList<>();
+        ArrayList<Integer> assigneeIndicators = new ArrayList<>();
+        ArrayList<Integer> roleIndicators = new ArrayList<>();
 
 
-        String desc = controlPanelController.checkValueFromTextItem(descriptionTF);
-        String estimated = controlPanelController.checkValueFromTextItem(estimatedTimeTF);
-        String category = controlPanelController.checkValueFromTextItem(categoryTF);
+        ArrayList<String> name = controlPanelController.processTextLines(ParamType.Name, nameIndicators);
+        ArrayList<String> desc = controlPanelController.processTextLines(ParamType.Description, descIndicators);
+        ArrayList<String> estimated = controlPanelController.processTextLines(ParamType.EstimateTime, estimatedIndicators);
+        ArrayList<String> category = controlPanelController.processTextLines(ParamType.Category, categoryIndicators);
+        ArrayList<Integer> priority = controlPanelController.processComboBoxLines(ParamType.Priority, priorityIndicators);
+        ArrayList<Integer> severity = controlPanelController.processComboBoxLines(ParamType.Severity, severityIndicators);
+        ArrayList<Integer> status = controlPanelController.processComboBoxLines(ParamType.Status, statusIndicators);
+        ArrayList<Integer> resolution = controlPanelController.processComboBoxLines(ParamType.Resolution, resolutionIndicators);
+        ArrayList<Integer> type = controlPanelController.processComboBoxLines(ParamType.Type, typeIndicators);
+        ArrayList<Integer> assignee = controlPanelController.processComboBoxLines(ParamType.AssigneeRole, assigneeIndicators);
+        ArrayList<Integer> role = controlPanelController.processComboBoxLines(ParamType.Role, roleIndicators);
+
+        boolean exist = controlPanelController.isMain();
 
 
-        editFormController.editDataFromWorkUnit(nameTF.getTextFromTextField(), desc, estimated, priorityCB.getItemIndex(),
-                severityCB.getItemIndex(), resolutionCB.getItemIndex(), statusCB.getItemIndex(), category,
-                typeCB.getItemIndex(), asigneeRoleCB.getItemIndex(), authorRoleCB.getItemIndex(), existRB.isSelected(), workUnitTable, id);
+        editFormController.editDataFromWorkUnit(name, desc, category, assignee, role, priority, severity, type, resolution, status, estimated, nameIndicators,
+                descIndicators, categoryIndicators, assigneeIndicators, roleIndicators, priorityIndicators, severityIndicators, typeIndicators, resolutionIndicators,
+                statusIndicators, estimatedIndicators, exist, workUnitTable, id);
 
         clearPanelCB(tableView);
     }

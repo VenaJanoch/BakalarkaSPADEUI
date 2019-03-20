@@ -74,25 +74,54 @@
         <xs:attribute name="startDate" type="xs:date"/>
     </xs:complexType>
 
+
+    <xs:complexType name="WorkUnitList">
+    <xs:sequence>
+    <xs:element name="WorkUnits" type="xs:int" minOccurs="0"
+                maxOccurs="unbounded"/>
+    </xs:sequence>
+    </xs:complexType>
     <xs:complexType name="Phase">
         <xs:sequence>
             <xs:element name="configuration" type="xs:int" minOccurs="0"
-                        maxOccurs="1"/>
-            <xs:element name="workUnits" type="xs:int" minOccurs="0"
+                        maxOccurs="unbounded"/>
+            <xs:element name="workUnits" type="WorkUnitList" minOccurs="0"
                         maxOccurs="unbounded"/>
             <xs:element name="milestoneIndex" type="xs:int" minOccurs="0"
-                        maxOccurs="1"/>
-            <xs:element name="coordinates" type="Coordinates"/>
+                        maxOccurs="unbounded"/>
+            <xs:element name="endDate" type="xs:date" minOccurs="0"
+                        maxOccurs="unbounded"/>
+            <xs:element name="name" type="xs:string" minOccurs="0"
+                        maxOccurs="unbounded" />
+            <xs:element name="description" type="xs:string" minOccurs="0"
+                        maxOccurs="unbounded" />
+            <xs:element name="configurationIndicator" type="xs:int" minOccurs="0"
+                        maxOccurs="unbounded"/>
+            <xs:element name="workUnitsIndicator" type="xs:int" minOccurs="0"
+                        maxOccurs="unbounded"/>
+            <xs:element name="milestoneIndicator" type="xs:int" minOccurs="0"
+                        maxOccurs="unbounded"/>
+            <xs:element name="endDateIndicator" type="xs:int" minOccurs="0"
+                        maxOccurs="unbounded"/>
+            <xs:element name="nameIndicator" type="xs:int" minOccurs="0"
+                        maxOccurs="unbounded" />
+            <xs:element name="descriptionIndicator" type="xs:int" minOccurs="0"
+                        maxOccurs="unbounded" />
         </xs:sequence>
-        <xs:attribute name="endDate" type="xs:date"/>
-        <xs:attribute name="name" type="xs:string"/>
-        <xs:attribute name="description" type="xs:string"/>
         <xs:attribute name="id" type="xs:int"/>
     </xs:complexType>
 
     <xs:complexType name="Criterion">
-        <xs:attribute name="name" type="xs:string"/>
-        <xs:attribute name="description" type="xs:string"/>
+        <xs:sequence>
+            <xs:element name="name" type="xs:string" minOccurs="0"
+                        maxOccurs="unbounded" />
+            <xs:element name="description" type="xs:string" minOccurs="0"
+                        maxOccurs="unbounded" />
+            <xs:element name="nameIndicator" type="xs:int" minOccurs="0"
+                        maxOccurs="unbounded" />
+            <xs:element name="descriptionIndicator" type="xs:int" minOccurs="0"
+                        maxOccurs="unbounded" />
+        </xs:sequence>
         <xs:attribute name="id" type="xs:int"/>
     </xs:complexType>
 
@@ -100,42 +129,82 @@
     <xs:complexType name="Iteration">
         <xs:sequence>
             <xs:element name="configuration" type="xs:int" minOccurs="0"
-                        maxOccurs="1"/>
-            <xs:element name="workUnits" type="xs:int" minOccurs="0"
                         maxOccurs="unbounded"/>
-            <xs:element name="coordinates" type="Coordinates"/>
+            <xs:element name="workUnits" type="WorkUnitList" minOccurs="0"
+                        maxOccurs="unbounded"/>
+            <xs:element name="name" type="xs:string" minOccurs="0"
+                        maxOccurs="unbounded" />
+            <xs:element name="description" type="xs:string" minOccurs="0"
+                        maxOccurs="unbounded" />
+            <xs:element name="startDate" type="xs:date" minOccurs="0"
+                        maxOccurs="unbounded"/>
+            <xs:element name="endDate" type="xs:date" minOccurs="0"
+                        maxOccurs="unbounded"/>
+            <xs:element name="workUnitsIndicator" type="xs:int" minOccurs="0"
+                        maxOccurs="unbounded"/>
+            <xs:element name="startDateIndicator" type="xs:int" minOccurs="0"
+                        maxOccurs="unbounded"/>
+            <xs:element name="endDateIndicator" type="xs:int" minOccurs="0"
+                        maxOccurs="unbounded"/>
+            <xs:element name="nameIndicator" type="xs:int" minOccurs="0"
+                        maxOccurs="unbounded" />
+            <xs:element name="descriptionIndicator" type="xs:int" minOccurs="0"
+                        maxOccurs="unbounded" />
+            <xs:element name="configurationIndicator" type="xs:int" minOccurs="0"
+                        maxOccurs="unbounded" />
         </xs:sequence>
-        <xs:attribute name="name" type="xs:string"/>
-        <xs:attribute name="description" type="xs:string"/>
-        <xs:attribute name="endDate" type="xs:date"/>
-        <xs:attribute name="startDate" type="xs:date"/>
         <xs:attribute name="id" type="xs:int"/>
     </xs:complexType>
 
     <xs:complexType name="Activity">
 
         <xs:sequence>
-            <xs:element name="workUnits" type="xs:int" minOccurs="0"
+            <xs:element name="workUnits" type="WorkUnitList" minOccurs="0"
                         maxOccurs="unbounded"/>
-            <xs:element name="coordinates" type="Coordinates"/>
-        </xs:sequence>
+            <xs:element name="name" type="xs:string" minOccurs="0"
+                        maxOccurs="unbounded" />
+            <xs:element name="description" type="xs:string" minOccurs="0"
+                        maxOccurs="unbounded" />
+            <xs:element name="workUnitsIndicator" type="xs:int" minOccurs="0"
+                        maxOccurs="unbounded"/>
+            <xs:element name="nameIndicator" type="xs:int" minOccurs="0"
+                        maxOccurs="unbounded" />
+            <xs:element name="descriptionIndicator" type="xs:int" minOccurs="0"
+                        maxOccurs="unbounded" />
 
-        <xs:attribute name="name" type="xs:string"/>
-        <xs:attribute name="description" type="xs:string"/>
+        </xs:sequence>
         <xs:attribute name="id" type="xs:int"/>
     </xs:complexType>
 
     <xs:complexType name="CommitedConfiguration">
-
-        <xs:attribute name="name" type="xs:string"/>
-        <xs:attribute name="commitedDay" type="xs:date"/>
+        <xs:sequence>
+            <xs:element name="commitedDay" type="xs:date" minOccurs="0"
+                        maxOccurs="unbounded"/>
+            <xs:element name="name" type="xs:string" minOccurs="0"
+                        maxOccurs="unbounded" />
+            <xs:element name="commitedDayIndicator" type="xs:int" minOccurs="0"
+                        maxOccurs="unbounded"/>
+            <xs:element name="nameIndicator" type="xs:int" minOccurs="0"
+                        maxOccurs="unbounded" />
+            <xs:element name="coordinates" type="Coordinates"/>
+            <xs:element name="count" type="xs:int" minOccurs="0"
+                        maxOccurs="1" />
+        </xs:sequence>
         <xs:attribute name="id" type="xs:int"/>
     </xs:complexType>
+    
 
     <xs:complexType name="VCSTag">
-
-        <xs:attribute name="name" type="xs:string"/>
-        <xs:attribute name="description" type="xs:string"/>
+        <xs:sequence>
+            <xs:element name="description" type="xs:string" minOccurs="0"
+                        maxOccurs="unbounded"/>
+            <xs:element name="name" type="xs:string" minOccurs="0"
+                        maxOccurs="unbounded" />
+            <xs:element name="descriptionIndicator" type="xs:int" minOccurs="0"
+                        maxOccurs="unbounded"/>
+            <xs:element name="nameIndicator" type="xs:int" minOccurs="0"
+                        maxOccurs="unbounded" />
+        </xs:sequence>
         <xs:attribute name="id" type="xs:int"/>
     </xs:complexType>
 
@@ -147,9 +216,24 @@
                         maxOccurs="unbounded"/>
             <xs:element name="tags" type="xs:int" minOccurs="0"
                         maxOccurs="unbounded"/>
+            <xs:element name="commitedDay" type="xs:date" minOccurs="0"
+                        maxOccurs="unbounded"/>
+            <xs:element name="name" type="xs:string" minOccurs="0"
+                        maxOccurs="unbounded" />
+            <xs:element name="commitedDayIndicator" type="xs:int" minOccurs="0"
+                        maxOccurs="unbounded"/>
+            <xs:element name="nameIndicator" type="xs:int" minOccurs="0"
+                        maxOccurs="unbounded" />
+            <xs:element name="cprsIndicator" type="xs:int" minOccurs="0"
+                        maxOccurs="unbounded"/>
+            <xs:element name="branchIndicator" type="xs:int" minOccurs="0"
+                        maxOccurs="unbounded"/>
+            <xs:element name="tagsIndicator" type="xs:int" minOccurs="0"
+                        maxOccurs="unbounded"/>
+            <xs:element name="coordinates" type="Coordinates"/>
+            <xs:element name="count" type="xs:int" minOccurs="0"
+                        maxOccurs="1" />
         </xs:sequence>
-        <xs:attribute name="name" type="xs:string"/>
-        <xs:attribute name="commitedDay" type="xs:date"/>
         <xs:attribute name="release" type="xs:boolean"/>
         <xs:attribute name="id" type="xs:int"/>
     </xs:complexType>
@@ -157,109 +241,282 @@
 
     <xs:complexType name="WorkUnit">
         <xs:sequence>
-            <xs:element name="priorityIndex" type="xs:int" minOccurs="0"
-                        maxOccurs="1"/>
-            <xs:element name="severityIndex" type="xs:int" minOccurs="0"
-                        maxOccurs="1"/>
+            <xs:element name="description" type="xs:string" minOccurs="0"
+                        maxOccurs="unbounded"/>
+            <xs:element name="name" type="xs:string" minOccurs="0"
+                        maxOccurs="unbounded" />
             <xs:element name="category" type="xs:string" minOccurs="0"
-                        maxOccurs="1"/>
+                        maxOccurs="unbounded"/>
+            <xs:element name="estimatedTime" type="xs:double" minOccurs="0"
+                        maxOccurs="unbounded"/>
+            <xs:element name="descriptionIndicator" type="xs:int" minOccurs="0"
+                        maxOccurs="unbounded"/>
+            <xs:element name="nameIndicator" type="xs:int" minOccurs="0"
+                        maxOccurs="unbounded" />
+            <xs:element name="categoryIndicator" type="xs:int" minOccurs="0"
+                        maxOccurs="unbounded"/>
+            <xs:element name="estimatedTimeIndicator" type="xs:int" minOccurs="0"
+                        maxOccurs="unbounded"/>
+            <xs:element name="priorityIndex" type="xs:int" minOccurs="0"
+                        maxOccurs="unbounded"/>
+            <xs:element name="severityIndex" type="xs:int" minOccurs="0"
+                        maxOccurs="unbounded"/>
             <xs:element name="typeIndex" type="xs:int" minOccurs="0"
-                        maxOccurs="1"/>
+                        maxOccurs="unbounded"/>
             <xs:element name="resolutionIndex" type="xs:int"
-                        minOccurs="0" maxOccurs="1"/>
+                        minOccurs="0" maxOccurs="unbounded"/>
             <xs:element name="statusIndex" type="xs:int" minOccurs="0"
-                        maxOccurs="1"/>
+                        maxOccurs="unbounded"/>
             <xs:element name="assigneeIndex" type="xs:int" minOccurs="0"
-                        maxOccurs="1"/>
+                        maxOccurs="unbounded"/>
             <xs:element name="authorIndex" type="xs:int" minOccurs="0"
-                        maxOccurs="1"/>
-            <xs:element name="coordinates" type="Coordinates"
-                        minOccurs="0" maxOccurs="1"/>
+                        maxOccurs="unbounded"/>
             <xs:element name="relationIndex" type="xs:int" minOccurs="0"
-                        maxOccurs="1"/>
+                        maxOccurs="unbounded"/>
+
+            <xs:element name="priorityIndicator" type="xs:int" minOccurs="0"
+                        maxOccurs="unbounded"/>
+            <xs:element name="severityIndicator" type="xs:int" minOccurs="0"
+                        maxOccurs="unbounded"/>
+            <xs:element name="typeIndicator" type="xs:int" minOccurs="0"
+                        maxOccurs="unbounded"/>
+            <xs:element name="resolutionIndicator" type="xs:int"
+                        minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="statusIndicator" type="xs:int" minOccurs="0"
+                        maxOccurs="unbounded"/>
+            <xs:element name="assigneeIndicator" type="xs:int" minOccurs="0"
+                        maxOccurs="unbounded"/>
+            <xs:element name="authorIIndicator" type="xs:int" minOccurs="0"
+                        maxOccurs="unbounded"/>
+            <xs:element name="relationIndicator" type="xs:int" minOccurs="0"
+                        maxOccurs="unbounded"/>            
             <xs:element name="leftUnitIndex" type="xs:int" minOccurs="0"
                         maxOccurs="unbounded"/>
             <xs:element name="rightUnitIndex" type="xs:int" minOccurs="0"
                         maxOccurs="unbounded"/>
         </xs:sequence>
-        <xs:attribute name="name" type="xs:string"/>
-        <xs:attribute name="description" type="xs:string"/>
-        <xs:attribute name="estimatedTime" type="xs:double"/>
         <xs:attribute name="exist" type="xs:boolean"/>
         <xs:attribute name="id" type="xs:int"/>
     </xs:complexType>
 
 
     <xs:complexType name="Priority">
-        <xs:attribute name="name" type="xs:string"/>
-        <xs:attribute name="priorityClass" type="xs:string"/>
-        <xs:attribute name="prioritySuperClass" type="xs:string"/>
+        <xs:sequence>
+            <xs:element name="priorityClassIndex" type="xs:int" minOccurs="0"
+                        maxOccurs="unbounded"/>
+            <xs:element name="prioritySuperClassIndex" type="xs:int" minOccurs="0"
+                        maxOccurs="unbounded"/>
+            <xs:element name="priorityClass" type="xs:string" minOccurs="0"
+                        maxOccurs="unbounded"/>
+            <xs:element name="prioritySuperClass" type="xs:string" minOccurs="0"
+                        maxOccurs="unbounded"/>
+            <xs:element name="prioritySuperClassIndicator" type="xs:int" minOccurs="0"
+                        maxOccurs="unbounded"/>
+            <xs:element name="priorityClassIndicator" type="xs:int" minOccurs="0"
+                        maxOccurs="unbounded"/>
+            <xs:element name="name" type="xs:string" minOccurs="0"
+                        maxOccurs="unbounded" />
+            <xs:element name="nameIndicator" type="xs:int" minOccurs="0"
+                        maxOccurs="unbounded" />
+        </xs:sequence>
         <xs:attribute name="id" type="xs:int"/>
     </xs:complexType>
 
     <xs:complexType name="Relation">
-        <xs:attribute name="name" type="xs:string"/>
-        <xs:attribute name="relationClass" type="xs:string"/>
-        <xs:attribute name="relationSuperClass" type="xs:string"/>
+        <xs:sequence>
+            <xs:element name="relationClassIndex" type="xs:int" minOccurs="0"
+                        maxOccurs="unbounded"/>
+            <xs:element name="relationSuperClassIndex" type="xs:int" minOccurs="0"
+                        maxOccurs="unbounded"/>
+            <xs:element name="relationClass" type="xs:string" minOccurs="0"
+                        maxOccurs="unbounded"/>
+            <xs:element name="relationSuperClass" type="xs:string" minOccurs="0"
+                        maxOccurs="unbounded"/>
+            <xs:element name="relationSuperClassIndicator" type="xs:int" minOccurs="0"
+                        maxOccurs="unbounded"/>
+            <xs:element name="relationClassIndicator" type="xs:int" minOccurs="0"
+                        maxOccurs="unbounded"/>
+            <xs:element name="name" type="xs:string" minOccurs="0"
+                        maxOccurs="unbounded" />
+            <xs:element name="nameIndicator" type="xs:int" minOccurs="0"
+                        maxOccurs="unbounded" />
+        </xs:sequence>
         <xs:attribute name="id" type="xs:int"/>
     </xs:complexType>
 
     <xs:complexType name="Resolution">
-        <xs:attribute name="name" type="xs:string"/>
-        <xs:attribute name="resolutionClass" type="xs:string"/>
-        <xs:attribute name="resolutionSuperClass" type="xs:string"/>
+        <xs:sequence>
+            <xs:element name="resolutionClassIndex" type="xs:int" minOccurs="0"
+                        maxOccurs="unbounded"/>
+            <xs:element name="resolutionSuperClassIndex" type="xs:int" minOccurs="0"
+                        maxOccurs="unbounded"/>
+            <xs:element name="resolutionClass" type="xs:string" minOccurs="0"
+                        maxOccurs="unbounded"/>
+            <xs:element name="resolutionSuperClass" type="xs:string" minOccurs="0"
+                        maxOccurs="unbounded"/>
+            <xs:element name="resolutionSuperClassIndicator" type="xs:int" minOccurs="0"
+                        maxOccurs="unbounded"/>
+            <xs:element name="resolutionClassIndicator" type="xs:int" minOccurs="0"
+                        maxOccurs="unbounded"/>
+            <xs:element name="name" type="xs:string" minOccurs="0"
+                        maxOccurs="unbounded" />
+            <xs:element name="nameIndicator" type="xs:int" minOccurs="0"
+                        maxOccurs="unbounded" />
+        </xs:sequence>
         <xs:attribute name="id" type="xs:int"/>
     </xs:complexType>
 
 
     <xs:complexType name="Severity">
-        <xs:attribute name="name" type="xs:string"/>
-        <xs:attribute name="severityClass" type="xs:string"/>
-        <xs:attribute name="severitySuperClass" type="xs:string"/>
+        <xs:sequence>
+            <xs:element name="severityClassIndex" type="xs:int" minOccurs="0"
+                        maxOccurs="unbounded"/>
+            <xs:element name="severitySuperClassIndex" type="xs:int" minOccurs="0"
+                        maxOccurs="unbounded"/>
+            <xs:element name="severityClass" type="xs:string" minOccurs="0"
+                        maxOccurs="unbounded"/>
+            <xs:element name="severitySuperClass" type="xs:string" minOccurs="0"
+                        maxOccurs="unbounded"/>
+            <xs:element name="severitySuperClassIndicator" type="xs:int" minOccurs="0"
+                        maxOccurs="unbounded"/>
+            <xs:element name="severityClassIndicator" type="xs:int" minOccurs="0"
+                        maxOccurs="unbounded"/>
+            <xs:element name="name" type="xs:string" minOccurs="0"
+                        maxOccurs="unbounded" />
+            <xs:element name="nameIndicator" type="xs:int" minOccurs="0"
+                        maxOccurs="unbounded" />
+        </xs:sequence>
         <xs:attribute name="id" type="xs:int"/>
     </xs:complexType>
 
     <xs:complexType name="Status">
-        <xs:attribute name="name" type="xs:string"/>
-        <xs:attribute name="statusClass" type="xs:string"/>
-        <xs:attribute name="statusSuperClass" type="xs:string"/>
+        <xs:sequence>
+            <xs:element name="statusClassIndex" type="xs:int" minOccurs="0"
+                        maxOccurs="unbounded"/>
+            <xs:element name="statusSuperClassIndex" type="xs:int" minOccurs="0"
+                        maxOccurs="unbounded"/>
+            <xs:element name="statusClass" type="xs:string" minOccurs="0"
+                        maxOccurs="unbounded"/>
+            <xs:element name="statusSuperClass" type="xs:string" minOccurs="0"
+                        maxOccurs="unbounded"/>
+            <xs:element name="statusSuperClassIndicator" type="xs:int" minOccurs="0"
+                        maxOccurs="unbounded"/>
+            <xs:element name="statusClassIndicator" type="xs:int" minOccurs="0"
+                        maxOccurs="unbounded"/>
+            <xs:element name="name" type="xs:string" minOccurs="0"
+                        maxOccurs="unbounded" />
+            <xs:element name="nameIndicator" type="xs:int" minOccurs="0"
+                        maxOccurs="unbounded" />
+        </xs:sequence>
         <xs:attribute name="id" type="xs:int"/>
     </xs:complexType>
 
     <xs:complexType name="Type">
-        <xs:attribute name="name" type="xs:string"/>
-        <xs:attribute name="typeClass" type="xs:string"/>
-        <xs:attribute name="typeSuperClass" type="xs:string"/>
+        <xs:sequence>
+            <xs:element name="typeClassIndex" type="xs:int" minOccurs="0"
+                        maxOccurs="unbounded"/>
+            <xs:element name="typeSuperClassIndex" type="xs:int" minOccurs="0"
+                        maxOccurs="unbounded"/>
+            <xs:element name="typeClass" type="xs:string" minOccurs="0"
+                        maxOccurs="unbounded"/>
+            <xs:element name="typeSuperClass" type="xs:string" minOccurs="0"
+                        maxOccurs="unbounded"/>
+            <xs:element name="typeSuperClassIndicator" type="xs:int" minOccurs="0"
+                        maxOccurs="unbounded"/>
+            <xs:element name="typeClassIndicator" type="xs:int" minOccurs="0"
+                        maxOccurs="unbounded"/>
+            <xs:element name="name" type="xs:string" minOccurs="0"
+                        maxOccurs="unbounded" />
+            <xs:element name="nameIndicator" type="xs:int" minOccurs="0"
+                        maxOccurs="unbounded" />
+        </xs:sequence>
         <xs:attribute name="id" type="xs:int"/>
     </xs:complexType>
 
+    <xs:complexType name="CriterionList">
+        <xs:sequence>
+            <xs:element name="Criterions" type="xs:int" minOccurs="0"
+                        maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="CPRSList">
+        <xs:sequence>
+            <xs:element name="CPRs" type="xs:int" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="BranchList">
+        <xs:sequence>
+            <xs:element name="Branches" type="xs:int" minOccurs="0"
+                        maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="ChangeList">
+        <xs:sequence>
+            <xs:element name="Changes" type="xs:int" minOccurs="0"
+                        maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
 
     <xs:complexType name="Milestone">
         <xs:sequence>
-            <xs:element name="criteriaIndexs" type="xs:int" minOccurs="0"
+            <xs:element name="criteriaIndexs" type="CriterionList" minOccurs="0"
                         maxOccurs="unbounded"/>
+            <xs:element name="criteriaIndicator" type="xs:int" minOccurs="0"
+                        maxOccurs="unbounded"/>
+                <xs:element name="description" type="xs:string" minOccurs="0"
+                            maxOccurs="unbounded"/>
+                <xs:element name="name" type="xs:string" minOccurs="0"
+                            maxOccurs="unbounded" />
+                <xs:element name="descriptionIndicator" type="xs:int" minOccurs="0"
+                            maxOccurs="unbounded"/>
+                <xs:element name="nameIndicator" type="xs:int" minOccurs="0"
+                            maxOccurs="unbounded" />
         </xs:sequence>
-        <xs:attribute name="name" type="xs:string"/>
-        <xs:attribute name="description" type="xs:string"/>
         <xs:attribute name="id" type="xs:int"/>
     </xs:complexType>
 
+    
+    
+    
     <xs:complexType name="Configuration">
         <xs:sequence>
-            <xs:element name="authorIndex" type="xs:int" minOccurs="0" maxOccurs="1"/>
+            <xs:element name="authorIndex" type="xs:int" minOccurs="0" maxOccurs="unbounded"/>
             <xs:element name="artifactsIndexs" type="xs:int"
                         minOccurs="0" maxOccurs="unbounded"/>
-            <xs:element name="changesIndexs" type="xs:int" minOccurs="0"
+            <xs:element name="changesIndexs" type="ChangeList" minOccurs="0"
                         maxOccurs="unbounded"/>
             <xs:element name="tags" type="xs:string" minOccurs="0"
                         maxOccurs="unbounded"/>
-            <xs:element name="branchesIndexs" type="xs:int" minOccurs="0"
+            <xs:element name="branchesIndexs" type="BranchList" minOccurs="0"
                         maxOccurs="unbounded"/>
-            <xs:element name="CPRsIndexs" type="xs:int" minOccurs="0"
+            <xs:element name="CPRsIndexs" type="CPRSList" minOccurs="0"
                         maxOccurs="unbounded"/>
+            <xs:element name="created" type="xs:date" minOccurs="0"
+                        maxOccurs="unbounded" />
+            <xs:element name="name" type="xs:string" minOccurs="0"
+                        maxOccurs="unbounded" />
+            <xs:element name="nameIndicator" type="xs:int" minOccurs="0"
+                        maxOccurs="unbounded" />
+            <xs:element name="authorIndicator" type="xs:int" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="artifactsIndicator" type="xs:int"
+                        minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="changesIndicator" type="xs:int" minOccurs="0"
+                        maxOccurs="unbounded"/>
+            <xs:element name="tagsIndicator" type="xs:int" minOccurs="0"
+                        maxOccurs="unbounded"/>
+            <xs:element name="branchesIndicator" type="xs:int" minOccurs="0"
+                        maxOccurs="unbounded"/>
+            <xs:element name="CPRsIndicator" type="xs:int" minOccurs="0"
+                        maxOccurs="unbounded"/>
+            <xs:element name="createdIndicator" type="xs:int" minOccurs="0"
+                        maxOccurs="unbounded" />
+            <xs:element name="count" type="xs:int" minOccurs="0"
+                        maxOccurs="1" />
+            <xs:element name="coordinates" type="Coordinates"/>
         </xs:sequence>
-        <xs:attribute name="name" type="xs:string"/>
-        <xs:attribute name="create" type="xs:date"/>
         <xs:attribute name="isRelease" type="xs:boolean"/>
         <xs:attribute name="id" type="xs:int"/>
     </xs:complexType>
@@ -267,17 +524,28 @@
     <xs:complexType name="ConfigPersonRelation">
         <xs:sequence>
             <xs:element name="personIndex" type="xs:int" minOccurs="0"
-                        maxOccurs="1"/>
+                        maxOccurs="unbounded"/>
+            <xs:element name="personIndicator" type="xs:int" minOccurs="0"
+                        maxOccurs="unbounded"/>
             <xs:element name="configurationIndex" type="xs:int"
-                        minOccurs="0" maxOccurs="1"/>
+                        minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="name" type="xs:string" minOccurs="0"
+                        maxOccurs="unbounded" />
+            <xs:element name="nameIndicator" type="xs:int" minOccurs="0"
+                        maxOccurs="unbounded" />
+            
         </xs:sequence>
-        <xs:attribute name="name" type="xs:string"/>
         <xs:attribute name="id" type="xs:int"/>
     </xs:complexType>
 
     <xs:complexType name="Branch">
 
-        <xs:attribute name="name" type="xs:string"/>
+        <xs:sequence>
+            <xs:element name="name" type="xs:string" minOccurs="0"
+                          maxOccurs="unbounded" />
+            <xs:element name="nameIndicator" type="xs:int" minOccurs="0"
+                        maxOccurs="unbounded" />
+        </xs:sequence>
         <xs:attribute name="isMain" type="xs:boolean"/>
         <xs:attribute name="id" type="xs:int"/>
 
@@ -288,9 +556,15 @@
             <xs:element name="artifactIndex" type="xs:int" minOccurs="0"
                         maxOccurs="unbounded"/>
             <xs:element name="coordinates" type="Coordinates"/>
+            <xs:element name="name" type="xs:string" minOccurs="0"
+                        maxOccurs="unbounded" />
+            <xs:element name="nameIndicator" type="xs:int" minOccurs="0"
+                        maxOccurs="unbounded" />
+            <xs:element name="description" type="xs:string" minOccurs="0"
+                        maxOccurs="unbounded" />
+            <xs:element name="descriptionIndicator" type="xs:int" minOccurs="0"
+                        maxOccurs="unbounded" />
         </xs:sequence>
-        <xs:attribute name="name" type="xs:string"/>
-        <xs:attribute name="descriptoin" type="xs:string"/>
         <xs:attribute name="exist" type="xs:boolean"/>
         <xs:attribute name="id" type="xs:int"/>
     </xs:complexType>
@@ -298,17 +572,36 @@
     <xs:complexType name="Artifact">
         <xs:sequence>
             <xs:element name="authorIndex" type="xs:int" minOccurs="0"
-                        maxOccurs="1"/>
+                        maxOccurs="unbounded"/>
             <xs:element name="mimeType" type="xs:string" minOccurs="0"
-                        maxOccurs="1"/>
+                        maxOccurs="unbounded"/>
             <xs:element name="coordinates" type="Coordinates"/>
             <xs:element name="changeIndex" type="xs:int" minOccurs="0"
                         maxOccurs="unbounded"/>
+            <xs:element name="name" type="xs:string" minOccurs="0"
+                                                            maxOccurs="unbounded" />
+            <xs:element name="description" type="xs:string" minOccurs="0"
+                        maxOccurs="unbounded" />
+            <xs:element name="created" type="xs:date" minOccurs="0"
+                        maxOccurs="unbounded"/>
+            <xs:element name="nameIndicator" type="xs:int" minOccurs="0"
+                        maxOccurs="unbounded" />
+            <xs:element name="descriptionIndicator" type="xs:int" minOccurs="0"
+                        maxOccurs="unbounded" />
+            <xs:element name="createdIndicator" type="xs:int" minOccurs="0"
+                        maxOccurs="unbounded"/>
+            <xs:element name="authorIndicator" type="xs:int" minOccurs="0"
+                        maxOccurs="unbounded"/>
+            <xs:element name="mimeTypeIndicator" type="xs:int" minOccurs="0"
+                        maxOccurs="unbounded"/>
+            <xs:element name="mimeTypeIndex" type="xs:int" minOccurs="0"
+                        maxOccurs="unbounded"/>
+            <xs:element name="changeIndicator" type="xs:int" minOccurs="0"
+                        maxOccurs="unbounded"/>
+            <xs:element name="count" type="xs:int" minOccurs="0"
+                        maxOccurs="1" />
+
         </xs:sequence>
-        <xs:attribute name="name" type="xs:string"/>
-        <xs:attribute name="descriptoin" type="xs:string"/>
-        <xs:attribute name="created" type="xs:dateTime"/>
-        <xs:attribute name="artifactIndex" type="xs:int"/>
         <xs:attribute name="exist" type="xs:boolean"/>
         <xs:attribute name="id" type="xs:int"/>
     </xs:complexType>
@@ -316,18 +609,45 @@
     <xs:complexType name="Role">
         <xs:sequence>
             <xs:element name="type" type="xs:int" minOccurs="0"
-                        maxOccurs="1"/>
+                        maxOccurs="unbounded"/>
+            <xs:element name="typeIndicator" type="xs:int" minOccurs="0"
+                        maxOccurs="unbounded"/>
+            <xs:element name="description" type="xs:string" minOccurs="0"
+                        maxOccurs="unbounded"/>
+            <xs:element name="name" type="xs:string" minOccurs="0"
+                        maxOccurs="unbounded" />
+            <xs:element name="descriptionIndicator" type="xs:int" minOccurs="0"
+                        maxOccurs="unbounded"/>
+            <xs:element name="nameIndicator" type="xs:int" minOccurs="0"
+                        maxOccurs="unbounded" />
+            <xs:element name="count" type="xs:int" minOccurs="0"
+                        maxOccurs="1" />
+            <xs:element name="coordinates" type="Coordinates"/>
         </xs:sequence>
-        <xs:attribute name="description" type="xs:string"/>
-        <xs:attribute name="name" type="xs:string"/>
+
         <xs:attribute name="id" type="xs:int"/>
     </xs:complexType>
 
 
     <xs:complexType name="RoleType">
-        <xs:attribute name="name" type="xs:string"/>
-        <xs:attribute name="RoleClass" type="xs:string"/>
-        <xs:attribute name="RoleSuperClass" type="xs:string"/>
+        <xs:sequence>
+            <xs:element name="roleTypeClassIndex" type="xs:int" minOccurs="0"
+                        maxOccurs="unbounded"/>
+            <xs:element name="roleTypeSuperClassIndex" type="xs:int" minOccurs="0"
+                        maxOccurs="unbounded"/>
+            <xs:element name="roleTypeClass" type="xs:string" minOccurs="0"
+                        maxOccurs="unbounded"/>
+            <xs:element name="roleTypeSuperClass" type="xs:string" minOccurs="0"
+                        maxOccurs="unbounded"/>
+            <xs:element name="roleTypeSuperClassIndicator" type="xs:int" minOccurs="0"
+                        maxOccurs="unbounded"/>
+            <xs:element name="roleTypeClassIndicator" type="xs:int" minOccurs="0"
+                        maxOccurs="unbounded"/>
+            <xs:element name="name" type="xs:string" minOccurs="0"
+                        maxOccurs="unbounded" />
+            <xs:element name="nameIndicator" type="xs:int" minOccurs="0"
+                        maxOccurs="unbounded" />
+        </xs:sequence>
         <xs:attribute name="id" type="xs:int"/>
     </xs:complexType>
 

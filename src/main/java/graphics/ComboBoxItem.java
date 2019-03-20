@@ -1,5 +1,7 @@
 package graphics;
 
+import abstractControlPane.ControlPanel;
+import controllers.ControlPanelController;
 import controllers.ItemBoxController;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -11,6 +13,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import org.controlsfx.control.PropertySheet;
 import services.Constans;
+import services.ControlPanelLineObject;
 import services.SegmentLists;
 import tables.BasicTable;
 import tables.CommitedConfigurationTable;
@@ -19,47 +22,46 @@ import java.util.Arrays;
 
 public class ComboBoxItem extends ItemBox {
 
-    private Label itemNameLB;
-    private ComboBox itemCB;
+     private ComboBox itemCB;
 
-    private ComboBoxItem otherComboBoxItem;
-    private ItemBoxController itemBoxController;
+     private ComboBoxItem otherComboBoxItem;
 
-    public ComboBoxItem(String name, ObservableList list){
-        super(FXCollections.observableList(Arrays.asList(Constans.indicatorList)));
+    public ComboBoxItem(ControlPanelLine controlPanelLine, ControlPanel controlPanel, ControlPanelController controlPanelController,
+                        ObservableList listForBox, ObservableList<ControlPanelLineObject> lineList){
+        super(FXCollections.observableList(Arrays.asList(Constans.textIndicatorList)), controlPanelController);
+
 
         itemBoxController = new ItemBoxController();
 
-        itemNameLB = new Label(name);
         itemCB = new ComboBox<BasicTable>();
         itemCB.getSelectionModel().selectedIndexProperty().addListener(itemBoxController.comboBoxListener());
         itemCB.setVisibleRowCount(5);
-        itemCB.setVisible(false);
-        itemCB.setItems(list);
+        itemCB.setItems(listForBox);
 
-        setExitButtonsActions(itemCB);
+        setExitButtonsActions(controlPanelLine, controlPanel, lineList);
 
-        this.getChildren().addAll(itemButton, itemNameLB, indicatorCB, itemCB);
+        this.getChildren().addAll(itemButton, indicatorCB, itemCB);
 
     }
 
-    public ComboBoxItem(String name, ObservableList list, boolean isBasicTable, ChangeListener<Number> listener ) {
-        super(FXCollections.observableList(Arrays.asList(Constans.indicatorList)));
+    public ComboBoxItem(ControlPanelLine controlPanelLine, ControlPanel controlPanel, ControlPanelController controlPanelController,
+                        ObservableList listForBox, ChangeListener<Number> listener, ObservableList<ControlPanelLineObject> lineList ) {
+        super(FXCollections.observableList(Arrays.asList(Constans.textIndicatorList)), controlPanelController);
 
-        itemNameLB = new Label(name);
         itemCB = new ComboBox<String>();
         itemCB.setVisibleRowCount(5);
         itemCB.getSelectionModel().selectedIndexProperty().addListener(listener);
-        itemCB.setItems(list);
+        itemCB.setItems(listForBox);
 
-        setExitButtonsActions(itemCB);
+        setExitButtonsActions(controlPanelLine, controlPanel, lineList);
 
-        this.getChildren().addAll(itemButton, itemNameLB, itemCB);
+        this.getChildren().addAll(itemButton, itemCB);
 
     }
 
-    public ComboBoxItem(String name, ObservableList list, ComboBoxItem comboBoxItem, ChangeListener<Number> indexListener) {
-        this(name, list);
+    public ComboBoxItem(ControlPanelLine controlPanelLine, ControlPanel controlPanel, ControlPanelController controlPanelController,
+                        ObservableList listForBox, ComboBoxItem comboBoxItem, ChangeListener<Number> indexListener, ObservableList<ControlPanelLineObject> lineList) {
+        this(controlPanelLine, controlPanel,controlPanelController, listForBox, lineList);
         otherComboBoxItem = comboBoxItem;
         itemButton.setOnAction(event -> addButtonAction(otherComboBoxItem));
     }
@@ -87,13 +89,8 @@ public class ComboBoxItem extends ItemBox {
         return itemCB;
     }
 
-
     public Button getItemButton() {
         return itemButton;
-    }
-
-    public Label getItemNameLB() {
-        return itemNameLB;
     }
 
     public int getItemIndex() {

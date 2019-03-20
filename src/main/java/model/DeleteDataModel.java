@@ -129,8 +129,8 @@ public class DeleteDataModel implements IDeleteDataModel {
 
     public void removeWorkUnitRelation(int startItemId, int endItemId) {
 
-        project.getWorkUnits().get(startItemId).setRelationIndex(null);
-        project.getWorkUnits().get(endItemId).setRelationIndex(null);
+   //     project.getWorkUnits().get(startItemId).setRelationIndex(null);
+   //     project.getWorkUnits().get(endItemId).setRelationIndex(null);
 
     }
     public void removeIteration(ObservableList<Integer> indexList) {

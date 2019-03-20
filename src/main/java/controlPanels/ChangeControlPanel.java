@@ -12,6 +12,7 @@ import javafx.geometry.HPos;
 import javafx.scene.control.*;
 import org.controlsfx.control.CheckComboBox;
 import services.Constans;
+import services.ParamType;
 import services.SegmentLists;
 import services.SegmentType;
 import tables.ActivityTable;
@@ -44,37 +45,43 @@ public class ChangeControlPanel extends DescriptionControlPanel {
     public void showEditControlPanel(BasicTable basicTable, TableView tableView) {
         changeTable = (ChangeTable) basicTable;
         int id = changeTable.getId();
-        String[] changeData = formDataController.getChangeStringData(id);
+        List[] changeData = formDataController.getChangeStringData(id);
 
-        nameTF.setTextToTextField(changeData[0]);
-        controlPanelController.setValueTextField(descriptionTF, changeData, 1);
+        controlPane.getChildren().clear();
+        addItemsToControlPanel();
 
-        exist = Boolean.valueOf(changeData[2]);
+        controlPanelController.setValueTextField(this, lineList ,ParamType.Name, changeData, changeData[2], 0);
+        controlPanelController.setValueTextField(this, lineList ,ParamType.Description, changeData, changeData[3], 1);
 
-        existRB.setSelected(exist);
+        boolean exist = false;
+        List boolList = changeData[4];
+        if (boolList.size() != 0){
+            exist = true;
+        }
+        controlPanelController.setValueRadioButton(exist);
 
         button.setOnAction(event -> saveDataFromPanel(changeTable, tableView));
     }
 
     @Override
     protected void addItemsToControlPanel() {
-        existRB = new RadioButton("Exist");
-        existRB.setSelected(true);
+        controlPanelController.setRadioButton(this, "Exist: ", false);
+        controlPanelController.createNewLine(this, lineList);
 
-        controlPane.add(existRB, 0, 3);
-        controlPane.add(button, 2, 4);
 
     }
 
     public void saveDataFromPanel(BasicTable table, TableView tableView){
         int id = table.getId();
-        changeTable.setName(id + "_" + nameTF.getTextFromTextField());
 
-        String desc = controlPanelController.checkValueFromTextItem(descriptionTF);
+        ArrayList<Integer> nameIndicators = new ArrayList<>();
+        ArrayList<Integer> descIndicators = new ArrayList<>();
+        ArrayList<String> name = controlPanelController.processTextLines(ParamType.Name, nameIndicators);
+        ArrayList<String> desc = controlPanelController.processTextLines(ParamType.Description, descIndicators);
 
-        exist = existRB.isSelected();
+        exist = controlPanelController.isMain();
 
-        editFormController.editDataFromChange(nameTF.getTextFromTextField(), desc , exist, changeTable, id);
+        editFormController.editDataFromChange(name, nameIndicators, desc, descIndicators, exist, changeTable, id);
 
         clearPanelCB(tableView);
     }

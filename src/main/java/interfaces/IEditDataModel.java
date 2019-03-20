@@ -9,35 +9,66 @@ import java.util.List;
 
 public interface IEditDataModel {
 
-      void editDataInCPR(String nameForManipulator, int roleIndex, int id);
-      void editDataInBranch(String nameForManipulator, boolean isMainBranch, int id);
-      void editDataInArtifact(String nameForManipulator, String descForManipulator, LocalDate createdDate, boolean isCreate, int authorIndex, int typeIndex,
-                                   int id);
-      void editDataInChange(String nameForManipulator, String descForManipulator, boolean selected, int id);
-      void editDataInPhase(String actName, LocalDate endDateL, String desc, int confIndex, int milestoneIndex, ArrayList<Integer> itemIndexList, int id);
-      void editDataInIteration(String nameForManipulator, LocalDate startDate, LocalDate endDate, String descriptionForManipulator,
-                                    int configIndex, ArrayList<Integer> itemIndexList, int id);
-      void editDataInActivity(String nameForManipulator, String descriptionForManipulator, ArrayList<Integer> setOfItemOnCanvas, int id);
-      void editDataInWorkUnit(String nameForManipulator,String description, String categoryForManipulator, int assigneIndex, int authorIndex,
-                                   int priorityIndex, int severityIndex, int typeIndex, int resolutionIndex, int statusIndex, double estimateForDataManipulator, boolean isExist, int id);
-      void editDataInConfiguration(String actName, LocalDate createDate, boolean isRelease, int authorIndex, List<Integer> cprs,
-                                        List<Integer> branches, ArrayList changeIndexs, int id);
-      void editDataInCriterion(String nameForManipulator, String descForManipulator, int id);
-      void editDataInPriority(String nameForManipulator, String classST, String superST, int id);
-      void editDataInSeverity(String nameForManipulator, String classST, String superST, int id);
-      void editDataInRelation(String nameForManipulator, String classST, String superST, int id);
-      void editDataInResolution(String nameForManipulator, String classST, String superST, int id);
-      void editDataInRole(String nameForManipulator, String descForManipulator, int type, int id);
-      void editDataInMilestone(String nameForManipulator, String descForManipulator, ArrayList<Integer> criterionIndex, int id);
-      void editDataInRoleType(String nameForManipulator, String classST, String superST, int id);
-      void editDataInStatus(String nameForManipulator, String classST, String superST, int id);
-      void editDataInType(String nameForManipulator, String classST, String superST, int id);
+      void editDataInCPR(ArrayList<String> nameForManipulator, ArrayList<Integer> nameIndicators, ArrayList<Integer> roleIndex, ArrayList<Integer> roleIndicator, int id);
+      void editDataInBranch(ArrayList<String> nameForManipulator, ArrayList<Integer> indicators, boolean isMainBranch, int id);
+      void editDataInArtifact(ArrayList<String> nameForManipulator, ArrayList<Integer> nameIndicators,
+                              ArrayList<String> descForManipulator, ArrayList<Integer> descriptionIndicators,
+                              ArrayList<LocalDate> createdDate, ArrayList<Integer> dateIndicator, boolean isCreate,
+                              ArrayList<Integer> authorIndex, ArrayList<Integer> typeIndex, ArrayList<Integer> authorIndicator,
+                              ArrayList<Integer> typeIndicator, int instanceCount, int id);
+      void editDataInChange( ArrayList<String> nameForManipulator, ArrayList<String> descForManipulator,
+                             ArrayList<Integer> nameIndicators, ArrayList<Integer> descIndicator, boolean selected, int id);
+      void editDataInPhase(ArrayList<String> actName, ArrayList<LocalDate> endDateL, ArrayList<String> desc,
+                           ArrayList<Integer> confIndex, ArrayList<Integer> milestoneIndex,  ArrayList<ArrayList<Integer>> workUnitIndexList,
+                           ArrayList<Integer> workUnitIndicators, ArrayList<Integer> nameIndicator, ArrayList<Integer> endDateIndicator,
+                           ArrayList<Integer> descIndicator, ArrayList<Integer> confIndicator, ArrayList<Integer> milestoneIndicator, int id);
+      void editDataInIteration(ArrayList<String> actName, ArrayList<LocalDate> endDateL,  ArrayList<LocalDate> startDateL, ArrayList<String> desc,
+                               ArrayList<Integer> confIndex,  ArrayList<ArrayList<Integer>> workUnitIndexList,
+                               ArrayList<Integer> workUnitIndicators, ArrayList<Integer> nameIndicator, ArrayList<Integer> endDateIndicator,
+                               ArrayList<Integer> startDateIndicator, ArrayList<Integer> descIndicator, ArrayList<Integer> confIndicator, int id);
+      void editDataInActivity(ArrayList<String> nameForManipulator, ArrayList<String> descriptionForManipulator, ArrayList<ArrayList<Integer>> setOfItemOnCanvas,
+                              ArrayList<Integer> nameIndicators,  ArrayList<Integer> descIndicators,  ArrayList<Integer> workUnitIndicators, int id);
+      void editDataInWorkUnit(List<String> nameForManipulator, List<String> description, List<String> categoryForManipulator,
+                              ArrayList<Integer> assigneIndex, ArrayList<Integer> authorIndex, ArrayList<Integer> priorityIndex, ArrayList<Integer> severityIndex,
+                              ArrayList<Integer> typeIndex, ArrayList<Integer> resolutionIndex, ArrayList<Integer> statusIndex,
+                              ArrayList<Double> estimateForDataManipulator, List<Integer> nameIndicator, List<Integer> descriptionIndicator, List<Integer> categoryIndicator,
+                              ArrayList<Integer> assigneIndicator, ArrayList<Integer> authorIndicator, ArrayList<Integer> priorityIndicator, ArrayList<Integer> severityIndicator,
+                              ArrayList<Integer> typeIndicator, ArrayList<Integer> resolutionIndicator, ArrayList<Integer> statusIndicator,
+                              ArrayList<Integer> estimateIndicator, boolean isExist, int id);
+      void editDataInConfiguration(ArrayList<String> actName, ArrayList<LocalDate> createDate,
+                                   boolean isRelease, ArrayList<Integer> authorIndex, ArrayList<ArrayList<Integer>> cprs,
+                                   ArrayList<ArrayList<Integer>> branches, ArrayList<ArrayList<Integer>> changeIndexs,
+                                   ArrayList<Integer> cprIndicators, ArrayList<Integer> nameIndicator, ArrayList<Integer> createdIndicator,
+                                   ArrayList<Integer> authorIndicator, ArrayList<Integer> branchIndicator, ArrayList<Integer> changeIndicator, int instanceCount, int id);
+      void editDataInCriterion( ArrayList<String> nameForManipulator, ArrayList<String> descForManipulator,
+                                ArrayList<Integer> nameIndicator, ArrayList<Integer> descIndicator, int id);
+      void editDataInPriority(ArrayList<String> nameForManipulator, ArrayList<Integer> nameIndicator,
+                              ArrayList<Integer> classST,  ArrayList<Integer> superST, ArrayList<String> classString,  ArrayList<String> superSting, int id);
+      void editDataInSeverity(ArrayList<String> nameForManipulator, ArrayList<Integer> nameIndicator,
+                              ArrayList<Integer> classST,  ArrayList<Integer> superST, ArrayList<String> classString,  ArrayList<String> superSting, int id);
+      void editDataInRelation(ArrayList<String> nameForManipulator, ArrayList<Integer> nameIndicator,
+                              ArrayList<Integer> classST,  ArrayList<Integer> superST, ArrayList<String> classString,  ArrayList<String> superSting, int id);
+      void editDataInResolution(ArrayList<String> nameForManipulator, ArrayList<Integer> nameIndicator,
+                                ArrayList<Integer> classST,  ArrayList<Integer> superST, ArrayList<String> classString,  ArrayList<String> superSting, int id);
+      void editDataInRole(ArrayList<String> nameForManipulator, ArrayList<String> descForManipulator, ArrayList<Integer> type,
+                          ArrayList<Integer> nameIndicator, ArrayList<Integer> descIndicator, ArrayList<Integer> typeIndicator, int instanceCount, int id);
+      void editDataInMilestone(ArrayList<String> nameForManipulator, ArrayList<String> descForManipulator,
+                               ArrayList<Integer> nameIndicator, ArrayList<Integer> descIndicator, ArrayList<Integer> criterionIndicator,
+                               ArrayList<ArrayList<Integer>> criterionIndex, int id);
+      void editDataInRoleType(ArrayList<String> nameForManipulator, ArrayList<Integer> nameIndicator,
+                              ArrayList<Integer> classST,  ArrayList<Integer> superST, ArrayList<String> classString,  ArrayList<String> superSting, int id);
+      void editDataInStatus(ArrayList<String> nameForManipulator, ArrayList<Integer> nameIndicator,
+                            ArrayList<Integer> classST,  ArrayList<Integer> superST, ArrayList<String> classString,  ArrayList<String> superSting, int id);
+      void editDataInType(ArrayList<String> nameForManipulator, ArrayList<Integer> nameIndicator,
+                          ArrayList<Integer> classST,  ArrayList<Integer> superST, ArrayList<String> classString,  ArrayList<String> superSting, int id);
       void updateItemList(SegmentType formType, SegmentType elementType, ArrayList<Integer> elementIndexList);
       void editTagInConfiguration(String tag, int configId, int id);
 
-    void editDataInVCSTag(String nameForManipulator, String descriptionForManipulator, int id);
+    void editDataInVCSTag(ArrayList<String> nameForManipulator, ArrayList<String> descriptionForManipulator,
+                          ArrayList<Integer> nameIndicator, ArrayList<Integer> descriptionIndicator, int id);
 
-    void editDataInCommit(String nameForManipulator, boolean release, int id);
+    void editDataInCommit(ArrayList<String> nameForManipulator,  ArrayList<Integer> nameIndicator, boolean release,int instanceCount, int id);
 
-      void editDataInCommitedConfiguration(String nameForManipulator, LocalDate dateFromDatePicker, int commitedConfigurationId);
+      void editDataInCommitedConfiguration(ArrayList<String> nameForManipulator, ArrayList<Integer> nameIndicator,
+                                           ArrayList<LocalDate> dateFromDatePicker, ArrayList<Integer> dateIndicator, int instanceCount, int id);
 }

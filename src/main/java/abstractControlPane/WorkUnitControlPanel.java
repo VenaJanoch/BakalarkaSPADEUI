@@ -12,8 +12,7 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
 import org.controlsfx.control.CheckComboBox;
-import services.Constans;
-import services.SegmentLists;
+import services.*;
 import tables.BasicTable;
 
 public abstract class WorkUnitControlPanel extends DescriptionControlPanel {
@@ -34,12 +33,7 @@ public abstract class WorkUnitControlPanel extends DescriptionControlPanel {
 
     protected void addItemsToControlPanel2() {
 
-
-        workUnitCB = new CheckComboBoxItem("Work units: ", segmentLists.getWorkUnitsObservable());
-
-        controlPanelController.setCheckComboBoxItemToControlPanel(controlPane, workUnitCB, 0, 2);
-
-
+        lineList.add(new ControlPanelLineObject("Work units:: ", ControlPanelLineType.CheckBox, ParamType.WorkUnit, segmentLists.getWorkUnitsObservable()));
 
     }
 

@@ -4,10 +4,12 @@ import abstractControlPane.DateControlPanel;
 import abstractControlPane.DescriptionControlPanel;
 import abstractControlPane.WorkUnitControlPanel;
 import controllers.FormController;
+import graphics.ControlPanelLine;
 import interfaces.IEditFormController;
 import interfaces.IFormDataController;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableView;
+import services.ParamType;
 import services.SegmentType;
 import tables.BasicTable;
 import tables.CommitedConfigurationTable;
@@ -41,16 +43,23 @@ public class CommitedConfigurationControlPanel extends DateControlPanel {
 
     @Override
     public void showEditControlPanel(BasicTable basicTable, TableView tableView){
-        String[] commitedData = formDataController.getCommitedConfigurationStringData(commitedConfigurationId);
+        List[] commitedData = formDataController.getCommitedConfigurationStringData(commitedConfigurationId);
 
-        nameTF.setTextToTextField(commitedData[0]);
-        controlPanelController.setValueDatePicker(dateDP, commitedData, 1);
+        controlPane.getChildren().clear();
+        addItemsToControlPanel();
+
+        controlPanelController.setValueTextField(this, lineList ,ParamType.Name, commitedData, commitedData[3], 0);
+        controlPanelController.setValueTextField(this, lineList ,ParamType.Description, commitedData, commitedData[4], 1);
+        controlPanelController.setValueTextField(this, lineList ,ParamType.Date, commitedData, commitedData[5], 2);
+
+
     }
 
 
     protected void addItemsToControlPanel() {
 
-        controlPane.add(button, 2, 3);
+        controlPanelController.setCountLine(this, 1, new ControlPanelLine(lineList,this, controlPanelController ));
+        controlPanelController.createNewLine(this, lineList);
 
         button.setOnAction(event -> saveDataFromPanel());
 
@@ -58,11 +67,14 @@ public class CommitedConfigurationControlPanel extends DateControlPanel {
 
     public void saveDataFromPanel(){
 
-        LocalDate date = controlPanelController.checkValueFromDateItem(dateDP);
+        ArrayList<Integer> nameIndicators = new ArrayList<>();
+        ArrayList<Integer> dateIndicators = new ArrayList<>();
+        ArrayList<String> name = controlPanelController.processTextLines(ParamType.Name, nameIndicators);
+        ArrayList<LocalDate> date = controlPanelController.processDateLines(ParamType.Date, dateIndicators);
 
+        String count = controlPanelController.getInstanceCount();
 
-        editFormController.editDataFromCommitedConfiguration(nameTF.getTextFromTextField(), date, commitedConfigurationId);
-        formController.setNameToItem(commitedConfigurationFormId, nameTF.getTextFromTextField());
+        editFormController.editDataFromCommitedConfiguration(name, date, nameIndicators, dateIndicators, count, commitedConfigurationId);
 
     }
 

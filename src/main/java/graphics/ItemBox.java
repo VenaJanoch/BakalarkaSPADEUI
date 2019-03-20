@@ -1,5 +1,8 @@
 package graphics;
 
+import abstractControlPane.ControlPanel;
+import controllers.ControlPanelController;
+import controllers.ItemBoxController;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -7,8 +10,11 @@ import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import services.Constans;
+import services.ControlPanelLineObject;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -19,20 +25,25 @@ public class ItemBox extends HBox {
     protected ComboBox<String> indicatorCB;
     protected boolean isShowItem;
     protected Button itemButton;
-
+    protected ItemBoxController itemBoxController;
+    protected Label label;
     private int indicatorIndex;
+    private ControlPanelController controlPanelController;
 
-    public ItemBox(ObservableList<String> indicatorSymbols){
+    public ItemBox(ObservableList<String> indicatorSymbols, ControlPanelController controlPanelController){
+
+        this.controlPanelController = controlPanelController;
+        this.itemBoxController = new ItemBoxController();
+        label = new Label();
         indicatorCB = new ComboBox<>(indicatorSymbols);
         indicatorCB.getSelectionModel().selectedIndexProperty().addListener(itemListener);
         indicatorCB.getSelectionModel().select(Constans.indicatorIndex);
-        indicatorCB.setVisible(false);
     }
 
-    protected void setExitButtonsActions(Node node){
+    protected void setExitButtonsActions(ControlPanelLine line, ControlPanel controlPanel, ObservableList<ControlPanelLineObject> lineList){
         isShowItem = false;
         itemButton = new Button("+");
-        itemButton.setOnAction(event -> addButtonAction(node));
+        itemButton.setOnAction(event -> controlPanelController.copyLine(line, controlPanel, lineList, line.getParamBox().getSelectionModel().getSelectedIndex()));
 
     }
 
@@ -79,6 +90,14 @@ public class ItemBox extends HBox {
 
     public ComboBox<String> getIndicatorCB() {
         return indicatorCB;
+    }
+
+    public void setIndicator(int indicatorIndex) {
+        indicatorCB.getSelectionModel().select(indicatorIndex);
+    }
+
+    public Label getLabel() {
+        return label;
     }
 }
 

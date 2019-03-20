@@ -4,19 +4,19 @@ import SPADEPAC.ArtifactClass;
 import abstractControlPane.DateDescControlPanel;
 import controllers.FormController;
 import graphics.ComboBoxItem;
+import graphics.ControlPanelLine;
 import interfaces.IEditFormController;
 import interfaces.IFormDataController;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
-import javafx.geometry.HPos;
 import javafx.scene.control.*;
-import javafx.scene.layout.GridPane;
-import services.SegmentLists;
+import services.*;
 import tables.ArtifactTable;
 import tables.BasicTable;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class ArtifactControlPanel extends DateDescControlPanel {
 
@@ -24,13 +24,9 @@ public class ArtifactControlPanel extends DateDescControlPanel {
      * Globální proměnné třídy
      */
 
-    private ComboBoxItem roleCB;
-    private ComboBoxItem typeCB;
 
-    private RadioButton existRB;
-    private boolean exist;
     private SegmentLists segmentLists;
-
+    private boolean exist;
     private ArtifactTable artifactTable;
 
     private  int artifactId;
@@ -42,57 +38,64 @@ public class ArtifactControlPanel extends DateDescControlPanel {
         this.artifactId = id;
         this.artifactFormIndex = formIndex;
         this.segmentLists = formController.getSegmentLists();
+        lineList.add(new ControlPanelLineObject("Role: ", ControlPanelLineType.ComboBox, ParamType.Role, segmentLists.getRoleObservable()));
+        lineList.add(new ControlPanelLineObject("Type: ", ControlPanelLineType.ComboBox, ParamType.ArtifactType));
         createControlPanel();
     }
 
     public void createControlPanel(){
 
-        dateDP.setItemNameLB("Created: ");
-
-        roleCB = new ComboBoxItem("Author: ", formController.getRoleObservable());
-        typeCB = new ComboBoxItem("Mine Type: ", FXCollections.observableArrayList(ArtifactClass.values()));
-
-        existRB = new RadioButton("Exist");
-        existRB.setSelected(true);
-
-        controlPanelController.setComboBoxItemToControlPanel(controlPane, typeCB,  0, 4);
-
-        controlPane.add(existRB, 1, 5);
-        controlPane.add(button, 3, 6);
-
-        button.setOnAction(event -> saveDataFromPanel() );
-
-    }
+        controlPanelController.setRadioButton(this, "Exist: ", false);
+        controlPanelController.setCountLine(this, 2, new ControlPanelLine(lineList,this, controlPanelController ));
+        controlPanelController.createNewLine(this, lineList);
+            }
 
     @Override
     public void showEditControlPanel(BasicTable basicTable, TableView tableView) {
 
 
-        String[] artifactData = formDataController.getArtifactStringData(artifactId);
 
-        nameTF.setTextToTextField(artifactData[0]);
+        List[] artifactData = formDataController.getArtifactStringData(artifactId);
+        controlPane.getChildren().clear();
+        addItemsToControlPanel();
 
-        controlPanelController.setValueTextField(descriptionTF, artifactData, 1);
-        controlPanelController.setValueComboBox(roleCB, artifactData, 2);
-        controlPanelController.setValueComboBox(typeCB, artifactData, 3);
-        controlPanelController.setValueDatePicker(dateDP, artifactData, 4);
+        controlPanelController.setValueTextField(this, lineList ,ParamType.Name, artifactData, artifactData[5], 0);
+        controlPanelController.setValueTextField(this, lineList ,ParamType.Description, artifactData, artifactData[6], 1);
+        controlPanelController.setValueTextField(this, lineList ,ParamType.Role, artifactData, artifactData[7], 2);
+        controlPanelController.setValueTextField(this, lineList ,ParamType.Date, artifactData, artifactData[8], 3);
+        controlPanelController.setValueTextField(this, lineList ,ParamType.ArtifactType, artifactData, artifactData[9], 4);
 
-        exist = Boolean.valueOf(artifactData[5]);
-        existRB.setSelected(exist);
+        boolean exist = false;
+        List boolList = artifactData[5];
+        if (boolList.size() != 0){
+            exist = true;
+        }
+        controlPanelController.setValueRadioButton(exist);
+
+        button.setOnAction(event -> saveDataFromPanel());
 
     }
 
     public void saveDataFromPanel(){
         int id = artifactId;
-        artifactTable.setName(id + "_" + nameTF.getTextFromTextField());
 
-        String desc = controlPanelController.checkValueFromTextItem(descriptionTF);
-        LocalDate date = controlPanelController.checkValueFromDateItem(dateDP);
 
-        exist = existRB.isSelected();
+        ArrayList<Integer> roleIndicators = new ArrayList<>();
+        ArrayList<Integer> typeIndicators = new ArrayList<>();
+        ArrayList<Integer> nameIndicators = new ArrayList<>();
+        ArrayList<Integer> descIndicators = new ArrayList<>();
+        ArrayList<Integer> dateIndicators = new ArrayList<>();
+        ArrayList<String> name = controlPanelController.processTextLines(ParamType.Name, nameIndicators);
+        ArrayList<String> desc = controlPanelController.processTextLines(ParamType.Description, descIndicators);
+        ArrayList<Integer> role = controlPanelController.processComboBoxLines(ParamType.Role, roleIndicators);
+        ArrayList<Integer> type = controlPanelController.processComboBoxLines(ParamType.ArtifactType, typeIndicators);
+        ArrayList<LocalDate> date = controlPanelController.processDateLines(ParamType.Date, dateIndicators);
 
-        editFormController.editDataFromArtifact(nameTF.getTextFromTextField(), desc , exist, roleCB.getItemIndex(), typeCB.getItemIndex(), date, artifactTable, id);
-        formController.setNameToItem(artifactFormIndex, nameTF.getTextFromTextField());
+        exist = controlPanelController.isMain();
+        String count = controlPanelController.getInstanceCount();
+        editFormController.editDataFromArtifact(name, desc , exist, role, type, date, nameIndicators, descIndicators, roleIndicators,
+                typeIndicators, dateIndicators, artifactTable, count, id);
+
     }
 
 

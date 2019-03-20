@@ -9,6 +9,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 public class Constans {
 
@@ -183,7 +184,8 @@ public class Constans {
     public static final String[] addItemNames = {"Project", "Phase", "Iteration", "Activity", "Work Unit", "Milestone", "Criterion", "Config-role",
             "Role Type", "Priority", "Severity", "Relation", "Resolution", "Status", "Type", "Branch", "Change", "VCSTag"};
 
-    public static final String[] indicatorList = {">","<","="};
+    public static final String[] textIndicatorList = {"IS", "IS NOT","CONTAINS", "NOT CONTAINS"};
+    public static final String[] numberIndicatorList = {"EQUEL", "BIGGER", "SMALLER" };
 
     public static final int projectFormIndex = 0;
     public static final int phaseFormIndex = 1;

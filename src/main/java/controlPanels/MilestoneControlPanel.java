@@ -9,6 +9,10 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
+import services.ControlPanelLineObject;
+import services.ControlPanelLineType;
+import services.ParamType;
+import services.SegmentType;
 import tables.BasicTable;
 import tables.MilestoneTable;
 
@@ -18,20 +22,19 @@ import java.util.List;
 
 public class MilestoneControlPanel extends DescriptionControlPanel {
 
-    private CheckComboBoxItem criteriaCB;
-
     private MilestoneTable milestoneTable;
 
     public MilestoneControlPanel(String buttonName, IFormDataController formDataController, IEditFormController editFormController, FormController formController){
         super(buttonName, formDataController,editFormController, formController);
+        lineList.add(new ControlPanelLineObject("Criterions: ", ControlPanelLineType.CheckBox, ParamType.Criterion));
+
         addItemsToControlPanel();
     }
 
 
     protected void addItemsToControlPanel(){
 
-        criteriaCB = new CheckComboBoxItem("Criterion: ", formController.getCriterionObservable());
-        controlPanelController.setCheckComboBoxItemToControlPanel(controlPane, criteriaCB, 0, 2);
+        controlPanelController.createNewLine(this, lineList);
 
     }
 
@@ -41,13 +44,20 @@ public class MilestoneControlPanel extends DescriptionControlPanel {
     public void showEditControlPanel(BasicTable basicTable, TableView tableView) {
         milestoneTable = (MilestoneTable) basicTable;
         int id = milestoneTable.getId();
-        String[] milestoneData = formDataController.getMilestoneStringData(id);
-        List<Integer> criteriaID = formDataController.getCriterionFromMilestone(id);
 
-        controlPanelController.setValueCheckComboBox(criteriaCB, criteriaID);
-        nameTF.setTextToTextField(milestoneData[0]);
+        List[] milestoneData = formDataController.getMilestoneStringData(id);
 
-        controlPanelController.setValueTextField(descriptionTF, milestoneData, 1);
+        controlPane.getChildren().clear();
+        addItemsToControlPanel();
+
+        ArrayList<ArrayList<Integer>>  criteriaID = formDataController.getCriterionFromMilestone(id);
+
+
+        controlPanelController.setValueTextField(this, lineList ,ParamType.Name, milestoneData, milestoneData[2], 0);
+        controlPanelController.setValueTextField(this, lineList ,ParamType.Description, milestoneData, milestoneData[3], 1);
+
+        controlPanelController.setValueCheckComboBox(this, lineList ,ParamType.Criterion, criteriaID, milestoneData[4]);
+
 
         button.setOnAction(event ->{
 
@@ -61,14 +71,15 @@ public class MilestoneControlPanel extends DescriptionControlPanel {
     public void saveDataFromPanel(BasicTable table, TableView tableView){
         int id =   table.getId();
 
-        String desc = controlPanelController.checkValueFromTextItem(descriptionTF);
-        milestoneTable.setDescription(desc);
-        ArrayList<Integer> criterionList = null;
-        if (criteriaCB.getChoosedIndicies() != null){
-            criterionList = new ArrayList<>(criteriaCB.getChoosedIndicies());
-        }
+        ArrayList<Integer> nameIndicators = new ArrayList<>();
+        ArrayList<Integer> descIndicators = new ArrayList<>();
+        ArrayList<Integer> criterionIndicators = new ArrayList<>();
+        ArrayList<String> name = controlPanelController.processTextLines(ParamType.Name, nameIndicators);
+        ArrayList<String> desc = controlPanelController.processTextLines(ParamType.Description, descIndicators);
+        ArrayList<ArrayList<Integer>> criterion = controlPanelController.processCheckComboBoxLines(ParamType.Criterion, criterionIndicators);
 
-        editFormController.editDataFromMilestone(nameTF.getTextFromTextField(),  milestoneTable, criterionList, id);
+
+        editFormController.editDataFromMilestone(name, nameIndicators, desc, descIndicators, milestoneTable, criterion, criterionIndicators, id);
 
         clearPanelCB(tableView);
     }
@@ -77,9 +88,6 @@ public class MilestoneControlPanel extends DescriptionControlPanel {
         return button;
     }
 
-    public ObservableList<Integer> getCriterionIndex() {
-        return criteriaCB.getChoosedIndicies();
-    }
 
 
     public void clearPanelCB(TableView tableView) {

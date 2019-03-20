@@ -7,8 +7,7 @@ import graphics.DateItem;
 import interfaces.IEditFormController;
 import interfaces.IFormDataController;
 import javafx.scene.control.*;
-import services.SegmentLists;
-import services.SegmentType;
+import services.*;
 import tables.BasicTable;
 import tables.IterationTable;
 
@@ -31,6 +30,8 @@ public class IterationControlPanel extends WorkUnitDateControlPanel {
                                  IEditFormController editFormController, FormController formController){
         super(buttonName, formDataController, editFormController, formController);
         segmentLists = formController.getSegmentLists();
+        lineList.add(new ControlPanelLineObject("End date: ", ControlPanelLineType.Date, ParamType.EndDate));
+        lineList.add(new ControlPanelLineObject("Configuration: ", ControlPanelLineType.ComboBox, ParamType.Configuration, segmentLists.getConfigObservable()));
         addItemsToControlPanel();
     }
 
@@ -39,16 +40,20 @@ public class IterationControlPanel extends WorkUnitDateControlPanel {
     public void showEditControlPanel(BasicTable basicTable, TableView tableView) {
         iterationTable = (IterationTable) basicTable;
         int id = iterationTable.getId();
-        String[] iterationData = formDataController.getIterationStringData(id);
+        List[] iterationData = formDataController.getIterationStringData(id);
 
-        nameTF.setTextToTextField(iterationData[0]);
-        controlPanelController.setValueTextField(descriptionTF, iterationData, 1);
-        controlPanelController.setValueComboBox(configCB, iterationData, 2);
-        controlPanelController.setValueDatePicker(dateDP, iterationData, 3);
-        controlPanelController.setValueDatePicker(endDateDP, iterationData, 4);
+        controlPane.getChildren().clear();
+        addItemsToControlPanel();
 
-        List<Integer> workUnits = formDataController.getWorkUnitFromSegment(id, SegmentType.Iteration);
-        controlPanelController.setValueCheckComboBox(workUnitCB, workUnits);
+        controlPanelController.setValueTextField(this, lineList ,ParamType.Name, iterationData, iterationData[5], 0);
+        controlPanelController.setValueTextField(this, lineList ,ParamType.Description, iterationData, iterationData[6], 1);
+        controlPanelController.setValueTextField(this, lineList ,ParamType.Configuration, iterationData, iterationData[7], 2);
+        controlPanelController.setValueDatePicker(this, lineList ,ParamType.Date, (ArrayList<LocalDate>)iterationData[3],  iterationData[8]);
+        controlPanelController.setValueDatePicker(this, lineList ,ParamType.Date, (ArrayList<LocalDate>)iterationData[4],  iterationData[9]);
+
+
+        ArrayList<ArrayList<Integer>> workUnits = formDataController.getWorkUnitFromSegment(id, SegmentType.Iteration);
+        controlPanelController.setValueCheckComboBox(this, lineList ,ParamType.WorkUnit, workUnits, iterationData[10]);
 
 
         button.setOnAction(event -> saveDataFromPanel(iterationTable, tableView));
@@ -57,32 +62,28 @@ public class IterationControlPanel extends WorkUnitDateControlPanel {
     @Override
     protected void addItemsToControlPanel() {
 
-        endDateDP = new DateItem("End-Date");
-        configCB = new ComboBoxItem("Configuration: ", segmentLists.getConfigObservable());
-
-
-        controlPanelController.setDateItemToControlPanel(controlPane, endDateDP, 0, 4);
-        controlPanelController.setComboBoxItemToControlPanel(controlPane, configCB, 0, 5);
-
-        controlPane.add(button, 2, 6);
-
+        controlPanelController.createNewLine(this, lineList);
     }
 
     public void saveDataFromPanel(BasicTable table, TableView tableView){
         int id = table.getId();
-        iterationTable.setName(id + "_" + nameTF.getTextFromTextField());
-        if (configCB.getItemIndex() != -1){
-            iterationTable.setConfiguration(segmentLists.getConfigObservable().get(configCB.getItemIndex()).getName());
-        }
+        ArrayList<Integer> nameIndicators = new ArrayList<>();
+        ArrayList<Integer> descIndicators = new ArrayList<>();
+        ArrayList<Integer> workUnitIndicators = new ArrayList<>();
+        ArrayList<Integer> date1Indicators = new ArrayList<>();
+        ArrayList<Integer> date2Indicators = new ArrayList<>();
+        ArrayList<Integer> configIndicators = new ArrayList<>();
 
-        String desc = controlPanelController.checkValueFromTextItem(descriptionTF);
+        ArrayList<String> name = controlPanelController.processTextLines(ParamType.Name, nameIndicators);
+        ArrayList<String> desc = controlPanelController.processTextLines(ParamType.Description, descIndicators);
+        ArrayList<ArrayList<Integer>> workUnit = controlPanelController.processCheckComboBoxLines(ParamType.WorkUnit, workUnitIndicators);
+        ArrayList<LocalDate> startDate = controlPanelController.processDateLines(ParamType.Date, date1Indicators);
+        ArrayList<LocalDate> endDate = controlPanelController.processDateLines(ParamType.EndDate, date2Indicators);
+        ArrayList<Integer> configIndex = controlPanelController.processComboBoxLines(ParamType.Configuration, configIndicators);
 
-        LocalDate date = controlPanelController.checkValueFromDateItem(dateDP);
 
-        LocalDate date2 = controlPanelController.checkValueFromDateItem(endDateDP);
-
-        editFormController.editDataFromIteration(nameTF.getTextFromTextField(), desc ,date, date2, configCB.getItemIndex(),
-                new ArrayList<Integer>(workUnitCB.getChoosedIndicies()),
+        editFormController.editDataFromIteration(name, startDate, endDate, desc, configIndex,
+                workUnit, workUnitIndicators, nameIndicators, date1Indicators, date2Indicators, descIndicators, configIndicators,
                 iterationTable, id);
 
         clearPanelCB(tableView);

@@ -33,8 +33,8 @@ import java.util.ArrayList;
  */
 public class StatusForm extends TableClassBasicForm {
 
-	private String[] classArray = new String[WorkUnitStatusClass.values().length];
-	private String[] superClassArray = new String[WorkUnitStatusSuperClass.values().length];
+	private ArrayList<String> classArray = new ArrayList<>();
+	private ArrayList<String> superClassArray = new ArrayList<>();
 	/**
 	 * Konstruktor třídy Zinicializuje globální proměnné třídy Nastaví reakci na
 	 * potvrzovací tlačítko
@@ -46,12 +46,12 @@ public class StatusForm extends TableClassBasicForm {
 		editClassControlPanelTCB = new ClassControlPanel("Edit", SegmentType.Status, formDataController, editFormController, formController);
 		int i = 0;
 		for(WorkUnitStatusClass classItem : WorkUnitStatusClass.values()){
-			classArray[i] = classItem.name();
+			classArray.add(classItem.name());
 			i++;
 		}
 		i = 0;
 		for(WorkUnitStatusSuperClass superClass : WorkUnitStatusSuperClass.values()){
-			superClassArray[i] = superClass.name();
+			superClassArray.add(superClass.name());
 			i++;
 		}
 

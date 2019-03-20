@@ -2,22 +2,21 @@ package controlPanels;
 
 import abstractControlPane.NameControlPanel;
 import controllers.FormController;
+import graphics.ControlPanelLine;
 import interfaces.IEditFormController;
 import interfaces.IFormDataController;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.control.*;
+import services.ParamType;
 import tables.BranchTable;
 import tables.CommitTable;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class CommitControlPanel extends NameControlPanel {
 
-    private Label releaseLB;
-
-    private ToggleGroup group = new ToggleGroup();
-
-    private RadioButton rbYes;
-    private RadioButton rbNo;
 
     private int commitId;
     private int commitFormId;
@@ -29,6 +28,7 @@ public class CommitControlPanel extends NameControlPanel {
         this.commitFormId = formIndex;
         this.commitId = id;
         this.commitTable = branchTable;
+        createControlPanel();
     }
 
     @Override
@@ -39,26 +39,19 @@ public class CommitControlPanel extends NameControlPanel {
 
 
     public void createControlPanel(){
-        releaseLB = new Label("Release: ");
 
-        rbYes = new RadioButton("Yes");
-        rbYes.setToggleGroup(group);
-        rbYes.setSelected(true);
-        rbYes.setId("YesRB");
-        rbNo = new RadioButton("No");
-        rbNo.setToggleGroup(group);
-        rbNo.setId("NoRB");
-
-        group.selectedToggleProperty().addListener(controlPanelController.radioButtonListener());
-
-        controlPane.add(releaseLB, 0, 1);
-        controlPane.add(rbYes, 1, 1);
-        controlPane.add(rbNo, 0, 1);
-        controlPane.add(button, 1, 2);
+        controlPanelController.setRadioButton(this, "Release: ", true);
+        controlPanelController.setCountLine(this, 2, new ControlPanelLine(lineList, this, controlPanelController));
+        controlPanelController.createNewLine(this, lineList);
 
         button.setOnAction(event ->{
-            editFormController.editDataFromCommit(nameTF.getTextFromTextField(), controlPanelController.isMain(), commitId);
-            formController.setNameToItem(commitFormId, nameTF.getTextFromTextField());
+            ArrayList<Integer> nameIndicators = new ArrayList<>();
+            ArrayList<String> name = controlPanelController.processTextLines(ParamType.Name, nameIndicators);
+            String count = controlPanelController.getInstanceCount();
+            boolean exist = controlPanelController.isMain();
+
+            editFormController.editDataFromCommit(name, nameIndicators, exist, count, commitId);
+
         });
 
     }
@@ -66,20 +59,21 @@ public class CommitControlPanel extends NameControlPanel {
 
     public void showEditControlPanel() {
 
-        String[] classData = formDataController.getCommitStringData(commitId);
+        List[] commitData = formDataController.getCommitStringData(commitId);
 
-        nameTF.setTextToTextField(classData[0]);
-        boolean isRelease = Boolean.valueOf(classData[1]);
-        if(isRelease){
-            rbYes.setSelected(true);
-        }else{
-            rbNo.setSelected(true);
+        controlPane.getChildren().clear();
+        createControlPanel();
+
+        controlPanelController.setValueTextField(this, lineList ,ParamType.Name, commitData, commitData[2], 0);
+        boolean exist = false;
+        List boolList = commitData[1];
+        if (boolList.size() != 0){
+            exist = true;
         }
+
+        controlPanelController.setValueRadioButton(exist);
+
     }
 
-    public void clearPanel(TableView<BranchTable> tableView) {
-        tableView.refresh();
-        tableView.getSelectionModel().clearSelection();
-        rbYes.setSelected(true);
-    }
+
 }

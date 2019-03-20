@@ -31,29 +31,29 @@ public class WorkUnitControlPanelController {
     }
 
     public void addRelationToPanel(Button editButton, Button addButton, RadioButton radioButton){
-      ComboBoxItem  workUnitCB = new ComboBoxItem("Work Unit: ", segmentLists.getWorkUnitsObservable());
-      ComboBoxItem  relationCB = new ComboBoxItem("Relation: ", segmentLists.getRelationTypeObservable());
-      workUnitBoxis.add(workUnitCB);
-      relationBoxis.add(relationCB);
+//      ComboBoxItem  workUnitCB = new ComboBoxItem("Work Unit: ", segmentLists.getWorkUnitsObservable());
+//      ComboBoxItem  relationCB = new ComboBoxItem("Relation: ", segmentLists.getRelationTypeObservable());
+//      workUnitBoxis.add(workUnitCB);
+//      relationBoxis.add(relationCB);
+//
+//      controlPane.getChildren().remove(addButton);
+//      controlPane.getChildren().remove(editButton);
+//      controlPane.getChildren().remove(radioButton);
+//
+//        relationRowIndex = relationRowIndex + 2;
+//        workuUnitRowIndex = workuUnitRowIndex +2;
+//      controlPane.add(relationCB.getItemButton(), 0, relationRowIndex);
+//      controlPane.add(relationCB.getItemNameLB(), 1, relationRowIndex);
+//      controlPane.setHalignment(relationCB.getItemNameLB(), HPos.RIGHT);
+//      controlPane.add(relationCB.getItemCB(), 2, relationRowIndex);
+//      controlPane.add(workUnitCB.getItemNameLB(), 1, workuUnitRowIndex);
+//      controlPane.setHalignment(workUnitCB.getItemNameLB(), HPos.RIGHT);
+//      controlPane.add(workUnitCB.getItemCB(), 2, workuUnitRowIndex);
 
-      controlPane.getChildren().remove(addButton);
-      controlPane.getChildren().remove(editButton);
-      controlPane.getChildren().remove(radioButton);
 
-        relationRowIndex = relationRowIndex + 2;
-        workuUnitRowIndex = workuUnitRowIndex +2;
-      controlPane.add(relationCB.getItemButton(), 0, relationRowIndex);
-      controlPane.add(relationCB.getItemNameLB(), 1, relationRowIndex);
-      controlPane.setHalignment(relationCB.getItemNameLB(), HPos.RIGHT);
-      controlPane.add(relationCB.getItemCB(), 2, relationRowIndex);
-      controlPane.add(workUnitCB.getItemNameLB(), 1, workuUnitRowIndex);
-      controlPane.setHalignment(workUnitCB.getItemNameLB(), HPos.RIGHT);
-      controlPane.add(workUnitCB.getItemCB(), 2, workuUnitRowIndex);
-
-
-      controlPane.add(addButton, 1, workuUnitRowIndex + 1);
-      controlPane.add(radioButton, 2, workuUnitRowIndex + 2);
-      controlPane.add(editButton, 3, workuUnitRowIndex +3);
+//      controlPane.add(addButton, 1, workuUnitRowIndex + 1);
+ //     controlPane.add(radioButton, 2, workuUnitRowIndex + 2);
+ //     controlPane.add(editButton, 3, workuUnitRowIndex +3);
     }
 
 

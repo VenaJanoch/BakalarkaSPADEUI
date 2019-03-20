@@ -1,5 +1,7 @@
 package graphics;
 
+import abstractControlPane.ControlPanel;
+import controllers.ControlPanelController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Button;
@@ -7,30 +9,25 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import services.Constans;
+import services.ControlPanelLineObject;
 
 import java.time.LocalDate;
 import java.util.Arrays;
 
 public class DateItem extends ItemBox {
 
-    private Label itemNameLB;
     private DatePicker itemDate;
 
-    public DateItem(String name){
-        super(FXCollections.observableList(Arrays.asList(Constans.indicatorList)));
+    public DateItem(ControlPanelLine controlPanelLine, ControlPanel controlPanel, ControlPanelController controlPanelController,
+                    ObservableList<ControlPanelLineObject> lineList){
+        super(FXCollections.observableList(Arrays.asList(Constans.numberIndicatorList)), controlPanelController);
 
-        itemNameLB = new Label(name);
         itemDate = new DatePicker();
-        itemDate.setVisible(false);
-        setExitButtonsActions(itemDate);
+        itemDate.setMaxWidth(80);
+        setExitButtonsActions(controlPanelLine, controlPanel, lineList);
 
-        this.getChildren().addAll(itemButton, itemNameLB, indicatorCB, itemDate);
+        this.getChildren().addAll(itemButton, indicatorCB, itemDate);
 
-    }
-
-
-    public void setItemNameLB(String nameLB){
-        itemNameLB.setText(nameLB);
     }
 
     public LocalDate getDateFromDatePicker(){
@@ -43,10 +40,6 @@ public class DateItem extends ItemBox {
 
     public void setDateToPicker(LocalDate date) {
         itemDate.setValue(date);
-    }
-
-    public Label getItemNameLB() {
-        return itemNameLB;
     }
 
     public DatePicker getItemDate() {

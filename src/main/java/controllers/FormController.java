@@ -1,9 +1,5 @@
 package controllers;
 
-import SPADEPAC.ConfigPersonRelation;
-import SPADEPAC.Milestone;
-import SPADEPAC.Role;
-import SPADEPAC.VCSTag;
 import abstractControlPane.ControlPanel;
 import abstractform.BasicForm;
 import controlPanels.*;
@@ -18,7 +14,6 @@ import interfaces.ISaveDataModel;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.TableView;
 import model.DataManipulator;
 import model.DataModel;
 import model.IdentificatorCreater;
@@ -28,7 +23,6 @@ import tables.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class FormController {
@@ -238,7 +232,7 @@ public class FormController {
     
     private int createNewRolePanel() {
         int formIndex = createNewRoleFormWithoutManipulator();
-        int id = identificatorCreater.getRoleIndexMaper().get(formIndex);
+        int id = identificatorCreater.getRoleIndexToIdMaper().get(formIndex);
         saveDataModel.crateNewRole(id);
         return formIndex;
     }
@@ -246,7 +240,7 @@ public class FormController {
     public int createNewRoleFormWithoutManipulator(){
 
         int index = identificatorCreater.createRoleID();
-        int id = identificatorCreater.getRoleIndexMaper().get(index);
+        int id = identificatorCreater.getRoleIndexToIdMaper().get(index);
         RoleTable roleTable = new RoleTable(id + "_", "", "", id);
 
         RoleControlPanel roleControlPanel = new RoleControlPanel(
@@ -260,7 +254,7 @@ public class FormController {
 
     private int createNewArtifactPanel() {
         int formIndex = createNewArtifactFormWithoutManipulator();
-        int id = identificatorCreater.getArtifactIndexMaper().get(formIndex);
+        int id = identificatorCreater.getArtifactIndexToIdMaper().get(formIndex);
         saveDataModel.createNewArtifact(id);
         return formIndex;
     }
@@ -268,7 +262,7 @@ public class FormController {
 
     public int createNewArtifactFormWithoutManipulator(){
         int index = identificatorCreater.createArtifactID();
-        int id = identificatorCreater.getArtifactIndexMaper().get(index);
+        int id = identificatorCreater.getArtifactIndexToIdMaper().get(index);
         ArtifactTable artifactTable = new ArtifactTable(id + "_", "", id);
 
         ArtifactControlPanel artifactControlPanel = new ArtifactControlPanel(
@@ -384,7 +378,7 @@ public class FormController {
         BasicForm form = forms.get(formIdentificator);
         switch (form.getSegmentType()){
             case Phase:
-                formFillController.fillPhaseForm(identificatorCreater.getRoleId(formIdentificator), formIdentificator);
+        //        formFillController.fillPhaseForm(identificatorCreater.getRoleId(formIdentificator), formIdentificator);
                 break;
             case Iteration:
                 formFillController.fillIterationForm(identificatorCreater.getIterationId(formIdentificator), formIdentificator);
@@ -402,48 +396,48 @@ public class FormController {
                 break;
             case Milestone:
 
-                List<Milestone> milestones = dataModel.getMilestones();
-                MilestoneForm milestoneForm = (MilestoneForm) form;
-                TableView tableView = milestoneForm.getTableTV();
-                tableView.getItems().clear();
-                for (int i = 0; i < milestones.size(); i++) {
-                    Milestone milestone = milestones.get(i);
-                    tableView.getItems().add(dataPreparer.prepareMilestoneTable(milestone.getName(), milestone.getDescription(), milestone.getId(),
-                            milestone.getCriteriaIndexs(), segmentLists.getCriterionObservable()));
-
-                }
-                tableView.sort();
-                tableView.refresh();
-                break;
+//                List<Milestone> milestones = dataModel.getMilestones();
+//                MilestoneForm milestoneForm = (MilestoneForm) form;
+//                TableView tableView = milestoneForm.getTableTV();
+//                tableView.getItems().clear();
+//                for (int i = 0; i < milestones.size(); i++) {
+//                    Milestone milestone = milestones.get(i);
+//                    tableView.getItems().add(dataPreparer.prepareMilestoneTable(milestone.getName(), milestone.getDescription(), milestone.getId(),
+//                            milestone.getCriteriaIndexs(), segmentLists.getCriterionObservable()));
+//
+//                }
+//                tableView.sort();
+//                tableView.refresh();
+//                break;
             case Role:
 
-                List<Role> roles = dataModel.getRoles();
-                RoleForm roleForm = (RoleForm) form;
-                TableView roleTableView = roleForm.getTableTV();
-                roleTableView.getItems().clear();
-                for (int i = 0; i < roles.size(); i++) {
-                    Role role = roles.get(i);
-                    RoleTable roleTable = dataPreparer.prepareRoleTable(role.getName(), role.getDescription(), role.getId(),
-                            role.getType(), segmentLists.getRoleTypeObservable());
-                    roleTableView.getItems().add(roleTable);
-
-                }
-                roleTableView.sort();
-                roleTableView.refresh();
+//                List<Role> roles = dataModel.getRoles();
+//                RoleForm roleForm = (RoleForm) form;
+//                TableView roleTableView = roleForm.getTableTV();
+//                roleTableView.getItems().clear();
+//                for (int i = 0; i < roles.size(); i++) {
+//                    Role role = roles.get(i);
+//                    RoleTable roleTable = dataPreparer.prepareRoleTable(role.getName(), role.getDescription(), role.getId(),
+//                            role.getType(), segmentLists.getRoleTypeObservable());
+//                    roleTableView.getItems().add(roleTable);
+//
+//                }
+//                roleTableView.sort();
+         //       roleTableView.refresh();
                 break;
             case ConfigPersonRelation:
-                List<ConfigPersonRelation> cprlist = dataModel.getCpr();
-                ConfigPersonRelationForm cprForm = (ConfigPersonRelationForm) form;
-                TableView cprTableView = cprForm.getTableTV();
-                cprTableView.getItems().clear();
-                for (int i = 0; i < cprlist.size(); i++) {
-                    ConfigPersonRelation cpr = cprlist.get(i);
-                    CPRTable cprTable = dataPreparer.prepareCPRTable(cpr.getName(), cpr.getPersonIndex(), cpr.getId(), segmentLists.getRoleObservable());
-                    cprTableView.getItems().add(cprTable);
-
-                }
-                cprTableView.sort();
-                cprTableView.refresh();
+//                List<ConfigPersonRelation> cprlist = dataModel.getCpr();
+//                ConfigPersonRelationForm cprForm = (ConfigPersonRelationForm) form;
+//                TableView cprTableView = cprForm.getTableTV();
+//                cprTableView.getItems().clear();
+//                for (int i = 0; i < cprlist.size(); i++) {
+//                    ConfigPersonRelation cpr = cprlist.get(i);
+//                    CPRTable cprTable = dataPreparer.prepareCPRTable(cpr.getName(), cpr.getPersonIndex(), cpr.getId(), segmentLists.getRoleObservable());
+//                    cprTableView.getItems().add(cprTable);
+//
+//                }
+//                cprTableView.sort();
+//                cprTableView.refresh();
                 break;
             default:
 
@@ -472,6 +466,11 @@ public class FormController {
 
         CanvasItem item = canvasItemList.get(index);
         item.setNameText(name);
+    }
+
+    public void setItemInstanceCount(int index, int instanceCount) {
+        CanvasItem item = canvasItemList.get(index);
+        item.setInstanceCountToItem(instanceCount);
     }
 
     public String getSegmentIdentificator(int indexForm){
@@ -776,5 +775,7 @@ public class FormController {
     public SegmentLists getSegmentLists() {
         return segmentLists;
     }
+
+
 }
 

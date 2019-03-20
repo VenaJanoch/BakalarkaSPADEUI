@@ -31,9 +31,9 @@ import java.util.ArrayList;
  *
  */
 public class ResolutionForm extends TableClassBasicForm implements ISegmentTableForm {
-	
-	private String[] classArray = new String[WorkUnitResolutionClass.values().length];
-	private String[] superClassArray = new String[WorkUnitResolutionsSuperClass.values().length];
+
+	private ArrayList<String> classArray = new ArrayList<>();
+	private ArrayList<String> superClassArray = new ArrayList<>();
 	/**
 	 * Konstruktor třídy
 	 * Zinicializuje globální proměnné třídy
@@ -45,12 +45,12 @@ public class ResolutionForm extends TableClassBasicForm implements ISegmentTable
 		editClassControlPanelTCB = new ClassControlPanel("Edit", SegmentType.Resolution, formDataController, editFormController, formController);
 		int i = 0;
 		for(WorkUnitResolutionClass classItem : WorkUnitResolutionClass.values()){
-			classArray[i] = classItem.name();
+			classArray.add(classItem.name());
 			i++;
 		}
 		i = 0;
 		for(WorkUnitResolutionsSuperClass superClass : WorkUnitResolutionsSuperClass.values()){
-			superClassArray[i] = superClass.name();
+			superClassArray.add(superClass.name());
 			i++;
 		}
 

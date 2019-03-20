@@ -1,5 +1,7 @@
 package graphics;
 
+import abstractControlPane.ControlPanel;
+import controllers.ControlPanelController;
 import controllers.ItemBoxController;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -12,6 +14,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import org.controlsfx.control.CheckComboBox;
 import services.Constans;
+import services.ControlPanelLineObject;
 import tables.BasicTable;
 
 import java.util.ArrayList;
@@ -20,23 +23,21 @@ import java.util.List;
 
 public class CheckComboBoxItem extends ItemBox {
 
-    private Label itemNameLB;
     private CheckComboBox<BasicTable> itemCB;
-    private ItemBoxController itemBoxController;
 
-    public CheckComboBoxItem(String name, ObservableList list){
-        super(FXCollections.observableList(Arrays.asList(Constans.indicatorList)));
 
-        itemBoxController = new ItemBoxController();
-        itemNameLB = new Label(name);
-        itemCB = new CheckComboBox<>(list);
-        itemCB.setVisible(false);
+    public CheckComboBoxItem(ControlPanelLine controlPanelLine, ControlPanel controlPanel, ControlPanelController controlPanelController,
+                             ObservableList listForBox, ObservableList<ControlPanelLineObject> lineList){
+        super(FXCollections.observableList(Arrays.asList(Constans.textIndicatorList)), controlPanelController);
+
+
+        itemCB = new CheckComboBox<>(listForBox);
 
         itemCB.getCheckModel().getCheckedItems().addListener(itemBoxController.CheckBoxListener(itemCB));
 
-        setExitButtonsActions(itemCB);
+        setExitButtonsActions(controlPanelLine, controlPanel, lineList);
 
-        this.getChildren().addAll(itemButton, itemNameLB, itemCB);
+        this.getChildren().addAll(itemButton, itemCB);
 
     }
 
@@ -48,11 +49,6 @@ public class CheckComboBoxItem extends ItemBox {
         }
     }
 
-
-
-    public Label getItemNameLB() {
-        return itemNameLB;
-    }
 
     public CheckComboBox<BasicTable> getItemCB() {
         return itemCB;

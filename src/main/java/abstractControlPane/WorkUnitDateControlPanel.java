@@ -12,8 +12,7 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
 import org.controlsfx.control.CheckComboBox;
-import services.Constans;
-import services.SegmentLists;
+import services.*;
 import tables.BasicTable;
 
 public abstract class WorkUnitDateControlPanel extends WorkUnitControlPanel {
@@ -32,9 +31,12 @@ public abstract class WorkUnitDateControlPanel extends WorkUnitControlPanel {
 
     protected void addItemsToControlPanel3() {
 
-        dateDP = new DateItem("Created: ");
+        lineList.add(new ControlPanelLineObject("Created: ", ControlPanelLineType.Date, ParamType.Date));
 
-        controlPanelController.setDateItemToControlPanel(controlPane, dateDP, 0, 3);
+
+        // dateDP = new DateItem("Created: ");
+
+      // controlPanelController.setDateItemToControlPanel(controlPane, dateDP, 0, 3);
     }
 
 

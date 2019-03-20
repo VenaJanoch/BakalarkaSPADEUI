@@ -36,8 +36,8 @@ public class TypeForm extends TableClassBasicForm implements ISegmentTableForm {
 	 * Globální proměnné třídy
 	 */
 
-	private String[] classArray = new String[WorkUnitTypeClass.values().length];
-	private String[] superClassArray = new String[WorkUnitTypeSuperClass.values().length];
+	private ArrayList<String> classArray = new ArrayList<>();
+	private ArrayList<String> superClassArray = new ArrayList<>();
 
 	/**
 	 * Konstruktor třídy Zinicializuje globální proměnné třídy Nastaví reakci na
@@ -50,12 +50,12 @@ public class TypeForm extends TableClassBasicForm implements ISegmentTableForm {
 		editClassControlPanelTCB = new ClassControlPanel("Edit", SegmentType.Type, formDataController, editFormController, formController);
 		int i = 0;
 		for(WorkUnitTypeClass classItem : WorkUnitTypeClass.values()){
-			classArray[i] = classItem.name();
+			classArray.add(classItem.name());
 			i++;
 		}
 		i = 0;
 		for(WorkUnitTypeSuperClass superClass : WorkUnitTypeSuperClass.values()){
-			superClassArray[i] = superClass.name();
+			superClassArray.add(superClass.name());
 			i++;
 		}
 

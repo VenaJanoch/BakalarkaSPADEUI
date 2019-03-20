@@ -37,20 +37,22 @@ public class IdentificatorCreater {
     private int index = 0;
 
     private Map<Integer, Integer> roleSegmentIndexToFormMaper = new HashMap<>();
-    private Map<Integer, Integer> roleIndexMaper = new HashMap<>();
-    private Map<Integer, Integer> artifactSegmentIndexToFormMaper = new HashMap<>();
-    private Map<Integer, Integer> artifactIndexMaper = new HashMap<>();
-    private Map<Integer, Integer> workUnitIndexMaper = new HashMap<>();
-    private Map<Integer, Integer> workUnitSegmentIndexToFormMaper = new HashMap<>();
-    private Map<Integer, Integer> commitIndexMaper = new HashMap<>();
-    private Map<Integer, Integer> commitedConfigurationIndexMaper = new HashMap<>();
+    private Map<Integer, Integer> roleIndexToIdMaper = new HashMap<>();
+    private Map<Integer, Integer> artifactSegmentIdToFormIndexMaper = new HashMap<>();
+    private Map<Integer, Integer> artifactIndexToIdMaper = new HashMap<>();
+    private Map<Integer, Integer> workUnitIndexToIdMaper = new HashMap<>();
+    private Map<Integer, Integer> workUnitSegmentIdToFormIndexMaper = new HashMap<>();
+    private Map<Integer, Integer> commitIndexToIdMaper = new HashMap<>();
+    private Map<Integer, Integer> commitIdtoIndexMaper = new HashMap<>();
+    private Map<Integer, Integer> commitedConfigurationIndexToIdMaper = new HashMap<>();
+    private Map<Integer, Integer> commitedConfigurationIdToIndexMaper = new HashMap<>();
     private Map<Integer, Integer> activityFormToIdMapper = new HashMap<>();
-    private Map<Integer, Integer> configurationFormToIndexMapper = new HashMap<>();
-    private Map<Integer, Integer> configurationIndexToFormMapper = new HashMap<>();
+    private Map<Integer, Integer> configurationIndexToIdMapper = new HashMap<>();
+    private Map<Integer, Integer> configurationIdToIndexMapper = new HashMap<>();
 
     public void setDataToConfigurationMappers(int formIndex, int segmentId){
-        configurationIndexToFormMapper.put(segmentId, formIndex);
-        configurationFormToIndexMapper.put(formIndex, segmentId);
+        configurationIdToIndexMapper.put(segmentId, formIndex);
+        configurationIndexToIdMapper.put(formIndex, segmentId);
         configID++;
     }
     
@@ -60,30 +62,30 @@ public class IdentificatorCreater {
     }
 
     public void setDataToIterationMapper(int formIndex, int segmentId){
-        commitedConfigurationIndexMaper.put(formIndex, segmentId);
+        commitedConfigurationIndexToIdMaper.put(formIndex, segmentId);
         iterationID++;
     }
 
     public void setDataToCommitMapper(int formIndex, int segmentId){
-        commitIndexMaper.put(formIndex, segmentId);
+        commitIndexToIdMaper.put(formIndex, segmentId);
         commidID++;
     }
 
     public void setDataToWorkUnitsMappers(int formIndex, int segmentId){
-        workUnitIndexMaper.put(formIndex, segmentId);
-        workUnitSegmentIndexToFormMaper.put(segmentId, formIndex);
+        workUnitIndexToIdMaper.put(formIndex, segmentId);
+        workUnitSegmentIdToFormIndexMaper.put(segmentId, formIndex);
         workUnitID++;
     }
 
     public void setDataToArtifactMappers(int formIndex, int segmentId){
-        artifactIndexMaper.put(formIndex, segmentId);
-        artifactSegmentIndexToFormMaper.put(segmentId, formIndex);
+        artifactIndexToIdMaper.put(formIndex, segmentId);
+        artifactSegmentIdToFormIndexMaper.put(segmentId, formIndex);
         artifactID++;
 
     }
 
     public void setDataToChangeMappers(int formIndex, int segmentId){
-        roleIndexMaper.put(formIndex, segmentId);
+        roleIndexToIdMaper.put(formIndex, segmentId);
         roleSegmentIndexToFormMaper.put(segmentId, formIndex);
         changeID++;
     }
@@ -188,7 +190,7 @@ public class IdentificatorCreater {
 
     public int createRoleID() {
         roleID++;
-        roleIndexMaper.put(index, roleID);
+        roleIndexToIdMaper.put(index, roleID);
         roleSegmentIndexToFormMaper.put(roleID, index);
         index++;
         return index - 1;
@@ -206,8 +208,8 @@ public class IdentificatorCreater {
 
     public int createArtifactID() {
         artifactID++;
-        artifactIndexMaper.put(index, artifactID);
-        artifactSegmentIndexToFormMaper.put(artifactID, index);
+        artifactIndexToIdMaper.put(index, artifactID);
+        artifactSegmentIdToFormIndexMaper.put(artifactID, index);
         index++;
         return index -1;
     }
@@ -219,22 +221,24 @@ public class IdentificatorCreater {
 
     public int createCommitID() {
         commidID++;
-        commitIndexMaper.put(index, commidID);
+        commitIndexToIdMaper.put(index, commidID);
+        commitIdtoIndexMaper.put(commidID, index);
         index++;
         return index - 1;
     }
 
     public int createCommiedConfigurationtID() {
         commtedConfigurationID++;
-        commitedConfigurationIndexMaper.put(index, commtedConfigurationID);
+        commitedConfigurationIndexToIdMaper.put(index, commtedConfigurationID);
+        commitedConfigurationIdToIndexMaper.put(commtedConfigurationID, index);
         index++;
         return index - 1;
     }
 
     public int createConfigurationID() {
         configID++;
-        configurationFormToIndexMapper.put(index, configID);
-        configurationIndexToFormMapper.put(configID, index);
+        configurationIndexToIdMapper.put(index, configID);
+        configurationIdToIndexMapper.put(configID, index);
         index++;
         return index - 1;
     }
@@ -251,31 +255,39 @@ public class IdentificatorCreater {
 
     public Integer getChangeId(int formIndex) {
 
-        return getRoleIndexMaper().get(formIndex);
+        return getRoleIndexToIdMaper().get(formIndex);
+    }
+
+    public Integer getCommitFormIndex(int id) {
+        return commitIdtoIndexMaper.get(id);
     }
 
     public Integer getCommitId(int formIndex) {
-        return commitIndexMaper.get(formIndex);
+        return commitIndexToIdMaper.get(formIndex);
     }
 
     public Integer getCommitedConfigurationId(int formIndex) {
-        return commitedConfigurationIndexMaper.get(formIndex);
+        return commitedConfigurationIndexToIdMaper.get(formIndex);
+    }
+
+    public Integer getCommitedConfigurationFormIndex(int id) {
+        return commitedConfigurationIdToIndexMaper.get(id);
     }
 
     public Integer getArtifactIndex(int formIndex) {
-        return getArtifactIndexMaper().get(formIndex);
+        return getArtifactIndexToIdMaper().get(formIndex);
     }
 
     public Integer getWorkUnitIndex(int startSegmentId) {
-        return getWorkUnitIndexMaper().get(startSegmentId);
+        return getWorkUnitIndexToIdMaper().get(startSegmentId);
     }
 
     public Integer getRoleId(int formIndex) {
-        return roleIndexMaper.get(formIndex);
+        return roleIndexToIdMaper.get(formIndex);
     }
 
     public Integer getIterationId(int formIdentificator) {
-        return commitedConfigurationIndexMaper.get(formIdentificator);
+        return commitedConfigurationIndexToIdMaper.get(formIdentificator);
     }
 
     public Integer getActivityId(int formIdentificator) {
@@ -283,11 +295,11 @@ public class IdentificatorCreater {
     }
 
     public Integer getConfigurationFormIndex(int index) {
-        return configurationIndexToFormMapper.get(index);
+        return configurationIdToIndexMapper.get(index);
     }
 
     public Integer getConfigurationId(int formIdentificator) {
-        return configurationFormToIndexMapper.get(formIdentificator);
+        return configurationIndexToIdMapper.get(formIdentificator);
     }
 
 
@@ -299,28 +311,28 @@ public class IdentificatorCreater {
 
     }
 
-    public Map<Integer, Integer> getRoleIndexMaper() {
-        return roleIndexMaper;
+    public Map<Integer, Integer> getRoleIndexToIdMaper() {
+        return roleIndexToIdMaper;
     }
 
-    public Map<Integer, Integer> getArtifactIndexMaper() {
-        return artifactIndexMaper;
+    public Map<Integer, Integer> getArtifactIndexToIdMaper() {
+        return artifactIndexToIdMaper;
     }
 
-    public Map<Integer, Integer> getWorkUnitIndexMaper() {
-        return workUnitIndexMaper;
+    public Map<Integer, Integer> getWorkUnitIndexToIdMaper() {
+        return workUnitIndexToIdMaper;
     }
 
-    public Map<Integer, Integer> getWorkUnitSegmentIndexToFormMaper() {
-        return workUnitSegmentIndexToFormMaper;
+    public Map<Integer, Integer> getWorkUnitSegmentIdToFormIndexMaper() {
+        return workUnitSegmentIdToFormIndexMaper;
     }
 
     public Map<Integer, Integer> getRoleSegmentIndexToFormMaper() {
         return roleSegmentIndexToFormMaper;
     }
 
-    public Map<Integer, Integer> getArtifactSegmentIndexToFormMaper() {
-        return artifactSegmentIndexToFormMaper;
+    public Map<Integer, Integer> getArtifactSegmentIdToFormIndexMaper() {
+        return artifactSegmentIdToFormIndexMaper;
     }
 
 

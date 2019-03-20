@@ -31,8 +31,8 @@ import java.util.ArrayList;
  *
  */
 public class RelationForm extends TableClassBasicForm {
-	private String[] classArray = new String[WorkUnitRelationClass.values().length];
-	private String[] superClassArray = new String[WorkUnitResolutionsSuperClass.values().length];
+	private ArrayList<String> classArray = new ArrayList<>();
+	private ArrayList<String> superClassArray = new ArrayList<>();
 
 	/**
 	 * Konstruktor třídy
@@ -46,12 +46,12 @@ public class RelationForm extends TableClassBasicForm {
 		editClassControlPanelTCB = new ClassControlPanel("Edit", SegmentType.Severity, formDataController, editFormController, formController);
 		int i = 0;
 		for(WorkUnitRelationClass classItem : WorkUnitRelationClass.values()){
-			classArray[i] = classItem.name();
+			classArray.add(classItem.name());
 			i++;
 		}
 		i = 0;
 		for(WorkUnitResolutionsSuperClass superClass : WorkUnitResolutionsSuperClass.values()){
-			superClassArray[i] = superClass.name();
+			superClassArray.add(superClass.name());
 			i++;
 		}
 

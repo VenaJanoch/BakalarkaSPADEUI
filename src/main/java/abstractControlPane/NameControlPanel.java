@@ -7,6 +7,9 @@ import interfaces.IFormDataController;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
+import services.ControlPanelLineObject;
+import services.ControlPanelLineType;
+import services.ParamType;
 
 public abstract class NameControlPanel extends ControlPanel {
 
@@ -14,6 +17,8 @@ public abstract class NameControlPanel extends ControlPanel {
 
     public NameControlPanel(String buttonText, IFormDataController formDataController, IEditFormController editFormController, FormController formController) {
         super(buttonText, formDataController, editFormController, formController);
+        lineList.add(new ControlPanelLineObject("Name: ", ControlPanelLineType.Text, ParamType.Name));
+
         createBasicPanel();
     }
 
@@ -23,13 +28,6 @@ public abstract class NameControlPanel extends ControlPanel {
     }
 
     protected void createBasicPanel() {
-
-        nameTF = new TextFieldItem("Name: ");
-        nameTF.setId("formName");
-        nameTF.getItemTF().setText(" ");
-        nameTF.setShowItem(nameTF.getItemTF(), true);
-        controlPane.add(nameTF.getItemNameLB(), 1, 0);
-        controlPane.add(nameTF.getItemTF(), 2, 0);
 
     }
     protected abstract void createBaseControlPanel();

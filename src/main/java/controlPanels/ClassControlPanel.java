@@ -1,80 +1,97 @@
 package controlPanels;
 
 import controllers.FormController;
-import SPADEPAC.RoleClass;
-import SPADEPAC.RoleSuperClass;
 import abstractControlPane.NameControlPanel;
 import graphics.ComboBoxItem;
+import graphics.ControlPanelLine;
 import interfaces.IEditFormController;
 import interfaces.IFormDataController;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
+import javafx.collections.ObservableList;
 import javafx.scene.control.TableView;
-import javafx.scene.layout.GridPane;
 import services.ClassSwitcher;
+import services.ParamType;
 import services.SegmentType;
+import sun.plugin.javascript.navig.Array;
 import tables.BasicTable;
 import tables.ClassTable;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ClassControlPanel extends NameControlPanel {
 
-    private ComboBoxItem classCB;
-    private ComboBoxItem superClassCB;
-    private ClassSwitcher switcher;
-    private String[] classList;
-    private String[] superClassList;
+
+    private ArrayList<String> classList;
+    private ArrayList<String > superClassList;
     private SegmentType segmentType;
 
-    private int classIndex;
-    private int superIndex;
+    private  int classIndex;
+    private  int superClassIndex;
 
     public ClassControlPanel(String buttonName, SegmentType segmentType, IFormDataController formDataController, IEditFormController editFormController, FormController formController){
         super(buttonName, formDataController, editFormController, formController);
-        switcher = new ClassSwitcher();
+
         this.segmentType = segmentType;
 
     }
 
 
-    public void createControlPanel(String[] classList, String[] superClassList){
+    public void createControlPanel(ArrayList classList, ArrayList superClassList){
 
         this.classList = classList;
         this.superClassList = superClassList;
-
-
-        classCB = new ComboBoxItem("Class: ", FXCollections.observableArrayList(classList));
-
-        superClassCB = new ComboBoxItem("Super class: ", FXCollections.observableArrayList(superClassList));
-
-        classCB.selectItemInComboBox(0);
-        superClassCB.selectItemInComboBox(0);
-
-        controlPanelController.setComboBoxItemToControlPanel(controlPane, classCB, 0 , 1);
-        controlPanelController.setComboBoxItemToControlPanel(controlPane, superClassCB, 0 , 2);
-
-        classCB.selectItemInComboBox(0);
-        superClassCB.selectItemInComboBox(0);
-
-        controlPane.add(button, 1, 3);
-
+        createControlPanel();
 
     }
+
+    public void createControlPanel(){
+
+        ObservableList oClassList = FXCollections.observableArrayList();
+        ObservableList oSuperClassList = FXCollections.observableArrayList();
+
+        oClassList.addAll(classList);
+        oSuperClassList.addAll(superClassList);
+        controlPanelController.setStaticClassBoxes(this, 1,
+                new ControlPanelLine(this, controlPanelController, controlPanelController.getClassListener(segmentType), oClassList ),
+                new ControlPanelLine( this, controlPanelController, controlPanelController.getSuperClassListener(), oSuperClassList));
+        controlPanelController.createNewLine(this, lineList);
+    }
+
 
     public void showEditControlPanel(BasicTable basicTable, TableView tableView) {
         ClassTable classTable = (ClassTable) basicTable;
         int id = classTable.getId();
-        String[] classData = formDataController.getClassStringData(segmentType, id);
+       List[] classData = formDataController.getClassStringData(segmentType, id);
+        controlPane.getChildren().clear();
+        createControlPanel();
 
-        nameTF.setTextToTextField(classData[0]);
+        controlPanelController.setValueTextField(this, lineList ,ParamType.Name, classData, classData[3], 0);
+        controlPanelController.setValueToClassBox(classData[1], classData[2]);
 
-        classCB.selectItemInComboBox(classData[1]);
 
         button.setOnAction(event ->{
-            editFormController.editDataFromClass(segmentType, nameTF.getTextFromTextField(), getClassName(), getSuperClassName(), classTable, id);
+
+            classIndex = controlPanelController.getClassIndex();
+            superClassIndex = controlPanelController.getSuperClassIndex();
+            ArrayList<Integer> nameIndicators = new ArrayList<>();
+            ArrayList<String> name = controlPanelController.processTextLines(ParamType.Name, nameIndicators);
+
+            ArrayList<Integer> classList = new ArrayList<>();
+            classList.add(classIndex);
+
+            ArrayList<Integer> superClassList = new ArrayList<>();
+            superClassList.add(superClassIndex);
+
+            ArrayList<String> classList1 = new ArrayList<>();
+            classList1.add(getClassName());
+
+            ArrayList<String> superClassList1 = new ArrayList<>();
+            superClassList1.add(getSuperClassName());
+
+            editFormController.editDataFromClass(segmentType, name, nameIndicators, classList, superClassList, classList1, superClassList1,  classTable, id);
             clearPanel(tableView);
         });
 
@@ -82,49 +99,16 @@ public class ClassControlPanel extends NameControlPanel {
     }
 
 
-    /**
-     * ChangeListener pro určení indexu prvku z comboBoxu pro Class. Zavolá
-     * metody pro mapování Class na Super Class
-     */
-    ChangeListener<Number> classListener = new ChangeListener<Number>() {
-
-        @Override
-        public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-
-            classIndex = newValue.intValue();
-            superIndex = switcher.ClassToSuperClass(segmentType, classIndex);
-            if (superIndex == -1) {
-                superClassCB.setDisable(false);
-                superClassCB.selectItemInComboBox(superClassList[0]);
-                superIndex = 0;
-            } else {
-                superClassCB.setDisable(true);
-                superClassCB.selectItemInComboBox(superClassList[superIndex]);
-            }
-        }
-    };
-    /**
-     * ChangeListener pro určení indexu prvku z comboBoxu pro Super Class
-     */
-    ChangeListener<Number> superListener = new ChangeListener<Number>() {
-
-        @Override
-        public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-
-            superIndex = newValue.intValue();
-        }
-    };
-
     public String getClassName() {
         if (classIndex == 0) {
-            return classList[0]; //   RoleClass.UNASSIGNED.name();
+            return classList.get(0); //   RoleClass.UNASSIGNED.name();
         } else {
-            return classList[classIndex];
+            return classList.get(classIndex);
         }
     }
 
     public String getSuperClassName() {
-     return superClassList[superIndex];
+     return superClassList.get(superClassIndex);
     }
 
     public void clearPanel(TableView<ClassTable> tableView) {

@@ -1,20 +1,15 @@
 package controlPanels;
 
 import abstractControlPane.DateControlPanel;
-import abstractControlPane.DescriptionControlPanel;
 import controllers.FormController;
 import forms.TagForm;
 import graphics.CheckComboBoxItem;
 import graphics.ComboBoxItem;
-import graphics.DateItem;
+import graphics.ControlPanelLine;
 import interfaces.IEditFormController;
 import interfaces.IFormDataController;
-import javafx.collections.ObservableList;
 import javafx.scene.control.*;
-import org.controlsfx.control.CheckComboBox;
-import services.Constans;
-import services.SegmentLists;
-import services.SegmentType;
+import services.*;
 import tables.BasicTable;
 import tables.ConfigTable;
 
@@ -28,74 +23,54 @@ public class ConfigurationControlPanel extends DateControlPanel {
 
 
     private Button addTag;
-    final ToggleGroup group = new ToggleGroup();
-
-    private RadioButton rbYes;
-    private RadioButton rbNo;
-    private CheckComboBoxItem branchCB;
-    private ComboBoxItem authorRoleCB;
-    private CheckComboBoxItem cprCB;
-    private CheckComboBoxItem changeCB;
-
-
-    private TagForm tagForm;
-    private SegmentLists segmentLists;
 
 
     private int configId;
     private ConfigTable configTable;
-    private int configIndex;
 
     public ConfigurationControlPanel(String buttonName, IFormDataController formDataController, IEditFormController editFormController,
                                      FormController formController, ConfigTable configTable, int configId, int configIndex) {
         super(buttonName, formDataController, editFormController, formController);
 
-        this.segmentLists = formController.getSegmentLists();
         this.configId = configId;
-        this.configIndex = configIndex;
         this.configTable = configTable;
+        lineList.add(new ControlPanelLineObject("CPRs: ", ControlPanelLineType.ComboBox, ParamType.CPR));
+        lineList.add(new ControlPanelLineObject("Branches: ", ControlPanelLineType.ComboBox, ParamType.Branch));
+        lineList.add(new ControlPanelLineObject("Changes: ", ControlPanelLineType.ComboBox, ParamType.Change));
         this.addItemsToControlPanel();
     }
 
 
     protected void addItemsToControlPanel() {
-        authorRoleCB = new ComboBoxItem("Author: ", formController.getRoleObservable());
-        dateDP.setItemNameLB("Created: ");
-
-        isReleaseLB = new Label("Release: ");
-        rbNo = new RadioButton("No");
-        rbNo.setToggleGroup(group);
-        rbYes = new RadioButton("Yes");
-        rbYes.setToggleGroup(group);
-        rbYes.setSelected(true);
-
-        group.selectedToggleProperty().addListener(controlPanelController.radioButtonListener());
-
-        cprCB = new CheckComboBoxItem("CPRs", segmentLists.getCPRObservable());
-        branchCB = new CheckComboBoxItem("Branches", segmentLists.getBranchObservable());
-        changeCB = new CheckComboBoxItem("Changes", segmentLists.getBranchObservable());
-        addTag = new Button("Add Tag");
-
-        controlPanelController.setComboBoxItemToControlPanel(controlPane, authorRoleCB, 0, 2);
-        controlPanelController.setCheckComboBoxItemToControlPanel(controlPane, cprCB, 0, 3);
-        controlPanelController.setCheckComboBoxItemToControlPanel(controlPane, branchCB, 0, 4);
-        controlPanelController.setCheckComboBoxItemToControlPanel(controlPane, changeCB, 0, 5);
 
 
-        controlPane.add(isReleaseLB, 0, 6);
-        controlPane.add(rbYes, 1, 6);
-        controlPane.add(rbNo, 2, 6);
+        controlPanelController.setRadioButton(this, "Release: ", true);
+        controlPanelController.setCountLine(this, 2, new ControlPanelLine(lineList, this, controlPanelController));
+        addTag = new Button("add Tag");
+        controlPanelController.setStaticButton(this, 3, addTag);
+        controlPanelController.createNewLine(this, lineList);
 
 
-        controlPane.add(addTag, 2, 7);
-        controlPane.add(button, 2, 8);
 
         button.setOnAction(event -> {
 
-            LocalDate date = controlPanelController.checkValueFromDateItem(dateDP);
-            editFormController.editDataFromConfiguration(nameTF.getTextFromTextField(), date, authorRoleCB.getItemIndex(),
-                    controlPanelController.isMain(), cprCB.getChoosedIndicies(),
-                    branchCB.getChoosedIndicies(), changeCB.getChoosedIndicies(), configId);
+            ArrayList<Integer> nameIndicators = new ArrayList<>();
+            ArrayList<Integer> dateIndicators = new ArrayList<>();
+            ArrayList<Integer> roleIndicators = new ArrayList<>();
+
+            ArrayList<Integer> cprsIndicators = new ArrayList<>();
+            ArrayList<Integer> branchIndicators = new ArrayList<>();
+            ArrayList<Integer> changeIndicators = new ArrayList<>();
+
+            ArrayList<String> name = controlPanelController.processTextLines(ParamType.Name, nameIndicators);
+            ArrayList<Integer> role = controlPanelController.processComboBoxLines(ParamType.Role, roleIndicators);
+            ArrayList<LocalDate> dates = controlPanelController.processDateLines(ParamType.Date, dateIndicators);
+            ArrayList<ArrayList<Integer>> cprs = controlPanelController.processCheckComboBoxLines(ParamType.CPR, cprsIndicators);
+            ArrayList<ArrayList<Integer>> branchs = controlPanelController.processCheckComboBoxLines(ParamType.Branch, branchIndicators);
+            ArrayList<ArrayList<Integer>> changes = controlPanelController.processCheckComboBoxLines(ParamType.Change, changeIndicators);
+            String instanceCount = controlPanelController.getInstanceCount();
+            editFormController.editDataFromConfiguration(name, dates, controlPanelController.isMain(), role, cprs, branchs, changes, cprsIndicators,
+                    nameIndicators, dateIndicators, roleIndicators, branchIndicators, changeIndicators, instanceCount,  configId);
         });
 
     }
@@ -103,29 +78,26 @@ public class ConfigurationControlPanel extends DateControlPanel {
     @Override
     public void showEditControlPanel(BasicTable basicTable, TableView tableView) {
 
-        String[] configData = formDataController.getConfigurationStringData(configId);
+        List[] configData = formDataController.getConfigurationStringData(configId);
 
-        nameTF.setTextToTextField(configData[0]);
+        controlPane.getChildren().clear();
+        addItemsToControlPanel();
 
-        controlPanelController.setValueDatePicker(dateDP, configData, 1);
+        controlPanelController.setValueTextField(this, lineList ,ParamType.Name, configData, configData[3], 0);
+        controlPanelController.setValueDatePicker(this, lineList ,ParamType.Date, (ArrayList<LocalDate>) configData[1], configData[4]);
+        controlPanelController.setValueTextField(this, lineList ,ParamType.Role, configData, configData[5], 2);
 
-        controlPanelController.setValueComboBox(authorRoleCB, configData, 2);
+        ArrayList<ArrayList<Integer>> cprList = formDataController.getCPRFromConfiguration(configId);
+        controlPanelController.setValueCheckComboBox(this, lineList ,ParamType.CPR, cprList, configData[6]);
 
-        List<Integer> cprList = formDataController.getCPRFromConfiguration(configId);
-        controlPanelController.setValueCheckComboBox(cprCB, cprList);
+        ArrayList<ArrayList<Integer>> branches = formDataController.getBranchesFromConfiguration(configId);
+        controlPanelController.setValueCheckComboBox(this, lineList ,ParamType.Branch, branches, configData[7]);
 
-        List<Integer> branches = formDataController.getBranchesFromConfiguration(configId);
-        controlPanelController.setValueCheckComboBox(branchCB, branches);
-
-        List<Integer> changeList = formDataController.getChangesFromConfiguration(configId);
-        controlPanelController.setValueCheckComboBox(changeCB, changeList);
+        ArrayList<ArrayList<Integer>> changeList = formDataController.getChangesFromConfiguration(configId);
+        controlPanelController.setValueCheckComboBox(this, lineList ,ParamType.WorkUnit, changeList, configData[8]);
 
 
-       boolean isRelease = Boolean.valueOf(configData[3]);
-        if (isRelease) {
-            rbYes.setSelected(true);
-        } else {
-            rbNo.setSelected(false);
-        }
+       boolean isRelease = Boolean.valueOf((Boolean) configData[9].get(0));
+       controlPanelController.setValueRadioButton(isRelease);
     }
 }

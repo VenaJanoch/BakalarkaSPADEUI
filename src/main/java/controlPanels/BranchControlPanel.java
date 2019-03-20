@@ -10,8 +10,12 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import services.ParamType;
 import tables.BasicTable;
 import tables.BranchTable;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class BranchControlPanel extends NameControlPanel {
 
@@ -24,32 +28,20 @@ public class BranchControlPanel extends NameControlPanel {
 
     public BranchControlPanel(String buttonName, IFormDataController formDataController, IEditFormController editFormController, FormController formController){
         super(buttonName, formDataController, editFormController, formController);
+        createControlPanel();
     }
 
     @Override
     protected void createBaseControlPanel() {
-
+        controlPanelController.createNewLine(this, lineList);
     }
 
 
 
     public void createControlPanel(){
-        isMainLB = new Label("Main");
 
-        rbYes = new RadioButton("Yes");
-        rbYes.setToggleGroup(group);
-        rbYes.setSelected(true);
-        rbYes.setId("YesRB");
-        rbNo = new RadioButton("No");
-        rbNo.setToggleGroup(group);
-        rbNo.setId("NoRB");
-
-        group.selectedToggleProperty().addListener(controlPanelController.radioButtonListener());
-
-        controlPane.add(isMainLB, 0, 1);
-        controlPane.add(rbYes, 1, 1);
-        controlPane.add(rbNo, 2, 1);
-        controlPane.add(button, 1, 2);
+        controlPanelController.createNewLine(this, lineList);
+        controlPanelController.setRadioButton(this, "Main: ", true);
 
     }
 
@@ -57,18 +49,26 @@ public class BranchControlPanel extends NameControlPanel {
     public void showEditControlPanel(BasicTable basicTable, TableView tableView) {
         BranchTable branchTable = (BranchTable) basicTable;
         int id = basicTable.getId();
-        String[] classData = formDataController.getBranchStringData(id);
 
-        nameTF.setTextToTextField(classData[0]);
-        boolean isMainBranch = Boolean.valueOf(classData[1]);
-        if(isMainBranch){
-            rbYes.setSelected(true);
-        }else{
-            rbNo.setSelected(true);
+        List branchData[] = formDataController.getBranchStringData(id);
+        controlPane.getChildren().clear();
+        createControlPanel();
+
+        controlPanelController.setValueTextField(this, lineList ,ParamType.Name, branchData, branchData[2], 0);
+       boolean exist = false;
+        List boolList = branchData[1];
+        if (boolList.size() != 0){
+            exist = true;
         }
+        controlPanelController.setValueRadioButton(exist);
+
+
 
         button.setOnAction(event ->{
-            editFormController.editDataFromBranch(nameTF.getTextFromTextField(), controlPanelController.isMain(), branchTable);
+            ArrayList<Integer> nameIndicators = new ArrayList<>();
+            ArrayList<String> name = controlPanelController.processTextLines(ParamType.Name, nameIndicators);
+
+            editFormController.editDataFromBranch(name, nameIndicators, controlPanelController.isMain(), branchTable);
             clearPanel(tableView);
         });
     }

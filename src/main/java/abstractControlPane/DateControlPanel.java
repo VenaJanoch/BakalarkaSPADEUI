@@ -5,6 +5,9 @@ import graphics.DateItem;
 import interfaces.IEditFormController;
 import interfaces.IFormDataController;
 import javafx.scene.control.*;
+import services.ControlPanelLineObject;
+import services.ControlPanelLineType;
+import services.ParamType;
 import tables.BasicTable;
 
 public abstract class DateControlPanel extends NameControlPanel {
@@ -23,8 +26,10 @@ public abstract class DateControlPanel extends NameControlPanel {
 
     protected void createBaseControlPanel() {
 
-        dateDP = new DateItem("Date: ");
-        controlPanelController.setDateItemToControlPanel(controlPane, dateDP, 0, 1);
+        lineList.add(new ControlPanelLineObject("Date: ", ControlPanelLineType.Date, ParamType.Date));
+
+        // dateDP = new DateItem("Date: ");
+       // controlPanelController.setDateItemToControlPanel(controlPane, dateDP, 0, 1);
 
     }
 

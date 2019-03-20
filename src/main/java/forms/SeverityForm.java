@@ -33,8 +33,8 @@ import java.util.ArrayList;
  */
 public class SeverityForm extends TableClassBasicForm{
 
-	private String[] classArray = new String[WorkUnitSeverityClass.values().length];
-	private String[] superClassArray = new String[WorkUnitSeveritySuperClass.values().length];
+	private ArrayList<String> classArray = new ArrayList<>();
+	private ArrayList<String> superClassArray = new ArrayList<>();
 
 	/**
 	 * Konstruktor třídy Zinicializuje globální proměnné třídy Nastaví reakci na
@@ -47,12 +47,12 @@ public class SeverityForm extends TableClassBasicForm{
 		editClassControlPanelTCB = new ClassControlPanel("Edit", SegmentType.Severity, formDataController, editFormController, formController);
 		int i = 0;
 		for(WorkUnitSeverityClass classItem : WorkUnitSeverityClass.values()){
-			classArray[i] = classItem.name();
+			classArray.add(classItem.name());
 			i++;
 		}
 		i = 0;
 		for(WorkUnitSeveritySuperClass superClass : WorkUnitSeveritySuperClass.values()){
-			superClassArray[i] = superClass.name();
+			superClassArray.add(superClass.name());
 			i++;
 		}
 

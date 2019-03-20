@@ -1,24 +1,12 @@
 package controlPanels;
 
-import abstractControlPane.DateDescControlPanel;
-import abstractControlPane.WorkUnitControlPanel;
 import abstractControlPane.WorkUnitDateControlPanel;
 import controllers.FormController;
 import graphics.ComboBoxItem;
 import interfaces.IEditFormController;
 import interfaces.IFormDataController;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.collections.FXCollections;
-import javafx.collections.ListChangeListener;
-import javafx.collections.ObservableList;
-import javafx.geometry.HPos;
 import javafx.scene.control.*;
-import javafx.scene.layout.GridPane;
-import org.controlsfx.control.CheckComboBox;
-import services.Constans;
-import services.SegmentLists;
-import services.SegmentType;
+import services.*;
 import tables.BasicTable;
 import tables.PhaseTable;
 
@@ -42,6 +30,9 @@ public class PhaseControlPanel extends WorkUnitDateControlPanel {
                              IEditFormController editFormController, FormController formController) {
         super(buttonName, formDataController, editFormController, formController);
         segmentLists = formController.getSegmentLists();
+        lineList.add(new ControlPanelLineObject("Configuration: ", ControlPanelLineType.ComboBox, ParamType.Configuration, segmentLists.getConfigObservable()));
+        lineList.add(new ControlPanelLineObject("Milestone: ", ControlPanelLineType.ComboBox, ParamType.Milestone, segmentLists.getMilestoneObservable()));
+
         addItemsToControlPanel();
 
     }
@@ -50,17 +41,18 @@ public class PhaseControlPanel extends WorkUnitDateControlPanel {
     public void showEditControlPanel(BasicTable basicTable, TableView tableView) {
         phaseTable = (PhaseTable) basicTable;
         int id = phaseTable.getId();
-        String[] phaseStringData = formDataController.getPhaseStringData(id);
+        List[] phaseStringData = formDataController.getPhaseStringData(id);
 
-        nameTF.setTextToTextField(phaseStringData[0]);
+        controlPane.getChildren().clear();
+        addItemsToControlPanel();
 
-        controlPanelController.setValueTextField(descriptionTF, phaseStringData, 1);
-        controlPanelController.setValueComboBox(configCB, phaseStringData, 2);
-        controlPanelController.setValueComboBox(milestoneCB, phaseStringData, 3);
-        controlPanelController.setValueDatePicker(dateDP, phaseStringData, 4);
-
-        List<Integer> workUnits = formDataController.getWorkUnitFromSegment(id, SegmentType.Phase);
-        controlPanelController.setValueCheckComboBox(workUnitCB, workUnits);
+        controlPanelController.setValueTextField(this, lineList ,ParamType.Name, phaseStringData, phaseStringData[5], 0);
+        controlPanelController.setValueTextField(this, lineList ,ParamType.Description, phaseStringData, phaseStringData[6], 1);
+        controlPanelController.setValueComboBox(this, lineList ,ParamType.Configuration, (ArrayList<Integer>) phaseStringData[2], phaseStringData[7]);
+        controlPanelController.setValueDatePicker(this, lineList ,ParamType.Date, (ArrayList<LocalDate>)phaseStringData[4],  phaseStringData[9]);
+        controlPanelController.setValueComboBox(this, lineList ,ParamType.Milestone, (ArrayList<Integer>) phaseStringData[3], phaseStringData[8]);
+        ArrayList<ArrayList<Integer>> workUnits = formDataController.getWorkUnitFromSegment(id, SegmentType.Phase);
+        controlPanelController.setValueCheckComboBox(this, lineList ,ParamType.WorkUnit, workUnits, phaseStringData[10]);
 
 
         button.setOnAction(event -> saveDataFromPanel(phaseTable, tableView));
@@ -68,19 +60,22 @@ public class PhaseControlPanel extends WorkUnitDateControlPanel {
 
     public void saveDataFromPanel(BasicTable table, TableView tableView) {
         int id = table.getId();
-        phaseTable.setName(id + "_" + nameTF.getTextFromTextField());
-        if (configCB.getItemCB() != null) {
-            phaseTable.setConfiguration(segmentLists.getConfigObservable().get(configCB.getItemIndex()).getName());
-        }
+        ArrayList<Integer> nameIndicators = new ArrayList<>();
+        ArrayList<Integer> descIndicators = new ArrayList<>();
+        ArrayList<Integer> milestoneIndicators = new ArrayList<>();
+        ArrayList<Integer> workUnitIndicators = new ArrayList<>();
+        ArrayList<Integer> date1Indicators = new ArrayList<>();
+        ArrayList<Integer> configIndicators = new ArrayList<>();
 
-        if (milestoneCB.getItemCB() != null) {
-            phaseTable.setMilestone(segmentLists.getMilestoneObservable().get(milestoneCB.getItemIndex()).getName());
-        }
-        String desc = controlPanelController.checkValueFromTextItem(descriptionTF);
+        ArrayList<String> name = controlPanelController.processTextLines(ParamType.Name, nameIndicators);
+        ArrayList<String> desc = controlPanelController.processTextLines(ParamType.Description, descIndicators);
+        ArrayList<ArrayList<Integer>> workUnit = controlPanelController.processCheckComboBoxLines(ParamType.WorkUnit, workUnitIndicators);
+        ArrayList<Integer> milestone = controlPanelController.processComboBoxLines(ParamType.Milestone, milestoneIndicators);
+        ArrayList<Integer> config = controlPanelController.processComboBoxLines(ParamType.Configuration, configIndicators);
+        ArrayList<LocalDate> startDate = controlPanelController.processDateLines(ParamType.Date, date1Indicators);
 
-        LocalDate date = controlPanelController.checkValueFromDateItem(dateDP);
-        editFormController.editDataFromPhase(nameTF.getTextFromTextField(), desc, date, milestoneCB.getItemIndex(), configCB.getItemIndex()
-                , new ArrayList<>(workUnitCB.getChoosedIndicies()), phaseTable, id);
+        editFormController.editDataFromPhase(name, startDate, desc, config, milestone, workUnit, workUnitIndicators, nameIndicators, date1Indicators,
+                descIndicators, configIndicators, milestoneIndicators, phaseTable, id);
 
         clearPanelCB(tableView);
     }
@@ -89,17 +84,7 @@ public class PhaseControlPanel extends WorkUnitDateControlPanel {
     @Override
     protected void addItemsToControlPanel() {
 
-        dateDP.setItemNameLB("End-Date");
-
-        configCB = new ComboBoxItem("Configuration: ", segmentLists.getConfigObservable());
-        milestoneCB = new ComboBoxItem("Milestone: ", segmentLists.getMilestoneObservable());
-
-        controlPanelController.setComboBoxItemToControlPanel(controlPane, configCB, 0, 4);
-        controlPanelController.setComboBoxItemToControlPanel(controlPane, milestoneCB, 0, 5);
-
-        controlPane.add(button, 2, 6);
-
-
+        controlPanelController.createNewLine(this, lineList);
     }
 
     public Button getButton() {

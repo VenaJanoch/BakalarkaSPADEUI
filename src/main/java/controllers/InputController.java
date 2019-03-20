@@ -4,6 +4,7 @@ import services.Alerts;
 import services.Constans;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 public class InputController {
 
@@ -28,6 +29,16 @@ public class InputController {
         }
 
     }
+
+    public static ArrayList<Double> isDoubleNumber(ArrayList<String> input){
+        ArrayList<Double> list = new ArrayList<>();
+
+        for (String number : input){
+            list.add(isDoubleNumber(number));
+        }
+        return list;
+    }
+
 
     public static Double isDoubleNumber(String input){
         try {
@@ -61,20 +72,48 @@ public class InputController {
      */
     public static String fillTextMapper(String text) {
 
-        if (!text.equals("null*")) {
-            return text;
+        if (text.equals("null*")) {
+            return "";
         }
 
-        return null;
+        return text;
 
     }
 
+    public static ArrayList<String> fillTextMapper(ArrayList<String> texts) {
+
+        ArrayList<String> checkTexts = new ArrayList<>();
+        for (String text : texts){
+            checkTexts.add(fillTextMapper(text));
+        }
+        return checkTexts;
+
+    }
+
+
+    public static ArrayList<String> fillNameTextMapper(ArrayList<String> names) {
+       ArrayList<String> checkNames = new ArrayList<>();
+        for (String name : names){
+            checkNames.add(fillNameTextMapper(name));
+        }
+    return checkNames;
+    }
+
     public static String fillNameTextMapper(String name) {
-        if(name == null){
+        if(name.equals("null*")){
             return "";
         }
         return name;
     }
+
+    public static ArrayList<LocalDate> checkDate(ArrayList<LocalDate> date) {
+        ArrayList<LocalDate> list = new ArrayList<>();
+        for (LocalDate date1 : date){
+            list.add(checkDate(date1));
+        }
+        return date;
+    }
+
 
     public static LocalDate checkDate(LocalDate date) {
         if(date.equals(Constans.nullDate)){

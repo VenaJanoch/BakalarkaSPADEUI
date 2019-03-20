@@ -58,4 +58,8 @@ public class ApplicationController {
     public FormFillController getFormFillController() {
         return formFillController;
     }
+
+    public EditFormController getEditFormController() {
+        return editFormController;
+    }
 }

@@ -2,12 +2,8 @@ package controllers;
 
 import interfaces.IEditDataModel;
 import interfaces.IEditFormController;
-import javafx.collections.ObservableList;
-import javafx.scene.control.ComboBox;
-import jdk.internal.org.objectweb.asm.tree.IntInsnNode;
 import model.DataModel;
 import model.IdentificatorCreater;
-import services.CanvasType;
 import services.MapperTableToObject;
 import services.SegmentLists;
 import services.SegmentType;
@@ -15,6 +11,7 @@ import tables.*;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 
 public class EditFormController implements IEditFormController {
 
@@ -38,67 +35,80 @@ public class EditFormController implements IEditFormController {
         this.formController = formController;
     }
 
-    public void editDataFromClass(SegmentType segmentType, String name, String className, String superClassName, ClassTable classTable, int id) {
+    public void editDataFromClass(SegmentType segmentType,ArrayList<String> name, ArrayList<Integer> nameIndicator,
+                                  ArrayList<Integer> classIndices,  ArrayList<Integer> superClassIndices, ArrayList<String> classString,  ArrayList<String> superSting
+            , ClassTable classTable, int id) {
         
-        String nameForManipulator = InputController.fillNameTextMapper(name);
+        ArrayList<String> nameForManipulator = InputController.fillNameTextMapper(name);
         
-        classTable.setName(dataPreparer.createTableItemIdName(id,nameForManipulator));
-        classTable.setClassType(className);
-        classTable.setSuperType(superClassName);
+        classTable.setName(dataPreparer.createTableItemIdName(id,nameForManipulator.get(0)));
+        classTable.setClassType(classString.get(0));
+        classTable.setSuperType(superSting.get(0));
 
         switch (segmentType) {
             case RoleType:
-                editDataFromRoleType(nameForManipulator, className, superClassName, classTable, id);
+                editDataFromRoleType(nameForManipulator, nameIndicator, classIndices, superClassIndices,classString, superSting, classTable, id);
                 break;
             case Severity:
-                editDataFromSeverity(nameForManipulator, className, superClassName, classTable, id);
+                editDataFromSeverity(nameForManipulator, nameIndicator, classIndices, superClassIndices,classString, superSting, classTable, id);
                 break;
             case Priority:
-                editDataFromPriority(nameForManipulator, className, superClassName, classTable, id);
+                editDataFromPriority(nameForManipulator, nameIndicator, classIndices, superClassIndices,classString, superSting, classTable, id);
                 break;
             case Status:
-                editDataFromStatus(nameForManipulator, className, superClassName, classTable, id);
+                editDataFromStatus(nameForManipulator, nameIndicator, classIndices, superClassIndices,classString, superSting, classTable, id);
                 break;
             case Type:
-                editDataFromType(nameForManipulator, className, superClassName, classTable, id);
+                editDataFromType(nameForManipulator, nameIndicator, classIndices, superClassIndices,classString, superSting, classTable, id);
                 break;
             case Relation:
-                editDataFromRelation(nameForManipulator, className, superClassName, classTable, id);
+                editDataFromRelation(nameForManipulator, nameIndicator, classIndices, superClassIndices,classString, superSting, classTable, id);
                 break;
             case Resolution:
-                editDataFromResolution(nameForManipulator, className, superClassName, classTable, id);
+                editDataFromResolution(nameForManipulator, nameIndicator, classIndices, superClassIndices,classString, superSting, classTable, id);
                 break;
             default:
         }
     }
 
-    private void editDataFromResolution(String name, String className, String superClassName, ClassTable classTable, int id) {
-         dataManipulator.editDataInResolution(name, className, superClassName, id);
+    private void editDataFromResolution(ArrayList<String> name, ArrayList<Integer> nameIndicator,
+                                        ArrayList<Integer> classIndices,  ArrayList<Integer> superClassIndices, ArrayList<String> classString,  ArrayList<String> superSting
+            , ClassTable classTable, int id) {
+         dataManipulator.editDataInResolution(name, nameIndicator, classIndices, superClassIndices, classString, superSting, id);
         segmentLists.updateListItem(SegmentType.Resolution, classTable.getId(), classTable);
 
     }
 
-    private void editDataFromRelation(String name, String className, String superClassName, ClassTable classTable, int id) {
-          dataManipulator.editDataInRelation(name, className, superClassName, id);
+    private void editDataFromRelation(ArrayList<String> name, ArrayList<Integer> nameIndicator,
+                                      ArrayList<Integer> classIndices,  ArrayList<Integer> superClassIndices, ArrayList<String> classString,  ArrayList<String> superSting
+            , ClassTable classTable, int id) {
+          dataManipulator.editDataInRelation(name, nameIndicator, classIndices, superClassIndices, classString, superSting, id);
         segmentLists.updateListItem(SegmentType.Relation, classTable.getId(), classTable);
 
     }
 
-    private void editDataFromType(String name, String className, String superClassName, ClassTable classTable, int id) {
+    private void editDataFromType(ArrayList<String> name, ArrayList<Integer> nameIndicator,
+                                  ArrayList<Integer> classIndices,  ArrayList<Integer> superClassIndices, ArrayList<String> classString,  ArrayList<String> superSting
+            , ClassTable classTable, int id) {
 
-        dataManipulator.editDataInType(name, className, superClassName, id);
+        dataManipulator.editDataInType(name, nameIndicator, classIndices, superClassIndices, classString, superSting, id);
         segmentLists.updateListItem(SegmentType.Type, classTable.getId(), classTable);
 
     }
 
-    private void editDataFromStatus(String name, String className, String superClassName, ClassTable classTable, int id) {
+    private void editDataFromStatus(ArrayList<String> name, ArrayList<Integer> nameIndicator,
+                                    ArrayList<Integer> classIndices,  ArrayList<Integer> superClassIndices, ArrayList<String> classString,  ArrayList<String> superSting
+            , ClassTable classTable, int id) {
 
-        dataManipulator.editDataInStatus(name, className, superClassName, id);
+        dataManipulator.editDataInStatus(name, nameIndicator, classIndices, superClassIndices, classString, superSting, id);
         segmentLists.updateListItem(SegmentType.Status, classTable.getId(), classTable);
     }
 
-    private void editDataFromPriority(String name, String className, String superClassName, ClassTable classTable, int id) {
-        dataManipulator.editDataInPriority(name, className, superClassName, id);
+    private void editDataFromPriority(ArrayList<String> name, ArrayList<Integer> nameIndicator,
+
+                                      ArrayList<Integer> classIndices,  ArrayList<Integer> superClassIndices, ArrayList<String> classString,  ArrayList<String> superSting
+            , ClassTable classTable, int id) {
+        dataManipulator.editDataInPriority(name, nameIndicator, classIndices, superClassIndices, classString, superSting, id);
         segmentLists.updateListItem(SegmentType.Priority, classTable.getId(), classTable);
     }
 
@@ -110,95 +120,120 @@ public class EditFormController implements IEditFormController {
         tagTable.setName(tag);
     }
 
-    private void editDataFromRoleType(String name, String className, String superClassName, ClassTable classTable, int id) {
+    private void editDataFromRoleType(ArrayList<String> name, ArrayList<Integer> nameIndicator,
+                                      ArrayList<Integer> classIndices,  ArrayList<Integer> superClassIndices, ArrayList<String> classString,  ArrayList<String> superSting
+                                        , ClassTable classTable, int id) {
 
-        dataManipulator.editDataInRoleType(name, className, superClassName, id);
+        dataManipulator.editDataInRoleType(name, nameIndicator, classIndices, superClassIndices, classString, superSting, id);
         segmentLists.updateListItem(SegmentType.RoleType, classTable.getId(), classTable);
     }
 
 
 
-    public void editDataFromRole(String nameST, String description, int roleTypeIndex, RoleTable roleTable, int id) {
+    public void editDataFromRole(ArrayList<String> name, ArrayList<Integer> nameIndicator, ArrayList<String> description, ArrayList<Integer> descriptionIndicator,
+                                 String count, ArrayList<Integer> roleTypeIndex, ArrayList<Integer> roleTypeIndicators, RoleTable roleTable, int id) {
+
+        int instanceCount;
+        try {
+            instanceCount = Integer.parseInt(count);
+            ArrayList<String> nameForManipulator = InputController.fillNameTextMapper(name);
+            ArrayList<String> descForManipulator = InputController.fillTextMapper(description);
+            ArrayList<Integer> typeFormManipulator = dataPreparer.prepareIndexForManipulator(roleTypeIndex);
+            int roleId = identificatorCreater.getRoleIndexToIdMaper().get(id);
+            String roleName = nameForManipulator.get(0);
+            dataManipulator.editDataInRole(nameForManipulator, descForManipulator, typeFormManipulator,nameIndicator, descriptionIndicator, roleTypeIndicators, instanceCount, roleId);
+
+            roleTable.setName(roleName);
+            segmentLists.updateListItem(SegmentType.Role, id, roleTable);
+
+            ArrayList<Integer> roleType = dataModel.getRoleTypeIndex(typeFormManipulator);
+            mapperTableToObject.updateValueList(roleType, mapperTableToObject.getRoleToRoleTypeMapper(),
+                    id, roleName);
+
+            int formIndex = identificatorCreater.getRoleSegmentIndexToFormMaper().get(id);
+
+            formController.setNameToItem(formIndex, roleName);
+            formController.setItemInstanceCount(formIndex, instanceCount);
+        }catch (NumberFormatException e){
+            //TODO udelat Allert
+            e.printStackTrace();
+        }
 
 
-        String nameForManipulator = InputController.fillNameTextMapper(nameST);
-        String descForManipulator = InputController.fillTextMapper(description);
-        int typeFormManipulator = dataPreparer.prepareIndexForManipulator(roleTypeIndex);
-        int roleId = identificatorCreater.getRoleIndexMaper().get(id);
-
-        dataManipulator.editDataInRole(nameForManipulator, descForManipulator, typeFormManipulator, roleId);
-
-        roleTable.setName(nameForManipulator);
-        segmentLists.updateListItem(SegmentType.Role, id, roleTable);
-
-        int roleType = dataModel.getRoleTypeIndex(typeFormManipulator);
-        mapperTableToObject.updateValueList(roleType, mapperTableToObject.getRoleToRoleTypeMapper(),
-               id, nameForManipulator);
-
-        formController.setNameToItem(identificatorCreater.getRoleSegmentIndexToFormMaper().get(id), nameForManipulator);
     }
 
-    private void editDataFromSeverity(String name, String className, String superClassName, ClassTable classTable, int id) {
-        dataManipulator.editDataInSeverity(name, className, superClassName, id);
+    private void editDataFromSeverity(ArrayList<String> name, ArrayList<Integer> nameIndicator,
+                                      ArrayList<Integer> classIndices,  ArrayList<Integer> superClassIndices, ArrayList<String> classString,  ArrayList<String> superSting
+            , ClassTable classTable, int id) {
+        dataManipulator.editDataInSeverity(name, nameIndicator, classIndices, superClassIndices, classString, superSting, id);
         segmentLists.updateListItem(SegmentType.Severity, classTable.getId(), classTable);
     }
 
-    public void editDataFromMilestone(String nameST, MilestoneTable milestoneTable, ArrayList<Integer> criterionIndex, int id) {
+    public void editDataFromMilestone(ArrayList<String> nameST, ArrayList<Integer> nameIndicators, ArrayList<String>description, ArrayList<Integer> descriptionIndicators,
+                                      MilestoneTable milestoneTable, ArrayList<ArrayList<Integer>> criterionIndex,
+                                      ArrayList<Integer> criterionIndicators,  int id) {
 
-        String nameForManipulator = InputController.fillNameTextMapper(nameST);
-        String descForManipulator = InputController.fillTextMapper(milestoneTable.getDescription());
-        criterionIndex = dataPreparer.prepareIndicesForManipulator(criterionIndex);
-        dataManipulator.editDataInMilestone(nameForManipulator, descForManipulator, criterionIndex, milestoneTable.getId());
+        ArrayList<String> nameForManipulator = InputController.fillNameTextMapper(nameST);
+        ArrayList<String> descForManipulator = InputController.fillTextMapper(description);
+       criterionIndex = dataPreparer.prepareIndicesForManipulator(criterionIndex);
+       dataManipulator.editDataInMilestone(nameForManipulator,  descForManipulator, nameIndicators, descriptionIndicators, criterionIndicators, criterionIndex, milestoneTable.getId());
 
-        ArrayList<Integer> criterionIndicies = dataModel.getCriterionIds(criterionIndex);
+
         milestoneTable.setCriterion(dataPreparer.prepareDependencyArray(criterionIndex, segmentLists.getCriterionObservable()));
+        milestoneTable.setName(dataPreparer.createTableItemIdName(id, nameForManipulator.get(0)));
 
-        milestoneTable.setName(dataPreparer.createTableItemIdName(id, nameForManipulator));
-        if (descForManipulator != null){
-            milestoneTable.setDescription(descForManipulator);
+        if (descForManipulator.size() != 0){
+            milestoneTable.setDescription(descForManipulator.get(0));
+        }
+
+        if (criterionIndex.size() != 0){
+            ArrayList<Integer> criterionIndicies = dataModel.getCriterionIds(criterionIndex.get(0));
+            mapperTableToObject.updateValueList(criterionIndicies, mapperTableToObject.getMilestoneToCriterionMapper(),
+                    milestoneTable.getId(), milestoneTable.getName());
         }
 
         segmentLists.updateListItem(SegmentType.Milestone, id, milestoneTable);
 
-        mapperTableToObject.updateValueList(criterionIndicies, mapperTableToObject.getMilestoneToCriterionMapper(),
-                milestoneTable.getId(), milestoneTable.getName());
+
     }
 
-    public void editDataFromCriterion(String nameST, String description, CriterionTable criterionTable, int id) {
+    public void editDataFromCriterion(ArrayList<String> nameST, ArrayList<Integer> nameIndicators, ArrayList<String>description, ArrayList<Integer> descriptionIndicators,
+            CriterionTable criterionTable, int id) {
 
-        String nameForManipulator = InputController.fillNameTextMapper(nameST);
-        String descForManipulator = InputController.fillTextMapper(criterionTable.getDescription());
+        ArrayList<String> nameForManipulator = InputController.fillNameTextMapper(nameST);
+        ArrayList<String> descForManipulator = InputController.fillTextMapper(description);
         criterionTable.setName(id + "_" + nameForManipulator);
         if(descForManipulator != null){
-            criterionTable.setDescription(description);
+            criterionTable.setDescription(description.get(0));
         }
 
 
-        dataManipulator.editDataInCriterion(nameForManipulator, descForManipulator, criterionTable.getId());
+        dataManipulator.editDataInCriterion(nameForManipulator, descForManipulator, nameIndicators, descriptionIndicators, criterionTable.getId());
         segmentLists.updateListItem(SegmentType.Criterion, id, criterionTable);
     }
 
-    public void editDataFromCPR(String nameST, int roleIndex, CPRTable cprTable) {
+    public void editDataFromCPR(ArrayList<String> nameST, ArrayList<Integer> nameIndicators, ArrayList<Integer> roleIndex,
+                                ArrayList<Integer> roleIndicators, CPRTable cprTable) {
 
-        String nameForManipulator = InputController.fillNameTextMapper(nameST);
-        int roleManipulatorId = dataPreparer.prepareIndexForManipulator(roleIndex);
+        ArrayList<String> nameForManipulator = InputController.fillNameTextMapper(nameST);
+        ArrayList<Integer> roleManipulatorId = dataPreparer.prepareIndexForManipulator(roleIndex);
         int cprId = cprTable.getId();
-        dataManipulator.editDataInCPR(nameForManipulator, roleManipulatorId, cprId);
-        String cprName = dataPreparer.createTableItemIdName(cprId, nameForManipulator);
+        dataManipulator.editDataInCPR(nameForManipulator, nameIndicators, roleManipulatorId, roleIndicators, cprId);
+        String cprName = dataPreparer.createTableItemIdName(cprId, nameForManipulator.get(0));
         cprTable.setName(cprName);
-        cprTable.setRole(dataPreparer.prepareDependency(roleManipulatorId, segmentLists.getRoleObservable()));
-        int roleId = dataModel.getRoleId(roleManipulatorId);
+        cprTable.setRole(dataPreparer.prepareDependency(roleManipulatorId.get(0), segmentLists.getRoleObservable()));
+        ArrayList<Integer> roleId = dataModel.getRoleId(roleManipulatorId);
         segmentLists.updateListItem(SegmentType.ConfigPersonRelation, cprId, cprTable);
 
         mapperTableToObject.updateValueList(roleId, mapperTableToObject.getRoleMaps().get(3), cprId, cprName);
     }
 
-    public void editDataFromBranch(String nameST, boolean isMainBranch, BranchTable branchTable) {
+    public void editDataFromBranch(ArrayList<String> nameST, ArrayList<Integer> nameIndicators,  boolean isMainBranch, BranchTable branchTable) {
 
-        String nameForManipulator = InputController.fillNameTextMapper(nameST);
+        ArrayList<String> nameForManipulator = InputController.fillNameTextMapper(nameST);
         int branchId = branchTable.getId();
-        dataManipulator.editDataInBranch(nameForManipulator, isMainBranch, branchId);
-        String branchName = dataPreparer.createTableItemIdName(branchId, nameForManipulator);
+        dataManipulator.editDataInBranch(nameForManipulator, nameIndicators, isMainBranch, branchId);
+        String branchName = dataPreparer.createTableItemIdName(branchId, nameForManipulator.get(0));
         branchTable.setName(branchName);
         if (isMainBranch) {
             branchTable.setMain("YES");
@@ -211,160 +246,231 @@ public class EditFormController implements IEditFormController {
     }
 
     @Override
-    public void editDataFromPhase(String name, String description, LocalDate endDate, int milestonId, int configurationId, ArrayList<Integer> workUnits,
+    public void editDataFromPhase(ArrayList<String> actName, ArrayList<LocalDate> endDateL, ArrayList<String> desc,
+                                  ArrayList<Integer> confIndex, ArrayList<Integer> milestoneIndex,  ArrayList<ArrayList<Integer>> workUnitIndexList,
+                                  ArrayList<Integer> workUnitIndicators, ArrayList<Integer> nameIndicator, ArrayList<Integer> endDateIndicator,
+                                  ArrayList<Integer> descIndicator, ArrayList<Integer> confIndicator, ArrayList<Integer> milestoneIndicator,
                                   PhaseTable phaseTable, int id) {
-        String nameForManipulator = InputController.fillNameTextMapper(name);
-        String descriptionForManipulator = InputController.fillTextMapper(description);
-        LocalDate date = InputController.checkDate(endDate);
-        int configIdForManipulator = segmentLists.getConfigObservable().get(configurationId).getId();
-        int milestoneForManipulator = segmentLists.getMilestoneObservable().get(milestonId).getId();
-        ArrayList<Integer> workUnitsForManipulator = dataPreparer.prepareIndicesForManipulator(workUnits);
+        ArrayList<String> nameForManipulator = InputController.fillNameTextMapper(actName);
+        ArrayList<String> descriptionForManipulator = InputController.fillTextMapper(desc);
+        ArrayList<LocalDate> date = InputController.checkDate(endDateL);
+        ArrayList<Integer> configIdForManipulator = dataPreparer.prepareIndexForManipulator(confIndex);
+        ArrayList<Integer> milestoneForManipulator = dataPreparer.prepareIndexForManipulator(milestoneIndex);
+        ArrayList<ArrayList<Integer>> workUnitsForManipulator = dataPreparer.prepareIndicesForManipulator(workUnitIndexList);
         dataManipulator.editDataInPhase(nameForManipulator, date, descriptionForManipulator, configIdForManipulator, milestoneForManipulator,
-                workUnitsForManipulator, id);
+                workUnitsForManipulator, workUnitIndicators, nameIndicator,  endDateIndicator, descIndicator,  confIndicator,  milestoneIndicator, id);
 
-        String phaseName = dataPreparer.createTableItemIdName(id, nameForManipulator);
+        String phaseName = dataPreparer.createTableItemIdName(id, nameForManipulator.get(0));
         phaseTable.setName(phaseName);
-        phaseTable.setConfiguration(segmentLists.getConfigObservable().get(configurationId).getName());
-        phaseTable.setMilestone(segmentLists.getMilestoneObservable().get(milestonId).getName());
-
     }
 
     @Override
-    public void editDataFromIteration(String name, String description, LocalDate startDate, LocalDate endDate, int configurationId, ArrayList<Integer> workUnits, IterationTable iterationTable,
-                                      int id) {
-        String nameForManipulator = InputController.fillNameTextMapper(name);
-        String descriptionForManipulator = InputController.fillTextMapper(description);
-        LocalDate startDate1 = InputController.checkDate(startDate);
-        LocalDate endDate1 = InputController.checkDate(endDate);
+    public void editDataFromIteration(ArrayList<String> actName, ArrayList<LocalDate> endDateL,  ArrayList<LocalDate> startDateL, ArrayList<String> desc,
+                                      ArrayList<Integer> confIndex,  ArrayList<ArrayList<Integer>> workUnitIndexList,
+                                      ArrayList<Integer> workUnitIndicators, ArrayList<Integer> nameIndicator, ArrayList<Integer> endDateIndicator,
+                                      ArrayList<Integer> startDateIndicator, ArrayList<Integer> descIndicator, ArrayList<Integer> confIndicator,
+                                      IterationTable iterationTable, int id) {
+        ArrayList<String> nameForManipulator = InputController.fillNameTextMapper(actName);
+        ArrayList<String> descriptionForManipulator = InputController.fillTextMapper(desc);
+        ArrayList<LocalDate> startDate1 = InputController.checkDate(startDateL);
+        ArrayList<LocalDate> endDate1 = InputController.checkDate(endDateL);
 
-        int configIdForManipulator = segmentLists.getConfigObservable().get(configurationId).getId();
+        ArrayList<Integer> configIdForManipulator = dataPreparer.prepareIndexForManipulator(confIndex);
 
-        ArrayList<Integer> workUnitsForManipulator = dataPreparer.prepareIndicesForManipulator(workUnits);
-        dataManipulator.editDataInIteration(nameForManipulator, startDate1, endDate1, descriptionForManipulator, configIdForManipulator, workUnitsForManipulator, id);
+        ArrayList<ArrayList<Integer>> workUnitsForManipulator = dataPreparer.prepareIndicesForManipulator(workUnitIndexList);
+       dataManipulator.editDataInIteration(nameForManipulator, startDate1, endDate1, descriptionForManipulator, configIdForManipulator,
+               workUnitsForManipulator, workUnitIndicators, nameIndicator, endDateIndicator, startDateIndicator, descIndicator, confIndicator, id);
 
-        String iterationName = dataPreparer.createTableItemIdName(id, nameForManipulator);
+        String iterationName = dataPreparer.createTableItemIdName(id, nameForManipulator.get(0));
         iterationTable.setName(iterationName);
-        iterationTable.setConfiguration(segmentLists.getConfigObservable().get(configurationId).getName());
     }
 
     @Override
-    public void editDataFromActivity(String name, String description, ArrayList<Integer> workUnits, ActivityTable activityTable,
-                                      int id) {
-        String nameForManipulator = InputController.fillNameTextMapper(name);
-        String descriptionForManipulator = InputController.fillTextMapper(description);
-        if(descriptionForManipulator != null){
-            activityTable.setDescription(descriptionForManipulator);
-        }
+    public void editDataFromActivity(ArrayList<String> name, ArrayList<String> description,  ArrayList<ArrayList<Integer>> workUnits,
+                                     ArrayList<Integer> nameIndicators,  ArrayList<Integer> descIndicators,  ArrayList<Integer> workUnitIndicators, ActivityTable activityTable, int id) {
+        ArrayList<String> nameForManipulator = InputController.fillNameTextMapper(name);
+        ArrayList<String> descriptionForManipulator = InputController.fillTextMapper(description);
 
-        ArrayList<Integer> workUnitsForManipulator = dataPreparer.prepareIndicesForManipulator(workUnits);
-        dataManipulator.editDataInActivity(nameForManipulator, descriptionForManipulator, workUnitsForManipulator, id);
+        ArrayList<ArrayList<Integer>> workUnitsForManipulator = dataPreparer.prepareIndicesForManipulator(workUnits);
+        dataManipulator.editDataInActivity(nameForManipulator, descriptionForManipulator, workUnitsForManipulator,
+                nameIndicators,  descIndicators, workUnitIndicators, id);
 
-        String activityName = dataPreparer.createTableItemIdName(id, nameForManipulator);
+        String activityName = dataPreparer.createTableItemIdName(id, nameForManipulator.get(0));
         activityTable.setName(activityName);
 
     }
 
     @Override
-    public void editDataFromChange(String name, String description, boolean exist, ChangeTable changeTable,
+    public void editDataFromChange(ArrayList<String> name, ArrayList<Integer> nameIndicator,  ArrayList<String> description,
+                                   ArrayList<Integer> descriptionIndicator, boolean exist, ChangeTable changeTable,
                                      int id) {
-        String nameForManipulator = InputController.fillNameTextMapper(name);
-        String descriptionForManipulator = InputController.fillTextMapper(description);
+        ArrayList<String> nameForManipulator = InputController.fillNameTextMapper(name);
+        ArrayList<String> descriptionForManipulator = InputController.fillTextMapper(description);
         if(descriptionForManipulator != null){
-            changeTable.setDescription(descriptionForManipulator);
+            changeTable.setDescription(descriptionForManipulator.get(0));
         }
 
-        dataManipulator.editDataInChange(nameForManipulator, descriptionForManipulator, exist, id);
+        dataManipulator.editDataInChange(nameForManipulator, descriptionForManipulator, nameIndicator, descriptionIndicator, exist, id);
 
-        String changeName = dataPreparer.createTableItemIdName(id, nameForManipulator);
+        String changeName = dataPreparer.createTableItemIdName(id, nameForManipulator.get(0));
         changeTable.setName(changeName);
 
     }
 
     @Override
-    public void editDataFromArtifact(String name, String description, boolean exist, int roleIndex, int typeIndex, LocalDate localDate, ArtifactTable artifactTable,
-                                   int id) {
-        String nameForManipulator = InputController.fillNameTextMapper(name);
-        LocalDate date = InputController.checkDate(localDate);
-        String descriptionForManipulator = InputController.fillTextMapper(description);
+    public void editDataFromArtifact( ArrayList<String> name, ArrayList<String> description, boolean exist,
+                                      ArrayList<Integer> roleIndex, ArrayList<Integer> typeIndex, ArrayList<LocalDate> localDate,
+                                      ArrayList<Integer> nameIndicator, ArrayList<Integer> descriptionIndicator,
+                                      ArrayList<Integer> roleIndicator,  ArrayList<Integer> typeIndicator, ArrayList<Integer> dateIndicator,
+                                     ArtifactTable artifactTable, String count, int id) {
+        int instanceCount = 1;
+        try {
+            instanceCount = Integer.parseInt(count);
+
+        ArrayList<String> nameForManipulator = InputController.fillNameTextMapper(name);
+        ArrayList<LocalDate> date = InputController.checkDate(localDate);
+        ArrayList<String> descriptionForManipulator = InputController.fillTextMapper(description);
+
         if (descriptionForManipulator != null){
-            artifactTable.setDescription(descriptionForManipulator);
+            artifactTable.setDescription(descriptionForManipulator.get(0));
         }
 
-        dataManipulator.editDataInArtifact(nameForManipulator, descriptionForManipulator, date, exist, roleIndex, typeIndex, id);
+        dataManipulator.editDataInArtifact(nameForManipulator, nameIndicator, descriptionForManipulator, descriptionIndicator,
+                date, dateIndicator, exist, roleIndex, typeIndex, roleIndicator, typeIndicator, instanceCount, id);
 
-        String artifactName = dataPreparer.createTableItemIdName(id, nameForManipulator);
+        String artifactName = dataPreparer.createTableItemIdName(id, nameForManipulator.get(0));
         artifactTable.setName(artifactName);
-
+        formController.setNameToItem(identificatorCreater.getArtifactSegmentIdToFormIndexMaper().get(id), artifactName);
+        }catch (NumberFormatException e){
+            //Todo allert
+        }
     }
     @Override
-    public void editDataFromWorkUnit(String name, String description, String estimatedTime, int priorityIndex, int severityIndex, int resolutionIndex,
-                                     int statusIndex, String category, int typeIndex, int assigneIndex, int authorIndex, boolean selected, WorkUnitTable workUnitTable, int id) {
+    public void editDataFromWorkUnit(ArrayList<String> name, ArrayList<String> description, ArrayList<String> category,
+                                     ArrayList<Integer> assigneIndex, ArrayList<Integer> authorIndex, ArrayList<Integer> priorityIndex, ArrayList<Integer> severityIndex,
+                                     ArrayList<Integer> typeIndex, ArrayList<Integer> resolutionIndex, ArrayList<Integer> statusIndex,
+                                     ArrayList<String> estimatedTime, List<Integer> nameIndicator, List<Integer> descriptionIndicator, List<Integer> categoryIndicator,
+                                     ArrayList<Integer> assigneIndicator, ArrayList<Integer> authorIndicator, ArrayList<Integer> priorityIndicator, ArrayList<Integer> severityIndicator,
+                                     ArrayList<Integer> typeIndicator, ArrayList<Integer> resolutionIndicator, ArrayList<Integer> statusIndicator,
+                                     ArrayList<Integer> estimateIndicator, boolean isExist, WorkUnitTable workUnitTable, int id) {
 
-        String nameForManipulator = InputController.fillNameTextMapper(name);
-        String categoryForManipulator = InputController.fillTextMapper(category);
-        String descriptionForManipulator = InputController.fillTextMapper(description);
+        ArrayList<String> nameForManipulator = InputController.fillNameTextMapper(name);
+        ArrayList<String> categoryForManipulator = InputController.fillTextMapper(category);
+        ArrayList<String> descriptionForManipulator = InputController.fillTextMapper(description);
 
-        Double estimateForDataManipulator = -1.0;
+        ArrayList<Double> estimateForDataManipulator = new ArrayList<>();
 
-        if (estimatedTime != null && !estimatedTime.equals("")) {
+        if (estimatedTime.size() != 0) {
             estimateForDataManipulator = InputController.isDoubleNumber(estimatedTime);
         }
 
-        int assigneForManipulator = dataPreparer.prepareIndexForManipulator(assigneIndex);
-        int authorForManipulator = dataPreparer.prepareIndexForManipulator(authorIndex);
-        int priorityForManipulator = dataPreparer.prepareIndexForManipulator(priorityIndex);
-        int severityForManipulator = dataPreparer.prepareIndexForManipulator(severityIndex);
-        int typeForManipulator = dataPreparer.prepareIndexForManipulator(typeIndex);
-        int resolutionForManipulator = dataPreparer.prepareIndexForManipulator(resolutionIndex);
-        int statusForManipulator = dataPreparer.prepareIndexForManipulator(statusIndex);
-        dataManipulator.editDataInWorkUnit(nameForManipulator, descriptionForManipulator ,categoryForManipulator, assigneForManipulator, authorForManipulator,
-                priorityForManipulator ,severityForManipulator, typeForManipulator,resolutionForManipulator , statusForManipulator, estimateForDataManipulator, selected, id);
-        workUnitTable.setName(dataPreparer.createTableItemIdName(id, nameForManipulator));
+        ArrayList<Integer> assigneForManipulator = dataPreparer.prepareIndexForManipulator(assigneIndex);
+        ArrayList<Integer> authorForManipulator = dataPreparer.prepareIndexForManipulator(authorIndex);
+        ArrayList<Integer> priorityForManipulator = dataPreparer.prepareIndexForManipulator(priorityIndex);
+        ArrayList<Integer> severityForManipulator = dataPreparer.prepareIndexForManipulator(severityIndex);
+        ArrayList<Integer> typeForManipulator = dataPreparer.prepareIndexForManipulator(typeIndex);
+        ArrayList<Integer> resolutionForManipulator = dataPreparer.prepareIndexForManipulator(resolutionIndex);
+        ArrayList<Integer> statusForManipulator = dataPreparer.prepareIndexForManipulator(statusIndex);
+        dataManipulator.editDataInWorkUnit(nameForManipulator, descriptionForManipulator, categoryForManipulator,
+                assigneForManipulator, authorForManipulator, priorityForManipulator, severityForManipulator,
+                typeForManipulator, resolutionForManipulator, statusForManipulator,
+                estimateForDataManipulator, nameIndicator,  descriptionIndicator,  categoryIndicator,
+                assigneIndicator, authorIndicator, priorityIndicator,  severityIndicator,
+                typeIndicator, resolutionIndicator, statusIndicator, estimateIndicator, isExist, id);
+
+        workUnitTable.setName(dataPreparer.createTableItemIdName(id, nameForManipulator.get(0)));
     }
 
     @Override
-    public void editDataFromConfiguration(String name, LocalDate createDate, int autohorIndex, boolean isRelease, ObservableList<Integer> cprsIndicies,
-                                          ObservableList<Integer> branchIndicies, ObservableList<Integer> changeIndicies, int configId) {
-        String nameForManipulator = InputController.fillNameTextMapper(name);
-        LocalDate date = InputController.checkDate(createDate);
-        int roleIdForManipulator = segmentLists.getRoleObservable().get(autohorIndex).getId();
+    public void editDataFromConfiguration(ArrayList<String> actName, ArrayList<LocalDate> createDate,
+                                          boolean isRelease, ArrayList<Integer> authorIndex, ArrayList<ArrayList<Integer>> cprs,
+                                          ArrayList<ArrayList<Integer>> branches, ArrayList<ArrayList<Integer>> changeIndexs,
+                                          ArrayList<Integer> cprIndicators, ArrayList<Integer> nameIndicator, ArrayList<Integer> createdIndicator,
+                                          ArrayList<Integer> authorIndicator, ArrayList<Integer> branchIndicator, ArrayList<Integer> changeIndicator,
+                                          String count, int configId) {
 
-        ArrayList<Integer> cprsForManipulator = dataPreparer.prepareIndicesForManipulator(cprsIndicies);
-        ArrayList<Integer> branchesForManipulator = dataPreparer.prepareIndicesForManipulator(branchIndicies);
-        ArrayList<Integer> changesForManipulator = dataPreparer.prepareIndicesForManipulator(changeIndicies);
+        int instanceCount;
+        try {
+            instanceCount = Integer.parseInt(count);
+            ArrayList<String> nameForManipulator = InputController.fillNameTextMapper(actName);
+            ArrayList<LocalDate> date = InputController.checkDate(createDate);
+            ArrayList<Integer> roleIdForManipulator = dataPreparer.prepareIndexForManipulator(authorIndex);
 
-        dataManipulator.editDataInConfiguration(nameForManipulator, date, isRelease, roleIdForManipulator,
-                cprsForManipulator, branchesForManipulator, changesForManipulator, configId);
+            ArrayList<ArrayList<Integer>> cprsForManipulator = dataPreparer.prepareIndicesForManipulator(cprs);
+            ArrayList<ArrayList<Integer>> branchesForManipulator = dataPreparer.prepareIndicesForManipulator(branches);
+            ArrayList<ArrayList<Integer>> changesForManipulator = dataPreparer.prepareIndicesForManipulator(changeIndexs);
+
+            dataManipulator.editDataInConfiguration(nameForManipulator, date, isRelease, roleIdForManipulator,
+                    cprsForManipulator, branchesForManipulator, changesForManipulator, nameIndicator, createdIndicator,
+                    authorIndicator, cprIndicators, branchIndicator, changeIndicator, instanceCount, configId);
+            String itemName = nameForManipulator.get(0);
+            int formIndex = identificatorCreater.getConfigurationFormIndex(configId);
+            ConfigTable configTable = new ConfigTable(itemName, "", formIndex, configId);
+            segmentLists.getConfigObservable().add(formIndex, configTable);
+
+            formController.setNameToItem(formIndex, itemName);
+            formController.setItemInstanceCount(formIndex, instanceCount);
+        }catch (NumberFormatException e){
+            //TODO allert
+        }
     }
 
     @Override
-    public void editDataFromVCSTag(String name, String description, VCSTagTable tagTable, int id){
-        String nameForManipulator = InputController.fillNameTextMapper(name);
-        String descriptionForManipulator =InputController.fillTextMapper(description);
+    public void editDataFromVCSTag(ArrayList<String> name, ArrayList<String> description,
+                                   ArrayList<Integer> nameIndicator, ArrayList<Integer> descriptionIndicator, VCSTagTable tagTable, int id){
+        ArrayList<String> nameForManipulator = InputController.fillNameTextMapper(name);
+        ArrayList<String> descriptionForManipulator =InputController.fillTextMapper(description);
         if(descriptionForManipulator != null){
-            tagTable.setDescription(descriptionForManipulator);
+            tagTable.setDescription(descriptionForManipulator.get(0));
         }
 
-        dataManipulator.editDataInVCSTag(nameForManipulator, descriptionForManipulator, id);
+        dataManipulator.editDataInVCSTag(nameForManipulator, descriptionForManipulator, nameIndicator, descriptionIndicator, id);
 
-        String artifactName = dataPreparer.createTableItemIdName(id, nameForManipulator);
-        tagTable.setName(artifactName);
+        String VCSTagName = dataPreparer.createTableItemIdName(id, nameForManipulator.get(0));
+        tagTable.setName(VCSTagName);
     }
 
     @Override
-    public void editDataFromCommit(String name, boolean release, int id) {
-        String nameForManipulator = InputController.fillNameTextMapper(name);
+    public void editDataFromCommit(ArrayList<String> name, ArrayList<Integer> nameIndicator, boolean release, String count, int id) {
 
-        dataManipulator.editDataInCommit(nameForManipulator, release, id);
+        int instanceCount = 0;
+        try {
+            instanceCount = Integer.parseInt(count);
+            ArrayList<String> nameForManipulator = InputController.fillNameTextMapper(name);
+
+            dataManipulator.editDataInCommit(nameForManipulator, nameIndicator, release, instanceCount, id);
+
+            int formIndex = identificatorCreater.getCommitFormIndex(id);
+
+            formController.setNameToItem(formIndex, nameForManipulator.get(0));
+            formController.setItemInstanceCount(formIndex, instanceCount);
+
+        }catch (NumberFormatException e){
+            //Todo allert
+            e.printStackTrace();
+        }
 
     }
 
     @Override
-    public void editDataFromCommitedConfiguration(String name, LocalDate dateFromDatePicker, int commitedConfigurationId) {
-        String nameForManipulator = InputController.fillNameTextMapper(name);
-        LocalDate date = InputController.checkDate(dateFromDatePicker);
-        dataManipulator.editDataInCommitedConfiguration(nameForManipulator, date, commitedConfigurationId);
+    public void editDataFromCommitedConfiguration(ArrayList<String> name, ArrayList<LocalDate>  dateFromDatePicker, ArrayList<Integer> nameIndicator,
+                                                  ArrayList<Integer> dateIndicator, String count, int commitedConfigurationId) {
 
+        int instanceCount = 0;
+        try {
+            instanceCount = Integer.parseInt(count);
+            ArrayList<String> nameForManipulator = InputController.fillNameTextMapper(name);
+            ArrayList<LocalDate> date = InputController.checkDate(dateFromDatePicker);
+
+            dataManipulator.editDataInCommitedConfiguration(nameForManipulator, nameIndicator, date, dateIndicator, instanceCount, commitedConfigurationId);
+
+            int formIndex = identificatorCreater.getCommitedConfigurationFormIndex(commitedConfigurationId);
+            formController.setNameToItem(formIndex, nameForManipulator.get(0));
+            formController.setItemInstanceCount(formIndex, instanceCount);
+        }catch (NumberFormatException e){
+            //Todo allert
+            e.printStackTrace();
+        }
     }
 
 }

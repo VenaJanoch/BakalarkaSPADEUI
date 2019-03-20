@@ -2,3 +2,7 @@ target/
 .idea/
 SPADEUI.iml
 out/
+src/main/java/run/DrawerDemo.java
+src/main/java/META-INF/MANIFEST.MF
+Testovaci
+build.xml

@@ -53,7 +53,6 @@ public class BranchForm extends TableBasicForm implements ISegmentTableForm {
         super(formController, formDataController, editFormController, deleteFormController, type);
 
        editBranchControlPanel = new BranchControlPanel("Edit", formDataController, editFormController, formController);
-       editBranchControlPanel.createControlPanel();
 
 
         setEventHandler();

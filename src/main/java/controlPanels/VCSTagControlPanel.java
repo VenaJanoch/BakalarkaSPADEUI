@@ -7,6 +7,7 @@ import interfaces.IEditFormController;
 import interfaces.IFormDataController;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableView;
+import services.ParamType;
 import services.SegmentType;
 import tables.ActivityTable;
 import tables.BasicTable;
@@ -32,10 +33,13 @@ public class VCSTagControlPanel extends DescriptionControlPanel {
     @Override
     public void showEditControlPanel(BasicTable basicTable, TableView tableView) {
         int id = basicTable.getId();
-        String[] vcsTagStringData = formDataController.getVCSTagStringData(id);
+        List[] vcsTagStringData = formDataController.getVCSTagStringData(id);
 
-        nameTF.setTextToTextField(vcsTagStringData[0]);
-       controlPanelController.setValueTextField(descriptionTF, vcsTagStringData, 1);
+        controlPane.getChildren().clear();
+        addItemsToControlPanel();
+
+        controlPanelController.setValueTextField(this, lineList ,ParamType.Name, vcsTagStringData, vcsTagStringData[2], 0);
+        controlPanelController.setValueTextField(this, lineList ,ParamType.Description, vcsTagStringData, vcsTagStringData[3], 1);
 
         button.setOnAction(event -> saveDataFromPanel(basicTable, tableView));
     }
@@ -43,19 +47,19 @@ public class VCSTagControlPanel extends DescriptionControlPanel {
     @Override
     protected void addItemsToControlPanel() {
 
-        controlPane.add(button, 2, 3);
-
+        controlPanelController.createNewLine(this, lineList);
 
     }
 
     public void saveDataFromPanel(BasicTable basicTable, TableView tableView){
         tagTable = (VCSTagTable) basicTable;
         int id = tagTable.getId();
+        ArrayList<Integer> nameIndicators = new ArrayList<>();
+        ArrayList<Integer> descIndicators = new ArrayList<>();
+        ArrayList<String> name = controlPanelController.processTextLines(ParamType.Name, nameIndicators);
+        ArrayList<String> desc = controlPanelController.processTextLines(ParamType.Description, descIndicators);
 
-
-        String desc = controlPanelController.checkValueFromTextItem(descriptionTF);
-
-        editFormController.editDataFromVCSTag(nameTF.getTextFromTextField(), desc, tagTable, id);
+        editFormController.editDataFromVCSTag(name, desc, nameIndicators, descIndicators, tagTable, id);
         clearPanelCB(tableView);
     }
 

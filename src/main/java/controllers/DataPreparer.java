@@ -75,6 +75,16 @@ public class DataPreparer {
         return id + "_" + prepareStringForForm(name);
     }
 
+    private ArrayList<ArrayList<Integer>> prepareIndicesForForm(List<List<Integer>> indices){
+        ArrayList<ArrayList<Integer>> list =  new ArrayList<>();
+
+        for(List<Integer> i : indices){
+            list.add(prepareIndiciesForForm(i));
+        }
+        return list;
+    }
+
+
     public ArrayList<Integer> prepareIndiciesForForm(List<Integer> indicies){
         ArrayList<Integer> formIndicies =  new ArrayList<>();
 
@@ -124,9 +134,17 @@ public class DataPreparer {
         return index - 1;
     }
 
-    public ArrayList<Integer> prepareIndicesForManipulator(List<Integer> indices) {
+    public ArrayList<Integer> prepareIndexForManipulator(List<Integer> indices){
         ArrayList<Integer> tmpIndices = new ArrayList<>();
         for (int index : indices) {
+            tmpIndices.add(prepareIndexForManipulator(index));
+        }
+        return tmpIndices;
+    }
+
+    public ArrayList<ArrayList<Integer>> prepareIndicesForManipulator(ArrayList<ArrayList<Integer>> indices) {
+        ArrayList<ArrayList<Integer>> tmpIndices = new ArrayList<>();
+        for (List<Integer> index : indices) {
             tmpIndices.add(prepareIndexForManipulator(index));
         }
         return tmpIndices;

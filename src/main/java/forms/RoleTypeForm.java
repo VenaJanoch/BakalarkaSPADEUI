@@ -33,8 +33,8 @@ import java.util.ArrayList;
  */
 public class RoleTypeForm extends TableClassBasicForm{
 
-	private String[] classArray = new String[RoleClass.values().length];
-	private String[] superClassArray = new String[RoleSuperClass.values().length];
+	private ArrayList<String> classArray = new ArrayList<>();
+	private ArrayList<String> superClassArray = new ArrayList<>();
 
 
 	/**
@@ -48,12 +48,12 @@ public class RoleTypeForm extends TableClassBasicForm{
 		editClassControlPanelTCB = new ClassControlPanel("Edit", SegmentType.RoleType, formDataController, editFormController, formController);
 		int i = 0;
 		for(RoleClass roleClass : RoleClass.values()){
-			classArray[i] = roleClass.name();
+			classArray.add(roleClass.name());
 			i++;
 		}
 		i = 0;
 		for(RoleSuperClass roleSuperClass : RoleSuperClass.values()){
-			superClassArray[i] = roleSuperClass.name();
+			superClassArray.add(roleSuperClass.name());
 			i++;
 		}
 

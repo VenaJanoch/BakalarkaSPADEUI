@@ -1,26 +1,29 @@
 package abstractControlPane;
 
-import com.sun.xml.internal.bind.v2.runtime.reflect.opt.Const;
 import controllers.ControlPanelController;
 import controllers.FormController;
+import graphics.ControlPanelLine;
 import interfaces.IEditFormController;
 import interfaces.IFormDataController;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
 import services.Constans;
+import services.ControlPanelLineObject;
+
+import java.util.ArrayList;
 
 public abstract class ControlPanel extends ScrollPane {
 
     protected GridPane controlPane;
     protected Button button;
+    protected ObservableList<ControlPanelLineObject> lineList;
+    protected ArrayList<ControlPanelLine> controlPanelLines;
 
     protected IFormDataController formDataController;
     protected IEditFormController editFormController;
@@ -32,15 +35,15 @@ public abstract class ControlPanel extends ScrollPane {
     public ControlPanel(String buttonText, IFormDataController formDataController, IEditFormController editFormController, FormController formController){
         this(buttonText, formDataController, editFormController);
         this.formController = formController;
-        this.controlPanelController = new ControlPanelController();
-
     }
 
     public ControlPanel(String buttonText, IFormDataController formDataController, IEditFormController editFormController){
         super();
         this.formDataController = formDataController;
         this.editFormController = editFormController;
-        this.controlPanelController = new ControlPanelController();
+        this.controlPanelLines = new ArrayList<ControlPanelLine>();
+        this.controlPanelController = new ControlPanelController(controlPanelLines);
+        this.lineList = FXCollections.observableArrayList();
         this.setWidth(Constans.rightDrawerWidth);
         createMainPanel(buttonText);
     }

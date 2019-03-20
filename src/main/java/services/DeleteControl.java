@@ -124,7 +124,7 @@ public class DeleteControl {
         ArrayList<Integer> indexDataList = new ArrayList<>();
 
         for(int i : list){
-            indexDataList.add(idCreater.getWorkUnitIndexMaper().get(i));
+            indexDataList.add(idCreater.getWorkUnitIndexToIdMaper().get(i));
         }
 
         return indexDataList;

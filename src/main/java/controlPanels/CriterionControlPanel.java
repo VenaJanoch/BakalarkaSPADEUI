@@ -7,8 +7,12 @@ import javafx.scene.Scene;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
+import services.ParamType;
 import tables.BasicTable;
 import tables.CriterionTable;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class CriterionControlPanel extends DescriptionControlPanel {
 
@@ -21,7 +25,7 @@ public class CriterionControlPanel extends DescriptionControlPanel {
 
 
     public void addItemsToControlPanel(){
-        controlPane.add(button, 1, 2);
+        controlPanelController.createNewLine(this, lineList);
 
     }
 
@@ -29,14 +33,22 @@ public class CriterionControlPanel extends DescriptionControlPanel {
     public void showEditControlPanel(BasicTable basicTable, TableView tableView){
         CriterionTable criterionTable = (CriterionTable) basicTable;
         int id = criterionTable.getId();
-        String[] criterionData = formDataController.getCriterionData(id);
+        List[] criterionData = formDataController.getCriterionData(id);
 
-        nameTF.setTextToTextField(criterionData[0]);
-        controlPanelController.setValueTextField(descriptionTF, criterionData, 1);
+        controlPane.getChildren().clear();
+        addItemsToControlPanel();
+
+        controlPanelController.setValueTextField(this, lineList ,ParamType.Name, criterionData, criterionData[2], 0);
+        controlPanelController.setValueTextField(this, lineList ,ParamType.Description, criterionData, criterionData[3], 1);
 
         button.setOnAction(event ->{
-            String description = controlPanelController.checkValueFromTextItem(descriptionTF);
-            editFormController.editDataFromCriterion(nameTF.getTextFromTextField(), description, criterionTable, id);
+
+            ArrayList<Integer> nameIndicators = new ArrayList<>();
+            ArrayList<Integer> descIndicators = new ArrayList<>();
+           ArrayList<String> name = controlPanelController.processTextLines(ParamType.Name, nameIndicators);
+            ArrayList<String> desc = controlPanelController.processTextLines(ParamType.Description, descIndicators);
+
+            editFormController.editDataFromCriterion(name, nameIndicators,  desc, descIndicators, criterionTable, id);
             clearPanel(tableView);
         });
     }
