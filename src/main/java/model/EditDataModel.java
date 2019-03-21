@@ -188,6 +188,16 @@ public class EditDataModel implements IEditDataModel {
         dataModel.addDataToCommitedConfiguration(commitedConfiguration, nameForManipulator, nameIndicator, dateFromDatePicker, dateIndicator, instanceCount);
     }
 
+    public void editDataInProject(ArrayList<String> nameForManipulator, ArrayList<LocalDate> startDate1, ArrayList<LocalDate> endDate1, ArrayList<String> descriptionForManipulator, ArrayList<ArrayList<Integer>> workUnitsForManipulator,
+                           ArrayList<Integer> workUnitIndicators, ArrayList<Integer> nameIndicators, ArrayList<Integer> date1Indicators,
+                           ArrayList<Integer> date2Indicators, ArrayList<Integer> descIndicators){
+        dataModel.addDataToProject(nameForManipulator, startDate1, endDate1, descriptionForManipulator, workUnitsForManipulator,
+                workUnitIndicators, nameIndicators, date1Indicators, date2Indicators, descIndicators);
+    }
+
+
+
+
     public void updateItemList(SegmentType formType, SegmentType elementType, ArrayList<Integer> elementIdList){
         if (elementIdList == null){
             return;

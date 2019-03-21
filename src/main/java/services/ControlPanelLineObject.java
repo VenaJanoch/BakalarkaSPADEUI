@@ -8,7 +8,7 @@ public class ControlPanelLineObject {
 
     private String name;
     private ControlPanelLineType lineType;
-    private ObservableList<BasicTable> segmentsList;
+    private ObservableList segmentsList;
     private ParamType type;
 
     public ControlPanelLineObject(String name, ControlPanelLineType lineType, ParamType type){
@@ -17,11 +17,13 @@ public class ControlPanelLineObject {
         this.type = type;
     }
 
-    public ControlPanelLineObject(String name, ControlPanelLineType lineType, ParamType type, ObservableList<BasicTable> segmentsList){
+    public ControlPanelLineObject(String name, ControlPanelLineType lineType, ParamType type, ObservableList segmentsList){
         this(name, lineType, type);
         this.segmentsList = segmentsList;
         this.type = type;
     }
+
+
 
     public String getName() {
         return name;

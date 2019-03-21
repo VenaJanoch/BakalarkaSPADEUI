@@ -101,7 +101,8 @@ public class IterationForm extends TableBasicForm implements ISegmentTableForm {
 		configurationColumn.setCellFactory(TextFieldTableCell.forTableColumn());
 
 
-		tableTV.getColumns().addAll(nameColumn, configurationColumn);
+		//tableTV.getColumns().addAll(nameColumn, configurationColumn);
+		tableTV.getColumns().add(nameColumn);
 		tableTV.setOnMousePressed(OnMousePressedEventHandler);
 		tableTV.setEditable(false);
 

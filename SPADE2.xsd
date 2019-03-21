@@ -21,8 +21,6 @@
         <xs:sequence>
             <xs:element name="workUnits" type="WorkUnit" minOccurs="0"
                         maxOccurs="unbounded"/>
-            <xs:element name="workUnitIndexs" type="xs:int" minOccurs="0"
-                        maxOccurs="unbounded"/>
             <xs:element name="phases" type="Phase" minOccurs="0"
                         maxOccurs="unbounded"/>
             <xs:element name="iterations" type="Iteration" minOccurs="0"
@@ -67,11 +65,27 @@
                         maxOccurs="unbounded"/>
             <xs:element name="commitConfiguration" type="CommitedConfiguration" minOccurs="0"
                         maxOccurs="unbounded"/>
+            <xs:element name="workUnitIndexs" type="WorkUnitList" minOccurs="0"
+                        maxOccurs="unbounded"/>
+            <xs:element name="name" type="xs:string" minOccurs="0"
+                        maxOccurs="unbounded" />
+            <xs:element name="description" type="xs:string" minOccurs="0"
+                        maxOccurs="unbounded" />
+            <xs:element name="startDate" type="xs:date" minOccurs="0"
+                        maxOccurs="unbounded"/>
+            <xs:element name="endDate" type="xs:date" minOccurs="0"
+                        maxOccurs="unbounded"/>
+            <xs:element name="workUnitsIndicator" type="xs:int" minOccurs="0"
+                        maxOccurs="unbounded"/>
+            <xs:element name="startDateIndicator" type="xs:int" minOccurs="0"
+                        maxOccurs="unbounded"/>
+            <xs:element name="endDateIndicator" type="xs:int" minOccurs="0"
+                        maxOccurs="unbounded"/>
+            <xs:element name="nameIndicator" type="xs:int" minOccurs="0"
+                        maxOccurs="unbounded" />
+            <xs:element name="descriptionIndicator" type="xs:int" minOccurs="0"
+                        maxOccurs="unbounded" />
         </xs:sequence>
-        <xs:attribute name="name" type="xs:string"/>
-        <xs:attribute name="description" type="xs:string"/>
-        <xs:attribute name="endDate" type="xs:date"/>
-        <xs:attribute name="startDate" type="xs:date"/>
     </xs:complexType>
 
 

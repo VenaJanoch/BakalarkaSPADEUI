@@ -42,5 +42,4 @@ public abstract class WorkUnitDateControlPanel extends WorkUnitControlPanel {
 
     protected abstract void showEditControlPanel(BasicTable basicTable, TableView tableView);
 
-
 }

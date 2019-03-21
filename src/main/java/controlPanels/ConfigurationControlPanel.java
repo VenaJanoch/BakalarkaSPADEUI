@@ -6,6 +6,7 @@ import forms.TagForm;
 import graphics.CheckComboBoxItem;
 import graphics.ComboBoxItem;
 import graphics.ControlPanelLine;
+import interfaces.IControlPanel;
 import interfaces.IEditFormController;
 import interfaces.IFormDataController;
 import javafx.scene.control.*;
@@ -17,7 +18,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ConfigurationControlPanel extends DateControlPanel {
+public class ConfigurationControlPanel extends DateControlPanel implements IControlPanel {
 
     private Label isReleaseLB;
 
@@ -76,7 +77,7 @@ public class ConfigurationControlPanel extends DateControlPanel {
     }
 
     @Override
-    public void showEditControlPanel(BasicTable basicTable, TableView tableView) {
+    public void showEditControlPanel() {
 
         List[] configData = formDataController.getConfigurationStringData(configId);
 
@@ -99,5 +100,10 @@ public class ConfigurationControlPanel extends DateControlPanel {
 
        boolean isRelease = Boolean.valueOf((Boolean) configData[9].get(0));
        controlPanelController.setValueRadioButton(isRelease);
+    }
+
+    @Override
+    protected void showEditControlPanel(BasicTable basicTable, TableView tableView) {
+
     }
 }

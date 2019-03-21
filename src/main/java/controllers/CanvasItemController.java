@@ -76,7 +76,7 @@ public class CanvasItemController {
 
                 if (t.getClickCount() == 2) {
 
-                    formController.showEditControlPanel(segmentType, item.getFormIdentificator());
+                    formController.showEditControlPanel(item.getFormIdentificator());
 
                 } else if (!canvasController.isArrow()) {
 

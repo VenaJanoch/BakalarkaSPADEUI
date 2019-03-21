@@ -15,6 +15,7 @@ public class SelectItemController {
     private int formiIndex = 0;
     private FormController formController;
     private DrawerPanelController drawerPanelController;
+
    public SelectItemController(DrawerPanelController drawerPanelController){
        this.drawerPanelController = drawerPanelController;
        roleListener = new ChangeListener<Number>() {

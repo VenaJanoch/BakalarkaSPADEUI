@@ -181,33 +181,33 @@ public class Constans {
     public static final KeyCode delete = KeyCode.DELETE;
     public static final String linkPicture = "link.svn";
 
-    public static final String[] addItemNames = {"Project", "Phase", "Iteration", "Activity", "Work Unit", "Milestone", "Criterion", "Config-role",
+    public static final String[] addItemNames = {"Phase", "Iteration", "Activity", "Work Unit", "Milestone", "Criterion", "Config-role",
             "Role Type", "Priority", "Severity", "Relation", "Resolution", "Status", "Type", "Branch", "Change", "VCSTag"};
 
     public static final String[] textIndicatorList = {"IS", "IS NOT","CONTAINS", "NOT CONTAINS"};
     public static final String[] numberIndicatorList = {"EQUEL", "BIGGER", "SMALLER" };
 
     public static final int projectFormIndex = 0;
-    public static final int phaseFormIndex = 1;
-    public static final int iterationFormIndex = 2;
-    public static final int activityFormIndex = 3;
-    public static final int workUnitFormIndex = 4;
-    public static final int milestoneFormIndex = 5;
-    public static final int criterionFormIndex = 6;
-    public static final int cprFormIndex = 7;
-    public static final int roleTypeIndex = 8;
-    public static final int priorityFormIndex = 9;
-    public static final int severityFormIndex = 10;
-    public static final int relationFormIndex = 11;
-    public static final int resolutionormIndex = 12;
-    public static final int statusFormIndex = 13;
-    public static final int wuTypeFormIndex = 14;
-    public static final int branchIndex = 15;
-    public static final int VCSTagIndex = 16;
-    public static final int changeFormIndex = 17;
-    public static final int artifactFormIndex = 18;
-    public static final int configurationFormIndex = 19;
-    public static final int roleFormIndex = 20;
+    public static final int phaseFormIndex = 0;
+    public static final int iterationFormIndex = 1;
+    public static final int activityFormIndex = 2;
+    public static final int workUnitFormIndex = 3;
+    public static final int milestoneFormIndex = 4;
+    public static final int criterionFormIndex = 5;
+    public static final int cprFormIndex = 6;
+    public static final int roleTypeIndex = 7;
+    public static final int priorityFormIndex = 8;
+    public static final int severityFormIndex = 9;
+    public static final int relationFormIndex = 10;
+    public static final int resolutionormIndex = 11;
+    public static final int statusFormIndex = 12;
+    public static final int wuTypeFormIndex = 13;
+    public static final int branchIndex = 14;
+    public static final int VCSTagIndex = 15;
+    public static final int changeFormIndex = 16;
+    public static final int artifactFormIndex = 17;
+    public static final int configurationFormIndex = 18;
+    public static final int roleFormIndex = 19;
 
 
 

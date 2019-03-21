@@ -7,5 +7,5 @@ package services;
  */
 public enum SegmentType {
     Phase, Iteration, Activity, WorkUnit, Milestone, Criterion, Configuration, ConfigPersonRelation, Branch,
-    Change, Artifact, Role,  Tag, Project, Priority, Severity, RoleType, Relation, Resolution, Status, Type, CommittedConfiguration, Commit, VCSTag
+    Change, Artifact, Role,  Tag, Project, Priority, Severity, RoleType, Relation, Resolution, Status, Type, CommittedConfiguration, Commit, VCSTag,
 }

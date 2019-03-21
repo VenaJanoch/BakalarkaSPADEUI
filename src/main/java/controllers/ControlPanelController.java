@@ -103,14 +103,16 @@ public class ControlPanelController {
     public void setValueDatePicker(ControlPanel controlPanel, ObservableList<ControlPanelLineObject> lineList,
                                    ParamType type, ArrayList<LocalDate> values, List<Integer> indicatorList) {
         int i = 0;
-        for (LocalDate value : values){
-            createNewLine(controlPanel, lineList);
-            ControlPanelLine line = controlPanelLines.get(controlPanelLines.size() -1);
-            line.fillDateLine(value, indicatorList.get(i), type );
-            i++;
-            incrementLineCounter();
-        }
 
+        if(values != null) {
+            for (LocalDate value : values) {
+                createNewLine(controlPanel, lineList);
+                ControlPanelLine line = controlPanelLines.get(controlPanelLines.size() - 1);
+                line.fillDateLine(value, indicatorList.get(i), type);
+                i++;
+                incrementLineCounter();
+            }
+        }
     }
 
     public void setValueCheckComboBox(ControlPanel controlPanel, ObservableList<ControlPanelLineObject> lineList,
@@ -397,6 +399,7 @@ public class ControlPanelController {
 
     public void setCountLine(ControlPanel controlPanel, int lineShift, ControlPanelLine countLine){
         this.countLine = countLine;
+        countLine.getTextItem().setTextToTextField("1");
         setCountLine(controlPanel, lineShift);
         staticObjectCount++;
     }

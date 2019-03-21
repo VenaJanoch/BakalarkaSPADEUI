@@ -511,6 +511,12 @@ public class DataManipulator{
         return getWorkUnitFrom(phase.getWorkUnits());
     }
 
+    public ArrayList<ArrayList<Integer>> getWorkUnitFromProject() {
+        Project project = dataModel.getProject();
+        return getWorkUnitFrom(project.getWorkUnitIndexs());
+    }
+
+
     public ArrayList<ArrayList<Integer>> getWorkUnitFromIteration(int iterationId) {
 
         Iteration iteration = dataModel.getIteration(iterationId);
@@ -533,6 +539,53 @@ public class DataManipulator{
         return list;
     }
 
+    public List[] getProjectStringData() {
+
+        List[] data = new List[11];
+        Project project = dataModel.getProject();
+
+        if(project.getName() != null){
+            data[0] = project.getName();
+        }
+
+
+        if(project.getDescription() != null){
+            data[1] = project.getDescription();
+        }
+
+        if(project.getStartDate() != null){
+            data[3] = project.getStartDate();
+        }
+
+        if(project.getEndDate() != null){
+            data[4] = project.getEndDate();
+        }
+
+        if(project.getNameIndicator() != null){
+            data[5] = project.getNameIndicator();
+        }
+
+
+        if(project.getDescriptionIndicator() != null){
+            data[6] = project.getDescriptionIndicator();
+        }
+
+        if(project.getStartDateIndicator() != null){
+            data[8] = project.getStartDateIndicator();
+        }
+
+        if(project.getEndDateIndicator() != null){
+            data[9] = project.getEndDateIndicator();
+        }
+
+        if(project.getWorkUnitsIndicator() != null){
+            data[10] = project.getWorkUnitsIndicator();
+        }
+
+        return data;
+
+    }
+    
     public List[] getIterationStringData(int id) {
         List[] data = new List[11];
         Iteration iteration = dataModel.getIteration(id);;
@@ -971,4 +1024,7 @@ public class DataManipulator{
         return data;
 
     }
+
+
+
 }

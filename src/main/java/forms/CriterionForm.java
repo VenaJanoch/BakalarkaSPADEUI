@@ -93,7 +93,8 @@ public class CriterionForm extends TableBasicForm implements ISegmentTableForm {
 		descriptionColumn.setMinWidth(150);
 		descriptionColumn.setCellFactory(TextFieldTableCell.forTableColumn());
 
-		tableTV.getColumns().addAll(nameColumn, descriptionColumn);
+		//tableTV.getColumns().addAll(nameColumn, descriptionColumn);
+		tableTV.getColumns().add(nameColumn);
 		tableTV.setOnMousePressed(OnMousePressedEventHandler);
 		tableTV.setEditable(false);
 

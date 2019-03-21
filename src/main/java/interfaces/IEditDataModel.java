@@ -71,4 +71,8 @@ public interface IEditDataModel {
 
       void editDataInCommitedConfiguration(ArrayList<String> nameForManipulator, ArrayList<Integer> nameIndicator,
                                            ArrayList<LocalDate> dateFromDatePicker, ArrayList<Integer> dateIndicator, int instanceCount, int id);
+
+    void editDataInProject(ArrayList<String> nameForManipulator, ArrayList<LocalDate> startDate1, ArrayList<LocalDate> endDate1, ArrayList<String> descriptionForManipulator, ArrayList<ArrayList<Integer>> workUnitsForManipulator,
+                           ArrayList<Integer> workUnitIndicators, ArrayList<Integer> nameIndicators, ArrayList<Integer> date1Indicators,
+                           ArrayList<Integer> date2Indicators, ArrayList<Integer> descIndicators);
 }

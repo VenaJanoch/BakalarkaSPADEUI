@@ -1,13 +1,16 @@
 package controlPanels;
 
 import SPADEPAC.ArtifactClass;
+import SPADEPAC.WorkUnitPriorityClass;
 import abstractControlPane.DateDescControlPanel;
 import controllers.FormController;
 import graphics.ComboBoxItem;
 import graphics.ControlPanelLine;
+import interfaces.IControlPanel;
 import interfaces.IEditFormController;
 import interfaces.IFormDataController;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.control.*;
 import services.*;
 import tables.ArtifactTable;
@@ -18,7 +21,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class ArtifactControlPanel extends DateDescControlPanel {
+public class ArtifactControlPanel extends DateDescControlPanel implements IControlPanel {
 
     /**
      * Globální proměnné třídy
@@ -28,6 +31,7 @@ public class ArtifactControlPanel extends DateDescControlPanel {
     private SegmentLists segmentLists;
     private boolean exist;
     private ArtifactTable artifactTable;
+    private ObservableList<String> artifactArray;
 
     private  int artifactId;
     private  int artifactFormIndex;
@@ -38,8 +42,16 @@ public class ArtifactControlPanel extends DateDescControlPanel {
         this.artifactId = id;
         this.artifactFormIndex = formIndex;
         this.segmentLists = formController.getSegmentLists();
+        int i = 0;
+
+        artifactArray = FXCollections.observableArrayList();
+        for(ArtifactClass classItem : ArtifactClass.values()){
+            artifactArray.add(classItem.name());
+            i++;
+        }
+
         lineList.add(new ControlPanelLineObject("Role: ", ControlPanelLineType.ComboBox, ParamType.Role, segmentLists.getRoleObservable()));
-        lineList.add(new ControlPanelLineObject("Type: ", ControlPanelLineType.ComboBox, ParamType.ArtifactType));
+        lineList.add(new ControlPanelLineObject("Type: ", ControlPanelLineType.ComboBox, ParamType.ArtifactType, artifactArray));
         createControlPanel();
     }
 
@@ -48,10 +60,12 @@ public class ArtifactControlPanel extends DateDescControlPanel {
         controlPanelController.setRadioButton(this, "Exist: ", false);
         controlPanelController.setCountLine(this, 2, new ControlPanelLine(lineList,this, controlPanelController ));
         controlPanelController.createNewLine(this, lineList);
-            }
+
+        button.setOnAction(event -> saveDataFromPanel());
+        }
 
     @Override
-    public void showEditControlPanel(BasicTable basicTable, TableView tableView) {
+    public void showEditControlPanel() {
 
 
 
@@ -71,8 +85,6 @@ public class ArtifactControlPanel extends DateDescControlPanel {
             exist = true;
         }
         controlPanelController.setValueRadioButton(exist);
-
-        button.setOnAction(event -> saveDataFromPanel());
 
     }
 
@@ -106,5 +118,10 @@ public class ArtifactControlPanel extends DateDescControlPanel {
     public void clearPanelCB(TableView tableView) {
         tableView.refresh();
         tableView.getSelectionModel().clearSelection();
+    }
+
+    @Override
+    protected void showEditControlPanel(BasicTable basicTable, TableView tableView) {
+
     }
 }

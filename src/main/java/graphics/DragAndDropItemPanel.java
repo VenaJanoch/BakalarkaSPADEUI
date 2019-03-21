@@ -33,34 +33,23 @@ public class DragAndDropItemPanel extends HBox {
     private ToggleButton linkButton;
     private int[] itemArray;
     private CanvasController canvasController;
-    private ComboBox<String> formBox;
-    private DrawerPanelController drawerPanelController;
-    private SelectItemController selectItemController;
 
+    private DrawerPanelController drawerPanelController;
     /**
      * Konstruktor třídy Zinicializuje globální proměnné třídy
      *
      * @param itemArray int[]
      */
-    public DragAndDropItemPanel(int[] itemArray, DrawerPanelController drawerPanelController, SelectItemController selectItemController) {
+    public DragAndDropItemPanel(int[] itemArray, DrawerPanelController drawerPanelController) {
         super(5);
         this.setPrefWidth(Constans.width);
         this.setPadding(new Insets(5));
         this.itemArray = itemArray;
         this.drawerPanelController = drawerPanelController;
-        this.selectItemController = selectItemController;
-        ObservableList<String> itemsList = FXCollections.observableArrayList();
 
-        for(String item : Constans.addItemNames){
-            itemsList.add(item);
-        }
-
-        this.formBox = new ComboBox<>(itemsList);
-        selectItemController.setBox(formBox);
-        this.setId("dgItem");
+         this.setId("dgItem");
 
         dragSegmnets = new DragSegmentButton[itemArray.length];
-        this.getChildren().add(formBox);
     }
 
     /**
@@ -69,8 +58,8 @@ public class DragAndDropItemPanel extends HBox {
      *
      * @param itemArray int[]
      */
-    public DragAndDropItemPanel(CanvasController canvasController, int[] itemArray, DrawerPanelController drawerPanelController, SelectItemController selectItemController) {
-        this(itemArray, drawerPanelController, selectItemController);
+    public DragAndDropItemPanel(CanvasController canvasController, int[] itemArray, DrawerPanelController drawerPanelController) {
+        this(itemArray, drawerPanelController);
         this.canvasController = canvasController;
         createDragItems();
     }

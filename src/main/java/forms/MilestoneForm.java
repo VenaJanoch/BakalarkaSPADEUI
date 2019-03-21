@@ -34,150 +34,148 @@ import java.util.ArrayList;
  * Třída představující dvojitý formulář pro element Milestone, vytvoří tabulku s
  * přehledem Milestonů a tabulkový formulář pro Criterion, odděděná od třídy
  * Table2BasicForm a implementující ISegmentTableForm
- * 
- * @author Václav Janoch
  *
+ * @author Václav Janoch
  */
 public class MilestoneForm extends TableBasicForm implements ISegmentTableForm {
 
-	/**
-	 * Globální proměnné třídy
-	 */
+    /**
+     * Globální proměnné třídy
+     */
 
-	private Label formName;
+    private Label formName;
 
-	private TableView<MilestoneTable> tableTV;
+    private TableView<MilestoneTable> tableTV;
 
-	private CriterionForm criterionForm;
+    private CriterionForm criterionForm;
 
-	private MilestoneControlPanel editMilestoneControlPanel;
+    private MilestoneControlPanel editMilestoneControlPanel;
 
-	/**
-	 * Konstruktor třídy Zinicializuje globální proměnné třídy
-	 *
-	 *
-	 */
-	public MilestoneForm(FormController formController, IFormDataController formDataController, IEditFormController editFormController, IDeleteFormController deleteFormController, SegmentType type) {
+    /**
+     * Konstruktor třídy Zinicializuje globální proměnné třídy
+     */
+    public MilestoneForm(FormController formController, IFormDataController formDataController, IEditFormController editFormController, IDeleteFormController deleteFormController, SegmentType type) {
 
-		super(formController, formDataController, editFormController, deleteFormController, type);
+        super(formController, formDataController, editFormController, deleteFormController, type);
 
-		editMilestoneControlPanel = new MilestoneControlPanel("Edit", formDataController, editFormController, formController);
-		setEventHandler();
-		createForm();
-		setActionSubmitButton();
+        editMilestoneControlPanel = new MilestoneControlPanel("Edit", formDataController, editFormController, formController);
+        setEventHandler();
+        createForm();
+        setActionSubmitButton();
 
-	}
+    }
 
-	protected void setEventHandler(){
-		OnMousePressedEventHandler = new EventHandler<MouseEvent>() {
+    protected void setEventHandler() {
+        OnMousePressedEventHandler = new EventHandler<MouseEvent>() {
 
-			@Override
-			public void handle(MouseEvent t) {
-				if(t.getClickCount() == 2) {
-					showEditPanel();
-				}
-			}
-		};
-	}
+            @Override
+            public void handle(MouseEvent t) {
+                if (t.getClickCount() == 2) {
+                    showEditPanel();
+                }
+            }
+        };
+    }
 
-	public void showEditPanel(){
-		MilestoneTable milestoneTable = tableTV.getSelectionModel().getSelectedItems().get(0);
-		if (milestoneTable != null) {
-			editMilestoneControlPanel.showEditControlPanel(milestoneTable, tableTV);
-			formController.showEditControlPanel(editMilestoneControlPanel);
-		}
-	}
+    public void showEditPanel() {
+        MilestoneTable milestoneTable = tableTV.getSelectionModel().getSelectedItems().get(0);
+        if (milestoneTable != null) {
+            editMilestoneControlPanel.showEditControlPanel(milestoneTable, tableTV);
+            formController.showEditControlPanel(editMilestoneControlPanel);
+        }
+    }
 
-	@Override
-	public void createForm() {
+    @Override
+    public void createForm() {
 
-	this.setCenter(getTable());
-	}
+        this.setCenter(getTable());
+    }
 
-	@Override
-	public void setActionSubmitButton() {
-		addButton.setOnAction(event -> addItem());
-		removeButton.setOnAction(event -> deleteItem(tableTV));
-		editButton.setOnAction(event -> showEditPanel());
+    @Override
+    public void setActionSubmitButton() {
+        addButton.setOnAction(event -> addItem());
+        removeButton.setOnAction(event -> deleteItem(tableTV));
+        editButton.setOnAction(event -> showEditPanel());
 
-	}
+    }
 
-	@Override
-	public Node getTable() {
-		tableTV = new TableView<MilestoneTable>();
+    @Override
+    public Node getTable() {
+        tableTV = new TableView<MilestoneTable>();
 
-		TableColumn<MilestoneTable, String> nameColumn = new TableColumn<MilestoneTable, String>("Name");
-		TableColumn<MilestoneTable, String> criterionColumn = new TableColumn<MilestoneTable, String>("Criterion");
-		TableColumn<MilestoneTable, String> descriptionColumn = new TableColumn<MilestoneTable, String>("Description");
+        TableColumn<MilestoneTable, String> nameColumn = new TableColumn<MilestoneTable, String>("Name");
+        TableColumn<MilestoneTable, String> criterionColumn = new TableColumn<MilestoneTable, String>("Criterion");
+        TableColumn<MilestoneTable, String> descriptionColumn = new TableColumn<MilestoneTable, String>("Description");
 
-		nameColumn.setCellValueFactory(new PropertyValueFactory("name"));
-		nameColumn.setMinWidth(100);
-		nameColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+        nameColumn.setCellValueFactory(new PropertyValueFactory("name"));
+        nameColumn.setMinWidth(100);
+        nameColumn.setCellFactory(TextFieldTableCell.forTableColumn());
 
-		descriptionColumn.setCellValueFactory(new PropertyValueFactory("description"));
-		descriptionColumn.setMinWidth(100);
-		descriptionColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+        descriptionColumn.setCellValueFactory(new PropertyValueFactory("description"));
+        descriptionColumn.setMinWidth(100);
+        descriptionColumn.setCellFactory(TextFieldTableCell.forTableColumn());
 
 
-		criterionColumn.setCellValueFactory(new PropertyValueFactory("criterion"));
-		criterionColumn.setMinWidth(100);
-		criterionColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+        criterionColumn.setCellValueFactory(new PropertyValueFactory("criterion"));
+        criterionColumn.setMinWidth(100);
+        criterionColumn.setCellFactory(TextFieldTableCell.forTableColumn());
 
-		tableTV.getColumns().addAll(nameColumn, descriptionColumn, criterionColumn);
-		tableTV.setOnMousePressed(OnMousePressedEventHandler);
-		tableTV.setEditable(false);
+//		tableTV.getColumns().addAll(nameColumn, descriptionColumn, criterionColumn);
+        tableTV.getColumns().add(nameColumn);
+        tableTV.setOnMousePressed(OnMousePressedEventHandler);
+        tableTV.setEditable(false);
 
-		tableTV.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        tableTV.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
-		tableTV.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        tableTV.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
-		tableTV.setOnKeyReleased(event -> deleteSelected(event));
+        tableTV.setOnKeyReleased(event -> deleteSelected(event));
 
-		BorderPane.setMargin(tableTV, new Insets(5));
+        BorderPane.setMargin(tableTV, new Insets(5));
 
-		return tableTV;
-	}
+        return tableTV;
+    }
 
-	@Override
-	public void deleteSelected(KeyEvent event) {
+    @Override
+    public void deleteSelected(KeyEvent event) {
 
-		if (event.getCode() == KeyCode.DELETE) {
-			deleteItem(tableTV);
-		}
+        if (event.getCode() == KeyCode.DELETE) {
+            deleteItem(tableTV);
+        }
 
-	}
+    }
 
-	@Override
-	public GridPane createControlPane() {
+    @Override
+    public GridPane createControlPane() {
 
 
-		return null;
+        return null;
 
-	}
+    }
 
-	@Override
-	public void addItem() {
+    @Override
+    public void addItem() {
 
-		String nameST = "";//milestoneControlPanel.getName();
-		String descriptionST = ""; // milestoneControlPanel.getDescriptionText();
+        String nameST = "";//milestoneControlPanel.getName();
+        String descriptionST = ""; // milestoneControlPanel.getDescriptionText();
 
-		int id = formController.createTableItem(SegmentType.Milestone);
+        int id = formController.createTableItem(SegmentType.Milestone);
 
-		ArrayList criterionList = new ArrayList<>();//new ArrayList<>(milestoneControlPanel.getChoosedIndicies());
-		MilestoneTable milestone = formDataController.prepareMilestoneToTable(nameST, descriptionST, id, criterionList);
+        ArrayList criterionList = new ArrayList<>();//new ArrayList<>(milestoneControlPanel.getChoosedIndicies());
+        MilestoneTable milestone = formDataController.prepareMilestoneToTable(nameST, descriptionST, id, criterionList);
 
-		tableTV.getItems().add(milestone);
-		tableTV.sort();
+        tableTV.getItems().add(milestone);
+        tableTV.sort();
 
-		formDataController.saveDataFromMilestoneForm(nameST, descriptionST, criterionList, milestone);
+        formDataController.saveDataFromMilestoneForm(nameST, descriptionST, criterionList, milestone);
 
-		int lastItem = tableTV.getItems().size();
-		tableTV.getSelectionModel().select(lastItem - 1);
-		showEditPanel();
-	}
+        int lastItem = tableTV.getItems().size();
+        tableTV.getSelectionModel().select(lastItem - 1);
+        showEditPanel();
+    }
 
-	public TableView<MilestoneTable> getTableTV() {
-		return tableTV;
-	}
+    public TableView<MilestoneTable> getTableTV() {
+        return tableTV;
+    }
 
 }

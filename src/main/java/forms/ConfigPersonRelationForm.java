@@ -125,7 +125,8 @@ public class ConfigPersonRelationForm extends TableBasicForm implements ISegment
 		roleColumn.setMinWidth(150);
 		roleColumn.setCellFactory(TextFieldTableCell.forTableColumn());
 
-		tableTV.getColumns().addAll(nameColumn, roleColumn);
+	//	tableTV.getColumns().addAll(nameColumn, roleColumn);
+		tableTV.getColumns().add(nameColumn);
 		tableTV.setOnMousePressed(OnMousePressedEventHandler);
 		tableTV.setEditable(false);
 

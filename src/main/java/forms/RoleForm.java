@@ -107,7 +107,8 @@ public class RoleForm extends TableBasicForm implements ISegmentTableForm {
 		typeColumn.setMinWidth(150);
 		typeColumn.setCellFactory(TextFieldTableCell.forTableColumn());
 
-		tableTV.getColumns().addAll(nameColumn,descColumn, typeColumn);
+	//	tableTV.getColumns().addAll(nameColumn,descColumn, typeColumn);
+		tableTV.getColumns().add(nameColumn);
 		tableTV.setOnMousePressed(OnMousePressedEventHandler);
 		tableTV.setEditable(false);
 
@@ -139,7 +140,7 @@ public class RoleForm extends TableBasicForm implements ISegmentTableForm {
 	private void showEditPanel(){
 		RoleTable roleTable = tableTV.getSelectionModel().getSelectedItems().get(0);
 		if (roleTable != null) {
-			editRoleControlPanel.showEditControlPanel(roleTable, tableTV);
+			editRoleControlPanel.showEditControlPanel();
 			formController.showEditControlPanel(editRoleControlPanel);
 		}
 	}

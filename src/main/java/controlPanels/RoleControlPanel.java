@@ -5,6 +5,7 @@ import abstractControlPane.DescriptionControlPanel;
 import graphics.ComboBoxItem;
 import graphics.ControlPanelLine;
 import graphics.TextFieldItem;
+import interfaces.IControlPanel;
 import interfaces.IEditFormController;
 import interfaces.IFormDataController;
 import javafx.scene.control.*;
@@ -19,7 +20,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RoleControlPanel extends DescriptionControlPanel {
+public class RoleControlPanel extends DescriptionControlPanel implements IControlPanel {
 
     protected ComboBoxItem roleTypeCB;
     private int roleId;
@@ -37,6 +38,10 @@ public class RoleControlPanel extends DescriptionControlPanel {
     }
 
 
+    @Override
+    protected void showEditControlPanel(BasicTable basicTable, TableView tableView) {
+
+    }
 
     protected void addItemsToControlPanel(){
 
@@ -61,7 +66,7 @@ public class RoleControlPanel extends DescriptionControlPanel {
     }
 
     @Override
-    public void showEditControlPanel(BasicTable basicTable, TableView tableView) {
+    public void showEditControlPanel() {
 
         List[] roleData = formDataController.getRoleStringData(roleId);
         controlPane.getChildren().clear();

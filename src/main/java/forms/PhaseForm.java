@@ -100,7 +100,8 @@ public class PhaseForm extends TableBasicForm implements ISegmentTableForm {
         configurationColumn.setCellFactory(TextFieldTableCell.forTableColumn());
 
 
-        tableTV.getColumns().addAll(nameColumn, milestoneColumn, configurationColumn);
+    //    tableTV.getColumns().addAll(nameColumn, milestoneColumn, configurationColumn);
+        tableTV.getColumns().add(nameColumn);
         tableTV.setOnMousePressed(OnMousePressedEventHandler);
         tableTV.setEditable(false);
 

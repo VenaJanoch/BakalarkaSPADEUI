@@ -653,11 +653,24 @@ public class DataModel {
     }
 
 
-    public void addDataToProject(String nameForManipulator, String descForManipulator, LocalDate startDate, LocalDate endDate) {
-        project.setDescription(descForManipulator);
-        project.setName(nameForManipulator);
-        project.setStartDate(convertDate(startDate));
-        project.setEndDate(convertDate(endDate));
+    public void addDataToProject(ArrayList<String> nameForManipulator, ArrayList<LocalDate> startDate1, ArrayList<LocalDate> endDate1, ArrayList<String> descriptionForManipulator, ArrayList<ArrayList<Integer>> workUnitsForManipulator,
+                                 ArrayList<Integer> workUnitIndicators, ArrayList<Integer> nameIndicators, ArrayList<Integer> date1Indicators,
+                                 ArrayList<Integer> date2Indicators, ArrayList<Integer> descIndicators) {
+        project.getName().addAll(nameForManipulator);
+        project.getDescription().addAll(descriptionForManipulator);
+        project.getEndDate().addAll(convertDate(endDate1));
+        project.getStartDate().addAll(convertDate(startDate1));
+
+        for (List<Integer> list : workUnitsForManipulator){
+            project.getWorkUnitIndexs().add(addWorkUnitList(list));
+        }
+
+        project.getNameIndicator().addAll(nameIndicators);
+        project.getDescriptionIndicator().addAll(descIndicators);
+        project.getEndDateIndicator().addAll(date1Indicators);
+        project.getStartDateIndicator().addAll(date2Indicators);
+        project.getWorkUnitsIndicator().addAll(workUnitIndicators);
+
     }
 
     public int getMilestoneId(int milestoneIndexForManipulator) {

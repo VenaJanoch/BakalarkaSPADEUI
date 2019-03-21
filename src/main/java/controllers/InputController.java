@@ -8,19 +8,19 @@ import java.util.ArrayList;
 
 public class InputController {
 
-    public static Integer isNumber(String input){
+    public static Integer isNumber(String input, String fieldName){
         try {
             int number = Integer.parseInt(input);
             return number;
         }catch (NumberFormatException e){
             e.printStackTrace();
-            Alerts.showWrongNumberFormat();
+            Alerts.showWrongNumberFormat(fieldName);
         }
         return null;
     }
 
-    public static void isNumber(String input, int minValue, int maxValue) {
-        Integer testValue = isNumber(input);
+    public static void isNumber(String input, int minValue, int maxValue, String fieldName) {
+        Integer testValue = isNumber(input, fieldName);
 
         if(testValue != null){
             if((minValue > testValue) || (maxValue < testValue)){
@@ -96,6 +96,11 @@ public class InputController {
         for (String name : names){
             checkNames.add(fillNameTextMapper(name));
         }
+
+        if (checkNames.size() == 0){
+            checkNames.add("");
+        }
+
     return checkNames;
     }
 

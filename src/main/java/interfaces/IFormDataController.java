@@ -114,4 +114,6 @@ public interface IFormDataController {
     List[] getCommitStringData(int commitId);
 
     List[] getCommitedConfigurationStringData(int commitedConfigurationId);
+
+    List[] getProjectStringData();
 }

@@ -82,18 +82,19 @@ public class ActivityForm extends TableBasicForm implements ISegmentTableForm {
 		tableTV = new TableView<ActivityTable>();
 
 		TableColumn<ActivityTable, String> nameColumn = new TableColumn<ActivityTable, String>("Name");
-		TableColumn<ActivityTable, String> descriptionColumn = new TableColumn<ActivityTable, String>("Description");
+	//	TableColumn<ActivityTable, String> descriptionColumn = new TableColumn<ActivityTable, String>("Description");
 
 		nameColumn.setCellValueFactory(new PropertyValueFactory("name"));
 		nameColumn.setMinWidth(150);
 		nameColumn.setCellFactory(TextFieldTableCell.forTableColumn());
 
-		descriptionColumn.setCellValueFactory(new PropertyValueFactory("description"));
-		descriptionColumn.setMinWidth(150);
-		descriptionColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+	//	descriptionColumn.setCellValueFactory(new PropertyValueFactory("description"));
+	//	descriptionColumn.setMinWidth(150);
+	//	descriptionColumn.setCellFactory(TextFieldTableCell.forTableColumn());
 
 
-		tableTV.getColumns().addAll(nameColumn, descriptionColumn);
+		//tableTV.getColumns().addAll(nameColumn, descriptionColumn);
+		tableTV.getColumns().add(nameColumn);
 		tableTV.setOnMousePressed(OnMousePressedEventHandler);
 		tableTV.setEditable(false);
 

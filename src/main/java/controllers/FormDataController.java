@@ -335,7 +335,7 @@ public class FormDataController implements IFormDataController {
     public void saveDataFromProjectFrom(String nameST, LocalDate endDate, LocalDate startDate, String desc) {
         String nameForManipulator = InputController.fillTextMapper(nameST);
         String descForManipulator = InputController.fillTextMapper(desc);
-        dataModel.addDataToProject(nameForManipulator, descForManipulator, startDate, endDate);
+ //       dataModel.addDataToProject(nameForManipulator, descForManipulator, startDate, endDate);
 
     }
 
@@ -432,6 +432,9 @@ public class FormDataController implements IFormDataController {
             case Activity:
                 indexList = dataManipulator.getWorkUnitFromActivity(id);
                 break;
+            case Project:
+                indexList = dataManipulator.getWorkUnitFromProject();
+                break;
             default:
                 return null;
         }
@@ -498,4 +501,10 @@ public class FormDataController implements IFormDataController {
     public List[] getCommitedConfigurationStringData(int commitedId){
         return dataManipulator.getCommitedConfigurationStringData(commitedId);
     }
+
+    @Override
+    public List[] getProjectStringData(){
+        return dataManipulator.getProjectStringData();
+    }
+
 }

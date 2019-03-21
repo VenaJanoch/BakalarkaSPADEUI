@@ -26,7 +26,6 @@ public class CriterionControlPanel extends DescriptionControlPanel {
 
     public void addItemsToControlPanel(){
         controlPanelController.createNewLine(this, lineList);
-
     }
 
 

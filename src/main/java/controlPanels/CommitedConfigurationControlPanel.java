@@ -5,6 +5,7 @@ import abstractControlPane.DescriptionControlPanel;
 import abstractControlPane.WorkUnitControlPanel;
 import controllers.FormController;
 import graphics.ControlPanelLine;
+import interfaces.IControlPanel;
 import interfaces.IEditFormController;
 import interfaces.IFormDataController;
 import javafx.scene.control.Button;
@@ -18,7 +19,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CommitedConfigurationControlPanel extends DateControlPanel {
+public class CommitedConfigurationControlPanel extends DateControlPanel implements IControlPanel {
 
     /**
      * Globální proměnné třídy
@@ -42,7 +43,7 @@ public class CommitedConfigurationControlPanel extends DateControlPanel {
     }
 
     @Override
-    public void showEditControlPanel(BasicTable basicTable, TableView tableView){
+    public void showEditControlPanel(){
         List[] commitedData = formDataController.getCommitedConfigurationStringData(commitedConfigurationId);
 
         controlPane.getChildren().clear();
@@ -88,4 +89,8 @@ public class CommitedConfigurationControlPanel extends DateControlPanel {
         tableView.getSelectionModel().clearSelection();
     }
 
+    @Override
+    protected void showEditControlPanel(BasicTable basicTable, TableView tableView) {
+
+    }
 }

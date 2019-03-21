@@ -34,7 +34,7 @@ public class IdentificatorCreater {
     private int typeID = -1;
     private int roleTypeID = -1;
 
-    private int index = 0;
+    private int index = 1;
 
     private Map<Integer, Integer> roleSegmentIndexToFormMaper = new HashMap<>();
     private Map<Integer, Integer> roleIndexToIdMaper = new HashMap<>();

@@ -3,6 +3,7 @@ package controlPanels;
 import abstractControlPane.NameControlPanel;
 import controllers.FormController;
 import graphics.ControlPanelLine;
+import interfaces.IControlPanel;
 import interfaces.IEditFormController;
 import interfaces.IFormDataController;
 import javafx.beans.value.ChangeListener;
@@ -15,7 +16,7 @@ import tables.CommitTable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CommitControlPanel extends NameControlPanel {
+public class CommitControlPanel extends NameControlPanel implements IControlPanel {
 
 
     private int commitId;

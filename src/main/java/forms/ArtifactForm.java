@@ -94,7 +94,8 @@ public class ArtifactForm extends TableBasicForm implements ISegmentTableForm {
         descriptionColumn.setCellFactory(TextFieldTableCell.forTableColumn());
 
 
-        tableTV.getColumns().addAll(nameColumn, descriptionColumn);
+       // tableTV.getColumns().addAll(nameColumn, descriptionColumn);
+        tableTV.getColumns().add(nameColumn);
         tableTV.setOnMousePressed(OnMousePressedEventHandler);
         tableTV.setEditable(false);
 
@@ -125,7 +126,7 @@ public class ArtifactForm extends TableBasicForm implements ISegmentTableForm {
     private void showEditPanel() {
         ArtifactTable artifactTable = tableTV.getSelectionModel().getSelectedItems().get(0);
         if (artifactTable != null) {
-            editControlPanel.showEditControlPanel(artifactTable, tableTV);
+            editControlPanel.showEditControlPanel();
             formController.showEditControlPanel(editControlPanel);
         }
     }

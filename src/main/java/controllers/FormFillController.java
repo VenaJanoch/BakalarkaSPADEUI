@@ -76,7 +76,7 @@ public class FormFillController {
         addExistPhaseFormToCanvas();
         addExistActivityFormToCanvas();
         addExistIterationFormToCanvas();
-        addExistWorkUnitFormToCanvas(project.getWorkUnitIndexs(), projectCanvasController, CanvasType.Project);
+      //  addExistWorkUnitFormToCanvas(project.getWorkUnitIndexs(), projectCanvasController, CanvasType.Project);
         fillLink();
 
     }
@@ -407,9 +407,9 @@ public class FormFillController {
 
     private void fillProjectForm() {
         ProjectForm projectForm = (ProjectForm) forms.get(Constans.projectFormIndex);
-        String name = dataPreparer.prepareStringForForm(project.getName());
-        String description = dataPreparer.prepareStringForForm(project.getDescription());
-        projectForm.setDataToForm(name, description, convertDateFromXML(project.getStartDate()), convertDateFromXML(project.getEndDate()));
+//        String name = dataPreparer.prepareStringForForm(project.getName());
+//        String description = dataPreparer.prepareStringForForm(project.getDescription());
+//        projectForm.setDataToForm(name, description, convertDateFromXML(project.getStartDate()), convertDateFromXML(project.getEndDate()));
     }
 
     public void addExistPhaseFormToCanvas(int oldFormId){

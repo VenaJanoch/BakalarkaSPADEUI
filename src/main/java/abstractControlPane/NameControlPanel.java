@@ -17,8 +17,6 @@ public abstract class NameControlPanel extends ControlPanel {
 
     public NameControlPanel(String buttonText, IFormDataController formDataController, IEditFormController editFormController, FormController formController) {
         super(buttonText, formDataController, editFormController, formController);
-        lineList.add(new ControlPanelLineObject("Name: ", ControlPanelLineType.Text, ParamType.Name));
-
         createBasicPanel();
     }
 
@@ -28,7 +26,7 @@ public abstract class NameControlPanel extends ControlPanel {
     }
 
     protected void createBasicPanel() {
-
+        lineList.add(new ControlPanelLineObject("Name: ", ControlPanelLineType.Text, ParamType.Name));
     }
     protected abstract void createBaseControlPanel();
 

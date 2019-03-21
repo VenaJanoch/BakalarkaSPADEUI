@@ -228,13 +228,15 @@ public class Alerts {
 
     }
 
-    public static void showWrongNumberFormat() {
+    public static void showWrongNumberFormat(String fieldName) {
         Alert alert = new Alert(AlertType.ERROR);
         alert.setTitle("Insert error");
         alert.setHeaderText("Wrong number input!");
-        alert.setContentText("Please provide a number");
+        alert.setContentText("Please provide a number in " + fieldName);
         alert.showAndWait();
     }
+
+
 
     public static void showNumberOffInterval(int minValue, int maxValue) {
         Alert alert = new Alert(AlertType.ERROR);
