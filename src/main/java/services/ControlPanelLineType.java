@@ -1,5 +1,5 @@
 package services;
 
 public enum ControlPanelLineType {
-    Text, Number, Date, CheckBox, ComboBox, RadioButton
+    Text, Number, Date, CheckBox, ComboBox, RadioButton, RelationComboBoxes
 }

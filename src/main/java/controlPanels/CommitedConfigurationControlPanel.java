@@ -49,10 +49,10 @@ public class CommitedConfigurationControlPanel extends DateControlPanel implemen
         controlPane.getChildren().clear();
         addItemsToControlPanel();
 
-        controlPanelController.setValueTextField(this, lineList ,ParamType.Name, commitedData, commitedData[3], 0);
-        controlPanelController.setValueTextField(this, lineList ,ParamType.Description, commitedData, commitedData[4], 1);
-        controlPanelController.setValueTextField(this, lineList ,ParamType.Date, commitedData, commitedData[5], 2);
+        controlPanelController.setValueTextField(this, lineList ,ParamType.Name, commitedData, commitedData[2], 0);
+        controlPanelController.setValueTextField(this, lineList ,ParamType.Date, commitedData, commitedData[3], 1);
 
+        controlPanelController.setCountToCountLine((int)commitedData[4].get(0));
 
     }
 

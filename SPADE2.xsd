@@ -287,6 +287,8 @@
                         maxOccurs="unbounded"/>
             <xs:element name="relationIndex" type="xs:int" minOccurs="0"
                         maxOccurs="unbounded"/>
+            <xs:element name="workUnits" type="WorkUnitList" minOccurs="0"
+                        maxOccurs="unbounded"/>
 
             <xs:element name="priorityIndicator" type="xs:int" minOccurs="0"
                         maxOccurs="unbounded"/>

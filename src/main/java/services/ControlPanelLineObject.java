@@ -9,6 +9,7 @@ public class ControlPanelLineObject {
     private String name;
     private ControlPanelLineType lineType;
     private ObservableList segmentsList;
+    private ObservableList segmentsList2;
     private ParamType type;
 
     public ControlPanelLineObject(String name, ControlPanelLineType lineType, ParamType type){
@@ -21,6 +22,11 @@ public class ControlPanelLineObject {
         this(name, lineType, type);
         this.segmentsList = segmentsList;
         this.type = type;
+    }
+
+    public ControlPanelLineObject(String name, ControlPanelLineType lineType, ParamType type, ObservableList segmentsList, ObservableList segmentsList2){
+        this(name, lineType, type, segmentsList);
+        this.segmentsList2 = segmentsList2;
     }
 
 
@@ -39,6 +45,10 @@ public class ControlPanelLineObject {
 
     public ParamType getType() {
         return type;
+    }
+
+    public ObservableList getSegmentsList2() {
+        return segmentsList2;
     }
 
     @Override

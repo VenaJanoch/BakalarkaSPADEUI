@@ -30,25 +30,23 @@ public class InputController {
 
     }
 
-    public static ArrayList<Double> isDoubleNumber(ArrayList<String> input){
+    public static ArrayList<Double> isDoubleNumber(ArrayList<String> input) {
         ArrayList<Double> list = new ArrayList<>();
 
         for (String number : input){
-            list.add(isDoubleNumber(number));
+            list.add(isDoubleNumber(number));;
         }
         return list;
     }
 
 
-    public static Double isDoubleNumber(String input){
+    public static Double isDoubleNumber(String input) throws NumberFormatException {
         try {
             double number = Double.parseDouble(input);
             return number;
         }catch (NumberFormatException e){
-            e.printStackTrace();
-            Alerts.showWrongDoubleFormat();
+            throw e;
         }
-        return null;
     }
 
     public static void isDoubleNumber(String input, double minValue, double maxValue) {

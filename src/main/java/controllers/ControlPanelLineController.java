@@ -67,6 +67,10 @@ public class ControlPanelLineController {
                 line.createComboBoxItem(object.getSegmentsList());
                 controlPanelController.setComboBoxItemToControlPanel(controlPanel.getControlPane(), line.getComboBoxItem(), 2);
                 break;
+            case RelationComboBoxes:
+                line.createRelationComboBoxItem(object.getSegmentsList(), object.getSegmentsList2());
+                controlPanelController.setRelationComboBoxItemToControlPanel(controlPanel.getControlPane(), line.getComboBoxItem(), line.getCheckComboBoxItem(), 2);
+                break;
             case CheckBox:
                 line.createCheckComboBoxItem(object.getSegmentsList());
                 controlPanelController.setCheckComboBoxItemToControlPanel(controlPanel.getControlPane(), line.getCheckComboBoxItem(), 2);

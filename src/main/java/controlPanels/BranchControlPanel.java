@@ -40,9 +40,9 @@ public class BranchControlPanel extends NameControlPanel {
 
     public void createControlPanel(){
 
-        controlPanelController.createNewLine(this, lineList);
-        controlPanelController.setRadioButton(this, "Main: ", true);
 
+        controlPanelController.setRadioButton(this, 1,"Main: ", true);
+        controlPanelController.createNewLine(this, lineList);
     }
 
 

@@ -1,6 +1,7 @@
 package controllers;
 
 import abstractControlPane.ControlPanel;
+import controlPanels.WorkUnitControlPanel;
 import graphics.*;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -47,15 +48,10 @@ public class ControlPanelController {
 
     public ControlPanelController(ArrayList<ControlPanelLine> controlPanelLines){
         switcher = new ClassSwitcher();
-        this.lineCount = 0;
         this.controlPanelLines = controlPanelLines;
-        this.isRadioButtonLine = false;
-        this.isSecondRadioButtonLine = false;
-        this.isCountLine = false;
-        this.isStaticButton = false;
-        this.isClass = false;
         this.countLB = new Label("Instance count: ");
-        this.staticObjectCount = 1;
+        resetPanel();
+
     }
 
 
@@ -66,13 +62,6 @@ public class ControlPanelController {
         }
         return desc;
     }
-
-
-    public void setValueTextField(TextFieldItem item, String[] value, int index) {
-
-    }
-
-
 
     public void setValueTextField(ControlPanel controlPanel, ObservableList<ControlPanelLineObject> lineList,
                                   ParamType type, List<String>[] values, List<Integer> indicatorList, int index) {
@@ -85,6 +74,18 @@ public class ControlPanelController {
             incrementLineCounter();
         }
 
+    }
+
+    public void setValueRelationBox(ControlPanel controlPanel, ObservableList<ControlPanelLineObject> lineList,
+                                    ParamType type, ArrayList<Integer> relation, ArrayList<ArrayList<Integer>> workUnit) {
+        int i = 0;
+        for ( int value : relation){
+            createNewLine(controlPanel, lineList);
+            ControlPanelLine line = controlPanelLines.get(controlPanelLines.size() -1);
+            line.fillRelationComboBoxLine(value, workUnit.get(i), type );
+            i++;
+            incrementLineCounter();
+        }
     }
 
     public void setValueComboBox(ControlPanel controlPanel, ObservableList<ControlPanelLineObject> lineList,
@@ -141,6 +142,11 @@ public class ControlPanelController {
         controlPane.add(item.getItemButton(), startColomIndex +2, lineCount);
     }
 
+    public void setRelationComboBoxItemToControlPanel(GridPane controlPane, ComboBoxItem relationItem, CheckComboBoxItem workUnitItem, int startColomIndex) {
+        controlPane.add(relationItem.getItemCB(), startColomIndex, lineCount);
+        controlPane.add(workUnitItem.getItemCB(), startColomIndex + 1, lineCount);
+        controlPane.add(relationItem.getItemButton(), startColomIndex + 2, lineCount);
+    }
 
     public void setDateItemToControlPanel(GridPane controlPane, DateItem item, int startColomIndex) {
 
@@ -163,14 +169,14 @@ public class ControlPanelController {
         controlPane.add(item.getItemButton(), startColomIndex + 2, lineCount);
     }
 
-    public ChangeListener<Toggle> radioButtonListener() {
+    public ChangeListener<Toggle> radioButtonGroupListener() {
         ChangeListener<Toggle> listener = new ChangeListener<Toggle>() {
 
             @Override
             public void changed(ObservableValue<? extends Toggle> observable, Toggle oldValue, Toggle newValue) {
-                RadioButton chk = (RadioButton) newValue.getToggleGroup().getSelectedToggle();
+                RadioButton chk = radioButtonLine.getRadioButtonItem().getYesRb();
 
-                if (chk.getText().contains("Yes")) {
+                if (chk.isSelected()) {
                     isMain = true;
                 } else {
                     isMain = false;
@@ -180,6 +186,7 @@ public class ControlPanelController {
         };
         return listener;
     }
+
 
     /**
      * ChangeListener pro určení indexu prvku z comboBoxu pro Class. Zavolá
@@ -225,7 +232,7 @@ public class ControlPanelController {
     }
 
     public boolean isMain() {
-        return isMain;
+        return radioButtonLine.isCheckYesRadioButton();
     }
 
     public void copyLine(ControlPanelLine line, ControlPanel controlPanel, ObservableList<ControlPanelLineObject> lineList, int paramIndex) {
@@ -270,12 +277,30 @@ public class ControlPanelController {
     public ArrayList<Integer> processComboBoxLines(ParamType type, ArrayList<Integer> indicators){
         ArrayList<Integer> list = new ArrayList<>();
         for ( ControlPanelLine line : controlPanelLines){
-            if (line.getType() == type){
-                list.add(line.getComboBoxItem().getItemIndex());
-                indicators.add(line.getComboBoxItem().getIndicatorIndex());
+            if ( line.getExitButton().isSelected()) {
+                if (line.getType() == type) {
+                    list.add(line.getComboBoxItem().getItemIndex());
+                    indicators.add(line.getComboBoxItem().getIndicatorIndex());
+                }
             }
         }
         return list;
+    }
+
+    public ArrayList<Integer> processRelationComboBoxLines(ParamType type, ArrayList<ArrayList<Integer>> workUnints){
+        ArrayList<Integer> listRelationList = new ArrayList<>();
+        for ( ControlPanelLine line : controlPanelLines){
+            if ( line.getExitButton().isSelected()){
+                if (line.getType() == type){
+                    listRelationList.add(line.getComboBoxItem().getItemIndex());
+                    workUnints.add(new ArrayList<>(line.getCheckComboBoxItem().getChoosedIndicies()));
+                }
+            }
+
+        }
+
+
+        return listRelationList;
     }
 
     public ArrayList<ArrayList<Integer>> processCheckComboBoxLines(ParamType type, ArrayList<Integer> indicators){
@@ -331,25 +356,26 @@ public class ControlPanelController {
 
     }
 
-    public void setRadioButton(ControlPanel controlPanel, String name, boolean secondButton) {
+    public void setRadioButton(ControlPanel controlPanel, int lineShift, String name, boolean secondButton) {
         isSecondRadioButtonLine = secondButton;
         staticObjectCount++;
         radioButtonLine = new ControlPanelLine(FXCollections.observableArrayList(), controlPanel, this);
         RadioButtonItem item = radioButtonLine.getRadioButtonItem();
+        item.setGroup();
         item.getNameLb().setText(name);
-        setRadioButton(controlPanel, item);
+        setRadioButton(controlPanel, item, lineShift);
     }
 
-    public void setRadioButton(ControlPanel controlPanel, RadioButtonItem item) {
+    public void setRadioButton(ControlPanel controlPanel, RadioButtonItem item, int lineShift) {
 
         GridPane pane = controlPanel.getControlPane();
         pane.getChildren().remove(item.getNameLb());
         pane.getChildren().remove(item.getYesRb());
         pane.getChildren().remove(item.getNoRb());
-        pane.add(item.getNameLb(), 0, lineCount + 1);
-        setRadioButton(pane, item.getYesRb(), 1);
+        pane.add(item.getNameLb(), 1, lineCount + lineShift);
+        setRadioButton(pane, item.getYesRb(), 2);
         if (isSecondRadioButtonLine){
-            setRadioButton(pane, item.getNoRb(), 2);
+            setRadioButton(pane, item.getNoRb(), 3);
             item.setGroup();
         }
     }
@@ -428,7 +454,7 @@ public class ControlPanelController {
 
         if (isRadioButtonLine){
             RadioButtonItem item = radioButtonLine.getRadioButtonItem();
-            setRadioButton(controlPanel, item);
+            setRadioButton(controlPanel, item, shift);
             shift++;
         }
 
@@ -478,6 +504,28 @@ public class ControlPanelController {
 
     public Integer getClassIndex() {
         return classLine.getComboBoxItem().getItemIndex();
+    }
+
+    public void setCountToCountLine(Integer value) {
+        countLine.setCount(value);
+    }
+
+
+    public void resetPanel(GridPane controlPane) {
+        controlPane.getChildren().clear();
+        controlPanelLines.clear();
+        resetPanel();
+    }
+
+
+    public void resetPanel() {
+        this.lineCount = 0;
+        this.isRadioButtonLine = false;
+        this.isSecondRadioButtonLine = false;
+        this.isCountLine = false;
+        this.isStaticButton = false;
+        this.isClass = false;
+        this.staticObjectCount = 1;
     }
 }
 

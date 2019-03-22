@@ -65,7 +65,7 @@ public class ChangeControlPanel extends DescriptionControlPanel {
 
     @Override
     protected void addItemsToControlPanel() {
-        controlPanelController.setRadioButton(this, "Exist: ", false);
+        controlPanelController.setRadioButton(this,1, "Exist: ", false);
         controlPanelController.createNewLine(this, lineList);
 
 

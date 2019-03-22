@@ -311,9 +311,11 @@ public class FormController {
 
     public int createNewWorkUnitFormWithoutManipulator(CanvasType canvasType){
         int index = identificatorCreater.createWorkUnitID();
-
+        int id = identificatorCreater.getWorkUnitIndexToIdMaper().get(index);
         CanvasController canvasController = new CanvasController(canvasType, applicationController);
-        WorkUnitForm workUnitForm = new WorkUnitForm(this, formDataController, editFormController, deleteFormController, canvasController, SegmentType.WorkUnit, index);
+        WorkUnitForm workUnitForm = new WorkUnitForm(this, formDataController, editFormController, deleteFormController,
+                canvasController, SegmentType.WorkUnit, index);
+
         forms.add(index, workUnitForm);
 
         return  index;
@@ -516,10 +518,6 @@ public class FormController {
 
         saveDataModel.createWorkUnitRelation(startIndex, endIndex);
     }
-
-
-
-
 
     public void setItemColor(int indexForm, boolean isExist) {
 

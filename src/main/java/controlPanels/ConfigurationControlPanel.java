@@ -45,7 +45,7 @@ public class ConfigurationControlPanel extends DateControlPanel implements ICont
     protected void addItemsToControlPanel() {
 
 
-        controlPanelController.setRadioButton(this, "Release: ", true);
+        controlPanelController.setRadioButton(this,1, "Release: ", true);
         controlPanelController.setCountLine(this, 2, new ControlPanelLine(lineList, this, controlPanelController));
         addTag = new Button("add Tag");
         controlPanelController.setStaticButton(this, 3, addTag);
@@ -98,8 +98,14 @@ public class ConfigurationControlPanel extends DateControlPanel implements ICont
         controlPanelController.setValueCheckComboBox(this, lineList ,ParamType.WorkUnit, changeList, configData[8]);
 
 
-       boolean isRelease = Boolean.valueOf((Boolean) configData[9].get(0));
-       controlPanelController.setValueRadioButton(isRelease);
+        List boolList = configData[9];
+        boolean exist = false;
+        if (boolList.size() != 1){
+            exist = true;
+        }
+
+        controlPanelController.setValueRadioButton(exist);
+        controlPanelController.setCountToCountLine((int) boolList.get(0));
     }
 
     @Override

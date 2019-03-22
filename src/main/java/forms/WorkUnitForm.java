@@ -138,7 +138,7 @@ public class WorkUnitForm extends TableBasicForm implements ISegmentTableForm {
 		WorkUnitTable table = new WorkUnitTable(idName, id);
 		tableTV.getItems().add(table);
 		tableTV.sort();
-
+		formDataController.saveDataFromWorkUnit(nameST, table);
 		int lastItem = tableTV.getItems().size();
 		tableTV.getSelectionModel().select(lastItem - 1);
 		showEditPanel();

@@ -372,17 +372,21 @@ public class EditFormController implements IEditFormController {
                                      ArrayList<String> estimatedTime, List<Integer> nameIndicator, List<Integer> descriptionIndicator, List<Integer> categoryIndicator,
                                      ArrayList<Integer> assigneIndicator, ArrayList<Integer> authorIndicator, ArrayList<Integer> priorityIndicator, ArrayList<Integer> severityIndicator,
                                      ArrayList<Integer> typeIndicator, ArrayList<Integer> resolutionIndicator, ArrayList<Integer> statusIndicator,
-                                     ArrayList<Integer> estimateIndicator, boolean isExist, WorkUnitTable workUnitTable, int id) {
+                                     ArrayList<Integer> estimateIndicator, boolean isExist, ArrayList<Integer> relations,  ArrayList<ArrayList<Integer>> workUnits, WorkUnitTable workUnitTable, int id) {
+
+        try {
+            ArrayList<Double> estimateForDataManipulator = new ArrayList<>();
+        if (estimatedTime.size() != 0) {
+            estimateForDataManipulator = InputController.isDoubleNumber(estimatedTime);
+        }
 
         ArrayList<String> nameForManipulator = InputController.fillNameTextMapper(name);
         ArrayList<String> categoryForManipulator = InputController.fillTextMapper(category);
         ArrayList<String> descriptionForManipulator = InputController.fillTextMapper(description);
 
-        ArrayList<Double> estimateForDataManipulator = new ArrayList<>();
+        ArrayList<ArrayList<Integer>> workUnitsForManipulator = dataPreparer.prepareIndicesForManipulator(workUnits);
+        ArrayList<Integer> relationForManipulator = dataPreparer.prepareIndexForManipulator(relations);
 
-        if (estimatedTime.size() != 0) {
-            estimateForDataManipulator = InputController.isDoubleNumber(estimatedTime);
-        }
 
         ArrayList<Integer> assigneForManipulator = dataPreparer.prepareIndexForManipulator(assigneIndex);
         ArrayList<Integer> authorForManipulator = dataPreparer.prepareIndexForManipulator(authorIndex);
@@ -396,9 +400,14 @@ public class EditFormController implements IEditFormController {
                 typeForManipulator, resolutionForManipulator, statusForManipulator,
                 estimateForDataManipulator, nameIndicator,  descriptionIndicator,  categoryIndicator,
                 assigneIndicator, authorIndicator, priorityIndicator,  severityIndicator,
-                typeIndicator, resolutionIndicator, statusIndicator, estimateIndicator, isExist, id);
+                typeIndicator, resolutionIndicator, statusIndicator, estimateIndicator, isExist, relationForManipulator, workUnitsForManipulator, id);
 
         workUnitTable.setName(dataPreparer.createTableItemIdName(id, nameForManipulator.get(0)));
+        segmentLists.updateListItem(SegmentType.WorkUnit, id, workUnitTable);
+        }catch (NumberFormatException e){
+            e.printStackTrace();
+            Alerts.showWrongNumberFormat("Estimated time");
+        }
     }
 
     @Override
@@ -421,8 +430,8 @@ public class EditFormController implements IEditFormController {
             ArrayList<ArrayList<Integer>> changesForManipulator = dataPreparer.prepareIndicesForManipulator(changeIndexs);
 
             dataManipulator.editDataInConfiguration(nameForManipulator, date, isRelease, roleIdForManipulator,
-                    cprsForManipulator, branchesForManipulator, changesForManipulator, nameIndicator, createdIndicator,
-                    authorIndicator, cprIndicators, branchIndicator, changeIndicator, instanceCount, configId);
+                    cprsForManipulator, branchesForManipulator, changesForManipulator, cprIndicators, nameIndicator, createdIndicator,
+                    authorIndicator,  branchIndicator, changeIndicator, instanceCount, configId);
             String itemName = nameForManipulator.get(0);
             int formIndex = identificatorCreater.getConfigurationFormIndex(configId);
             ConfigTable configTable = new ConfigTable(itemName, "", formIndex, configId);

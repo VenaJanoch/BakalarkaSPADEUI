@@ -28,7 +28,7 @@ public class ItemBox extends HBox {
     protected ItemBoxController itemBoxController;
     protected Label label;
     private int indicatorIndex;
-    private ControlPanelController controlPanelController;
+    protected ControlPanelController controlPanelController;
 
     public ItemBox(ObservableList<String> indicatorSymbols, ControlPanelController controlPanelController){
 

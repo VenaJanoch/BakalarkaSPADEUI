@@ -29,14 +29,17 @@ public class RadioButtonItem extends ItemBox {
         yesRb.setSelected(true);
 
         nameLb = new Label("Exist: ");
-
-        group.selectedToggleProperty().addListener(controlPanelController.radioButtonListener());
-
     }
 
     public void setGroup(){
-         yesRb.setToggleGroup(group);
+        group.selectedToggleProperty().addListener(controlPanelController.radioButtonGroupListener());
+
+        yesRb.setToggleGroup(group);
          noRb.setToggleGroup(group);
+    }
+
+    public boolean isSelectYes(){
+        return yesRb.isSelected();
     }
 
     public RadioButton getYesRb() {

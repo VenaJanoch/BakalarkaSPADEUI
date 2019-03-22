@@ -2,6 +2,7 @@ package controllers;
 
 import controlPanels.WorkUnitControlPanel;
 import graphics.ComboBoxItem;
+import graphics.ControlPanelLine;
 import javafx.geometry.HPos;
 import javafx.scene.control.Button;
 import javafx.scene.control.RadioButton;
@@ -13,15 +14,17 @@ import java.util.ArrayList;
 public class WorkUnitControlPanelController {
 
     private WorkUnitControlPanel workUnitControlPanel;
+    private ControlPanelLineController controlPanelLineController;
     private GridPane controlPane;
-    private ArrayList<ComboBoxItem> workUnitBoxis;
-    private ArrayList<ComboBoxItem> relationBoxis;
+    private ArrayList<ControlPanelLine> workUnitBoxis;
+    private ArrayList<ControlPanelLine> relationBoxis;
     private SegmentLists segmentLists;
     private int relationRowIndex;
     private int workuUnitRowIndex;
 
-    public WorkUnitControlPanelController(WorkUnitControlPanel workUnitControlPanel, SegmentLists segmentLists){
+    public WorkUnitControlPanelController(WorkUnitControlPanel workUnitControlPanel,        SegmentLists segmentLists){
         this.workUnitControlPanel = workUnitControlPanel;
+        this.controlPanelLineController = controlPanelLineController;
         this.controlPane = workUnitControlPanel.getControlPane();
         this.workUnitBoxis = new ArrayList<>();
         this.relationBoxis = new ArrayList<>();
@@ -30,9 +33,9 @@ public class WorkUnitControlPanelController {
         this.workuUnitRowIndex = 11;
     }
 
-    public void addRelationToPanel(Button editButton, Button addButton, RadioButton radioButton){
-//      ComboBoxItem  workUnitCB = new ComboBoxItem("Work Unit: ", segmentLists.getWorkUnitsObservable());
-//      ComboBoxItem  relationCB = new ComboBoxItem("Relation: ", segmentLists.getRelationTypeObservable());
+    public void addRelationToPanel(ControlPanelLine workUnitLine, ControlPanelLine relationLine){
+//    ComboBoxItem  workUnitCB = new ControlPanelLine();
+//    ComboBoxItem  relationCB = new ComboBoxItem("Relation: ", segmentLists.getRelationTypeObservable());
 //      workUnitBoxis.add(workUnitCB);
 //      relationBoxis.add(relationCB);
 //

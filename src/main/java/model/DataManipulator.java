@@ -511,6 +511,11 @@ public class DataManipulator{
         return getWorkUnitFrom(phase.getWorkUnits());
     }
 
+    public ArrayList<ArrayList<Integer>> getWorkUniFromWorkUnit(int id) {
+        WorkUnit workUnit = dataModel.getWorkUnit(id);
+        return getWorkUnitFrom(workUnit.getWorkUnits());
+    }
+
     public ArrayList<ArrayList<Integer>> getWorkUnitFromProject() {
         Project project = dataModel.getProject();
         return getWorkUnitFrom(project.getWorkUnitIndexs());
@@ -745,12 +750,13 @@ public class DataManipulator{
 
 
         List list = new ArrayList();
+        list.add(artifact.getCount());
         data[10] = list;
         if(artifact.isExist() != null){
 
             list.add(artifact.isExist());
-            data[10] = list;
         }
+
 
 
         return data;
@@ -758,7 +764,7 @@ public class DataManipulator{
 
     public List[] getWorkUnitStringData(int id) {
 
-        List[] data = new List[23];
+        List[] data = new List[25];
         WorkUnit workUnit = dataModel.getWorkUnit(id);;
        
         if(workUnit.getName() != null){
@@ -856,6 +862,14 @@ public class DataManipulator{
             data[22] = list;
         }
 
+        if (workUnit.getRelationIndex() != null){
+            data[23] = workUnit.getRelationIndex();
+        }
+
+        if(workUnit.getWorkUnits() != null){
+            data[24] = workUnit.getWorkUnits();
+        }
+
         return data;
         
     }
@@ -901,8 +915,11 @@ public class DataManipulator{
             data[8] = configuration.getChangesIndicator();
         }
 
+        List list = new ArrayList();
+        list.add(configuration.getCount());
+        data[9] = list;
         if(configuration.isIsRelease() != null){
-            List list = new ArrayList();
+
             list.add(configuration.isIsRelease());
             data[9] = list;
         }
@@ -990,11 +1007,11 @@ public class DataManipulator{
             data[1] = commit.getNameIndicator();
         }
 
-
+        ArrayList list = new ArrayList();
+        list.add(commit.getCount());
+        data[2] = list;
         if(commit.isRelease() != null){
-            ArrayList list = new ArrayList();
             list.add(commit.isRelease());
-           data[2] = list;
         }
 
 
@@ -1002,13 +1019,12 @@ public class DataManipulator{
     }
 
     public List[] getCommitedConfigurationStringData(int commitedId) {
-        List[] data = new List[4];
+        List[] data = new List[6];
         CommitedConfiguration commitedConfiguration = dataModel.getCommitedConfiguration(commitedId);;
 
         if(commitedConfiguration.getName() != null){
             data[0] = commitedConfiguration.getName();
         }
-
         if(commitedConfiguration.getNameIndicator() != null){
             data[1] = commitedConfiguration.getNameIndicator();
         }
@@ -1020,6 +1036,10 @@ public class DataManipulator{
         if(commitedConfiguration.getCommitedDayIndicator() != null){
             data[3] = commitedConfiguration.getCommitedDayIndicator();
         }
+
+        ArrayList list = new ArrayList();
+        list.add(commitedConfiguration.getCount());
+        data[4] = list;
 
         return data;
 

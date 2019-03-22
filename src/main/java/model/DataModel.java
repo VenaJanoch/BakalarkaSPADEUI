@@ -484,7 +484,7 @@ public class DataModel {
                                   ArrayList<Double> estimateForDataManipulator, List<Integer> nameIndicator, List<Integer> descriptionIndicator, List<Integer> categoryIndicator,
                                   ArrayList<Integer> assigneIndicator, ArrayList<Integer> authorIndicator, ArrayList<Integer> priorityIndicator, ArrayList<Integer> severityIndicator,
                                   ArrayList<Integer> typeIndicator, ArrayList<Integer> resolutionIndicator, ArrayList<Integer> statusIndicator,
-                                  ArrayList<Integer> estimateIndicator, boolean isExist) {
+                                  ArrayList<Integer> estimateIndicator, boolean isExist, ArrayList<Integer> relations,  ArrayList<ArrayList<Integer>> workUnits) {
 
         workUnit.getAssigneeIndex().addAll(assigneIndex);
         workUnit.getAuthorIndex().addAll(authorIndex);
@@ -498,7 +498,10 @@ public class DataModel {
         workUnit.getTypeIndex().addAll(typeIndex);
         workUnit.getStatusIndex().addAll(statusIndex);
         workUnit.getResolutionIndex().addAll(resolutionIndex);
-
+        workUnit.getRelationIndex().addAll(relations);
+        for (List<Integer> list : workUnits){
+            workUnit.getWorkUnits().add(addWorkUnitList(list));
+        }
         workUnit.getAssigneeIndicator().addAll(assigneIndicator);
         workUnit.getAuthorIIndicator().addAll(authorIndicator);
         workUnit.getCategoryIndicator().addAll(categoryIndicator);

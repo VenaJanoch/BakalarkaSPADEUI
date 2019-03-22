@@ -66,7 +66,8 @@ public class EditDataModel implements IEditDataModel {
     }
 
     public void editDataInActivity(ArrayList<String> nameForManipulator, ArrayList<String> descriptionForManipulator,
-                                   ArrayList<ArrayList<Integer>> setOfItemOnCanvas, ArrayList<Integer> nameIndicators,  ArrayList<Integer> descIndicators,  ArrayList<Integer> workUnitIndicators, int id) {
+                                   ArrayList<ArrayList<Integer>> setOfItemOnCanvas, ArrayList<Integer> nameIndicators,  ArrayList<Integer> descIndicators,
+                                   ArrayList<Integer> workUnitIndicators, int id) {
         Activity activity = dataModel.getActivity(id);
         dataModel.addDataToActivity(activity, nameForManipulator, descriptionForManipulator, setOfItemOnCanvas, nameIndicators,  descIndicators,  workUnitIndicators);
 
@@ -78,7 +79,7 @@ public class EditDataModel implements IEditDataModel {
                                    ArrayList<Double> estimateForDataManipulator, List<Integer> nameIndicator, List<Integer> descriptionIndicator, List<Integer> categoryIndicator,
                                    ArrayList<Integer> assigneIndicator, ArrayList<Integer> authorIndicator, ArrayList<Integer> priorityIndicator, ArrayList<Integer> severityIndicator,
                                    ArrayList<Integer> typeIndicator, ArrayList<Integer> resolutionIndicator, ArrayList<Integer> statusIndicator,
-                                   ArrayList<Integer> estimateIndicator, boolean isExist, int id) {
+                                   ArrayList<Integer> estimateIndicator, boolean isExist, ArrayList<Integer> relations,  ArrayList<ArrayList<Integer>> workUnits, int id) {
         WorkUnit workUnit = dataModel.getWorkUnit(id);
         dataModel.addDataToWorkUnit(workUnit,nameForManipulator, description, categoryForManipulator,
                 assigneIndex, authorIndex, priorityIndex,severityIndex,
@@ -86,7 +87,7 @@ public class EditDataModel implements IEditDataModel {
                 estimateForDataManipulator, nameIndicator, descriptionIndicator, categoryIndicator,
                 assigneIndicator, authorIndicator, priorityIndicator, severityIndicator,
                 typeIndicator, resolutionIndicator, statusIndicator,
-                estimateIndicator, isExist);
+                estimateIndicator, isExist, relations, workUnits);
     }
 
     public void editDataInConfiguration(ArrayList<String> actName, ArrayList<LocalDate> createDate,

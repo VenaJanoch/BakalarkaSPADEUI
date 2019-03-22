@@ -41,7 +41,7 @@ public class CommitControlPanel extends NameControlPanel implements IControlPane
 
     public void createControlPanel(){
 
-        controlPanelController.setRadioButton(this, "Release: ", true);
+        controlPanelController.setRadioButton(this,1, "Release: ", true);
         controlPanelController.setCountLine(this, 2, new ControlPanelLine(lineList, this, controlPanelController));
         controlPanelController.createNewLine(this, lineList);
 
@@ -68,12 +68,12 @@ public class CommitControlPanel extends NameControlPanel implements IControlPane
         controlPanelController.setValueTextField(this, lineList ,ParamType.Name, commitData, commitData[2], 0);
         boolean exist = false;
         List boolList = commitData[1];
-        if (boolList.size() != 0){
+        if (boolList.size() != 1){
             exist = true;
         }
 
         controlPanelController.setValueRadioButton(exist);
-
+        controlPanelController.setCountToCountLine((int) boolList.get(0));
     }
 
 

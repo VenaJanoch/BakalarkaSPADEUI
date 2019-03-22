@@ -43,7 +43,7 @@ public class RelationForm extends TableClassBasicForm {
 		super(formController, formDataController, editFormController, deleteFormController, type);
 	//	this.setTitle("Edit Relations");
 
-		editClassControlPanelTCB = new ClassControlPanel("Edit", SegmentType.Severity, formDataController, editFormController, formController);
+		editClassControlPanelTCB = new ClassControlPanel("Edit", SegmentType.Relation, formDataController, editFormController, formController);
 		int i = 0;
 		for(WorkUnitRelationClass classItem : WorkUnitRelationClass.values()){
 			classArray.add(classItem.name());

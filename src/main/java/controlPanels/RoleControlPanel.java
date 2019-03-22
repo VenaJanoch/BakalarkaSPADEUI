@@ -76,6 +76,7 @@ public class RoleControlPanel extends DescriptionControlPanel implements IContro
         controlPanelController.setValueTextField(this, lineList ,ParamType.Description, roleData, roleData[4], 1);
         controlPanelController.setValueComboBox(this, lineList ,ParamType.RoleType, (ArrayList<Integer>) roleData[2], roleData[5]);
 
+        controlPanelController.setCountToCountLine((int) roleData[6].get(0));
 
     }
 }

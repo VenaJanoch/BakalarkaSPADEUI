@@ -201,6 +201,8 @@ public class SegmentLists {
 
             case Configuration:
                 return removeDataFromListTest(configObservable, indexList);
+            case WorkUnit:
+                return removeDataFromListTest(workUnitsObservable, indexList);
 
             default:
         }
@@ -297,6 +299,9 @@ public class SegmentLists {
                 break;
             case Configuration:
                 configObservable.add(index, basicTable);
+                break;
+            case WorkUnit:
+                workUnitsObservable.add(index, basicTable);
                 break;
             default:
 

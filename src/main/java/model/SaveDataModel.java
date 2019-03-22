@@ -75,6 +75,7 @@ public class SaveDataModel implements ISaveDataModel {
     public void createNewConfiguration(int id) {
         Configuration configuration = objF.createConfiguration();
         configuration.setId(id);
+        configuration.setCount(1);
         project.getConfiguration().add(configuration);
     }
 
@@ -87,6 +88,7 @@ public class SaveDataModel implements ISaveDataModel {
     public void createNewArtifact(int id) {
         Artifact artifact = objF.createArtifact();
         artifact.setId(id);
+        artifact.setCount(1);
         project.getArtifacts().add(artifact);
     }
 
@@ -143,6 +145,7 @@ public class SaveDataModel implements ISaveDataModel {
 
         Role role = objF.createRole();
         role.setId(id);
+        role.setCount(1);
         project.getRoles().add(role);
     }
 
@@ -193,6 +196,7 @@ public class SaveDataModel implements ISaveDataModel {
     public void createNewCommit(int id) {
         Commit commit = objF.createCommit();
         commit.setId(id);
+        commit.setCount(1);
         project.getCommit().add(commit);
     }
 
@@ -200,6 +204,7 @@ public class SaveDataModel implements ISaveDataModel {
     public void createNewCommitedConfiguration(int id) {
         CommitedConfiguration commitedConfiguration = objF.createCommitedConfiguration();
         commitedConfiguration.setId(id);
+        commitedConfiguration.setCount(1);
         project.getCommitConfiguration().add(commitedConfiguration);
     }
 }

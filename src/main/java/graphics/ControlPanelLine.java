@@ -13,6 +13,7 @@ import services.ControlPanelLineObject;
 import services.ParamType;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ControlPanelLine {
@@ -88,6 +89,10 @@ public class ControlPanelLine {
         return radioButtonItem;
     }
 
+    public boolean isCheckYesRadioButton() {
+        return radioButtonItem.isSelectYes();
+    }
+
     public ComboBox getParamBox() {
         return paramBox;
     }
@@ -112,8 +117,14 @@ public class ControlPanelLine {
         return controlPanelLineController;
     }
 
+
     public void createComboBoxItem(ObservableList list) {
         this.comboBoxItem = new ComboBoxItem(this, controlPanel, controlPanelController, list, paramList);
+    }
+
+    public void createRelationComboBoxItem(ObservableList relationList, ObservableList workUnitList) {
+        this.comboBoxItem = new ComboBoxItem(this, controlPanel, controlPanelController, relationList, paramList);
+        this.checkComboBoxItem = new CheckComboBoxItem(this, controlPanel, controlPanelController, workUnitList, paramList);
     }
 
     public void createCheckComboBoxItem(ObservableList list) {
@@ -180,5 +191,14 @@ public class ControlPanelLine {
     }
 
 
+    public void setCount(Integer value) {
+        textItem.setTextToTextField(value.toString());
+    }
 
+    public void fillRelationComboBoxLine(int value, ArrayList<Integer> workUnit, ParamType type) {
+        paramBox.getSelectionModel().select(findTypeIndex(type));
+        comboBoxItem.selectItemInComboBox(value);
+        checkComboBoxItem.selectItemsInComboBox(workUnit);
+        exitButton.setSelected(true);
+    }
 }

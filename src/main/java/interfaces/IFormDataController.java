@@ -20,8 +20,7 @@ public interface IFormDataController {
 
     boolean saveDataFromActivityForm(String actName, String desc, Map<Integer, CanvasItem> mapOfItemOnCanvas, int indexForm);
 
-    boolean saveDataFromWorkUnit(String actName, String description, String category, int assigneIndex, int authorIndex, int priorityIndex, int severityIndex,
-                                 int typeIndex, int resolutionIndex, int statusIndex, String estimated, boolean selected, int indexForm, CanvasType canvasType);
+    boolean saveDataFromWorkUnit(String nameST, BasicTable tableItem);
 
     boolean saveDataFromConfiguration(String actName, LocalDate createDate, boolean isRelease, int authorIndex, ArrayList<Integer> branchIndex,
                                       ArrayList<Integer> cprIndex, Map<Integer, CanvasItem> itemIndexList, boolean isNew, int indexForm);

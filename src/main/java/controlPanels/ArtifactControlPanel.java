@@ -57,7 +57,7 @@ public class ArtifactControlPanel extends DateDescControlPanel implements IContr
 
     public void createControlPanel(){
 
-        controlPanelController.setRadioButton(this, "Exist: ", false);
+        controlPanelController.setRadioButton(this, 1, "Exist: ", false);
         controlPanelController.setCountLine(this, 2, new ControlPanelLine(lineList,this, controlPanelController ));
         controlPanelController.createNewLine(this, lineList);
 
@@ -71,7 +71,7 @@ public class ArtifactControlPanel extends DateDescControlPanel implements IContr
 
         List[] artifactData = formDataController.getArtifactStringData(artifactId);
         controlPane.getChildren().clear();
-        addItemsToControlPanel();
+        createControlPanel();
 
         controlPanelController.setValueTextField(this, lineList ,ParamType.Name, artifactData, artifactData[5], 0);
         controlPanelController.setValueTextField(this, lineList ,ParamType.Description, artifactData, artifactData[6], 1);
@@ -80,11 +80,12 @@ public class ArtifactControlPanel extends DateDescControlPanel implements IContr
         controlPanelController.setValueTextField(this, lineList ,ParamType.ArtifactType, artifactData, artifactData[9], 4);
 
         boolean exist = false;
-        List boolList = artifactData[5];
-        if (boolList.size() != 0){
+        List boolList = artifactData[10];
+        if (boolList.size() != 1){
             exist = true;
         }
         controlPanelController.setValueRadioButton(exist);
+        controlPanelController.setCountToCountLine((Integer)boolList.get(0));
 
     }
 

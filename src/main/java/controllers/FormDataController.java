@@ -97,45 +97,11 @@ public class FormDataController implements IFormDataController {
 
     }
 
-    public boolean saveDataFromWorkUnit(String actName,String description, String category, int assigneIndex, int authorIndex, int priorityIndex,int severityIndex,
-                                        int typeIndex, int resolutionIndex, int statusIndex, String estimated, boolean selected, int indexForm, CanvasType canvasType) {
+    public boolean saveDataFromWorkUnit(String actName, BasicTable workUnitTable) {
 
         String nameForManipulator = InputController.fillTextMapper(actName);
-        String categoryForManipulator = InputController.fillTextMapper(category);
-        String descriptionForManipulator = InputController.fillTextMapper(description);
-
-        int[] coords = formController.getCoordsFromItem(indexForm);
-
-        Double estimateForDataManipulator = -1.0;
-
-            if (!estimated.equals("")) {
-                estimateForDataManipulator = InputController.isDoubleNumber(estimated);
-                if(estimateForDataManipulator == null){
-                    return false;
-                }
-            }
-
-        boolean isProjectCanvas = false;
-        if(canvasType.equals(CanvasType.Project)){
-            isProjectCanvas = true;
-        }
-
-        formController.setItemColor(indexForm, selected);
-
-        int assigneForManipulator = dataPreparer.prepareIndexForManipulator(assigneIndex);
-        int authorForManipulator = dataPreparer.prepareIndexForManipulator(authorIndex);
-        int priorityForManipulator = dataPreparer.prepareIndexForManipulator(priorityIndex);
-        int severityForManipulator = dataPreparer.prepareIndexForManipulator(severityIndex);
-        int typeForManipulator = dataPreparer.prepareIndexForManipulator(typeIndex);
-        int resolutionForManipulator = dataPreparer.prepareIndexForManipulator(resolutionIndex);
-        int statusForManipulator = dataPreparer.prepareIndexForManipulator(statusIndex);
-       // editDataModel.editDataInWorkUnit(nameForManipulator, descriptionForManipulator ,categoryForManipulator, assigneForManipulator, authorForManipulator,
-        //        priorityForManipulator ,severityForManipulator ,typeForManipulator,resolutionForManipulator , statusForManipulator ,
-         //       estimateForDataManipulator, selected, identificatorCreater.getWorkUnitIndex(indexForm));
-        formController.setNameToItem(indexForm, nameForManipulator);
-        String segmentId = formController.getSegmentIdentificator(indexForm);
-        mapperTableToObject.mapTableToWU(assigneForManipulator, authorForManipulator, priorityForManipulator, severityForManipulator, typeForManipulator,
-                resolutionForManipulator, statusForManipulator, indexForm, segmentId);
+        saveDataModel.createNewWorkUnit(workUnitTable.getId());
+        lists.getWorkUnitsObservable().add(workUnitTable);
         return  true;
     }
 
@@ -425,6 +391,9 @@ public class FormDataController implements IFormDataController {
         switch (segmentType){
             case Phase:
                 indexList = dataManipulator.getWorkUnitFromPhase(id);
+                break;
+            case WorkUnit:
+                indexList = dataManipulator.getWorkUniFromWorkUnit(id);
                 break;
             case Iteration:
                indexList = dataManipulator.getWorkUnitFromIteration(id);
