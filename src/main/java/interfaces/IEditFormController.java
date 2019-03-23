@@ -81,4 +81,11 @@ public interface IEditFormController {
 
     void editDataFromProject(ArrayList<String> name, ArrayList<LocalDate> startDate, ArrayList<LocalDate> endDate, ArrayList<String> desc, ArrayList<ArrayList<Integer>> workUnit, ArrayList<Integer> workUnitIndicators, ArrayList<Integer> nameIndicators, ArrayList<Integer> date1Indicators, ArrayList<Integer> date2Indicators, ArrayList<Integer> descIndicators);
 
+    void editCoordsInCommit(double x, double y, int id);
+    void editCoordsInCommitedConfiguration(double x, double y, int id);
+    void editCoordsInConfiguration(double x, double y, int id);
+    void editCoordsInArtifact(double x, double y, int id);
+    void editCoordsInRole(double x, double y, int id);
+
+
 }

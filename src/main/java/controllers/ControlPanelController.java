@@ -247,7 +247,7 @@ public class ControlPanelController {
         ControlPanelLine line = new ControlPanelLine(lineList, controlPane, this);
         setParamBoxToControlPanel(controlPane.getControlPane(), line);
         controlPanelLines.add(line);
-        setEditButton(controlPane, lineCount + staticObjectCount);
+        shiftStaticObjects(controlPane);
         return line.getControlPanelLineController();
     }
 
@@ -350,8 +350,8 @@ public class ControlPanelController {
         controlPanel.getChildren().remove(combo.getItemButton());
     }
 
-    public void setRadioButton(GridPane controlPane, RadioButton rbYes, int i) {
-        controlPane.add(rbYes, i, lineCount + 1);
+    public void setRadioButton(GridPane controlPane, RadioButton rbYes, int i, int lineShift) {
+        controlPane.add(rbYes, i, lineCount + lineShift);
         isRadioButtonLine = true;
 
     }
@@ -373,9 +373,9 @@ public class ControlPanelController {
         pane.getChildren().remove(item.getYesRb());
         pane.getChildren().remove(item.getNoRb());
         pane.add(item.getNameLb(), 1, lineCount + lineShift);
-        setRadioButton(pane, item.getYesRb(), 2);
+        setRadioButton(pane, item.getYesRb(), 2, lineShift);
         if (isSecondRadioButtonLine){
-            setRadioButton(pane, item.getNoRb(), 3);
+            setRadioButton(pane, item.getNoRb(), 3, lineShift);
             item.setGroup();
         }
     }

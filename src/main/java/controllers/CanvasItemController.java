@@ -14,6 +14,7 @@ public class CanvasItemController {
     private SegmentType type;
     private LinkControl linkControl;
     private FormController formController;
+    private int formIndex;
 
 
     public CanvasItemController(LinkControl linkControl, FormController formController, ManipulationController manipulationController) {
@@ -28,7 +29,7 @@ public class CanvasItemController {
 
         linkControl.createLinkInstanceInMap(formIndex);
         this.type = type;
-
+        this.formIndex = formIndex;
         CanvasItem item = new CanvasItem(type, segmentIdentificator, formIndex, name, instanceCount, 0, x, y,
                 canvasController, this);
         formController.addCanvasItemToList(formIndex, item);
@@ -40,7 +41,7 @@ public class CanvasItemController {
      *
      * @param t
      */
-    public void setDragFromDragPoint(MouseEvent t, CanvasItem canvasItem, CanvasController canvasController) {
+    public void setDragFromDragPoint(MouseEvent t, CanvasItem canvasItem, CanvasController canvasController, SegmentType segmentType, int id) {
         if (!canvasController.isArrow()) {
 
             double offsetX = t.getSceneX() - canvasItem.getOrgSceneX();
@@ -50,6 +51,8 @@ public class CanvasItemController {
 
             ((AnchorPane) (t.getSource())).setTranslateX(newTranslateX);
             ((AnchorPane) (t.getSource())).setTranslateY(newTranslateY);
+
+            formController.setCoordinatesToCanvasItem(segmentType, newTranslateX, newTranslateY, formIndex);
 
         }
 

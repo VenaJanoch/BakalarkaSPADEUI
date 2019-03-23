@@ -773,5 +773,31 @@ public class FormController {
     }
 
 
+    public void setCoordinatesToCanvasItem(SegmentType segmentType, double newTranslateX, double newTranslateY, int fromIndex) {
+        int id = 0;
+        switch (segmentType){
+            case Role:
+                id = identificatorCreater.getRoleId(fromIndex);
+                editFormController.editCoordsInRole(newTranslateX, newTranslateY, id);
+                break;
+            case Commit:
+                id = identificatorCreater.getCommitId(fromIndex);
+                editFormController.editCoordsInCommit(newTranslateX, newTranslateY, id);
+            break;
+
+            case CommittedConfiguration:
+                id = identificatorCreater.getCommitedConfigurationId(fromIndex);
+                editFormController.editCoordsInCommitedConfiguration(newTranslateX, newTranslateY, id);
+                break;
+            case Configuration:
+                id = identificatorCreater.getConfigurationId(fromIndex);
+                editFormController.editCoordsInConfiguration(newTranslateX, newTranslateY, id);
+                break;
+            case Artifact:
+                id = identificatorCreater.getArtifactIndexToIdMaper().get(fromIndex);
+                editFormController.editCoordsInArtifact(newTranslateX, newTranslateY, id);
+                break;
+        }
+    }
 }
 

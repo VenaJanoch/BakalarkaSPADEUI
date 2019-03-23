@@ -483,6 +483,32 @@ public class EditFormController implements IEditFormController {
     }
 
     @Override
+    public void editCoordsInCommit(double x, double y, int id){
+        dataManipulator.editCoordinatesInCommit((int)x, (int)y, id);
+    }
+
+    @Override
+    public void editCoordsInCommitedConfiguration(double x, double y, int id){
+        dataManipulator.editCoordinatesInCommitedConfiguration((int)x, (int)y, id);
+    }
+
+    @Override
+    public void editCoordsInConfiguration(double x, double y, int id){
+        dataManipulator.editCoordinatesInConfiguration((int)x, (int)y, id);
+    }
+
+    @Override
+    public void editCoordsInArtifact(double x, double y, int id){
+        dataManipulator.editCoordinatesInArtifact((int)x, (int)y, id);
+    }
+
+    @Override
+    public void editCoordsInRole(double x, double y, int id){
+        dataManipulator.editCoordinatesInRole((int)x, (int)y, id);
+    }
+
+
+    @Override
     public void editDataFromCommitedConfiguration(ArrayList<String> name, ArrayList<LocalDate>  dateFromDatePicker, ArrayList<Integer> nameIndicator,
                                                   ArrayList<Integer> dateIndicator, String count, int commitedConfigurationId) {
 

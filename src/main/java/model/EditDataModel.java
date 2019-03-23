@@ -182,7 +182,37 @@ public class EditDataModel implements IEditDataModel {
         Commit commit = dataModel.getCommit(id);
         dataModel.addDataToCommit(commit, nameForManipulator, nameIndicator, release, instanceCount);
     }
+    
+    public void editCoordinatesInCommit(int x, int y, int id){
+        Commit commit = dataModel.getCommit(id);
+        Coordinates coordinates = dataModel.createCoords(x, y);
+        dataModel.setCoordinatesToCommit(coordinates, commit);
+    }
 
+    public void editCoordinatesInCommitedConfiguration(int x, int y, int id){
+        CommitedConfiguration commitedConfiguration = dataModel.getCommitedConfiguration(id);
+        Coordinates coordinates = dataModel.createCoords(x, y);
+        dataModel.setCoordinatesToCommitedConfiguration(coordinates, commitedConfiguration);
+    }
+
+    public void editCoordinatesInConfiguration(int x, int y, int id){
+        Configuration configuration = dataModel.getConfiguration(id);
+        Coordinates coordinates = dataModel.createCoords(x, y);
+        dataModel.setCoordinatesToConfiguration(coordinates, configuration);
+    }
+
+    public void editCoordinatesInArtifact(int x, int y, int id){
+        Artifact artifact = dataModel.getArtifact(id);
+        Coordinates coordinates = dataModel.createCoords(x, y);
+        dataModel.setCoordinatesToArtifact(coordinates, artifact);
+    }
+
+    public void editCoordinatesInRole(int x, int y, int id){
+        Role role = dataModel.getRole(id);
+        Coordinates coordinates = dataModel.createCoords(x, y);
+        dataModel.setCoordinatesToRole(coordinates, role);
+    }
+    
     public void editDataInCommitedConfiguration(ArrayList<String> nameForManipulator, ArrayList<Integer> nameIndicator,
                                                 ArrayList<LocalDate> dateFromDatePicker, ArrayList<Integer> dateIndicator, int instanceCount, int id){
         CommitedConfiguration commitedConfiguration = dataModel.getCommitedConfiguration(id);

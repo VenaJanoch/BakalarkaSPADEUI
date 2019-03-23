@@ -39,7 +39,8 @@ public interface IEditDataModel {
                                    boolean isRelease, ArrayList<Integer> authorIndex, ArrayList<ArrayList<Integer>> cprs,
                                    ArrayList<ArrayList<Integer>> branches, ArrayList<ArrayList<Integer>> changeIndexs,
                                    ArrayList<Integer> cprIndicators, ArrayList<Integer> nameIndicator, ArrayList<Integer> createdIndicator,
-                                   ArrayList<Integer> authorIndicator, ArrayList<Integer> branchIndicator, ArrayList<Integer> changeIndicator, int instanceCount, int id);
+                                   ArrayList<Integer> authorIndicator, ArrayList<Integer> branchIndicator, ArrayList<Integer> changeIndicator,
+                                   int instanceCount, int id);
       void editDataInCriterion( ArrayList<String> nameForManipulator, ArrayList<String> descForManipulator,
                                 ArrayList<Integer> nameIndicator, ArrayList<Integer> descIndicator, int id);
       void editDataInPriority(ArrayList<String> nameForManipulator, ArrayList<Integer> nameIndicator,
@@ -75,4 +76,10 @@ public interface IEditDataModel {
     void editDataInProject(ArrayList<String> nameForManipulator, ArrayList<LocalDate> startDate1, ArrayList<LocalDate> endDate1, ArrayList<String> descriptionForManipulator, ArrayList<ArrayList<Integer>> workUnitsForManipulator,
                            ArrayList<Integer> workUnitIndicators, ArrayList<Integer> nameIndicators, ArrayList<Integer> date1Indicators,
                            ArrayList<Integer> date2Indicators, ArrayList<Integer> descIndicators);
+
+    void editCoordinatesInCommit(int x, int y, int id);
+      void editCoordinatesInCommitedConfiguration(int x, int y, int id);
+      void editCoordinatesInConfiguration(int x, int y, int id);
+      void editCoordinatesInArtifact(int x, int y, int id);
+      void editCoordinatesInRole(int x, int y, int id);
 }
