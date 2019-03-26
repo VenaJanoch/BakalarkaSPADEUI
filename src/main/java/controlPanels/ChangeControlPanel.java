@@ -11,10 +11,7 @@ import javafx.collections.ObservableList;
 import javafx.geometry.HPos;
 import javafx.scene.control.*;
 import org.controlsfx.control.CheckComboBox;
-import services.Constans;
-import services.ParamType;
-import services.SegmentLists;
-import services.SegmentType;
+import services.*;
 import tables.ActivityTable;
 import tables.BasicTable;
 import tables.ChangeTable;
@@ -38,6 +35,8 @@ public class ChangeControlPanel extends DescriptionControlPanel {
     public ChangeControlPanel(String buttonName, IFormDataController formDataController,
                               IEditFormController editFormController, FormController formController){
         super(buttonName, formDataController, editFormController, formController);
+        SegmentLists segmentLists = formController.getSegmentLists();
+        lineList.add(new ControlPanelLineObject("Artifact: ", ControlPanelLineType.ComboBox, ParamType.Artifact, segmentLists.getArtifactObservable()));
         addItemsToControlPanel();
     }
 
@@ -47,11 +46,14 @@ public class ChangeControlPanel extends DescriptionControlPanel {
         int id = changeTable.getId();
         List[] changeData = formDataController.getChangeStringData(id);
 
-        controlPane.getChildren().clear();
+        controlPanelController.resetPanel(controlPane);
         addItemsToControlPanel();
 
         controlPanelController.setValueTextField(this, lineList ,ParamType.Name, changeData, changeData[2], 0);
         controlPanelController.setValueTextField(this, lineList ,ParamType.Description, changeData, changeData[3], 1);
+        ArrayList<Integer> artifactIndicators = new ArrayList<>();
+        artifactIndicators.add(0);
+        controlPanelController.setValueComboBox(this, lineList ,ParamType.Artifact, (ArrayList<Integer>) changeData[5], artifactIndicators);
 
         boolean exist = false;
         List boolList = changeData[4];
@@ -76,12 +78,14 @@ public class ChangeControlPanel extends DescriptionControlPanel {
 
         ArrayList<Integer> nameIndicators = new ArrayList<>();
         ArrayList<Integer> descIndicators = new ArrayList<>();
+        ArrayList<Integer> artifactsIndicators = new ArrayList<>();
         ArrayList<String> name = controlPanelController.processTextLines(ParamType.Name, nameIndicators);
         ArrayList<String> desc = controlPanelController.processTextLines(ParamType.Description, descIndicators);
+        ArrayList<Integer> aritifacts = controlPanelController.processComboBoxLines(ParamType.Artifact, artifactsIndicators);
 
         exist = controlPanelController.isMain();
 
-        editFormController.editDataFromChange(name, nameIndicators, desc, descIndicators, exist, changeTable, id);
+        editFormController.editDataFromChange(name, nameIndicators, desc, aritifacts, descIndicators, exist, changeTable, id);
 
         clearPanelCB(tableView);
     }

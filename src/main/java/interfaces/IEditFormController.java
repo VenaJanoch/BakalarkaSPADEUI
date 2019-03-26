@@ -46,7 +46,7 @@ public interface IEditFormController {
     void editDataFromActivity(ArrayList<String> name, ArrayList<String> description,  ArrayList<ArrayList<Integer>> workUnits,
                               ArrayList<Integer> nameIndicators,  ArrayList<Integer> descIndicators,  ArrayList<Integer> workUnitIndicators, ActivityTable activityTable, int id);
 
-    void editDataFromChange(ArrayList<String> name, ArrayList<Integer> nameIndicator,  ArrayList<String> description,
+    void editDataFromChange(ArrayList<String> name, ArrayList<Integer> nameIndicator,  ArrayList<String> description, ArrayList<Integer> artifacts,
                             ArrayList<Integer> descriptionIndicator, boolean exist, ChangeTable changeTable,
                             int id);
 

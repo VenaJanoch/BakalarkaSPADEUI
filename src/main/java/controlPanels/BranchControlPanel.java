@@ -51,7 +51,7 @@ public class BranchControlPanel extends NameControlPanel {
         int id = basicTable.getId();
 
         List branchData[] = formDataController.getBranchStringData(id);
-        controlPane.getChildren().clear();
+        controlPanelController.resetPanel(controlPane);
         createControlPanel();
 
         controlPanelController.setValueTextField(this, lineList ,ParamType.Name, branchData, branchData[2], 0);

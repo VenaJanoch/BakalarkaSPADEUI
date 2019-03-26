@@ -94,7 +94,7 @@ public class ControlPanelController {
         for ( int value : values){
             createNewLine(controlPanel, lineList);
             ControlPanelLine line = controlPanelLines.get(controlPanelLines.size() -1);
-            line.fillComboBoxLine(value, indicatorList.get(i), type );
+                line.fillComboBoxLine(value, indicatorList.get(i), type );
             i++;
             incrementLineCounter();
         }

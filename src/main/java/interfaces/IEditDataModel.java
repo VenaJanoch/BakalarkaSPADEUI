@@ -16,7 +16,7 @@ public interface IEditDataModel {
                               ArrayList<LocalDate> createdDate, ArrayList<Integer> dateIndicator, boolean isCreate,
                               ArrayList<Integer> authorIndex, ArrayList<Integer> typeIndex, ArrayList<Integer> authorIndicator,
                               ArrayList<Integer> typeIndicator, int instanceCount, int id);
-      void editDataInChange( ArrayList<String> nameForManipulator, ArrayList<String> descForManipulator,
+      void editDataInChange( ArrayList<String> nameForManipulator, ArrayList<String> descForManipulator, ArrayList<Integer> artifactForManipulator,
                              ArrayList<Integer> nameIndicators, ArrayList<Integer> descIndicator, boolean selected, int id);
       void editDataInPhase(ArrayList<String> actName, ArrayList<LocalDate> endDateL, ArrayList<String> desc,
                            ArrayList<Integer> confIndex, ArrayList<Integer> milestoneIndex,  ArrayList<ArrayList<Integer>> workUnitIndexList,
@@ -63,6 +63,7 @@ public interface IEditDataModel {
       void editDataInType(ArrayList<String> nameForManipulator, ArrayList<Integer> nameIndicator,
                           ArrayList<Integer> classST,  ArrayList<Integer> superST, ArrayList<String> classString,  ArrayList<String> superSting, int id);
       void updateItemList(SegmentType formType, SegmentType elementType, ArrayList<Integer> elementIndexList);
+    void updateItemList(SegmentType formType, SegmentType elementType, int elementIndexList);
       void editTagInConfiguration(String tag, int configId, int id);
 
     void editDataInVCSTag(ArrayList<String> nameForManipulator, ArrayList<String> descriptionForManipulator,

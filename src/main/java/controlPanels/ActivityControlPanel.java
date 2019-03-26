@@ -42,7 +42,8 @@ public class ActivityControlPanel extends DescriptionControlPanel {
         activityTable = (ActivityTable) basicTable;
         int id = activityTable.getId();
         List activityData[] = formDataController.getActivityStringData(id);
-        controlPane.getChildren().clear();
+
+       controlPanelController.resetPanel(controlPane);
         addItemsToControlPanel();
 
         controlPanelController.setValueTextField(this, lineList ,ParamType.Name, activityData, activityData[3], 0);

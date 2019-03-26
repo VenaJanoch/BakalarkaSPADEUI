@@ -2,6 +2,7 @@ package services;
 
 import java.util.ArrayList;
 
+import SPADEPAC.Artifact;
 import graphics.ChangeArtifactLink;
 import graphics.NodeLink;
 import graphics.WorkUnitLink;
@@ -169,7 +170,8 @@ public class SegmentLists {
         switch (segmentType) {
             case Branch:
                return removeDataFromListTest(branchObservable, indexList);
-
+            case Artifact:
+                return removeDataFromListTest(artifactObservable, indexList);
             case Priority:
                 return removeDataFromListTest(priorityTypeObservable, indexList);
             case Severity:
@@ -400,5 +402,16 @@ public class SegmentLists {
 
     public ObservableList<BasicTable> getWorkUnitsObservable() {
         return workUnitsObservable;
+    }
+
+    public BasicTable getArtifactTable(int id) {
+
+        for (BasicTable table : artifactObservable){
+            if (table.getId() == id ){
+                return table;
+            }
+        }
+
+        return null;
     }
 }

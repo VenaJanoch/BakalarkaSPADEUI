@@ -384,25 +384,6 @@ public class FormFillController {
 
     }
 
-    /**
-     * Umožní převedení data ve formátu XMLGregorianCalendar uloženého v XML do
-     * formátu LocalDate
-     *
-     * @param xmlDate XMLGregorianCalendar
-     * @return LocalDate
-     */
-    public LocalDate convertDateFromXML(XMLGregorianCalendar xmlDate) {
-
-        if (xmlDate == null) {
-            return null;
-        }
-
-        Date date = xmlDate.toGregorianCalendar().getTime();
-        Instant instant = date.toInstant();
-        ZonedDateTime zdt = instant.atZone(ZoneId.systemDefault());
-        LocalDate localDate = zdt.toLocalDate();
-        return localDate;
-    }
     
 
     private void fillProjectForm() {

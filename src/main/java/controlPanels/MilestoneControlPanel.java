@@ -9,10 +9,7 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
-import services.ControlPanelLineObject;
-import services.ControlPanelLineType;
-import services.ParamType;
-import services.SegmentType;
+import services.*;
 import tables.BasicTable;
 import tables.MilestoneTable;
 
@@ -26,7 +23,8 @@ public class MilestoneControlPanel extends DescriptionControlPanel {
 
     public MilestoneControlPanel(String buttonName, IFormDataController formDataController, IEditFormController editFormController, FormController formController){
         super(buttonName, formDataController,editFormController, formController);
-        lineList.add(new ControlPanelLineObject("Criterions: ", ControlPanelLineType.CheckBox, ParamType.Criterion));
+        SegmentLists segmentLists = formController.getSegmentLists();
+        lineList.add(new ControlPanelLineObject("Criterions: ", ControlPanelLineType.CheckBox, ParamType.Criterion, segmentLists.getCriterionObservable()));
 
         addItemsToControlPanel();
     }
@@ -47,7 +45,7 @@ public class MilestoneControlPanel extends DescriptionControlPanel {
 
         List[] milestoneData = formDataController.getMilestoneStringData(id);
 
-        controlPane.getChildren().clear();
+        controlPanelController.resetPanel(controlPane);
         addItemsToControlPanel();
 
         ArrayList<ArrayList<Integer>>  criteriaID = formDataController.getCriterionFromMilestone(id);

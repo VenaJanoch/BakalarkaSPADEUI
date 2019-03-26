@@ -190,7 +190,7 @@ public class DataManipulator{
             data[3] = milestone.getDescriptionIndicator();
         }
 
-        if(milestone.getCriteriaIndexs() != null){
+        if(milestone.getCriteriaIndicator() != null){
             data[4] = milestone.getCriteriaIndicator();
         }
 
@@ -672,7 +672,7 @@ public class DataManipulator{
 
     public List[] getChangeStringData(int id) {
 
-        List[] data = new List[5];
+        List[] data = new List[6];
         Change change = dataModel.getChange(id);;
 
         if(change.getName() != null){
@@ -699,7 +699,9 @@ public class DataManipulator{
             data[4] = list;
         }
 
-
+        if(change.getArtifactIndex() != null){
+            data[5] = change.getArtifactIndex();
+        }
 
         return data;
     }
@@ -724,8 +726,8 @@ public class DataManipulator{
             data[3] = artifact.getCreated();
         }
 
-        if(artifact.getMimeType() != null){
-            data[4] = artifact.getMimeType();
+        if(artifact.getMimeTypeIndex() != null){
+            data[4] = artifact.getMimeTypeIndex();
         }
 
         if(artifact.getNameIndicator() != null){

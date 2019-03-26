@@ -34,7 +34,7 @@ public class CriterionControlPanel extends DescriptionControlPanel {
         int id = criterionTable.getId();
         List[] criterionData = formDataController.getCriterionData(id);
 
-        controlPane.getChildren().clear();
+        controlPanelController.resetPanel(controlPane);
         addItemsToControlPanel();
 
         controlPanelController.setValueTextField(this, lineList ,ParamType.Name, criterionData, criterionData[2], 0);

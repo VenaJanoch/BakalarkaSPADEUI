@@ -50,7 +50,7 @@ public class ArtifactControlPanel extends DateDescControlPanel implements IContr
             i++;
         }
 
-        lineList.add(new ControlPanelLineObject("Role: ", ControlPanelLineType.ComboBox, ParamType.Role, segmentLists.getRoleObservable()));
+
         lineList.add(new ControlPanelLineObject("Type: ", ControlPanelLineType.ComboBox, ParamType.ArtifactType, artifactArray));
         createControlPanel();
     }
@@ -70,7 +70,7 @@ public class ArtifactControlPanel extends DateDescControlPanel implements IContr
 
 
         List[] artifactData = formDataController.getArtifactStringData(artifactId);
-        controlPane.getChildren().clear();
+        controlPanelController.resetPanel(controlPane);
         createControlPanel();
 
         controlPanelController.setValueTextField(this, lineList ,ParamType.Name, artifactData, artifactData[5], 0);

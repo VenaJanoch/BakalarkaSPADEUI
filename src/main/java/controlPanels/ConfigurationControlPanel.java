@@ -81,12 +81,12 @@ public class ConfigurationControlPanel extends DateControlPanel implements ICont
 
         List[] configData = formDataController.getConfigurationStringData(configId);
 
-        controlPane.getChildren().clear();
+        controlPanelController.resetPanel(controlPane);
         addItemsToControlPanel();
 
         controlPanelController.setValueTextField(this, lineList ,ParamType.Name, configData, configData[3], 0);
         controlPanelController.setValueDatePicker(this, lineList ,ParamType.Date, (ArrayList<LocalDate>) configData[1], configData[4]);
-        controlPanelController.setValueTextField(this, lineList ,ParamType.Role, configData, configData[5], 2);
+        controlPanelController.setValueComboBox(this, lineList ,ParamType.Role, (ArrayList<Integer>) configData[2], configData[5]);
 
         ArrayList<ArrayList<Integer>> cprList = formDataController.getCPRFromConfiguration(configId);
         controlPanelController.setValueCheckComboBox(this, lineList ,ParamType.CPR, cprList, configData[6]);

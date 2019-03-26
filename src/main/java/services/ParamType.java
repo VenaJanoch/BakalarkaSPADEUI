@@ -8,5 +8,5 @@ package services;
  */
 public enum ParamType {
 	Name, Description, Category, EstimateTime, Date, EndDate, Criterion, Milestone,  Role, Class, SuperClass, CPR, Branch, RadioButton,
-	Configuration, WorkUnit, Priority, Severity, Status, Type, Relation, Resolution, AssigneeRole, ArtifactType, Change, RoleType
+	Configuration, WorkUnit, Priority, Severity, Status, Type, Relation, Resolution, AssigneeRole, ArtifactType, Change, RoleType, Artifact
 }

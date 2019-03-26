@@ -43,7 +43,7 @@ public class PhaseControlPanel extends WorkUnitDateControlPanel {
         int id = phaseTable.getId();
         List[] phaseStringData = formDataController.getPhaseStringData(id);
 
-        controlPane.getChildren().clear();
+        controlPanelController.resetPanel(controlPane);
         addItemsToControlPanel();
 
         controlPanelController.setValueTextField(this, lineList ,ParamType.Name, phaseStringData, phaseStringData[5], 0);

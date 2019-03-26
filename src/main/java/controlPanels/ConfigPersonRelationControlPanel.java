@@ -46,7 +46,7 @@ public class ConfigPersonRelationControlPanel extends NameControlPanel {
         int id = cprTable.getId();
         List[] configPersonRelation = formDataController.getCPRStringData(id);
 
-        controlPane.getChildren().clear();
+        controlPanelController.resetPanel(controlPane);
         createControlPanel();
 
         controlPanelController.setValueTextField(this, lineList ,ParamType.Name, configPersonRelation, configPersonRelation[2], 0);

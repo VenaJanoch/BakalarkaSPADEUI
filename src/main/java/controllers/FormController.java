@@ -1,5 +1,7 @@
 package controllers;
 
+import SPADEPAC.ConfigPersonRelation;
+import SPADEPAC.Milestone;
 import abstractControlPane.ControlPanel;
 import abstractform.BasicForm;
 import controlPanels.*;
@@ -11,6 +13,7 @@ import interfaces.*;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.TableView;
 import model.DataManipulator;
 import model.DataModel;
 import model.IdentificatorCreater;
@@ -20,6 +23,7 @@ import tables.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class FormController {
@@ -395,48 +399,32 @@ public class FormController {
                 break;
             case Milestone:
 
-//                List<Milestone> milestones = dataModel.getMilestones();
-//                MilestoneForm milestoneForm = (MilestoneForm) form;
-//                TableView tableView = milestoneForm.getTableTV();
-//                tableView.getItems().clear();
-//                for (int i = 0; i < milestones.size(); i++) {
-//                    Milestone milestone = milestones.get(i);
-//                    tableView.getItems().add(dataPreparer.prepareMilestoneTable(milestone.getName(), milestone.getDescription(), milestone.getId(),
-//                            milestone.getCriteriaIndexs(), segmentLists.getCriterionObservable()));
-//
-//                }
-//                tableView.sort();
-//                tableView.refresh();
-//                break;
-            case Role:
+                List<Milestone> milestones = dataModel.getMilestones();
+                MilestoneForm milestoneForm = (MilestoneForm) form;
+                TableView tableView = milestoneForm.getTableTV();
+                tableView.getItems().clear();
+                for (int i = 0; i < milestones.size(); i++) {
+                    Milestone milestone = milestones.get(i);
+                    tableView.getItems().add(dataPreparer.prepareMilestoneTable(milestone.getName().get(0), milestone.getId()));
 
-//                List<Role> roles = dataModel.getRoles();
-//                RoleForm roleForm = (RoleForm) form;
-//                TableView roleTableView = roleForm.getTableTV();
-//                roleTableView.getItems().clear();
-//                for (int i = 0; i < roles.size(); i++) {
-//                    Role role = roles.get(i);
-//                    RoleTable roleTable = dataPreparer.prepareRoleTable(role.getName(), role.getDescription(), role.getId(),
-//                            role.getType(), segmentLists.getRoleTypeObservable());
-//                    roleTableView.getItems().add(roleTable);
-//
-//                }
-//                roleTableView.sort();
-         //       roleTableView.refresh();
+                }
+                tableView.sort();
+                tableView.refresh();
                 break;
+
             case ConfigPersonRelation:
-//                List<ConfigPersonRelation> cprlist = dataModel.getCpr();
-//                ConfigPersonRelationForm cprForm = (ConfigPersonRelationForm) form;
-//                TableView cprTableView = cprForm.getTableTV();
-//                cprTableView.getItems().clear();
-//                for (int i = 0; i < cprlist.size(); i++) {
-//                    ConfigPersonRelation cpr = cprlist.get(i);
-//                    CPRTable cprTable = dataPreparer.prepareCPRTable(cpr.getName(), cpr.getPersonIndex(), cpr.getId(), segmentLists.getRoleObservable());
-//                    cprTableView.getItems().add(cprTable);
-//
-//                }
-//                cprTableView.sort();
-//                cprTableView.refresh();
+                List<ConfigPersonRelation> cprlist = dataModel.getCpr();
+                ConfigPersonRelationForm cprForm = (ConfigPersonRelationForm) form;
+                TableView cprTableView = cprForm.getTableTV();
+                cprTableView.getItems().clear();
+                for (int i = 0; i < cprlist.size(); i++) {
+                    ConfigPersonRelation cpr = cprlist.get(i);
+                    CPRTable cprTable = dataPreparer.prepareCPRTable(cpr.getName().get(0), cpr.getId());
+                    cprTableView.getItems().add(cprTable);
+
+                }
+                cprTableView.sort();
+                cprTableView.refresh();
                 break;
             default:
 

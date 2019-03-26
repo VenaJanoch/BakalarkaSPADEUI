@@ -4,10 +4,7 @@ import interfaces.IEditDataModel;
 import interfaces.IEditFormController;
 import model.DataModel;
 import model.IdentificatorCreater;
-import services.Alerts;
-import services.MapperTableToObject;
-import services.SegmentLists;
-import services.SegmentType;
+import services.*;
 import tables.*;
 
 import java.time.LocalDate;
@@ -149,6 +146,8 @@ public class EditFormController implements IEditFormController {
             segmentLists.updateListItem(SegmentType.Role, id, roleTable);
 
             ArrayList<Integer> roleType = dataModel.getRoleTypeIndex(typeFormManipulator);
+            mapperTableToObject.mapTableToObject(SegmentType.Role, roleType, new TableToObjectInstanc(roleTable.getName(), roleTable.getId(),
+                    SegmentType.Role));
             mapperTableToObject.updateValueList(roleType, mapperTableToObject.getRoleToRoleTypeMapper(),
                     id, roleName);
 
@@ -181,12 +180,14 @@ public class EditFormController implements IEditFormController {
        dataManipulator.editDataInMilestone(nameForManipulator,  descForManipulator, nameIndicators, descriptionIndicators, criterionIndicators, criterionIndex, milestoneTable.getId());
 
 
-        milestoneTable.setCriterion(dataPreparer.prepareDependencyArray(criterionIndex, segmentLists.getCriterionObservable()));
+       // milestoneTable.setCriterion(dataPreparer.prepareDependencyArray(criterionIndex, segmentLists.getCriterionObservable()));
         milestoneTable.setName(dataPreparer.createTableItemIdName(id, nameForManipulator.get(0)));
 
 
         if (criterionIndex.size() != 0){
-            ArrayList<Integer> criterionIndicies = dataModel.getCriterionIds(criterionIndex.get(0));
+            ArrayList<Integer> criterionIndicies = dataModel.getCriterionIds(criterionIndex);
+            mapperTableToObject.mapTableToObject(SegmentType.Milestone, criterionIndicies, new TableToObjectInstanc(milestoneTable.getName(), id,
+                    SegmentType.Milestone));
             mapperTableToObject.updateValueList(criterionIndicies, mapperTableToObject.getMilestoneToCriterionMapper(),
                     milestoneTable.getId(), milestoneTable.getName());
         }
@@ -201,7 +202,8 @@ public class EditFormController implements IEditFormController {
 
         ArrayList<String> nameForManipulator = InputController.fillNameTextMapper(nameST);
         ArrayList<String> descForManipulator = InputController.fillTextMapper(description);
-        criterionTable.setName(id + "_" + nameForManipulator);
+        String milestoneName = dataPreparer.createTableItemIdName(id, nameForManipulator.get(0));
+        criterionTable.setName(milestoneName);
 //        if(descForManipulator != null){
 //            criterionTable.setDescription(description.get(0));
 //        }
@@ -225,6 +227,8 @@ public class EditFormController implements IEditFormController {
             cprTable.setRole(dataPreparer.prepareDependency(roleManipulatorId.get(0), segmentLists.getRoleObservable()));
             ArrayList<Integer> roleId = dataModel.getRoleId(roleManipulatorId);
             segmentLists.updateListItem(SegmentType.ConfigPersonRelation, cprId, cprTable);
+            mapperTableToObject.mapTableToObject(SegmentType.ConfigPersonRelation, roleId,
+                    new TableToObjectInstanc(cprTable.getName(), cprTable.getId(), SegmentType.ConfigPersonRelation));
             mapperTableToObject.updateValueList(roleId, mapperTableToObject.getRoleMaps().get(3), cprId, cprName);
         }
 
@@ -253,6 +257,7 @@ public class EditFormController implements IEditFormController {
                                   ArrayList<Integer> workUnitIndicators, ArrayList<Integer> nameIndicator, ArrayList<Integer> endDateIndicator,
                                   ArrayList<Integer> descIndicator, ArrayList<Integer> confIndicator, ArrayList<Integer> milestoneIndicator,
                                   PhaseTable phaseTable, int id) {
+
         ArrayList<String> nameForManipulator = InputController.fillNameTextMapper(actName);
         ArrayList<String> descriptionForManipulator = InputController.fillTextMapper(desc);
         ArrayList<LocalDate> date = InputController.checkDate(endDateL);
@@ -264,6 +269,9 @@ public class EditFormController implements IEditFormController {
 
         String phaseName = dataPreparer.createTableItemIdName(id, nameForManipulator.get(0));
         phaseTable.setName(phaseName);
+
+        mapperTableToObject.mapTableToPhase(milestoneForManipulator, configIdForManipulator, phaseName , id);
+
     }
 
     @Override
@@ -285,6 +293,10 @@ public class EditFormController implements IEditFormController {
 
         String iterationName = dataPreparer.createTableItemIdName(id, nameForManipulator.get(0));
         iterationTable.setName(iterationName);
+
+        mapperTableToObject.mapTableToObject(SegmentType.Iteration, configIdForManipulator,
+                new TableToObjectInstanc(iterationName, id, SegmentType.Iteration));
+
     }
 
     @Override
@@ -321,19 +333,22 @@ public class EditFormController implements IEditFormController {
     }
 
     @Override
-    public void editDataFromChange(ArrayList<String> name, ArrayList<Integer> nameIndicator,  ArrayList<String> description,
+    public void editDataFromChange(ArrayList<String> name, ArrayList<Integer> nameIndicator,  ArrayList<String> description, ArrayList<Integer> artifact,
                                    ArrayList<Integer> descriptionIndicator, boolean exist, ChangeTable changeTable,
                                      int id) {
         ArrayList<String> nameForManipulator = InputController.fillNameTextMapper(name);
         ArrayList<String> descriptionForManipulator = InputController.fillTextMapper(description);
+        ArrayList<Integer> artifactForManipulator = dataPreparer.prepareIndexForManipulator(artifact);
 //        if(descriptionForManipulator != null){
 //            changeTable.setDescription(descriptionForManipulator.get(0));
 //        }
 
-        dataManipulator.editDataInChange(nameForManipulator, descriptionForManipulator, nameIndicator, descriptionIndicator, exist, id);
+        dataManipulator.editDataInChange(nameForManipulator, descriptionForManipulator, artifactForManipulator, nameIndicator, descriptionIndicator, exist, id);
 
         String changeName = dataPreparer.createTableItemIdName(id, nameForManipulator.get(0));
         changeTable.setName(changeName);
+        ArrayList<Integer> artifactId = dataModel.getArtifactId(artifactForManipulator);
+        mapperTableToObject.mapTableToObject(SegmentType.Change, artifactId, new TableToObjectInstanc(changeName, id, SegmentType.Change));
 
     }
 
@@ -359,7 +374,7 @@ public class EditFormController implements IEditFormController {
         int formIndex = identificatorCreater.getArtifactSegmentIdToFormIndexMaper().get(id);
         formController.setNameToItem(formIndex, nameForManipulator.get(0));
         formController.setItemInstanceCount(formIndex, instanceCount);
-
+        formController.setItemColor(formIndex, exist);
         }catch (NumberFormatException e){
             Alerts.showWrongNumberFormat("Instance count");
             e.printStackTrace();
@@ -403,6 +418,8 @@ public class EditFormController implements IEditFormController {
                 typeIndicator, resolutionIndicator, statusIndicator, estimateIndicator, isExist, relationForManipulator, workUnitsForManipulator, id);
 
         workUnitTable.setName(dataPreparer.createTableItemIdName(id, nameForManipulator.get(0)));
+        mapperTableToObject.mapTableToWU(assigneForManipulator, authorForManipulator, priorityForManipulator, severityForManipulator, typeForManipulator, resolutionForManipulator
+                ,statusIndex, id, workUnitTable.getName());
         segmentLists.updateListItem(SegmentType.WorkUnit, id, workUnitTable);
         }catch (NumberFormatException e){
             e.printStackTrace();
@@ -439,6 +456,10 @@ public class EditFormController implements IEditFormController {
 
             formController.setNameToItem(formIndex, itemName);
             formController.setItemInstanceCount(formIndex, instanceCount);
+
+            mapperTableToObject.mapTableToConfiguration(roleIdForManipulator, branchesForManipulator, cprsForManipulator, itemName, configId);
+
+
         }catch (NumberFormatException e){
             Alerts.showWrongNumberFormat("Instance count");
             e.printStackTrace();

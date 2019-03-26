@@ -42,7 +42,7 @@ public class IterationControlPanel extends WorkUnitDateControlPanel {
         int id = iterationTable.getId();
         List[] iterationData = formDataController.getIterationStringData(id);
 
-        controlPane.getChildren().clear();
+        controlPanelController.resetPanel(controlPane);
         addItemsToControlPanel();
 
         controlPanelController.setValueTextField(this, lineList ,ParamType.Name, iterationData, iterationData[5], 0);

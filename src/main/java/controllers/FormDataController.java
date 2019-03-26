@@ -59,7 +59,7 @@ public class FormDataController implements IFormDataController {
         formController.setNameToItem(indexForm, nameForManipulator);
 
         String segmentId = formController.getSegmentIdentificator(indexForm);
-        mapperTableToObject.mapTableToPhase(milestoneIndexForManipulator, configurationIndexFromManipulator, segmentId , phaseId);
+    //    mapperTableToObject.mapTableToPhase(milestoneIndexForManipulator, configurationIndexFromManipulator, segmentId , phaseId);
 
         return true;
     }
@@ -79,7 +79,8 @@ public class FormDataController implements IFormDataController {
         formController.setNameToItem(indexForm, nameForManipulator);
 
         String segmentId = formController.getSegmentIdentificator(indexForm);
-        mapperTableToObject.mapTableToObject(SegmentType.Iteration, configurationIdForManipulator, new TableToObjectInstanc(segmentId, iterationId, SegmentType.Iteration));
+      //  ArrayList<Integer> configurationID = dataModel.getConfigurationId(configurationIdForManipulator);
+      //  mapperTableToObject.mapTableToObject(SegmentType.Iteration, configurationIdForManipulator, new TableToObjectInstanc(segmentId, iterationId, SegmentType.Iteration));
         return true;
     }
 
@@ -145,7 +146,7 @@ public class FormDataController implements IFormDataController {
         ArrayList<Integer> branchIndicies = dataModel.getBranchIndices(branchIndex);
         ArrayList<Integer> cprIndicies = dataModel.getCPRIndices(cprIndex);
         int roleIndex = dataModel.getRoleId(authorIndex);
-        mapperTableToObject.mapTableToConfiguration(roleIndex, branchIndicies, cprIndicies, idName, configIndex);
+      //  mapperTableToObject.mapTableToConfiguration(roleIndex, branchIndicies, cprIndicies, idName, configIndex);
         return true;
     }
 
@@ -209,8 +210,8 @@ public class FormDataController implements IFormDataController {
         lists.getCPRObservable().add(cprTable);
 
         int roleId = dataModel.getRoleId(roleIndexFormManipulator);
-        mapperTableToObject.mapTableToObject(SegmentType.ConfigPersonRelation, roleId,
-                new TableToObjectInstanc(cprTable.getName(), cprTable.getId(), SegmentType.ConfigPersonRelation));
+      //  mapperTableToObject.mapTableToObject(SegmentType.ConfigPersonRelation, roleId,
+      //          new TableToObjectInstanc(cprTable.getName(), cprTable.getId(), SegmentType.ConfigPersonRelation));
 
     }
 
@@ -228,9 +229,9 @@ public class FormDataController implements IFormDataController {
     //    criterionIndex = dataPreparer.prepareIndicesForManipulator(criterionIndex);
         saveDataModel.createNewMilestone(nameForManipulator,descForManipulator, criterionIndex, milestoneTable.getId());
         lists.getMilestoneObservable().add(milestoneTable);
-        ArrayList<Integer> criterionIndicies = dataModel.getCriterionIds(criterionIndex);
-        mapperTableToObject.mapTableToObject(SegmentType.Milestone, criterionIndicies, new TableToObjectInstanc(milestoneTable.getName(), milestoneTable.getId(),
-                SegmentType.Milestone));
+       // ArrayList<Integer> criterionIndicies = dataModel.getCriterionIds(criterionIndex);
+      //  mapperTableToObject.mapTableToObject(SegmentType.Milestone, criterionIndicies, new TableToObjectInstanc(milestoneTable.getName(), milestoneTable.getId(),
+      //          SegmentType.Milestone));
 }
 
     public void saveDataFromPriority(String nameST, ClassTable tableItem) {
@@ -267,8 +268,8 @@ public class FormDataController implements IFormDataController {
         saveDataModel.crateNewRole(roleTable.getId());
         lists.getRoleObservable().add(roleTable);
 
-        int roleTypeIndex = dataModel.getRoleTypeIndex(typeFormManipulator);
-        mapperTableToObject.mapTableToObject(SegmentType.Role, roleTypeIndex, new TableToObjectInstanc(roleTable.getName(), roleTable.getId(), SegmentType.Role));
+       // int roleTypeIndex = dataModel.getRoleTypeIndex(typeFormManipulator);
+       // mapperTableToObject.mapTableToObject(SegmentType.Role, roleTypeIndex, new TableToObjectInstanc(roleTable.getName(), roleTable.getId(), SegmentType.Role));
 }
 
     public void saveDataFromRoleTypeForm(String nameST, ClassTable classTable) {
@@ -306,7 +307,7 @@ public class FormDataController implements IFormDataController {
     }
 
     public MilestoneTable prepareMilestoneToTable(String nameST, String description, int id, ArrayList criterionArray) {
-     return   dataPreparer.prepareMilestoneTable(nameST, description, id, dataPreparer.prepareIndicesForManipulator(criterionArray), lists.getCriterionObservable());
+     return   dataPreparer.prepareMilestoneTable(nameST, id);
     }
 
     public RoleTable prepareRoleToTable(String nameST, String description, int id, int roleTypeIndex) {
@@ -315,7 +316,7 @@ public class FormDataController implements IFormDataController {
     }
 
     public CPRTable prepareCPRToTable(String nameST, int roleIndex, int id) {
-        return dataPreparer.prepareCPRTable(nameST, dataPreparer.prepareIndexForManipulator(roleIndex), id, lists.getRoleObservable());
+        return dataPreparer.prepareCPRTable(nameST, id);
     }
 
     public BranchTable prepareBranchToTable(String nameST, boolean main, int id) {
@@ -337,7 +338,10 @@ public class FormDataController implements IFormDataController {
     }
 
     public List[] getRoleStringData(int id) {
-        return dataManipulator.getRoleData(id);
+        List[] data = dataManipulator.getRoleData(id);
+        ArrayList<Integer> typeIndices = dataPreparer.prepareIndiciesForForm(data[2]);
+        data[2] = typeIndices;
+        return data ;
     }
 
     public List[] getClassStringData(SegmentType segmentType, int id) {
@@ -367,7 +371,10 @@ public class FormDataController implements IFormDataController {
     }
 
     public List[] getCPRStringData(int id) {
-        return dataManipulator.getCPRData(id);
+        List[] data = dataManipulator.getCPRData(id);
+        ArrayList<Integer> indices = dataPreparer.prepareIndiciesForForm(data[1]);
+        data[1] = indices;
+        return data;
     }
 
 
@@ -381,6 +388,13 @@ public class FormDataController implements IFormDataController {
     }
 
     public  List[] getPhaseStringData(int id){
+        List[] data = dataManipulator.getPhaseStringData(id);
+        ArrayList indices1 = dataPreparer.prepareIndiciesForForm(data[2]);
+        ArrayList indices2 = dataPreparer.prepareIndiciesForForm(data[3]);
+        ArrayList date = dataPreparer.prepareDateForForm(data[4]);
+        data[2] = indices1;
+        data[3] = indices2;
+        data[4] = date;
         return dataManipulator.getPhaseStringData(id);
     }
 
@@ -414,6 +428,14 @@ public class FormDataController implements IFormDataController {
 
     @Override
     public List[] getIterationStringData(int id) {
+        List[] data = dataManipulator.getIterationStringData(id);
+        ArrayList indices1 = dataPreparer.prepareIndiciesForForm(data[2]);
+        ArrayList date1 = dataPreparer.prepareIndiciesForForm(data[3]);
+        ArrayList date2 = dataPreparer.prepareDateForForm(data[4]);
+        data[2] = indices1;
+        data[3] = date1;
+        data[4] = date2;
+
         return dataManipulator.getIterationStringData(id);
     }
 
@@ -424,22 +446,62 @@ public class FormDataController implements IFormDataController {
 
     @Override
     public List[] getChangeStringData(int id) {
-        return dataManipulator.getChangeStringData(id);
+        List[] data = dataManipulator.getChangeStringData(id);
+        List<Integer> artifact = dataPreparer.prepareIndiciesForForm(data[5]);
+        data[5] = artifact;
+
+        return data;
     }
 
     @Override
     public List[] getArtifactStringData(int id) {
-        return dataManipulator.getArtifactStringData(id);
+
+        List[] data = dataManipulator.getArtifactStringData(id);
+        ArrayList<Integer> indicies = dataPreparer.prepareIndiciesForForm(data[2]);
+        ArrayList<LocalDate> dates = dataPreparer.prepareDateForForm(data[3]);
+
+        data[2] = indicies;
+        data[3] = dates;
+
+        return data;
     }
 
     @Override
     public List[] getWorkUnitStringData(int id) {
-        return dataManipulator.getWorkUnitStringData(id);
+
+        List[] data = dataManipulator.getWorkUnitStringData(id);
+
+        ArrayList priorityIndicies = dataPreparer.prepareIndexForManipulator(data[4]);
+        ArrayList indicies1 = dataPreparer.prepareIndexForManipulator(data[5]);
+        ArrayList indicies2 = dataPreparer.prepareIndexForManipulator(data[6]);
+        ArrayList indicies3 = dataPreparer.prepareIndexForManipulator(data[7]);
+        ArrayList indicies4 = dataPreparer.prepareIndexForManipulator(data[8]);
+        ArrayList indicies5 = dataPreparer.prepareIndexForManipulator(data[9]);
+        ArrayList indicies6 = dataPreparer.prepareIndexForManipulator(data[10]);
+
+        data[4] = priorityIndicies;
+        data[5] = indicies1;
+        data[6] = indicies2;
+        data[7] = indicies3;
+        data[8] = indicies4;
+        data[9] = indicies5;
+        data[10] = indicies6;
+
+        return data;
     }
 
     @Override
     public List[] getConfigurationStringData(int id) {
-        return dataManipulator.getConfigurationStringData(id);
+
+        List[] data =  dataManipulator.getConfigurationStringData(id);
+
+        ArrayList<Integer> inidices = dataPreparer.prepareIndiciesForForm(data[2]);
+        ArrayList<LocalDate> dates = dataPreparer.prepareDateForForm(data[1]);
+
+        data[2] = inidices;
+        data[1] = dates;
+
+        return data;
     }
 
     @Override
@@ -473,7 +535,14 @@ public class FormDataController implements IFormDataController {
 
     @Override
     public List[] getProjectStringData(){
-        return dataManipulator.getProjectStringData();
+        List[] data = dataManipulator.getProjectStringData();
+        ArrayList<LocalDate> dates1 = dataPreparer.prepareDateForForm(data[3]);
+        ArrayList<LocalDate> dates2 = dataPreparer.prepareDateForForm(data[4]);
+
+        data[3] = dates1;
+        data[4] = dates2;
+
+        return data;
     }
 
 }

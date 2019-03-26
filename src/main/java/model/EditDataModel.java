@@ -41,10 +41,11 @@ public class EditDataModel implements IEditDataModel {
                 createdDate, dateIndicator, isCreate, authorIndex,  typeIndex,  authorIndicator, typeIndicator, instanceCount);
     }
 
-    public void editDataInChange( ArrayList<String> nameForManipulator, ArrayList<String> descForManipulator,
-                                  ArrayList<Integer> nameIndicators, ArrayList<Integer> descIndicator, boolean selected, int id){
-        Change change =dataModel.getChange(id);
-        dataModel.addDataToChange(change,   nameForManipulator,  descForManipulator, nameIndicators, descIndicator, selected);
+    public void editDataInChange( ArrayList<String> nameForManipulator, ArrayList<String> descForManipulator, ArrayList<Integer> artifactForManipulator,
+                                  ArrayList<Integer> nameIndicators, ArrayList<Integer> descIndicator,
+                                  boolean selected, int id){
+        Change change = dataModel.getChange(id);
+        dataModel.addDataToChange(change,   nameForManipulator,  descForManipulator, artifactForManipulator, nameIndicators, descIndicator, selected);
     }
 
     public void editDataInPhase(ArrayList<String> actName, ArrayList<LocalDate> endDateL, ArrayList<String> desc,
@@ -227,6 +228,31 @@ public class EditDataModel implements IEditDataModel {
     }
 
 
+    public void updateItemList(SegmentType formType, SegmentType elementType, int elementIdList){
+        switch (formType){
+            case Change:
+                switch (elementType ) {
+                    case Artifact:
+                        for (Change segment : project.getChanges()) {
+                            List<Integer> type = segment.getArtifactIndex();
+                            List<Integer> artifactIdId = dataModel.getArtifactId(type);
+                                int deleteIndexInProject = dataModel.getArtifactIndexInProject(elementIdList);
+                                for (int i = 0; i < type.size(); i++) {
+                                    int index = type.get(i);
+                                    if( artifactIdId.get(i) == elementIdList ){
+                                        segment.getArtifactIndex().remove(i);
+                                    }else if(index > deleteIndexInProject ){
+                                        segment.getArtifactIndex().remove(i);
+                                        segment.getArtifactIndex().add(i, index -1);
+                                    }
+                                }
+
+                        }
+                }
+                break;
+        }
+
+    }
 
 
     public void updateItemList(SegmentType formType, SegmentType elementType, ArrayList<Integer> elementIdList){
@@ -242,7 +268,14 @@ public class EditDataModel implements IEditDataModel {
                 switch (elementType ) {
                     case Criterion:
                         for (Milestone segment : project.getMilestones()) {
-            //                updateElementListFromSegment(elementIdList, segment.getCriteriaIndexs());
+                            int i = 0;
+                            for (CriterionList list : segment.getCriteriaIndexs()){
+                                updateElementListFromSegment(elementIdList, list.getCriterions());
+                                if (list.getCriterions().size() == 0){
+                                    segment.getCriteriaIndicator().remove(i);
+                                }
+                                i++;
+                            }
                         }
                         break;
                     default:
@@ -250,18 +283,23 @@ public class EditDataModel implements IEditDataModel {
                 break;
             case Role:
                 for (Role segment : project.getRoles()) {
-//             //       int type = segment.getType();
-//             //       int roleTypeId = dataModel.getRoleTypeId(type);
-//                    for(int deleteId : elementIdList){
-//                        int deleteIndexInProject = dataModel.getRoleTypeIndexInProject(deleteId);
-//                        if( roleTypeId == deleteId ){
-//             //               segment.setType(-1);
-//                        }else if(type > deleteIndexInProject ){
-//                            segment.setType(type - 1);
-                        //}
+                    List<Integer> type = segment.getType();
+                    List<Integer> roleTypeId = dataModel.getRoleTypeId(type);
+                    for(int deleteId : elementIdList) {
+                        int deleteIndexInProject = dataModel.getRoleTypeIndexInProject(deleteId);
+                        for (int i = 0; i < roleTypeId.size(); i++) {
+                            int index = type.get(i);
+                            if (roleTypeId.get(i) == deleteId) {
+                                segment.getType().remove(i);
+                                segment.getTypeIndicator().remove(i);
+                            } else if (type.get(i) > deleteIndexInProject) {
+                                segment.getType().remove(i);
+                                segment.getType().add(i, index -1);
+                                segment.getTypeIndicator().remove(i);
+                            }
+                        }
                     }
-
-               // }
+                }
 
                 break;
             case ConfigPersonRelation:
@@ -269,17 +307,23 @@ public class EditDataModel implements IEditDataModel {
                     case Role:
                         for (ConfigPersonRelation segment : project.getCpr()) {
 
-//                            int type = segment.getPersonIndex();
-//                            int personId = dataModel.getRoleId(type);
-//
-//                            for(int deleteId : elementIdList){
-//                                int deleteIndexInProject = dataModel.getRoleIndexInProject(deleteId);
-//                                if( personId == deleteId ){
-//                                    segment.setPersonIndex(-1);
-//                                }else if(type > deleteIndexInProject ){
-//                                    segment.setPersonIndex(type - 1);
-//                                }
-//                            }
+                            List<Integer> type = segment.getPersonIndex();
+                            List<Integer> personId = dataModel.getRoleId(type);
+
+                            for(int deleteId : elementIdList){
+                                int deleteIndexInProject = dataModel.getRoleIndexInProject(deleteId);
+                                for (int i = 0; i < personId.size(); i++) {
+                                    int index = type.get(i);
+                                    if (personId.get(i) == deleteId) {
+                                        segment.getPersonIndex().remove(i);
+                                        segment.getPersonIndicator().remove(i);
+                                    } else if (index > deleteIndexInProject) {
+                                        segment.getPersonIndex().remove(i);
+                                        segment.getPersonIndex().add(i, index -1);
+                                        segment.getPersonIndicator().remove(index);
+                                    }
+                                }
+                            }
 
                         }
                         break;
@@ -291,16 +335,22 @@ public class EditDataModel implements IEditDataModel {
                     case Role:
                         for (Artifact segment : project.getArtifacts()) {
 
-//                            int type = segment.getAuthorIndex();
-//                            int personId = dataModel.getRoleId(type);
-//                            for(int deleteId : elementIdList){
-//                                int deleteIndexInProject = dataModel.getRoleIndexInProject(deleteId);
-//                                if( personId == deleteId ){
-//                                    segment.setAuthorIndex(-1);
-//                                }else if(type > deleteIndexInProject ){
-//                                    segment.setAuthorIndex(type - 1);
-//                                }
-//                            }
+                            List<Integer> type = segment.getAuthorIndex();
+                            List<Integer> personId = dataModel.getRoleId(type);
+                            for(int deleteId : elementIdList){
+                                int deleteIndexInProject = dataModel.getRoleIndexInProject(deleteId);
+                                for (int i = 0; i < personId.size(); i++) {
+                                    int index = type.get(i);
+                                    if (personId.get(i) == deleteId) {
+                                        segment.getAuthorIndex().remove(i);
+                                        segment.getAuthorIndicator().remove(i);
+                                    } else if (index > deleteIndexInProject) {
+                                        segment.getAuthorIndex().remove(i);
+                                        segment.getAuthorIndex().add(i, index -1);
+                                        segment.getAuthorIndicator().remove(index);
+                                    }
+                                }
+                            }
                         }
                         break;
                     default:
@@ -309,35 +359,47 @@ public class EditDataModel implements IEditDataModel {
             case Phase:
                 switch (elementType ) {
                     case Milestone:
-//                        for (Phase segment : project.getPhases()) {
-//
-//                            int type = segment.getMilestoneIndex();
-//                            int milestoneId = dataModel.getMilestoneId(type);
-//
-//                            for(int deleteId : elementIdList){
-//                                int deleteIndexInProject = dataModel.getMilestoneIndexInProject(deleteId);
-//                                if( milestoneId == deleteId ){
-//                                    segment.setMilestoneIndex(-1);
-//                                }else if(type > deleteIndexInProject ){
-//                                    segment.setMilestoneIndex(type - 1);
-//                                }
-//                            }
-//                        }
+                        for (Phase segment : project.getPhases()) {
+
+                            List<Integer> type = segment.getMilestoneIndex();
+                            List<Integer> milestoneId = dataModel.getMilestoneId(type);
+
+                            for(int deleteId : elementIdList){
+                                int deleteIndexInProject = dataModel.getMilestoneIndexInProject(deleteId);
+                                for (int i = 0; i < type.size(); i++) {
+                                    int index = type.get(i);
+                                    if (milestoneId.get(i) == deleteId) {
+                                        segment.getMilestoneIndex().remove(i);
+                                        segment.getMilestoneIndicator().remove(i);
+                                    } else if (index > deleteIndexInProject) {
+                                        segment.getMilestoneIndex().remove(i);
+                                        segment.getMilestoneIndex().add(i, index -1);
+                                        segment.getMilestoneIndicator().remove(index);
+                                    }
+                                }
+                            }
+                        }
                         break;
                     case Configuration:
-//                        for (Phase segment : project.getPhases()) {
-//
-//                            int type = segment.getConfiguration();
-//                            int configurationId = dataModel.getConfigurationId(type);
-//                            for(int deleteId : elementIdList){
-//                                int deleteIndexInProject = dataModel.getConfigurationIndexInProject(deleteId);
-//                                if( configurationId == deleteId ){
-//                                    segment.setConfiguration(-1);
-//                                }else if(type > deleteIndexInProject ){
-//                                    segment.setConfiguration(type - 1);
-//                                }
-//                            }
-//                        }
+                        for (Phase segment : project.getPhases()) {
+
+                            List<Integer> type = segment.getConfiguration();
+                            List<Integer> configurationId = dataModel.getConfigurationId(type);
+                            for(int deleteId : elementIdList){
+                                int deleteIndexInProject = dataModel.getConfigurationIndexInProject(deleteId);
+                                for (int i = 0; i < type.size(); i++) {
+                                    int index = type.get(i);
+                                    if( configurationId.get(i) == deleteId ){
+                                        segment.getConfiguration().remove(i);
+                                        segment.getConfigurationIndicator().remove(i);
+                                    }else if(index > deleteIndexInProject ){
+                                        segment.getConfiguration().remove(i);
+                                        segment.getConfiguration().add(i, index -1);
+                                        segment.getConfigurationIndicator().remove(i);
+                                    }
+                                }
+                            }
+                        }
                         break;
                     default:
                 }
@@ -346,57 +408,84 @@ public class EditDataModel implements IEditDataModel {
                 switch (elementType ) {
                     case Configuration:
                         for (Iteration segment : project.getIterations()) {
-
-//                            int type = segment.getConfiguration();
-//                            int configurationId = dataModel.getConfigurationId(type);
-//                            for(int deleteId : elementIdList){
-//                                int deleteIndexInProject = dataModel.getConfigurationIndexInProject(deleteId);
-//                                if( configurationId == deleteId ){
-//                                    segment.setConfiguration(-1);
-//                                }else if(type > deleteIndexInProject ){
-//                                    segment.setConfiguration(type - 1);
-//                                }
-//                            }
+                          List<Integer> type = segment.getConfiguration();
+                            List<Integer> configurationId = dataModel.getConfigurationId(type);
+                            for(int deleteId : elementIdList){
+                                int deleteIndexInProject = dataModel.getConfigurationIndexInProject(deleteId);
+                                for (int i = 0; i < type.size(); i++) {
+                                    int index = type.get(i);
+                                    if( configurationId.get(i) == deleteId ){
+                                        segment.getConfiguration().remove(i);
+                                        segment.getConfigurationIndicator().remove(i);
+                                    }else if(index > deleteIndexInProject ){
+                                        segment.getConfiguration().remove(i);
+                                        segment.getConfiguration().add(i, index -1);
+                                        segment.getConfigurationIndicator().remove(i);
+                                    }
+                                }
+                            }
                         }
-                        break;
-                    default:
-                }
+                        }
                 break;
             case Configuration:
 
                 switch (elementType ) {
                     case Role:
                         for (Configuration segment : project.getConfiguration()) {
-//                            int type = segment.getAuthorIndex();
-//                            int personId = dataModel.getRoleId(type);
-//
-//                            for(int deleteId : elementIdList){
-//                                int deleteIndexInProject = dataModel.getRoleIndexInProject(deleteId);
-//                                if( personId == deleteId ){
-//                                    segment.setAuthorIndex(-1);
-//                                }else if(type > deleteIndexInProject ){
-//                                    segment.setAuthorIndex(type - 1);
-//                                }
-//                            }
-//
+                            List<Integer> type = segment.getAuthorIndex();
+                            List<Integer> personId = dataModel.getRoleId(type);
+                            for(int deleteId : elementIdList){
+                                int deleteIndexInProject = dataModel.getRoleIndexInProject(deleteId);
+                                for (int i = 0; i < personId.size(); i++) {
+                                    int index = type.get(i);
+                                    if (personId.get(i) == deleteId) {
+                                        segment.getAuthorIndex().remove(i);
+                                        segment.getAuthorIndicator().remove(i);
+                                    } else if (index > deleteIndexInProject) {
+                                        segment.getAuthorIndex().remove(i);
+                                        segment.getAuthorIndex().add(i, index -1);
+                                        segment.getAuthorIndicator().remove(i);
+                                    }
+                                }
+                            }
                         }
                         break;
                     case ConfigPersonRelation:
                         for (Configuration segment : project.getConfiguration()) {
-//                            updateElementListFromSegment(elementIdList, segment.getCPRsIndexs());
+                            int i = 0;
+                            for (CPRSList list : segment.getCPRsIndexs()){
+                                updateElementListFromSegment(elementIdList, list.getCPRs());
+                                if (list.getCPRs().size() == 0){
+                                    segment.getCPRsIndicator().remove(i);
+                                }
+                                i++;
+                            }
                         }
                         break;
                     case Branch:
                         for (Configuration segment : project.getConfiguration()) {
-  //                          updateElementListFromSegment(elementIdList, segment.getBranchesIndexs());
+                            int i = 0;
+                            for (BranchList list : segment.getBranchesIndexs()){
+                                updateElementListFromSegment(elementIdList, list.getBranches());
+                                if (list.getBranches().size() == 0){
+                                    segment.getBranchesIndicator().remove(i);
+                                }
+                                i++;
+                            }
                         }
                         break;
+
                     default:
                 }
             default:
 
         }
     }
+
+    private void updateConfigurationList(){
+    }
+
+
 
     private void updateElementListFromSegmet(int changeValue, List<Integer> elementList ){
 

@@ -26,6 +26,7 @@ public class MapperTableToObject {
     private Map<Integer, ArrayList<TableToObjectInstanc>> phaseToMilestone;
     private Map<Integer, ArrayList<TableToObjectInstanc>> phaseToConfigurationMapper;
     private Map<Integer, ArrayList<TableToObjectInstanc>> iterationToConfigurationMapper;
+    private Map<Integer, ArrayList<TableToObjectInstanc>> changeToArtifactMapper;
 
 
     private ArrayList<Map<Integer, ArrayList<TableToObjectInstanc>>> roleMaps;
@@ -50,6 +51,7 @@ public class MapperTableToObject {
         this.phaseToMilestone = new HashMap<>();
         this.phaseToConfigurationMapper = new HashMap<>();
         this.iterationToConfigurationMapper = new HashMap<>();
+        this.changeToArtifactMapper = new HashMap<>();
 
 
 
@@ -70,20 +72,23 @@ public class MapperTableToObject {
         roleMaps.add(CPRToRoleMapper);
     }
 
-    public void mapTableToObject(SegmentType segmentType, ArrayList<Integer> indexList, TableToObjectInstanc instanc) {
+    public void mapTableToObjects(SegmentType segmentType, ArrayList<ArrayList<Integer>> indexList, TableToObjectInstanc instanc) {
 
         switch (segmentType) {
             case Milestone:
-                addInstanceToMap(indexList, lists.getCriterionObservable(), instanc, milestoneToCriterionMapper);
+                addInstancesToMap(indexList, lists.getCriterionObservable(), instanc, milestoneToCriterionMapper);
                 break;
             default:
 
         }
     }
 
-    public void mapTableToObject(SegmentType segmentType, int index, TableToObjectInstanc instanc) {
+    public void mapTableToObject(SegmentType segmentType, ArrayList<Integer> index, TableToObjectInstanc instanc) {
 
         switch (segmentType) {
+            case Milestone:
+                addInstanceToMap(index, lists.getCriterionObservable(), instanc, milestoneToCriterionMapper);
+                break;
             case Role:
                 addInstanceToMap(index, lists.getRoleTypeObservable(), instanc, roleToRoleTypeMapper);
                 break;
@@ -99,13 +104,17 @@ public class MapperTableToObject {
             case Iteration:
                 addInstanceToMap(index, lists.getConfigObservable(), instanc, iterationToConfigurationMapper);
                 break;
+            case Change:
+                addInstanceToMap(index, lists.getArtifactObservable(), instanc, changeToArtifactMapper);
+                break;
             default:
 
         }
     }
 
-    public void mapTableToWU(int assigneIndex, int authorIndex, int priorityIndex, int severityIndex, int typeIndex, int resolutionIndex,
-                             int statusIndex, int indexForm, String WUName) {
+    public void mapTableToWU(ArrayList<Integer> assigneIndex, ArrayList<Integer> authorIndex, ArrayList<Integer> priorityIndex,
+                             ArrayList<Integer> severityIndex, ArrayList<Integer> typeIndex, ArrayList<Integer> resolutionIndex,
+                             ArrayList<Integer> statusIndex, int indexForm, String WUName) {
         addInstanceToMap(priorityIndex, lists.getPriorityTypeObservable(), new TableToObjectInstanc(WUName, indexForm, SegmentType.WorkUnit), priorityToWUMapper);
         addInstanceToMap(severityIndex, lists.getSeverityTypeObservable(), new TableToObjectInstanc(WUName, indexForm, SegmentType.WorkUnit), severityToWUMapper);
         addInstanceToMap(typeIndex, lists.getTypeObservable(), new TableToObjectInstanc(WUName, indexForm, SegmentType.WorkUnit), typeToWUMapper);
@@ -115,13 +124,14 @@ public class MapperTableToObject {
         addInstanceToMap(authorIndex, lists.getRoleObservable(), new TableToObjectInstanc(WUName, indexForm, SegmentType.WorkUnit), wuToRoleMapper);
     }
 
-    public void mapTableToConfiguration(int roleIndex, ArrayList<Integer> cprIndicies, ArrayList<Integer> branches, String configName, int configIndex){
+    public void mapTableToConfiguration(ArrayList<Integer> roleIndex, ArrayList<ArrayList<Integer>> cprIndicies, ArrayList<ArrayList<Integer>> branches,
+                                        String configName, int configIndex){
         addInstanceToMap(roleIndex, lists.getRoleObservable(), new TableToObjectInstanc(configName, configIndex, SegmentType.Configuration), configurationToRoleMapper);
-        addInstanceToMap(cprIndicies, lists.getCPRObservable(), new TableToObjectInstanc(configName, configIndex, SegmentType.Configuration), configurationToCPRMapper);
-        addInstanceToMap(branches, lists.getBranchObservable(), new TableToObjectInstanc(configName, configIndex, SegmentType.Configuration), configurationToBranchMapper);
+        addInstancesToMap(cprIndicies, lists.getCPRObservable(), new TableToObjectInstanc(configName, configIndex, SegmentType.Configuration), configurationToCPRMapper);
+        addInstancesToMap(branches, lists.getBranchObservable(), new TableToObjectInstanc(configName, configIndex, SegmentType.Configuration), configurationToBranchMapper);
     }
 
-    public void mapTableToPhase(int milestoneId, int configurationId, String phaseName, int phaseId){
+    public void mapTableToPhase(ArrayList<Integer> milestoneId, ArrayList<Integer> configurationId, String phaseName, int phaseId){
         addInstanceToMap(milestoneId, lists.getMilestoneObservable(), new TableToObjectInstanc(phaseName, phaseId, SegmentType.Phase), phaseToMilestone);
         addInstanceToMap(configurationId, lists.getConfigObservable(), new TableToObjectInstanc(phaseName, phaseId, SegmentType.Phase), phaseToConfigurationMapper);
     }
@@ -132,6 +142,13 @@ public class MapperTableToObject {
     private void addInstanceToMap(ArrayList<Integer> criterionIndex, ObservableList<BasicTable> list, TableToObjectInstanc instanc,
                                  Map<Integer, ArrayList<TableToObjectInstanc>> map ) {
         for (int index : criterionIndex) {
+            addInstanceToMap(index, list, instanc, map);
+    }
+    }
+
+    private void addInstancesToMap(ArrayList<ArrayList<Integer>> criterionIndex, ObservableList<BasicTable> list, TableToObjectInstanc instanc,
+                                  Map<Integer, ArrayList<TableToObjectInstanc>> map ) {
+        for (ArrayList<Integer> index : criterionIndex) {
             addInstanceToMap(index, list, instanc, map);
         }
     }
@@ -190,13 +207,36 @@ public class MapperTableToObject {
                 }
             }
         }
+    }
+
+    public void updateValueList(Map<Integer, ArrayList<TableToObjectInstanc>> map, int ids) {
+        for (int i : map.keySet()) {
+            ArrayList<TableToObjectInstanc> objectList = map.get(i);
+            ArrayList<TableToObjectInstanc> objectListTmp = new ArrayList<>();
+            if (objectList != null) {
+                objectListTmp.addAll(objectList);
+                for (int j = objectListTmp.size() - 1; j >= 0; j--) {
+
+                        if (objectListTmp.get(j).getId() == ids) {
+                            objectList.remove(j);
+
+                    }
+
+                }
+            }
+        }
 
     }
 
+
     public void deleteFromMap(Map<Integer, ArrayList<TableToObjectInstanc>> map, ArrayList<Integer> dependencCriterion){
         for (int i : dependencCriterion) {
-            map.remove(i);
+            deleteFromMap(map, i);
         }
+    }
+
+    public void deleteFromMap(Map<Integer, ArrayList<TableToObjectInstanc>> map, int dependencCriterion){
+        map.remove(dependencCriterion);
     }
 
     public void deleteFromRoleMaps(ArrayList<Integer> dependencyRole) {
@@ -306,6 +346,7 @@ public class MapperTableToObject {
         return iterationToConfigurationMapper;
     }
 
-
-
- }
+    public Map<Integer, ArrayList<TableToObjectInstanc>> getChangeToArtifactMapper() {
+        return changeToArtifactMapper;
+    }
+}

@@ -9,10 +9,7 @@ import interfaces.IControlPanel;
 import interfaces.IEditFormController;
 import interfaces.IFormDataController;
 import javafx.scene.control.*;
-import services.ControlPanelLineObject;
-import services.ControlPanelLineType;
-import services.ParamType;
-import services.SegmentType;
+import services.*;
 import tables.BasicTable;
 import tables.RoleTable;
 
@@ -33,7 +30,8 @@ public class RoleControlPanel extends DescriptionControlPanel implements IContro
         this.roleId = roleId;
         this.roleIndex = roleIndex;
         this.roleTable = roleTable;
-        lineList.add(new ControlPanelLineObject("Role Type: ", ControlPanelLineType.ComboBox, ParamType.RoleType));
+        SegmentLists segmentLists = formController.getSegmentLists();
+        lineList.add(new ControlPanelLineObject("Role Type: ", ControlPanelLineType.ComboBox, ParamType.RoleType, segmentLists.getRoleTypeObservable()));
         this.addItemsToControlPanel();
     }
 
@@ -69,7 +67,7 @@ public class RoleControlPanel extends DescriptionControlPanel implements IContro
     public void showEditControlPanel() {
 
         List[] roleData = formDataController.getRoleStringData(roleId);
-        controlPane.getChildren().clear();
+        controlPanelController.resetPanel(controlPane);
         addItemsToControlPanel();
 
         controlPanelController.setValueTextField(this, lineList ,ParamType.Name, roleData, roleData[3], 0);

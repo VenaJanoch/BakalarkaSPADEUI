@@ -26,10 +26,13 @@ public class ComboBoxItem extends ItemBox {
 
      private ComboBoxItem otherComboBoxItem;
 
+     private ObservableList<String> listForBox;
+
     public ComboBoxItem(ControlPanelLine controlPanelLine, ControlPanel controlPanel, ControlPanelController controlPanelController,
                         ObservableList listForBox, ObservableList<ControlPanelLineObject> lineList){
         super(FXCollections.observableList(Arrays.asList(Constans.textIndicatorList)), controlPanelController);
 
+        this.listForBox = listForBox;
 
         itemBoxController = new ItemBoxController();
 
@@ -79,6 +82,7 @@ public class ComboBoxItem extends ItemBox {
 
     public void selectItemInComboBox(int index){
         itemCB.getSelectionModel().select(index);
+        itemCB.getSelectionModel().select(listForBox.get(index));
     }
 
     public void selectItemInComboBox(String  value){

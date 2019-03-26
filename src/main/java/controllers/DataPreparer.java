@@ -4,7 +4,13 @@ import javafx.collections.ObservableList;
 import model.IdentificatorCreater;
 import tables.*;
 
+import javax.xml.datatype.XMLGregorianCalendar;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -41,12 +47,12 @@ public class DataPreparer {
         return dependency;
     }
 
-    public MilestoneTable prepareMilestoneTable(String nameST, String description, int id, List criterionArray, ObservableList observableList) {
+    public MilestoneTable prepareMilestoneTable(String nameST, int id) {
 
         String idName = prepareTableName(nameST, id);
-        String criterion = prepareDependencyArray(criterionArray, observableList);
+     //   String criterion = prepareDependencyArray(criterionArray, observableList);
 
-        return new MilestoneTable(idName, description, criterion, id);
+        return new MilestoneTable(idName, "", "", id);
     }
 
     public RoleTable prepareRoleTable(String name, String description, int id, int type, ObservableList<BasicTable> roleTypeObservable) {
@@ -55,10 +61,10 @@ public class DataPreparer {
         return new RoleTable(idName, description, typeName,id);
     }
 
-    public CPRTable prepareCPRTable(String name, int roleIndex, int id, ObservableList<BasicTable> roleObservable) {
+    public CPRTable prepareCPRTable(String name, int id) {
         String idName = prepareTableName(name, id);
-        String roleName = prepareDependency(roleIndex, roleObservable) ;
-        return new CPRTable(idName, roleName, id);
+      //  String roleName = prepareDependency(roleIndex, roleObservable) ;
+        return new CPRTable(idName, "", id);
     }
 
     public BranchTable prepareBranchTable(String name, boolean main, int id) {
@@ -169,4 +175,31 @@ public class DataPreparer {
         return values;
     }
 
- }
+    public ArrayList<LocalDate> prepareDateForForm(List<XMLGregorianCalendar> dateXML) {
+        ArrayList<LocalDate> values = new ArrayList();
+        for (XMLGregorianCalendar date : dateXML){
+            values.add(convertDateFromXML(date));
+        }
+        return values;
+    }
+
+    /**
+     * Umožní převedení data ve formátu XMLGregorianCalendar uloženého v XML do
+     * formátu LocalDate
+     *
+     * @param xmlDate XMLGregorianCalendar
+     * @return LocalDate
+     */
+    public LocalDate convertDateFromXML(XMLGregorianCalendar xmlDate) {
+
+        if (xmlDate == null) {
+            return null;
+        }
+
+        Date date = xmlDate.toGregorianCalendar().getTime();
+        Instant instant = date.toInstant();
+        ZonedDateTime zdt = instant.atZone(ZoneId.systemDefault());
+        LocalDate localDate = zdt.toLocalDate();
+        return localDate;
+    }
+}

@@ -42,7 +42,7 @@ public class ProjectControlPanel extends WorkUnitDateControlPanel implements ICo
     public void showEditControlPanel() {
         List[] projectData = formDataController.getProjectStringData();
 
-        controlPane.getChildren().clear();
+        controlPanelController.resetPanel(controlPane);
         addItemsToControlPanel();
 
         controlPanelController.setValueTextField(this, lineList ,ParamType.Name, projectData, projectData[4], 0);

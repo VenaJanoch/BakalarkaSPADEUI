@@ -65,7 +65,7 @@ public class ClassControlPanel extends NameControlPanel {
         ClassTable classTable = (ClassTable) basicTable;
         int id = classTable.getId();
        List[] classData = formDataController.getClassStringData(segmentType, id);
-        controlPane.getChildren().clear();
+        controlPanelController.resetPanel(controlPane);
         createControlPanel();
 
         controlPanelController.setValueTextField(this, lineList ,ParamType.Name, classData, classData[3], 0);

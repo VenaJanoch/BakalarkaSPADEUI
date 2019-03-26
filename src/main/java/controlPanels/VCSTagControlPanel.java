@@ -35,7 +35,7 @@ public class VCSTagControlPanel extends DescriptionControlPanel {
         int id = basicTable.getId();
         List[] vcsTagStringData = formDataController.getVCSTagStringData(id);
 
-        controlPane.getChildren().clear();
+        controlPanelController.resetPanel(controlPane);
         addItemsToControlPanel();
 
         controlPanelController.setValueTextField(this, lineList ,ParamType.Name, vcsTagStringData, vcsTagStringData[2], 0);

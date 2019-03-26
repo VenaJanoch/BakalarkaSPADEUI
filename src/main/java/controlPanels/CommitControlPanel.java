@@ -62,7 +62,7 @@ public class CommitControlPanel extends NameControlPanel implements IControlPane
 
         List[] commitData = formDataController.getCommitStringData(commitId);
 
-        controlPane.getChildren().clear();
+        controlPanelController.resetPanel(controlPane);
         createControlPanel();
 
         controlPanelController.setValueTextField(this, lineList ,ParamType.Name, commitData, commitData[2], 0);

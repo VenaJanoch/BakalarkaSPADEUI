@@ -53,9 +53,7 @@ public class DeleteFormController implements IDeleteFormController {
         if(Alerts.showDeleteItemCascadeAlert(selection)){
 
             ObservableList phaseListObservable = view.getSelectionModel().getSelectedIndices();
-
             deleteActivityForm(phaseListObservable, selection);
-
             view.getItems().removeAll(selection);
             view.getSelectionModel().clearSelection();
         }
@@ -64,7 +62,7 @@ public class DeleteFormController implements IDeleteFormController {
     public void deleteWorkUnit(ArrayList<Integer> indicesForm) {
 
         for(int i : indicesForm){
-      //      deleteWorkUnit(identificatorCreater.getWorkUnitIndex(i));
+           //deleteWorkUnit(identificatorCreater.getWorkUnitIndex(i));
         }
     }
 
@@ -78,9 +76,8 @@ public class DeleteFormController implements IDeleteFormController {
     public void deleteWorkUnitWithDialog(ArrayList<BasicTable> selection, TableView view) {
         if(Alerts.showDeleteItemCascadeAlert(selection)){
 
-            ObservableList phaseListObservable = view.getSelectionModel().getSelectedIndices();
-
-            deleteWorkUnit(phaseListObservable, selection);
+            ObservableList listObservable = view.getSelectionModel().getSelectedIndices();
+            deleteWorkUnit(listObservable, selection);
 
             view.getItems().removeAll(selection);
             view.getSelectionModel().clearSelection();
@@ -109,12 +106,25 @@ public class DeleteFormController implements IDeleteFormController {
     }
 
     public void deleteArtifact(int indexForm) {
+        ArrayList list = new ArrayList();
+        int id = identificatorCreater.getArtifactIndexToIdMaper().get(indexForm);
         if (!forms.get(indexForm).isSave()) {
-            forms.remove(indexForm);
-            forms.add(indexForm, null);
+            list.add(segmentLists.getArtifactTable(id));
+            if (Alerts.showDeleteItemCascadeAlert(list, mapperTableToObject.getChangeToArtifactMapper())) {
+
+                forms.remove(indexForm);
+                forms.add(indexForm, null);
+                editDataModel.updateItemList(SegmentType.Change, SegmentType.Artifact, id);
+
+                mapperTableToObject.updateValueList(mapperTableToObject.getChangeToArtifactMapper(), id);
+
+                mapperTableToObject.deleteFromMap(mapperTableToObject.getChangeToArtifactMapper(), id);
+                segmentLists.removeItemFromObservableList(SegmentType.Artifact, id);
+                deleteDataModel.removeArtifact(id);
+            }
         }
 
-        deleteDataModel.removeArtifact(indexForm);
+
 
     }
     
@@ -248,7 +258,6 @@ public class DeleteFormController implements IDeleteFormController {
 
             tableView.getItems().removeAll(selection);
             tableView.getSelectionModel().clearSelection();
-            formController.showForm(Constans.roleFormIndex);
         }
     }
 

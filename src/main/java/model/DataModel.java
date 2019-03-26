@@ -219,6 +219,8 @@ public class DataModel {
         return -1;
     }
 
+
+
     public int getArtifactIndexInProject(int id) {
         List<Artifact> items = project.getArtifacts();
         for (int i = 0; i < items.size(); i++) {
@@ -425,13 +427,14 @@ public class DataModel {
         return valueList;
     }
 
-    public void addDataToChange(Change change, ArrayList<String> nameForManipulator, ArrayList<String> descForManipulator,
+    public void addDataToChange(Change change, ArrayList<String> nameForManipulator, ArrayList<String> descForManipulator, ArrayList<Integer> artifactForManipulator,
                                 ArrayList<Integer> nameIndicators, ArrayList<Integer> descIndicator, boolean selected) {
         clearDataInChange(change);
         change.getName().addAll(nameForManipulator);
         change.getDescription().addAll(descForManipulator);
         change.getNameIndicator().addAll(nameIndicators);
         change.getDescriptionIndicator().addAll(descIndicator);
+        change.getArtifactIndex().addAll(artifactForManipulator);
         change.setExist(selected);
     }
     
@@ -1004,7 +1007,15 @@ public class DataModel {
 
     }
 
-    public ArrayList<Integer> getRoleId(ArrayList<Integer> roleIndex) {
+    public ArrayList<Integer> getMilestoneId(List<Integer> milestoneIndex) {
+        ArrayList<Integer> list = new ArrayList<>();
+        for(int i : milestoneIndex){
+            list.add(getMilestoneId(i));
+        }
+        return list;
+    }
+
+    public ArrayList<Integer> getRoleId(List<Integer> roleIndex) {
         ArrayList<Integer> list = new ArrayList<>();
         for(int i : roleIndex){
             list.add(getRoleId(i));
@@ -1038,15 +1049,17 @@ public class DataModel {
     }
 
 
-    public ArrayList getCriterionIds(List<Integer> criterionIndex) {
+    public ArrayList getCriterionIds(ArrayList<ArrayList<Integer>> criterionIndex) {
 
         List<Criterion> criterion = project.getCriterions();
         ArrayList<Integer> existCriterionId = new ArrayList();
-        for (int i : criterionIndex) {
+        for (ArrayList<Integer> list : criterionIndex){
+        for (int i : list) {
             if (i != -1) {
                 existCriterionId.add(criterion.get(i).getId());
             }
 
+        }
         }
         return existCriterionId;
     }
@@ -1158,13 +1171,32 @@ public class DataModel {
         return objF;
     }
 
-    public int getConfigurationId(int index) {
-        return project.getConfiguration().get(index).getId();
+    public ArrayList<Integer> getConfigurationId(List<Integer> index) {
+        ArrayList<Integer> idList = new ArrayList<>();
+        List<Configuration> configList = project.getConfiguration();
+        for (int configurationIndex : index){
+            idList.add(configList.get(configurationIndex).getId());
+        }
+        return idList;
     }
 
-    public int getRoleTypeId(int index) {
+    public ArrayList<Integer> getArtifactId(List<Integer> artifactForManipulator) {
+        ArrayList<Integer> idList = new ArrayList<>();
+        List<Artifact> artifactList = project.getArtifacts();
+        for (int artifactIndex : artifactForManipulator){
+            idList.add(artifactList.get(artifactIndex).getId());
+        }
+        return idList;
+    }
 
-        return project.getRoleType().get(index).getId();
+    public ArrayList<Integer> getRoleTypeId(List<Integer> roleTypeForManipulator) {
+
+        ArrayList<Integer> idList = new ArrayList<>();
+        List<RoleType> roleTypeList = project.getRoleType();
+        for (int artifactIndex : roleTypeForManipulator){
+            idList.add(roleTypeList.get(artifactIndex).getId());
+        }
+        return idList;
     }
 
     public int getPriorityId(int index) {
@@ -1241,5 +1273,6 @@ public class DataModel {
         return -1;
     }
 
-   
+
+
 }

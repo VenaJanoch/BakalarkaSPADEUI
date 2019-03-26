@@ -46,7 +46,7 @@ public class CommitedConfigurationControlPanel extends DateControlPanel implemen
     public void showEditControlPanel(){
         List[] commitedData = formDataController.getCommitedConfigurationStringData(commitedConfigurationId);
 
-        controlPane.getChildren().clear();
+        controlPanelController.resetPanel(controlPane);
         addItemsToControlPanel();
 
         controlPanelController.setValueTextField(this, lineList ,ParamType.Name, commitedData, commitedData[2], 0);

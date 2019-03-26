@@ -5,6 +5,7 @@ import graphics.DragAndDropCanvas;
 import graphics.NodeLink;
 import interfaces.IDeleteFormController;
 import services.*;
+import tables.BasicTable;
 
 public class ManipulationController {
 
@@ -136,6 +137,7 @@ public class ManipulationController {
 
 
     public void deleteForm(int formIndex, SegmentType segmentType){
+
         switch (segmentType){
             case Artifact:
                 deleteFormController.deleteArtifact (formIndex);
