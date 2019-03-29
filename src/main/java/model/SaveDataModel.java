@@ -35,16 +35,67 @@ public class SaveDataModel implements ISaveDataModel {
         project.getArtifacts().get(artifactIndex).getChangeIndex().add(changeIndex);
     }
 
-    public void createCommitToCommitedConfigurationRelation(int startId, int endId) {
-
+    public void createCommitedConfigurationToConfigurationRelation(Integer startId, Integer endId){
         Link linkP = objF.createLink();
 
         linkP.setType("Config");
         linkP.setArtifactIndex(startId);
         linkP.setChangeIndex(endId);
 
+        project.getLinks().add(linkP);
+
+        CommitedConfiguration commitedConfiguration = dataModel.getCommitedConfiguration(startId);
+        commitedConfiguration.getCommit().add(endId);
+        Configuration configuration = dataModel.getConfiguration(endId);
+        configuration.getCommitedConfiguration().add(startId);
+    }
+
+    private void createLink(int startId, int endId){
+        Link linkP = objF.createLink();
+
+        linkP.setType("Config");
+        linkP.setArtifactIndex(startId);
+        linkP.setChangeIndex(endId);
 
         project.getLinks().add(linkP);
+    }
+
+    public void createNewPersonToArtifactRelation(int startId, int endId){
+
+        createLink(startId, endId);
+
+        Person person = dataModel.getRole(startId);
+        person.getArtifacts().add(endId);
+        Artifact artifact = dataModel.getArtifact(endId);
+        artifact.getAuthorIndex().add(startId);
+    }
+
+
+    public void createNewPersonToConfigurationRelation(int startId, int endId){
+        createLink(startId, endId);
+
+        Person person = dataModel.getRole(startId);
+        person.getConfigurations().add(endId);
+        Configuration configuration = dataModel.getConfiguration(endId);
+        configuration.getAuthorIndex().add(startId);
+    }
+
+    public void createNewArtifacToConfigurationRelation(int startId, int endId){
+        createLink(startId, endId);
+
+
+        Artifact artifact = dataModel.getArtifact(startId);
+        artifact.getConfigurations().add(endId);
+        Configuration configuration = dataModel.getConfiguration(endId);
+        configuration.getArtifactsIndexs().add(startId);
+    }
+
+
+
+    public void createCommitToCommitedConfigurationRelation(int startId, int endId) {
+
+        createLink(startId, endId);
+
         Commit commit = dataModel.getCommit(startId);
         commit.getCommitedConfiguration().add(endId);
         CommitedConfiguration commitedConfiguration = dataModel.getCommitedConfiguration(endId);

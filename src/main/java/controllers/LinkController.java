@@ -1,7 +1,9 @@
 package controllers;
 
+import graphics.NodeLink;
 import javafx.geometry.Point2D;
 import services.Constans;
+import services.SegmentLists;
 
 public class LinkController {
 
@@ -36,6 +38,21 @@ public class LinkController {
         points[7] = endPoint.getY() + Constans.polygonHeight;
         return points;
     }
+
+
+    public void repaintArrowStartPoint(NodeLink link, double newWidth, double newHeight) {
+
+        if (link != null) {
+            link.setStartPoint(new Point2D(newWidth, newHeight));
+        }
+    }
+    public void repaintArrowEndPoint(NodeLink link, double newWidth, double newHeight) {
+        if (link != null) {
+            link.setEndPoint(new Point2D(newWidth, newHeight));
+        }
+    }
+
+
 
     /**
      * Vypočte střed spojovací čáry pro vložení boxu s výběrem relace

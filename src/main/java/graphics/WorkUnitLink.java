@@ -140,7 +140,7 @@ public class WorkUnitLink extends NodeLink {
         public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
 
             relationIndex = newValue.intValue();
-            linkControl.setRealtionIndexToLink(id, relationIndex);
+       //     linkControl.setRealtionIndexToLink(id, relationIndex);
 
         }
     };

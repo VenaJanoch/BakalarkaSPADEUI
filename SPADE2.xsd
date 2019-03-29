@@ -607,6 +607,8 @@
         <xs:sequence>
             <xs:element name="authorIndex" type="xs:int" minOccurs="0"
                         maxOccurs="unbounded"/>
+            <xs:element name="configurations" type="xs:int" minOccurs="0"
+                        maxOccurs="unbounded"/>
             <xs:element name="mimeType" type="xs:string" minOccurs="0"
                         maxOccurs="unbounded"/>
             <xs:element name="coordinates" type="Coordinates"/>
@@ -649,6 +651,10 @@
             <xs:element name="name" type="xs:string" minOccurs="0"
                         maxOccurs="unbounded" />
             <xs:element name="nameIndicator" type="xs:int" minOccurs="0"
+                        maxOccurs="unbounded" />
+            <xs:element name="configurations" type="xs:int" minOccurs="0"
+                        maxOccurs="unbounded" />
+            <xs:element name="artifacts" type="xs:int" minOccurs="0"
                         maxOccurs="unbounded" />
             <xs:element name="count" type="xs:int" minOccurs="0"
                         maxOccurs="1" />

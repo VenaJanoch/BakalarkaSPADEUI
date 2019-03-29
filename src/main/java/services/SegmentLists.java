@@ -142,22 +142,6 @@ public class SegmentLists {
 
     }
 
-    public void repaintArrowStartPoint(int linkId, double newWidth, double newHeight) {
-
-        NodeLink link = getArrows().get(linkId);
-        if (link != null) {
-            link.setStartPoint(new Point2D(newWidth, newHeight));
-        }
-    }
-
-    public void repaintArrowEndPoint(int linkId, double newWidth, double newHeight) {
-
-        NodeLink link = getArrows().get(linkId);
-        if (link != null) {
-            link.setEndPoint(new Point2D(newWidth, newHeight));
-        }
-    }
-
     public void repaintWorkUnitComboBox(int linkId) {
 
         WorkUnitLink link = (WorkUnitLink) getArrows().get(linkId);
@@ -422,5 +406,9 @@ public class SegmentLists {
 
     public ObservableList<BasicTable> getVCSTag() {
         return VCSTagObservable;
+    }
+
+    public NodeLink getArrow(int linkId) {
+        return arrows.get(linkId);
     }
 }

@@ -68,8 +68,8 @@ public class CanvasItemController {
 
             if (canvasController.isArrow()) {
 
-                linkControl.ArrowManipulation(false, canvasController.isStartArrow(), canvasController, item.getFormIdentificator(), segmentType, item.getTranslateX(),
-                        item.getTranslateY(), item.getWidth(), item.getHeight());
+                linkControl.ArrowManipulation(canvasController.isStartArrow(), canvasController, item.getFormIdentificator(), segmentType, item.getTranslateX(),
+                        item.getTranslateY(), item.getLength(), item.getHeight());
             } else {
 
                 if (t.getClickCount() == 2) {

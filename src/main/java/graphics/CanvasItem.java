@@ -5,6 +5,7 @@ import controllers.CanvasItemController;
 import javafx.geometry.Point2D;
 import javafx.scene.control.Tooltip;
 import javafx.scene.layout.AnchorPane;
+import services.Constans;
 import services.SegmentType;
 
 /**
@@ -93,7 +94,6 @@ public class CanvasItem extends AnchorPane {
 		this.setTranslateX(point.getX());
 		this.setTranslateY(point.getY());
 		canvasItemController.repaintArrows(segmentType,formIdentificator, getTranslateX(), getTranslateY(), segmentInfo.getLength(), getHeight());
-
 	}
 
 
@@ -117,6 +117,10 @@ public class CanvasItem extends AnchorPane {
 
 	public void setID(String iD) {
 		segmentIdentificator = iD;
+	}
+
+	public double getLength() {
+		return length + Constans.offset;
 	}
 
 	public InfoBoxSegment getSegmentInfo() {

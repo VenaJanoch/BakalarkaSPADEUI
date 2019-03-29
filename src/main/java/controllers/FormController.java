@@ -815,9 +815,57 @@ public class FormController {
 
         Integer[] result = findCorectId(startIndex, endIndex, startIndex1, endIndex2);
 
-
-
         saveDataModel.createCommitToCommitedConfigurationRelation(result[0], result[1]);
+    }
+
+    public void createCommitedConfigurationToConfigurationRelation(int startSegmentId, int endSegmentId) {
+        Integer startIndex = identificatorCreater.getCommitedConfigurationId(startSegmentId);
+        Integer endIndex = identificatorCreater.getCommitedConfigurationId(endSegmentId);
+
+        Integer startIndex1 = identificatorCreater.getConfigurationId(startSegmentId);
+        Integer endIndex2 = identificatorCreater.getConfigurationId(endSegmentId);
+
+        Integer[] result = findCorectId(startIndex, endIndex, startIndex1, endIndex2);
+
+        saveDataModel.createCommitedConfigurationToConfigurationRelation(result[0], result[1]);
+
+    }
+
+    public void createArtifactToConfigurationRelation(int startSegmentId, int endSegmentId) {
+        Integer startIndex = identificatorCreater.getArtifactId(startSegmentId);
+        Integer endIndex = identificatorCreater.getArtifactId(endSegmentId);
+
+        Integer startIndex1 = identificatorCreater.getConfigurationId(startSegmentId);
+        Integer endIndex2 = identificatorCreater.getConfigurationId(endSegmentId);
+
+        Integer[] result = findCorectId(startIndex, endIndex, startIndex1, endIndex2);
+
+        saveDataModel.createNewArtifacToConfigurationRelation(result[0], result[1]);
+
+    }
+
+    public void createRoleToConfigurationRelation(int startSegmentId, int endSegmentId) {
+        Integer startIndex = identificatorCreater.getRoleId(startSegmentId);
+        Integer endIndex = identificatorCreater.getRoleId(endSegmentId);
+
+        Integer startIndex1 = identificatorCreater.getConfigurationId(startSegmentId);
+        Integer endIndex2 = identificatorCreater.getConfigurationId(endSegmentId);
+
+        Integer[] result = findCorectId(startIndex, endIndex, startIndex1, endIndex2);
+
+        saveDataModel.createNewPersonToConfigurationRelation(result[0], result[1]);
+    }
+
+    public void createRoleToArtifactRelation(int startSegmentId, int endSegmentId) {
+        Integer startIndex = identificatorCreater.getRoleId(startSegmentId);
+        Integer endIndex = identificatorCreater.getRoleId(endSegmentId);
+
+        Integer startIndex1 = identificatorCreater.getArtifactId(startSegmentId);
+        Integer endIndex2 = identificatorCreater.getArtifactId(endSegmentId);
+
+        Integer[] result = findCorectId(startIndex, endIndex, startIndex1, endIndex2);
+
+        saveDataModel.createNewPersonToArtifactRelation(result[0], result[1]);
     }
 }
 

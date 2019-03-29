@@ -130,4 +130,15 @@ public abstract class NodeLink extends Line {
         return backgroundPolygon;
     }
 
+    public void repaintArrowStartPoint(int index, double newWidth, double newHeight) {
+
+        linkController.repaintArrowStartPoint(this, newWidth, newHeight);
+
+    }
+
+    public void repaintArrowEndPoint(int index, double newWidth, double newHeight) {
+
+        linkController.repaintArrowEndPoint(this, newWidth, newHeight);
+
+    }
 }

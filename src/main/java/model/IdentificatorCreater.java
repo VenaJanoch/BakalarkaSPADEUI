@@ -270,6 +270,10 @@ public class IdentificatorCreater {
         return commitedConfigurationIndexToIdMaper.get(formIndex);
     }
 
+    public Integer getArtifactId(int formIndex) {
+        return artifactIndexToIdMaper.get(formIndex);
+    }
+
     public Integer getCommitedConfigurationFormIndex(int id) {
         return commitedConfigurationIdToIndexMaper.get(id);
     }

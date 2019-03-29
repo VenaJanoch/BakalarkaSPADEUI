@@ -507,10 +507,10 @@ public class FormFillController {
                 CanvasItem endItem = canvasItemList.get(endIndexItem);
                 CanvasController canvasController = startItem.getCanvasController();
 
-                linkControl.ArrowManipulation(true, false, canvasController, startIndexItem, SegmentType.Change, startItem.getTranslateX()
-                        ,startItem.getTranslateY(), startItem.getWidth(), startItem.getHeight() );
-                linkControl.ArrowManipulation(true, true, canvasController, endIndexItem, SegmentType.Artifact, endItem.getTranslateX()
-                        ,endItem.getTranslateY(), endItem.getWidth(), endItem.getHeight() );
+          //      linkControl.ArrowManipulation(true, false, canvasController, startIndexItem, SegmentType.Change, startItem.getTranslateX()
+          //              ,startItem.getTranslateY(), startItem.getWidth(), startItem.getHeight() );
+          //      linkControl.ArrowManipulation(true, true, canvasController, endIndexItem, SegmentType.Artifact, endItem.getTranslateX()
+          //              ,endItem.getTranslateY(), endItem.getWidth(), endItem.getHeight() );
 
             }else{
                 int startIndexItem = identificatorCreater.getWorkUnitSegmentIdToFormIndexMaper().get(link.getLeftUnitIndex());
@@ -520,10 +520,10 @@ public class FormFillController {
                 CanvasItem endItem = canvasItemList.get(endIndexItem);
                 CanvasController canvasController = startItem.getCanvasController();
 
-                linkControl.ArrowManipulation(true, false, canvasController, startIndexItem, SegmentType.Work_Unit, startItem.getTranslateX()
+                linkControl.ArrowManipulation(false, canvasController, startIndexItem, SegmentType.Work_Unit, startItem.getTranslateX()
                             ,startItem.getTranslateY(), startItem.getWidth(), startItem.getHeight() );
-                linkControl.ArrowManipulation(true, true, canvasController, endIndexItem, SegmentType.Work_Unit, endItem.getTranslateX()
-                        ,endItem.getTranslateY(), endItem.getWidth(), endItem.getHeight(), dataPreparer.prepareIndexForForm(link.getRelationIndex()));
+          //      linkControl.ArrowManipulation( true, canvasController, endIndexItem, SegmentType.Work_Unit, endItem.getTranslateX()
+          //              ,endItem.getTranslateY(), endItem.getWidth(), endItem.getHeight(), dataPreparer.prepareIndexForForm(link.getRelationIndex()));
             }
 
         }

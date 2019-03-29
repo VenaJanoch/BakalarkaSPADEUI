@@ -24,7 +24,6 @@ public class LinkControl {
     private int id;
 
     private ElementsLink changeArtifactLink;
-    private WorkUnitLink workUnitLink;
 
     private int startSegmentId = -1;
     private int endSegmentId = -1;
@@ -57,22 +56,11 @@ public class LinkControl {
         this.manipulationController = manipulationController;
     }
 
-
-    public void ArrowManipulation(boolean isSave, boolean startArrow, CanvasController canvasController, int segmentIdAct, SegmentType segmentType,
-                                  double x, double y, double width, double height, int relationIndex) {
-
-        ArrowManipulation(isSave, startArrow, canvasController, segmentIdAct, segmentType, x, y, width, height);
-        workUnitLink.setRelationIndexToComboBox(relationIndex);
-
-    }
-
     /**
      * Rozhodne o propojení Change a Artifact Vytvoří instanci třídy NodeLink a
      * přídá ji do seznamu Rozhodne o počátečním a koncovém prvku
-     *
-     * @param isSave informace o uložení a ochrana před vytvořením dvojího spojení
      */
-    public void ArrowManipulation(boolean isSave, boolean startArrow, CanvasController canvasController, int segmentIdAct, SegmentType segmentType,
+    public void ArrowManipulation(boolean startArrow, CanvasController canvasController, int segmentIdAct, SegmentType segmentType,
                                   double x, double y, double width, double height) {
 
         if (!startArrow) {
@@ -117,55 +105,34 @@ public class LinkControl {
         if ( operation == 1) {
             endSegmentId = segmentIdAct;
             formController.createCommitToCommitedConfigurationRelation(startSegmentId, endSegmentId);
-            finishLink(x, y, height, canvasController);
+            finisLink(x, y, height, canvasController);
         } else if (operation == 2) {
             endSegmentId = segmentIdAct;
-       //     formController.createCommitedConfigurationToConfigurationRelation(startSegmentId, endSegmentId);
-            finishLink(x, y, height, canvasController);
+            formController.createCommitedConfigurationToConfigurationRelation(startSegmentId, endSegmentId);
+            finisLink(x, y, height, canvasController);
         } else if (operation == 3) {
             endSegmentId = segmentIdAct;
-        //    formController.createArtifactToConfigurationRelation(startSegmentId, endSegmentId);
-            finishLink(x, y, height, canvasController);
+            formController.createArtifactToConfigurationRelation(startSegmentId, endSegmentId);
+            finisLink(x, y, height, canvasController);
         }else if (operation == 4) {
             endSegmentId = segmentIdAct;
-        //    formController.createRoleToConfigurationRelation(startSegmentId, endSegmentId);
-            finishLink(x, y, height, canvasController);
+            formController.createRoleToConfigurationRelation(startSegmentId, endSegmentId);
+            finisLink(x, y, height, canvasController);
         }else if (operation == 5) {
             endSegmentId = segmentIdAct;
-        //    formController.createRoleToArtifactRelation(startSegmentId, endSegmentId);
-            finishLink(x, y, height, canvasController);
+            formController.createRoleToArtifactRelation(startSegmentId, endSegmentId);
+            finisLink(x, y, height, canvasController);
         }
     }
 
 
-    private void finishLink(double x, double y, double height, CanvasController canvasController){
+    private void finisLink(double x, double y, double height, CanvasController canvasController){
         changeArtifactLink.setEndPoint(new Point2D(x, y + (height / 2)));
         canvasController.setStartArrow(false);
-
-        endLinkIdMap.get(endSegmentId).add(this.id);
+        startLinkIdMap.get(startSegmentId).add(id);
+        endLinkIdMap.get(endSegmentId).add(id);
         startSegmentId = -1;
         endSegmentId = -1;
-    }
-
-
-    private WorkUnitLink createWorkUnitLink(CanvasController canvasController, int segmentIdAct, double x, double y, double width, double height) {
-
-        id = identificatorCreater.createLineID();
-        WorkUnitLink workUnitLink = new WorkUnitLink(id, this, canvasController, segmentLists.getRelationTypeObservable(), manipulationController);
-        canvasController.addLinkToCanvas(workUnitLink);
-
-        segmentLists.addLinkToList(workUnitLink);
-
-        workUnitLink.setStartPoint(new Point2D(x + (width), y + (height / 2)));
-
-        canvasController.setStartArrow(true);
-        startSegmentId = segmentIdAct;
-
-        return workUnitLink;
-    }
-
-    public void setRealtionIndexToLink(int id, int relationIndex){
-        dataManipulator.setRelationIndexToLink(id, relationIndex);
     }
 
     private ElementsLink createChangeArtifactLink(CanvasController canvasController, int startSegmentIdAct, double x, double y, double width, double height) {
@@ -306,23 +273,15 @@ public class LinkControl {
         for (int i = 0; i < mStartLinkIds.size(); i++) {
 
             int index = mStartLinkIds.get(i);
-            segmentLists.repaintArrowStartPoint(index, newWidth, newHeight);
-
-            if (segmentType == SegmentType.Work_Unit) {
-                segmentLists.repaintWorkUnitComboBox(index);
-            }
+            NodeLink link = segmentLists.getArrow(index);
+            link.repaintArrowStartPoint(index, newWidth, newHeight);
         }
 
         for (int i = 0; i < mEndLinkIds.size(); i++) {
 
             int index = mEndLinkIds.get(i);
-            segmentLists.repaintArrowEndPoint(index, translateX, translateY + (height / 2));
-
-            if (segmentType == SegmentType.Work_Unit) {
-                segmentLists.repaintWorkUnitComboBox(index);
-                segmentLists.repaintWorkUnitRelationEndPoint(index, translateX, translateY + (height / 2));
-            }
-
+            NodeLink link = segmentLists.getArrow(index);
+            link.repaintArrowEndPoint(index, translateX, translateY + (height / 2));
         }
     }
 
