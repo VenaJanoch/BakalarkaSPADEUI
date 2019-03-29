@@ -48,7 +48,7 @@ public class ProjectControlPanel extends WorkUnitDateControlPanel implements ICo
         controlPanelController.setValueTextField(this, lineList ,ParamType.Name, projectData, projectData[4], 0);
         controlPanelController.setValueTextField(this, lineList ,ParamType.Description, projectData, projectData[5], 1);
         controlPanelController.setValueDatePicker(this, lineList ,ParamType.Date, (ArrayList<LocalDate>)projectData[2],  projectData[6]);
-        controlPanelController.setValueDatePicker(this, lineList ,ParamType.Date, (ArrayList<LocalDate>)projectData[3],  projectData[7]);
+        controlPanelController.setValueDatePicker(this, lineList ,ParamType.EndDate, (ArrayList<LocalDate>)projectData[3],  projectData[7]);
 
 
         ArrayList<ArrayList<Integer>> workUnits = formDataController.getWorkUnitFromSegment(0, SegmentType.Project);

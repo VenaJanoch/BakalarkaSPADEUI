@@ -3,7 +3,7 @@ package tables;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
-public class RoleTable extends BasicTable {
+public class PersonTable extends BasicTable {
 
     /**
      * Globální proměnné třídy
@@ -19,8 +19,8 @@ public class RoleTable extends BasicTable {
      * @param desc popis description
      * @param type typ role
      */
-    public RoleTable(String name, String desc, String type, int id) {
-        super(name, id);
+    public PersonTable(String name, String desc, String type,  boolean exist, int id) {
+        super(name, exist, id);
         this.type = new SimpleStringProperty(type);
         this.description = new SimpleStringProperty(desc);
     }

@@ -5,7 +5,6 @@ import graphics.DragAndDropCanvas;
 import graphics.NodeLink;
 import interfaces.IDeleteFormController;
 import services.*;
-import tables.BasicTable;
 
 public class ManipulationController {
 
@@ -121,7 +120,7 @@ public class ManipulationController {
             case Activity:
                 formFillController.addExistActivityFormToCanvas(oldFormIndex);
                 break;
-            case WorkUnit:
+            case Work_Unit:
                 formFillController.addExistWorkUnitFormToCanvas(oldFormIndex, canvasController);
                 break;
             case Change:

@@ -2,8 +2,7 @@ package services;
 
 import java.util.ArrayList;
 
-import SPADEPAC.Artifact;
-import graphics.ChangeArtifactLink;
+import graphics.ElementsLink;
 import graphics.NodeLink;
 import graphics.WorkUnitLink;
 import javafx.collections.FXCollections;
@@ -45,6 +44,8 @@ public class SegmentLists {
 
     private ObservableList<BasicTable> typeObservable;
 
+    private ObservableList<BasicTable> VCSTagObservable;
+
     private ArrayList<NodeLink> arrows;
 
     /**
@@ -64,51 +65,55 @@ public class SegmentLists {
     public void createLists() {
 
         configObservable = FXCollections.observableArrayList();
-        configObservable.add(new ConfigTable("", "", -1, -1));
+        configObservable.add(new ConfigTable("", "", -1, true,-1));
+
+        VCSTagObservable = FXCollections.observableArrayList();
+        VCSTagObservable.add(new VCSTagTable("",  "",true, -1));
+
 
         workUnitsObservable = FXCollections.observableArrayList();
-        workUnitsObservable.add(new WorkUnitTable("", -1));
+        workUnitsObservable.add(new WorkUnitTable("", true,-1));
 
 
         roleObservable = FXCollections.observableArrayList();
-        roleObservable.add(new RoleTable("","","",-1));
+        roleObservable.add(new PersonTable("","","",true,-1));
 
         branchObservable = FXCollections.observableArrayList();
-        branchObservable.add(new BranchTable("","", false,-1));
+        branchObservable.add(new BranchTable("","", false,true,-1));
 
 
         artifactObservable = FXCollections.observableArrayList();
-        artifactObservable.add(new ArtifactTable("","",-1));
+        artifactObservable.add(new ArtifactTable("","",true,-1));
 
         criterionObservable = FXCollections.observableArrayList();
-        criterionObservable.add(new CriterionTable("","",-1));
+        criterionObservable.add(new CriterionTable("","",true,-1));
 
         milestoneObservable = FXCollections.observableArrayList();
-        milestoneObservable.add(new MilestoneTable("","","",-1));
+        milestoneObservable.add(new MilestoneTable("","","",true,-1));
 
         CPRObservable = FXCollections.observableArrayList();
-        CPRObservable.add(new CPRTable("", "", -1));
+        CPRObservable.add(new CPRTable("", "", true,-1));
 
         roleTypeObservable = FXCollections.observableArrayList();
-        roleTypeObservable.add(new ClassTable("", "", "",-1));
+        roleTypeObservable.add(new ClassTable("", "", "",true,-1));
 
         priorityTypeObservable = FXCollections.observableArrayList();
-        priorityTypeObservable.add(new ClassTable("", "", "",-1));
+        priorityTypeObservable.add(new ClassTable("", "", "",true,-1));
 
         severityTypeObservable = FXCollections.observableArrayList();
-        severityTypeObservable.add(new ClassTable("", "", "",-1));
+        severityTypeObservable.add(new ClassTable("", "", "",true,-1));
 
         relationTypeObservable = FXCollections.observableArrayList();
-        relationTypeObservable.add(new ClassTable("", "", "",-1));
+        relationTypeObservable.add(new ClassTable("", "", "",true,-1));
 
         resolutionTypeObservable = FXCollections.observableArrayList();
-        resolutionTypeObservable.add(new ClassTable("", "", "",-1));
+        resolutionTypeObservable.add(new ClassTable("", "", "",true,-1));
 
         statusTypeObservable = FXCollections.observableArrayList();
-        statusTypeObservable.add(new ClassTable("", "", "",-1));
+        statusTypeObservable.add(new ClassTable("", "", "",true,-1));
 
         typeObservable = FXCollections.observableArrayList();
-        typeObservable.add(new ClassTable("", "", "",-1));
+        typeObservable.add(new ClassTable("", "", "",true,-1));
 
         arrows = new ArrayList<>();
     }
@@ -123,7 +128,7 @@ public class SegmentLists {
 
     }
 
-    public void addLinkToList(ChangeArtifactLink caLink) {
+    public void addLinkToList(ElementsLink caLink) {
         getArrows().add(caLink);
 
     }
@@ -181,12 +186,12 @@ public class SegmentLists {
             case Criterion:
                 return removeDataFromListTest(criterionObservable, indexList);
 
-            case Role:
+            case Person:
                 return removeDataFromListTest(roleObservable, indexList);
-            case RoleType:
+            case Role_Type:
                 return  removeDataFromListTest(roleTypeObservable, indexList);
 
-            case ConfigPersonRelation:
+            case Config_Person_Relation:
                 return removeDataFromListTest(CPRObservable, indexList);
 
             case Relation:
@@ -203,7 +208,7 @@ public class SegmentLists {
 
             case Configuration:
                 return removeDataFromListTest(configObservable, indexList);
-            case WorkUnit:
+            case Work_Unit:
                 return removeDataFromListTest(workUnitsObservable, indexList);
 
             default:
@@ -226,12 +231,12 @@ public class SegmentLists {
             case Criterion:
                 removeDataFromListTest(criterionObservable, indexList);
                 break;
-            case Role:
+            case Person:
                 return removeDataFromListTest(roleObservable, indexList);
-            case RoleType:
+            case Role_Type:
                 removeDataFromListTest(roleTypeObservable, indexList);
                 break;
-            case ConfigPersonRelation:
+            case Config_Person_Relation:
                 removeDataFromListTest(CPRObservable, indexList);
                 break;
             case Relation:
@@ -278,13 +283,13 @@ public class SegmentLists {
             case Criterion:
                 criterionObservable.add(index, basicTable);
                 break;
-            case Role:
+            case Person:
                 roleObservable.add(index, basicTable);
                 break;
-            case RoleType:
+            case Role_Type:
                 roleTypeObservable.add(index, basicTable);
                 break;
-            case ConfigPersonRelation:
+            case Config_Person_Relation:
                 CPRObservable.add(index, basicTable);
                 break;
             case Relation:
@@ -302,7 +307,7 @@ public class SegmentLists {
             case Configuration:
                 configObservable.add(index, basicTable);
                 break;
-            case WorkUnit:
+            case Work_Unit:
                 workUnitsObservable.add(index, basicTable);
                 break;
             default:
@@ -413,5 +418,9 @@ public class SegmentLists {
         }
 
         return null;
+    }
+
+    public ObservableList<BasicTable> getVCSTag() {
+        return VCSTagObservable;
     }
 }

@@ -24,9 +24,13 @@ import java.util.List;
 public class ClassControlPanel extends NameControlPanel {
 
 
-    private ArrayList<String> classList;
-    private ArrayList<String > superClassList;
-    private SegmentType segmentType;
+    protected ArrayList<String> classList;
+    protected ArrayList<String > superClassList;
+    protected ArrayList<Integer> classListIndex;
+    protected ArrayList<Integer > superClassListIndex;
+    protected ArrayList<String> name;
+    protected ArrayList<Integer> nameIndicators;
+    protected SegmentType segmentType;
 
     private  int classIndex;
     private  int superClassIndex;
@@ -35,6 +39,13 @@ public class ClassControlPanel extends NameControlPanel {
         super(buttonName, formDataController, editFormController, formController);
 
         this.segmentType = segmentType;
+
+        classList = new ArrayList<>();
+       superClassList = new ArrayList<>();
+        classListIndex = new ArrayList<>();
+         superClassListIndex = new ArrayList<>();
+        name = new ArrayList<>();
+        nameIndicators = new ArrayList<>();
 
     }
 
@@ -60,6 +71,29 @@ public class ClassControlPanel extends NameControlPanel {
         controlPanelController.createNewLine(this, lineList);
     }
 
+    protected void setClassData(List[] classData){
+        controlPanelController.setValueTextField(this, lineList ,ParamType.Name, classData, classData[3], 0);
+        controlPanelController.setValueToClassBox(classData[1], classData[2]);
+
+        List boolList = classData[4];
+        boolean exist = (boolean) boolList.get(0);
+
+        controlPanelController.setValueExistRadioButton(exist);
+    }
+
+    protected void saveClassData(){
+        classIndex = controlPanelController.getClassIndex();
+        superClassIndex = controlPanelController.getSuperClassIndex();
+
+        name = controlPanelController.processTextLines(ParamType.Name, nameIndicators);
+
+
+        classListIndex.add(classIndex);
+        superClassListIndex.add(superClassIndex);
+
+        classList.add(getClassName());
+        superClassList.add(getSuperClassName());
+    }
 
     public void showEditControlPanel(BasicTable basicTable, TableView tableView) {
         ClassTable classTable = (ClassTable) basicTable;
@@ -68,30 +102,15 @@ public class ClassControlPanel extends NameControlPanel {
         controlPanelController.resetPanel(controlPane);
         createControlPanel();
 
-        controlPanelController.setValueTextField(this, lineList ,ParamType.Name, classData, classData[3], 0);
-        controlPanelController.setValueToClassBox(classData[1], classData[2]);
+        setClassData(classData);
 
 
         button.setOnAction(event ->{
 
-            classIndex = controlPanelController.getClassIndex();
-            superClassIndex = controlPanelController.getSuperClassIndex();
-            ArrayList<Integer> nameIndicators = new ArrayList<>();
-            ArrayList<String> name = controlPanelController.processTextLines(ParamType.Name, nameIndicators);
+          saveClassData();
 
-            ArrayList<Integer> classList = new ArrayList<>();
-            classList.add(classIndex);
-
-            ArrayList<Integer> superClassList = new ArrayList<>();
-            superClassList.add(superClassIndex);
-
-            ArrayList<String> classList1 = new ArrayList<>();
-            classList1.add(getClassName());
-
-            ArrayList<String> superClassList1 = new ArrayList<>();
-            superClassList1.add(getSuperClassName());
-
-            editFormController.editDataFromClass(segmentType, name, nameIndicators, classList, superClassList, classList1, superClassList1,  classTable, id);
+            editFormController.editDataFromClass(segmentType, name, nameIndicators, classListIndex, superClassListIndex, classList, superClassList,
+                    classTable, controlPanelController.isExist(), id);
             clearPanel(tableView);
         });
 

@@ -81,20 +81,19 @@ public class ActivityForm extends TableBasicForm implements ISegmentTableForm {
 	public Node getTable() {
 		tableTV = new TableView<ActivityTable>();
 
-		TableColumn<ActivityTable, String> nameColumn = new TableColumn<ActivityTable, String>("Name");
-	//	TableColumn<ActivityTable, String> descriptionColumn = new TableColumn<ActivityTable, String>("Description");
+		TableColumn<ActivityTable, String> nameColumn = new TableColumn<ActivityTable, String>("Id");
+		TableColumn<ActivityTable, String> exist = new TableColumn<ActivityTable, String>("Exist");
 
-		nameColumn.setCellValueFactory(new PropertyValueFactory("name"));
+		nameColumn.setCellValueFactory(new PropertyValueFactory("idString"));
 		nameColumn.setMinWidth(150);
 		nameColumn.setCellFactory(TextFieldTableCell.forTableColumn());
 
-	//	descriptionColumn.setCellValueFactory(new PropertyValueFactory("description"));
-	//	descriptionColumn.setMinWidth(150);
-	//	descriptionColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+		exist.setCellValueFactory(new PropertyValueFactory("existString"));
+		exist.setMinWidth(150);
+		exist.setCellFactory(TextFieldTableCell.forTableColumn());
 
 
-		//tableTV.getColumns().addAll(nameColumn, descriptionColumn);
-		tableTV.getColumns().add(nameColumn);
+		tableTV.getColumns().addAll(nameColumn, exist);
 		tableTV.setOnMousePressed(OnMousePressedEventHandler);
 		tableTV.setEditable(false);
 
@@ -145,7 +144,7 @@ public class ActivityForm extends TableBasicForm implements ISegmentTableForm {
 		int id = formController.createTableItem(SegmentType.Activity);
 		String idName = id + "_" + nameST;
 
-		ActivityTable table = new ActivityTable(idName, "", id);
+		ActivityTable table = new ActivityTable(idName, "", true, id);
 
 		tableTV.getItems().add(table);
 		tableTV.sort();

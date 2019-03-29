@@ -19,12 +19,6 @@ import java.util.List;
 
 public class BranchControlPanel extends NameControlPanel {
 
-    private Label isMainLB;
-
-    private ToggleGroup group = new ToggleGroup();
-
-    private RadioButton rbYes;
-    private RadioButton rbNo;
 
     public BranchControlPanel(String buttonName, IFormDataController formDataController, IEditFormController editFormController, FormController formController){
         super(buttonName, formDataController, editFormController, formController);
@@ -41,7 +35,7 @@ public class BranchControlPanel extends NameControlPanel {
     public void createControlPanel(){
 
 
-        controlPanelController.setRadioButton(this, 1,"Main: ", true);
+        controlPanelController.setRadioButton(this, 2,"Main: ", true);
         controlPanelController.createNewLine(this, lineList);
     }
 
@@ -54,21 +48,22 @@ public class BranchControlPanel extends NameControlPanel {
         controlPanelController.resetPanel(controlPane);
         createControlPanel();
 
-        controlPanelController.setValueTextField(this, lineList ,ParamType.Name, branchData, branchData[2], 0);
-       boolean exist = false;
-        List boolList = branchData[1];
-        if (boolList.size() != 0){
-            exist = true;
+        controlPanelController.setValueTextField(this, lineList ,ParamType.Name, branchData, branchData[1], 0);
+       boolean main = false;
+        List boolList = branchData[2];
+        if(boolList.size() > 1) {
+            main = (boolean) boolList.get(1);
         }
-        controlPanelController.setValueRadioButton(exist);
 
+        controlPanelController.setValueRadioButton(main);
+        controlPanelController.setValueExistRadioButton((boolean)boolList.get(0));
 
 
         button.setOnAction(event ->{
             ArrayList<Integer> nameIndicators = new ArrayList<>();
             ArrayList<String> name = controlPanelController.processTextLines(ParamType.Name, nameIndicators);
 
-            editFormController.editDataFromBranch(name, nameIndicators, controlPanelController.isMain(), branchTable);
+            editFormController.editDataFromBranch(name, nameIndicators, controlPanelController.isMain(), controlPanelController.isExist(), branchTable);
             clearPanel(tableView);
         });
     }

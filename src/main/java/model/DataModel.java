@@ -14,6 +14,7 @@ import java.io.File;
 import java.lang.reflect.Array;
 import java.time.Instant;
 import java.time.LocalDate;
+import java.time.Period;
 import java.time.ZoneId;
 import java.util.*;
 
@@ -163,7 +164,7 @@ public class DataModel {
     }
 
     public int getRoleIndexInProject(int id) {
-        List<Role> items = project.getRoles();
+        List<Person> items = project.getRoles();
         for (int i = 0; i < items.size(); i++) {
 
             if (items.get(i).getId() == id) {
@@ -328,7 +329,7 @@ public class DataModel {
         return project.getResolution().get(getResolutionIndexInProject(id));
     }
 
-    public Role getRole(int id) {
+    public Person getRole(int id) {
         return project.getRoles().get(getRoleIndexInProject(id));
     }
 
@@ -354,13 +355,14 @@ public class DataModel {
 
 
     public void addDataToCPR(ConfigPersonRelation cpr, ArrayList<String> nameForManipulator, ArrayList<Integer> nameIndicators, ArrayList<Integer> roleIndex
-        , ArrayList<Integer> roleIndicators) {
+        , ArrayList<Integer> roleIndicators, boolean exist) {
        
         clearDataInCPR(cpr);
         cpr.getPersonIndex().addAll(roleIndex);
         cpr.getPersonIndicator().addAll(roleIndicators);
         cpr.getName().addAll(nameForManipulator);
         cpr.getNameIndicator().addAll(nameIndicators);
+        cpr.setExist(exist);
     }
     
     private void clearDataInCPR(ConfigPersonRelation cpr){
@@ -370,12 +372,13 @@ public class DataModel {
         cpr.getName().clear();
     }
 
-    public void addDataToBranch(Branch branch, ArrayList<String> nameForManipulator, ArrayList<Integer> nameIndicators, boolean isMain) {
+    public void addDataToBranch(Branch branch, ArrayList<String> nameForManipulator, ArrayList<Integer> nameIndicators, boolean isMain, boolean exist) {
         
         clearDataInBranch(branch);
         branch.getName().addAll(nameForManipulator);
         branch.getNameIndicator().addAll(nameIndicators);
         branch.setIsMain(isMain);
+        branch.setExist(exist);
     }
     
     private void clearDataInBranch(Branch branch){
@@ -436,6 +439,7 @@ public class DataModel {
         change.getDescriptionIndicator().addAll(descIndicator);
         change.getArtifactIndex().addAll(artifactForManipulator);
         change.setExist(selected);
+
     }
     
     private void clearDataInChange(Change change){
@@ -448,7 +452,7 @@ public class DataModel {
     public void addDataToPhase(Phase phase, ArrayList<String> actName, ArrayList<LocalDate> endDateL, ArrayList<String> desc,
                                ArrayList<Integer> confIndex, ArrayList<Integer> milestoneIndex,  ArrayList<ArrayList<Integer>> workUnitIndexList,
                                ArrayList<Integer> workUnitIndicators, ArrayList<Integer> nameIndicator, ArrayList<Integer> endDateIndicator,
-                               ArrayList<Integer> descIndicator, ArrayList<Integer> confIndicator, ArrayList<Integer> milestoneIndicator ) {
+                               ArrayList<Integer> descIndicator, ArrayList<Integer> confIndicator, ArrayList<Integer> milestoneIndicator, boolean exist ) {
         clearDataInPhase(phase);
        phase.getName().addAll(actName);
        phase.getDescription().addAll(desc);
@@ -465,6 +469,7 @@ public class DataModel {
         phase.getMilestoneIndicator().addAll(milestoneIndicator);
         phase.getWorkUnitsIndicator().addAll(workUnitIndicators);
         phase.getWorkUnits().clear();
+        phase.setExist(exist);
     }
 
     private void clearDataInPhase(Phase phase) {
@@ -486,7 +491,7 @@ public class DataModel {
     public void addDataToIteration(Iteration iteration,  ArrayList<String> actName, ArrayList<LocalDate> endDateL,  ArrayList<LocalDate> startDateL, ArrayList<String> desc,
                                    ArrayList<Integer> confIndex,  ArrayList<ArrayList<Integer>> workUnitIndexList,
                                    ArrayList<Integer> workUnitIndicators, ArrayList<Integer> nameIndicator, ArrayList<Integer> endDateIndicator,
-                                   ArrayList<Integer> startDateIndicator, ArrayList<Integer> descIndicator, ArrayList<Integer> confIndicator) {
+                                   ArrayList<Integer> startDateIndicator, ArrayList<Integer> descIndicator, ArrayList<Integer> confIndicator, boolean exist) {
         clearDataInIteration(iteration);
         iteration.getName().addAll(actName);
         iteration.getDescription().addAll(desc);
@@ -503,6 +508,7 @@ public class DataModel {
         iteration.getStartDateIndicator().addAll(startDateIndicator);
         iteration.getConfigurationIndicator().addAll(confIndicator);
         iteration.getWorkUnitsIndicator().addAll(workUnitIndicators);
+        iteration.setExist(exist);
 
     }
 
@@ -522,7 +528,7 @@ public class DataModel {
     }
 
     public void addDataToCommitedConfiguration(CommitedConfiguration commitedConfiguration,ArrayList<String> nameForManipulator, ArrayList<Integer> nameIndicator,
-                                               ArrayList<LocalDate> startDate, ArrayList<Integer> dateIndicator, int instanceCount) {
+                                               ArrayList<LocalDate> startDate, ArrayList<Integer> dateIndicator, int instanceCount, boolean exist) {
         
         clearDataInCommitedConfiguration(commitedConfiguration);
         commitedConfiguration.getName().addAll(nameForManipulator);
@@ -530,6 +536,7 @@ public class DataModel {
         commitedConfiguration.getCommitedDayIndicator().addAll(dateIndicator);
         commitedConfiguration.getCommitedDay().addAll(convertDate(startDate));
         commitedConfiguration.setCount(instanceCount);
+        commitedConfiguration.setExist(exist);
     }
 
     private void clearDataInCommitedConfiguration(CommitedConfiguration commitedConfiguration) {
@@ -549,7 +556,7 @@ public class DataModel {
 
     public void addDataToActivity(Activity activity, List<String> nameForManipulator, ArrayList<String> descriptionForManipulator,
                                   ArrayList<ArrayList<Integer>> setOfItemOnCanvas, ArrayList<Integer> nameIndicators,
-                                  ArrayList<Integer> descIndicators,  ArrayList<Integer> workUnitIndicators) {
+                                  ArrayList<Integer> descIndicators,  ArrayList<Integer> workUnitIndicators, boolean exist) {
         
         clearDataInActivity(activity);
         activity.getDescription().addAll(descriptionForManipulator);
@@ -560,7 +567,7 @@ public class DataModel {
         activity.getNameIndicator().addAll(nameIndicators);
         activity.getDescriptionIndicator().addAll(descIndicators);
         activity.getWorkUnitsIndicator().addAll(workUnitIndicators);
-
+        activity.setExist(exist);
     }
 
     private void clearDataInActivity(Activity activity) {
@@ -579,7 +586,8 @@ public class DataModel {
                                   ArrayList<Double> estimateForDataManipulator, List<Integer> nameIndicator, List<Integer> descriptionIndicator, List<Integer> categoryIndicator,
                                   ArrayList<Integer> assigneIndicator, ArrayList<Integer> authorIndicator, ArrayList<Integer> priorityIndicator, ArrayList<Integer> severityIndicator,
                                   ArrayList<Integer> typeIndicator, ArrayList<Integer> resolutionIndicator, ArrayList<Integer> statusIndicator,
-                                  ArrayList<Integer> estimateIndicator, boolean isExist, ArrayList<Integer> relations,  ArrayList<ArrayList<Integer>> workUnits) {
+                                  ArrayList<Integer> estimateIndicator, boolean isExist, ArrayList<Integer> relations,
+                                  ArrayList<ArrayList<Integer>> workUnits) {
         clearDataInWorkUnit(workUnit);
         
         workUnit.getAssigneeIndex().addAll(assigneIndex);
@@ -642,9 +650,9 @@ public class DataModel {
 
     public void addDataToConfiguration(Configuration configuration, ArrayList<String> actName, ArrayList<LocalDate> createDate,
                                        boolean isRelease, ArrayList<Integer> authorIndex, ArrayList<ArrayList<Integer>> cprs,
-                                       ArrayList<ArrayList<Integer>> branches, ArrayList<ArrayList<Integer>> changeIndexs,
+                                       ArrayList<ArrayList<Integer>> changeIndexs,
                                        ArrayList<Integer> cprIndicators, ArrayList<Integer> nameIndicator, ArrayList<Integer> createdIndicator,
-                                       ArrayList<Integer> authorIndicator, ArrayList<Integer> branchIndicator, ArrayList<Integer> changeIndicator, int instanceCount) {
+                                       ArrayList<Integer> authorIndicator, ArrayList<Integer> changeIndicator, int instanceCount, boolean exist) {
         clearDataInConfiguration(configuration);
         configuration.getName().addAll(actName);
         configuration.getCreated().addAll(convertDate(createDate));
@@ -654,21 +662,16 @@ public class DataModel {
         configuration.getAuthorIndicator().addAll(authorIndicator);
         configuration.getCPRsIndicator().addAll(cprIndicators);
         configuration.getChangesIndicator().addAll(changeIndicator);
-        configuration.getBranchesIndicator().addAll(branchIndicator);
         configuration.setIsRelease(isRelease);
         configuration.setCount(instanceCount);
-        
+        configuration.setExist(exist);
         for (List<Integer> list : cprs){
             CPRSList cprList = objF.createCPRSList();
             cprList.getCPRs().addAll(list);
             configuration.getCPRsIndexs().add(cprList);
         }
 
-        for (List<Integer> list : branches){
-            BranchList cprList = objF.createBranchList();
-            cprList.getBranches().addAll(list);
-            configuration.getBranchesIndexs().add(cprList);
-        }
+
 
         for (List<Integer> list : changeIndexs){
             ChangeList cprList = objF.createChangeList();
@@ -678,7 +681,6 @@ public class DataModel {
     }
 
     private void clearDataInConfiguration(Configuration configuration) {
-        configuration.getBranchesIndexs().clear();
         configuration.getCPRsIndexs().clear();
         configuration.getChangesIndexs().clear();
         configuration.getName().clear();
@@ -694,12 +696,13 @@ public class DataModel {
 
 
     public void addDataToCriterion(Criterion criterion, ArrayList<String> nameForManipulator, ArrayList<String> descForManipulator,
-                                   ArrayList<Integer> nameIndicator, ArrayList<Integer> descIndicator) {
+                                   ArrayList<Integer> nameIndicator, ArrayList<Integer> descIndicator, boolean exist) {
         clearDataInCriterion(criterion);
         criterion.getName().addAll(nameForManipulator);
         criterion.getDescription().addAll(descForManipulator);
         criterion.getNameIndicator().addAll(nameIndicator);
         criterion.getDescriptionIndicator().addAll(descIndicator);
+        criterion.setExist(exist);
     }
 
     private void clearDataInCriterion(Criterion criterion) {
@@ -710,7 +713,7 @@ public class DataModel {
     }
 
     public void addDataToPriority(Priority priority, ArrayList<String> nameForManipulator, ArrayList<Integer> nameIndicator,
-                                  ArrayList<Integer> classST,  ArrayList<Integer> superST, ArrayList<String> classString,  ArrayList<String> superSting) {
+                                  ArrayList<Integer> classST,  ArrayList<Integer> superST, ArrayList<String> classString,  ArrayList<String> superSting, boolean exist) {
 
         clearDataInPriority(priority);
         priority.getName().addAll(nameForManipulator);
@@ -719,6 +722,7 @@ public class DataModel {
         priority.getPriorityClassIndex().addAll(classST);
         priority.getPrioritySuperClass().addAll(superSting);
         priority.getPrioritySuperClassIndex().addAll(superST);
+        priority.setExist(exist);
     }
 
     private void clearDataInPriority(Priority priority) {
@@ -733,7 +737,7 @@ public class DataModel {
     }
 
     public void addDataToSeverity(Severity severity, ArrayList<String> nameForManipulator, ArrayList<Integer> nameIndicator,
-                                  ArrayList<Integer> classST,  ArrayList<Integer> superST, ArrayList<String> classString,  ArrayList<String> superSting) {
+                                  ArrayList<Integer> classST,  ArrayList<Integer> superST, ArrayList<String> classString,  ArrayList<String> superSting, boolean exist) {
          clearDataInSeverity(severity);
         severity.getName().addAll(nameForManipulator);
         severity.getNameIndicator().addAll(nameIndicator);
@@ -741,6 +745,7 @@ public class DataModel {
         severity.getSeverityClassIndex().addAll(classST);
         severity.getSeveritySuperClass().addAll(superSting);
         severity.getSeveritySuperClassIndex().addAll(superST);
+        severity.setExist(exist);
     }
 
     private void clearDataInSeverity(Severity severity) {
@@ -754,18 +759,23 @@ public class DataModel {
         severity.getSeverityClassIndicator().clear();
     }
     
-    public void addDataToRoleType(RoleType roleType, ArrayList<String> nameForManipulator, ArrayList<Integer> nameIndicator,
-                                  ArrayList<Integer> classST,  ArrayList<Integer> superST, ArrayList<String> classString,  ArrayList<String> superSting) {
+    public void addDataToRoleType(RoleType roleType, ArrayList<String> nameForManipulator, ArrayList<Integer> nameIndicator, ArrayList<String> descForManipulator, ArrayList<Integer> descIndicator,
+                                  ArrayList<Integer> classST,  ArrayList<Integer> superST, ArrayList<String> classString,  ArrayList<String> superSting, boolean exist) {
         clearDataInRoleType(roleType);
+        roleType.getDescriptionIndicator().addAll(descIndicator);
+        roleType.getDescription().addAll(descForManipulator);
         roleType.getName().addAll(nameForManipulator);
         roleType.getNameIndicator().addAll(nameIndicator);
         roleType.getRoleTypeClass().addAll(classString);
         roleType.getRoleTypeClassIndex().addAll(classST);
         roleType.getRoleTypeSuperClass().addAll(superSting);
         roleType.getRoleTypeSuperClassIndex().addAll(superST);
+        roleType.setExist(exist);
     }
 
     private void clearDataInRoleType(RoleType roleType) {
+        roleType.getDescription().clear();
+        roleType.getDescriptionIndicator().clear();
         roleType.getNameIndicator().clear();
         roleType.getName().clear();
         roleType.getRoleTypeSuperClass().clear();
@@ -777,7 +787,7 @@ public class DataModel {
     }
     
     public void addDataToStatus(Status status, ArrayList<String> nameForManipulator, ArrayList<Integer> nameIndicator,
-                                ArrayList<Integer> classST,  ArrayList<Integer> superST, ArrayList<String> classString,  ArrayList<String> superSting) {
+                                ArrayList<Integer> classST,  ArrayList<Integer> superST, ArrayList<String> classString,  ArrayList<String> superSting, boolean exist) {
         clearDataInStatus(status);
         status.getName().addAll(nameForManipulator);
         status.getNameIndicator().addAll(nameIndicator);
@@ -785,6 +795,7 @@ public class DataModel {
         status.getStatusClassIndex().addAll(classST);
         status.getStatusSuperClass().addAll(superSting);
         status.getStatusSuperClassIndex().addAll(superST);
+        status.setExist(exist);
     }
 
     private void clearDataInStatus(Status status) {
@@ -799,7 +810,7 @@ public class DataModel {
     }
 
     public void addDataToType(Type type, ArrayList<String> nameForManipulator, ArrayList<Integer> nameIndicator,
-                                  ArrayList<Integer> classST,  ArrayList<Integer> superST, ArrayList<String> classString,  ArrayList<String> superSting) {
+                                  ArrayList<Integer> classST,  ArrayList<Integer> superST, ArrayList<String> classString,  ArrayList<String> superSting, boolean exist) {
         clearDataInType(type);
         type.getName().addAll(nameForManipulator);
         type.getNameIndicator().addAll(nameIndicator);
@@ -807,6 +818,7 @@ public class DataModel {
         type.getTypeClassIndex().addAll(classST);
         type.getTypeSuperClass().addAll(superSting);
         type.getTypeSuperClassIndex().addAll(superST);
+        type.setExist(exist);
     }
 
     private void clearDataInType(Type type) {
@@ -821,14 +833,15 @@ public class DataModel {
     }
     
     public void addDataToRelation(Relation relation, ArrayList<String> nameForManipulator, ArrayList<Integer> nameIndicator,
-                                  ArrayList<Integer> classST,  ArrayList<Integer> superST, ArrayList<String> classString,  ArrayList<String> superSting) {
-
+                                  ArrayList<Integer> classST,  ArrayList<Integer> superST, ArrayList<String> classString,  ArrayList<String> superSting, boolean exist) {
+        clearDataInRelation(relation);
         relation.getName().addAll(nameForManipulator);
         relation.getNameIndicator().addAll(nameIndicator);
         relation.getRelationClass().addAll(classString);
         relation.getRelationClassIndex().addAll(classST);
         relation.getRelationSuperClass().addAll(superSting);
         relation.getRelationSuperClassIndex().addAll(superST);
+        relation.setExist(exist);
     }
 
     private void clearDataInRelation(Relation relation) {
@@ -843,7 +856,7 @@ public class DataModel {
     }
 
     public void addDataToResolution(Resolution resolution, ArrayList<String> nameForManipulator, ArrayList<Integer> nameIndicator,
-                                    ArrayList<Integer> classST,  ArrayList<Integer> superST, ArrayList<String> classString,  ArrayList<String> superSting) {
+                                    ArrayList<Integer> classST,  ArrayList<Integer> superST, ArrayList<String> classString,  ArrayList<String> superSting, boolean exist) {
         clearDataInResolution(resolution);
         resolution.getName().addAll(nameForManipulator);
         resolution.getNameIndicator().addAll(nameIndicator);
@@ -851,6 +864,7 @@ public class DataModel {
         resolution.getResolutionClassIndex().addAll(classST);
         resolution.getResolutionSuperClass().addAll(superSting);
         resolution.getResolutionSuperClassIndex().addAll(superST);
+        resolution.setExist(exist);
     }
 
     private void clearDataInResolution(Resolution resolution) {
@@ -865,24 +879,22 @@ public class DataModel {
     }
 
 
-    public void addDatToRole(Role role, ArrayList<String> nameForManipulator, ArrayList<String> descForManipulator, ArrayList<Integer> type,
-                             ArrayList<Integer> nameIndicator, ArrayList<Integer> descIndicator, ArrayList<Integer> typeIndicator, int instanceCount) {
+    public void addDatToRole(Person role, ArrayList<String> nameForManipulator, ArrayList<Integer> type,
+                             ArrayList<Integer> nameIndicator,  ArrayList<Integer> typeIndicator, int instanceCount, boolean exist) {
         clearDataInRole(role);
         role.getName().addAll(nameForManipulator);
         role.getNameIndicator().addAll(nameIndicator);
-        role.getDescriptionIndicator().addAll(descIndicator);
         role.getTypeIndicator().addAll(typeIndicator);
-        role.getDescription().addAll(descForManipulator);
+        role.setExist(exist);
+
         role.setCount(instanceCount);
         role.getType().addAll(type);
     }
 
-    private void clearDataInRole(Role role) {
+    private void clearDataInRole(Person role) {
         role.getName().clear();
         role.getNameIndicator().clear();
-        role.getDescriptionIndicator().clear();
         role.getTypeIndicator().clear();
-        role.getDescription().clear();
         role.getType().clear();
     }
 
@@ -926,9 +938,10 @@ public class DataModel {
 
     public void addDataToMilestone(Milestone milestone, ArrayList<String> nameForManipulator, ArrayList<String> descForManipulator,
                                    ArrayList<Integer> nameIndicator, ArrayList<Integer> descIndicator, ArrayList<Integer> criterionIndicator,
-                                   ArrayList<ArrayList<Integer>> criterionIndex) {
+                                   ArrayList<ArrayList<Integer>> criterionIndex, boolean exist) {
         clearDataInMilestone(milestone);
         milestone.getCriteriaIndexs().clear();
+        milestone.setExist(exist);
         for (List<Integer> list : criterionIndex){
             CriterionList cprList = objF.createCriterionList();
             cprList.getCriterions().addAll(list);
@@ -952,12 +965,13 @@ public class DataModel {
     }
 
     public void addDataToVCSTag(VCSTag tag, ArrayList<String> nameForManipulator, ArrayList<String> descriptionForManipulator,
-                                ArrayList<Integer> nameIndicator, ArrayList<Integer> descriptionIndicator) {
+                                ArrayList<Integer> nameIndicator, ArrayList<Integer> descriptionIndicator, boolean exist) {
         clearDataInVCSTag(tag);
         tag.getName().addAll(nameForManipulator);
         tag.getNameIndicator().addAll(nameIndicator);
         tag.getDescription().addAll(descriptionForManipulator);
         tag.getDescriptionIndicator().addAll(descriptionIndicator);
+        tag.setExist(exist);
     }
 
     private void clearDataInVCSTag(VCSTag tag) {
@@ -967,12 +981,23 @@ public class DataModel {
         tag.getDescription().clear();
     }
 
-    public void addDataToCommit(Commit commit, ArrayList<String> nameForManipulator, ArrayList<Integer> nameIndicator, boolean release, int instanceCount) {
+    public void addDataToCommit(Commit commit, ArrayList<String> nameForManipulator, ArrayList<Integer> nameIndicator,  ArrayList<Integer> tag,
+                                ArrayList<Integer> tagIndicator, ArrayList<ArrayList<Integer>> branches, ArrayList<Integer> branchIndicator,
+                                boolean release, int instanceCount, boolean exist) {
         clearDataInCommit(commit);
         commit.setRelease(release);
         commit.getName().addAll(nameForManipulator);
         commit.getNameIndicator().addAll(nameIndicator);
+        commit.getTags().addAll(tag);
+        commit.getTagsIndicator().addAll(tagIndicator);
+        for (List<Integer> list : branches){
+            BranchList cprList = objF.createBranchList();
+            cprList.getBranches().addAll(list);
+            commit.getBranch().add(cprList);
+        }
+        commit.getBranchIndicator().addAll(branchIndicator);
         commit.setCount(instanceCount);
+        commit.setExist(exist);
     }
 
     public void setCoordinatesToCommit(Coordinates coordinates, Commit commit){
@@ -991,13 +1016,17 @@ public class DataModel {
         artifact.setCoordinates(coordinates);
     }
 
-    public void setCoordinatesToRole(Coordinates coordinates, Role role){
+    public void setCoordinatesToRole(Coordinates coordinates, Person role){
         role.setCoordinates(coordinates);
     }
     
     private void clearDataInCommit(Commit commit) {
         commit.getNameIndicator().clear();
         commit.getName().clear();
+        commit.getTagsIndicator().clear();
+        commit.getTags().clear();
+        commit.getBranchIndicator().clear();
+        commit.getBranch().clear();
     }
 
 
@@ -1155,7 +1184,7 @@ public class DataModel {
         return project.getMilestones();
     }
 
-    public List<Role> getRoles() {
+    public List<Person> getRoles() {
         return project.getRoles();
     }
 

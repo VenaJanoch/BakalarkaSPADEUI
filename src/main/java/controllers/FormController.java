@@ -114,7 +114,7 @@ public class FormController {
         forms.add(activityForm);
 
         workUnitForm = new WorkUnitForm(this, formDataController, editFormController, deleteFormController, canvasController,
-                SegmentType.WorkUnit, Constans.workUnitFormIndex);
+                SegmentType.Work_Unit, Constans.workUnitFormIndex);
         forms.add(workUnitForm);
 
         milestoneForm = new MilestoneForm(
@@ -124,10 +124,10 @@ public class FormController {
         criterionForm = new CriterionForm(this, formDataController, editFormController, deleteFormController, SegmentType.Criterion);
         forms.add(criterionForm);
 
-        CPRForm = new ConfigPersonRelationForm(this, formDataController, editFormController, deleteFormController, SegmentType.ConfigPersonRelation);
+        CPRForm = new ConfigPersonRelationForm(this, formDataController, editFormController, deleteFormController, SegmentType.Config_Person_Relation);
         forms.add(CPRForm);
 
-        roleTypeForm = new RoleTypeForm(this, formDataController, editFormController, deleteFormController, SegmentType.RoleType);
+        roleTypeForm = new RoleTypeForm(this, formDataController, editFormController, deleteFormController, SegmentType.Role_Type);
         forms.add(roleTypeForm);
 
 
@@ -177,13 +177,13 @@ public class FormController {
             switch (type) {
                 case Configuration:
                     return createNewConfigurationPanel();
-                case Role:
+                case Person:
                     return createNewRolePanel();
                 case Artifact:
                     return createNewArtifactPanel();
                 case Commit:
                     return createNewCommitPanel();
-                case CommittedConfiguration:
+                case Committed_Configuration:
                     return createNewCommitedConfigurationPanel();
                 default:
                     return -1;
@@ -202,7 +202,7 @@ public class FormController {
 
         int index = identificatorCreater.createCommitID();
         int id = identificatorCreater.getCommitId(index);
-        CommitTable commitTable = new CommitTable(id + "_", "", true, id);
+        CommitTable commitTable = new CommitTable(id + "_", "", true, true, id);
 
         CommitControlPanel commitControlPanel = new CommitControlPanel(
                 "Edit", formDataController, editFormController,this, commitTable, id, index);
@@ -222,7 +222,7 @@ public class FormController {
 
         int index = identificatorCreater.createCommiedConfigurationtID();
         int id = identificatorCreater.getCommitedConfigurationId(index);
-        CommitedConfigurationTable commitTable = new CommitedConfigurationTable(id + "_","",id);
+        CommitedConfigurationTable commitTable = new CommitedConfigurationTable(id + "_","", true, id);
 
         CommitedConfigurationControlPanel commitControlPanel = new CommitedConfigurationControlPanel(
                 "Edit", formDataController, editFormController,this, commitTable, id, index);
@@ -242,13 +242,13 @@ public class FormController {
 
         int index = identificatorCreater.createRoleID();
         int id = identificatorCreater.getRoleIndexToIdMaper().get(index);
-        RoleTable roleTable = new RoleTable(id + "_", "", "", id);
+        PersonTable personTable = new PersonTable(id + "_", "", "", true, id);
 
-        RoleControlPanel roleControlPanel = new RoleControlPanel(
-                "Edit", formDataController, editFormController,this, roleTable, id, index);
+        PersonControlPanel personControlPanel = new PersonControlPanel(
+                "Edit", formDataController, editFormController,this, personTable, id, index);
 
-        segmentLists.getRoleObservable().add(roleTable);
-        controlPanels.add(roleControlPanel);
+        segmentLists.getRoleObservable().add(personTable);
+        controlPanels.add(personControlPanel);
         return index;
 
     }
@@ -264,7 +264,7 @@ public class FormController {
     public int createNewArtifactFormWithoutManipulator(){
         int index = identificatorCreater.createArtifactID();
         int id = identificatorCreater.getArtifactIndexToIdMaper().get(index);
-        ArtifactTable artifactTable = new ArtifactTable(id + "_", "", id);
+        ArtifactTable artifactTable = new ArtifactTable(id + "_", "", true, id);
 
         ArtifactControlPanel artifactControlPanel = new ArtifactControlPanel(
                 "Edit", formDataController, editFormController,this, artifactTable, id, index);
@@ -298,7 +298,7 @@ public class FormController {
     public int createNewConfiguratioFormWithoutManipulator(){
         int index = identificatorCreater.createConfigurationID();
         int id = identificatorCreater.getConfigurationId(index);
-        ConfigTable configTable = new ConfigTable(id + "_", "", index, id);
+        ConfigTable configTable = new ConfigTable(id + "_", "", index, true, id);
 
         ConfigurationControlPanel roleControlPanel = new ConfigurationControlPanel(
                 "Edit", formDataController, editFormController,this, configTable, id, index);
@@ -318,7 +318,7 @@ public class FormController {
         int id = identificatorCreater.getWorkUnitIndexToIdMaper().get(index);
         CanvasController canvasController = new CanvasController(canvasType, applicationController);
         WorkUnitForm workUnitForm = new WorkUnitForm(this, formDataController, editFormController, deleteFormController,
-                canvasController, SegmentType.WorkUnit, index);
+                canvasController, SegmentType.Work_Unit, index);
 
         forms.add(index, workUnitForm);
 
@@ -389,7 +389,7 @@ public class FormController {
             case Activity:
                 formFillController.fillActivityForm(identificatorCreater.getActivityId(formIdentificator), formIdentificator);
                 break;
-            case WorkUnit:
+            case Work_Unit:
                 formFillController.fillWorkUnitForm(identificatorCreater.getWorkUnitIndex(formIdentificator), formIdentificator);
                 break;
             case Change:
@@ -412,7 +412,7 @@ public class FormController {
                 tableView.refresh();
                 break;
 
-            case ConfigPersonRelation:
+            case Config_Person_Relation:
                 List<ConfigPersonRelation> cprlist = dataModel.getCpr();
                 ConfigPersonRelationForm cprForm = (ConfigPersonRelationForm) form;
                 TableView cprTableView = cprForm.getTableTV();
@@ -434,10 +434,6 @@ public class FormController {
        // form.show();
        // form.toFront();
 
-    }
-
-    public boolean isFormFill(int formIdentificator) {
-       return forms.get(formIdentificator).isSave();
     }
 
     public int[] getCoordsFromItem(int indexForm){
@@ -533,13 +529,13 @@ public class FormController {
     public int getSegmetIdFromFormId(SegmentType type, int formIndex) {
 
         switch (type) {
-            case Role:
+            case Person:
                 return identificatorCreater.getRoleId(formIndex);
             case Iteration:
                 return identificatorCreater.getIterationId(formIndex);
             case Activity:
                 return identificatorCreater.getActivityId(formIndex);
-            case CommittedConfiguration:
+            case Committed_Configuration:
                 return identificatorCreater.getCommitedConfigurationId(formIndex);
             case Configuration:
                 return identificatorCreater.getConfigurationId(formIndex);
@@ -556,7 +552,7 @@ public class FormController {
     public int createTableItem(SegmentType segmentType) {
         int id;
         switch (segmentType) {
-            case WorkUnit:
+            case Work_Unit:
                 id = identificatorCreater.createWorkUnitID();
                 createNewWorkUnitForm(id);
                 return id;
@@ -590,11 +586,11 @@ public class FormController {
              return identificatorCreater.createMilestoneID();
             case Criterion:
              return  identificatorCreater.createCriterionID();
-            case Role:
+            case Person:
                return identificatorCreater.createRoleID();
-            case RoleType:
+            case Role_Type:
                return identificatorCreater.createRoleTypeID();
-            case ConfigPersonRelation:
+            case Config_Person_Relation:
                 id = identificatorCreater.createCPRID();
                 createNewCPRForm(id);
                 return id;
@@ -629,7 +625,7 @@ public class FormController {
     }
 
     public void setNewItemToConfigurationTable(String actName, String isRelease, int formIndex, int id) {
-        ConfigTable configTable = new ConfigTable(actName, isRelease, formIndex, id);
+        ConfigTable configTable = new ConfigTable(actName, isRelease, formIndex, true, id);
         ConfigurationTableForm configurationTableForm = (ConfigurationTableForm) forms.get(Constans.configurationFormIndex);
         configurationTableForm.getTableTV().getItems().add(configTable);
         configurationTableForm.getTableTV().sort();
@@ -664,7 +660,7 @@ public class FormController {
                 for (int i : formList) {
                     ConfigurationForm form = (ConfigurationForm) forms.get(i);
                     switch (comboBoxType ) {
-                        case ConfigPersonRelation:
+                        case Config_Person_Relation:
                         upDateCheckComboBox(form.getCprCB(), indices);
                         break;
                         default:
@@ -688,7 +684,7 @@ public class FormController {
                    //     form.getSeverityCB().getSelectionModel().select(0);
                     }
                     break;
-                case Role:
+                case Person:
                     for (int i : wuList){
                         WorkUnitForm form = (WorkUnitForm) forms.get(i);
                  //       form.getAuthorRoleCB().getSelectionModel().select(0);
@@ -764,7 +760,7 @@ public class FormController {
     public void setCoordinatesToCanvasItem(SegmentType segmentType, double newTranslateX, double newTranslateY, int fromIndex) {
         int id = 0;
         switch (segmentType){
-            case Role:
+            case Person:
                 id = identificatorCreater.getRoleId(fromIndex);
                 editFormController.editCoordsInRole(newTranslateX, newTranslateY, id);
                 break;
@@ -773,7 +769,7 @@ public class FormController {
                 editFormController.editCoordsInCommit(newTranslateX, newTranslateY, id);
             break;
 
-            case CommittedConfiguration:
+            case Committed_Configuration:
                 id = identificatorCreater.getCommitedConfigurationId(fromIndex);
                 editFormController.editCoordsInCommitedConfiguration(newTranslateX, newTranslateY, id);
                 break;
@@ -786,6 +782,42 @@ public class FormController {
                 editFormController.editCoordsInArtifact(newTranslateX, newTranslateY, id);
                 break;
         }
+    }
+
+    private Integer[] findCorectId(Integer startIndex, Integer endIndex, Integer startIndex1, Integer endIndex1){
+        Integer[] result = new Integer[2];
+
+        Integer firstResult = -1;
+        Integer secondResult = -1;
+
+        if( startIndex != null){
+            firstResult = startIndex;
+        }else{
+            firstResult = endIndex;
+        }
+
+        if(startIndex1 != null){
+            secondResult = startIndex1;
+        }else {
+            secondResult = endIndex1;
+        }
+        result[0] = firstResult;
+        result[1] = secondResult;
+        return result;
+    }
+
+    public void createCommitToCommitedConfigurationRelation(int startId, int endId) {
+        Integer startIndex = identificatorCreater.getCommitId(startId);
+        Integer endIndex = identificatorCreater.getCommitId(endId);
+
+        Integer startIndex1 = identificatorCreater.getCommitedConfigurationId(startId);
+        Integer endIndex2 = identificatorCreater.getCommitedConfigurationId(endId);
+
+        Integer[] result = findCorectId(startIndex, endIndex, startIndex1, endIndex2);
+
+
+
+        saveDataModel.createCommitToCommitedConfigurationRelation(result[0], result[1]);
     }
 }
 

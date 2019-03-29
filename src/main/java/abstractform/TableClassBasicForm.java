@@ -38,6 +38,7 @@ public abstract class TableClassBasicForm extends TableBasicForm implements ISeg
 	protected EventHandler<MouseEvent> OnMousePressedEventHandler;
 	protected ClassControlPanel editClassControlPanelTCB;
 
+
 	/**
 	 * Konstruktor třídy Zinicializuje globální proměnné třídy
 	 */
@@ -82,8 +83,9 @@ public abstract class TableClassBasicForm extends TableBasicForm implements ISeg
 		TableColumn<ClassTable, String> nameColumn = new TableColumn<ClassTable, String>("Name");
 		TableColumn<ClassTable, String> classColumn = new TableColumn<ClassTable, String>("Class");
 		TableColumn<ClassTable, String> superColumn = new TableColumn<ClassTable, String>("Super Class");
+		TableColumn<ClassTable, String> existColumn = new TableColumn<ClassTable, String>("Exist");
 
-		nameColumn.setCellValueFactory(new PropertyValueFactory("name"));
+		nameColumn.setCellValueFactory(new PropertyValueFactory("idString"));
 		nameColumn.setMinWidth(150);
 		nameColumn.setCellFactory(TextFieldTableCell.forTableColumn());
 
@@ -95,8 +97,12 @@ public abstract class TableClassBasicForm extends TableBasicForm implements ISeg
 		superColumn.setMinWidth(150);
 		superColumn.setCellFactory(TextFieldTableCell.forTableColumn());
 
-		tableTV.getColumns().addAll(nameColumn, classColumn, superColumn);
+		superColumn.setCellValueFactory(new PropertyValueFactory("existString"));
+		superColumn.setMinWidth(150);
+		superColumn.setCellFactory(TextFieldTableCell.forTableColumn());
 
+		//tableTV.getColumns().addAll(nameColumn, classColumn, superColumn, existColumn);
+		tableTV.getColumns().addAll(nameColumn, existColumn);
 		tableTV.setEditable(false);
 
 		tableTV.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
@@ -136,7 +142,7 @@ public abstract class TableClassBasicForm extends TableBasicForm implements ISeg
 		String classST = ""; // classControlPanel.getClassName();
 		String superST = ""; //classControlPanel.getSuperClassName();
 
-		ClassTable table = new ClassTable(idName, classST, superST, id);
+		ClassTable table = new ClassTable(idName, classST, superST, true, id);
 		saveData(getSegmentType(), nameST, table);
 		tableTV.getItems().add(table);
 		tableTV.sort();
@@ -149,9 +155,6 @@ public abstract class TableClassBasicForm extends TableBasicForm implements ISeg
 
 	public void saveData(SegmentType segmentType, String nameST, ClassTable table) {
 		switch (segmentType){
-			case RoleType:
-				formDataController.saveDataFromRoleTypeForm(nameST, table);
-				break;
 			case Severity:
 				formDataController.saveDataFromSeverity(nameST, table);
 				break;

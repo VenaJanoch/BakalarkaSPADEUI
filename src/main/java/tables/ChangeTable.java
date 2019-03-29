@@ -16,8 +16,8 @@ public class ChangeTable extends BasicTable {
 
 	 *
 	 */
-	public ChangeTable(String name, String description, int id) {
-		super(name, id);
+	public ChangeTable(String name, String description, boolean exist, int id) {
+		super(name, exist, id);
 		this.description = new SimpleStringProperty(description);
 	}
 	

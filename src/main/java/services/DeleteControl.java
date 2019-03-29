@@ -43,11 +43,11 @@ public class DeleteControl {
                 return findTableToObjectIndicesForDelete(indicesList, mapperTableToObject.getMilestoneToCriterionMapper());
             case Criterion:
                 break;
-            case Role:
+            case Person:
                 return findTableToObjectIndicesForDelete(indicesList, mapperTableToObject.getRoleToRoleTypeMapper());
-            case RoleType:
+            case Role_Type:
                 break;
-            case ConfigPersonRelation:
+            case Config_Person_Relation:
                 break;
             case Relation:
                 return findTableToObjectIndicesForDelete(indicesList, mapperTableToObject.getRelationToWUMapper());
@@ -70,7 +70,7 @@ public class DeleteControl {
         switch (segmentType) {
             case Phase:
                 return findTableToObjectIndicesForDeleteData(idList, mapperTableToObject.getPhaseToMilestone());
-            case WorkUnit:
+            case Work_Unit:
                 return findTableToObjectIndicesForDeleteData(idList, mapperTableToObject.getPhaseToMilestone());
             case Branch:
                 break;
@@ -82,9 +82,9 @@ public class DeleteControl {
                 return findTableToObjectIndicesForDeleteData(idList, mapperTableToObject.getMilestoneToCriterionMapper());
             case Criterion:
                 break;
-            case Role:
+            case Person:
                 switch (elementType){
-                    case WorkUnit:
+                    case Work_Unit:
                         findTableToObjectIndicesForDelete(idList, mapperTableToObject.getRoleMaps().get(0) );
                     break;
                     case Configuration:
@@ -93,15 +93,15 @@ public class DeleteControl {
                     case Artifact:
                         findTableToObjectIndicesForDelete(idList, mapperTableToObject.getRoleMaps().get(2) );
                         break;
-                    case ConfigPersonRelation:
+                    case Config_Person_Relation:
                         findTableToObjectIndicesForDelete(idList, mapperTableToObject.getRoleMaps().get(3) );
                         break;
                     default:
                 }
                 return findTableToObjectIndicesForDeleteData(idList, mapperTableToObject.getRoleToRoleTypeMapper());
-            case RoleType:
+            case Role_Type:
                 break;
-            case ConfigPersonRelation:
+            case Config_Person_Relation:
                 return findTableToObjectIndicesForDeleteData(idList, mapperTableToObject.getCPRToRoleMapper());
             case Relation:
                 return findTableToObjectIndicesForDeleteData(idList, mapperTableToObject.getRelationToWUMapper());

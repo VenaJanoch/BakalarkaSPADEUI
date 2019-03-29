@@ -149,7 +149,7 @@ public class TagForm extends TableBasicForm implements ISegmentTableForm {
 
 		String idName = id + "_" + tagST;
 
-		TagTable tag = new TagTable(idName, id);
+		TagTable tag = new TagTable(idName,true, id);
 		formDataController.saveDataFromTagForm(tagST, configId, id);
 
 		tableTV.getItems().add(tag);

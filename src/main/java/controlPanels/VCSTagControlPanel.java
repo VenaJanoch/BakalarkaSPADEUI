@@ -40,7 +40,10 @@ public class VCSTagControlPanel extends DescriptionControlPanel {
 
         controlPanelController.setValueTextField(this, lineList ,ParamType.Name, vcsTagStringData, vcsTagStringData[2], 0);
         controlPanelController.setValueTextField(this, lineList ,ParamType.Description, vcsTagStringData, vcsTagStringData[3], 1);
+        List boolList = vcsTagStringData[4];
+        boolean exist = (boolean) boolList.get(0);
 
+        controlPanelController.setValueExistRadioButton(exist);
         button.setOnAction(event -> saveDataFromPanel(basicTable, tableView));
     }
 
@@ -59,7 +62,7 @@ public class VCSTagControlPanel extends DescriptionControlPanel {
         ArrayList<String> name = controlPanelController.processTextLines(ParamType.Name, nameIndicators);
         ArrayList<String> desc = controlPanelController.processTextLines(ParamType.Description, descIndicators);
 
-        editFormController.editDataFromVCSTag(name, desc, nameIndicators, descIndicators, tagTable, id);
+        editFormController.editDataFromVCSTag(name, desc, nameIndicators, descIndicators, tagTable, controlPanelController.isExist(), id);
         clearPanelCB(tableView);
     }
 

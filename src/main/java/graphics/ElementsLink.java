@@ -6,14 +6,14 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import controllers.LinkControl;
 
-public class ChangeArtifactLink extends NodeLink {
+public class ElementsLink extends NodeLink {
     /**
      * Konstruktor třídy Zinicizalizuje globální proměnné třídy
      *
      * @param ID          Identifikace spojnice
      * @param linkControl LinkControl
      */
-    public ChangeArtifactLink(int ID, LinkControl linkControl, CanvasController canvasController, ManipulationController manipulationController) {
+    public ElementsLink(int ID, LinkControl linkControl, CanvasController canvasController, ManipulationController manipulationController) {
         super(ID, linkControl,canvasController, manipulationController );
     }
 

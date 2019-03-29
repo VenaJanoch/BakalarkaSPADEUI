@@ -22,8 +22,8 @@ public class ClassTable extends BasicTable {
      * @param classType class
      * @param superType super class
      */
-    public ClassTable(String name, String classType, String superType, int id) {
-        super(name, id);
+    public ClassTable(String name, String classType, String superType, boolean exist, int id) {
+        super(name, exist, id);
         this.classType = new SimpleStringProperty(classType);
         this.superType = new SimpleStringProperty(superType);
         }

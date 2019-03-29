@@ -89,13 +89,13 @@ public class MapperTableToObject {
             case Milestone:
                 addInstanceToMap(index, lists.getCriterionObservable(), instanc, milestoneToCriterionMapper);
                 break;
-            case Role:
+            case Person:
                 addInstanceToMap(index, lists.getRoleTypeObservable(), instanc, roleToRoleTypeMapper);
                 break;
             case Artifact:
                 addInstanceToMap(index, lists.getRoleObservable(), instanc, artifactToRoleMapper);
                 break;
-            case ConfigPersonRelation:
+            case Config_Person_Relation:
                 addInstanceToMap(index, lists.getRoleObservable(), instanc, CPRToRoleMapper);
                 break;
             case Configuration:
@@ -115,13 +115,13 @@ public class MapperTableToObject {
     public void mapTableToWU(ArrayList<Integer> assigneIndex, ArrayList<Integer> authorIndex, ArrayList<Integer> priorityIndex,
                              ArrayList<Integer> severityIndex, ArrayList<Integer> typeIndex, ArrayList<Integer> resolutionIndex,
                              ArrayList<Integer> statusIndex, int indexForm, String WUName) {
-        addInstanceToMap(priorityIndex, lists.getPriorityTypeObservable(), new TableToObjectInstanc(WUName, indexForm, SegmentType.WorkUnit), priorityToWUMapper);
-        addInstanceToMap(severityIndex, lists.getSeverityTypeObservable(), new TableToObjectInstanc(WUName, indexForm, SegmentType.WorkUnit), severityToWUMapper);
-        addInstanceToMap(typeIndex, lists.getTypeObservable(), new TableToObjectInstanc(WUName, indexForm, SegmentType.WorkUnit), typeToWUMapper);
-        addInstanceToMap(statusIndex, lists.getStatusTypeObservable(), new TableToObjectInstanc(WUName, indexForm, SegmentType.WorkUnit), statusToWUMapper);
-        addInstanceToMap(resolutionIndex, lists.getResolutionTypeObservable(), new TableToObjectInstanc(WUName, indexForm, SegmentType.WorkUnit), resolutionToWUMapper);
-        addInstanceToMap(assigneIndex, lists.getRoleObservable(), new TableToObjectInstanc(WUName, indexForm, SegmentType.WorkUnit), wuToRoleMapper);
-        addInstanceToMap(authorIndex, lists.getRoleObservable(), new TableToObjectInstanc(WUName, indexForm, SegmentType.WorkUnit), wuToRoleMapper);
+        addInstanceToMap(priorityIndex, lists.getPriorityTypeObservable(), new TableToObjectInstanc(WUName, indexForm, SegmentType.Work_Unit), priorityToWUMapper);
+        addInstanceToMap(severityIndex, lists.getSeverityTypeObservable(), new TableToObjectInstanc(WUName, indexForm, SegmentType.Work_Unit), severityToWUMapper);
+        addInstanceToMap(typeIndex, lists.getTypeObservable(), new TableToObjectInstanc(WUName, indexForm, SegmentType.Work_Unit), typeToWUMapper);
+        addInstanceToMap(statusIndex, lists.getStatusTypeObservable(), new TableToObjectInstanc(WUName, indexForm, SegmentType.Work_Unit), statusToWUMapper);
+        addInstanceToMap(resolutionIndex, lists.getResolutionTypeObservable(), new TableToObjectInstanc(WUName, indexForm, SegmentType.Work_Unit), resolutionToWUMapper);
+        addInstanceToMap(assigneIndex, lists.getRoleObservable(), new TableToObjectInstanc(WUName, indexForm, SegmentType.Work_Unit), wuToRoleMapper);
+        addInstanceToMap(authorIndex, lists.getRoleObservable(), new TableToObjectInstanc(WUName, indexForm, SegmentType.Work_Unit), wuToRoleMapper);
     }
 
     public void mapTableToConfiguration(ArrayList<Integer> roleIndex, ArrayList<ArrayList<Integer>> cprIndicies, ArrayList<ArrayList<Integer>> branches,

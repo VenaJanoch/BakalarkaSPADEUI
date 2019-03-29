@@ -14,8 +14,8 @@ public class TagTable extends BasicTable {
 	 * @param tag
 	 *            String prvek pro přídání do tabulky
 	 */
-	public TagTable(String tag, int id) {
-		super(tag, id);
+	public TagTable(String tag,  boolean exist, int id) {
+		super(tag, exist, id);
 		this.tag = new SimpleStringProperty(tag);
 	}
 

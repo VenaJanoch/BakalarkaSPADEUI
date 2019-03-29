@@ -7,8 +7,6 @@ import interfaces.IDeleteFormController;
 import interfaces.IEditFormController;
 import interfaces.IFormDataController;
 import interfaces.ISegmentTableForm;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
@@ -22,12 +20,8 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
-import services.Alerts;
 import services.SegmentType;
-import tables.BasicTable;
 import tables.CPRTable;
-
-import java.util.ArrayList;
 
 /**
  * Třída představující tabulkový formulář pro element Configuration-Person-Relatio, odděděná od třídy
@@ -114,19 +108,19 @@ public class ConfigPersonRelationForm extends TableBasicForm implements ISegment
 	public Node getTable() {
 		tableTV = new TableView<CPRTable>();
 		tableTV.setId("cprTable");
-		TableColumn<CPRTable, String> nameColumn = new TableColumn<CPRTable, String>("Name");
-		TableColumn<CPRTable, String> roleColumn = new TableColumn<CPRTable, String>("Role");
+		TableColumn<CPRTable, String> nameColumn = new TableColumn<CPRTable, String>("Id");
+		TableColumn<CPRTable, String> exist = new TableColumn<CPRTable, String>("Exist");
 
-		nameColumn.setCellValueFactory(new PropertyValueFactory("name"));
+		nameColumn.setCellValueFactory(new PropertyValueFactory("idString"));
 		nameColumn.setMinWidth(150);
 		nameColumn.setCellFactory(TextFieldTableCell.forTableColumn());
 
-		roleColumn.setCellValueFactory(new PropertyValueFactory("role"));
-		roleColumn.setMinWidth(150);
-		roleColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+		exist.setCellValueFactory(new PropertyValueFactory("existString"));
+		exist.setMinWidth(150);
+		exist.setCellFactory(TextFieldTableCell.forTableColumn());
 
-	//	tableTV.getColumns().addAll(nameColumn, roleColumn);
-		tableTV.getColumns().add(nameColumn);
+
+		tableTV.getColumns().addAll(nameColumn, exist);
 		tableTV.setOnMousePressed(OnMousePressedEventHandler);
 		tableTV.setEditable(false);
 
@@ -146,7 +140,7 @@ public class ConfigPersonRelationForm extends TableBasicForm implements ISegment
 	public void addItem() {
 
 		String nameST = ""; // cprControlPanel.getName();
-		int id = formController.createTableItem(SegmentType.ConfigPersonRelation);
+		int id = formController.createTableItem(SegmentType.Config_Person_Relation);
 		int roleIndex = 0;
 		CPRTable cpr = formDataController.prepareCPRToTable(nameST, roleIndex, id);
 

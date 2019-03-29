@@ -263,6 +263,8 @@ public class Alerts {
     }
 
 
+
+
     /**
      * Alert s infomací o ukončení aplikace s možností uložení procesu, přídně
      * zrušením akce
@@ -309,13 +311,60 @@ public class Alerts {
      * Alert s informací o pokusu propojení nevyplněného Work Unitu
      */
 
+
     public static void showNoWorkUnit() {
         Alert alert = new Alert(AlertType.ERROR);
         alert.setTitle("Link error");
         alert.setHeaderText("Uncomplete Workunit segment !");
         alert.setContentText("Please fill this item!");
         alert.showAndWait();
-
     }
 
+    public static void showConfigurationAsStartElement() {
+        Alert alert = new Alert(AlertType.ERROR);
+        alert.setTitle("Link error");
+        alert.setHeaderText("Configuration must not be start element!");
+        alert.setContentText("Please choose another element!");
+        alert.showAndWait();
+    }
+
+    public static void showBadCommitRelation(SegmentType segmentType) {
+        Alert alert = new Alert(AlertType.ERROR);
+        alert.setTitle("Link error");
+        alert.setHeaderText("Commit could not be add" + segmentType.name()+ "!");
+        alert.setContentText("Please choose another element!");
+        alert.showAndWait();
+    }
+
+    public static void showBadCommitedConfigurationRelation(SegmentType segmentType) {
+        Alert alert = new Alert(AlertType.ERROR);
+        alert.setTitle("Link error");
+        alert.setHeaderText("Commited Configuration could not be add" + segmentType.name()+ "!");
+        alert.setContentText("Please choose another element!");
+        alert.showAndWait();
+    }
+
+    public static void showBadConfigurationRelation(SegmentType segmentType) {
+        Alert alert = new Alert(AlertType.ERROR);
+        alert.setTitle("Link error");
+        alert.setHeaderText("Configuration could not be add to" + segmentType.name()+ "!");
+        alert.setContentText("Please choose another element!");
+        alert.showAndWait();
+    }
+
+    public static void showBadArtifactRelation(SegmentType segmentType) {
+        Alert alert = new Alert(AlertType.ERROR);
+        alert.setTitle("Link error");
+        alert.setHeaderText("Artifact could not be add to" + segmentType.name()+ "!");
+        alert.setContentText("Please choose another element!");
+        alert.showAndWait();
+    }
+
+    public static void showBadRoleRelation(SegmentType segmentType) {
+        Alert alert = new Alert(AlertType.ERROR);
+        alert.setTitle("Link error");
+        alert.setHeaderText("Person could not be add to" + segmentType.name()+ "!");
+        alert.setContentText("Please choose another element!");
+        alert.showAndWait();
+    }
 }

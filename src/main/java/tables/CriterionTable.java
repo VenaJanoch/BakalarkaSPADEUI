@@ -16,8 +16,8 @@ public class CriterionTable extends BasicTable{
 	 * @param description
 	 *            popis criterion
 	 */
-	public CriterionTable(String name, String description, int id) {
-		super(name, id);
+	public CriterionTable(String name, String description,  boolean exist, int id) {
+		super(name, exist, id);
 		this.description = new SimpleStringProperty(description);
 	}
 

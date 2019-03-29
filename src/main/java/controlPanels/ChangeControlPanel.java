@@ -55,19 +55,14 @@ public class ChangeControlPanel extends DescriptionControlPanel {
         artifactIndicators.add(0);
         controlPanelController.setValueComboBox(this, lineList ,ParamType.Artifact, (ArrayList<Integer>) changeData[5], artifactIndicators);
 
-        boolean exist = false;
         List boolList = changeData[4];
-        if (boolList.size() != 0){
-            exist = true;
-        }
-        controlPanelController.setValueRadioButton(exist);
+        controlPanelController.setValueExistRadioButton((boolean) boolList.get(0));
 
         button.setOnAction(event -> saveDataFromPanel(changeTable, tableView));
     }
 
     @Override
     protected void addItemsToControlPanel() {
-        controlPanelController.setRadioButton(this,1, "Exist: ", false);
         controlPanelController.createNewLine(this, lineList);
 
 
@@ -83,7 +78,7 @@ public class ChangeControlPanel extends DescriptionControlPanel {
         ArrayList<String> desc = controlPanelController.processTextLines(ParamType.Description, descIndicators);
         ArrayList<Integer> aritifacts = controlPanelController.processComboBoxLines(ParamType.Artifact, artifactsIndicators);
 
-        exist = controlPanelController.isMain();
+        exist = controlPanelController.isExist();
 
         editFormController.editDataFromChange(name, nameIndicators, desc, aritifacts, descIndicators, exist, changeTable, id);
 

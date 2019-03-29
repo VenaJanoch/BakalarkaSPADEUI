@@ -54,7 +54,10 @@ public class PhaseControlPanel extends WorkUnitDateControlPanel {
         ArrayList<ArrayList<Integer>> workUnits = formDataController.getWorkUnitFromSegment(id, SegmentType.Phase);
         controlPanelController.setValueCheckComboBox(this, lineList ,ParamType.WorkUnit, workUnits, phaseStringData[10]);
 
+        List boolList = phaseStringData[11];
+        boolean exist = (boolean) boolList.get(0);
 
+        controlPanelController.setValueExistRadioButton(exist);
         button.setOnAction(event -> saveDataFromPanel(phaseTable, tableView));
     }
 
@@ -75,7 +78,7 @@ public class PhaseControlPanel extends WorkUnitDateControlPanel {
         ArrayList<LocalDate> startDate = controlPanelController.processDateLines(ParamType.Date, date1Indicators);
 
         editFormController.editDataFromPhase(name, startDate, desc, config, milestone, workUnit, workUnitIndicators, nameIndicators, date1Indicators,
-                descIndicators, configIndicators, milestoneIndicators, phaseTable, id);
+                descIndicators, configIndicators, milestoneIndicators, phaseTable, controlPanelController.isExist(), id);
 
         clearPanelCB(tableView);
     }

@@ -1,9 +1,7 @@
 package interfaces;
 
-import controlPanels.CriterionControlPanel;
 import graphics.CanvasItem;
 import javafx.collections.ObservableList;
-import services.CanvasType;
 import services.SegmentType;
 import tables.*;
 
@@ -48,7 +46,7 @@ public interface IFormDataController {
 
     void saveDataFromRelationForm(String nameST, ClassTable classTable);
 
-    void saveDataFromRoleForm(String nameST, int typeIndex, RoleTable roleTable);
+    void saveDataFromRoleForm(String nameST, int typeIndex, PersonTable personTable);
 
     void saveDataFromRoleTypeForm(String nameST, ClassTable classTable);
 
@@ -62,7 +60,7 @@ public interface IFormDataController {
 
     MilestoneTable prepareMilestoneToTable(String nameST, String description, int id, ArrayList criterionArray);
 
-    RoleTable prepareRoleToTable(String nameST, String description, int id, int roleTypeIndex);
+    PersonTable prepareRoleToTable(String nameST, String description, int id, int roleTypeIndex);
 
     CPRTable prepareCPRToTable(String nameST, int roleIndex, int id);
 
@@ -74,7 +72,7 @@ public interface IFormDataController {
 
     ArrayList<ArrayList<Integer>>  getCriterionFromMilestone(int id);
 
-    List[] getRoleStringData(int id);
+    List[] getPersonStringData(int id);
 
     List[] getClassStringData(SegmentType segmentType, int id);
 
@@ -104,7 +102,7 @@ public interface IFormDataController {
 
     ArrayList<ArrayList<Integer>> getCPRFromConfiguration(int configId);
 
-    ArrayList<ArrayList<Integer>> getBranchesFromConfiguration(int configId);
+    ArrayList<ArrayList<Integer>> getBranchesFromCommit(int configId);
 
     ArrayList<ArrayList<Integer>> getChangesFromConfiguration(int configId);
 
@@ -115,4 +113,6 @@ public interface IFormDataController {
     List[] getCommitedConfigurationStringData(int commitedConfigurationId);
 
     List[] getProjectStringData();
+
+    List[] getRoleTypeStringData(int id);
 }

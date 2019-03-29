@@ -103,25 +103,19 @@ public class MilestoneForm extends TableBasicForm implements ISegmentTableForm {
     public Node getTable() {
         tableTV = new TableView<MilestoneTable>();
 
-        TableColumn<MilestoneTable, String> nameColumn = new TableColumn<MilestoneTable, String>("Name");
-        TableColumn<MilestoneTable, String> criterionColumn = new TableColumn<MilestoneTable, String>("Criterion");
-        TableColumn<MilestoneTable, String> descriptionColumn = new TableColumn<MilestoneTable, String>("Description");
+        TableColumn<MilestoneTable, String> nameColumn = new TableColumn<MilestoneTable, String>("Id");
+        TableColumn<MilestoneTable, String> exist = new TableColumn<MilestoneTable, String>("Exist");
 
-        nameColumn.setCellValueFactory(new PropertyValueFactory("name"));
-        nameColumn.setMinWidth(100);
+        nameColumn.setCellValueFactory(new PropertyValueFactory("idString"));
+        nameColumn.setMinWidth(150);
         nameColumn.setCellFactory(TextFieldTableCell.forTableColumn());
 
-        descriptionColumn.setCellValueFactory(new PropertyValueFactory("description"));
-        descriptionColumn.setMinWidth(100);
-        descriptionColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+        exist.setCellValueFactory(new PropertyValueFactory("existString"));
+        exist.setMinWidth(150);
+        exist.setCellFactory(TextFieldTableCell.forTableColumn());
 
 
-        criterionColumn.setCellValueFactory(new PropertyValueFactory("criterion"));
-        criterionColumn.setMinWidth(100);
-        criterionColumn.setCellFactory(TextFieldTableCell.forTableColumn());
-
-//		tableTV.getColumns().addAll(nameColumn, descriptionColumn, criterionColumn);
-        tableTV.getColumns().add(nameColumn);
+        tableTV.getColumns().addAll(nameColumn, exist);
         tableTV.setOnMousePressed(OnMousePressedEventHandler);
         tableTV.setEditable(false);
 

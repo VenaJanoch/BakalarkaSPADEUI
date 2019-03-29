@@ -16,8 +16,8 @@ public class CommitTable extends BasicTable{
 	 * @param main hodnota main
 	 */
 
-	public CommitTable(String name, String main, boolean isMain, int id) {
-		super(name, id);
+	public CommitTable(String name, String main, boolean isMain, boolean exist, int id) {
+		super(name, exist, id);
 		this.main = new SimpleStringProperty(main);
 		this.mainBool = isMain;
 	}

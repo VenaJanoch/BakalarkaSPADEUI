@@ -14,7 +14,6 @@ public class CanvasItemController {
     private SegmentType type;
     private LinkControl linkControl;
     private FormController formController;
-    private int formIndex;
 
 
     public CanvasItemController(LinkControl linkControl, FormController formController, ManipulationController manipulationController) {
@@ -29,7 +28,6 @@ public class CanvasItemController {
 
         linkControl.createLinkInstanceInMap(formIndex);
         this.type = type;
-        this.formIndex = formIndex;
         CanvasItem item = new CanvasItem(type, segmentIdentificator, formIndex, name, instanceCount, 0, x, y,
                 canvasController, this);
         formController.addCanvasItemToList(formIndex, item);
@@ -41,7 +39,7 @@ public class CanvasItemController {
      *
      * @param t
      */
-    public void setDragFromDragPoint(MouseEvent t, CanvasItem canvasItem, CanvasController canvasController, SegmentType segmentType, int id) {
+    public void setDragFromDragPoint(MouseEvent t, CanvasItem canvasItem, CanvasController canvasController) {
         if (!canvasController.isArrow()) {
 
             double offsetX = t.getSceneX() - canvasItem.getOrgSceneX();
@@ -51,9 +49,6 @@ public class CanvasItemController {
 
             ((AnchorPane) (t.getSource())).setTranslateX(newTranslateX);
             ((AnchorPane) (t.getSource())).setTranslateY(newTranslateY);
-
-            formController.setCoordinatesToCanvasItem(segmentType, newTranslateX, newTranslateY, formIndex);
-
         }
 
     }
@@ -73,7 +68,7 @@ public class CanvasItemController {
 
             if (canvasController.isArrow()) {
 
-                linkControl.ArrowManipulation(false, canvasController.isStartArrow(), canvasController, item.getFormIdentificator(), type, item.getTranslateX(),
+                linkControl.ArrowManipulation(false, canvasController.isStartArrow(), canvasController, item.getFormIdentificator(), segmentType, item.getTranslateX(),
                         item.getTranslateY(), item.getWidth(), item.getHeight());
             } else {
 
@@ -104,7 +99,7 @@ public class CanvasItemController {
      * @param y souřadnice prvku
      * @return Point2D zkontrolovaná poloha
      */
-    public Point2D canvasItemPositionControl(double x, double y) {
+    public Point2D canvasItemPositionControl(double x, double y, SegmentType segmentType, int formIndex) {
 
         Point2D point = new Point2D(x, y);
 
@@ -124,7 +119,7 @@ public class CanvasItemController {
         if (y >= Constans.canvasMaxHeight) {
             point = new Point2D(x, Constans.canvasMaxHeight - Constans.offset);
         }
-
+        formController.setCoordinatesToCanvasItem(segmentType, point.getX(), point.getY(), formIndex);
         return point;
 
     }

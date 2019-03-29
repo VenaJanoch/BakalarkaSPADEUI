@@ -14,13 +14,8 @@ import services.SegmentType;
 import tables.*;
 
 import javafx.scene.control.TableView;
-import javax.xml.datatype.XMLGregorianCalendar;
-import java.time.Instant;
-import java.time.LocalDate;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
+
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -130,8 +125,8 @@ public class FormFillController {
         TableView<TagTable> tagView =  form.getTagForm().getTableTV();
         for(int j = 0; j < configuration.getTags().size(); j++){
             formId = identificatorCreater.createTagID();
-            TagTable tagTable = new TagTable(configuration.getTags().get(j), formId);
-            tagView.getItems().add(tagTable);
+      //      TagTable tagTable = new TagTable(configuration.getTags().get(j), formId);
+      //      tagView.getItems().add(tagTable);
         }
         CanvasController canvasController = form.getCanvasController();
 
@@ -239,7 +234,7 @@ public class FormFillController {
     private ClassTable createClassTable(int id, String name, String lclass, String superClass){
 
         String idName = dataPreparer.createTableItemIdName(id, name);
-        return new ClassTable(idName, lclass, superClass, id);
+       return  null; //new ClassTable(idName, lclass, superClass, id);
     }
 
     private void fillTypeForm() {
@@ -319,7 +314,7 @@ public class FormFillController {
         for (int i = 0; i < project.getCpr().size(); i++){
             ConfigPersonRelation cpr = project.getCpr().get(i);
             int id = cpr.getId();
-            formController.createTableItem(SegmentType.ConfigPersonRelation);
+            formController.createTableItem(SegmentType.Config_Person_Relation);
 //            String idName = dataPreparer.createTableItemIdName(id, cpr.getName());
 //            BasicTable role = segmentLists.getRoleObservable().get(dataPreparer.prepareIndexForForm(cpr.getPersonIndex()));
 //            CPRTable cprTable = new CPRTable(idName, role.getName(), id);
@@ -332,12 +327,12 @@ public class FormFillController {
     private void fillRoleForm() {
         RoleForm roleForm = (RoleForm) forms.get(Constans.roleFormIndex);
         for (int i = 0; i < project.getRoleType().size(); i++){
-            Role role = project.getRoles().get(i);
+            Person role = project.getRoles().get(i);
             int id = role.getId();
-            formController.createTableItem(SegmentType.Role);
+            formController.createTableItem(SegmentType.Person);
 //            String idName = dataPreparer.createTableItemIdName(id, role.getName());
 //            BasicTable type = segmentLists.getRoleTypeObservable().get(dataPreparer.prepareIndexForForm(role.getType()));
-//            RoleTable roleTable = new RoleTable(idName, dataPreparer.prepareStringForForm(role.getDescription()), type.getName(), id);
+//            PersonTable roleTable = new PersonTable(idName, dataPreparer.prepareStringForForm(role.getDescription()), type.getName(), id);
 //
 //            roleForm.getTableTV().getItems().add(roleTable);
 //            segmentLists.getRoleObservable().add(roleTable);
@@ -347,8 +342,8 @@ public class FormFillController {
     private void fillRoleTypeForm() {
         RoleTypeForm roleTypeForm = (RoleTypeForm) forms.get(Constans.roleTypeIndex);
         for (int i = 0; i < project.getRoleType().size(); i++){
-//            RoleType segment = project.getRoleType().get(i);
-//            formController.createTableItem(SegmentType.RoleType);
+//            Role_Type segment = project.getRoleType().get(i);
+//            formController.createTableItem(SegmentType.Role_Type);
 //            ClassTable table = createClassTable(segment.getId(), segment.getName(), segment.getRoleClass(), segment.getRoleSuperClass());
 //            roleTypeForm.getTableTV().getItems().add(table);
 //            segmentLists.getRoleTypeObservable().add(table);
@@ -440,7 +435,7 @@ public class FormFillController {
     }
 
     public void addExistWorkUnitFormToCanvas(int oldFormId, CanvasController canvasController){
-        int id = formController.createNewForm(SegmentType.WorkUnit, canvasController.getCanvasType());
+        int id = formController.createNewForm(SegmentType.Work_Unit, canvasController.getCanvasType());
         int wuId = identificatorCreater.getWorkUnitIndex(oldFormId);
         int newWUId = identificatorCreater.getWorkUnitIndex(id);
         dataManipulator.copyDataFromWorkUnit(wuId, newWUId);
@@ -496,7 +491,7 @@ public class FormFillController {
     private void addExistWorkUnitFormToCanvas(int segmentId, int formId, CanvasController canvasController){
         WorkUnit workUnit = fillWorkUnitForm(segmentId, formId);
         identificatorCreater.setDataToWorkUnitsMappers(formId, workUnit.getId());
-//        canvasController.addCanvasItemFromExistData(SegmentType.WorkUnit, formId, workUnit.getName(), workUnit.getCoordinates().getXCoordinate(),
+//        canvasController.addCanvasItemFromExistData(SegmentType.Work_Unit, formId, workUnit.getName(), workUnit.getCoordinates().getXCoordinate(),
 //                workUnit.getCoordinates().getYCoordinate(), 1); //todo upravit pocet instanci
     }
 
@@ -525,9 +520,9 @@ public class FormFillController {
                 CanvasItem endItem = canvasItemList.get(endIndexItem);
                 CanvasController canvasController = startItem.getCanvasController();
 
-                linkControl.ArrowManipulation(true, false, canvasController, startIndexItem, SegmentType.WorkUnit, startItem.getTranslateX()
+                linkControl.ArrowManipulation(true, false, canvasController, startIndexItem, SegmentType.Work_Unit, startItem.getTranslateX()
                             ,startItem.getTranslateY(), startItem.getWidth(), startItem.getHeight() );
-                linkControl.ArrowManipulation(true, true, canvasController, endIndexItem, SegmentType.WorkUnit, endItem.getTranslateX()
+                linkControl.ArrowManipulation(true, true, canvasController, endIndexItem, SegmentType.Work_Unit, endItem.getTranslateX()
                         ,endItem.getTranslateY(), endItem.getWidth(), endItem.getHeight(), dataPreparer.prepareIndexForForm(link.getRelationIndex()));
             }
 

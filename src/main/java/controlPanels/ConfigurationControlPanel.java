@@ -36,7 +36,6 @@ public class ConfigurationControlPanel extends DateControlPanel implements ICont
         this.configId = configId;
         this.configTable = configTable;
         lineList.add(new ControlPanelLineObject("CPRs: ", ControlPanelLineType.ComboBox, ParamType.CPR));
-        lineList.add(new ControlPanelLineObject("Branches: ", ControlPanelLineType.ComboBox, ParamType.Branch));
         lineList.add(new ControlPanelLineObject("Changes: ", ControlPanelLineType.ComboBox, ParamType.Change));
         this.addItemsToControlPanel();
     }
@@ -45,10 +44,10 @@ public class ConfigurationControlPanel extends DateControlPanel implements ICont
     protected void addItemsToControlPanel() {
 
 
-        controlPanelController.setRadioButton(this,1, "Release: ", true);
+    //    controlPanelController.setRadioButton(this,1, "Release: ", true);
         controlPanelController.setCountLine(this, 2, new ControlPanelLine(lineList, this, controlPanelController));
-        addTag = new Button("add Tag");
-        controlPanelController.setStaticButton(this, 3, addTag);
+      //  addTag = new Button("add Tag");
+     //   controlPanelController.setStaticButton(this, 3, addTag);
         controlPanelController.createNewLine(this, lineList);
 
 
@@ -60,18 +59,19 @@ public class ConfigurationControlPanel extends DateControlPanel implements ICont
             ArrayList<Integer> roleIndicators = new ArrayList<>();
 
             ArrayList<Integer> cprsIndicators = new ArrayList<>();
-            ArrayList<Integer> branchIndicators = new ArrayList<>();
+
             ArrayList<Integer> changeIndicators = new ArrayList<>();
 
             ArrayList<String> name = controlPanelController.processTextLines(ParamType.Name, nameIndicators);
             ArrayList<Integer> role = controlPanelController.processComboBoxLines(ParamType.Role, roleIndicators);
             ArrayList<LocalDate> dates = controlPanelController.processDateLines(ParamType.Date, dateIndicators);
             ArrayList<ArrayList<Integer>> cprs = controlPanelController.processCheckComboBoxLines(ParamType.CPR, cprsIndicators);
-            ArrayList<ArrayList<Integer>> branchs = controlPanelController.processCheckComboBoxLines(ParamType.Branch, branchIndicators);
             ArrayList<ArrayList<Integer>> changes = controlPanelController.processCheckComboBoxLines(ParamType.Change, changeIndicators);
             String instanceCount = controlPanelController.getInstanceCount();
-            editFormController.editDataFromConfiguration(name, dates, controlPanelController.isMain(), role, cprs, branchs, changes, cprsIndicators,
-                    nameIndicators, dateIndicators, roleIndicators, branchIndicators, changeIndicators, instanceCount,  configId);
+
+
+            editFormController.editDataFromConfiguration(name, dates, false, role, cprs, changes, cprsIndicators,
+                    nameIndicators, dateIndicators, roleIndicators, changeIndicators, instanceCount, controlPanelController.isExist(),  configId);
         });
 
     }
@@ -91,21 +91,15 @@ public class ConfigurationControlPanel extends DateControlPanel implements ICont
         ArrayList<ArrayList<Integer>> cprList = formDataController.getCPRFromConfiguration(configId);
         controlPanelController.setValueCheckComboBox(this, lineList ,ParamType.CPR, cprList, configData[6]);
 
-        ArrayList<ArrayList<Integer>> branches = formDataController.getBranchesFromConfiguration(configId);
-        controlPanelController.setValueCheckComboBox(this, lineList ,ParamType.Branch, branches, configData[7]);
-
         ArrayList<ArrayList<Integer>> changeList = formDataController.getChangesFromConfiguration(configId);
         controlPanelController.setValueCheckComboBox(this, lineList ,ParamType.WorkUnit, changeList, configData[8]);
 
 
         List boolList = configData[9];
-        boolean exist = false;
-        if (boolList.size() != 1){
-            exist = true;
-        }
+        boolean exist = (boolean) boolList.get(0);
 
-        controlPanelController.setValueRadioButton(exist);
-        controlPanelController.setCountToCountLine((int) boolList.get(0));
+        controlPanelController.setValueExistRadioButton(exist);
+        controlPanelController.setCountToCountLine((int) boolList.get(1));
     }
 
     @Override

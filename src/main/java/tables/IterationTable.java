@@ -17,8 +17,8 @@ public class IterationTable extends BasicTable {
 
 	 *
 	 */
-	public IterationTable(String name, String configuration, int id) {
-		super(name, id);
+	public IterationTable(String name, String configuration, boolean exist, int id) {
+		super(name, exist, id);
 		this.configuration = new SimpleStringProperty(configuration);
 	}
 	

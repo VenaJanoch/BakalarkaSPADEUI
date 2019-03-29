@@ -7,7 +7,7 @@ package services;
 public class ClassSwitcher {
 
 	/**
-	 * Rozhodovací metoda pro mapování Role Class na Super Class
+	 * Rozhodovací metoda pro mapování Person Class na Super Class
 	 * 
 	 * @param classIndex
 	 * @return Super Class index
@@ -169,7 +169,7 @@ public class ClassSwitcher {
 
 	public int ClassToSuperClass(SegmentType segmentType, int classIndex) {
 		switch (segmentType){
-			case RoleType:
+			case Role_Type:
 				return roleClassToSupperClass(classIndex);
 			case Severity:
 				return -1 ;

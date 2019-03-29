@@ -138,7 +138,7 @@ public class DataManipulator{
     }
 
     public List[] getCriterionData(int id) {
-        List[] data = new List[4];
+        List[] data = new List[5];
         Criterion criterion = project.getCriterions().get(getCriterionIndexInProject(id));
         
         if(criterion.getName() != null){
@@ -157,6 +157,10 @@ public class DataManipulator{
             data[3] = criterion.getDescriptionIndicator();
         }
 
+        List list = new ArrayList();
+        list.add(criterion.isExist());
+        data[4] = list;
+
         return data;
     }
 
@@ -172,7 +176,7 @@ public class DataManipulator{
     }
 
     public List[] getMilestoneData(int id) {
-        List[] data = new List[5];
+        List[] data = new List[6];
         Milestone milestone = project.getMilestones().get(id);
         if(milestone.getName() != null){
             data[0] = milestone.getName();
@@ -194,6 +198,10 @@ public class DataManipulator{
             data[4] = milestone.getCriteriaIndicator();
         }
 
+        List list = new ArrayList();
+        list.add(milestone.isExist());
+        data[5] = list;
+
 
         return data;
     }
@@ -212,36 +220,30 @@ public class DataManipulator{
 
 
     public List[] getRoleData(int id) {
-        List[] data = new List[7];
-        Role role = dataModel.getRole(id);
+        List[] data = new List[5];
+        Person role = dataModel.getRole(id);
 
         if(role.getName() != null){
             data[0] = role.getName();
         }
 
-        if(role.getDescription() != null){
-            data[1] = role.getDescription();
-        }
-
         if(role.getType() != null){
-            data[2] = role.getType();
+            data[1] = role.getType();
         }
         
         if(role.getNameIndicator() != null){
-            data[3] = role.getNameIndicator();
+            data[2] = role.getNameIndicator();
         }
 
-        if(role.getDescriptionIndicator() != null){
-            data[4] = role.getDescriptionIndicator();
-        }
 
         if(role.getTypeIndicator() != null){
-            data[5] = role.getTypeIndicator();
+            data[3] = role.getTypeIndicator();
         }
         
         ArrayList list = new ArrayList();
+        list.add(role.isExist());
         list.add(role.getCount());
-        data[6] = list;
+        data[4] = list;
 
 
         return data;
@@ -249,7 +251,7 @@ public class DataManipulator{
     }
 
     public List[] getRoleTypeData(int id) {
-        List[] data = new List[4];
+        List[] data = new List[7];
         RoleType roleType = dataModel.getRoleType(id);
         if(roleType.getName() != null){
             data[0] = roleType.getName();
@@ -265,8 +267,22 @@ public class DataManipulator{
 
 
         if(roleType.getNameIndicator() != null){
-            data[3] = roleType.getName();
+            data[3] = roleType.getNameIndicator();
         }
+
+        List list = new ArrayList();
+        list.add(roleType.isExist());
+        data[4] = list;
+
+        if(roleType.getDescription() != null){
+            data[5] = roleType.getDescription();
+        }
+
+        if(roleType.getDescriptionIndicator() != null){
+            data[6] = roleType.getDescriptionIndicator();
+        }
+
+
        
         return data;
     }
@@ -289,13 +305,17 @@ public class DataManipulator{
 
 
         if(severity.getNameIndicator() != null){
-            data[3] = severity.getName();
+            data[3] = severity.getNameIndicator();
         }
+
+        List list = new ArrayList();
+        list.add(severity.isExist());
+        data[4] = list;
         return data;
     }
 
     public List[] getPriorityData(int id) {
-        List[] data = new List[4];
+        List[] data = new List[5];
         Priority priority = dataModel.getPriority(id);
         if(priority.getName() != null){
             data[0] = priority.getName();
@@ -311,8 +331,12 @@ public class DataManipulator{
 
 
         if(priority.getNameIndicator() != null){
-            data[3] = priority.getName();
+            data[3] = priority.getNameIndicator();
         }
+        
+        List list = new ArrayList();
+        list.add(priority.isExist());
+        data[4] = list;
         return data;
     }
 
@@ -333,8 +357,12 @@ public class DataManipulator{
 
 
         if(status.getNameIndicator() != null){
-            data[3] = status.getName();
+            data[3] = status.getNameIndicator();
         }
+
+        List list = new ArrayList();
+        list.add(status.isExist());
+        data[4] = list;
         return data;
     }
 
@@ -355,8 +383,12 @@ public class DataManipulator{
 
 
         if(type.getNameIndicator() != null){
-            data[3] = type.getName();
+            data[3] = type.getNameIndicator();
         }
+
+        List list = new ArrayList();
+        list.add(type.isExist());
+        data[4] = list;
         return data;
     }
 
@@ -377,8 +409,13 @@ public class DataManipulator{
 
 
         if(relation.getNameIndicator().size() != 0){
-            data[3] = relation.getName();
+            data[3] = relation.getNameIndicator();
         }
+
+        List list = new ArrayList();
+        list.add(relation.isExist());
+        data[4] = list;
+
         return data;
     }
 
@@ -399,13 +436,18 @@ public class DataManipulator{
 
 
         if(resolution.getNameIndicator() != null){
-            data[3] = resolution.getName();
+            data[3] = resolution.getNameIndicator();
         }
+
+        List list = new ArrayList();
+        list.add(resolution.isExist());
+        data[4] = list;
+
         return data;
     }
 
     public List[] getCPRData(int id) {
-        List[] data = new List[4];
+        List[] data = new List[5];
         ConfigPersonRelation cpr = dataModel.getConfigPersonRelation(id);
 
         if(cpr.getName() != null){
@@ -423,7 +465,9 @@ public class DataManipulator{
         if(cpr.getPersonIndicator() != null){
             data[3] = cpr.getPersonIndicator();
         }
-        
+        List list = new ArrayList();
+        list.add(cpr.isExist());
+        data[4] = list;
         return data;
     }
 
@@ -437,11 +481,11 @@ public class DataManipulator{
             data[1] = branch.getNameIndicator();
         }
         List list = new ArrayList();
+        list.add(branch.isExist());
         data[2] = list;
         if(branch.isIsMain() != null){
 
             list.add(branch.isIsMain());
-            data[2] = list;
         }
 
         return data;
@@ -454,7 +498,7 @@ public class DataManipulator{
     }
 
     public List[] getPhaseStringData(int id) {
-        List[] data = new List[11];
+        List[] data = new List[12];
         Phase phase = dataModel.getPhase(id);;
         
         if(phase.getName() != null){
@@ -501,6 +545,9 @@ public class DataManipulator{
             data[10] = phase.getWorkUnitsIndicator();
         }
 
+        List list = new ArrayList();
+        list.add(phase.isExist());
+        data[11] = list;
 
         return data;
     }
@@ -559,32 +606,32 @@ public class DataManipulator{
         }
 
         if(project.getStartDate() != null){
-            data[3] = project.getStartDate();
+            data[2] = project.getStartDate();
         }
 
         if(project.getEndDate() != null){
-            data[4] = project.getEndDate();
+            data[3] = project.getEndDate();
         }
 
         if(project.getNameIndicator() != null){
-            data[5] = project.getNameIndicator();
+            data[4] = project.getNameIndicator();
         }
 
 
         if(project.getDescriptionIndicator() != null){
-            data[6] = project.getDescriptionIndicator();
+            data[5] = project.getDescriptionIndicator();
         }
 
         if(project.getStartDateIndicator() != null){
-            data[8] = project.getStartDateIndicator();
+            data[6] = project.getStartDateIndicator();
         }
 
         if(project.getEndDateIndicator() != null){
-            data[9] = project.getEndDateIndicator();
+            data[7] = project.getEndDateIndicator();
         }
 
         if(project.getWorkUnitsIndicator() != null){
-            data[10] = project.getWorkUnitsIndicator();
+            data[8] = project.getWorkUnitsIndicator();
         }
 
         return data;
@@ -592,7 +639,7 @@ public class DataManipulator{
     }
     
     public List[] getIterationStringData(int id) {
-        List[] data = new List[11];
+        List[] data = new List[12];
         Iteration iteration = dataModel.getIteration(id);;
 
         if(iteration.getName() != null){
@@ -641,11 +688,15 @@ public class DataManipulator{
             data[10] = iteration.getWorkUnitsIndicator();
         }
 
+        List list = new ArrayList();
+        list.add(iteration.isExist());
+        data[11] = list;
+
         return data;
     }
 
     public List[] getActivityStringData(int id) {
-        List[] data = new List[5];
+        List[] data = new List[6];
         Activity activity = dataModel.getActivity(id);;
         if(activity.getName() != null){
             data[0] = activity.getName();
@@ -666,6 +717,10 @@ public class DataManipulator{
         if(activity.getDescriptionIndicator() != null){
             data[4] = activity.getDescriptionIndicator();
         }
+
+        List list = new ArrayList();
+        list.add(activity.isExist());
+        data[5] = list;
 
         return data;
     }
@@ -752,12 +807,9 @@ public class DataManipulator{
 
 
         List list = new ArrayList();
+        list.add(artifact.isExist());
         list.add(artifact.getCount());
         data[10] = list;
-        if(artifact.isExist() != null){
-
-            list.add(artifact.isExist());
-        }
 
 
 
@@ -856,13 +908,11 @@ public class DataManipulator{
         if(workUnit.getAuthorIndex() != null){
             data[21] = workUnit.getAuthorIndex();
         }
-        List list = new ArrayList();
-        data[22] = list;
-        if(workUnit.isExist() != null){
 
-            list.add(workUnit.isExist());
-            data[22] = list;
-        }
+        List list = new ArrayList();
+        list.add(workUnit.isExist());
+        data[22] = list;
+
 
         if (workUnit.getRelationIndex() != null){
             data[23] = workUnit.getRelationIndex();
@@ -918,13 +968,9 @@ public class DataManipulator{
         }
 
         List list = new ArrayList();
+        list.add(configuration.isExist());
         list.add(configuration.getCount());
         data[9] = list;
-        if(configuration.isIsRelease() != null){
-
-            list.add(configuration.isIsRelease());
-            data[9] = list;
-        }
 
         return data;
         
@@ -965,9 +1011,14 @@ public class DataManipulator{
         return list;
     }
 
+    public  ArrayList<ArrayList<Integer>> getBranchfromCommit(int commidId) {
+        Commit commit = dataModel.getCommit(commidId);
+        return getBranchFrom(commit.getBranch());
+    }
+
     public  ArrayList<ArrayList<Integer>> getBranchfromConfiguration(int configId) {
         Configuration configuration = dataModel.getConfiguration(configId);
-        return getBranchFrom(configuration.getBranchesIndexs());
+        return null; // getBranchFrom(configuration.getBranchesIndexs());
     }
 
     public  ArrayList<ArrayList<Integer>> getChangeFromConfiguration(int configId) {
@@ -976,7 +1027,7 @@ public class DataManipulator{
     }
 
     public List[] getVCSTagStringData(int tagId) {
-        List[] data = new List[4];
+        List[] data = new List[5];
         VCSTag vcsTag = dataModel.getVCSTag(tagId);;
 
         if(vcsTag.getName() != null){
@@ -995,11 +1046,14 @@ public class DataManipulator{
             data[3] = vcsTag.getDescriptionIndicator();
         }
 
+        List list = new ArrayList();
+        list.add(vcsTag.isExist());
+        data[4] = list;
         return data;
     }
 
     public List[] getCommitStringData(int commitId) {
-            List[] data = new List[3];
+            List[] data = new List[6];
             Commit commit = dataModel.getCommit(commitId);;
         if(commit.getName() != null){
             data[0] = commit.getName();
@@ -1009,9 +1063,23 @@ public class DataManipulator{
             data[1] = commit.getNameIndicator();
         }
 
+        if(commit.getTags() != null){
+            data[2] = commit.getTags();
+        }
+
+        if(commit.getTagsIndicator() != null){
+            data[3] = commit.getTagsIndicator();
+        }
+
+        if(commit.getBranchIndicator() != null){
+            data[4] = commit.getBranchIndicator();
+        }
+
+
         ArrayList list = new ArrayList();
+        list.add(commit.isExist());
         list.add(commit.getCount());
-        data[2] = list;
+        data[5] = list;
         if(commit.isRelease() != null){
             list.add(commit.isRelease());
         }
@@ -1040,6 +1108,7 @@ public class DataManipulator{
         }
 
         ArrayList list = new ArrayList();
+        list.add(commitedConfiguration.isExist());
         list.add(commitedConfiguration.getCount());
         data[4] = list;
 

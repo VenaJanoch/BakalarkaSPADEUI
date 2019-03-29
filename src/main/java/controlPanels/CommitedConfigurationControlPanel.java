@@ -49,17 +49,19 @@ public class CommitedConfigurationControlPanel extends DateControlPanel implemen
         controlPanelController.resetPanel(controlPane);
         addItemsToControlPanel();
 
-        controlPanelController.setValueTextField(this, lineList ,ParamType.Name, commitedData, commitedData[2], 0);
-        controlPanelController.setValueTextField(this, lineList ,ParamType.Date, commitedData, commitedData[3], 1);
+        controlPanelController.setValueTextField(this, lineList ,ParamType.Name, commitedData, commitedData[1], 0);
+        controlPanelController.setValueDatePicker(this, lineList ,ParamType.Date, (ArrayList<LocalDate>) commitedData[2], commitedData[3]);
 
-        controlPanelController.setCountToCountLine((int)commitedData[4].get(0));
-
+        List boolList = commitedData[4];
+        controlPanelController.setCountToCountLine((int)boolList.get(1));
+        boolean exist = (boolean) boolList.get(0);
+        controlPanelController.setValueExistRadioButton(exist);
     }
 
 
     protected void addItemsToControlPanel() {
 
-        controlPanelController.setCountLine(this, 1, new ControlPanelLine(lineList,this, controlPanelController ));
+        controlPanelController.setCountLine(this, 2, new ControlPanelLine(lineList,this, controlPanelController ));
         controlPanelController.createNewLine(this, lineList);
 
         button.setOnAction(event -> saveDataFromPanel());
@@ -75,7 +77,7 @@ public class CommitedConfigurationControlPanel extends DateControlPanel implemen
 
         String count = controlPanelController.getInstanceCount();
 
-        editFormController.editDataFromCommitedConfiguration(name, date, nameIndicators, dateIndicators, count, commitedConfigurationId);
+        editFormController.editDataFromCommitedConfiguration(name, date, nameIndicators, dateIndicators, count, controlPanelController.isExist(), commitedConfigurationId);
 
     }
 

@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import graphics.ChangeArtifactLink;
+import graphics.ElementsLink;
 import graphics.NodeLink;
 import graphics.WorkUnitLink;
 import interfaces.IDeleteDataModel;
@@ -23,7 +23,7 @@ public class LinkControl {
 
     private int id;
 
-    private ChangeArtifactLink changeArtifactLink;
+    private ElementsLink changeArtifactLink;
     private WorkUnitLink workUnitLink;
 
     private int startSegmentId = -1;
@@ -38,6 +38,8 @@ public class LinkControl {
 
     private Map<Integer, List<Integer>> startLinkIdMap;
     private Map<Integer, List<Integer>> endLinkIdMap;
+
+    private SegmentType firstSegmentType;
 
     ManipulationController manipulationController;
     /**
@@ -74,57 +76,77 @@ public class LinkControl {
                                   double x, double y, double width, double height) {
 
         if (!startArrow) {
-            try {
-                if (isFormfillControl(segmentIdAct)) {
-                    if (segmentControl(segmentIdAct, segmentType)) {
-                        changeArtifactLink = createChangeArtifactLink(canvasController, segmentIdAct, x, y, width, height);
-                        startLinkIdMap.get(segmentIdAct).add(this.id);
-                    } else if(SegmentType.WorkUnit == segmentType) {
-                        workUnitLink = createWorkUnitLink(canvasController, segmentIdAct, x, y, width, height);
-                        startLinkIdMap.get(segmentIdAct).add(this.id);
-                    }else {
-                        Alerts.showNoWorkUnit();
-                    }
 
-                } else {
-                    Alerts.showNoWorkUnit();
+                if (segmentControl(segmentType) == -1) { // Zvoleny prvek neni konfigurace muze byt zalozena relace
+                    Alerts.showConfigurationAsStartElement();
+                }else{
+                    changeArtifactLink = createChangeArtifactLink(canvasController, segmentIdAct, x, y, width,  height);
                 }
 
-            } catch (Exception e) {
-                e.printStackTrace();
-                Alerts.showNoWorkUnit();
-            }
+
+
         } else {
-            try {
-                if (segmentControl(segmentIdAct, segmentType)) {
-                    endSegmentId = segmentIdAct;
-                    changeArtifactLink.setEndPoint(new Point2D(x, y + (height / 2)));
-                    canvasController.setStartArrow(false);
-                    if (!isSave) {
-                        formController.createChangeArtifactRelation(startSegmentId, endSegmentId);
-                    }
-                    endLinkIdMap.get(segmentIdAct).add(this.id);
-                    startSegmentId = -1;
-                    endSegmentId = -1;
-                } else if (segmentWorkUnitControl(segmentIdAct)) {
-                    endSegmentId = segmentIdAct;
-                    workUnitLink.setArrowAndBox(
-                            new Point2D(x, y + (height / 2)));
-                    canvasController.setStartArrow(false);
-                    if (!isSave) {
-                        formController.createWorkUnitRelation(startSegmentId, endSegmentId);
-                        }
-                    endLinkIdMap.get(segmentIdAct).add(this.id);
-                    startSegmentId = -1;
-                    endSegmentId = -1;
-                }
-
-            } catch (Exception e) {
-                Alerts.showNoWorkUnit();
+            int operation = segmentControl(segmentType);
+            if (operation < 10){
+                finishLinkFromOperation(operation, segmentIdAct, x, y, height, canvasController);
+            }else{
+                startSegmentId = -1;
+                endSegmentId = -1;
+                firstSegmentType = null;
+                showOperationAlert(operation, segmentType);
             }
         }
 
     }
+
+    private void showOperationAlert(int operation, SegmentType segmentType) {
+        if ( operation == 10) {
+          Alerts.showBadCommitRelation(segmentType);
+        } else if (operation == 11) {
+            Alerts.showBadCommitedConfigurationRelation(segmentType);
+        } else if (operation == 12) {
+            Alerts.showBadConfigurationRelation(segmentType);
+        }else if (operation == 13) {
+            Alerts.showBadArtifactRelation(segmentType);
+        }else if (operation == 14) {
+            Alerts.showBadRoleRelation(segmentType);
+        }
+    }
+
+    private void finishLinkFromOperation(int operation, int segmentIdAct, double x, double y, double height, CanvasController canvasController){
+        if ( operation == 1) {
+            endSegmentId = segmentIdAct;
+            formController.createCommitToCommitedConfigurationRelation(startSegmentId, endSegmentId);
+            finishLink(x, y, height, canvasController);
+        } else if (operation == 2) {
+            endSegmentId = segmentIdAct;
+       //     formController.createCommitedConfigurationToConfigurationRelation(startSegmentId, endSegmentId);
+            finishLink(x, y, height, canvasController);
+        } else if (operation == 3) {
+            endSegmentId = segmentIdAct;
+        //    formController.createArtifactToConfigurationRelation(startSegmentId, endSegmentId);
+            finishLink(x, y, height, canvasController);
+        }else if (operation == 4) {
+            endSegmentId = segmentIdAct;
+        //    formController.createRoleToConfigurationRelation(startSegmentId, endSegmentId);
+            finishLink(x, y, height, canvasController);
+        }else if (operation == 5) {
+            endSegmentId = segmentIdAct;
+        //    formController.createRoleToArtifactRelation(startSegmentId, endSegmentId);
+            finishLink(x, y, height, canvasController);
+        }
+    }
+
+
+    private void finishLink(double x, double y, double height, CanvasController canvasController){
+        changeArtifactLink.setEndPoint(new Point2D(x, y + (height / 2)));
+        canvasController.setStartArrow(false);
+
+        endLinkIdMap.get(endSegmentId).add(this.id);
+        startSegmentId = -1;
+        endSegmentId = -1;
+    }
+
 
     private WorkUnitLink createWorkUnitLink(CanvasController canvasController, int segmentIdAct, double x, double y, double width, double height) {
 
@@ -146,15 +168,15 @@ public class LinkControl {
         dataManipulator.setRelationIndexToLink(id, relationIndex);
     }
 
-    private ChangeArtifactLink createChangeArtifactLink(CanvasController canvasController, int startSegmentIdAct, double x, double y, double width, double height) {
+    private ElementsLink createChangeArtifactLink(CanvasController canvasController, int startSegmentIdAct, double x, double y, double width, double height) {
 
         id = identificatorCreater.createLineID();
-        ChangeArtifactLink link = new ChangeArtifactLink(id, this, canvasController, manipulationController);
+        ElementsLink link = new ElementsLink(id, this, canvasController, manipulationController);
 
         canvasController.addLinkToCanvas(link);
         segmentLists.addLinkToList(link);
 
-        link.setStartPoint(new Point2D(x + (width), y + (height / 2)));
+        link.setStartPoint(new Point2D(x + (width-Constans.offset), y + (height / 2)));
 
         canvasController.setStartArrow(true);
         startSegmentId = startSegmentIdAct;
@@ -163,30 +185,54 @@ public class LinkControl {
 
     }
 
-    /**
-     * Kontrola vyplněného formuláře
-     *
-     * @return true pokud je kontrola v pořadku v opačném případě false
-     */
-
-    private boolean isFormfillControl(int formIdentificator) {
-
-        return formController.isFormFill(formIdentificator);
-    }
 
     /**
      * Rozhodne o zvoleném elementu přidá jeho IDs do Linku
      *
      * @return rozhodnuti o pridani prvku
      */
-    private boolean segmentControl(int segmentIdAct, SegmentType segmentType) {
-        //Todo zjistit za muze spojnice vychazet z Artifactu
-            if (startSegmentId == -1 && (segmentType == SegmentType.Change || segmentType == SegmentType.Artifact)) {
-                return true;
-            } else if (endSegmentId == -1 && (segmentType == SegmentType.Change || segmentType == SegmentType.Artifact)) {
-                return true;
+    private int segmentControl(SegmentType segmentType) {
+
+            if (startSegmentId == -1) {
+                firstSegmentType = segmentType;
+                return 0;
+            } else if (endSegmentId == -1 && (segmentType != firstSegmentType)) {
+                if (firstSegmentType == SegmentType.Commit && segmentType == SegmentType.Committed_Configuration){
+                    return 1;
+                }else if(firstSegmentType == SegmentType.Committed_Configuration){
+
+                    if (segmentType == SegmentType.Commit){
+                        return 1;
+                    }else if( segmentType == SegmentType.Configuration){
+                        return 2;
+                    }
+                    return 11;
+                }else if(firstSegmentType == SegmentType.Artifact){
+                    if (segmentType == SegmentType.Person){
+                        return 4;
+                    }else if( segmentType == SegmentType.Configuration){
+                        return 3;
+                    }
+                    return 12;
+                }else if(firstSegmentType == SegmentType.Person){
+                    if (segmentType == SegmentType.Artifact){
+                        return 4;
+                    }else if( segmentType == SegmentType.Configuration){
+                        return 5;
+                    }
+                    return 13;
+                }else if(firstSegmentType == SegmentType.Configuration){
+                    if (segmentType == SegmentType.Committed_Configuration){
+                        return 2;
+                    }else if( segmentType == SegmentType.Artifact){
+                        return 3;
+                    }else if( segmentType == SegmentType.Person){
+                    return 5;
+                    }
+                    return 14;
+                }
             }
-            return false;
+            return 10;
     }
 
     /**
@@ -262,7 +308,7 @@ public class LinkControl {
             int index = mStartLinkIds.get(i);
             segmentLists.repaintArrowStartPoint(index, newWidth, newHeight);
 
-            if (segmentType == SegmentType.WorkUnit) {
+            if (segmentType == SegmentType.Work_Unit) {
                 segmentLists.repaintWorkUnitComboBox(index);
             }
         }
@@ -272,7 +318,7 @@ public class LinkControl {
             int index = mEndLinkIds.get(i);
             segmentLists.repaintArrowEndPoint(index, translateX, translateY + (height / 2));
 
-            if (segmentType == SegmentType.WorkUnit) {
+            if (segmentType == SegmentType.Work_Unit) {
                 segmentLists.repaintWorkUnitComboBox(index);
                 segmentLists.repaintWorkUnitRelationEndPoint(index, translateX, translateY + (height / 2));
             }

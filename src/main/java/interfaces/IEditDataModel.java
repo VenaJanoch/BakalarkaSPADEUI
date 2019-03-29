@@ -9,8 +9,8 @@ import java.util.List;
 
 public interface IEditDataModel {
 
-      void editDataInCPR(ArrayList<String> nameForManipulator, ArrayList<Integer> nameIndicators, ArrayList<Integer> roleIndex, ArrayList<Integer> roleIndicator, int id);
-      void editDataInBranch(ArrayList<String> nameForManipulator, ArrayList<Integer> indicators, boolean isMainBranch, int id);
+      void editDataInCPR(ArrayList<String> nameForManipulator, ArrayList<Integer> nameIndicators, ArrayList<Integer> roleIndex, ArrayList<Integer> roleIndicator, boolean exist, int id);
+      void editDataInBranch(ArrayList<String> nameForManipulator, ArrayList<Integer> indicators, boolean isMainBranch, boolean exist, int id);
       void editDataInArtifact(ArrayList<String> nameForManipulator, ArrayList<Integer> nameIndicators,
                               ArrayList<String> descForManipulator, ArrayList<Integer> descriptionIndicators,
                               ArrayList<LocalDate> createdDate, ArrayList<Integer> dateIndicator, boolean isCreate,
@@ -21,13 +21,13 @@ public interface IEditDataModel {
       void editDataInPhase(ArrayList<String> actName, ArrayList<LocalDate> endDateL, ArrayList<String> desc,
                            ArrayList<Integer> confIndex, ArrayList<Integer> milestoneIndex,  ArrayList<ArrayList<Integer>> workUnitIndexList,
                            ArrayList<Integer> workUnitIndicators, ArrayList<Integer> nameIndicator, ArrayList<Integer> endDateIndicator,
-                           ArrayList<Integer> descIndicator, ArrayList<Integer> confIndicator, ArrayList<Integer> milestoneIndicator, int id);
+                           ArrayList<Integer> descIndicator, ArrayList<Integer> confIndicator, ArrayList<Integer> milestoneIndicator, boolean exist, int id);
       void editDataInIteration(ArrayList<String> actName, ArrayList<LocalDate> endDateL,  ArrayList<LocalDate> startDateL, ArrayList<String> desc,
                                ArrayList<Integer> confIndex,  ArrayList<ArrayList<Integer>> workUnitIndexList,
                                ArrayList<Integer> workUnitIndicators, ArrayList<Integer> nameIndicator, ArrayList<Integer> endDateIndicator,
-                               ArrayList<Integer> startDateIndicator, ArrayList<Integer> descIndicator, ArrayList<Integer> confIndicator, int id);
+                               ArrayList<Integer> startDateIndicator, ArrayList<Integer> descIndicator, ArrayList<Integer> confIndicator, boolean exist, int id);
       void editDataInActivity(ArrayList<String> nameForManipulator, ArrayList<String> descriptionForManipulator, ArrayList<ArrayList<Integer>> setOfItemOnCanvas,
-                              ArrayList<Integer> nameIndicators,  ArrayList<Integer> descIndicators,  ArrayList<Integer> workUnitIndicators, int id);
+                              ArrayList<Integer> nameIndicators,  ArrayList<Integer> descIndicators,  ArrayList<Integer> workUnitIndicators, boolean exist, int id);
       void editDataInWorkUnit(List<String> nameForManipulator, List<String> description, List<String> categoryForManipulator,
                               ArrayList<Integer> assigneIndex, ArrayList<Integer> authorIndex, ArrayList<Integer> priorityIndex, ArrayList<Integer> severityIndex,
                               ArrayList<Integer> typeIndex, ArrayList<Integer> resolutionIndex, ArrayList<Integer> statusIndex,
@@ -37,42 +37,43 @@ public interface IEditDataModel {
                               ArrayList<Integer> estimateIndicator, boolean isExist, ArrayList<Integer> relations,  ArrayList<ArrayList<Integer>> workUnits, int id);
       void editDataInConfiguration(ArrayList<String> actName, ArrayList<LocalDate> createDate,
                                    boolean isRelease, ArrayList<Integer> authorIndex, ArrayList<ArrayList<Integer>> cprs,
-                                   ArrayList<ArrayList<Integer>> branches, ArrayList<ArrayList<Integer>> changeIndexs,
+                                  ArrayList<ArrayList<Integer>> changeIndexs,
                                    ArrayList<Integer> cprIndicators, ArrayList<Integer> nameIndicator, ArrayList<Integer> createdIndicator,
-                                   ArrayList<Integer> authorIndicator, ArrayList<Integer> branchIndicator, ArrayList<Integer> changeIndicator,
-                                   int instanceCount, int id);
+                                   ArrayList<Integer> authorIndicator, ArrayList<Integer> changeIndicator,
+                                   int instanceCount, boolean exist, int id);
       void editDataInCriterion( ArrayList<String> nameForManipulator, ArrayList<String> descForManipulator,
-                                ArrayList<Integer> nameIndicator, ArrayList<Integer> descIndicator, int id);
+                                ArrayList<Integer> nameIndicator, ArrayList<Integer> descIndicator, boolean exist, int id);
       void editDataInPriority(ArrayList<String> nameForManipulator, ArrayList<Integer> nameIndicator,
-                              ArrayList<Integer> classST,  ArrayList<Integer> superST, ArrayList<String> classString,  ArrayList<String> superSting, int id);
+                              ArrayList<Integer> classST,  ArrayList<Integer> superST, ArrayList<String> classString,  ArrayList<String> superSting, boolean exist, int id);
       void editDataInSeverity(ArrayList<String> nameForManipulator, ArrayList<Integer> nameIndicator,
-                              ArrayList<Integer> classST,  ArrayList<Integer> superST, ArrayList<String> classString,  ArrayList<String> superSting, int id);
+                              ArrayList<Integer> classST,  ArrayList<Integer> superST, ArrayList<String> classString,  ArrayList<String> superSting, boolean exist, int id);
       void editDataInRelation(ArrayList<String> nameForManipulator, ArrayList<Integer> nameIndicator,
-                              ArrayList<Integer> classST,  ArrayList<Integer> superST, ArrayList<String> classString,  ArrayList<String> superSting, int id);
+                              ArrayList<Integer> classST,  ArrayList<Integer> superST, ArrayList<String> classString,  ArrayList<String> superSting, boolean exist, int id);
       void editDataInResolution(ArrayList<String> nameForManipulator, ArrayList<Integer> nameIndicator,
-                                ArrayList<Integer> classST,  ArrayList<Integer> superST, ArrayList<String> classString,  ArrayList<String> superSting, int id);
-      void editDataInRole(ArrayList<String> nameForManipulator, ArrayList<String> descForManipulator, ArrayList<Integer> type,
-                          ArrayList<Integer> nameIndicator, ArrayList<Integer> descIndicator, ArrayList<Integer> typeIndicator, int instanceCount, int id);
+                                ArrayList<Integer> classST,  ArrayList<Integer> superST, ArrayList<String> classString,  ArrayList<String> superSting, boolean exist, int id);
+      void editDataInRole(ArrayList<String> nameForManipulator, ArrayList<Integer> type, ArrayList<Integer> nameIndicator,
+                          ArrayList<Integer> typeIndicator, int instanceCount, boolean exist, int id);
       void editDataInMilestone(ArrayList<String> nameForManipulator, ArrayList<String> descForManipulator,
                                ArrayList<Integer> nameIndicator, ArrayList<Integer> descIndicator, ArrayList<Integer> criterionIndicator,
-                               ArrayList<ArrayList<Integer>> criterionIndex, int id);
-      void editDataInRoleType(ArrayList<String> nameForManipulator, ArrayList<Integer> nameIndicator,
-                              ArrayList<Integer> classST,  ArrayList<Integer> superST, ArrayList<String> classString,  ArrayList<String> superSting, int id);
+                               ArrayList<ArrayList<Integer>> criterionIndex, boolean exist, int id);
+      void editDataInRoleType(ArrayList<String> nameForManipulator, ArrayList<Integer> nameIndicator, ArrayList<String> descForManipulator, ArrayList<Integer> descIndicator,
+                              ArrayList<Integer> classST,  ArrayList<Integer> superST, ArrayList<String> classString,  ArrayList<String> superSting, boolean exist, int id);
       void editDataInStatus(ArrayList<String> nameForManipulator, ArrayList<Integer> nameIndicator,
-                            ArrayList<Integer> classST,  ArrayList<Integer> superST, ArrayList<String> classString,  ArrayList<String> superSting, int id);
+                            ArrayList<Integer> classST,  ArrayList<Integer> superST, ArrayList<String> classString,  ArrayList<String> superSting, boolean exist, int id);
       void editDataInType(ArrayList<String> nameForManipulator, ArrayList<Integer> nameIndicator,
-                          ArrayList<Integer> classST,  ArrayList<Integer> superST, ArrayList<String> classString,  ArrayList<String> superSting, int id);
+                          ArrayList<Integer> classST,  ArrayList<Integer> superST, ArrayList<String> classString,  ArrayList<String> superSting, boolean exist, int id);
       void updateItemList(SegmentType formType, SegmentType elementType, ArrayList<Integer> elementIndexList);
     void updateItemList(SegmentType formType, SegmentType elementType, int elementIndexList);
       void editTagInConfiguration(String tag, int configId, int id);
 
     void editDataInVCSTag(ArrayList<String> nameForManipulator, ArrayList<String> descriptionForManipulator,
-                          ArrayList<Integer> nameIndicator, ArrayList<Integer> descriptionIndicator, int id);
+                          ArrayList<Integer> nameIndicator, ArrayList<Integer> descriptionIndicator, boolean exist, int id);
 
-    void editDataInCommit(ArrayList<String> nameForManipulator,  ArrayList<Integer> nameIndicator, boolean release,int instanceCount, int id);
+    void editDataInCommit(ArrayList<String> nameForManipulator,  ArrayList<Integer> nameIndicator,  ArrayList<Integer> tag, ArrayList<Integer> tagIndicator,
+                          ArrayList<ArrayList<Integer>> branches, ArrayList<Integer> branchIndicator, boolean release,int instanceCount, boolean exist, int id);
 
       void editDataInCommitedConfiguration(ArrayList<String> nameForManipulator, ArrayList<Integer> nameIndicator,
-                                           ArrayList<LocalDate> dateFromDatePicker, ArrayList<Integer> dateIndicator, int instanceCount, int id);
+                                           ArrayList<LocalDate> dateFromDatePicker, ArrayList<Integer> dateIndicator, int instanceCount, boolean exist, int id);
 
     void editDataInProject(ArrayList<String> nameForManipulator, ArrayList<LocalDate> startDate1, ArrayList<LocalDate> endDate1, ArrayList<String> descriptionForManipulator, ArrayList<ArrayList<Integer>> workUnitsForManipulator,
                            ArrayList<Integer> workUnitIndicators, ArrayList<Integer> nameIndicators, ArrayList<Integer> date1Indicators,

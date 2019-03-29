@@ -1,8 +1,8 @@
 package tables;
 
 public class WorkUnitTable extends BasicTable {
-    public WorkUnitTable(String name, int id) {
-        super(name, id);
+    public WorkUnitTable(String name,  boolean exist, int id) {
+        super(name, exist, id);
     }
     /**
      * Vypíše info o prvku

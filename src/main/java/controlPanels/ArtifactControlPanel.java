@@ -57,7 +57,7 @@ public class ArtifactControlPanel extends DateDescControlPanel implements IContr
 
     public void createControlPanel(){
 
-        controlPanelController.setRadioButton(this, 1, "Exist: ", false);
+
         controlPanelController.setCountLine(this, 2, new ControlPanelLine(lineList,this, controlPanelController ));
         controlPanelController.createNewLine(this, lineList);
 
@@ -75,17 +75,17 @@ public class ArtifactControlPanel extends DateDescControlPanel implements IContr
 
         controlPanelController.setValueTextField(this, lineList ,ParamType.Name, artifactData, artifactData[5], 0);
         controlPanelController.setValueTextField(this, lineList ,ParamType.Description, artifactData, artifactData[6], 1);
-        controlPanelController.setValueTextField(this, lineList ,ParamType.Role, artifactData, artifactData[7], 2);
-        controlPanelController.setValueTextField(this, lineList ,ParamType.Date, artifactData, artifactData[8], 3);
-        controlPanelController.setValueTextField(this, lineList ,ParamType.ArtifactType, artifactData, artifactData[9], 4);
+        controlPanelController.setValueComboBox(this, lineList ,ParamType.Role, (ArrayList<Integer>) artifactData[2], artifactData[7]);
+        controlPanelController.setValueDatePicker(this, lineList ,ParamType.Date,(ArrayList<LocalDate>) artifactData[3], artifactData[8]);
+        controlPanelController.setValueComboBox(this, lineList ,ParamType.ArtifactType, (ArrayList<Integer>)artifactData[4], artifactData[9]);
 
         boolean exist = false;
         List boolList = artifactData[10];
-        if (boolList.size() != 1){
-            exist = true;
-        }
-        controlPanelController.setValueRadioButton(exist);
-        controlPanelController.setCountToCountLine((Integer)boolList.get(0));
+
+        exist = (boolean) boolList.get(0);
+
+        controlPanelController.setValueExistRadioButton(exist);
+        controlPanelController.setCountToCountLine((Integer)boolList.get(1));
 
     }
 
@@ -104,7 +104,7 @@ public class ArtifactControlPanel extends DateDescControlPanel implements IContr
         ArrayList<Integer> type = controlPanelController.processComboBoxLines(ParamType.ArtifactType, typeIndicators);
         ArrayList<LocalDate> date = controlPanelController.processDateLines(ParamType.Date, dateIndicators);
 
-        exist = controlPanelController.isMain();
+        exist = controlPanelController.isExist();
         String count = controlPanelController.getInstanceCount();
         editFormController.editDataFromArtifact(name, desc , exist, role, type, date, nameIndicators, descIndicators, roleIndicators,
                 typeIndicators, dateIndicators, artifactTable, count, id);

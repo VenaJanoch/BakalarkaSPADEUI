@@ -132,7 +132,7 @@ public class FormDataController implements IFormDataController {
         //editDataModel.editDataInConfiguration(nameForManipulator, createDate, isRelease, authorIndex , branchIndex,cprIndex,
           //      changeList, configIndex );
         String idName = identificatorCreater.getConfigurationId(indexForm) + "_" + actName;
-        ConfigTable configTable = new ConfigTable(idName, release, indexForm, configIndex);
+        ConfigTable configTable = new ConfigTable(idName, release, indexForm, true, configIndex);
         if (isNew){
             lists.getConfigObservable().add(configTable);
             formController.setNewItemToConfigurationTable(idName, release, indexForm, configIndex);
@@ -210,8 +210,8 @@ public class FormDataController implements IFormDataController {
         lists.getCPRObservable().add(cprTable);
 
         int roleId = dataModel.getRoleId(roleIndexFormManipulator);
-      //  mapperTableToObject.mapTableToObject(SegmentType.ConfigPersonRelation, roleId,
-      //          new TableToObjectInstanc(cprTable.getName(), cprTable.getId(), SegmentType.ConfigPersonRelation));
+      //  mapperTableToObject.mapTableToObject(SegmentType.Config_Person_Relation, roleId,
+      //          new TableToObjectInstanc(cprTable.getName(), cprTable.getId(), SegmentType.Config_Person_Relation));
 
     }
 
@@ -260,16 +260,16 @@ public class FormDataController implements IFormDataController {
         lists.getRelationTypeObservable().add(classTable);
     }
 
-    public void saveDataFromRoleForm(String nameST, int typeIndex, RoleTable roleTable) {
+    public void saveDataFromRoleForm(String nameST, int typeIndex, PersonTable personTable) {
         String nameForManipulator = InputController.fillTextMapper(nameST);
-        String descForManipulator = InputController.fillTextMapper(roleTable.getDescription());
+        String descForManipulator = InputController.fillTextMapper(personTable.getDescription());
         int typeFormManipulator = dataPreparer.prepareIndexForManipulator(typeIndex);
 
-        saveDataModel.crateNewRole(roleTable.getId());
-        lists.getRoleObservable().add(roleTable);
+        saveDataModel.crateNewRole(personTable.getId());
+        lists.getRoleObservable().add(personTable);
 
        // int roleTypeIndex = dataModel.getRoleTypeIndex(typeFormManipulator);
-       // mapperTableToObject.mapTableToObject(SegmentType.Role, roleTypeIndex, new TableToObjectInstanc(roleTable.getName(), roleTable.getId(), SegmentType.Role));
+       // mapperTableToObject.mapTableToObject(SegmentType.Person, roleTypeIndex, new TableToObjectInstanc(personTable.getName(), personTable.getId(), SegmentType.Person));
 }
 
     public void saveDataFromRoleTypeForm(String nameST, ClassTable classTable) {
@@ -310,7 +310,7 @@ public class FormDataController implements IFormDataController {
      return   dataPreparer.prepareMilestoneTable(nameST, id);
     }
 
-    public RoleTable prepareRoleToTable(String nameST, String description, int id, int roleTypeIndex) {
+    public PersonTable prepareRoleToTable(String nameST, String description, int id, int roleTypeIndex) {
         return   dataPreparer.prepareRoleTable(nameST, description, id, dataPreparer.prepareIndexForManipulator(roleTypeIndex),
                 lists.getRoleTypeObservable());
     }
@@ -337,7 +337,7 @@ public class FormDataController implements IFormDataController {
         return dataPreparer.prepareIndicesForManipulator(criterion);
     }
 
-    public List[] getRoleStringData(int id) {
+    public List[] getPersonStringData(int id) {
         List[] data = dataManipulator.getRoleData(id);
         ArrayList<Integer> typeIndices = dataPreparer.prepareIndiciesForForm(data[2]);
         data[2] = typeIndices;
@@ -346,7 +346,7 @@ public class FormDataController implements IFormDataController {
 
     public List[] getClassStringData(SegmentType segmentType, int id) {
         switch (segmentType){
-            case RoleType:
+            case Role_Type:
                     return dataManipulator.getRoleTypeData(id);
             case Severity:
                 return dataManipulator.getSeverityData(id);
@@ -395,7 +395,7 @@ public class FormDataController implements IFormDataController {
         data[2] = indices1;
         data[3] = indices2;
         data[4] = date;
-        return dataManipulator.getPhaseStringData(id);
+        return data;
     }
 
     @Override
@@ -406,7 +406,7 @@ public class FormDataController implements IFormDataController {
             case Phase:
                 indexList = dataManipulator.getWorkUnitFromPhase(id);
                 break;
-            case WorkUnit:
+            case Work_Unit:
                 indexList = dataManipulator.getWorkUniFromWorkUnit(id);
                 break;
             case Iteration:
@@ -510,8 +510,8 @@ public class FormDataController implements IFormDataController {
     }
 
     @Override
-    public ArrayList<ArrayList<Integer>> getBranchesFromConfiguration(int configId) {
-        return dataManipulator.getBranchfromConfiguration(configId);
+    public ArrayList<ArrayList<Integer>> getBranchesFromCommit(int configId) {
+        return dataManipulator.getBranchfromCommit(configId);
     }
     @Override
     public ArrayList<ArrayList<Integer>> getChangesFromConfiguration(int configId) {
@@ -530,18 +530,28 @@ public class FormDataController implements IFormDataController {
 
     @Override
     public List[] getCommitedConfigurationStringData(int commitedId){
-        return dataManipulator.getCommitedConfigurationStringData(commitedId);
+        List[] data = dataManipulator.getCommitedConfigurationStringData(commitedId);
+        ArrayList<LocalDate> dates = dataPreparer.prepareDateForForm(data[2]);
+
+        data[2] = dates;
+        return data;
     }
 
     @Override
     public List[] getProjectStringData(){
         List[] data = dataManipulator.getProjectStringData();
-        ArrayList<LocalDate> dates1 = dataPreparer.prepareDateForForm(data[3]);
-        ArrayList<LocalDate> dates2 = dataPreparer.prepareDateForForm(data[4]);
+        ArrayList<LocalDate> dates1 = dataPreparer.prepareDateForForm(data[2]);
+        ArrayList<LocalDate> dates2 = dataPreparer.prepareDateForForm(data[3]);
 
-        data[3] = dates1;
-        data[4] = dates2;
+        data[2] = dates1;
+        data[3] = dates2;
 
+        return data;
+    }
+
+    @Override
+    public List[] getRoleTypeStringData(int id){
+        List[] data = dataManipulator.getRoleTypeData(id);
         return data;
     }
 

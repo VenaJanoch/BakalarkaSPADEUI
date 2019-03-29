@@ -23,10 +23,10 @@ import java.util.List;
 
 public class ControlPanelController {
 
-    private boolean isMain;
     private int lineCount;
     private ArrayList<ControlPanelLine> controlPanelLines;
     private ControlPanelLine radioButtonLine;
+    private ControlPanelLine radioExistButtonLine;
     private Label countLB;
     private ControlPanelLine countLine;
     private ControlPanelLine classLine;
@@ -119,14 +119,15 @@ public class ControlPanelController {
     public void setValueCheckComboBox(ControlPanel controlPanel, ObservableList<ControlPanelLineObject> lineList,
                                       ParamType type, ArrayList<ArrayList<Integer>> values, List<Integer> indicatorList) {
        int i = 0;
-        for (List<Integer> value : values){
-            createNewLine(controlPanel, lineList);
-            ControlPanelLine line = controlPanelLines.get(controlPanelLines.size() -1);
-            line.fillCheckComboBoxLine(value, indicatorList.get(i), type );
-            i++;
-            incrementLineCounter();
-        }
-
+       if(values != null) {
+           for (List<Integer> value : values) {
+               createNewLine(controlPanel, lineList);
+               ControlPanelLine line = controlPanelLines.get(controlPanelLines.size() - 1);
+               line.fillCheckComboBoxLine(value, indicatorList.get(i), type);
+               i++;
+               incrementLineCounter();
+           }
+       }
     }
 
 
@@ -177,9 +178,9 @@ public class ControlPanelController {
                 RadioButton chk = radioButtonLine.getRadioButtonItem().getYesRb();
 
                 if (chk.isSelected()) {
-                    isMain = true;
+                  //  isMain = true;
                 } else {
-                    isMain = false;
+                  //  isMain = false;
                 }
 
             }
@@ -235,6 +236,10 @@ public class ControlPanelController {
         return radioButtonLine.isCheckYesRadioButton();
     }
 
+    public boolean isExist() {
+        return radioExistButtonLine.isCheckYesRadioButton();
+    }
+
     public void copyLine(ControlPanelLine line, ControlPanel controlPanel, ObservableList<ControlPanelLineObject> lineList, int paramIndex) {
         incrementLineCounter();
         ControlPanelLineController copyLine = createNewLine(controlPanel,  lineList);
@@ -243,7 +248,7 @@ public class ControlPanelController {
     }
 
     public ControlPanelLineController createNewLine(ControlPanel controlPane, ObservableList<ControlPanelLineObject> lineList) {
-
+        setExistRadioButton(controlPane, 1);
         ControlPanelLine line = new ControlPanelLine(lineList, controlPane, this);
         setParamBoxToControlPanel(controlPane.getControlPane(), line);
         controlPanelLines.add(line);
@@ -354,6 +359,19 @@ public class ControlPanelController {
         controlPane.add(rbYes, i, lineCount + lineShift);
         isRadioButtonLine = true;
 
+    }
+
+    public void setExistRadioButton(ControlPanel controlPanel, int lineShift){
+        staticObjectCount++;
+        radioExistButtonLine = new ControlPanelLine(FXCollections.observableArrayList(), controlPanel, this);
+        setExistRadioButton(controlPanel.getControlPane(), lineShift);
+    }
+
+    public void setExistRadioButton(GridPane gridPane, int lineShift){
+        gridPane.getChildren().remove(radioExistButtonLine.getRadioButtonItem().getNameLb());
+        gridPane.getChildren().remove(radioExistButtonLine.getRadioButtonItem().getYesRb());
+        gridPane.add(radioExistButtonLine.getRadioButtonItem().getNameLb(), 1, lineCount + lineShift);
+        gridPane.add(radioExistButtonLine.getRadioButtonItem().getYesRb(), 2, lineCount + lineShift);
     }
 
     public void setRadioButton(ControlPanel controlPanel, int lineShift, String name, boolean secondButton) {
@@ -468,6 +486,9 @@ public class ControlPanelController {
             shift++;
         }
 
+        setExistRadioButton(controlPanel.getControlPane(), shift);
+        shift++;
+
         setEditButton(controlPanel, shift + 1);
     }
 
@@ -478,6 +499,14 @@ public class ControlPanelController {
             radioButtonLine.getRadioButtonItem().getYesRb().setSelected(false);
         }
 
+    }
+
+    public void setValueExistRadioButton(boolean exist) {
+        if (exist){
+            radioExistButtonLine.getRadioButtonItem().getYesRb().setSelected(true);
+        }else{
+            radioExistButtonLine.getRadioButtonItem().getYesRb().setSelected(false);
+        }
     }
 
     public String getInstanceCount() {
@@ -527,5 +556,7 @@ public class ControlPanelController {
         this.isClass = false;
         this.staticObjectCount = 1;
     }
+
+
 }
 

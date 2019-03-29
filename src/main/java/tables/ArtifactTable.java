@@ -16,8 +16,8 @@ public class ArtifactTable extends BasicTable {
 
 	 *
 	 */
-	public ArtifactTable(String name, String description, int id) {
-		super(name, id);
+	public ArtifactTable(String name, String description, boolean exist, int id) {
+		super(name, exist, id);
 		this.description = new SimpleStringProperty(description);
 	}
 	

@@ -89,20 +89,19 @@ public class IterationForm extends TableBasicForm implements ISegmentTableForm {
 	public Node getTable() {
 		tableTV = new TableView<IterationTable>();
 
-		TableColumn<IterationTable, String> nameColumn = new TableColumn<IterationTable, String>("Name");
-		TableColumn<IterationTable, String> configurationColumn = new TableColumn<IterationTable, String>("Configuration");
+		TableColumn<IterationTable, String> nameColumn = new TableColumn<IterationTable, String>("Id");
+		TableColumn<IterationTable, String> exist = new TableColumn<IterationTable, String>("Exist");
 
-		nameColumn.setCellValueFactory(new PropertyValueFactory("name"));
+		nameColumn.setCellValueFactory(new PropertyValueFactory("idString"));
 		nameColumn.setMinWidth(150);
 		nameColumn.setCellFactory(TextFieldTableCell.forTableColumn());
 
-		configurationColumn.setCellValueFactory(new PropertyValueFactory("configuration"));
-		configurationColumn.setMinWidth(150);
-		configurationColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+		exist.setCellValueFactory(new PropertyValueFactory("existString"));
+		exist.setMinWidth(150);
+		exist.setCellFactory(TextFieldTableCell.forTableColumn());
 
 
-		//tableTV.getColumns().addAll(nameColumn, configurationColumn);
-		tableTV.getColumns().add(nameColumn);
+		tableTV.getColumns().addAll(nameColumn, exist);
 		tableTV.setOnMousePressed(OnMousePressedEventHandler);
 		tableTV.setEditable(false);
 
@@ -153,7 +152,7 @@ public class IterationForm extends TableBasicForm implements ISegmentTableForm {
 		int id = formController.createTableItem(SegmentType.Iteration);
 		String idName = id + "_" + nameST;
 
-		IterationTable table = new IterationTable(idName, "", id);
+		IterationTable table = new IterationTable(idName, "", true, id);
 
 		tableTV.getItems().add(table);
 		tableTV.sort();

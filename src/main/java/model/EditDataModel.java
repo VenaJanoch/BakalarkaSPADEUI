@@ -19,16 +19,17 @@ public class EditDataModel implements IEditDataModel {
         this.dataModel = dataModel;
     }
 
-    public void editDataInCPR(ArrayList<String> nameForManipulator, ArrayList<Integer> nameIndicators, ArrayList<Integer> roleIndex, ArrayList<Integer> roleIndicator, int id) {
+    public void editDataInCPR(ArrayList<String> nameForManipulator, ArrayList<Integer> nameIndicators, ArrayList<Integer> roleIndex,
+                              ArrayList<Integer> roleIndicator, boolean exist, int id) {
 
         ConfigPersonRelation cpr = dataModel.getConfigPersonRelation(id);
-        dataModel.addDataToCPR(cpr, nameForManipulator, nameIndicators, roleIndex, roleIndicator);
+        dataModel.addDataToCPR(cpr, nameForManipulator, nameIndicators, roleIndex, roleIndicator, exist);
 
     }
 
-    public void editDataInBranch(ArrayList<String> nameForManipulator, ArrayList<Integer> nameIndicators, boolean isMainBranch, int id) {
+    public void editDataInBranch(ArrayList<String> nameForManipulator, ArrayList<Integer> nameIndicators, boolean isMainBranch, boolean exist, int id) {
         Branch branch = dataModel.getBranch(id);
-        dataModel.addDataToBranch(branch, nameForManipulator, nameIndicators, isMainBranch);
+        dataModel.addDataToBranch(branch, nameForManipulator, nameIndicators, isMainBranch, exist);
     }
 
     public void editDataInArtifact(ArrayList<String> nameForManipulator, ArrayList<Integer> nameIndicators,
@@ -51,26 +52,26 @@ public class EditDataModel implements IEditDataModel {
     public void editDataInPhase(ArrayList<String> actName, ArrayList<LocalDate> endDateL, ArrayList<String> desc,
             ArrayList<Integer> confIndex, ArrayList<Integer> milestoneIndex,  ArrayList<ArrayList<Integer>> workUnitIndexList,
             ArrayList<Integer> workUnitIndicators, ArrayList<Integer> nameIndicator, ArrayList<Integer> endDateIndicator,
-            ArrayList<Integer> descIndicator, ArrayList<Integer> confIndicator, ArrayList<Integer> milestoneIndicator, int id){
+            ArrayList<Integer> descIndicator, ArrayList<Integer> confIndicator, ArrayList<Integer> milestoneIndicator, boolean exist, int id){
         Phase phase =  dataModel.getPhase(id);
         dataModel.addDataToPhase(phase, actName, endDateL, desc, confIndex, milestoneIndex,  workUnitIndexList,
-                workUnitIndicators, nameIndicator, endDateIndicator, descIndicator, confIndicator, milestoneIndicator);
+                workUnitIndicators, nameIndicator, endDateIndicator, descIndicator, confIndicator, milestoneIndicator, exist);
     }
 
     public void editDataInIteration(ArrayList<String> actName, ArrayList<LocalDate> endDateL,  ArrayList<LocalDate> startDateL, ArrayList<String> desc,
                                     ArrayList<Integer> confIndex,  ArrayList<ArrayList<Integer>> workUnitIndexList,
                                     ArrayList<Integer> workUnitIndicators, ArrayList<Integer> nameIndicator, ArrayList<Integer> endDateIndicator,
-                                    ArrayList<Integer> startDateIndicator, ArrayList<Integer> descIndicator, ArrayList<Integer> confIndicator, int id) {
+                                    ArrayList<Integer> startDateIndicator, ArrayList<Integer> descIndicator, ArrayList<Integer> confIndicator, boolean exist, int id) {
         Iteration iteration = dataModel.getIteration(id);
         dataModel.addDataToIteration(iteration, actName, endDateL,  startDateL, desc,
-                confIndex,  workUnitIndexList, workUnitIndicators, nameIndicator, endDateIndicator, startDateIndicator, descIndicator, confIndicator);
+                confIndex,  workUnitIndexList, workUnitIndicators, nameIndicator, endDateIndicator, startDateIndicator, descIndicator, confIndicator, exist);
     }
 
     public void editDataInActivity(ArrayList<String> nameForManipulator, ArrayList<String> descriptionForManipulator,
                                    ArrayList<ArrayList<Integer>> setOfItemOnCanvas, ArrayList<Integer> nameIndicators,  ArrayList<Integer> descIndicators,
-                                   ArrayList<Integer> workUnitIndicators, int id) {
+                                   ArrayList<Integer> workUnitIndicators, boolean exist, int id) {
         Activity activity = dataModel.getActivity(id);
-        dataModel.addDataToActivity(activity, nameForManipulator, descriptionForManipulator, setOfItemOnCanvas, nameIndicators,  descIndicators,  workUnitIndicators);
+        dataModel.addDataToActivity(activity, nameForManipulator, descriptionForManipulator, setOfItemOnCanvas, nameIndicators,  descIndicators,  workUnitIndicators, exist);
 
     }
 
@@ -93,78 +94,77 @@ public class EditDataModel implements IEditDataModel {
 
     public void editDataInConfiguration(ArrayList<String> actName, ArrayList<LocalDate> createDate,
                                         boolean isRelease, ArrayList<Integer> authorIndex, ArrayList<ArrayList<Integer>> cprs,
-                                        ArrayList<ArrayList<Integer>> branches, ArrayList<ArrayList<Integer>> changeIndexs,
+                                        ArrayList<ArrayList<Integer>> changeIndexs,
                                         ArrayList<Integer> cprIndicators, ArrayList<Integer> nameIndicator, ArrayList<Integer> createdIndicator,
-                                        ArrayList<Integer> authorIndicator, ArrayList<Integer> branchIndicator, ArrayList<Integer> changeIndicator, int instanceCount, int id){
+                                        ArrayList<Integer> authorIndicator, ArrayList<Integer> changeIndicator, int instanceCount, boolean exist, int id){
         Configuration configuration = dataModel.getConfiguration(id);
-        dataModel.addDataToConfiguration(configuration, actName, createDate, isRelease, authorIndex, cprs, branches, changeIndexs,
-                cprIndicators, nameIndicator, createdIndicator, authorIndicator, branchIndicator, changeIndicator, instanceCount);
+        dataModel.addDataToConfiguration(configuration, actName, createDate, isRelease, authorIndex, cprs, changeIndexs,
+                cprIndicators, nameIndicator, createdIndicator, authorIndicator, changeIndicator, instanceCount, exist);
 
     }
 
     public void editDataInCriterion( ArrayList<String> nameForManipulator, ArrayList<String> descForManipulator,
-                                     ArrayList<Integer> nameIndicator, ArrayList<Integer> descIndicator, int id){
+                                     ArrayList<Integer> nameIndicator, ArrayList<Integer> descIndicator, boolean exist, int id){
         Criterion criterion = dataModel.getCriterion(id);
-        dataModel.addDataToCriterion(criterion,  nameForManipulator, descForManipulator, nameIndicator, descIndicator);
+        dataModel.addDataToCriterion(criterion,  nameForManipulator, descForManipulator, nameIndicator, descIndicator, exist);
     }
 
     public void editDataInPriority(ArrayList<String> nameForManipulator, ArrayList<Integer> nameIndicator,  ArrayList<Integer> classST,
-                                   ArrayList<Integer> superST, ArrayList<String> classString,  ArrayList<String> superSting, int id) {
+                                   ArrayList<Integer> superST, ArrayList<String> classString,  ArrayList<String> superSting, boolean exist, int id) {
         Priority priority = dataModel.getPriority(id);
-        dataModel.addDataToPriority(priority, nameForManipulator,  nameIndicator, classST, superST, classString, superSting);
+        dataModel.addDataToPriority(priority, nameForManipulator,  nameIndicator, classST, superST, classString, superSting, exist);
 
     }
 
     public void editDataInSeverity(ArrayList<String> nameForManipulator, ArrayList<Integer> nameIndicator,  ArrayList<Integer> classST,
-                                   ArrayList<Integer> superST, ArrayList<String> classString,  ArrayList<String> superSting, int id) {
+                                   ArrayList<Integer> superST, ArrayList<String> classString,  ArrayList<String> superSting, boolean exist, int id) {
         Severity severity = dataModel.getSeverity(id);
-        dataModel.addDataToSeverity(severity, nameForManipulator, nameIndicator, classST, superST, classString, superSting);
+        dataModel.addDataToSeverity(severity, nameForManipulator, nameIndicator, classST, superST, classString, superSting, exist);
     }
 
     public void editDataInRelation(ArrayList<String> nameForManipulator, ArrayList<Integer> nameIndicator,  ArrayList<Integer> classST,
-                                   ArrayList<Integer> superST, ArrayList<String> classString,  ArrayList<String> superSting, int id) {
+                                   ArrayList<Integer> superST, ArrayList<String> classString,  ArrayList<String> superSting, boolean exist, int id) {
 
         Relation relation = dataModel.getRelation(id);
-        dataModel.addDataToRelation(relation, nameForManipulator, nameIndicator, classST, superST, classString, superSting);
+        dataModel.addDataToRelation(relation, nameForManipulator, nameIndicator, classST, superST, classString, superSting, exist);
     }
 
     public void editDataInResolution(ArrayList<String> nameForManipulator, ArrayList<Integer> nameIndicator,  ArrayList<Integer> classST,
-                                     ArrayList<Integer> superST, ArrayList<String> classString,  ArrayList<String> superSting, int id) {
+                                     ArrayList<Integer> superST, ArrayList<String> classString,  ArrayList<String> superSting, boolean exist, int id) {
         Resolution relation = dataModel.getResolution(id);
-        dataModel.addDataToResolution(relation, nameForManipulator, nameIndicator, classST, superST, classString, superSting);
+        dataModel.addDataToResolution(relation, nameForManipulator, nameIndicator, classST, superST, classString, superSting, exist);
     }
 
-    public void editDataInRole(ArrayList<String> nameForManipulator, ArrayList<String> descForManipulator, ArrayList<Integer> type,
-                               ArrayList<Integer> nameIndicator, ArrayList<Integer> descIndicator, ArrayList<Integer> typeIndicator, int instanceCount, int id) {
+    public void editDataInRole(ArrayList<String> nameForManipulator, ArrayList<Integer> type,
+                               ArrayList<Integer> nameIndicator, ArrayList<Integer> typeIndicator, int instanceCount, boolean exist, int id) {
 
-        Role role = dataModel.getRole(id);
-        dataModel.addDatToRole(role, nameForManipulator, descForManipulator, type,
-                nameIndicator, descIndicator, typeIndicator, instanceCount);
+        Person role = dataModel.getRole(id);
+        dataModel.addDatToRole(role, nameForManipulator, type, nameIndicator, typeIndicator, instanceCount, exist);
     }
 
     public void editDataInMilestone(ArrayList<String> nameForManipulator, ArrayList<String> descForManipulator,
                                     ArrayList<Integer> nameIndicator, ArrayList<Integer> descIndicator, ArrayList<Integer> criterionIndicator,
-                                    ArrayList<ArrayList<Integer>> criterionIndex, int id) {
+                                    ArrayList<ArrayList<Integer>> criterionIndex, boolean exist, int id) {
         Milestone milestone = dataModel.getMilestone(id);
         dataModel.addDataToMilestone(milestone, nameForManipulator, descForManipulator,
-                nameIndicator, descIndicator, criterionIndicator,criterionIndex);
+                nameIndicator, descIndicator, criterionIndicator,criterionIndex, exist);
     }
 
-    public void editDataInRoleType(ArrayList<String> nameForManipulator, ArrayList<Integer> nameIndicator,  ArrayList<Integer> classST,
-                                   ArrayList<Integer> superST, ArrayList<String> classString,  ArrayList<String> superSting, int id) {
+    public void editDataInRoleType(ArrayList<String> nameForManipulator, ArrayList<Integer> nameIndicator, ArrayList<String> descForManipulator, ArrayList<Integer> descIndicator, ArrayList<Integer> classST,
+                                   ArrayList<Integer> superST, ArrayList<String> classString,  ArrayList<String> superSting, boolean exist, int id) {
         RoleType roleType = dataModel.getRoleType(id);
-        dataModel.addDataToRoleType(roleType, nameForManipulator, nameIndicator, classST,superST, classString, superSting);
+        dataModel.addDataToRoleType(roleType, nameForManipulator, nameIndicator, descForManipulator, descIndicator, classST,superST, classString, superSting, exist);
     }
 
     public void editDataInStatus(ArrayList<String> nameForManipulator, ArrayList<Integer> nameIndicator, ArrayList<Integer> classST,
-                                 ArrayList<Integer> superST, ArrayList<String> classString,  ArrayList<String> superSting, int id) {
+                                 ArrayList<Integer> superST, ArrayList<String> classString,  ArrayList<String> superSting, boolean exist, int id) {
         Status status = dataModel.getStatus(id);
-        dataModel.addDataToStatus(status, nameForManipulator, nameIndicator, classST, superST, classString, superSting);
+        dataModel.addDataToStatus(status, nameForManipulator, nameIndicator, classST, superST, classString, superSting, exist);
     }
     public void editDataInType(ArrayList<String> nameForManipulator, ArrayList<Integer> nameIndicator,  ArrayList<Integer> classST,
-                               ArrayList<Integer> superST, ArrayList<String> classString,  ArrayList<String> superSting, int id) {
+                               ArrayList<Integer> superST, ArrayList<String> classString,  ArrayList<String> superSting, boolean exist, int id) {
         Type type = dataModel.getType(id);;
-        dataModel.addDataToType(type, nameForManipulator, nameIndicator, classST, superST, classString, superSting);
+        dataModel.addDataToType(type, nameForManipulator, nameIndicator, classST, superST, classString, superSting, exist);
     }
 
     public void editTagInConfiguration(String tag, int configId, int id) {
@@ -174,14 +174,15 @@ public class EditDataModel implements IEditDataModel {
     }
 
     public void editDataInVCSTag(ArrayList<String> nameForManipulator, ArrayList<String> descriptionForManipulator,
-                                 ArrayList<Integer> nameIndicator, ArrayList<Integer> descriptionIndicator, int id){
+                                 ArrayList<Integer> nameIndicator, ArrayList<Integer> descriptionIndicator, boolean exist, int id){
         VCSTag tag = dataModel.getVCSTag(id);
-        dataModel.addDataToVCSTag(tag, nameForManipulator, descriptionForManipulator, nameIndicator, descriptionIndicator);
+        dataModel.addDataToVCSTag(tag, nameForManipulator, descriptionForManipulator, nameIndicator, descriptionIndicator, exist);
     }
 
-    public void editDataInCommit(ArrayList<String> nameForManipulator,  ArrayList<Integer> nameIndicator, boolean release, int instanceCount, int id){
+    public void editDataInCommit(ArrayList<String> nameForManipulator,  ArrayList<Integer> nameIndicator,  ArrayList<Integer> tag, ArrayList<Integer> tagIndicator,
+                                 ArrayList<ArrayList<Integer>> branches, ArrayList<Integer> branchIndicator, boolean release, int instanceCount, boolean exist, int id){
         Commit commit = dataModel.getCommit(id);
-        dataModel.addDataToCommit(commit, nameForManipulator, nameIndicator, release, instanceCount);
+        dataModel.addDataToCommit(commit, nameForManipulator, nameIndicator,  tag, tagIndicator,  branches, branchIndicator, release, instanceCount, exist);
     }
     
     public void editCoordinatesInCommit(int x, int y, int id){
@@ -209,15 +210,15 @@ public class EditDataModel implements IEditDataModel {
     }
 
     public void editCoordinatesInRole(int x, int y, int id){
-        Role role = dataModel.getRole(id);
+        Person role = dataModel.getRole(id);
         Coordinates coordinates = dataModel.createCoords(x, y);
         dataModel.setCoordinatesToRole(coordinates, role);
     }
     
     public void editDataInCommitedConfiguration(ArrayList<String> nameForManipulator, ArrayList<Integer> nameIndicator,
-                                                ArrayList<LocalDate> dateFromDatePicker, ArrayList<Integer> dateIndicator, int instanceCount, int id){
+                                                ArrayList<LocalDate> dateFromDatePicker, ArrayList<Integer> dateIndicator, int instanceCount, boolean exist, int id){
         CommitedConfiguration commitedConfiguration = dataModel.getCommitedConfiguration(id);
-        dataModel.addDataToCommitedConfiguration(commitedConfiguration, nameForManipulator, nameIndicator, dateFromDatePicker, dateIndicator, instanceCount);
+        dataModel.addDataToCommitedConfiguration(commitedConfiguration, nameForManipulator, nameIndicator, dateFromDatePicker, dateIndicator, instanceCount, exist);
     }
 
     public void editDataInProject(ArrayList<String> nameForManipulator, ArrayList<LocalDate> startDate1, ArrayList<LocalDate> endDate1, ArrayList<String> descriptionForManipulator, ArrayList<ArrayList<Integer>> workUnitsForManipulator,
@@ -260,7 +261,7 @@ public class EditDataModel implements IEditDataModel {
             return;
         }
         switch (formType) {
-            case WorkUnit:
+            case Work_Unit:
                 updateWUListItem(elementType, elementIdList);
                 break;
             case Milestone:
@@ -281,8 +282,8 @@ public class EditDataModel implements IEditDataModel {
                     default:
                 }
                 break;
-            case Role:
-                for (Role segment : project.getRoles()) {
+            case Person:
+                for (Person segment : project.getRoles()) {
                     List<Integer> type = segment.getType();
                     List<Integer> roleTypeId = dataModel.getRoleTypeId(type);
                     for(int deleteId : elementIdList) {
@@ -302,9 +303,9 @@ public class EditDataModel implements IEditDataModel {
                 }
 
                 break;
-            case ConfigPersonRelation:
+            case Config_Person_Relation:
                 switch (elementType ) {
-                    case Role:
+                    case Person:
                         for (ConfigPersonRelation segment : project.getCpr()) {
 
                             List<Integer> type = segment.getPersonIndex();
@@ -332,7 +333,7 @@ public class EditDataModel implements IEditDataModel {
                 break;
             case Artifact:
                 switch (elementType ) {
-                    case Role:
+                    case Person:
                         for (Artifact segment : project.getArtifacts()) {
 
                             List<Integer> type = segment.getAuthorIndex();
@@ -427,10 +428,25 @@ public class EditDataModel implements IEditDataModel {
                         }
                         }
                 break;
+            case Commit:
+                switch (elementType) {
+                    case Branch:
+                        for (Commit segment : project.getCommit()) {
+                            int i = 0;
+                            for (BranchList list : segment.getBranch()) {
+                                updateElementListFromSegment(elementIdList, list.getBranches());
+                                if (list.getBranches().size() == 0) {
+                                    segment.getBranchIndicator().remove(i);
+                                }
+                                i++;
+                            }
+                        }
+                }
+                break;
             case Configuration:
 
                 switch (elementType ) {
-                    case Role:
+                    case Person:
                         for (Configuration segment : project.getConfiguration()) {
                             List<Integer> type = segment.getAuthorIndex();
                             List<Integer> personId = dataModel.getRoleId(type);
@@ -450,7 +466,7 @@ public class EditDataModel implements IEditDataModel {
                             }
                         }
                         break;
-                    case ConfigPersonRelation:
+                    case Config_Person_Relation:
                         for (Configuration segment : project.getConfiguration()) {
                             int i = 0;
                             for (CPRSList list : segment.getCPRsIndexs()){
@@ -462,18 +478,7 @@ public class EditDataModel implements IEditDataModel {
                             }
                         }
                         break;
-                    case Branch:
-                        for (Configuration segment : project.getConfiguration()) {
-                            int i = 0;
-                            for (BranchList list : segment.getBranchesIndexs()){
-                                updateElementListFromSegment(elementIdList, list.getBranches());
-                                if (list.getBranches().size() == 0){
-                                    segment.getBranchesIndicator().remove(i);
-                                }
-                                i++;
-                            }
-                        }
-                        break;
+
 
                     default:
                 }
@@ -566,7 +571,7 @@ public class EditDataModel implements IEditDataModel {
 //                    }
                 }
                 break;
-            case Role:
+            case Person:
                 for (WorkUnit segment : project.getWorkUnits()) {
 //                    int index = segment.getAuthorIndex();
 //                    int index2 = segment.getAssigneeIndex();

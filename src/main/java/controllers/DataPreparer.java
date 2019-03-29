@@ -52,19 +52,19 @@ public class DataPreparer {
         String idName = prepareTableName(nameST, id);
      //   String criterion = prepareDependencyArray(criterionArray, observableList);
 
-        return new MilestoneTable(idName, "", "", id);
+        return new MilestoneTable(idName, "", "",true, id);
     }
 
-    public RoleTable prepareRoleTable(String name, String description, int id, int type, ObservableList<BasicTable> roleTypeObservable) {
+    public PersonTable prepareRoleTable(String name, String description, int id, int type, ObservableList<BasicTable> roleTypeObservable) {
         String idName = prepareTableName(name, id);
         String typeName = prepareDependency(type, roleTypeObservable) ;
-        return new RoleTable(idName, description, typeName,id);
+        return new PersonTable(idName, description, typeName, true, id);
     }
 
     public CPRTable prepareCPRTable(String name, int id) {
         String idName = prepareTableName(name, id);
       //  String roleName = prepareDependency(roleIndex, roleObservable) ;
-        return new CPRTable(idName, "", id);
+        return new CPRTable(idName, "",true, id);
     }
 
     public BranchTable prepareBranchTable(String name, boolean main, int id) {
@@ -73,7 +73,7 @@ public class DataPreparer {
         if (main) {
             mainST = "YES";
         }
-        return new BranchTable(idName, mainST, main, id);
+        return new BranchTable(idName, mainST, main,true, id);
     }
 
 

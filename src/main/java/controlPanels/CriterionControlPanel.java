@@ -39,7 +39,10 @@ public class CriterionControlPanel extends DescriptionControlPanel {
 
         controlPanelController.setValueTextField(this, lineList ,ParamType.Name, criterionData, criterionData[2], 0);
         controlPanelController.setValueTextField(this, lineList ,ParamType.Description, criterionData, criterionData[3], 1);
+        List boolList = criterionData[4];
+        boolean exist = (boolean) boolList.get(0);
 
+        controlPanelController.setValueExistRadioButton(exist);
         button.setOnAction(event ->{
 
             ArrayList<Integer> nameIndicators = new ArrayList<>();
@@ -47,7 +50,7 @@ public class CriterionControlPanel extends DescriptionControlPanel {
            ArrayList<String> name = controlPanelController.processTextLines(ParamType.Name, nameIndicators);
             ArrayList<String> desc = controlPanelController.processTextLines(ParamType.Description, descIndicators);
 
-            editFormController.editDataFromCriterion(name, nameIndicators,  desc, descIndicators, criterionTable, id);
+            editFormController.editDataFromCriterion(name, nameIndicators,  desc, descIndicators, criterionTable, controlPanelController.isExist(), id);
             clearPanel(tableView);
         });
     }

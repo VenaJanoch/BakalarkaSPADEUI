@@ -208,7 +208,7 @@ public class ConfigurationForm extends DateBasicForm implements ISegmentForm {
     }
 
     /**
-     * ChangeListener pro určení indexu prvku z comboBoxu pro Role
+     * ChangeListener pro určení indexu prvku z comboBoxu pro Person
      */
     ChangeListener<Number> roleListenerAut = new ChangeListener<Number>() {
 

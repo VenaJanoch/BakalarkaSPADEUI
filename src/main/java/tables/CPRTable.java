@@ -13,8 +13,8 @@ public class CPRTable extends BasicTable{
 	 * @param name jméno CPR
 	 * @param role jméno vybrané role
 	 */
-	public CPRTable(String name, String role, int id) {
-		super(name, id);
+	public CPRTable(String name, String role, boolean exist, int id) {
+		super(name, exist, id);
 		this.role = new SimpleStringProperty(role);
 	}
 	

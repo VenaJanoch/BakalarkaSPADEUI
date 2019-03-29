@@ -7,6 +7,7 @@ import java.util.ArrayList;
   public interface ISaveDataModel {
 
       void createChangeArtifactRelation(int artifactIndex, int changeIndex);
+      void createCommitToCommitedConfigurationRelation(int startId, int endId);
 
       void createWorkUnitRelation(int startIndex, Integer endIndex);
 

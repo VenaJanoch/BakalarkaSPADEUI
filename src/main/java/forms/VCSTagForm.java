@@ -80,20 +80,19 @@ public class VCSTagForm extends TableBasicForm implements ISegmentTableForm {
 	public Node getTable() {
 		tableTV = new TableView<VCSTagTable>();
 
-		TableColumn<VCSTagTable, String> nameColumn = new TableColumn<VCSTagTable, String>("Name");
-		TableColumn<VCSTagTable, String> descriptionColumn = new TableColumn<VCSTagTable, String>("Description");
+		TableColumn<VCSTagTable, String> nameColumn = new TableColumn<VCSTagTable, String>("Id");
+		TableColumn<VCSTagTable, String> exist = new TableColumn<VCSTagTable, String>("Exist");
 
-		nameColumn.setCellValueFactory(new PropertyValueFactory("name"));
+		nameColumn.setCellValueFactory(new PropertyValueFactory("idString"));
 		nameColumn.setMinWidth(150);
 		nameColumn.setCellFactory(TextFieldTableCell.forTableColumn());
 
-		descriptionColumn.setCellValueFactory(new PropertyValueFactory("description"));
-		descriptionColumn.setMinWidth(150);
-		descriptionColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+		exist.setCellValueFactory(new PropertyValueFactory("existString"));
+		exist.setMinWidth(150);
+		exist.setCellFactory(TextFieldTableCell.forTableColumn());
 
 
-		//tableTV.getColumns().addAll(nameColumn, descriptionColumn);
-		tableTV.getColumns().add(nameColumn);
+		tableTV.getColumns().addAll(nameColumn, exist);
 		tableTV.setOnMousePressed(OnMousePressedEventHandler);
 		tableTV.setEditable(false);
 
@@ -144,7 +143,7 @@ public class VCSTagForm extends TableBasicForm implements ISegmentTableForm {
 		int id = formController.createTableItem(SegmentType.VCSTag);
 		String idName = id + "_" + nameST;
 
-		VCSTagTable table = new VCSTagTable(idName, "", id);
+		VCSTagTable table = new VCSTagTable(idName, "",true, id);
 
 		tableTV.getItems().add(table);
 		tableTV.sort();

@@ -52,6 +52,11 @@ public class ActivityControlPanel extends DescriptionControlPanel {
         ArrayList<ArrayList<Integer>> workUnits = formDataController.getWorkUnitFromSegment(id, SegmentType.Activity);
         controlPanelController.setValueCheckComboBox(this, lineList ,ParamType.WorkUnit, workUnits, activityData[2]);
 
+        boolean exist = false;
+        List boolList = activityData[5];
+        exist = (boolean) boolList.get(0);
+
+        controlPanelController.setValueExistRadioButton(exist);
 
         button.setOnAction(event -> saveDataFromPanel(activityTable, tableView));
     }
@@ -71,7 +76,8 @@ public class ActivityControlPanel extends DescriptionControlPanel {
         ArrayList<String> name = controlPanelController.processTextLines(ParamType.Name, nameIndicators);
         ArrayList<String> desc = controlPanelController.processTextLines(ParamType.Description, descIndicators);
         ArrayList<ArrayList<Integer>> workUnit = controlPanelController.processCheckComboBoxLines(ParamType.WorkUnit, workUnitIndicators);
-        editFormController.editDataFromActivity(name, desc, workUnit, nameIndicators, descIndicators, workUnitIndicators, activityTable, id);
+        editFormController.editDataFromActivity(name, desc, workUnit, nameIndicators, descIndicators,
+                workUnitIndicators, activityTable, controlPanelController.isExist(), id);
 
         clearPanelCB(tableView);
     }

@@ -1,12 +1,5 @@
 package services;
 
-import SPADEPAC.Artifact;
-import SPADEPAC.Configuration;
-import SPADEPAC.Iteration;
-import SPADEPAC.Phase;
-import SPADEPAC.WorkUnit;
-import forms.WorkUnitForm;
-
 public class FormControl {
 
 
@@ -40,7 +33,7 @@ public class FormControl {
 	 */
 	public static boolean copyControl(SegmentType itemType, CanvasType canvasType) {
 
-		if (itemType == SegmentType.WorkUnit) {
+		if (itemType == SegmentType.Work_Unit) {
 
 			if (canvasType == canvasType.Phase || canvasType == canvasType.Iteration
 					|| canvasType == canvasType.Activity || canvasType == canvasType.Project) {

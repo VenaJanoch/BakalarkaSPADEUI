@@ -16,8 +16,8 @@ public class CommitedConfigurationTable extends BasicTable {
 
 	 *
 	 */
-	public CommitedConfigurationTable(String name, String description, int id) {
-		super(name, id);
+	public CommitedConfigurationTable(String name, String description, boolean exist, int id) {
+		super(name, exist, id);
 		this.description = new SimpleStringProperty(description);
 	}
 	

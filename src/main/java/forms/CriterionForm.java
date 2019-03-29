@@ -82,19 +82,19 @@ public class CriterionForm extends TableBasicForm implements ISegmentTableForm {
 	public Node getTable() {
 		tableTV = new TableView<CriterionTable>();
 
-		TableColumn<CriterionTable, String> nameColumn = new TableColumn<CriterionTable, String>("Name");
-		TableColumn<CriterionTable, String> descriptionColumn = new TableColumn<CriterionTable, String>("Description");
+		TableColumn<CriterionTable, String> nameColumn = new TableColumn<CriterionTable, String>("Id");
+		TableColumn<CriterionTable, String> exist = new TableColumn<CriterionTable, String>("Exist");
 
-		nameColumn.setCellValueFactory(new PropertyValueFactory("name"));
+		nameColumn.setCellValueFactory(new PropertyValueFactory("idString"));
 		nameColumn.setMinWidth(150);
 		nameColumn.setCellFactory(TextFieldTableCell.forTableColumn());
 
-		descriptionColumn.setCellValueFactory(new PropertyValueFactory("description"));
-		descriptionColumn.setMinWidth(150);
-		descriptionColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+		exist.setCellValueFactory(new PropertyValueFactory("existString"));
+		exist.setMinWidth(150);
+		exist.setCellFactory(TextFieldTableCell.forTableColumn());
 
-		//tableTV.getColumns().addAll(nameColumn, descriptionColumn);
-		tableTV.getColumns().add(nameColumn);
+
+		tableTV.getColumns().addAll(nameColumn, exist);
 		tableTV.setOnMousePressed(OnMousePressedEventHandler);
 		tableTV.setEditable(false);
 
@@ -146,7 +146,7 @@ public class CriterionForm extends TableBasicForm implements ISegmentTableForm {
 		int id = formController.createTableItem(SegmentType.Criterion);
 		String idName = id + "_" + nameST;
 
-		CriterionTable criterion = new CriterionTable(idName, descriptionST, id);
+		CriterionTable criterion = new CriterionTable(idName, descriptionST, true, id);
 		tableTV.getItems().add(criterion);
 		tableTV.sort();
 		formDataController.saveDataFromCriterionForm(nameST, criterion);

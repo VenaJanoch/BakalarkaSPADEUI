@@ -6,11 +6,10 @@ import graphics.ControlPanelLine;
 import interfaces.IControlPanel;
 import interfaces.IEditFormController;
 import interfaces.IFormDataController;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.scene.control.*;
+import services.ControlPanelLineObject;
+import services.ControlPanelLineType;
 import services.ParamType;
-import tables.BranchTable;
+import services.SegmentLists;
 import tables.CommitTable;
 
 import java.util.ArrayList;
@@ -29,6 +28,9 @@ public class CommitControlPanel extends NameControlPanel implements IControlPane
         this.commitFormId = formIndex;
         this.commitId = id;
         this.commitTable = branchTable;
+        SegmentLists segmentLists = formController.getSegmentLists();
+        lineList.add(new ControlPanelLineObject("VCS Tag: ", ControlPanelLineType.ComboBox, ParamType.VCSTag, segmentLists.getVCSTag() ));
+        lineList.add(new ControlPanelLineObject("Branches: ", ControlPanelLineType.ComboBox, ParamType.Branch));
         createControlPanel();
     }
 
@@ -48,10 +50,17 @@ public class CommitControlPanel extends NameControlPanel implements IControlPane
         button.setOnAction(event ->{
             ArrayList<Integer> nameIndicators = new ArrayList<>();
             ArrayList<String> name = controlPanelController.processTextLines(ParamType.Name, nameIndicators);
+            ArrayList<Integer> branchIndicators = new ArrayList<>();
+            ArrayList<ArrayList<Integer>> branchs = controlPanelController.processCheckComboBoxLines(ParamType.Branch, branchIndicators);
+
+            ArrayList<Integer> tagIndicators = new ArrayList<>();
+            ArrayList<Integer> tag = controlPanelController.processComboBoxLines(ParamType.VCSTag, tagIndicators);
+
             String count = controlPanelController.getInstanceCount();
             boolean exist = controlPanelController.isMain();
 
-            editFormController.editDataFromCommit(name, nameIndicators, exist, count, commitId);
+            editFormController.editDataFromCommit(name, nameIndicators, tag, tagIndicators, branchs, branchIndicators, exist, count,
+                    controlPanelController.isExist(), commitId);
 
         });
 
@@ -65,15 +74,23 @@ public class CommitControlPanel extends NameControlPanel implements IControlPane
         controlPanelController.resetPanel(controlPane);
         createControlPanel();
 
-        controlPanelController.setValueTextField(this, lineList ,ParamType.Name, commitData, commitData[2], 0);
-        boolean exist = false;
-        List boolList = commitData[1];
-        if (boolList.size() != 1){
-            exist = true;
+        controlPanelController.setValueTextField(this, lineList ,ParamType.Name, commitData, commitData[1], 0);
+        ArrayList<ArrayList<Integer>> branches = formDataController.getBranchesFromCommit(commitId);
+        controlPanelController.setValueCheckComboBox(this, lineList ,ParamType.Branch, branches, commitData[4]);
+        controlPanelController.setValueComboBox(this, lineList ,ParamType.VCSTag, (ArrayList<Integer>) commitData[2], commitData[3]);
+
+
+        boolean release = false;
+        List boolList = commitData[5];
+        if (boolList.size() > 2){
+            release = true;
         }
 
-        controlPanelController.setValueRadioButton(exist);
-        controlPanelController.setCountToCountLine((int) boolList.get(0));
+        boolean exist = (boolean) boolList.get(0);
+
+        controlPanelController.setValueExistRadioButton(exist);
+        controlPanelController.setValueRadioButton(release);
+        controlPanelController.setCountToCountLine((int) boolList.get(1));
     }
 
 

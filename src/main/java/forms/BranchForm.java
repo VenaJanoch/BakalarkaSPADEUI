@@ -23,6 +23,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import services.*;
+import tables.ActivityTable;
 import tables.BasicTable;
 import tables.BranchTable;
 import tables.CriterionTable;
@@ -100,18 +101,19 @@ public class BranchForm extends TableBasicForm implements ISegmentTableForm {
         tableTV = new TableView<BranchTable>();
         tableTV.setId("branchTable");
         tableTV.setEditable(false);
-        TableColumn<BranchTable, String> nameColumn = new TableColumn<BranchTable, String>("Name");
-        TableColumn<BranchTable, String> mainColumn = new TableColumn<BranchTable, String>("Is Main");
+        TableColumn<BranchTable, String> nameColumn = new TableColumn<BranchTable, String>("Id");
+        TableColumn<BranchTable, String> exist = new TableColumn<BranchTable, String>("Exist");
 
-        nameColumn.setCellValueFactory(new PropertyValueFactory("name"));
+        nameColumn.setCellValueFactory(new PropertyValueFactory("idString"));
         nameColumn.setMinWidth(150);
         nameColumn.setCellFactory(TextFieldTableCell.forTableColumn());
 
-        mainColumn.setCellValueFactory(new PropertyValueFactory("main"));
-        mainColumn.setMinWidth(150);
-        mainColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+        exist.setCellValueFactory(new PropertyValueFactory("existString"));
+        exist.setMinWidth(150);
+        exist.setCellFactory(TextFieldTableCell.forTableColumn());
 
-        tableTV.getColumns().addAll(nameColumn, mainColumn);
+
+        tableTV.getColumns().addAll(nameColumn, exist);
 
         tableTV.setEditable(false);
         tableTV.setOnMousePressed(OnMousePressedEventHandler);

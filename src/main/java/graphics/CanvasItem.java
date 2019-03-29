@@ -52,8 +52,8 @@ public class CanvasItem extends AnchorPane {
 		this.canvasItemController = canvasItemController;
 		this.instanceCount = instanceCount;
 		this.setOnMousePressed(event -> canvasItemController.setClicFromDragPoint(event, this, canvasController, type));
-		this.setOnMouseDragged(event -> canvasItemController.setDragFromDragPoint(event,this, canvasController, type, formIdentificator));
-		this.setOnMouseReleased(event -> setPosition(canvasItemController.canvasItemPositionControl(getTranslateX(), getTranslateY())));
+		this.setOnMouseDragged(event -> canvasItemController.setDragFromDragPoint(event,this, canvasController));
+		this.setOnMouseReleased(event -> setPosition(canvasItemController.canvasItemPositionControl(getTranslateX(), getTranslateY(), segmentType, formIdentificator)));
 
 		//this.setForm(rootForm);
 		this.segmentType = type;
@@ -93,6 +93,7 @@ public class CanvasItem extends AnchorPane {
 		this.setTranslateX(point.getX());
 		this.setTranslateY(point.getY());
 		canvasItemController.repaintArrows(segmentType,formIdentificator, getTranslateX(), getTranslateY(), segmentInfo.getLength(), getHeight());
+
 	}
 
 

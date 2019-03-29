@@ -151,7 +151,7 @@ public class InfoBoxSegment extends Group {
 	 */
 	public void repaintBox(double width, double height) {
 
-		length = width + 2 * Constans.offset;
+		length = width + Constans.offset;
 
 		topRectangle.setWidth(length);
 		botomRectangle.setWidth(length);
@@ -159,6 +159,10 @@ public class InfoBoxSegment extends Group {
 
 		canItem.setMaxHeight(height);
 		canItem.setMaxWidth(length);
+
+		instanceCount.setTranslateX(length + Constans.offset);
+		instanceCount.setTranslateY(topRectangle.getHeight() + botomRectangle.getHeight() + Constans.offset);
+
 
 	}
 

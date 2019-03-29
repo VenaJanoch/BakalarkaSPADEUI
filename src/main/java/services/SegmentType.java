@@ -6,6 +6,6 @@ package services;
  * @author Václav Janoch
  */
 public enum SegmentType {
-    Phase, Iteration, Activity, WorkUnit, Milestone, Criterion, Configuration, ConfigPersonRelation, Branch,
-    Change, Artifact, Role,  Tag, Project, Priority, Severity, RoleType, Relation, Resolution, Status, Type, CommittedConfiguration, Commit, VCSTag,
+    Phase, Iteration, Activity, Work_Unit, Milestone, Criterion, Configuration, Config_Person_Relation, Branch,
+    Change, Artifact, Person,  Tag, Project, Priority, Severity, Role_Type, Relation, Resolution, Status, Type, Committed_Configuration, Commit, VCSTag,
 }

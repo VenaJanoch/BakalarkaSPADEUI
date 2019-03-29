@@ -74,20 +74,19 @@ public class ChangeForm extends TableBasicForm implements ISegmentTableForm {
     public Node getTable() {
         tableTV = new TableView<ChangeTable>();
 
-        TableColumn<ChangeTable, String> nameColumn = new TableColumn<ChangeTable, String>("Name");
-        TableColumn<ChangeTable, String> descriptionColumn = new TableColumn<ChangeTable, String>("Description");
+        TableColumn<ChangeTable, String> nameColumn = new TableColumn<ChangeTable, String>("Id");
+        TableColumn<ChangeTable, String> exist = new TableColumn<ChangeTable, String>("Exist");
 
-        nameColumn.setCellValueFactory(new PropertyValueFactory("name"));
+        nameColumn.setCellValueFactory(new PropertyValueFactory("idString"));
         nameColumn.setMinWidth(150);
         nameColumn.setCellFactory(TextFieldTableCell.forTableColumn());
 
-        descriptionColumn.setCellValueFactory(new PropertyValueFactory("description"));
-        descriptionColumn.setMinWidth(150);
-        descriptionColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+        exist.setCellValueFactory(new PropertyValueFactory("existString"));
+        exist.setMinWidth(150);
+        exist.setCellFactory(TextFieldTableCell.forTableColumn());
 
 
-        //tableTV.getColumns().addAll(nameColumn, descriptionColumn);
-        tableTV.getColumns().add(nameColumn);
+        tableTV.getColumns().addAll(nameColumn, exist);
         tableTV.setOnMousePressed(OnMousePressedEventHandler);
         tableTV.setEditable(false);
 
@@ -138,7 +137,7 @@ public class ChangeForm extends TableBasicForm implements ISegmentTableForm {
         int id = formController.createTableItem(SegmentType.Change);
         String idName = id + "_" + nameST;
 
-        ChangeTable table = new ChangeTable(idName, "", id);
+        ChangeTable table = new ChangeTable(idName, "", true, id);
 
         tableTV.getItems().add(table);
         tableTV.sort();

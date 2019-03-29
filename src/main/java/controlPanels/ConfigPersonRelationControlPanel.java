@@ -23,7 +23,7 @@ public class ConfigPersonRelationControlPanel extends NameControlPanel {
     public ConfigPersonRelationControlPanel(String buttonName, IFormDataController formDataController, IEditFormController editFormController, FormController formController){
         super(buttonName, formDataController, editFormController, formController);
         SegmentLists segmentLists = formController.getSegmentLists();
-        lineList.add(new ControlPanelLineObject("Role: ", ControlPanelLineType.ComboBox, ParamType.Role, segmentLists.getRoleObservable()));
+        lineList.add(new ControlPanelLineObject("Person: ", ControlPanelLineType.ComboBox, ParamType.Role, segmentLists.getRoleObservable()));
 
         createControlPanel();
     }
@@ -51,7 +51,10 @@ public class ConfigPersonRelationControlPanel extends NameControlPanel {
 
         controlPanelController.setValueTextField(this, lineList ,ParamType.Name, configPersonRelation, configPersonRelation[2], 0);
         controlPanelController.setValueTextField(this, lineList ,ParamType.Role, configPersonRelation, configPersonRelation[3], 1);
+        List boolList = configPersonRelation[4];
+        boolean exist = (boolean) boolList.get(0);
 
+        controlPanelController.setValueExistRadioButton(exist);
         button.setOnAction(event ->{
 
             ArrayList<Integer> nameIndicators = new ArrayList<>();
@@ -59,7 +62,7 @@ public class ConfigPersonRelationControlPanel extends NameControlPanel {
             ArrayList<String> name = controlPanelController.processTextLines(ParamType.Name, nameIndicators);
             ArrayList<Integer> role = controlPanelController.processComboBoxLines(ParamType.Role, roleIndicators);
 
-            editFormController.editDataFromCPR(name, role, nameIndicators, roleIndicators, cprTable);
+            editFormController.editDataFromCPR(name, role, nameIndicators, roleIndicators, controlPanelController.isExist(), cprTable);
             clearPanel(tableView);
 
         });

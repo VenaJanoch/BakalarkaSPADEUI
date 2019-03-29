@@ -35,8 +35,8 @@ public class Constans {
     public static final int twoFormWidth = 1250;
     public static final int twoFormHeight = 850;
 
-    public static final double minCanvasItemWidth = 155;
-    public static final double maxCanvasItemWidth = 155;
+    public static final double minCanvasItemWidth = 210;
+    public static final double maxCanvasItemWidth = 210;
 
     /**
      * Konstanta pro nastavení počtu segmentů a elementů
@@ -66,7 +66,7 @@ public class Constans {
     /**
      * Konstanta pro určtní poředí jmen tlačítek s tablukovými formuláři
      */
-    public static final String[] addButtonsNames = {"Project", "Add Milestone", "Add Role", "Add Config-role",
+    public static final String[] addButtonsNames = {"Project", "Add Milestone", "Add Person", "Add Config-role",
             "Add Priority", "Add Severity", "Add Relation", "Add Resolution", "Add Status", "Add Type", "Add Branch",
             "Add Configuration"};
 
@@ -182,7 +182,7 @@ public class Constans {
     public static final String linkPicture = "link.svn";
 
     public static final String[] addItemNames = {"Phase", "Iteration", "Activity", "Work Unit", "Milestone", "Criterion", "Config-role",
-            "Role Type", "Priority", "Severity", "Relation", "Resolution", "Status", "Type", "Branch", "Change", "VCSTag"};
+            "Role", "Priority", "Severity", "Relation", "Resolution", "Status", "Type", "Branch", "Change", "VCSTag"};
 
     public static final String[] textIndicatorList = {"IS", "IS NOT","CONTAINS", "NOT CONTAINS"};
     public static final String[] numberIndicatorList = {"EQUEL", "BIGGER", "SMALLER" };

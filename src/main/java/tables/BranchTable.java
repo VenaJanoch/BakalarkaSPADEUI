@@ -16,8 +16,8 @@ public class BranchTable extends BasicTable{
 	 * @param main hodnota main
 	 */
 	
-	public BranchTable(String name, String main, boolean isMain, int id) {
-		super(name, id);
+	public BranchTable(String name, String main, boolean isMain, boolean exist, int id) {
+		super(name, exist, id);
 		this.main = new SimpleStringProperty(main);
 		this.mainBool = isMain;
 	}

@@ -1,16 +1,11 @@
 package forms;
 
 import abstractform.TableBasicForm;
-import controlPanels.PhaseControlPanel;
 import controlPanels.WorkUnitControlPanel;
 import controllers.CanvasController;
 import controllers.FormController;
-import abstractform.DescriptionBasicForm;
 import interfaces.*;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
-import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.*;
@@ -22,8 +17,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import services.*;
-import tables.BasicTable;
-import tables.PhaseTable;
 import tables.WorkUnitTable;
 
 /**
@@ -77,14 +70,19 @@ public class WorkUnitForm extends TableBasicForm implements ISegmentTableForm {
 	public Node getTable() {
 		tableTV = new TableView<WorkUnitTable>();
 
-		TableColumn<WorkUnitTable, String> nameColumn = new TableColumn<WorkUnitTable, String>("Name");
+		TableColumn<WorkUnitTable, String> nameColumn = new TableColumn<WorkUnitTable, String>("Id");
+		TableColumn<WorkUnitTable, String> exist = new TableColumn<WorkUnitTable, String>("Exist");
 
-		nameColumn.setCellValueFactory(new PropertyValueFactory("name"));
+		nameColumn.setCellValueFactory(new PropertyValueFactory("idString"));
 		nameColumn.setMinWidth(150);
 		nameColumn.setCellFactory(TextFieldTableCell.forTableColumn());
 
+		exist.setCellValueFactory(new PropertyValueFactory("existString"));
+		exist.setMinWidth(150);
+		exist.setCellFactory(TextFieldTableCell.forTableColumn());
 
-		tableTV.getColumns().addAll(nameColumn);
+
+		tableTV.getColumns().addAll(nameColumn, exist);
 		tableTV.setOnMousePressed(OnMousePressedEventHandler);
 		tableTV.setEditable(false);
 
@@ -132,10 +130,10 @@ public class WorkUnitForm extends TableBasicForm implements ISegmentTableForm {
 	public void addItem() {
 		String nameST = "";// criterionControlPanel.getName();
 
-		int id = formController.createTableItem(SegmentType.WorkUnit);
+		int id = formController.createTableItem(SegmentType.Work_Unit);
 		String idName = id + "_" + nameST;
 
-		WorkUnitTable table = new WorkUnitTable(idName, id);
+		WorkUnitTable table = new WorkUnitTable(idName, true, id);
 		tableTV.getItems().add(table);
 		tableTV.sort();
 		formDataController.saveDataFromWorkUnit(nameST, table);

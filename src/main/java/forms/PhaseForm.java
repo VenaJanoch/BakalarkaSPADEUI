@@ -82,26 +82,19 @@ public class PhaseForm extends TableBasicForm implements ISegmentTableForm {
     @Override
     public Node getTable() {
         tableTV = new TableView<PhaseTable>();
+        TableColumn<PhaseTable, String> nameColumn = new TableColumn<PhaseTable, String>("Id");
+        TableColumn<PhaseTable, String> exist = new TableColumn<PhaseTable, String>("Exist");
 
-        TableColumn<PhaseTable, String> nameColumn = new TableColumn<PhaseTable, String>("Name");
-        TableColumn<PhaseTable, String> milestoneColumn = new TableColumn<PhaseTable, String>("Milestone");
-        TableColumn<PhaseTable, String> configurationColumn = new TableColumn<PhaseTable, String>("Configuration");
-
-        nameColumn.setCellValueFactory(new PropertyValueFactory("name"));
+        nameColumn.setCellValueFactory(new PropertyValueFactory("idString"));
         nameColumn.setMinWidth(150);
         nameColumn.setCellFactory(TextFieldTableCell.forTableColumn());
 
-        milestoneColumn.setCellValueFactory(new PropertyValueFactory("milestone"));
-        milestoneColumn.setMinWidth(150);
-        milestoneColumn.setCellFactory(TextFieldTableCell.forTableColumn());
-
-        configurationColumn.setCellValueFactory(new PropertyValueFactory("configuration"));
-        configurationColumn.setMinWidth(150);
-        configurationColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+        exist.setCellValueFactory(new PropertyValueFactory("existString"));
+        exist.setMinWidth(150);
+        exist.setCellFactory(TextFieldTableCell.forTableColumn());
 
 
-    //    tableTV.getColumns().addAll(nameColumn, milestoneColumn, configurationColumn);
-        tableTV.getColumns().add(nameColumn);
+        tableTV.getColumns().addAll(nameColumn, exist);
         tableTV.setOnMousePressed(OnMousePressedEventHandler);
         tableTV.setEditable(false);
 
@@ -152,7 +145,7 @@ public class PhaseForm extends TableBasicForm implements ISegmentTableForm {
         int id = formController.createTableItem(SegmentType.Phase);
         String idName = id + "_" + nameST;
 
-        PhaseTable table = new PhaseTable(idName, "", "", id);
+        PhaseTable table = new PhaseTable(idName, "", "", true, id);
         tableTV.getItems().add(table);
         tableTV.sort();
 

@@ -3,8 +3,6 @@ package controlPanels;
 import abstractControlPane.DescriptionControlPanel;
 import controllers.FormController;
 import controllers.WorkUnitControlPanelController;
-import graphics.ComboBoxItem;
-import graphics.TextFieldItem;
 import interfaces.IEditFormController;
 import interfaces.IFormDataController;
 import javafx.scene.control.*;
@@ -51,7 +49,6 @@ public class WorkUnitControlPanel extends DescriptionControlPanel {
     protected void addItemsToControlPanel(){
 
 
-        controlPanelController.setRadioButton(this, 1, "Exist: ", false);
         controlPanelController.createNewLine(this, lineList);
     }
 
@@ -76,14 +73,11 @@ public class WorkUnitControlPanel extends DescriptionControlPanel {
         controlPanelController.setValueComboBox(this, lineList ,ParamType.Type, (ArrayList<Integer>) workUnitData[8], workUnitData[19]);
         controlPanelController.setValueComboBox(this, lineList ,ParamType.AssigneeRole, (ArrayList<Integer>) workUnitData[9], workUnitData[20]);
         controlPanelController.setValueComboBox(this, lineList ,ParamType.Role, (ArrayList<Integer>) workUnitData[10], workUnitData[21]);
-        ArrayList<ArrayList<Integer>> workUnits = formDataController.getWorkUnitFromSegment(id, SegmentType.WorkUnit);
+        ArrayList<ArrayList<Integer>> workUnits = formDataController.getWorkUnitFromSegment(id, SegmentType.Work_Unit);
         controlPanelController.setValueRelationBox(this, lineList, ParamType.Relation, (ArrayList<Integer>) workUnitData[23], workUnits);
         List boolList = workUnitData[22];
-        exist = false;
-        if (boolList.size() != 0){
-            exist = true;
-        }
-        controlPanelController.setValueRadioButton(exist);
+        exist = (boolean) boolList.get(0);
+        controlPanelController.setValueExistRadioButton(exist);
 
         button.setOnAction(event -> saveDataFromPanel(basicTable, tableView));
     }
@@ -117,7 +111,7 @@ public class WorkUnitControlPanel extends DescriptionControlPanel {
         ArrayList<Integer> role = controlPanelController.processComboBoxLines(ParamType.Role, roleIndicators);
         ArrayList<Integer> relation = controlPanelController.processRelationComboBoxLines(ParamType.Relation, workUnit);
 
-        boolean exist = controlPanelController.isMain();
+        boolean exist = controlPanelController.isExist();
 
 
         editFormController.editDataFromWorkUnit(name, desc, category, assignee, role, priority, severity, type, resolution, status, estimated, nameIndicators,

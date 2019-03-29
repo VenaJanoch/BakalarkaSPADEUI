@@ -23,8 +23,8 @@ public class ConfigTable extends BasicTable {
 	 * @param release hodnota release
 	 * @param id      identikace
 	 */
-	public ConfigTable(String name, String release, int formIndex, int id) {
-		super(name, id);
+	public ConfigTable(String name, String release, int formIndex, boolean exist, int id) {
+		super(name, exist, id);
 		this.release = new SimpleStringProperty(release);
 		this.formIndex = new SimpleIntegerProperty(formIndex);
 
