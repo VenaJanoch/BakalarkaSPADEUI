@@ -49,10 +49,10 @@ public class DeleteDataModel implements IDeleteDataModel {
         }
     }
 
-    public void removeRole(ObservableList<Integer> indexList) {
-        for(int i = indexList.size() -1; i >= 0; i-- ){
-            project.getRoles().remove((int)indexList.get(i));
-        }
+    public void removeRole(int id) {
+        int projectIndex = dataModel.getRoleIndexInProject(id);
+            project.getRoles().remove(projectIndex);
+
     }
 
     public void removeResolution(ObservableList<Integer> indexList) {
@@ -97,6 +97,12 @@ public class DeleteDataModel implements IDeleteDataModel {
         }
     }
 
+    public void removeVCSTag(ObservableList<Integer> indexList) {
+        for(int i = indexList.size() -1; i >= 0; i-- ){
+            project.getVcsTag().remove((int)indexList.get(i));
+        }
+    }
+
     public void removeArtifactChangeLink(int artifactID, int changeID) {
 
 
@@ -109,10 +115,9 @@ public class DeleteDataModel implements IDeleteDataModel {
         project.getArtifacts().remove(dataModel.getArtifactIndexInProject(id));
     }
 
-    public void removeConfiguration(ObservableList<Integer> indexList){
-        for(int i = indexList.size() -1; i >= 0; i-- ){
-            project.getConfiguration().remove((int)indexList.get(i));
-        }
+    public void removeConfiguration(int id){
+        int projectIndex = dataModel.getConfigurationIndexInProject(id);
+        project.getConfiguration().remove(projectIndex);
     }
 
     public void removeWorkUnit(ObservableList<Integer> indexList) {
@@ -149,6 +154,16 @@ public class DeleteDataModel implements IDeleteDataModel {
         for(int i = indexList.size() -1; i >= 0; i-- ){
             project.getChanges().remove((int)indexList.get(i));
         }
+    }
+
+    public void removeCommitedConfiguration(int id){
+        int projectIndex = dataModel.getCommitedConfigurationIndexInProject(id);
+        project.getCommitConfiguration().remove(projectIndex);
+    }
+
+    public void removeCommit(int id){
+        int projectIndex = dataModel.getCommitIndexInProject(id);
+        project.getCommit().remove(projectIndex);
     }
 
 }

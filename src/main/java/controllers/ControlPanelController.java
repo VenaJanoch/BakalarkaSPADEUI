@@ -206,10 +206,11 @@ public class ControlPanelController {
             if (superIndex == -1) {
 
                 superClassLine.getComboBoxItem().selectItemInComboBox(superIndex);
+                superClassLine.lockComboBox();
                 superIndex = 0;
             } else {
-
                 superClassLine.getComboBoxItem().selectItemInComboBox(superIndex);
+                superClassLine.unlockComboBox();
             }
         }
     };

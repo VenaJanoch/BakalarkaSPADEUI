@@ -148,6 +148,10 @@ public class RoleTypeForm extends TableBasicForm implements ISegmentTableForm {
 		editButton.setOnAction(event -> showEditPanel());
 	}
 
+	public TableView<RoleTypeTable> getTableTV() {
+		return tableTV;
+	}
+
 	@Override
 	public void addItem() {
 		String nameST = "";// criterionControlPanel.getName();
@@ -163,5 +167,6 @@ public class RoleTypeForm extends TableBasicForm implements ISegmentTableForm {
 		tableTV.getSelectionModel().select(lastItem - 1);
 		showEditPanel();
 	}
+
 
 }

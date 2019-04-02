@@ -154,6 +154,10 @@ public class PhaseForm extends TableBasicForm implements ISegmentTableForm {
         showEditPanel();
     }
 
+    public TableView<PhaseTable> getTableTV() {
+        return tableTV;
+    }
+
     public PhaseControlPanel getEditControlPanel() {
         return editControlPanel;
     }

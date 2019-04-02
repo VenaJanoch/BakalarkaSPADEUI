@@ -18,8 +18,8 @@ public interface IEditFormController {
 //   void editDataFromPriority(ArrayList<String> name, ArrayList<Integer> nameIndicator, String className, String superClassName, ClassTable classTable, int id);
 //   void editDataFromTag(String tag, TagTable tagTable, int configFormId, int id);
  //void editDataFromRoleType(ArrayList<String> name, ArrayList<Integer> nameIndicator, String className, String superClassName, ClassTable classTable, int id);
-   void editDataFromRole(ArrayList<String> name, ArrayList<Integer> nameIndicator, String count, ArrayList<Integer> roleTypeIndex,
-                         ArrayList<Integer> roleTypeIndicators, PersonTable personTable, boolean exist, int id);
+   void editDataFromPerson(ArrayList<String> name, ArrayList<Integer> nameIndicator, String count, ArrayList<Integer> roleTypeIndex,
+                           ArrayList<Integer> roleTypeIndicators, PersonTable personTable, boolean exist, int id);
 //    private void editDataFromSeverity(String nameST, String className, String superClassName, ClassTable classTable, int id);
    void editDataFromMilestone(ArrayList<String> nameST, ArrayList<Integer> nameIndicators, ArrayList<String>description, ArrayList<Integer> descriptionIndicators,
                               MilestoneTable milestoneTable, ArrayList<ArrayList<Integer>> criterionIndex,

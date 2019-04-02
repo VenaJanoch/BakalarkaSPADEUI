@@ -152,4 +152,8 @@ public class ActivityForm extends TableBasicForm implements ISegmentTableForm {
 		tableTV.getSelectionModel().select(lastItem - 1);
 		showEditPanel();
 	}
+
+	public TableView<ActivityTable> getTableTV() {
+		return tableTV;
+	}
 }

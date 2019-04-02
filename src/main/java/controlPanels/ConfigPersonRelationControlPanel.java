@@ -62,7 +62,7 @@ public class ConfigPersonRelationControlPanel extends NameControlPanel {
             ArrayList<String> name = controlPanelController.processTextLines(ParamType.Name, nameIndicators);
             ArrayList<Integer> role = controlPanelController.processComboBoxLines(ParamType.Role, roleIndicators);
 
-            editFormController.editDataFromCPR(name, role, nameIndicators, roleIndicators, controlPanelController.isExist(), cprTable);
+            editFormController.editDataFromCPR(name, nameIndicators, role, roleIndicators, controlPanelController.isExist(), cprTable);
             clearPanel(tableView);
 
         });

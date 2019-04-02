@@ -100,8 +100,6 @@ public class FormDataController implements IFormDataController {
 
     public boolean saveDataFromWorkUnit(String actName, BasicTable workUnitTable) {
 
-        String nameForManipulator = InputController.fillTextMapper(actName);
-        saveDataModel.createNewWorkUnit(workUnitTable.getId());
         lists.getWorkUnitsObservable().add(workUnitTable);
         return  true;
     }
@@ -143,10 +141,6 @@ public class FormDataController implements IFormDataController {
         }
 
         formController.setConfigurationFormToTableForm();
-        ArrayList<Integer> branchIndicies = dataModel.getBranchIndices(branchIndex);
-        ArrayList<Integer> cprIndicies = dataModel.getCPRIndices(cprIndex);
-        int roleIndex = dataModel.getRoleId(authorIndex);
-      //  mapperTableToObject.mapTableToConfiguration(roleIndex, branchIndicies, cprIndicies, idName, configIndex);
         return true;
     }
 
@@ -190,6 +184,34 @@ public class FormDataController implements IFormDataController {
         formController.setNameToItem(indexForm, nameForManipulator);
         return  true;
     }
+
+
+   public void saveDataFromVCSTag(String nameST, VCSTagTable table){
+
+       lists.getVCSTag().add(table);
+    }
+
+    public void createArtifactToConfigurationRelation(Integer startId, Integer endId){
+        saveDataModel.createNewArtifacToConfigurationRelation(startId, endId);
+        mapperTableToObject.mapTableToObjects(SegmentType.Configuration, SegmentType.Artifact, startId, new TableToObjectInstanc( String.valueOf(endId), startId, SegmentType.Configuration));
+    }
+
+
+    public void createCommitToCommitedConfigurationRelation(Integer startId, Integer endId){
+        saveDataModel.createCommitToCommitedConfigurationRelation(startId, endId);
+        mapperTableToObject.mapTableToObjects(SegmentType.Committed_Configuration, null, startId, new TableToObjectInstanc( String.valueOf(endId), startId, SegmentType.Committed_Configuration));
+    }
+
+    public void createCommitedConfigurationToConfigurationRelation(Integer startId, Integer endId){
+        saveDataModel.createCommitedConfigurationToConfigurationRelation(startId, endId);
+        mapperTableToObject.mapTableToObjects(SegmentType.Configuration, SegmentType.Committed_Configuration, startId,
+                new TableToObjectInstanc( String.valueOf(endId), startId, SegmentType.Configuration));
+    }
+
+
+
+
+
     public void saveDataFromBranch(String nameST, BranchTable branchTable) {
 
         String nameForManipulator = InputController.fillTextMapper(nameST);
@@ -204,15 +226,7 @@ public class FormDataController implements IFormDataController {
 
     public void saveDataFromCPR(String nameST, int roleListIndex, CPRTable cprTable) {
 
-        String nameForManipulator = InputController.fillTextMapper(nameST);
-        int roleIndexFormManipulator = dataPreparer.prepareIndexForManipulator(roleListIndex);
-        saveDataModel.createNewCPR( cprTable.getId());
         lists.getCPRObservable().add(cprTable);
-
-        int roleId = dataModel.getRoleId(roleIndexFormManipulator);
-      //  mapperTableToObject.mapTableToObject(SegmentType.Config_Person_Relation, roleId,
-      //          new TableToObjectInstanc(cprTable.getName(), cprTable.getId(), SegmentType.Config_Person_Relation));
-
     }
 
     public void saveDataFromCriterionForm(String nameST, CriterionTable criterionTable) {
@@ -265,7 +279,7 @@ public class FormDataController implements IFormDataController {
         String descForManipulator = InputController.fillTextMapper(personTable.getDescription());
         int typeFormManipulator = dataPreparer.prepareIndexForManipulator(typeIndex);
 
-        saveDataModel.crateNewRole(personTable.getId());
+        saveDataModel.createNewRole(personTable.getId());
         lists.getRoleObservable().add(personTable);
 
        // int roleTypeIndex = dataModel.getRoleTypeIndex(typeFormManipulator);
@@ -288,7 +302,7 @@ public class FormDataController implements IFormDataController {
     public void saveDataFromStatusForm(String nameST, ClassTable classTable) {
 
         String nameForManipulator = InputController.fillTextMapper(nameST);
-        saveDataModel.crateNewStatus(nameForManipulator, classTable.getClassType(), classTable.getSuperType(), classTable.getId());
+        saveDataModel.createNewStatus(nameForManipulator, classTable.getClassType(), classTable.getSuperType(), classTable.getId());
         lists.getStatusTypeObservable().add(classTable);
     }
 

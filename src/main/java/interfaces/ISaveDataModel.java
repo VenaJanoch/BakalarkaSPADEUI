@@ -23,11 +23,11 @@ import java.util.ArrayList;
       void createNewSeverity(String nameForManipulator, String classST, String superST, int id);
       void createNewRelation(String nameForManipulator, String classST, String superST, int id);
       void createNewResolution(String nameForManipulator, String classST, String superST, int id);
-      void crateNewRole(int id);
+      void createNewRole(int id);
       void createNewMilestone(String nameForManipulator, String description, ArrayList<Integer> criterionIndex, int id);
       void createNewRoleType(String nameForManipulator, String classST, String superST, int id);
       void addTagToConfiguration(String tag, int configId, int index);
-      void crateNewStatus(String nameForManipulator, String classST, String superST, int id);
+      void createNewStatus(String nameForManipulator, String classST, String superST, int id);
       void createNewType(String nameForManipulator, String classST, String superST, int id);
 
       void createNewVCSTag(int id);

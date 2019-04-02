@@ -2,16 +2,11 @@ package controlPanels;
 
 import abstractControlPane.NameControlPanel;
 import controllers.FormController;
-import abstractControlPane.DescriptionControlPanel;
-import graphics.ComboBoxItem;
 import graphics.ControlPanelLine;
-import graphics.TextFieldItem;
 import interfaces.IControlPanel;
 import interfaces.IEditFormController;
 import interfaces.IFormDataController;
-import javafx.scene.control.*;
 import services.*;
-import tables.BasicTable;
 import tables.PersonTable;
 
 import java.util.ArrayList;
@@ -48,7 +43,7 @@ public class PersonControlPanel extends NameControlPanel implements IControlPane
 
             String count = controlPanelController.getInstanceCount();
 
-            editFormController.editDataFromRole(name, nameIndicators, count, roleType, roleTypeIndicators, personTable,
+            editFormController.editDataFromPerson(name, nameIndicators, count, roleType, roleTypeIndicators, personTable,
                     controlPanelController.isExist(), roleId);
 
         });

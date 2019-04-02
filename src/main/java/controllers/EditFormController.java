@@ -132,8 +132,8 @@ public class EditFormController implements IEditFormController {
 
 
 
-    public void editDataFromRole(ArrayList<String> name, ArrayList<Integer> nameIndicator, String count, ArrayList<Integer> roleTypeIndex,
-                                 ArrayList<Integer> roleTypeIndicators, PersonTable personTable, boolean exist, int id) {
+    public void editDataFromPerson(ArrayList<String> name, ArrayList<Integer> nameIndicator, String count, ArrayList<Integer> roleTypeIndex,
+                                   ArrayList<Integer> roleTypeIndicators, PersonTable personTable, boolean exist, int id) {
 
         int instanceCount;
         try {
@@ -151,7 +151,7 @@ public class EditFormController implements IEditFormController {
             ArrayList<Integer> roleType = dataModel.getRoleTypeIndex(typeFormManipulator);
             mapperTableToObject.mapTableToObject(SegmentType.Person, roleType, new TableToObjectInstanc(personTable.getName(), personTable.getId(),
                     SegmentType.Person));
-            mapperTableToObject.updateValueList(roleType, mapperTableToObject.getRoleToRoleTypeMapper(),
+            mapperTableToObject.updateValueList(roleType, mapperTableToObject.getPersonToRoleTypeMapper(),
                     id, roleName);
 
             int formIndex = identificatorCreater.getRoleSegmentIndexToFormMaper().get(id);
@@ -275,7 +275,8 @@ public class EditFormController implements IEditFormController {
         String phaseName = dataPreparer.createTableItemIdName(id, nameForManipulator.get(0));
         phaseTable.setName(phaseName);
         phaseTable.setExist(exist);
-        mapperTableToObject.mapTableToPhase(milestoneForManipulator, configIdForManipulator, phaseName , id);
+        ArrayList<Integer> workUnitIndicies = dataModel.getWorkUnitIds(workUnitsForManipulator);
+        mapperTableToObject.mapTableToPhase(milestoneForManipulator, configIdForManipulator, workUnitIndicies, phaseName, id);
 
     }
 
@@ -291,16 +292,17 @@ public class EditFormController implements IEditFormController {
         ArrayList<LocalDate> endDate1 = InputController.checkDate(endDateL);
 
         ArrayList<Integer> configIdForManipulator = dataPreparer.prepareIndexForManipulator(confIndex);
-
         ArrayList<ArrayList<Integer>> workUnitsForManipulator = dataPreparer.prepareIndicesForManipulator(workUnitIndexList);
+
        dataManipulator.editDataInIteration(nameForManipulator, startDate1, endDate1, descriptionForManipulator, configIdForManipulator,
                workUnitsForManipulator, workUnitIndicators, nameIndicator, endDateIndicator, startDateIndicator, descIndicator, confIndicator, exist, id);
 
         String iterationName = dataPreparer.createTableItemIdName(id, nameForManipulator.get(0));
         iterationTable.setName(iterationName);
         iterationTable.setExist(exist);
-        mapperTableToObject.mapTableToObject(SegmentType.Iteration, configIdForManipulator,
-                new TableToObjectInstanc(iterationName, id, SegmentType.Iteration));
+        ArrayList<Integer> workUnitIndicies = dataModel.getWorkUnitIds(workUnitsForManipulator);
+        mapperTableToObject.mapTableToIteration(configIdForManipulator, workUnitIndicies, iterationName, id);
+
 
     }
 
@@ -333,7 +335,8 @@ public class EditFormController implements IEditFormController {
                 nameIndicators,  descIndicators, workUnitIndicators, exist, id);
 
         activityTable.setExist(exist);
-        activityTable.setExist(exist);
+        ArrayList<Integer> workUnitIndicies = dataModel.getWorkUnitIds(workUnitsForManipulator);
+        mapperTableToObject.mapTableToObject(SegmentType.Activity, workUnitIndicies, new TableToObjectInstanc(String.valueOf(id), id, SegmentType.Activity));
 
     }
 
@@ -485,6 +488,7 @@ public class EditFormController implements IEditFormController {
         tagTable.setExist(exist);
         String VCSTagName = dataPreparer.createTableItemIdName(id, nameForManipulator.get(0));
         tagTable.setName(VCSTagName);
+        segmentLists.getVCSTag().add(tagTable);
     }
 
     @Override
@@ -505,7 +509,11 @@ public class EditFormController implements IEditFormController {
             formController.setNameToItem(formIndex, nameForManipulator.get(0));
             formController.setItemInstanceCount(formIndex, instanceCount);
             formController.setItemColor(formIndex, exist);
-        //TODO:PRidat mapovani pro BranchToCommit a ostatni Commited configuration atd
+
+            ArrayList<Integer> branchIndicies = dataModel.getBranchIndices(branchesForManipulator);
+            ArrayList<Integer> tagIndicies = dataModel.getVCSTagIndices(tagForManipulator);
+            mapperTableToObject.mapTableToCommit(branchIndicies, tagIndicies, String.valueOf(id), id);
+
         }catch (NumberFormatException e){
             Alerts.showWrongNumberFormat("Instance count");
             e.printStackTrace();

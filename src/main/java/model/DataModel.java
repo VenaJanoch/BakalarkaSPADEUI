@@ -174,14 +174,28 @@ public class DataModel {
         return -1;
     }
 
-    public ArrayList<Integer> getBranchIndices(ArrayList<Integer> branchIndex) {
+    public ArrayList<Integer> getVCSTagIndices(ArrayList<Integer> tagIndex) {
+        List<VCSTag> vcsTages = project.getVcsTag();
+        ArrayList<Integer> existVCSTagId = new ArrayList();
+
+            for (int i : tagIndex) {
+                if (i != -1) {
+                    existVCSTagId.add(vcsTages.get(i).getId());
+                }
+            }
+        return existVCSTagId;
+    }
+    
+
+    public ArrayList<Integer> getBranchIndices(ArrayList<ArrayList<Integer>> branchIndex) {
         List<Branch> branches = project.getBranches();
         ArrayList<Integer> existBranchId = new ArrayList();
-        for (int i : branchIndex) {
-            if (i != -1) {
-                existBranchId.add(branches.get(i).getId());
+        for (ArrayList<Integer> list : branchIndex){
+            for (int i : list) {
+                if (i != -1) {
+                    existBranchId.add(branches.get(i).getId());
+                }
             }
-
         }
         return existBranchId;
     }
@@ -209,6 +223,17 @@ public class DataModel {
         return existCprId;
     }
 
+    public int getVCSTAgProjectIndex(int deleteId) {
+        List<VCSTag> items = project.getVcsTag();
+        for (int i = 0; i < items.size(); i++) {
+
+            if (items.get(i).getId() == deleteId) {
+                return i;
+            }
+        }
+        return -1;
+    }
+    
     public int getConfigurationIndexInProject(int id) {
         List<Configuration> items = project.getConfiguration();
         for (int i = 0; i < items.size(); i++) {
@@ -1077,6 +1102,20 @@ public class DataModel {
         return index;
     }
 
+    public ArrayList getWorkUnitIds(ArrayList<ArrayList<Integer>> workUnitIndex) {
+
+        List<WorkUnit> criterion = project.getWorkUnits();
+        ArrayList<Integer> existCriterionId = new ArrayList();
+        for (ArrayList<Integer> list : workUnitIndex){
+            for (int i : list) {
+                if (i != -1) {
+                    existCriterionId.add(criterion.get(i).getId());
+                }
+
+            }
+        }
+        return existCriterionId;
+    }
 
     public ArrayList getCriterionIds(ArrayList<ArrayList<Integer>> criterionIndex) {
 
@@ -1209,9 +1248,28 @@ public class DataModel {
         return idList;
     }
 
+    public List<Integer> getTagId(List<Integer> index) {
+        ArrayList<Integer> idList = new ArrayList<>();
+        List<VCSTag> configList = project.getVcsTag();
+        for (int configurationIndex : index){
+            idList.add(configList.get(configurationIndex).getId());
+        }
+        return idList;
+
+    }
+
     public ArrayList<Integer> getArtifactId(List<Integer> artifactForManipulator) {
         ArrayList<Integer> idList = new ArrayList<>();
         List<Artifact> artifactList = project.getArtifacts();
+        for (int artifactIndex : artifactForManipulator){
+            idList.add(artifactList.get(artifactIndex).getId());
+        }
+        return idList;
+    }
+    
+    public ArrayList<Integer> getCommitedConfigurationId(List<Integer> artifactForManipulator){
+        ArrayList<Integer> idList = new ArrayList<>();
+        List<CommitedConfiguration> artifactList = project.getCommitConfiguration();
         for (int artifactIndex : artifactForManipulator){
             idList.add(artifactList.get(artifactIndex).getId());
         }
@@ -1278,7 +1336,7 @@ public class DataModel {
         return project.getCommit().get(getCommitIndexInProject(commitId));
     }
 
-    private int getCommitIndexInProject(int id) {
+    public int getCommitIndexInProject(int id) {
         List<Commit> items = project.getCommit();
         for (int i = 0; i < items.size(); i++) {
             if (items.get(i).getId() == id) {
@@ -1292,7 +1350,7 @@ public class DataModel {
         return project.getCommitConfiguration().get(getCommitedConfigurationIndexInProject(commitedId));
     }
 
-    private int getCommitedConfigurationIndexInProject(int id) {
+    public int getCommitedConfigurationIndexInProject(int id) {
         List<CommitedConfiguration> items = project.getCommitConfiguration();
         for (int i = 0; i < items.size(); i++) {
             if (items.get(i).getId() == id) {

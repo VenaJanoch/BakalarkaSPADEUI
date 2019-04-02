@@ -86,8 +86,8 @@ public class IterationControlPanel extends WorkUnitDateControlPanel {
         ArrayList<Integer> configIndex = controlPanelController.processComboBoxLines(ParamType.Configuration, configIndicators);
 
 
-        editFormController.editDataFromIteration(name, startDate, endDate, desc, configIndex,
-                workUnit, workUnitIndicators, nameIndicators, date1Indicators, date2Indicators, descIndicators, configIndicators,
+        editFormController.editDataFromIteration(name, endDate, startDate, desc, configIndex,
+                workUnit, workUnitIndicators, nameIndicators, date2Indicators, date1Indicators, descIndicators, configIndicators,
                 iterationTable, controlPanelController.isExist(), id);
 
         clearPanelCB(tableView);

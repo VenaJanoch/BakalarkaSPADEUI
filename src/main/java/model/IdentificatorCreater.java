@@ -50,49 +50,49 @@ public class IdentificatorCreater {
     private Map<Integer, Integer> configurationIndexToIdMapper = new HashMap<>();
     private Map<Integer, Integer> configurationIdToIndexMapper = new HashMap<>();
 
-    public void setDataToConfigurationMappers(int formIndex, int segmentId){
-        configurationIdToIndexMapper.put(segmentId, formIndex);
-        configurationIndexToIdMapper.put(formIndex, segmentId);
-        configID++;
-    }
-    
-    public void setDataToActivityMapper(int formIndex, int segmentId){
-        activityFormToIdMapper.put(formIndex, segmentId);
-        activityID++;
+    public int setDataToConfigurationMappers(int segmentId) {
+        configurationIdToIndexMapper.put(segmentId, index);
+        configurationIndexToIdMapper.put(index, segmentId);
+        configID = segmentId;
+        index++;
+        return index - 1;
     }
 
-    public void setDataToIterationMapper(int formIndex, int segmentId){
-        commitedConfigurationIndexToIdMaper.put(formIndex, segmentId);
-        iterationID++;
+
+    public int setDataToCommitedConfigurationMapper(int segmentId) {
+        commitedConfigurationIndexToIdMaper.put(index, segmentId);
+        commitedConfigurationIdToIndexMaper.put(segmentId, index);
+        commtedConfigurationID = segmentId;
+        index++;
+        return index - 1;
     }
 
-    public void setDataToCommitMapper(int formIndex, int segmentId){
-        commitIndexToIdMaper.put(formIndex, segmentId);
-        commidID++;
+    public int setDataToCommitMapper(int segmentId) {
+        commitIndexToIdMaper.put(index, segmentId);
+        commitIdtoIndexMaper.put(segmentId, index);
+        index++;
+        commidID = segmentId;
+        return index - 1;
     }
 
-    public void setDataToWorkUnitsMappers(int formIndex, int segmentId){
-        workUnitIndexToIdMaper.put(formIndex, segmentId);
-        workUnitSegmentIdToFormIndexMaper.put(segmentId, formIndex);
-        workUnitID++;
+    public int setDataToArtifactMappers(int segmentId) {
+
+        artifactIndexToIdMaper.put(index, segmentId);
+        artifactSegmentIdToFormIndexMaper.put(segmentId, index);
+        index++;
+        artifactID = segmentId;
+        return index - 1;
     }
 
-    public void setDataToArtifactMappers(int formIndex, int segmentId){
-        artifactIndexToIdMaper.put(formIndex, segmentId);
-        artifactSegmentIdToFormIndexMaper.put(segmentId, formIndex);
-        artifactID++;
-
+    public int setDataToRoleMappers(int segmentId) {
+        roleIndexToIdMaper.put(index, segmentId);
+        roleSegmentIndexToFormMaper.put(segmentId, index);
+        index++;
+        roleID = segmentId;
+        return index - 1;
     }
 
-    public void setDataToChangeMappers(int formIndex, int segmentId){
-        roleIndexToIdMaper.put(formIndex, segmentId);
-        roleSegmentIndexToFormMaper.put(segmentId, formIndex);
-        changeID++;
-    }
-    
-    
-    
-    
+
     /**
      * Metody pro inkrementaci počtu daného prvku
      */
@@ -211,7 +211,7 @@ public class IdentificatorCreater {
         artifactIndexToIdMaper.put(index, artifactID);
         artifactSegmentIdToFormIndexMaper.put(artifactID, index);
         index++;
-        return index -1;
+        return index - 1;
     }
 
     public int createCPRID() {

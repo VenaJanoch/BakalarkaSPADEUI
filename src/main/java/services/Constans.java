@@ -105,6 +105,18 @@ public class Constans {
     public static final int priorityTypeOtherSuperClass = 4;
 
     /**
+     * Konstanty pro mapování priority Class na priority Super Class
+     */
+    public static final int severityTypeMajorlClass = 2;
+    public static final int severityTypeNormalClass = 3;
+    public static final int severityTypeMinorClass = 5;
+    public static final int severityTypeOtherSuperClass = 6;
+
+    public static final int severityTypeMinorSuperClass = 1;
+    public static final int severityTypeNormalSuperClass = 2;
+    public static final int severityTypeMajorClassSuperClass = 3;
+
+    /**
      * Konstanty pro mapování resolution Class na Super Class
      */
     public static final int resolutionTypeFinishedClass = 5;

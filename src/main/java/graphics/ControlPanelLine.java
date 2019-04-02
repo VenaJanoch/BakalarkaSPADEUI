@@ -201,4 +201,12 @@ public class ControlPanelLine {
         checkComboBoxItem.selectItemsInComboBox(workUnit);
         exitButton.setSelected(true);
     }
+
+    public void unlockComboBox() {
+        comboBoxItem.getItemCB().setDisable(true);
+    }
+
+    public void lockComboBox() {
+        comboBoxItem.getItemCB().setDisable(false);
+    }
 }

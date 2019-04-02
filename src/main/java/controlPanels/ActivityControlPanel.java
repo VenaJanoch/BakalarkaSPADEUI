@@ -21,7 +21,7 @@ import abstractControlPane.WorkUnitControlPanel;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ActivityControlPanel extends DescriptionControlPanel {
+public class ActivityControlPanel extends WorkUnitControlPanel {
 
     /**
      * Globální proměnné třídy

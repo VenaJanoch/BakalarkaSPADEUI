@@ -145,4 +145,8 @@ public class ChangeForm extends TableBasicForm implements ISegmentTableForm {
         tableTV.getSelectionModel().select(lastItem - 1);
         showEditPanel();
     }
+
+    public TableView<ChangeTable> getTableTV() {
+        return tableTV;
+    }
 }

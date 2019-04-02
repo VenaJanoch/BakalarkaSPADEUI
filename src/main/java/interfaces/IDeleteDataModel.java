@@ -13,7 +13,7 @@ import java.util.ArrayList;
       void removeTag(ArrayList<Integer> indexList, int configId);
       void removeRoleType(ObservableList<Integer> indexList);
       void removeMilestone(ObservableList<Integer> indexList);
-      void removeRole(ObservableList<Integer> indexList);
+      void removeRole(int id);
       void removeResolution(ObservableList<Integer> indexList);
       void removeRelation(ObservableList<Integer> indexList);
       void removeSeverity(ObservableList<Integer> indexList);
@@ -21,12 +21,17 @@ import java.util.ArrayList;
       void removeCriterion(ObservableList<Integer> indexList);
       void removeCPR(ObservableList<Integer> indexList);
       void removeBranch(ObservableList<Integer> indexList);
+      void removeVCSTag(ObservableList<Integer> indexList);
       void removeArtifactChangeLink(int artifactID, int changeID);
       void removeArtifact(int id);
-      void removeConfiguration(ObservableList<Integer> indexList);
+      void removeConfiguration(int id);
       void removeWorkUnit(ObservableList<Integer> indexList);
       void removeActivity(ObservableList<Integer> indexList);
       void removeWorkUnitRelation(int startItemId, int endItemId);
       void removeIteration(ObservableList<Integer> indexList);
       void removePhase(ObservableList<Integer> indexList);
-}
+
+      void removeCommitedConfiguration(int id);
+
+      void removeCommit(int id);
+  }

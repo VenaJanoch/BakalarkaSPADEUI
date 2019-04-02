@@ -68,6 +68,39 @@ public class ClassSwitcher {
 	}
 
 	/**
+	 * Rozhodovací metoda pro mapování Severity Class na Super Class
+	 *
+	 * @param classIndex
+	 * @return Super Class index
+	 */
+	public int severityClassToSupperClass(int classIndex) {
+
+		if (classIndex == Constans.severityTypeNormalClass) {
+
+			return Constans.severityTypeNormalSuperClass;
+
+		} else if (classIndex >= 1 && classIndex <= Constans.severityTypeMajorlClass) {
+
+			return Constans.severityTypeMajorClassSuperClass;
+
+		} else if (classIndex < 1) {
+
+			return -1;
+
+		} else if (classIndex > Constans.severityTypeNormalClass && classIndex <= Constans.severityTypeMinorClass) {
+
+			return Constans.severityTypeMinorSuperClass;
+
+		} else {
+
+			return Constans.severityTypeOtherSuperClass;
+		}
+	}
+
+
+
+
+	/**
 	 * Rozhodovací metoda pro mapování Relation Class na Super Class
 	 * 
 	 * @param classIndex
@@ -172,7 +205,7 @@ public class ClassSwitcher {
 			case Role_Type:
 				return roleClassToSupperClass(classIndex);
 			case Severity:
-				return -1 ;
+				return severityClassToSupperClass(classIndex);
 			case Priority:
 				return priorityClassToSupperClass(classIndex);
 			case Resolution:

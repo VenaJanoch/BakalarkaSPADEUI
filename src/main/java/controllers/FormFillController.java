@@ -54,11 +54,11 @@ public class FormFillController {
 
     public void createFormsFromData(){
         this.project = dataModel.getProject();
-        fillProjectForm();
+
         fillCriterionForm();
         fillMilestoneForm();
         fillRoleTypeForm();
-        fillRoleForm();
+        fillPersonForm();
         fillCPR();
         fillPriorityForm();
         fillSeverityForm();
@@ -68,148 +68,156 @@ public class FormFillController {
         fillTypeForm();
         fillBranchForm();
         fillConfigurationForm();
-        addExistPhaseFormToCanvas();
-        addExistActivityFormToCanvas();
-        addExistIterationFormToCanvas();
-      //  addExistWorkUnitFormToCanvas(project.getWorkUnitIndexs(), projectCanvasController, CanvasType.Project);
+        fillCommitForm();
+        fillCommitedConfigurationForm();
+        fillPhaseForm();
+        fillActivityForm();
+        fillChangeForm();
+        fillArtifactForm();
+        fillIterationForm();
+        fillWorkUnitForm();
+        fillVCSTagForm();
         fillLink();
+
 
     }
 
 
-    private void addDataToConfigurationTable(int id, int formId, Configuration configuration, ConfigurationTableForm configTable){
+    public void fillConfigurationForm(int oldFormId){
+        int newFormId = formController.createNewForm(SegmentType.Configuration, projectCanvasController.getCanvasType());
+        int configurationId = identificatorCreater.getConfigurationFormIndex(oldFormId);
+        int newConfigurationId = identificatorCreater.getConfigurationFormIndex(newFormId);
+        dataManipulator.copyDataFromConfiguration(configurationId, newConfigurationId);
+        fillConfigurationForm(newConfigurationId, newFormId, projectCanvasController);
+    }
 
-   //     String idName = dataPreparer.createTableItemIdName(id,dataPreparer.prepareStringForForm(configuration.getName()));
-        String isRelease = "YES";
-        if(configuration.isIsRelease() == null || !configuration.isIsRelease()){
-            isRelease = "NO";
-        }
+    private void fillConfigurationForm(int segmentId, int formId, CanvasController canvasController){
 
-   //     ConfigTable table = new ConfigTable(idName, isRelease, formId, id);
+        Configuration configuration = dataModel.getConfiguration(segmentId);
+        ConfigurationForm form = (ConfigurationForm) forms.get(formId);
+        String name = configuration.getName().get(0);
+        canvasController.addCanvasItemFromExistData(SegmentType.Configuration, formId, name, configuration.getCoordinates().getXCoordinate(),
+                configuration.getCoordinates().getYCoordinate(), configuration.getCount(), configuration.isExist());
 
-//        configTable.getTableTV().getItems().add(table);
-//        segmentLists.getConfigObservable().add(table);
     }
 
     private void fillConfigurationForm() {
-        ConfigurationTableForm form = (ConfigurationTableForm)forms.get(Constans.configurationFormIndex);
-        Configuration configuration = project.getConfiguration().get(0);
-        if (configuration != null){
-            fillConfigurationFormWithoutCreateId(project.getConfiguration().get(0), Constans.configurationFormIndex + 1);
-            addDataToConfigurationTable(configuration.getId(), Constans.configurationFormIndex + 1, configuration, form);
+        for (Configuration configuration : project.getConfiguration()){
+
+            String name = configuration.getName().get(0);
+            int formId = identificatorCreater.setDataToConfigurationMappers(configuration.getId());
+            formController.createNewConfigurationFormWithoutCreateId(name, configuration.isExist(), configuration.getId(), formId);
+
+
+            fillConfigurationForm(configuration.getId(), formId, projectCanvasController);
         }
-
-        int formId;
-        for (int i = 1; i < project.getConfiguration().size() - 1; i++){
-            configuration = project.getConfiguration().get(i);
-            formId = formController.createNewConfiguratioFormWithoutManipulator();
-            fillConfigurationFormWithoutCreateId(configuration, formId);
-            addDataToConfigurationTable(configuration.getId(), formId, configuration, form);
-        }
-        formId = formController.createNewForm(SegmentType.Configuration, CanvasType.Configuration);
-        form.getMainPanel().setLeft(formController.getMainPanelFromForm(formId));
-
-    }
-    public void fillConfigurationFormWithoutCreateId(Configuration configuration, int formId){
-
-        ConfigurationForm form = (ConfigurationForm) forms.get(formId);
-        identificatorCreater.setDataToConfigurationMappers(formId, configuration.getId());
-
-//        String name = dataPreparer.prepareStringForForm(configuration.getName());
-//        int authorIndex = dataPreparer.prepareIndexForForm(configuration.getAuthorIndex());
-//        LocalDate createdDate = convertDateFromXML(configuration.getCreate());
-//        ArrayList<Integer> cprIndexs = dataPreparer.prepareIndexForMultiComboBox(configuration.getCPRsIndexs());
-//        ArrayList<Integer> branchIndexs = dataPreparer.prepareIndexForMultiComboBox(configuration.getBranchesIndexs());
-//
-//        form.setDataToForm(name, createdDate, authorIndex, cprIndexs, branchIndexs);
-        TableView<TagTable> tagView =  form.getTagForm().getTableTV();
-        for(int j = 0; j < configuration.getTags().size(); j++){
-            formId = identificatorCreater.createTagID();
-      //      TagTable tagTable = new TagTable(configuration.getTags().get(j), formId);
-      //      tagView.getItems().add(tagTable);
-        }
-        CanvasController canvasController = form.getCanvasController();
-
-        fillArtifactForm(configuration.getArtifactsIndexs(), canvasController);
-   //     fillChangeForm(configuration.getChangesIndexs(), canvasController);
     }
 
+    
 
-    public void fillChangeForm(int oldFormId, CanvasController canvasController){
-        int newFormId = formController.createNewForm(SegmentType.Change, canvasController.getCanvasType());
-        int changeId = identificatorCreater.getChangeId(oldFormId);
-        int newChangeId = identificatorCreater.getChangeId(newFormId);
-        dataManipulator.copyDataFromChange(changeId, newChangeId);
-        fillChangeForm(newChangeId, newFormId, canvasController);
-    }
+    private void fillChangeForm() {
+        ChangeForm form = (ChangeForm) forms.get(Constans.changeFormIndex);
+        for (Change segment : project.getChanges()) {
+            
+            int id = formController.createTableItem(SegmentType.Change);
+            String idName = segment.getName().get(0);
+            String description = segment.getDescription().get(0);
+            ChangeTable table = new ChangeTable(idName, description, segment.isExist(), id);
 
-    private void fillChangeForm(int segmentId, int formId, CanvasController canvasController) {
-
-        Change change = dataModel.getChange(segmentId);
-        ChangeForm form = (ChangeForm) forms.get(formId);
-
-        boolean isExist = false;
-        if(change.isExist()){
-            isExist = true;
+            form.getTableTV().getItems().add(table);
+            segmentLists.getChangeObservable().add(table);
         }
-
-//        String name = dataPreparer.prepareStringForForm(change.getName());
-//        String description = dataPreparer.prepareStringForForm(change.getDescriptoin());
-//
-//       // form.setDataToForm(name, description, isExist);
-//
-//        canvasController.addCanvasItemFromExistData(SegmentType.Change, formId, change.getName(), change.getCoordinates().getXCoordinate(),
-//                change.getCoordinates().getYCoordinate(), 1, isExist); //todo upravit pocet instanci
-   }
-
-    private void fillChangeForm(List<Integer> changeIndexs, CanvasController canvasController) {
-        for (int i = 0; i < changeIndexs.size(); i++){
-
-            int fromId = formController.createNewChangeFormWithoutManipulator();
-            int indexInProject = changeIndexs.get(i);
-            Change change = project.getChanges().get(indexInProject);
-            identificatorCreater.setDataToChangeMappers(fromId, change.getId());
-            fillChangeForm(change.getId(), fromId, canvasController);
-            }
     }
 
-    public void fillArtifactForm(int oldFormId, CanvasController canvasController){
-        int newFormId = formController.createNewForm(SegmentType.Artifact, canvasController.getCanvasType());
+    public void fillCommitForm(int oldFormId){
+        int newFormId = formController.createNewForm(SegmentType.Commit, projectCanvasController.getCanvasType());
+        int commitId = identificatorCreater.getCommitFormIndex(oldFormId);
+        int newCommitId = identificatorCreater.getCommitFormIndex(newFormId);
+        dataManipulator.copyDataFromCommit(commitId, newCommitId);
+        fillCommitForm(newCommitId, newFormId, projectCanvasController);
+    }
+
+    private void fillCommitForm(int segmentId, int formId, CanvasController canvasController){
+
+        Commit commit = dataModel.getCommit(segmentId);
+       
+        String name = commit.getName().get(0);
+        canvasController.addCanvasItemFromExistData(SegmentType.Commit, formId, name, commit.getCoordinates().getXCoordinate(),
+                commit.getCoordinates().getYCoordinate(), commit.getCount(), commit.isExist());
+
+    }
+
+    private void fillCommitForm() {
+        for (Commit commit : project.getCommit()){
+
+            String name = commit.getName().get(0);
+            int formId = identificatorCreater.setDataToCommitMapper(commit.getId());
+            formController.createNewCommitFormWithoutCreateId(name, commit.isExist(), commit.getId(), formId);
+
+
+            fillCommitForm(commit.getId(), formId, projectCanvasController);
+        }
+    }
+
+    public void fillCommitedConfigurationForm(int oldFormId){
+        int newFormId = formController.createNewForm(SegmentType.Committed_Configuration, projectCanvasController.getCanvasType());
+        int commitConfigurationId = identificatorCreater.getCommitedConfigurationFormIndex(oldFormId);
+        int newCommitConfigurationId = identificatorCreater.getCommitedConfigurationFormIndex(newFormId);
+        dataManipulator.copyDataFromCommitedConfiguration(commitConfigurationId, newCommitConfigurationId);
+        fillCommitedConfigurationForm(newCommitConfigurationId, newFormId, projectCanvasController);
+    }
+
+    private void fillCommitedConfigurationForm(int segmentId, int formId, CanvasController canvasController){
+
+        CommitedConfiguration commitedConfiguration = dataModel.getCommitedConfiguration(segmentId);
+
+        String name = commitedConfiguration.getName().get(0);
+        canvasController.addCanvasItemFromExistData(SegmentType.Committed_Configuration, formId, name, commitedConfiguration.getCoordinates().getXCoordinate(),
+                commitedConfiguration.getCoordinates().getYCoordinate(), commitedConfiguration.getCount(), commitedConfiguration.isExist());
+
+    }
+
+    private void fillCommitedConfigurationForm() {
+        for (CommitedConfiguration commitedConfiguration : project.getCommitConfiguration()){
+
+            String name = commitedConfiguration.getName().get(0);
+
+            int formId = identificatorCreater.setDataToCommitedConfigurationMapper(commitedConfiguration.getId());
+            formController.createNewCommitedConfigurationFormWithoutCreateId(name, commitedConfiguration.isExist(), commitedConfiguration.getId(), formId);
+
+            fillCommitedConfigurationForm(commitedConfiguration.getId(), formId, projectCanvasController);
+        }
+    }
+    
+    
+
+    public void fillArtifactForm(int oldFormId){
+        int newFormId = formController.createNewForm(SegmentType.Artifact, projectCanvasController.getCanvasType());
         int artifactId = identificatorCreater.getArtifactIndex(oldFormId);
         int newArtifactId = identificatorCreater.getArtifactIndex(newFormId);
         dataManipulator.copyDataFromArtifact(artifactId, newArtifactId);
-        fillArtifactForm(newArtifactId, newFormId, canvasController);
+        fillArtifactForm(newArtifactId, newFormId, projectCanvasController);
     }
 
     private void fillArtifactForm(int segmentId, int formId, CanvasController canvasController){
 
         Artifact artifact = dataModel.getArtifact(segmentId);
-        ArtifactForm form = (ArtifactForm) forms.get(formId);
-
-//        int authorIndex = dataPreparer.prepareIndexForForm(artifact.getAuthorIndex());
-//        LocalDate createDate = convertDateFromXML(artifact.getCreated());
-//        String name = dataPreparer.prepareStringForForm(artifact.getName());
-//        String description = dataPreparer.prepareStringForForm(artifact.getDescriptoin());
-        boolean isExist = false;
-        if(artifact.isExist()){
-            isExist = true;
-        }
-
-       // form.setDataToForm(name, description, authorIndex, createDate, artifact.getMimeType(), isExist);
-
-//        canvasController.addCanvasItemFromExistData(SegmentType.Artifact, formId, artifact.getName(), artifact.getCoordinates().getXCoordinate(),
-//                artifact.getCoordinates().getYCoordinate(), 1, isExist); //todo upravit pocet instanci
+        
+        String name = artifact.getName().get(0);
+        canvasController.addCanvasItemFromExistData(SegmentType.Artifact, formId, name, artifact.getCoordinates().getXCoordinate(),
+                artifact.getCoordinates().getYCoordinate(), artifact.getCount(), artifact.isExist());
 
     }
 
-    private void fillArtifactForm(List<Integer> artifactsIndexs, CanvasController canvasController) {
-        for (int i = 0; i < artifactsIndexs.size(); i++){
+    private void fillArtifactForm() {
+        for (Artifact artifact : project.getArtifacts()){
+            
+            String name = artifact.getName().get(0);
+            String description = artifact.getDescription().get(0);
 
-            int formId = formController.createNewArtifactFormWithoutManipulator();
-            int indexInProject = artifactsIndexs.get(i);
-            Artifact artifact = project.getArtifacts().get(indexInProject);
-            identificatorCreater.setDataToArtifactMappers(formId, artifact.getId());
-            fillArtifactForm(artifact.getId(), formId, canvasController);
+            int formId =  identificatorCreater.setDataToArtifactMappers(artifact.getId());
+            formController.createNewArtifactFormWithoutCreateId(name, description, artifact.isExist(), artifact.getId(), formId);
+            fillArtifactForm(artifact.getId(), formId, projectCanvasController);
             }
     }
 
@@ -218,23 +226,26 @@ public class FormFillController {
         for (int i = 0; i < project.getBranches().size(); i++){
             Branch segment = project.getBranches().get(i);
             int id = formController.createTableItem(SegmentType.Branch);
-    //        String idName = dataPreparer.createTableItemIdName(id, segment.getName());
+           String idName = segment.getName().get(0);
             String isMain = "NO";
             if(segment.isIsMain()){
                 isMain = "YES";
             }
 
-      //      BranchTable table = new BranchTable(idName, isMain, segment.isIsMain(), id);
+            BranchTable table = new BranchTable(idName, isMain, segment.isIsMain(), segment.isExist(), id);
 
-//            form.getTableTV().getItems().add(table);
-//            segmentLists.getBranchObservable().add(table);
+            form.getTableTV().getItems().add(table);
+            segmentLists.getBranchObservable().add(table);
         }
     }
 
-    private ClassTable createClassTable(int id, String name, String lclass, String superClass){
+    private ClassTable createClassTable(int id, List<String> name, List<String> lclass, List<String> lsuperClass, boolean exist){
 
-        String idName = dataPreparer.createTableItemIdName(id, name);
-       return  null; //new ClassTable(idName, lclass, superClass, id);
+        String  idName = name.get(0);
+        String classType = lclass.get(0);
+        String superClass = lsuperClass.get(0);
+        
+       return  new ClassTable(idName, classType, superClass, exist, id);
     }
 
     private void fillTypeForm() {
@@ -242,11 +253,11 @@ public class FormFillController {
         for (int i = 0; i < project.getTypes().size(); i++){
             Type segment = project.getTypes().get(i);
             formController.createTableItem(SegmentType.Type);
+            ClassTable table = createClassTable(segment.getId(), segment.getName(), segment.getTypeClass(),
+                    segment.getTypeSuperClass(), segment.isExist());
 
-       //     ClassTable table = createClassTable(segment.getId(), segment.getName(), segment.getTypeClass(), segment.getTypeSuperClass());
-
-//            form.getTableTV().getItems().add(table);
-//            segmentLists.getTypeObservable().add(table);
+            form.getTableTV().getItems().add(table);
+            segmentLists.getTypeObservable().add(table);
         }
     }
 
@@ -255,9 +266,11 @@ public class FormFillController {
         for (int i = 0; i < project.getStatus().size(); i++){
             Status segment = project.getStatus().get(i);
             formController.createTableItem(SegmentType.Status);
-//       //     ClassTable table = createClassTable(segment.getId(), segment.getName(), segment.getStatusClass(), segment.getStatusSuperClass());
-//            form.getTableTV().getItems().add(table);
-//            segmentLists.getStatusTypeObservable().add(table);
+            ClassTable table = createClassTable(segment.getId(), segment.getName(), segment.getStatusClass(),
+                    segment.getStatusSuperClass(), segment.isExist());
+
+            form.getTableTV().getItems().add(table);
+            segmentLists.getStatusTypeObservable().add(table);
         }
     }
 
@@ -266,10 +279,12 @@ public class FormFillController {
         for (int i = 0; i < project.getResolution().size(); i++){
             Resolution segment = project.getResolution().get(i);
             formController.createTableItem(SegmentType.Resolution);
+         
+            ClassTable table = createClassTable(segment.getId(), segment.getName(), segment.getResolutionClass(),
+                    segment.getResolutionSuperClass(), segment.isExist());
 
-//            ClassTable table = createClassTable(segment.getId(), segment.getName(), segment.getResolutionClass(), segment.getResolutionSuperClass());
-//            form.getTableTV().getItems().add(table);
-//            segmentLists.getResolutionTypeObservable().add(table);
+            form.getTableTV().getItems().add(table);
+            segmentLists.getResolutionTypeObservable().add(table);
         }
     }
 
@@ -278,9 +293,12 @@ public class FormFillController {
         for (int i = 0; i < project.getRelation().size(); i++){
             Relation segment = project.getRelation().get(i);
             formController.createTableItem(SegmentType.Relation);
-//            ClassTable table = createClassTable(segment.getId(), segment.getName(), segment.getRelationClass(), segment.getRelationSuperClass());
-//            form.getTableTV().getItems().add(table);
-//            segmentLists.getRelationTypeObservable().add(table);
+            
+            ClassTable table = createClassTable(segment.getId(), segment.getName(), segment.getRelationClass(),
+                    segment.getRelationSuperClass(), segment.isExist());
+
+            form.getTableTV().getItems().add(table);
+            segmentLists.getRelationTypeObservable().add(table);
         }
     }
 
@@ -288,11 +306,13 @@ public class FormFillController {
         SeverityForm form = (SeverityForm) forms.get(Constans.severityFormIndex);
         for (int i = 0; i < project.getSeverity().size(); i++){
             Severity segment = project.getSeverity().get(i);
-//            int id = formController.createTableItem(SegmentType.Severity);
-//            ClassTable table = createClassTable(segment.getId(), segment.getName(), segment.getSeverityClass(), segment.getSeveritySuperClass());
+            formController.createTableItem(SegmentType.Severity);
 
-//            form.getTableTV().getItems().add(table);
-//            segmentLists.getSeverityTypeObservable().add(table);
+            ClassTable table = createClassTable(segment.getId(), segment.getName(), segment.getSeverityClass(),
+                    segment.getSeveritySuperClass(), segment.isExist());
+
+            form.getTableTV().getItems().add(table);
+            segmentLists.getSeverityTypeObservable().add(table);
         }
     }
 
@@ -300,12 +320,13 @@ public class FormFillController {
         PriorityForm form = (PriorityForm) forms.get(Constans.priorityFormIndex);
         for (int i = 0; i < project.getPriority().size(); i++){
             Priority segment = project.getPriority().get(i);
-            int id = formController.createTableItem(SegmentType.Priority);
+            formController.createTableItem(SegmentType.Priority);
+            
+            ClassTable table = createClassTable(segment.getId(), segment.getName(), segment.getPriorityClass(),
+                    segment.getPrioritySuperClass(), segment.isExist());
 
-         //   ClassTable table = createClassTable(segment.getId(), segment.getName(), segment.getPriorityClass(), segment.getPrioritySuperClass());
-//
-//            form.getTableTV().getItems().add(table);
-//            segmentLists.getPriorityTypeObservable().add(table);
+            form.getTableTV().getItems().add(table);
+            segmentLists.getPriorityTypeObservable().add(table);
         }
     }
 
@@ -315,38 +336,58 @@ public class FormFillController {
             ConfigPersonRelation cpr = project.getCpr().get(i);
             int id = cpr.getId();
             formController.createTableItem(SegmentType.Config_Person_Relation);
-//            String idName = dataPreparer.createTableItemIdName(id, cpr.getName());
-//            BasicTable role = segmentLists.getRoleObservable().get(dataPreparer.prepareIndexForForm(cpr.getPersonIndex()));
-//            CPRTable cprTable = new CPRTable(idName, role.getName(), id);
-//
-//            cprForm.getTableTV().getItems().add(cprTable);
-//            segmentLists.getCPRObservable().add(cprTable);
+            String name = cpr.getName().get(0);
+            
+            CPRTable cprTable = new CPRTable(name, "", cpr.isExist(), id);
+
+            cprForm.getTableTV().getItems().add(cprTable);
+            segmentLists.getCPRObservable().add(cprTable);
         }
     }
 
-    private void fillRoleForm() {
-        RoleForm roleForm = (RoleForm) forms.get(Constans.roleFormIndex);
-        for (int i = 0; i < project.getRoleType().size(); i++){
-            Person role = project.getRoles().get(i);
-            int id = role.getId();
-            formController.createTableItem(SegmentType.Person);
-//            String idName = dataPreparer.createTableItemIdName(id, role.getName());
-//            BasicTable type = segmentLists.getRoleTypeObservable().get(dataPreparer.prepareIndexForForm(role.getType()));
-//            PersonTable roleTable = new PersonTable(idName, dataPreparer.prepareStringForForm(role.getDescription()), type.getName(), id);
-//
-//            roleForm.getTableTV().getItems().add(roleTable);
-//            segmentLists.getRoleObservable().add(roleTable);
+    public void fillPersonForm(int oldFormId){
+        int newFormId = formController.createNewForm(SegmentType.Person, projectCanvasController.getCanvasType());
+        int personId = identificatorCreater.getRoleIndexToIdMaper().get(oldFormId);
+        int newPersonId = identificatorCreater.getRoleSegmentIndexToFormMaper().get(newFormId);
+        dataManipulator.copyDataFromPerson(personId, newPersonId);
+        fillArtifactForm(newPersonId, newFormId, projectCanvasController);
+    }
+
+    private void fillPersonForm(int segmentId, int formId, CanvasController canvasController){
+
+        Person person = dataModel.getRole(segmentId);
+        String name = person.getName().get(0);
+        canvasController.addCanvasItemFromExistData(SegmentType.Person, formId, name, person.getCoordinates().getXCoordinate(),
+                person.getCoordinates().getYCoordinate(), person.getCount(), person.isExist());
+
+    }
+
+    private void fillPersonForm() {
+        for (Person person : project.getRoles() ){
+            
+            String name = person.getName().get(0);
+
+            int formId = identificatorCreater.setDataToRoleMappers(person.getId());
+            formController.createNewPersonFormWithoutCreateId(name,  person.isExist(), person.getId(), formId);
+
+            fillPersonForm(person.getId(), formId, projectCanvasController);
         }
     }
 
     private void fillRoleTypeForm() {
         RoleTypeForm roleTypeForm = (RoleTypeForm) forms.get(Constans.roleTypeIndex);
         for (int i = 0; i < project.getRoleType().size(); i++){
-//            Role_Type segment = project.getRoleType().get(i);
-//            formController.createTableItem(SegmentType.Role_Type);
-//            ClassTable table = createClassTable(segment.getId(), segment.getName(), segment.getRoleClass(), segment.getRoleSuperClass());
-//            roleTypeForm.getTableTV().getItems().add(table);
-//            segmentLists.getRoleTypeObservable().add(table);
+            RoleType segment = project.getRoleType().get(i);
+            formController.createTableItem(SegmentType.Role_Type);
+
+            String name = segment.getName().get(0);
+            String description = segment.getDescription().get(0);
+            String classType = segment.getRoleTypeClass().get(0);
+            String superClassType = segment.getRoleTypeSuperClass().get(0);
+            RoleTypeTable table = new RoleTypeTable(name, description, classType, segment.isExist(), superClassType, segment.getId());
+            TableView<RoleTypeTable> roleType = roleTypeForm.getTableTV();
+            roleType.getItems().add(table);
+            segmentLists.getRoleTypeObservable().add(table);
         }
     }
 
@@ -354,145 +395,83 @@ public class FormFillController {
         MilestoneForm milestoneForm = (MilestoneForm) forms.get(Constans.milestoneFormIndex);
         for (int i = 0; i < project.getMilestones().size(); i++){
             Milestone milestone = project.getMilestones().get(i);
-//            int id = milestone.getId();
-//            formController.createTableItem(SegmentType.Milestone);
-//            String idName = dataPreparer.createTableItemIdName(id, milestone.getName());
-//            String criterion = dataPreparer.prepareIndexForTable(milestone.getCriteriaIndexs(), segmentLists.getCriterionObservable()).toString();
-//            MilestoneTable milestoneTable = new MilestoneTable(idName, milestone.getDescription(), criterion, id);
-//            milestoneForm.getTableTV().getItems().add(milestoneTable);
-//            segmentLists.getMilestoneObservable().add(milestoneTable);
+            int id = milestone.getId();
+            formController.createTableItem(SegmentType.Milestone);
+            String idName = milestone.getName().get(0);
+            MilestoneTable milestoneTable = new MilestoneTable(idName, milestone.getDescription().get(0), "", milestone.isExist(), id);
+            milestoneForm.getTableTV().getItems().add(milestoneTable);
+            segmentLists.getMilestoneObservable().add(milestoneTable);
         }
     }
 
 
     private void fillCriterionForm() {
         CriterionForm criterionForm = (CriterionForm) forms.get(Constans.criterionFormIndex);
-        for (int i = 0; i < project.getCriterions().size(); i++){
-//            Criterion criterion = project.getCriterions().get(i);
-//            int id = criterion.getId();
-//            formController.createTableItem(SegmentType.Criterion);
-//            String idName = dataPreparer.createTableItemIdName(id, criterion.getName());
-//            CriterionTable criterionTable = new CriterionTable(idName, dataPreparer.prepareStringForForm(criterion.getDescription()), id);
-//            criterionForm.getTableTV().getItems().add(criterionTable);
-//            segmentLists.getCriterionObservable().add(criterionTable);
+        for (Criterion criterion : project.getCriterions()){
+            formController.createTableItem(SegmentType.Criterion);
+            TableView<CriterionTable> criterionView =  criterionForm.getTableTV();
+            CriterionTable criterionTable = new CriterionTable(criterion.getName().get(0), "", criterion.isExist(), criterion.getId());
+            criterionView.getItems().add(criterionTable);
+           segmentLists.getCriterionObservable().add(criterionTable);
         }
 
     }
 
-    
-
-    private void fillProjectForm() {
-        ProjectForm projectForm = (ProjectForm) forms.get(Constans.projectFormIndex);
-//        String name = dataPreparer.prepareStringForForm(project.getName());
-//        String description = dataPreparer.prepareStringForForm(project.getDescription());
-//        projectForm.setDataToForm(name, description, convertDateFromXML(project.getStartDate()), convertDateFromXML(project.getEndDate()));
-    }
-
-    public void addExistPhaseFormToCanvas(int oldFormId){
-        int id = formController.createNewForm(SegmentType.Phase, CanvasType.Phase);
-        int phaseId = identificatorCreater.getRoleId(oldFormId);
-        int newPhaseId = identificatorCreater.getRoleId(id);
-        dataManipulator.copyDataFromPhase(phaseId, newPhaseId);
-        addExistPhaseFormToCanvas(newPhaseId, id);
-
-    }
-
-    public void addExistPhaseFormToCanvas(int segmentId, int formId){
-//        Phase phase = fillPhaseForm(segmentId, formId);
-//  //      identificatorCreater.setDataToPhaseMapper(formId, phase.getId());
-//        projectCanvasController.addCanvasItemFromExistData(SegmentType.Phase, formId, phase.getName(), phase.getCoordinates().getXCoordinate(),
-//                phase.getCoordinates().getYCoordinate(), 1);//todo upravit pocet instanci
-//
-//    }
-//
-//    public Phase fillPhaseForm(int segmentId, int formId){
-//        Phase phase = dataModel.getPhase(segmentId);
-//
-//        PhaseForm phaseForm = (PhaseForm) forms.get(formId);
-//        int milestoneIndex = dataPreparer.prepareIndexForForm(phase.getMilestoneIndex());
-//        int configurationIndex = dataPreparer.prepareIndexForForm(phase.getConfiguration());
-//        String name = dataPreparer.prepareStringForForm(phase.getName());
-//        String description = dataPreparer.prepareStringForForm(phase.getDescription());
-//       // TODO prededelat na tabulkovy formular phaseForm.setDataToForm(name, convertDateFromXML(phase.getEndDate()), description, milestoneIndex, configurationIndex);
-//
-//        CanvasController canvasController = phaseForm.getCanvasController();
-//        canvasController.clearCanvas();
-//        addExistWorkUnitFormToCanvas(phase.getWorkUnits(), canvasController, CanvasType.Phase);
-//
-//        return phase;
-    }
 
 
-    public void addExistPhaseFormToCanvas(){
-
-        for (int i = 0; i < project.getPhases().size(); i++){
-
-         int id = formController.createNewPhaseFormWithoutManipulator();
-         Phase phase = project.getPhases().get(i);
-         addExistPhaseFormToCanvas(phase.getId(), id);
-
-        }
-    }
-
-    public void addExistWorkUnitFormToCanvas(int oldFormId, CanvasController canvasController){
-        int id = formController.createNewForm(SegmentType.Work_Unit, canvasController.getCanvasType());
-        int wuId = identificatorCreater.getWorkUnitIndex(oldFormId);
-        int newWUId = identificatorCreater.getWorkUnitIndex(id);
-        dataManipulator.copyDataFromWorkUnit(wuId, newWUId);
-        addExistWorkUnitFormToCanvas(newWUId, id, canvasController);
-    }
-
-
-    public WorkUnit fillWorkUnitForm(int segmentId, int formId){
-        WorkUnit workUnit = dataModel.getWorkUnit(segmentId);
-        WorkUnitForm workUnitForm = (WorkUnitForm) forms.get(formId);
-
-//        int assigneIndex = dataPreparer.prepareIndexForForm(workUnit.getAssigneeIndex());
-//        int authorIndex = dataPreparer.prepareIndexForForm(workUnit.getAuthorIndex());
-//        int priorityIndex = dataPreparer.prepareIndexForForm(workUnit.getPriorityIndex());
-//        int resolutionIndex = dataPreparer.prepareIndexForForm(workUnit.getResolutionIndex());
-//        int severityIndex = dataPreparer.prepareIndexForForm(workUnit.getSeverityIndex());
-//        int statusIndex = dataPreparer.prepareIndexForForm(workUnit.getStatusIndex());
-//        int typeIndex = dataPreparer.prepareIndexForForm(workUnit.getTypeIndex());
-//        String name = dataPreparer.prepareStringForForm(workUnit.getName());
-//        String category = dataPreparer.prepareStringForForm(workUnit.getCategory());
-//        String description = dataPreparer.prepareStringForForm(workUnit.getDescription());
-//        String estimate;
-//        if(workUnit.getEstimatedTime() == null){
-//            estimate = "";
-//        }else{
-//            estimate = dataPreparer.prepareEstimateForForm(workUnit.getEstimatedTime());
-//
-//        }
-
-        boolean isExist = false;
-        if(workUnit.isExist() != null && workUnit.isExist()){
-            isExist = true;
-        }
-
-      //  workUnitForm.setDataToForm(name, assigneIndex,authorIndex, category, description,estimate ,
-       //         priorityIndex, resolutionIndex, severityIndex, statusIndex, typeIndex, isExist);
-        return workUnit;
-
-    }
-
-    public void addExistWorkUnitFormToCanvas(List<Integer> workUnitsIndexs, CanvasController canvasController, CanvasType canvasType){
-
-
-        for (int i = 0; i < workUnitsIndexs.size(); i++){
-            int id = formController.createNewWorkUnitFormWithoutManipulator(canvasType);
-            WorkUnit workUnit = project.getWorkUnits().get(workUnitsIndexs.get(i));
-            addExistWorkUnitFormToCanvas(workUnit.getId() , id, canvasController);
-
+    public void fillPhaseForm(){
+        PhaseForm phaseForm = (PhaseForm) forms.get(Constans.phaseFormIndex);
+        for (Phase phase : project.getPhases()){
+            identificatorCreater.createPhaseID();
+            TableView<PhaseTable> phaseView =  phaseForm.getTableTV();
+            PhaseTable phaseTable = new PhaseTable(phase.getName().get(0), "", "", phase.isExist(), phase.getId());
+            phaseView.getItems().add(phaseTable);
         }
 
     }
 
-    private void addExistWorkUnitFormToCanvas(int segmentId, int formId, CanvasController canvasController){
-        WorkUnit workUnit = fillWorkUnitForm(segmentId, formId);
-        identificatorCreater.setDataToWorkUnitsMappers(formId, workUnit.getId());
-//        canvasController.addCanvasItemFromExistData(SegmentType.Work_Unit, formId, workUnit.getName(), workUnit.getCoordinates().getXCoordinate(),
-//                workUnit.getCoordinates().getYCoordinate(), 1); //todo upravit pocet instanci
+    public void fillActivityForm(){
+        ActivityForm activityForm = (ActivityForm) forms.get(Constans.activityFormIndex);
+        for (Activity activity : project.getActivities()){
+            identificatorCreater.createActivityID();
+            TableView<ActivityTable> activityView =  activityForm.getTableTV();
+            ActivityTable activityTable = new ActivityTable(activity.getName().get(0), "", activity.isExist(), activity.getId());
+            activityView.getItems().add(activityTable);
+        }
+
+    }
+
+    public void fillIterationForm(){
+        IterationForm iterationForm = (IterationForm) forms.get(Constans.iterationFormIndex);
+        for (Iteration iteration : project.getIterations()){
+            identificatorCreater.createIterationID();
+            TableView<IterationTable> iterationView =  iterationForm.getTableTV();
+            IterationTable iterationTable = new IterationTable(iteration.getName().get(0), "", iteration.isExist(), iteration.getId());
+            iterationView.getItems().add(iterationTable);
+        }
+
+    }
+
+    public void fillWorkUnitForm(){
+        WorkUnitForm workUnitForm = (WorkUnitForm) forms.get(Constans.workUnitFormIndex);
+        for (WorkUnit workUnit : project.getWorkUnits()){
+            identificatorCreater.createWorkUnitID();
+            TableView<WorkUnitTable> workUnitView =  workUnitForm.getTableTV();
+            WorkUnitTable workUnitTable = new WorkUnitTable(workUnit.getName().get(0), workUnit.isExist(), workUnit.getId());
+            workUnitView.getItems().add(workUnitTable);
+        }
+
+    }
+
+    public void fillVCSTagForm(){
+        VCSTagForm tagForm = (VCSTagForm) forms.get(Constans.VCSTagIndex);
+        for (VCSTag tag : project.getVcsTag()){
+            identificatorCreater.createVCSTagID();
+            TableView<VCSTagTable> tagView =  tagForm.getTableTV();
+            VCSTagTable tagTable = new VCSTagTable(tag.getName().get(0), "", tag.isExist(), tag.getId());
+            tagView.getItems().add(tagTable);
+        }
+
     }
 
     public void fillLink(){
@@ -507,10 +486,10 @@ public class FormFillController {
                 CanvasItem endItem = canvasItemList.get(endIndexItem);
                 CanvasController canvasController = startItem.getCanvasController();
 
-          //      linkControl.ArrowManipulation(true, false, canvasController, startIndexItem, SegmentType.Change, startItem.getTranslateX()
-          //              ,startItem.getTranslateY(), startItem.getWidth(), startItem.getHeight() );
-          //      linkControl.ArrowManipulation(true, true, canvasController, endIndexItem, SegmentType.Artifact, endItem.getTranslateX()
-          //              ,endItem.getTranslateY(), endItem.getWidth(), endItem.getHeight() );
+                //      linkControl.ArrowManipulation(true, false, canvasController, startIndexItem, SegmentType.Change, startItem.getTranslateX()
+                //              ,startItem.getTranslateY(), startItem.getWidth(), startItem.getHeight() );
+                //      linkControl.ArrowManipulation(true, true, canvasController, endIndexItem, SegmentType.Artifact, endItem.getTranslateX()
+                //              ,endItem.getTranslateY(), endItem.getWidth(), endItem.getHeight() );
 
             }else{
                 int startIndexItem = identificatorCreater.getWorkUnitSegmentIdToFormIndexMaper().get(link.getLeftUnitIndex());
@@ -521,103 +500,16 @@ public class FormFillController {
                 CanvasController canvasController = startItem.getCanvasController();
 
                 linkControl.ArrowManipulation(false, canvasController, startIndexItem, SegmentType.Work_Unit, startItem.getTranslateX()
-                            ,startItem.getTranslateY(), startItem.getWidth(), startItem.getHeight() );
-          //      linkControl.ArrowManipulation( true, canvasController, endIndexItem, SegmentType.Work_Unit, endItem.getTranslateX()
-          //              ,endItem.getTranslateY(), endItem.getWidth(), endItem.getHeight(), dataPreparer.prepareIndexForForm(link.getRelationIndex()));
+                        ,startItem.getTranslateY(), startItem.getWidth(), startItem.getHeight() );
+                //      linkControl.ArrowManipulation( true, canvasController, endIndexItem, SegmentType.Work_Unit, endItem.getTranslateX()
+                //              ,endItem.getTranslateY(), endItem.getWidth(), endItem.getHeight(), dataPreparer.prepareIndexForForm(link.getRelationIndex()));
             }
 
         }
 
     }
 
-    public void addExistActivityFormToCanvas(int oldFormId){
 
-        int id = formController.createNewForm(SegmentType.Activity, CanvasType.Activity);
-        int activityId = identificatorCreater.getActivityId(oldFormId);
-        int newActivityId = identificatorCreater.getActivityId(id);
-        dataManipulator.copyDataFromActivity(activityId, newActivityId);
-        addExistActivityFormToCanvas(newActivityId, id);
-
-    }
-
-    public void addExistActivityFormToCanvas(int segmentId, int formId){
-
-        Activity activity = fillActivityForm(segmentId, formId);
-        identificatorCreater.setDataToActivityMapper(formId, activity.getId());
-    //    projectCanvasController.addCanvasItemFromExistData(SegmentType.Activity, formId, activity.getName(), activity.getCoordinates().getXCoordinate(),
-      //          activity.getCoordinates().getYCoordinate(), 1); //todo upravit pocet instanci
-    }
-
-    public Activity fillActivityForm(int segmentId, int formId){
-        Activity activity = dataModel.getActivity(segmentId);
-
-        ActivityForm activityForm = (ActivityForm) forms.get(formId);
-       // String name = dataPreparer.prepareStringForForm(activity.getName());
-       // String description = dataPreparer.prepareStringForForm(activity.getDescription());
-       // activityForm.setDataToForm(name, description);
-
-        CanvasController canvasController = activityForm.getCanvasController();
-        canvasController.clearCanvas();
-       // addExistWorkUnitFormToCanvas(activity.getWorkUnits(), canvasController, CanvasType.Activity);
-
-        return activity;
-    }
-
-
-    public void addExistActivityFormToCanvas(){
-
-        for (int i = 0; i < project.getActivities().size(); i++){
-
-            int id = formController.createNewActivityFormWithoutManipulator();
-            Activity activity = project.getActivities().get(i);
-            addExistActivityFormToCanvas(activity.getId(), id);
-
-        }
-    }
-
-    public void addExistIterationFormToCanvas(){
-
-        for (int i = 0; i < project.getIterations().size(); i++){
-
-            int id = formController.createNewIterationFormWithoutManipulator();
-            Iteration iteration = project.getIterations().get(i);
-            addExistIterationFormToCanvas(iteration.getId(), id);
-
-        }
-    }
-
-    public void addExistIterationFormToCanvas(int segmentId, int formId){
-        Iteration iteration = fillIterationForm(segmentId, formId);
-        identificatorCreater.setDataToIterationMapper(formId, iteration.getId());
-//        projectCanvasController.addCanvasItemFromExistData(SegmentType.Iteration, formId, iteration.getName(), iteration.getCoordinates().getXCoordinate(),
-//                iteration.getCoordinates().getYCoordinate(), 1);
-    }
-
-    public void addExistIterationFormToCanvas(int oldFormId){
-        int id = formController.createNewForm(SegmentType.Iteration, CanvasType.Iteration);
-        int iteratationId = identificatorCreater.getIterationId(oldFormId);
-        int newIterationId = identificatorCreater.getIterationId(id);
-        dataManipulator.copyDataFromIteration(iteratationId, newIterationId);
-        addExistIterationFormToCanvas(newIterationId, id);
-    }
-
-    public Iteration fillIterationForm(int segmentId, int formId){
-        Iteration iteration = dataModel.getIteration(segmentId);
-        IterationForm iterationForm = (IterationForm) forms.get(formId);
-
-//        String name = dataPreparer.prepareStringForForm(iteration.getName());
-//        String description = dataPreparer.prepareStringForForm(iteration.getDescription());
-//        int confiIndex =  dataPreparer.prepareIndexForForm(iteration.getConfiguration());
-//
-//       // iterationForm.setDataToForm(name, description, convertDateFromXML(iteration.getStartDate()), convertDateFromXML(iteration.getEndDate()),
-//          //      confiIndex);
-//
-//        CanvasController canvasController = iterationForm.getCanvasController();
-//        canvasController.clearCanvas();
-//        addExistWorkUnitFormToCanvas(iteration.getWorkUnits(), canvasController, CanvasType.Iteration);
-
-        return iteration;
-    }
 
 
     /**

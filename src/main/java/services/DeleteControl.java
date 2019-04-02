@@ -36,27 +36,27 @@ public class DeleteControl {
             case Branch:
                 break;
             case Priority:
-                return findTableToObjectIndicesForDelete(indicesList, mapperTableToObject.getPriorityToWUMapper());
+                return findTableToObjectIndicesForDelete(indicesList, mapperTableToObject.getWUToPriorityMapper());
             case Severity:
-                return findTableToObjectIndicesForDelete(indicesList, mapperTableToObject.getSeverityToWUMapper());
+                return findTableToObjectIndicesForDelete(indicesList, mapperTableToObject.getWUToSeverityMapper());
             case Milestone:
                 return findTableToObjectIndicesForDelete(indicesList, mapperTableToObject.getMilestoneToCriterionMapper());
             case Criterion:
                 break;
             case Person:
-                return findTableToObjectIndicesForDelete(indicesList, mapperTableToObject.getRoleToRoleTypeMapper());
+                return findTableToObjectIndicesForDelete(indicesList, mapperTableToObject.getPersonToRoleTypeMapper());
             case Role_Type:
                 break;
             case Config_Person_Relation:
                 break;
             case Relation:
-                return findTableToObjectIndicesForDelete(indicesList, mapperTableToObject.getRelationToWUMapper());
+                return findTableToObjectIndicesForDelete(indicesList, mapperTableToObject.getWUTORelationMapper());
             case Resolution:
-                return findTableToObjectIndicesForDelete(indicesList, mapperTableToObject.getResolutionToWUMapper());
+                return findTableToObjectIndicesForDelete(indicesList, mapperTableToObject.getWUToResolutionMapper());
             case Status:
-                return findTableToObjectIndicesForDelete(indicesList, mapperTableToObject.getStatusToWUMapper());
+                return findTableToObjectIndicesForDelete(indicesList, mapperTableToObject.getWUStatusMapper());
             case Type:
-                return findTableToObjectIndicesForDelete(indicesList, mapperTableToObject.getTypeToWUMapper());
+                return findTableToObjectIndicesForDelete(indicesList, mapperTableToObject.getWUTotypeMapper());
             case Configuration:
                 break;
             default:
@@ -75,9 +75,9 @@ public class DeleteControl {
             case Branch:
                 break;
             case Priority:
-                return findTableToObjectIndicesForDeleteData(idList, mapperTableToObject.getPriorityToWUMapper());
+                return findTableToObjectIndicesForDeleteData(idList, mapperTableToObject.getWUToPriorityMapper());
             case Severity:
-                return findTableToObjectIndicesForDeleteData(idList, mapperTableToObject.getSeverityToWUMapper());
+                return findTableToObjectIndicesForDeleteData(idList, mapperTableToObject.getWUToSeverityMapper());
             case Milestone:
                 return findTableToObjectIndicesForDeleteData(idList, mapperTableToObject.getMilestoneToCriterionMapper());
             case Criterion:
@@ -98,19 +98,19 @@ public class DeleteControl {
                         break;
                     default:
                 }
-                return findTableToObjectIndicesForDeleteData(idList, mapperTableToObject.getRoleToRoleTypeMapper());
+                return findTableToObjectIndicesForDeleteData(idList, mapperTableToObject.getPersonToRoleTypeMapper());
             case Role_Type:
                 break;
             case Config_Person_Relation:
                 return findTableToObjectIndicesForDeleteData(idList, mapperTableToObject.getCPRToRoleMapper());
             case Relation:
-                return findTableToObjectIndicesForDeleteData(idList, mapperTableToObject.getRelationToWUMapper());
+                return findTableToObjectIndicesForDeleteData(idList, mapperTableToObject.getWUTORelationMapper());
             case Resolution:
-                return findTableToObjectIndicesForDeleteData(idList, mapperTableToObject.getResolutionToWUMapper());
+                return findTableToObjectIndicesForDeleteData(idList, mapperTableToObject.getWUToResolutionMapper());
             case Status:
-                return findTableToObjectIndicesForDeleteData(idList, mapperTableToObject.getStatusToWUMapper());
+                return findTableToObjectIndicesForDeleteData(idList, mapperTableToObject.getWUStatusMapper());
             case Type:
-                return findTableToObjectIndicesForDeleteData(idList, mapperTableToObject.getTypeToWUMapper());
+                return findTableToObjectIndicesForDeleteData(idList, mapperTableToObject.getWUTotypeMapper());
             case Configuration:
                 break;
             default:

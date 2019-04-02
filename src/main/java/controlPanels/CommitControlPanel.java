@@ -30,7 +30,7 @@ public class CommitControlPanel extends NameControlPanel implements IControlPane
         this.commitTable = branchTable;
         SegmentLists segmentLists = formController.getSegmentLists();
         lineList.add(new ControlPanelLineObject("VCS Tag: ", ControlPanelLineType.ComboBox, ParamType.VCSTag, segmentLists.getVCSTag() ));
-        lineList.add(new ControlPanelLineObject("Branches: ", ControlPanelLineType.ComboBox, ParamType.Branch));
+        lineList.add(new ControlPanelLineObject("Branches: ", ControlPanelLineType.CheckBox, ParamType.Branch, segmentLists.getBranchObservable()));
         createControlPanel();
     }
 

@@ -37,7 +37,7 @@ public class ApplicationController {
         this.canvasItemController = new CanvasItemController(linkControl, formController, manipulationController);
         this.formFillController = new FormFillController(formController, dataModel, canvasItemController, identificatorCreater,dataPreparer, segmentLists,
                  linkControl, formController.getCanvasItemList());
-      formController.initBasicForms(formDataController, editFormController, deleteFormController);
+       formController.initBasicForms(formDataController, editFormController, deleteFormController);
         formController.setFormFillController(formFillController);
         this.manipulationController.setFormFillController(formFillController);
     }

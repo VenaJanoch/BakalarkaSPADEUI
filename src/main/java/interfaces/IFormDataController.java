@@ -115,4 +115,12 @@ public interface IFormDataController {
     List[] getProjectStringData();
 
     List[] getRoleTypeStringData(int id);
+
+    void saveDataFromVCSTag(String nameST, VCSTagTable table);
+
+    void createArtifactToConfigurationRelation(Integer startId, Integer endId);
+
+    void createCommitToCommitedConfigurationRelation(Integer startId, Integer endId);
+
+    void createCommitedConfigurationToConfigurationRelation(Integer startId, Integer endId);
 }

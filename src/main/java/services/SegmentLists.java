@@ -16,6 +16,10 @@ public class SegmentLists {
      **/
     private ObservableList<BasicTable> configObservable;
 
+    private ObservableList<BasicTable> commitObservable;
+
+    private ObservableList<BasicTable> commitedConfigurationObservable;
+
     private ObservableList<BasicTable> workUnitsObservable;
 
     private ObservableList<BasicTable> branchObservable;
@@ -27,6 +31,8 @@ public class SegmentLists {
     private ObservableList<BasicTable> milestoneObservable;
 
     private ObservableList<BasicTable> artifactObservable;
+
+    private ObservableList<BasicTable> changeObservable;
 
     private ObservableList<BasicTable> CPRObservable;
 
@@ -67,6 +73,13 @@ public class SegmentLists {
         configObservable = FXCollections.observableArrayList();
         configObservable.add(new ConfigTable("", "", -1, true,-1));
 
+        commitObservable = FXCollections.observableArrayList();
+        commitObservable.add(new CommitTable("", "", true, true, -1));
+
+        commitedConfigurationObservable = FXCollections.observableArrayList();
+        commitedConfigurationObservable.add(new CommitedConfigurationTable("", "",true,-1));
+
+
         VCSTagObservable = FXCollections.observableArrayList();
         VCSTagObservable.add(new VCSTagTable("",  "",true, -1));
 
@@ -84,6 +97,10 @@ public class SegmentLists {
 
         artifactObservable = FXCollections.observableArrayList();
         artifactObservable.add(new ArtifactTable("","",true,-1));
+
+        changeObservable = FXCollections.observableArrayList();
+        changeObservable.add(new ChangeTable("","",true,-1));
+
 
         criterionObservable = FXCollections.observableArrayList();
         criterionObservable.add(new CriterionTable("","",true,-1));
@@ -161,6 +178,8 @@ public class SegmentLists {
                return removeDataFromListTest(branchObservable, indexList);
             case Artifact:
                 return removeDataFromListTest(artifactObservable, indexList);
+            case Change:
+                return removeDataFromListTest(changeObservable, indexList);
             case Priority:
                 return removeDataFromListTest(priorityTypeObservable, indexList);
             case Severity:
@@ -174,10 +193,8 @@ public class SegmentLists {
                 return removeDataFromListTest(roleObservable, indexList);
             case Role_Type:
                 return  removeDataFromListTest(roleTypeObservable, indexList);
-
             case Config_Person_Relation:
                 return removeDataFromListTest(CPRObservable, indexList);
-
             case Relation:
                 return removeDataFromListTest(relationTypeObservable, indexList);
 
@@ -192,8 +209,15 @@ public class SegmentLists {
 
             case Configuration:
                 return removeDataFromListTest(configObservable, indexList);
+            case Committed_Configuration:
+                return removeDataFromListTest(commitedConfigurationObservable, indexList);
+            case Commit:
+                return removeDataFromListTest(commitObservable, indexList);
+            case VCSTag:
+                return removeDataFromListTest(getVCSTag(), indexList);
             case Work_Unit:
                 return removeDataFromListTest(workUnitsObservable, indexList);
+
 
             default:
         }
@@ -205,6 +229,9 @@ public class SegmentLists {
         switch (segmentType) {
             case Branch:
                 removeDataFromListTest(branchObservable, indexList);
+                break;
+            case Work_Unit:
+                removeDataFromListTest(workUnitsObservable, indexList);
                 break;
             case Priority:
                 return removeDataFromListTest(priorityTypeObservable, indexList);
@@ -331,6 +358,18 @@ public class SegmentLists {
         return configObservable;
     }
 
+    public ObservableList<BasicTable> getCommitObservable() {
+        return commitObservable;
+    }
+
+    public ObservableList<BasicTable> getCommitedConfigurationObservable() {
+        return commitedConfigurationObservable;
+    }
+
+    public ObservableList<BasicTable> getVCSTagObservable() {
+        return VCSTagObservable;
+    }
+
     public ObservableList<BasicTable> getRoleObservable() {
         return roleObservable;
     }
@@ -388,6 +427,9 @@ public class SegmentLists {
         return typeObservable;
     }
 
+    public ObservableList<BasicTable> getChangeObservable() {
+        return changeObservable;
+    }
 
     public ObservableList<BasicTable> getWorkUnitsObservable() {
         return workUnitsObservable;
@@ -404,6 +446,40 @@ public class SegmentLists {
         return null;
     }
 
+    public BasicTable getConfigurationTable(int id) {
+
+        for (BasicTable table : configObservable){
+            if (table.getId() == id ){
+                return table;
+            }
+        }
+
+        return null;
+    }
+
+    public BasicTable getCommitedConfigurationTable(int id) {
+
+        for (BasicTable table : commitedConfigurationObservable){
+            if (table.getId() == id ){
+                return table;
+            }
+        }
+
+        return null;
+    }
+
+    public BasicTable getCommitTable(int id) {
+
+        for (BasicTable table : commitObservable){
+            if (table.getId() == id ){
+                return table;
+            }
+        }
+
+        return null;
+    }
+    
+    
     public ObservableList<BasicTable> getVCSTag() {
         return VCSTagObservable;
     }

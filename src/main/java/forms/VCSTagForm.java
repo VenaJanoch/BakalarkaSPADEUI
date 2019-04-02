@@ -144,11 +144,15 @@ public class VCSTagForm extends TableBasicForm implements ISegmentTableForm {
 		String idName = id + "_" + nameST;
 
 		VCSTagTable table = new VCSTagTable(idName, "",true, id);
-
+		formDataController.saveDataFromVCSTag(nameST,table);
 		tableTV.getItems().add(table);
 		tableTV.sort();
 		int lastItem = tableTV.getItems().size();
 		tableTV.getSelectionModel().select(lastItem - 1);
 		showEditPanel();
+	}
+
+	public TableView<VCSTagTable> getTableTV() {
+		return tableTV;
 	}
 }

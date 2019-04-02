@@ -68,10 +68,12 @@ public class ManipulationController {
      */
     public void deleteItem(CanvasItemController canvasItemController) {
         if (chooseCanvasItem != null) {
-            canvasItemController.deleteItem(chooseCanvasItem);
-            int index = chooseCanvasItem.getFormIdentificator();
-            deleteForm(index, chooseCanvasItem.getSegmentType());
 
+            int index = chooseCanvasItem.getFormIdentificator();
+            boolean isDelete =  deleteForm(index, chooseCanvasItem.getSegmentType());
+            if (isDelete) {
+                canvasItemController.deleteItem(chooseCanvasItem);
+            }
         }
         chooseCanvasItem = null;
 
@@ -111,23 +113,20 @@ public class ManipulationController {
     public void createCopyForm(int oldFormIndex, SegmentType segmentType, CanvasController canvasController) {
 
         switch (segmentType) {
-            case Phase:
-                formFillController.addExistPhaseFormToCanvas(oldFormIndex);
+            case Configuration:
+                formFillController.fillConfigurationForm(oldFormIndex);
                 break;
-            case Iteration:
-                formFillController.addExistIterationFormToCanvas(oldFormIndex);
+            case Committed_Configuration:
+                formFillController.fillCommitedConfigurationForm(oldFormIndex);
                 break;
-            case Activity:
-                formFillController.addExistActivityFormToCanvas(oldFormIndex);
+            case Commit:
+                formFillController.fillCommitForm(oldFormIndex);
                 break;
             case Work_Unit:
-                formFillController.addExistWorkUnitFormToCanvas(oldFormIndex, canvasController);
-                break;
-            case Change:
-                formFillController.fillChangeForm(oldFormIndex, canvasController);
+                formFillController.fillPersonForm(oldFormIndex);
                 break;
             case Artifact:
-                formFillController.fillArtifactForm(oldFormIndex, canvasController);
+                formFillController.fillArtifactForm(oldFormIndex);
                 break;
             default:
                 break;
@@ -135,15 +134,28 @@ public class ManipulationController {
     }
 
 
-    public void deleteForm(int formIndex, SegmentType segmentType){
-
+    public boolean deleteForm(int formIndex, SegmentType segmentType){
+        boolean isDelete = false;
         switch (segmentType){
             case Artifact:
-                deleteFormController.deleteArtifact (formIndex);
+             isDelete = deleteFormController.deleteArtifact (formIndex);
+                break;
+            case Person:
+                isDelete = deleteFormController.deleteRoleWithDialog(formIndex);
+                break;
+            case Configuration:
+                isDelete = deleteFormController.deleteConfigurationWithDialog(formIndex);
+                break;
+            case Committed_Configuration:
+                isDelete = deleteFormController.deleteCommitedConfigurationWithDialog(formIndex);
+                break;
+            case Commit:
+                isDelete = deleteFormController.deleteCommitWithDialog(formIndex);
                 break;
             default:
-                break;
+                return isDelete;
         }
+        return isDelete;
     }
 
     /**

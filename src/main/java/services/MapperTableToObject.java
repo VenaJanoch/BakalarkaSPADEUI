@@ -9,57 +9,96 @@ public class MapperTableToObject {
 
     private SegmentLists lists;
 
-    private Map<Integer, ArrayList<TableToObjectInstanc>> milestoneToCriterionMapper;
-    private Map<Integer, ArrayList<TableToObjectInstanc>> roleToRoleTypeMapper;
-    private Map<Integer, ArrayList<TableToObjectInstanc>> priorityToWUMapper;
-    private Map<Integer, ArrayList<TableToObjectInstanc>> severityToWUMapper;
-    private Map<Integer, ArrayList<TableToObjectInstanc>> resolutionToWUMapper;
-    private Map<Integer, ArrayList<TableToObjectInstanc>> statusToWUMapper;
-    private Map<Integer, ArrayList<TableToObjectInstanc>> typeToWUMapper;
-    private Map<Integer, ArrayList<TableToObjectInstanc>> relationToWUMapper;
-    private Map<Integer, ArrayList<TableToObjectInstanc>> wuToRoleMapper;
+    private Map<Integer, ArrayList<TableToObjectInstanc>> personToRoleTypeMapper; // Vazba mezi Role Type a Person, vychazejici z Person
+
+    private Map<Integer, ArrayList<TableToObjectInstanc>> wuToRoleMapper; // Vazba mezi Role a WU, vychazejici z WU
     private Map<Integer, ArrayList<TableToObjectInstanc>> CPRToRoleMapper;
     private Map<Integer, ArrayList<TableToObjectInstanc>> configurationToRoleMapper;
-    private Map<Integer, ArrayList<TableToObjectInstanc>> configurationToBranchMapper;
-    private Map<Integer, ArrayList<TableToObjectInstanc>> configurationToCPRMapper;
     private Map<Integer, ArrayList<TableToObjectInstanc>> artifactToRoleMapper;
-    private Map<Integer, ArrayList<TableToObjectInstanc>> phaseToMilestone;
+
     private Map<Integer, ArrayList<TableToObjectInstanc>> phaseToConfigurationMapper;
     private Map<Integer, ArrayList<TableToObjectInstanc>> iterationToConfigurationMapper;
+
+    private Map<Integer, ArrayList<TableToObjectInstanc>> configurationToCommitedConfigurationMapper;
+
+    private Map<Integer, ArrayList<TableToObjectInstanc>> commitedConfigurationToCommitMapper;
+
     private Map<Integer, ArrayList<TableToObjectInstanc>> changeToArtifactMapper;
+    private Map<Integer, ArrayList<TableToObjectInstanc>> configurationToArtifactMapper;
+
+    private Map<Integer, ArrayList<TableToObjectInstanc>> WUToPriorityMapper; // Vazba mezi Priority a WU, vychazejici z WU
+    private Map<Integer, ArrayList<TableToObjectInstanc>> WUToSeverityMapper; // Vazba mezi Severity a WU, vychazejici z WU
+    private Map<Integer, ArrayList<TableToObjectInstanc>> WUToResolutionMapper; // Vazba mezi Resolution a WU, vychazejici z WU
+    private Map<Integer, ArrayList<TableToObjectInstanc>> WUStatusMapper; // Vazba mezi Status a WU, vychazejici z WU
+    private Map<Integer, ArrayList<TableToObjectInstanc>> WUTotypeMapper; // Vazba mezi Type a WU, vychazejici z WU
+    private Map<Integer, ArrayList<TableToObjectInstanc>> WUTORelationMapper; // Vazba mezi Relation a WU, vychazejici z WU
+
+    private Map<Integer, ArrayList<TableToObjectInstanc>> phaseToWUMapper;
+    private Map<Integer, ArrayList<TableToObjectInstanc>> iterationToWUMapper;
+    private Map<Integer, ArrayList<TableToObjectInstanc>> activityToWUMapper;
+
+    private Map<Integer, ArrayList<TableToObjectInstanc>> milestoneToCriterionMapper; //Vazba mezi Criterions a Milestone, vychazejici z Milestone
+    private Map<Integer, ArrayList<TableToObjectInstanc>> phaseToMilestone;
+
+    private Map<Integer, ArrayList<TableToObjectInstanc>> commitToBranchMapper;
+    private Map<Integer, ArrayList<TableToObjectInstanc>> commitToVCSTagMapper;
+
+    private Map<Integer, ArrayList<TableToObjectInstanc>> configurationToCPRMapper;
 
 
     private ArrayList<Map<Integer, ArrayList<TableToObjectInstanc>>> roleMaps;
     private ArrayList<Map<Integer, ArrayList<TableToObjectInstanc>>> configurationMaps;
+    private ArrayList<Map<Integer, ArrayList<TableToObjectInstanc>>> artifactMaps;
+    private ArrayList<Map<Integer, ArrayList<TableToObjectInstanc>>> workUnitMaps;
 
     public MapperTableToObject(SegmentLists lists) {
         this.lists = lists;
         this.milestoneToCriterionMapper = new HashMap<>();
-        this.roleToRoleTypeMapper = new HashMap<>();
-        this.priorityToWUMapper = new HashMap<>();
-        this.severityToWUMapper = new HashMap<>();
-        this.resolutionToWUMapper = new HashMap<>();
-        this.statusToWUMapper = new HashMap<>();
-        this.typeToWUMapper = new HashMap<>();
-        this.relationToWUMapper = new HashMap<>();
+        this.personToRoleTypeMapper = new HashMap<>();
+        this.WUToPriorityMapper = new HashMap<>();
+        this.WUToSeverityMapper = new HashMap<>();
+        this.WUToResolutionMapper = new HashMap<>();
+        this.WUStatusMapper = new HashMap<>();
+        this.WUTotypeMapper = new HashMap<>();
+        this.WUTORelationMapper = new HashMap<>();
         this.wuToRoleMapper = new HashMap<>();
         this.artifactToRoleMapper = new HashMap<>();
         this.CPRToRoleMapper = new HashMap<>();
         this.configurationToRoleMapper = new HashMap<>();
         this.configurationToCPRMapper = new HashMap<>();
-        this.configurationToBranchMapper = new HashMap<>();
         this.phaseToMilestone = new HashMap<>();
         this.phaseToConfigurationMapper = new HashMap<>();
         this.iterationToConfigurationMapper = new HashMap<>();
         this.changeToArtifactMapper = new HashMap<>();
-
-
-
+        this.phaseToWUMapper = new HashMap<>();
+        this.iterationToWUMapper = new HashMap<>();
+        this.activityToWUMapper = new HashMap<>();
+        this.commitToBranchMapper = new HashMap<>();
+        this.commitToVCSTagMapper = new HashMap<>();
+        this.configurationToCommitedConfigurationMapper = new HashMap<>();
+        this.commitedConfigurationToCommitMapper = new HashMap<>();
+        this.configurationToArtifactMapper = new HashMap<>();
         this.roleMaps = new ArrayList<>();
         this.configurationMaps = new ArrayList<>();
+        this.artifactMaps = new ArrayList<>();
+        this.workUnitMaps = new ArrayList<>();
         initRoleMapsList();
         initConfigurationMapList();
+        initArtifactMapList();
+        initWorkUnitMapList();
     }
+
+    private void initWorkUnitMapList(){
+        workUnitMaps.add(phaseToWUMapper);
+        workUnitMaps.add(iterationToWUMapper);
+        workUnitMaps.add(activityToWUMapper);
+    }
+
+    private void initArtifactMapList(){
+        artifactMaps.add(changeToArtifactMapper);
+        artifactMaps.add(configurationToArtifactMapper);
+    }
+
 
     private void initConfigurationMapList(){
         configurationMaps.add(phaseToConfigurationMapper);
@@ -83,6 +122,29 @@ public class MapperTableToObject {
         }
     }
 
+    public void mapTableToObjects(SegmentType segmentType, SegmentType destinationSegment, int indexList, TableToObjectInstanc instanc) {
+
+        switch (segmentType) {
+            case Configuration:
+                switch (destinationSegment) {
+                    case Artifact:
+                        addInstanceToMap(indexList, lists.getConfigObservable(), instanc, configurationToArtifactMapper);
+                        break;
+                    case Committed_Configuration:
+                        addInstanceToMap(indexList, lists.getConfigObservable(), instanc, configurationToCommitedConfigurationMapper);
+                        break;
+                        default:
+                }
+
+                break;
+            case Committed_Configuration:
+                addInstanceToMap(indexList, lists.getCommitedConfigurationObservable(), instanc, commitedConfigurationToCommitMapper);
+                break;
+            default:
+
+        }
+    }
+
     public void mapTableToObject(SegmentType segmentType, ArrayList<Integer> index, TableToObjectInstanc instanc) {
 
         switch (segmentType) {
@@ -90,7 +152,7 @@ public class MapperTableToObject {
                 addInstanceToMap(index, lists.getCriterionObservable(), instanc, milestoneToCriterionMapper);
                 break;
             case Person:
-                addInstanceToMap(index, lists.getRoleTypeObservable(), instanc, roleToRoleTypeMapper);
+                addInstanceToMap(index, lists.getRoleTypeObservable(), instanc, personToRoleTypeMapper);
                 break;
             case Artifact:
                 addInstanceToMap(index, lists.getRoleObservable(), instanc, artifactToRoleMapper);
@@ -101,12 +163,10 @@ public class MapperTableToObject {
             case Configuration:
                 addInstanceToMap(index, lists.getRoleObservable(), instanc, configurationToRoleMapper);
                 break;
-            case Iteration:
-                addInstanceToMap(index, lists.getConfigObservable(), instanc, iterationToConfigurationMapper);
-                break;
             case Change:
                 addInstanceToMap(index, lists.getArtifactObservable(), instanc, changeToArtifactMapper);
-                break;
+            case Activity:
+                addInstanceToMap(index, lists.getWorkUnitsObservable(), instanc, activityToWUMapper);
             default:
 
         }
@@ -115,11 +175,11 @@ public class MapperTableToObject {
     public void mapTableToWU(ArrayList<Integer> assigneIndex, ArrayList<Integer> authorIndex, ArrayList<Integer> priorityIndex,
                              ArrayList<Integer> severityIndex, ArrayList<Integer> typeIndex, ArrayList<Integer> resolutionIndex,
                              ArrayList<Integer> statusIndex, int indexForm, String WUName) {
-        addInstanceToMap(priorityIndex, lists.getPriorityTypeObservable(), new TableToObjectInstanc(WUName, indexForm, SegmentType.Work_Unit), priorityToWUMapper);
-        addInstanceToMap(severityIndex, lists.getSeverityTypeObservable(), new TableToObjectInstanc(WUName, indexForm, SegmentType.Work_Unit), severityToWUMapper);
-        addInstanceToMap(typeIndex, lists.getTypeObservable(), new TableToObjectInstanc(WUName, indexForm, SegmentType.Work_Unit), typeToWUMapper);
-        addInstanceToMap(statusIndex, lists.getStatusTypeObservable(), new TableToObjectInstanc(WUName, indexForm, SegmentType.Work_Unit), statusToWUMapper);
-        addInstanceToMap(resolutionIndex, lists.getResolutionTypeObservable(), new TableToObjectInstanc(WUName, indexForm, SegmentType.Work_Unit), resolutionToWUMapper);
+        addInstanceToMap(priorityIndex, lists.getPriorityTypeObservable(), new TableToObjectInstanc(WUName, indexForm, SegmentType.Work_Unit), WUToPriorityMapper);
+        addInstanceToMap(severityIndex, lists.getSeverityTypeObservable(), new TableToObjectInstanc(WUName, indexForm, SegmentType.Work_Unit), WUToSeverityMapper);
+        addInstanceToMap(typeIndex, lists.getTypeObservable(), new TableToObjectInstanc(WUName, indexForm, SegmentType.Work_Unit), WUTotypeMapper);
+        addInstanceToMap(statusIndex, lists.getStatusTypeObservable(), new TableToObjectInstanc(WUName, indexForm, SegmentType.Work_Unit), WUStatusMapper);
+        addInstanceToMap(resolutionIndex, lists.getResolutionTypeObservable(), new TableToObjectInstanc(WUName, indexForm, SegmentType.Work_Unit), WUToResolutionMapper);
         addInstanceToMap(assigneIndex, lists.getRoleObservable(), new TableToObjectInstanc(WUName, indexForm, SegmentType.Work_Unit), wuToRoleMapper);
         addInstanceToMap(authorIndex, lists.getRoleObservable(), new TableToObjectInstanc(WUName, indexForm, SegmentType.Work_Unit), wuToRoleMapper);
     }
@@ -128,12 +188,22 @@ public class MapperTableToObject {
                                         String configName, int configIndex){
         addInstanceToMap(roleIndex, lists.getRoleObservable(), new TableToObjectInstanc(configName, configIndex, SegmentType.Configuration), configurationToRoleMapper);
         addInstancesToMap(cprIndicies, lists.getCPRObservable(), new TableToObjectInstanc(configName, configIndex, SegmentType.Configuration), configurationToCPRMapper);
-        addInstancesToMap(branches, lists.getBranchObservable(), new TableToObjectInstanc(configName, configIndex, SegmentType.Configuration), configurationToBranchMapper);
-    }
+     }
 
-    public void mapTableToPhase(ArrayList<Integer> milestoneId, ArrayList<Integer> configurationId, String phaseName, int phaseId){
+    public void mapTableToPhase(ArrayList<Integer> milestoneId, ArrayList<Integer> configurationId, ArrayList<Integer> workUnitId,  String phaseName, int phaseId){
         addInstanceToMap(milestoneId, lists.getMilestoneObservable(), new TableToObjectInstanc(phaseName, phaseId, SegmentType.Phase), phaseToMilestone);
         addInstanceToMap(configurationId, lists.getConfigObservable(), new TableToObjectInstanc(phaseName, phaseId, SegmentType.Phase), phaseToConfigurationMapper);
+        addInstanceToMap(workUnitId, lists.getWorkUnitsObservable(), new TableToObjectInstanc(phaseName, phaseId, SegmentType.Phase), phaseToWUMapper);
+    }
+
+    public void mapTableToIteration(ArrayList<Integer> configurationId, ArrayList<Integer> workUnitId,  String iterationName, int iterationId){
+        addInstanceToMap(configurationId, lists.getConfigObservable(), new TableToObjectInstanc(iterationName, iterationId, SegmentType.Iteration), iterationToConfigurationMapper);
+        addInstanceToMap(workUnitId, lists.getWorkUnitsObservable(), new TableToObjectInstanc(iterationName, iterationId, SegmentType.Iteration), iterationToWUMapper);
+    }
+
+    public void mapTableToCommit(ArrayList<Integer> branches, ArrayList<Integer> tags,  String commitName, int commitId){
+        addInstanceToMap(branches, lists.getBranchObservable(), new TableToObjectInstanc(commitName, commitId, SegmentType.Commit), commitToBranchMapper);
+        addInstanceToMap(tags, lists.getVCSTag(), new TableToObjectInstanc(commitName, commitId, SegmentType.Commit), commitToVCSTagMapper);
     }
 
 
@@ -241,21 +311,29 @@ public class MapperTableToObject {
 
     public void deleteFromRoleMaps(ArrayList<Integer> dependencyRole) {
         for (int i : dependencyRole) {
-            wuToRoleMapper.remove(i);
-            CPRToRoleMapper.remove(i);
-            configurationToRoleMapper.remove(i);
-            artifactToRoleMapper.remove(i);
+            deleteFromRoleMaps(i);
         }
 
     }
+
+    public void deleteFromRoleMaps(int id){
+        wuToRoleMapper.remove(id);
+        CPRToRoleMapper.remove(id);
+        configurationToRoleMapper.remove(id);
+        artifactToRoleMapper.remove(id);
+    }
+
 
     public void deleteFromConfigurationMaps(ArrayList<Integer> dependencyConfiguration) {
         for (int i : dependencyConfiguration) {
-            phaseToConfigurationMapper.remove(i);
-            iterationToConfigurationMapper.remove(i);
+           deleteFromConfigurationMaps(i);
         }
     }
 
+    public void deleteFromConfigurationMaps(int id){
+        phaseToConfigurationMapper.remove(id);
+        iterationToConfigurationMapper.remove(id);
+    }
 
     public void updateRoleMaps(ArrayList<Integer> indexList) {
         updateValueList(wuToRoleMapper, indexList);
@@ -274,32 +352,32 @@ public class MapperTableToObject {
         return milestoneToCriterionMapper;
     }
 
-    public Map<Integer, ArrayList<TableToObjectInstanc>> getRoleToRoleTypeMapper() {
-        return roleToRoleTypeMapper;
+    public Map<Integer, ArrayList<TableToObjectInstanc>> getPersonToRoleTypeMapper() {
+        return personToRoleTypeMapper;
     }
 
-    public Map<Integer, ArrayList<TableToObjectInstanc>> getPriorityToWUMapper() {
-        return priorityToWUMapper;
+    public Map<Integer, ArrayList<TableToObjectInstanc>> getWUToPriorityMapper() {
+        return WUToPriorityMapper;
     }
 
-    public Map<Integer, ArrayList<TableToObjectInstanc>> getSeverityToWUMapper() {
-        return severityToWUMapper;
+    public Map<Integer, ArrayList<TableToObjectInstanc>> getWUToSeverityMapper() {
+        return WUToSeverityMapper;
     }
 
-    public Map<Integer, ArrayList<TableToObjectInstanc>> getResolutionToWUMapper() {
-        return resolutionToWUMapper;
+    public Map<Integer, ArrayList<TableToObjectInstanc>> getWUToResolutionMapper() {
+        return WUToResolutionMapper;
     }
 
-    public Map<Integer, ArrayList<TableToObjectInstanc>> getStatusToWUMapper() {
-        return statusToWUMapper;
+    public Map<Integer, ArrayList<TableToObjectInstanc>> getWUStatusMapper() {
+        return WUStatusMapper;
     }
 
-    public Map<Integer, ArrayList<TableToObjectInstanc>> getTypeToWUMapper() {
-        return typeToWUMapper;
+    public Map<Integer, ArrayList<TableToObjectInstanc>> getWUTotypeMapper() {
+        return WUTotypeMapper;
     }
 
-    public Map<Integer, ArrayList<TableToObjectInstanc>> getRelationToWUMapper() {
-        return relationToWUMapper;
+    public Map<Integer, ArrayList<TableToObjectInstanc>> getWUTORelationMapper() {
+        return WUTORelationMapper;
     }
 
     public Map<Integer, ArrayList<TableToObjectInstanc>> getWuToRoleMapper() {
@@ -334,9 +412,6 @@ public class MapperTableToObject {
         return phaseToMilestone;
     }
 
-    public Map<Integer, ArrayList<TableToObjectInstanc>> getConfigurationToBranchMapper() {
-        return configurationToBranchMapper;
-    }
 
     public Map<Integer, ArrayList<TableToObjectInstanc>> getPhaseToConfigurationMapper() {
         return phaseToConfigurationMapper;
@@ -348,5 +423,49 @@ public class MapperTableToObject {
 
     public Map<Integer, ArrayList<TableToObjectInstanc>> getChangeToArtifactMapper() {
         return changeToArtifactMapper;
+    }
+
+    public Map<Integer, ArrayList<TableToObjectInstanc>> getConfigurationToCommitedConfigurationMapper() {
+        return configurationToCommitedConfigurationMapper;
+    }
+
+    public Map<Integer, ArrayList<TableToObjectInstanc>> getCommitedConfigurationToCommitMapper() {
+        return commitedConfigurationToCommitMapper;
+    }
+
+    public Map<Integer, ArrayList<TableToObjectInstanc>> getConfigurationToArtifactMapper() {
+        return configurationToArtifactMapper;
+    }
+
+    public Map<Integer, ArrayList<TableToObjectInstanc>> getPhaseToWUMapper() {
+        return phaseToWUMapper;
+    }
+
+    public Map<Integer, ArrayList<TableToObjectInstanc>> getIterationToWUMapper() {
+        return iterationToWUMapper;
+    }
+
+    public Map<Integer, ArrayList<TableToObjectInstanc>> getActivityToWUMapper() {
+        return activityToWUMapper;
+    }
+
+    public Map<Integer, ArrayList<TableToObjectInstanc>> getCommitToBranchMapper() {
+        return commitToBranchMapper;
+    }
+
+    public Map<Integer, ArrayList<TableToObjectInstanc>> getCommitToVCSTagMapper() {
+        return commitToVCSTagMapper;
+    }
+
+    public ArrayList<Map<Integer, ArrayList<TableToObjectInstanc>>> getConfigurationMaps() {
+        return configurationMaps;
+    }
+
+    public ArrayList<Map<Integer, ArrayList<TableToObjectInstanc>>> getArtifactMaps() {
+        return artifactMaps;
+    }
+
+    public ArrayList<Map<Integer, ArrayList<TableToObjectInstanc>>> getWorkUnitMaps() {
+        return workUnitMaps;
     }
 }

@@ -82,7 +82,6 @@ public class ComboBoxItem extends ItemBox {
 
     public void selectItemInComboBox(int index){
         itemCB.getSelectionModel().select(index);
-        itemCB.getSelectionModel().select(listForBox.get(index));
     }
 
     public void selectItemInComboBox(String  value){

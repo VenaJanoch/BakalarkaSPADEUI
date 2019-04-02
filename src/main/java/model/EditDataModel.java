@@ -251,6 +251,26 @@ public class EditDataModel implements IEditDataModel {
                         }
                 }
                 break;
+            case Configuration:
+                switch (elementType ) {
+                    case Committed_Configuration:
+                        for (Configuration segment : project.getConfiguration()) {
+                            List<Integer> type = segment.getCommitedConfiguration();
+                            List<Integer> commitedConfigurationId = dataModel.getCommitedConfigurationId(type);
+                            int deleteIndexInProject = dataModel.getCommitedConfigurationIndexInProject(elementIdList);
+                            for (int i = 0; i < type.size(); i++) {
+                                int index = type.get(i);
+                                if( commitedConfigurationId.get(i) == elementIdList ){
+                                    segment.getCommitedConfiguration().remove(i);
+                                }else if(index > deleteIndexInProject ){
+                                    segment.getCommitedConfiguration().remove(i);
+                                }
+                            }
+
+                        }
+                }
+                break;
+                default:
         }
 
     }
@@ -435,10 +455,29 @@ public class EditDataModel implements IEditDataModel {
                             int i = 0;
                             for (BranchList list : segment.getBranch()) {
                                 updateElementListFromSegment(elementIdList, list.getBranches());
-                                if (list.getBranches().size() == 0) {
+                                if (list.getBranches().size() != 0) {
                                     segment.getBranchIndicator().remove(i);
                                 }
                                 i++;
+                            }
+                        }
+                    case VCSTag:
+                        for (Commit segment : project.getCommit()) {
+                            List<Integer> type = segment.getTags();
+                            List<Integer> tagId = dataModel.getTagId(type);
+                            for(int deleteId : elementIdList){
+                                int deleteIndexInProject = dataModel.getVCSTAgProjectIndex(deleteId);
+                                for (int i = 0; i < type.size(); i++) {
+                                    int index = type.get(i);
+                                    if( tagId.get(i) == deleteId ){
+                                        segment.getTags().remove(i);
+                                        segment.getTagsIndicator().remove(i);
+                                    }else if(index > deleteIndexInProject ){
+                                        segment.getTags().remove(i);
+                                        segment.getTags().add(i, index -1);
+                                        segment.getTagsIndicator().remove(i);
+                                    }
+                                }
                             }
                         }
                 }

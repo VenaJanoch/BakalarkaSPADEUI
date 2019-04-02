@@ -124,17 +124,82 @@ public class DataManipulator{
         }
 
     public void copyDataFromArtifact(int artifactId, int newArtifactId) {
-        Artifact oldArtifact = project.getArtifacts().get(artifactId);
-        Artifact newArtifact = project.getArtifacts().get(newArtifactId);
+        Artifact oldArtifact = dataModel.getArtifact(artifactId);
+        Artifact newArtifact = dataModel.getArtifact(newArtifactId);
 
-//        newArtifact.setCoordinates(oldArtifact.getCoordinates());
-//        newArtifact.setName(oldArtifact.getName());
-//        newArtifact.setDescriptoin(oldArtifact.getDescriptoin());
-//        newArtifact.setExist(oldArtifact.isExist());
-//        newArtifact.setMimeType(oldArtifact.getMimeType());
-//        newArtifact.setCreated(oldArtifact.getCreated());
-//        newArtifact.setAuthorIndex(oldArtifact.getAuthorIndex());
-//        newArtifact.setArtifactIndex(oldArtifact.getArtifactIndex());
+        newArtifact.setCoordinates(oldArtifact.getCoordinates());
+        newArtifact.getName().addAll(oldArtifact.getName());
+        newArtifact.getNameIndicator().addAll(oldArtifact.getNameIndicator());
+        newArtifact.getDescription().addAll(oldArtifact.getDescription());
+        newArtifact.getDescriptionIndicator().addAll(oldArtifact.getDescriptionIndicator());
+        newArtifact.setExist(oldArtifact.isExist());
+        newArtifact.getMimeType().addAll(oldArtifact.getMimeType());
+        newArtifact.getMimeTypeIndex().addAll(oldArtifact.getMimeTypeIndex());
+        newArtifact.getMimeTypeIndicator().addAll(oldArtifact.getMimeTypeIndicator());
+        newArtifact.getCreated().addAll(oldArtifact.getCreated());
+        newArtifact.getCreatedIndicator().addAll(oldArtifact.getCreatedIndicator());
+        newArtifact.getAuthorIndex().addAll(oldArtifact.getAuthorIndex());
+        newArtifact.getAuthorIndicator().addAll(oldArtifact.getAuthorIndicator());
+    }
+
+
+    public void copyDataFromCommitedConfiguration(int commitedConfigurationId, int newCommitedConfigurationId) {
+        CommitedConfiguration oldCommitedConfiguration = dataModel.getCommitedConfiguration(commitedConfigurationId);
+        CommitedConfiguration newCommitedConfiguration = dataModel.getCommitedConfiguration(newCommitedConfigurationId);
+
+        newCommitedConfiguration.setCoordinates(oldCommitedConfiguration.getCoordinates());
+        newCommitedConfiguration.getName().addAll(oldCommitedConfiguration.getName());
+        newCommitedConfiguration.getNameIndicator().addAll(oldCommitedConfiguration.getNameIndicator());
+        newCommitedConfiguration.setExist(oldCommitedConfiguration.isExist());
+        newCommitedConfiguration.getCommitedDay().addAll(oldCommitedConfiguration.getCommitedDay());
+        newCommitedConfiguration.getCommitedDayIndicator().addAll(oldCommitedConfiguration.getCommitedDayIndicator());
+    }
+    
+
+    public void copyDataFromCommit(int commitId, int newCommitId) {
+        Commit oldCommit = dataModel.getCommit(commitId);
+        Commit newCommit = dataModel.getCommit(newCommitId);
+
+        newCommit.setCoordinates(oldCommit.getCoordinates());
+        newCommit.getName().addAll(oldCommit.getName());
+        newCommit.getNameIndicator().addAll(oldCommit.getNameIndicator());
+        newCommit.setExist(oldCommit.isExist());
+        newCommit.getBranch().addAll(oldCommit.getBranch());
+        newCommit.getBranchIndicator().addAll(oldCommit.getBranchIndicator());
+        newCommit.getTags().addAll(oldCommit.getTags());
+        newCommit.getTagsIndicator().addAll(oldCommit.getTagsIndicator());
+    }
+    
+
+    public void copyDataFromConfiguration(int configurationId, int newConfigurationId) {
+        Configuration oldConfiguration = dataModel.getConfiguration(configurationId);
+        Configuration newConfiguration = dataModel.getConfiguration(newConfigurationId);
+
+        newConfiguration.setCoordinates(oldConfiguration.getCoordinates());
+        newConfiguration.getName().addAll(oldConfiguration.getName());
+        newConfiguration.getNameIndicator().addAll(oldConfiguration.getNameIndicator());
+        newConfiguration.setExist(oldConfiguration.isExist());
+        newConfiguration.getCreated().addAll(oldConfiguration.getCreated());
+        newConfiguration.getAuthorIndex().addAll(oldConfiguration.getAuthorIndex());
+        newConfiguration.getAuthorIndicator().addAll(oldConfiguration.getAuthorIndicator());
+        newConfiguration.getCPRsIndicator().addAll(oldConfiguration.getCPRsIndicator());
+        newConfiguration.getCPRsIndexs().addAll(oldConfiguration.getCPRsIndexs());
+        newConfiguration.getChangesIndicator().addAll(oldConfiguration.getChangesIndicator());
+        newConfiguration.getChangesIndexs().addAll(oldConfiguration.getChangesIndexs());
+        newConfiguration.getCreatedIndicator().addAll(oldConfiguration.getCreatedIndicator());
+    }
+    
+    
+    public void copyDataFromPerson(int artifactId, int newPersonId) {
+        Person oldPerson = dataModel.getRole(artifactId);
+        Person newPerson = dataModel.getRole(newPersonId);
+
+        newPerson.setCoordinates(oldPerson.getCoordinates());
+        newPerson.getName().addAll(oldPerson.getName());
+        newPerson.getNameIndicator().addAll(oldPerson.getNameIndicator());
+        newPerson.setExist(oldPerson.isExist());
+        newPerson.getType().addAll(oldPerson.getType());
+        newPerson.getTypeIndicator().addAll(oldPerson.getTypeIndicator());
     }
 
     public List[] getCriterionData(int id) {
@@ -289,7 +354,7 @@ public class DataManipulator{
 
 
     public List[] getSeverityData(int id) {
-        List[] data = new List[4];
+        List[] data = new List[5];
         Severity severity = dataModel.getSeverity(id);
         if(severity.getName() != null){
             data[0] = severity.getName();
@@ -341,7 +406,7 @@ public class DataManipulator{
     }
 
     public List[] getStatusData(int id) {
-        List[] data = new List[4];
+        List[] data = new List[5];
         Status status = dataModel.getStatus(id);
         if(status.getName() != null){
             data[0] = status.getName();
@@ -367,7 +432,7 @@ public class DataManipulator{
     }
 
     public List[] getTypeData(int id) {
-        List[] data = new List[4];
+        List[] data = new List[5];
         Type type = dataModel.getType(id);
         if(type.getName() != null){
             data[0] = type.getName();
@@ -394,7 +459,7 @@ public class DataManipulator{
 
 
     public List[] getRelationData(int id) {
-        List[] data = new List[4];
+        List[] data = new List[5];
         Relation relation = dataModel.getRelation(id);
         if(relation.getName() != null){
             data[0] = relation.getName();
@@ -420,7 +485,7 @@ public class DataManipulator{
     }
 
     public List[] getResolutionData(int id) {
-        List[] data = new List[4];
+        List[] data = new List[5];
         Resolution resolution = dataModel.getResolution(id);
 
         if(resolution.getName() != null){

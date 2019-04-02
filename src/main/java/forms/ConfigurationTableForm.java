@@ -152,7 +152,7 @@ public class ConfigurationTableForm extends Table2BasicForm implements ISegmentT
 			}
 			else{
 				ArrayList<BasicTable> list = new ArrayList<>(selection);
-				deleteFormController.deleteConfigurationWithDialog(list, getTableTV());
+		//		deleteFormController.deleteConfigurationWithDialog(list, getTableTV());
 			}
 		}
 

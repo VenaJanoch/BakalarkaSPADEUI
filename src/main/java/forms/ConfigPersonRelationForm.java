@@ -143,7 +143,7 @@ public class ConfigPersonRelationForm extends TableBasicForm implements ISegment
 		int id = formController.createTableItem(SegmentType.Config_Person_Relation);
 		int roleIndex = 0;
 		CPRTable cpr = formDataController.prepareCPRToTable(nameST, roleIndex, id);
-
+		formDataController.saveDataFromCPR(nameST, roleIndex, cpr);
 		tableTV.getItems().add(cpr);
 		tableTV.sort();
 

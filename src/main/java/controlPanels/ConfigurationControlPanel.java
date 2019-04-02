@@ -35,8 +35,9 @@ public class ConfigurationControlPanel extends DateControlPanel implements ICont
 
         this.configId = configId;
         this.configTable = configTable;
-        lineList.add(new ControlPanelLineObject("CPRs: ", ControlPanelLineType.ComboBox, ParamType.CPR));
-        lineList.add(new ControlPanelLineObject("Changes: ", ControlPanelLineType.ComboBox, ParamType.Change));
+        SegmentLists segmentLists = formController.getSegmentLists();
+        lineList.add(new ControlPanelLineObject("CPRs: ", ControlPanelLineType.CheckBox, ParamType.CPR, segmentLists.getCPRObservable() ));
+        lineList.add(new ControlPanelLineObject("Changes: ", ControlPanelLineType.CheckBox, ParamType.Change, segmentLists.getChangeObservable()));
         this.addItemsToControlPanel();
     }
 

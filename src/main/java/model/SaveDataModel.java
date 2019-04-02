@@ -222,7 +222,7 @@ public class SaveDataModel implements ISaveDataModel {
 
     }
 
-    public void crateNewRole(int id) {
+    public void createNewRole(int id) {
 
         Person role = objF.createPerson();
         role.setId(id);
@@ -253,7 +253,7 @@ public class SaveDataModel implements ISaveDataModel {
         configuration.getTags().add(tag);
     }
 
-    public void crateNewStatus(String nameForManipulator, String classST, String superST, int id) {
+    public void createNewStatus(String nameForManipulator, String classST, String superST, int id) {
 
         Status status = objF.createStatus();
         status.setId(id);

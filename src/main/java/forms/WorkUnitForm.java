@@ -142,4 +142,7 @@ public class WorkUnitForm extends TableBasicForm implements ISegmentTableForm {
 		showEditPanel();
 	}
 
+	public TableView<WorkUnitTable> getTableTV() {
+		return tableTV;
+	}
 }

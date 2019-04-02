@@ -114,11 +114,11 @@ public class LinkControl {
             endSegmentId = segmentIdAct;
             formController.createArtifactToConfigurationRelation(startSegmentId, endSegmentId);
             finisLink(x, y, height, canvasController);
-        }else if (operation == 4) {
+        }else if (operation == 5) {
             endSegmentId = segmentIdAct;
             formController.createRoleToConfigurationRelation(startSegmentId, endSegmentId);
             finisLink(x, y, height, canvasController);
-        }else if (operation == 5) {
+        }else if (operation == 4) {
             endSegmentId = segmentIdAct;
             formController.createRoleToArtifactRelation(startSegmentId, endSegmentId);
             finisLink(x, y, height, canvasController);

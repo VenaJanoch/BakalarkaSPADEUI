@@ -192,86 +192,108 @@ public class FormController {
     }
 
     private int createNewCommitPanel() {
-        int formIndex = createNewCommitFormWithoutManipulator();
+        int formIndex = createNewCommitFormWithoutManipulator("", true);
         int id = identificatorCreater.getCommitId(formIndex);
         saveDataModel.createNewCommit(id);
         return formIndex;
     }
 
-    public int createNewCommitFormWithoutManipulator(){
+
+    public int createNewCommitFormWithoutCreateId(String name, boolean exist, int id, int formIndex){
+        CommitTable commitTable = new CommitTable(name, "", true, exist, id);
+
+        CommitControlPanel commitControlPanel = new CommitControlPanel(
+                "Edit", formDataController, editFormController,this, commitTable, id, formIndex);
+        segmentLists.getCommitObservable().add(commitTable);
+        controlPanels.add(commitControlPanel);
+        return formIndex;
+
+    }
+
+
+        public int createNewCommitFormWithoutManipulator(String name, boolean exist){
 
         int index = identificatorCreater.createCommitID();
         int id = identificatorCreater.getCommitId(index);
-        CommitTable commitTable = new CommitTable(id + "_", "", true, true, id);
+        return createNewCommitFormWithoutCreateId(name, exist, id, index);
+    }
 
-        CommitControlPanel commitControlPanel = new CommitControlPanel(
-                "Edit", formDataController, editFormController,this, commitTable, id, index);
 
+    public int createNewCommitedConfigurationFormWithoutCreateId(String name, boolean exist, int id, int formIndex){
+        CommitedConfigurationTable commitTable = new CommitedConfigurationTable(name,"", exist, id);
+
+        CommitedConfigurationControlPanel commitControlPanel = new CommitedConfigurationControlPanel(
+                "Edit", formDataController, editFormController,this, commitTable, id, formIndex);
+        segmentLists.getCommitedConfigurationObservable().add(commitTable);
         controlPanels.add(commitControlPanel);
-        return index;
+        return formIndex;
     }
 
     private int createNewCommitedConfigurationPanel() {
-        int formIndex = createNewCommitedConfigurationPanelFormWithoutManipulator();
+        int formIndex = createNewCommitedConfigurationPanelFormWithoutManipulator("", true);
         int id = identificatorCreater.getCommitedConfigurationId(formIndex);
         saveDataModel.createNewCommitedConfiguration(id);
         return formIndex;
     }
 
-    public int createNewCommitedConfigurationPanelFormWithoutManipulator(){
+    public int createNewCommitedConfigurationPanelFormWithoutManipulator(String name, boolean exist){
 
         int index = identificatorCreater.createCommiedConfigurationtID();
         int id = identificatorCreater.getCommitedConfigurationId(index);
-        CommitedConfigurationTable commitTable = new CommitedConfigurationTable(id + "_","", true, id);
-
-        CommitedConfigurationControlPanel commitControlPanel = new CommitedConfigurationControlPanel(
-                "Edit", formDataController, editFormController,this, commitTable, id, index);
-
-        controlPanels.add(commitControlPanel);
-        return index;
+        return createNewCommitedConfigurationFormWithoutCreateId(name, exist, id, index);
     }
     
     private int createNewRolePanel() {
-        int formIndex = createNewRoleFormWithoutManipulator();
+        int formIndex = createNewRoleFormWithoutManipulator("", true);
         int id = identificatorCreater.getRoleIndexToIdMaper().get(formIndex);
-        saveDataModel.crateNewRole(id);
+        saveDataModel.createNewRole(id);
         return formIndex;
     }
 
-    public int createNewRoleFormWithoutManipulator(){
+    public int createNewPersonFormWithoutCreateId(String name, boolean exist, int id, int formIndex){
 
-        int index = identificatorCreater.createRoleID();
-        int id = identificatorCreater.getRoleIndexToIdMaper().get(index);
-        PersonTable personTable = new PersonTable(id + "_", "", "", true, id);
+        PersonTable personTable = new PersonTable(name, "", "", exist, id);
 
         PersonControlPanel personControlPanel = new PersonControlPanel(
-                "Edit", formDataController, editFormController,this, personTable, id, index);
+                "Edit", formDataController, editFormController,this, personTable, id, formIndex);
 
         segmentLists.getRoleObservable().add(personTable);
         controlPanels.add(personControlPanel);
-        return index;
-
+        return formIndex;
     }
 
-    private int createNewArtifactPanel() {
-        int formIndex = createNewArtifactFormWithoutManipulator();
+
+    public int createNewRoleFormWithoutManipulator(String name, boolean exist){
+
+        int index = identificatorCreater.createRoleID();
+        int id = identificatorCreater.getRoleIndexToIdMaper().get(index);
+        return createNewPersonFormWithoutCreateId(name, exist, id, index);
+    }
+
+        private int createNewArtifactPanel() {
+        int formIndex = createNewArtifactFormWithoutManipulator("","", true);
         int id = identificatorCreater.getArtifactIndexToIdMaper().get(formIndex);
         saveDataModel.createNewArtifact(id);
         return formIndex;
     }
-    
 
-    public int createNewArtifactFormWithoutManipulator(){
-        int index = identificatorCreater.createArtifactID();
-        int id = identificatorCreater.getArtifactIndexToIdMaper().get(index);
-        ArtifactTable artifactTable = new ArtifactTable(id + "_", "", true, id);
+    public int createNewArtifactFormWithoutCreateId(String name, String description, boolean exist, int id, int formIndex){
+
+        ArtifactTable artifactTable = new ArtifactTable(name,description, exist, id);
 
         ArtifactControlPanel artifactControlPanel = new ArtifactControlPanel(
-                "Edit", formDataController, editFormController,this, artifactTable, id, index);
+                "Edit", formDataController, editFormController,this, artifactTable, id, formIndex);
 
         segmentLists.getArtifactObservable().add(artifactTable);
         controlPanels.add(artifactControlPanel);
-        return index;
+        return formIndex;
+
+    }
+
+    public int createNewArtifactFormWithoutManipulator(String name, String description, boolean exist){
+        int index = identificatorCreater.createArtifactID();
+        int id = identificatorCreater.getArtifactIndexToIdMaper().get(index);
+        return createNewArtifactFormWithoutCreateId(name, description, exist, id, index);
 
     }
 
@@ -289,23 +311,30 @@ public class FormController {
     }
 
     private int createNewConfigurationPanel() {
-        int formIndex = createNewConfiguratioFormWithoutManipulator();
+        int formIndex = createNewConfiguratioFormWithoutManipulator("", true);
         int id = identificatorCreater.getConfigurationId(formIndex);
         saveDataModel.createNewConfiguration(id);
         return formIndex;
     }
 
-    public int createNewConfiguratioFormWithoutManipulator(){
-        int index = identificatorCreater.createConfigurationID();
-        int id = identificatorCreater.getConfigurationId(index);
-        ConfigTable configTable = new ConfigTable(id + "_", "", index, true, id);
+    public int createNewConfigurationFormWithoutCreateId(String name, boolean exist, int id, int formIndex){
+
+        ConfigTable configTable = new ConfigTable(name, "", formIndex, exist, id);
 
         ConfigurationControlPanel roleControlPanel = new ConfigurationControlPanel(
-                "Edit", formDataController, editFormController,this, configTable, id, index);
+                "Edit", formDataController, editFormController,this, configTable, id, formIndex);
 
         segmentLists.getConfigObservable().add(configTable);
         controlPanels.add(roleControlPanel);
-        return index;
+        return formIndex;
+    }
+
+
+        public int createNewConfiguratioFormWithoutManipulator(String name, boolean exist){
+        int index = identificatorCreater.createConfigurationID();
+        int id = identificatorCreater.getConfigurationId(index);
+
+        return createNewConfigurationFormWithoutCreateId(name, exist, id, index);
     }
 
     private int createNewWorkUnitForm(int id) {
@@ -380,23 +409,6 @@ public class FormController {
     public void showForm(int formIdentificator) {
         BasicForm form = forms.get(formIdentificator);
         switch (form.getSegmentType()){
-            case Phase:
-        //        formFillController.fillPhaseForm(identificatorCreater.getRoleId(formIdentificator), formIdentificator);
-                break;
-            case Iteration:
-                formFillController.fillIterationForm(identificatorCreater.getIterationId(formIdentificator), formIdentificator);
-                break;
-            case Activity:
-                formFillController.fillActivityForm(identificatorCreater.getActivityId(formIdentificator), formIdentificator);
-                break;
-            case Work_Unit:
-                formFillController.fillWorkUnitForm(identificatorCreater.getWorkUnitIndex(formIdentificator), formIdentificator);
-                break;
-            case Change:
-                //  formFillController.fillChangeForm(identificatorCreater.getIterationId(formIdentificator), formIdentificator);break;
-            case Artifact:
-                //  formFillController.fillArtifactForm(identificatorCreater.getIterationId(formIdentificator), formIdentificator);
-                break;
             case Milestone:
 
                 List<Milestone> milestones = dataModel.getMilestones();
@@ -815,7 +827,7 @@ public class FormController {
 
         Integer[] result = findCorectId(startIndex, endIndex, startIndex1, endIndex2);
 
-        saveDataModel.createCommitToCommitedConfigurationRelation(result[0], result[1]);
+        formDataController.createCommitToCommitedConfigurationRelation(result[0], result[1]);
     }
 
     public void createCommitedConfigurationToConfigurationRelation(int startSegmentId, int endSegmentId) {
@@ -826,8 +838,7 @@ public class FormController {
         Integer endIndex2 = identificatorCreater.getConfigurationId(endSegmentId);
 
         Integer[] result = findCorectId(startIndex, endIndex, startIndex1, endIndex2);
-
-        saveDataModel.createCommitedConfigurationToConfigurationRelation(result[0], result[1]);
+        formDataController.createCommitedConfigurationToConfigurationRelation(result[0], result[1]);
 
     }
 
@@ -839,8 +850,7 @@ public class FormController {
         Integer endIndex2 = identificatorCreater.getConfigurationId(endSegmentId);
 
         Integer[] result = findCorectId(startIndex, endIndex, startIndex1, endIndex2);
-
-        saveDataModel.createNewArtifacToConfigurationRelation(result[0], result[1]);
+        formDataController.createArtifactToConfigurationRelation(result[0], result[1]);
 
     }
 
