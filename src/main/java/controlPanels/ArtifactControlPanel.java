@@ -1,10 +1,8 @@
 package controlPanels;
 
 import SPADEPAC.ArtifactClass;
-import SPADEPAC.WorkUnitPriorityClass;
 import abstractControlPane.DateDescControlPanel;
 import controllers.FormController;
-import graphics.ComboBoxItem;
 import graphics.ControlPanelLine;
 import interfaces.IControlPanel;
 import interfaces.IEditFormController;
@@ -18,7 +16,6 @@ import tables.BasicTable;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class ArtifactControlPanel extends DateDescControlPanel implements IControlPanel {
@@ -58,8 +55,8 @@ public class ArtifactControlPanel extends DateDescControlPanel implements IContr
     public void createControlPanel(){
 
 
-        controlPanelController.setCountLine(this, 2, new ControlPanelLine(lineList,this, controlPanelController ));
-        controlPanelController.createNewLine(this, lineList);
+        controlPanelController.setCountLine(this, 2, new ControlPanelLine(lineList,this, controlPanelController, controlPanelController.getLineCount() ));
+        controlPanelController.createNewLineWithExist(this, lineList);
 
         button.setOnAction(event -> saveDataFromPanel());
         }

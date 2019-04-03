@@ -33,7 +33,7 @@ public abstract class WorkUnitControlPanel extends DescriptionControlPanel {
 
     protected void addItemsToControlPanel2() {
 
-        lineList.add(new ControlPanelLineObject("Work units:: ", ControlPanelLineType.CheckBox, ParamType.WorkUnit, segmentLists.getWorkUnitsObservable()));
+        lineList.add(new ControlPanelLineObject("Work units: ", ControlPanelLineType.CheckBox, ParamType.WorkUnit, segmentLists.getWorkUnitsObservable()));
 
     }
 

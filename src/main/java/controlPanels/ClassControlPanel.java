@@ -2,19 +2,14 @@ package controlPanels;
 
 import controllers.FormController;
 import abstractControlPane.NameControlPanel;
-import graphics.ComboBoxItem;
 import graphics.ControlPanelLine;
 import interfaces.IEditFormController;
 import interfaces.IFormDataController;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.TableView;
-import services.ClassSwitcher;
 import services.ParamType;
 import services.SegmentType;
-import sun.plugin.javascript.navig.Array;
 import tables.BasicTable;
 import tables.ClassTable;
 
@@ -68,7 +63,7 @@ public class ClassControlPanel extends NameControlPanel {
         controlPanelController.setStaticClassBoxes(this, 1,
                 new ControlPanelLine(this, controlPanelController, controlPanelController.getClassListener(segmentType), oClassList ),
                 new ControlPanelLine( this, controlPanelController, controlPanelController.getSuperClassListener(), oSuperClassList));
-        controlPanelController.createNewLine(this, lineList);
+        controlPanelController.createNewLineWithExist(this, lineList);
     }
 
     protected void setClassData(List[] classData){

@@ -30,8 +30,8 @@ public class PersonControlPanel extends NameControlPanel implements IControlPane
 
     protected void addItemsToControlPanel(){
 
-        controlPanelController.setCountLine(this, 1, new ControlPanelLine(lineList, this, controlPanelController));
-        controlPanelController.createNewLine(this, lineList);
+        controlPanelController.setCountLine(this, 1, new ControlPanelLine(lineList, this, controlPanelController, controlPanelController.getLineCount()));
+        controlPanelController.createNewLineWithExist(this, lineList);
 
         button.setOnAction(event ->{
             ArrayList<Integer> nameIndicators = new ArrayList<>();

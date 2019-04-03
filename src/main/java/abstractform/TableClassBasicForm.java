@@ -97,9 +97,9 @@ public abstract class TableClassBasicForm extends TableBasicForm implements ISeg
 		superColumn.setMinWidth(150);
 		superColumn.setCellFactory(TextFieldTableCell.forTableColumn());
 
-		superColumn.setCellValueFactory(new PropertyValueFactory("existString"));
-		superColumn.setMinWidth(150);
-		superColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+		existColumn.setCellValueFactory(new PropertyValueFactory("existString"));
+		existColumn.setMinWidth(150);
+		existColumn.setCellFactory(TextFieldTableCell.forTableColumn());
 
 		//tableTV.getColumns().addAll(nameColumn, classColumn, superColumn, existColumn);
 		tableTV.getColumns().addAll(nameColumn, existColumn);

@@ -44,8 +44,8 @@ public class CommitControlPanel extends NameControlPanel implements IControlPane
     public void createControlPanel(){
 
         controlPanelController.setRadioButton(this,1, "Release: ", true);
-        controlPanelController.setCountLine(this, 2, new ControlPanelLine(lineList, this, controlPanelController));
-        controlPanelController.createNewLine(this, lineList);
+        controlPanelController.setCountLine(this, 2, new ControlPanelLine(lineList, this, controlPanelController, controlPanelController.getLineCount()));
+        controlPanelController.createNewLineWithExist(this, lineList);
 
         button.setOnAction(event ->{
             ArrayList<Integer> nameIndicators = new ArrayList<>();

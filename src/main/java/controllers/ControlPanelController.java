@@ -1,7 +1,6 @@
 package controllers;
 
 import abstractControlPane.ControlPanel;
-import controlPanels.WorkUnitControlPanel;
 import graphics.*;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -67,7 +66,7 @@ public class ControlPanelController {
                                   ParamType type, List<String>[] values, List<Integer> indicatorList, int index) {
         int i = 0;
         for (String value : values[index]){
-            createNewLine(controlPanel, lineList);
+            createNewLineWithExist(controlPanel, lineList);
             ControlPanelLine line = controlPanelLines.get(controlPanelLines.size() -1);
             line.fillTextLine(value, indicatorList.get(i), type );
             i++;
@@ -80,7 +79,7 @@ public class ControlPanelController {
                                     ParamType type, ArrayList<Integer> relation, ArrayList<ArrayList<Integer>> workUnit) {
         int i = 0;
         for ( int value : relation){
-            createNewLine(controlPanel, lineList);
+            createNewLineWithExist(controlPanel, lineList);
             ControlPanelLine line = controlPanelLines.get(controlPanelLines.size() -1);
             line.fillRelationComboBoxLine(value, workUnit.get(i), type );
             i++;
@@ -92,7 +91,7 @@ public class ControlPanelController {
                                  ParamType type, ArrayList<Integer> values, List<Integer> indicatorList) {
         int i = 0;
         for ( int value : values){
-            createNewLine(controlPanel, lineList);
+            createNewLineWithExist(controlPanel, lineList);
             ControlPanelLine line = controlPanelLines.get(controlPanelLines.size() -1);
                 line.fillComboBoxLine(value, indicatorList.get(i), type );
             i++;
@@ -107,7 +106,7 @@ public class ControlPanelController {
 
         if(values != null) {
             for (LocalDate value : values) {
-                createNewLine(controlPanel, lineList);
+                createNewLineWithExist(controlPanel, lineList);
                 ControlPanelLine line = controlPanelLines.get(controlPanelLines.size() - 1);
                 line.fillDateLine(value, indicatorList.get(i), type);
                 i++;
@@ -121,7 +120,7 @@ public class ControlPanelController {
        int i = 0;
        if(values != null) {
            for (List<Integer> value : values) {
-               createNewLine(controlPanel, lineList);
+               createNewLineWithExist(controlPanel, lineList);
                ControlPanelLine line = controlPanelLines.get(controlPanelLines.size() - 1);
                line.fillCheckComboBoxLine(value, indicatorList.get(i), type);
                i++;
@@ -137,37 +136,37 @@ public class ControlPanelController {
     }
 
 
-    public void setComboBoxItemToControlPanel(GridPane controlPane, ComboBoxItem item, int startColomIndex) {
-        controlPane.add(item.getIndicatorCB(), startColomIndex, lineCount);
-        controlPane.add(item.getItemCB(), startColomIndex + 1, lineCount);
-        controlPane.add(item.getItemButton(), startColomIndex +2, lineCount);
+    public void setComboBoxItemToControlPanel(GridPane controlPane, ComboBoxItem item, int startColomIndex, int lineIndex) {
+        controlPane.add(item.getIndicatorCB(), startColomIndex, lineIndex);
+        controlPane.add(item.getItemCB(), startColomIndex + 1, lineIndex);
+        controlPane.add(item.getItemButton(), startColomIndex +2, lineIndex);
     }
 
-    public void setRelationComboBoxItemToControlPanel(GridPane controlPane, ComboBoxItem relationItem, CheckComboBoxItem workUnitItem, int startColomIndex) {
-        controlPane.add(relationItem.getItemCB(), startColomIndex, lineCount);
-        controlPane.add(workUnitItem.getItemCB(), startColomIndex + 1, lineCount);
-        controlPane.add(relationItem.getItemButton(), startColomIndex + 2, lineCount);
+    public void setRelationComboBoxItemToControlPanel(GridPane controlPane, ComboBoxItem relationItem, CheckComboBoxItem workUnitItem, int startColomIndex, int lineIndex) {
+        controlPane.add(relationItem.getItemCB(), startColomIndex, lineIndex);
+        controlPane.add(workUnitItem.getItemCB(), startColomIndex + 1, lineIndex);
+        controlPane.add(relationItem.getItemButton(), startColomIndex + 2, lineIndex);
     }
 
-    public void setDateItemToControlPanel(GridPane controlPane, DateItem item, int startColomIndex) {
+    public void setDateItemToControlPanel(GridPane controlPane, DateItem item, int startColomIndex, int lineIndex) {
 
-        controlPane.add(item.getIndicatorCB(), startColomIndex, lineCount);
-        controlPane.add(item.getItemDate(), startColomIndex + 1, lineCount);
-        controlPane.add(item.getItemButton(), startColomIndex + 2, lineCount);
+        controlPane.add(item.getIndicatorCB(), startColomIndex, lineIndex);
+        controlPane.add(item.getItemDate(), startColomIndex + 1, lineIndex);
+        controlPane.add(item.getItemButton(), startColomIndex + 2, lineIndex);
     }
 
-    public void setTextItemToControlPanel(GridPane controlPane, TextFieldItem item, int startColomIndex) {
+    public void setTextItemToControlPanel(GridPane controlPane, TextFieldItem item, int startColomIndex, int lineIndex) {
 
-        controlPane.add(item.getIndicatorCB(), startColomIndex, lineCount);
-        controlPane.add(item.getItemTF(), startColomIndex + 1, lineCount);
-        controlPane.add(item.getItemButton(), startColomIndex + 2, lineCount);
+        controlPane.add(item.getIndicatorCB(), startColomIndex, lineIndex);
+        controlPane.add(item.getItemTF(), startColomIndex + 1, lineIndex);
+        controlPane.add(item.getItemButton(), startColomIndex + 2, lineIndex);
     }
 
-    public void setCheckComboBoxItemToControlPanel(GridPane controlPane, CheckComboBoxItem item, int startColomIndex) {
+    public void setCheckComboBoxItemToControlPanel(GridPane controlPane, CheckComboBoxItem item, int startColomIndex, int lineIndex) {
 
-        controlPane.add(item.getIndicatorCB(), startColomIndex, lineCount);
-        controlPane.add(item.getItemCB(), startColomIndex + 1, lineCount);
-        controlPane.add(item.getItemButton(), startColomIndex + 2, lineCount);
+        controlPane.add(item.getIndicatorCB(), startColomIndex, lineIndex);
+        controlPane.add(item.getItemCB(), startColomIndex + 1, lineIndex);
+        controlPane.add(item.getItemButton(), startColomIndex + 2, lineIndex);
     }
 
     public ChangeListener<Toggle> radioButtonGroupListener() {
@@ -248,9 +247,13 @@ public class ControlPanelController {
         shiftStaticObjects(controlPanel);
     }
 
-    public ControlPanelLineController createNewLine(ControlPanel controlPane, ObservableList<ControlPanelLineObject> lineList) {
+    public ControlPanelLineController createNewLineWithExist(ControlPanel controlPane, ObservableList<ControlPanelLineObject> lineList) {
         setExistRadioButton(controlPane, 1);
-        ControlPanelLine line = new ControlPanelLine(lineList, controlPane, this);
+        return createNewLine(controlPane, lineList);
+    }
+    public ControlPanelLineController createNewLine(ControlPanel controlPane, ObservableList<ControlPanelLineObject> lineList) {
+
+        ControlPanelLine line = new ControlPanelLine(lineList, controlPane, this, lineCount);
         setParamBoxToControlPanel(controlPane.getControlPane(), line);
         controlPanelLines.add(line);
         shiftStaticObjects(controlPane);
@@ -259,7 +262,7 @@ public class ControlPanelController {
 
     public ControlPanelLineController createNewLine(ControlPanel controlPane, ObservableList<ControlPanelLineObject> lineList, String[] indicators) {
 
-        ControlPanelLine line = new ControlPanelLine(lineList, controlPane, this, indicators);
+        ControlPanelLine line = new ControlPanelLine(lineList, controlPane, this, indicators, lineCount);
         setParamBoxToControlPanel(controlPane.getControlPane(), line);
         controlPanelLines.add(line);
         setEditButton(controlPane, 1);
@@ -364,7 +367,7 @@ public class ControlPanelController {
 
     public void setExistRadioButton(ControlPanel controlPanel, int lineShift){
         staticObjectCount++;
-        radioExistButtonLine = new ControlPanelLine(FXCollections.observableArrayList(), controlPanel, this);
+        radioExistButtonLine = new ControlPanelLine(FXCollections.observableArrayList(), controlPanel, this, lineCount + lineShift );
         setExistRadioButton(controlPanel.getControlPane(), lineShift);
     }
 
@@ -378,7 +381,7 @@ public class ControlPanelController {
     public void setRadioButton(ControlPanel controlPanel, int lineShift, String name, boolean secondButton) {
         isSecondRadioButtonLine = secondButton;
         staticObjectCount++;
-        radioButtonLine = new ControlPanelLine(FXCollections.observableArrayList(), controlPanel, this);
+        radioButtonLine = new ControlPanelLine(FXCollections.observableArrayList(), controlPanel, this, lineCount + lineShift);
         RadioButtonItem item = radioButtonLine.getRadioButtonItem();
         item.setGroup();
         item.getNameLb().setText(name);
@@ -558,6 +561,8 @@ public class ControlPanelController {
         this.staticObjectCount = 1;
     }
 
-
+    public int getLineCount() {
+        return lineCount;
+    }
 }
 

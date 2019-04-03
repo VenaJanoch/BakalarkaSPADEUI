@@ -22,7 +22,7 @@ public class DataManipulator{
 
 
     public void setRelationIndexToLink(int id, int relationIndex) {
-    project.getLinks().get(id).setRelationIndex(relationIndex);
+ //   project.getLinks().get(id).setRelationIndex(relationIndex);
     }
 
     public void copyDataFromActivity(int oldActivityId, int newActivityId) {

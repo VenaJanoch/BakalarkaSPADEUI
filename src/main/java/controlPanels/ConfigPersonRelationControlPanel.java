@@ -36,7 +36,7 @@ public class ConfigPersonRelationControlPanel extends NameControlPanel {
 
     public void createControlPanel(){
 
-        controlPanelController.createNewLine(this, lineList);
+        controlPanelController.createNewLineWithExist(this, lineList);
 
     }
 

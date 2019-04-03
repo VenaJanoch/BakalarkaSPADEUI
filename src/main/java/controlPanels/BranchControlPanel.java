@@ -4,12 +4,7 @@ import controllers.FormController;
 import abstractControlPane.NameControlPanel;
 import interfaces.IEditFormController;
 import interfaces.IFormDataController;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
 import services.ParamType;
 import tables.BasicTable;
 import tables.BranchTable;
@@ -27,7 +22,7 @@ public class BranchControlPanel extends NameControlPanel {
 
     @Override
     protected void createBaseControlPanel() {
-        controlPanelController.createNewLine(this, lineList);
+        controlPanelController.createNewLineWithExist(this, lineList);
     }
 
 
@@ -36,7 +31,7 @@ public class BranchControlPanel extends NameControlPanel {
 
 
         controlPanelController.setRadioButton(this, 2,"Main: ", true);
-        controlPanelController.createNewLine(this, lineList);
+        controlPanelController.createNewLineWithExist(this, lineList);
     }
 
 

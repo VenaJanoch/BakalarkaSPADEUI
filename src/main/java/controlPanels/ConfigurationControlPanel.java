@@ -2,9 +2,6 @@ package controlPanels;
 
 import abstractControlPane.DateControlPanel;
 import controllers.FormController;
-import forms.TagForm;
-import graphics.CheckComboBoxItem;
-import graphics.ComboBoxItem;
 import graphics.ControlPanelLine;
 import interfaces.IControlPanel;
 import interfaces.IEditFormController;
@@ -46,12 +43,10 @@ public class ConfigurationControlPanel extends DateControlPanel implements ICont
 
 
     //    controlPanelController.setRadioButton(this,1, "Release: ", true);
-        controlPanelController.setCountLine(this, 2, new ControlPanelLine(lineList, this, controlPanelController));
+        controlPanelController.setCountLine(this, 2, new ControlPanelLine(lineList, this, controlPanelController, controlPanelController.getLineCount()));
       //  addTag = new Button("add Tag");
      //   controlPanelController.setStaticButton(this, 3, addTag);
-        controlPanelController.createNewLine(this, lineList);
-
-
+        controlPanelController.createNewLineWithExist(this, lineList);
 
         button.setOnAction(event -> {
 
@@ -87,7 +82,7 @@ public class ConfigurationControlPanel extends DateControlPanel implements ICont
 
         controlPanelController.setValueTextField(this, lineList ,ParamType.Name, configData, configData[3], 0);
         controlPanelController.setValueDatePicker(this, lineList ,ParamType.Date, (ArrayList<LocalDate>) configData[1], configData[4]);
-        controlPanelController.setValueComboBox(this, lineList ,ParamType.Role, (ArrayList<Integer>) configData[2], configData[5]);
+//        controlPanelController.setValueComboBox(this, lineList ,ParamType.Role, (ArrayList<Integer>) configData[2], configData[5]);
 
         ArrayList<ArrayList<Integer>> cprList = formDataController.getCPRFromConfiguration(configId);
         controlPanelController.setValueCheckComboBox(this, lineList ,ParamType.CPR, cprList, configData[6]);

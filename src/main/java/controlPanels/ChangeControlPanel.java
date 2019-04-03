@@ -2,17 +2,10 @@ package controlPanels;
 
 import abstractControlPane.DescriptionControlPanel;
 import controllers.FormController;
-import forms.ChangeForm;
 import interfaces.IEditFormController;
 import interfaces.IFormDataController;
-import javafx.collections.FXCollections;
-import javafx.collections.ListChangeListener;
-import javafx.collections.ObservableList;
-import javafx.geometry.HPos;
 import javafx.scene.control.*;
-import org.controlsfx.control.CheckComboBox;
 import services.*;
-import tables.ActivityTable;
 import tables.BasicTable;
 import tables.ChangeTable;
 
@@ -63,7 +56,7 @@ public class ChangeControlPanel extends DescriptionControlPanel {
 
     @Override
     protected void addItemsToControlPanel() {
-        controlPanelController.createNewLine(this, lineList);
+        controlPanelController.createNewLineWithExist(this, lineList);
 
 
     }

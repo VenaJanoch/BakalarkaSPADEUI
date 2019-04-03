@@ -19,14 +19,16 @@ public class ControlPanelLineController {
     private  ControlPanel controlPanel;
     private ChangeListener<Number> listener;
     private ControlPanelLine line;
+    private int lineIndex;
 
     private int itemIndex = 0;
     private ObservableList<ControlPanelLineObject> paramList;
     private boolean isSetType = false;
-    public ControlPanelLineController(ControlPanelLine line, ControlPanel controlPanel, ControlPanelController controlPanelController, ObservableList<ControlPanelLineObject> paramList){
+    public ControlPanelLineController(ControlPanelLine line, ControlPanel controlPanel, ControlPanelController controlPanelController, ObservableList<ControlPanelLineObject> paramList, int lineIndex){
         this.controlPanelController = controlPanelController;
         this.controlPanel = controlPanel;
         this.line = line;
+        this.lineIndex = lineIndex;
         this.paramList = paramList;
 
     }
@@ -58,22 +60,22 @@ public class ControlPanelLineController {
 
         switch (object.getLineType()){
             case Text:
-                controlPanelController.setTextItemToControlPanel(controlPanel.getControlPane(), line.getTextItem(), 2);
+                controlPanelController.setTextItemToControlPanel(controlPanel.getControlPane(), line.getTextItem(), 2, lineIndex );
                 break;
             case Date:
-                controlPanelController.setDateItemToControlPanel(controlPanel.getControlPane(), line.getDateItem(), 2);
+                controlPanelController.setDateItemToControlPanel(controlPanel.getControlPane(), line.getDateItem(), 2, lineIndex);
                 break;
             case ComboBox:
                 line.createComboBoxItem(object.getSegmentsList());
-                controlPanelController.setComboBoxItemToControlPanel(controlPanel.getControlPane(), line.getComboBoxItem(), 2);
+                controlPanelController.setComboBoxItemToControlPanel(controlPanel.getControlPane(), line.getComboBoxItem(), 2, lineIndex);
                 break;
             case RelationComboBoxes:
                 line.createRelationComboBoxItem(object.getSegmentsList(), object.getSegmentsList2());
-                controlPanelController.setRelationComboBoxItemToControlPanel(controlPanel.getControlPane(), line.getComboBoxItem(), line.getCheckComboBoxItem(), 2);
+                controlPanelController.setRelationComboBoxItemToControlPanel(controlPanel.getControlPane(), line.getComboBoxItem(), line.getCheckComboBoxItem(), 2, lineIndex);
                 break;
             case CheckBox:
                 line.createCheckComboBoxItem(object.getSegmentsList());
-                controlPanelController.setCheckComboBoxItemToControlPanel(controlPanel.getControlPane(), line.getCheckComboBoxItem(), 2);
+                controlPanelController.setCheckComboBoxItemToControlPanel(controlPanel.getControlPane(), line.getCheckComboBoxItem(), 2, lineIndex);
                 break;
             default:
         }

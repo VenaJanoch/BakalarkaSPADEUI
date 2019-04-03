@@ -66,7 +66,7 @@ public class IterationControlPanel extends WorkUnitDateControlPanel {
     @Override
     protected void addItemsToControlPanel() {
 
-        controlPanelController.createNewLine(this, lineList);
+        controlPanelController.createNewLineWithExist(this, lineList);
     }
 
     public void saveDataFromPanel(BasicTable table, TableView tableView){

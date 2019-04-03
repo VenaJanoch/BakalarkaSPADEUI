@@ -49,7 +49,7 @@ public class WorkUnitControlPanel extends DescriptionControlPanel {
     protected void addItemsToControlPanel(){
 
 
-        controlPanelController.createNewLine(this, lineList);
+        controlPanelController.createNewLineWithExist(this, lineList);
     }
 
 

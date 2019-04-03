@@ -41,7 +41,6 @@ public class ItemBox extends HBox {
     }
 
     protected void setExitButtonsActions(ControlPanelLine line, ControlPanel controlPanel, ObservableList<ControlPanelLineObject> lineList){
-        isShowItem = false;
         itemButton = new Button("+");
         itemButton.setOnAction(event -> controlPanelController.copyLine(line, controlPanel, lineList, line.getParamBox().getSelectionModel().getSelectedIndex()));
 

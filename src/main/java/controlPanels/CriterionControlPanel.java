@@ -3,10 +3,7 @@ package controlPanels;
 import abstractControlPane.DescriptionControlPanel;
 import interfaces.IEditFormController;
 import interfaces.IFormDataController;
-import javafx.scene.Scene;
 import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
-import javafx.scene.layout.GridPane;
 import services.ParamType;
 import tables.BasicTable;
 import tables.CriterionTable;
@@ -25,7 +22,7 @@ public class CriterionControlPanel extends DescriptionControlPanel {
 
 
     public void addItemsToControlPanel(){
-        controlPanelController.createNewLine(this, lineList);
+        controlPanelController.createNewLineWithExist(this, lineList);
     }
 
 

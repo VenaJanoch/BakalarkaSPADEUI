@@ -1,15 +1,12 @@
 package controlPanels;
 
 import abstractControlPane.DescriptionControlPanel;
-import abstractControlPane.WorkUnitControlPanel;
 import controllers.FormController;
 import interfaces.IEditFormController;
 import interfaces.IFormDataController;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableView;
 import services.ParamType;
-import services.SegmentType;
-import tables.ActivityTable;
 import tables.BasicTable;
 import tables.VCSTagTable;
 
@@ -50,7 +47,7 @@ public class VCSTagControlPanel extends DescriptionControlPanel {
     @Override
     protected void addItemsToControlPanel() {
 
-        controlPanelController.createNewLine(this, lineList);
+        controlPanelController.createNewLineWithExist(this, lineList);
 
     }
 

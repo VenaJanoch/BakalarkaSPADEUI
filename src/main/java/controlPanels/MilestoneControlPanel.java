@@ -2,18 +2,14 @@ package controlPanels;
 
 import controllers.FormController;
 import abstractControlPane.DescriptionControlPanel;
-import graphics.CheckComboBoxItem;
 import interfaces.IEditFormController;
 import interfaces.IFormDataController;
-import javafx.collections.ObservableList;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
 import services.*;
 import tables.BasicTable;
 import tables.MilestoneTable;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,7 +28,7 @@ public class MilestoneControlPanel extends DescriptionControlPanel {
 
     protected void addItemsToControlPanel(){
 
-        controlPanelController.createNewLine(this, lineList);
+        controlPanelController.createNewLineWithExist(this, lineList);
 
     }
 

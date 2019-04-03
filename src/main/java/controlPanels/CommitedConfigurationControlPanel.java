@@ -1,8 +1,6 @@
 package controlPanels;
 
 import abstractControlPane.DateControlPanel;
-import abstractControlPane.DescriptionControlPanel;
-import abstractControlPane.WorkUnitControlPanel;
 import controllers.FormController;
 import graphics.ControlPanelLine;
 import interfaces.IControlPanel;
@@ -11,7 +9,6 @@ import interfaces.IFormDataController;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableView;
 import services.ParamType;
-import services.SegmentType;
 import tables.BasicTable;
 import tables.CommitedConfigurationTable;
 
@@ -61,8 +58,8 @@ public class CommitedConfigurationControlPanel extends DateControlPanel implemen
 
     protected void addItemsToControlPanel() {
 
-        controlPanelController.setCountLine(this, 2, new ControlPanelLine(lineList,this, controlPanelController ));
-        controlPanelController.createNewLine(this, lineList);
+        controlPanelController.setCountLine(this, 2, new ControlPanelLine(lineList,this, controlPanelController, controlPanelController.getLineCount() ));
+        controlPanelController.createNewLineWithExist(this, lineList);
 
         button.setOnAction(event -> saveDataFromPanel());
 

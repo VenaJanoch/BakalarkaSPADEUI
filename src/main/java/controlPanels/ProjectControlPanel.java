@@ -2,17 +2,13 @@ package controlPanels;
 
 import abstractControlPane.WorkUnitDateControlPanel;
 import controllers.FormController;
-import graphics.ComboBoxItem;
-import graphics.DateItem;
 import interfaces.IControlPanel;
 import interfaces.IEditFormController;
 import interfaces.IFormDataController;
 import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableView;
 import services.*;
 import tables.BasicTable;
-import tables.IterationTable;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -59,7 +55,7 @@ public class ProjectControlPanel extends WorkUnitDateControlPanel implements ICo
     @Override
     protected void addItemsToControlPanel() {
 
-        controlPanelController.createNewLine(this, lineList);
+        controlPanelController.createNewLineWithExist(this, lineList);
         button.setOnAction(event -> saveDataFromPanel());
     }
 

@@ -87,7 +87,7 @@ public class PhaseControlPanel extends WorkUnitDateControlPanel {
     @Override
     protected void addItemsToControlPanel() {
 
-        controlPanelController.createNewLine(this, lineList);
+        controlPanelController.createNewLineWithExist(this, lineList);
     }
 
     public Button getButton() {

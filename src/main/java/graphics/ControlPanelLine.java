@@ -32,7 +32,7 @@ public class ControlPanelLine {
     private ParamType type;
 
     public ControlPanelLine(ObservableList<ControlPanelLineObject> paramNameList, ControlPanel controlPanel,
-                            ControlPanelController controlPanelController, String[] indicators){
+                            ControlPanelController controlPanelController, String[] indicators, int lineIndex){
         this.paramBox = new ComboBox(paramNameList);
         this.paramList = paramNameList;
         this.controlPanel = controlPanel;
@@ -41,9 +41,9 @@ public class ControlPanelLine {
         this.comboBoxItem = new ComboBoxItem(this, controlPanel, controlPanelController, null, null);
         this.checkComboBoxItem = new CheckComboBoxItem(this, controlPanel, controlPanelController, null, null);
         this.radioButtonItem = new RadioButtonItem(this, controlPanel, controlPanelController, null);
-        this.textItem = new TextFieldItem(this, controlPanel, controlPanelController, paramNameList, indicators );
+        this.textItem = new TextFieldItem(this, controlPanel, controlPanelController, paramNameList, indicators);
         this.dateItem = new DateItem(this, controlPanel, controlPanelController, paramNameList);
-        this.controlPanelLineController = new ControlPanelLineController(this,controlPanel, controlPanelController, paramNameList);
+        this.controlPanelLineController = new ControlPanelLineController(this,controlPanel, controlPanelController, paramNameList, lineIndex);
         paramBox.getSelectionModel().select(0);
         controlPanelLineController.setBoxToControlPanel(0);
         this.type = paramNameList.get(0).getType();
@@ -51,7 +51,7 @@ public class ControlPanelLine {
     }
 
     public ControlPanelLine(ObservableList<ControlPanelLineObject> paramNameList, ControlPanel controlPanel,
-                            ControlPanelController controlPanelController){
+                            ControlPanelController controlPanelController, int lineIndex){
         this.paramBox = new ComboBox(paramNameList);
         this.paramList = paramNameList;
         this.controlPanel = controlPanel;
@@ -62,7 +62,7 @@ public class ControlPanelLine {
         this.checkComboBoxItem = new CheckComboBoxItem(this, controlPanel, controlPanelController, null, null);
         this.textItem = new TextFieldItem(this, controlPanel, controlPanelController, paramNameList, Constans.textIndicatorList);
         this.dateItem = new DateItem(this, controlPanel, controlPanelController, paramNameList);
-        this.controlPanelLineController = new ControlPanelLineController(this,controlPanel, controlPanelController, paramNameList);
+        this.controlPanelLineController = new ControlPanelLineController(this,controlPanel, controlPanelController, paramNameList, lineIndex);
         paramBox.getSelectionModel().select(0);
         controlPanelLineController.setBoxToControlPanel(0);
         if (paramNameList.size() !=0 ){

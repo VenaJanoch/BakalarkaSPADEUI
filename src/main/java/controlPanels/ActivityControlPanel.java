@@ -1,17 +1,10 @@
 package controlPanels;
 
-import abstractControlPane.ControlPanel;
-import abstractControlPane.DescriptionControlPanel;
 import controllers.FormController;
-import graphics.ControlPanelLine;
 import interfaces.IEditFormController;
 import interfaces.IFormDataController;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableView;
-import services.ControlPanelLineObject;
-import services.ControlPanelLineType;
 import services.ParamType;
 import services.SegmentType;
 import tables.ActivityTable;
@@ -64,7 +57,7 @@ public class ActivityControlPanel extends WorkUnitControlPanel {
     @Override
     protected void addItemsToControlPanel() {
 
-        controlPanelController.createNewLine(this, lineList);
+        controlPanelController.createNewLineWithExist(this, lineList);
 
     }
 
