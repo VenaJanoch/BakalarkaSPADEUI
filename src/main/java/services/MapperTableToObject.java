@@ -133,12 +133,18 @@ public class MapperTableToObject {
                     case Committed_Configuration:
                         addInstanceToMap(indexList, lists.getConfigObservable(), instanc, configurationToCommitedConfigurationMapper);
                         break;
+                    case Person:
+                        addInstanceToMap(indexList, lists.getRoleObservable(), instanc, configurationToRoleMapper);
+                        break;
                         default:
                 }
 
                 break;
             case Committed_Configuration:
                 addInstanceToMap(indexList, lists.getCommitedConfigurationObservable(), instanc, commitedConfigurationToCommitMapper);
+                break;
+            case Artifact:
+                addInstanceToMap(indexList, lists.getRoleObservable(), instanc, artifactToRoleMapper);
                 break;
             default:
 
@@ -223,6 +229,8 @@ public class MapperTableToObject {
         }
     }
 
+
+
     private void addInstanceToMap(int key, ObservableList<BasicTable> list, TableToObjectInstanc instanc,
                                  Map<Integer, ArrayList<TableToObjectInstanc>> map ){
         if (key != -1) {
@@ -255,11 +263,18 @@ public class MapperTableToObject {
                     }
                 }
             }
-
-
     }
 
-
+    public void clearValueList(int key, Map<Integer, ArrayList<TableToObjectInstanc>> map, int valueId) {
+        ArrayList<TableToObjectInstanc> objectList = map.get(key);
+        if (objectList != null) {
+            for (int i =0; i < objectList.size(); i++) {
+                if (objectList.get(i).getId() == valueId) {
+                    objectList.remove(i);
+                }
+            }
+        }
+    }
 
     public void updateValueList(Map<Integer, ArrayList<TableToObjectInstanc>> map, ArrayList<Integer> ids) {
         for (int i : map.keySet()) {
@@ -468,4 +483,8 @@ public class MapperTableToObject {
     public ArrayList<Map<Integer, ArrayList<TableToObjectInstanc>>> getWorkUnitMaps() {
         return workUnitMaps;
     }
+
+
+
+
 }

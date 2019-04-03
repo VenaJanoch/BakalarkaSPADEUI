@@ -128,4 +128,9 @@ public class LinkController {
     public void setEndItemId(int endItemId) {
         this.endItemId = endItemId;
     }
+
+    public void setIds(int startId, int endId) {
+        startItemId = startId;
+        endItemId = endId;
+    }
 }

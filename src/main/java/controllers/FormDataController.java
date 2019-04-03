@@ -191,25 +191,37 @@ public class FormDataController implements IFormDataController {
        lists.getVCSTag().add(table);
     }
 
-    public void createArtifactToConfigurationRelation(Integer startId, Integer endId){
-        saveDataModel.createNewArtifacToConfigurationRelation(startId, endId);
+    public void createArtifactToConfigurationRelation(int linkId, Integer startId, Integer endId){
+        saveDataModel.createNewArtifacToConfigurationRelation(linkId, startId, endId);
         mapperTableToObject.mapTableToObjects(SegmentType.Configuration, SegmentType.Artifact, startId, new TableToObjectInstanc( String.valueOf(endId), startId, SegmentType.Configuration));
     }
 
 
-    public void createCommitToCommitedConfigurationRelation(Integer startId, Integer endId){
-        saveDataModel.createCommitToCommitedConfigurationRelation(startId, endId);
+    public void createCommitToCommitedConfigurationRelation(int linkId, Integer startId, Integer endId){
+        saveDataModel.createCommitToCommitedConfigurationRelation(linkId, startId, endId);
         mapperTableToObject.mapTableToObjects(SegmentType.Committed_Configuration, null, startId, new TableToObjectInstanc( String.valueOf(endId), startId, SegmentType.Committed_Configuration));
     }
 
-    public void createCommitedConfigurationToConfigurationRelation(Integer startId, Integer endId){
-        saveDataModel.createCommitedConfigurationToConfigurationRelation(startId, endId);
+    public void createCommitedConfigurationToConfigurationRelation(int linkId, Integer startId, Integer endId){
+        saveDataModel.createCommitedConfigurationToConfigurationRelation( linkId, startId, endId);
         mapperTableToObject.mapTableToObjects(SegmentType.Configuration, SegmentType.Committed_Configuration, startId,
                 new TableToObjectInstanc( String.valueOf(endId), startId, SegmentType.Configuration));
     }
 
 
 
+    public void createNewPersonToConfigurationRelation(int linkId, Integer startId, Integer endId){
+        saveDataModel.createNewPersonToConfigurationRelation(linkId, startId, endId);
+        mapperTableToObject.mapTableToObjects(SegmentType.Configuration, SegmentType.Person, startId,
+                new TableToObjectInstanc( String.valueOf(endId), startId, SegmentType.Configuration));
+    }
+
+
+    public void createNewPersonToArtifactRelation(int linkId, Integer startId, Integer endId){
+        saveDataModel.createNewPersonToArtifactRelation(linkId, startId, endId);
+        mapperTableToObject.mapTableToObjects(SegmentType.Artifact, SegmentType.Person, startId,
+                new TableToObjectInstanc( String.valueOf(endId), startId, SegmentType.Artifact));
+    }
 
 
     public void saveDataFromBranch(String nameST, BranchTable branchTable) {

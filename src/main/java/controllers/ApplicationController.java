@@ -33,7 +33,7 @@ public class ApplicationController {
         this.deleteFormController = new DeleteFormController(formController, dataModel, identificatorCreater, mapperTableToObject, deleteControl, segmentLists);
         this.editFormController = new EditFormController(dataModel, identificatorCreater, mapperTableToObject, segmentLists, dataPreparer, formController);
         this.manipulationController = new ManipulationController(deleteFormController);
-        this.linkControl = new LinkControl(formController, identificatorCreater, segmentLists, dataModel, manipulationController);
+        this.linkControl = new LinkControl(formController, identificatorCreater, segmentLists, deleteFormController, manipulationController);
         this.canvasItemController = new CanvasItemController(linkControl, formController, manipulationController);
         this.formFillController = new FormFillController(formController, dataModel, canvasItemController, identificatorCreater,dataPreparer, segmentLists,
                  linkControl, formController.getCanvasItemList());

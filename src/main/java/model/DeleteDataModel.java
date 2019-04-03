@@ -1,11 +1,14 @@
 package model;
 
+import SPADEPAC.Artifact;
+import SPADEPAC.CommitedConfiguration;
 import SPADEPAC.Configuration;
 import SPADEPAC.Project;
 import interfaces.IDeleteDataModel;
 import javafx.collections.ObservableList;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class DeleteDataModel implements IDeleteDataModel {
 
@@ -103,14 +106,97 @@ public class DeleteDataModel implements IDeleteDataModel {
         }
     }
 
-    public void removeArtifactChangeLink(int artifactID, int changeID) {
+    public void removePersonArtifactLink(int arrowId, int personId, int artifactID) {
 
+        int linkIndexInProject = dataModel.getLinkIndexInProject(arrowId);
+        project.getLinks().remove(linkIndexInProject);
+        Artifact artifact = dataModel.getArtifact(arrowId);
+        List<Integer> list = artifact.getAuthorIndex();
+        removePersonFromList(list, personId);
+    }
 
-        project.getArtifacts().get(artifactID).getChangeIndex().remove(0);
-        project.getChanges().get(changeID).getArtifactIndex().remove(0);
+    public void removePersonFromList(List<Integer> list, int personId){
+        for (int i =0; i > list.size(); i++){
+            int roleIndex = list.get(i);
+            int roleId = dataModel.getRoleId(roleIndex);
+            if (roleId == personId){
+                list.remove(i);
+            }
+        }
+    }
+
+    public void removeArtifactFromList(List<Integer> list, int artifactId){
+        for (int i =0; i > list.size(); i++){
+            int artifactIndex = list.get(i);
+            int artifactIdloc = dataModel.getArtifactId(artifactIndex);
+            if (artifactIdloc == artifactId){
+                list.remove(i);
+            }
+        }
+    }
+
+    public void removeCommitFromList(List<Integer> list, int commitId){
+        for (int i =0; i > list.size(); i++){
+            int commitIndex = list.get(i);
+            int commitIdloc = dataModel.getCommitId(commitIndex);
+            if (commitIdloc == commitId){
+                list.remove(i);
+            }
+        }
+    }
+
+    public void removeCommitedConfigurationFromList(List<Integer> list, int commitedConfigurationId){
+        for (int i =0; i > list.size(); i++){
+            int commitedConfigurationindex = list.get(i);
+            int commitedConfigurationIdloc = dataModel.getCommitedConfigurationId(commitedConfigurationindex);
+            if (commitedConfigurationIdloc == commitedConfigurationId){
+                list.remove(i);
+            }
+        }
+    }
+    
+    public void removeArtifactConfigurationLink(int arrowId, int artifactId, int configurationID) {
+
+        int linkIndexInProject = dataModel.getLinkIndexInProject(arrowId);
+        project.getLinks().remove(linkIndexInProject);
+        Configuration configuration = dataModel.getConfiguration(arrowId);
+        List<Integer> list = configuration.getAuthorIndex();
+        removeArtifactFromList(list, artifactId);
 
     }
 
+    public void removePersonConfigurationLink(int arrowId, int personId, int configurationID) {
+
+        int linkIndexInProject = dataModel.getLinkIndexInProject(arrowId);
+        project.getLinks().remove(linkIndexInProject);
+        Configuration configuration = dataModel.getConfiguration(arrowId);
+        List<Integer> list = configuration.getAuthorIndex();
+        removePersonFromList(list, personId);
+
+    }
+    
+    
+
+    public void removeCommitedConfigurationConfigurationLink(int arrowId, int commitedConfigurationId, int configurationID) {
+
+        int linkIndexInProject = dataModel.getLinkIndexInProject(arrowId);
+        project.getLinks().remove(linkIndexInProject);
+        Configuration configuration = dataModel.getConfiguration(arrowId);
+        List<Integer> list = configuration.getCommitedConfiguration();
+        removeCommitedConfigurationFromList(list, commitedConfigurationId);
+
+    }
+
+    public void removeCommitCommitedConfigurationLink(int arrowId, int commitedConfigurationId, int configurationID) {
+
+        int linkIndexInProject = dataModel.getLinkIndexInProject(arrowId);
+        project.getLinks().remove(linkIndexInProject);
+        CommitedConfiguration configuration = dataModel.getCommitedConfiguration(arrowId);
+        List<Integer> list = configuration.getCommit();
+        removeCommitFromList(list, commitedConfigurationId);
+
+    }
+    
     public void removeArtifact(int id) {
         project.getArtifacts().remove(dataModel.getArtifactIndexInProject(id));
     }

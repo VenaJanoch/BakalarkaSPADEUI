@@ -9,6 +9,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Polygon;
 import controllers.LinkControl;
+import services.LinkType;
 
 /**
  * /** Třída vykreslující spojení mezi Change a Artifact
@@ -27,6 +28,7 @@ public abstract class NodeLink extends Line {
     protected LinkController linkController;
     protected CanvasController canvasController;
     protected ManipulationController manipulationController;
+    protected LinkType linkType;
     protected int id;
 
 
@@ -57,6 +59,7 @@ public abstract class NodeLink extends Line {
 
         });
         backgroundPolygon.setFill(Color.TRANSPARENT);
+
         canvasController.addPolygonToCanvas(backgroundPolygon);
     }
 
@@ -120,6 +123,11 @@ public abstract class NodeLink extends Line {
 
     }
 
+    public void setIdsToController(int startId, int endId){
+        linkController.setIds(startId, endId);
+    }
+
+
     public  void coverBackgroundPolygon(){
         backgroundPolygon.setStroke(Color.TRANSPARENT);
     }
@@ -141,4 +149,10 @@ public abstract class NodeLink extends Line {
         linkController.repaintArrowEndPoint(this, newWidth, newHeight);
 
     }
+
+    public void setLinkType(LinkType linkType){
+        this.linkType = linkType;
+    }
+
+
 }

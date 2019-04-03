@@ -70,16 +70,7 @@ public class WorkUnitLink extends NodeLink {
         polygon.setVisible(true);
     }
 
-    /**
-     * MouseEvent handler pro reakci na kliknutí na šipku
-     */
-    EventHandler<MouseEvent> polygonMouseEvent = new EventHandler<MouseEvent>() {
 
-        @Override
-        public void handle(MouseEvent t) {
-            pressedDeleteArrow(t);
-        }
-    };
 
     public void setRelationIndexToComboBox(int relationIndex){
         relationCB.getSelectionModel().select(relationIndex);
@@ -96,7 +87,6 @@ public class WorkUnitLink extends NodeLink {
         polygon = null;
         getBackgroundPolygon().setVisible(false);
         //setBackgroundPolygon(null);
-        linkControl.deleteWorkUnitArrow(linkController);
     }
 
     /**

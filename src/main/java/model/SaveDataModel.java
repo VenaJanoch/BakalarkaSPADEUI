@@ -20,29 +20,8 @@ public class SaveDataModel implements ISaveDataModel {
         this.objF = objF;
     }
 
-    public void createChangeArtifactRelation(int artifactIndex, int changeIndex) {
-
-        Link linkP = objF.createLink();
-
-        linkP.setType("Config");
-        linkP.setArtifactIndex(artifactIndex);
-        linkP.setChangeIndex(changeIndex);
-
-
-        project.getLinks().add(linkP);
-
-        project.getChanges().get(changeIndex).getArtifactIndex().add(artifactIndex);
-        project.getArtifacts().get(artifactIndex).getChangeIndex().add(changeIndex);
-    }
-
-    public void createCommitedConfigurationToConfigurationRelation(Integer startId, Integer endId){
-        Link linkP = objF.createLink();
-
-        linkP.setType("Config");
-        linkP.setArtifactIndex(startId);
-        linkP.setChangeIndex(endId);
-
-        project.getLinks().add(linkP);
+    public void createCommitedConfigurationToConfigurationRelation(int linkId, Integer startId, Integer endId){
+        createLink(linkId, startId, endId, LinkType.COMMITED_CONFIGURATION_CONFIGURATION );
 
         CommitedConfiguration commitedConfiguration = dataModel.getCommitedConfiguration(startId);
         commitedConfiguration.getCommit().add(endId);
@@ -50,19 +29,20 @@ public class SaveDataModel implements ISaveDataModel {
         configuration.getCommitedConfiguration().add(startId);
     }
 
-    private void createLink(int startId, int endId){
+    private void createLink(int linkId, int startId, int endId, LinkType linkType){
         Link linkP = objF.createLink();
 
-        linkP.setType("Config");
-        linkP.setArtifactIndex(startId);
-        linkP.setChangeIndex(endId);
+        linkP.setType(linkType);
+        linkP.setId(linkId);
+        linkP.setStartIndex(startId);
+        linkP.setEndIndex(endId);
 
         project.getLinks().add(linkP);
     }
 
-    public void createNewPersonToArtifactRelation(int startId, int endId){
+    public void createNewPersonToArtifactRelation(int linkId, int startId, int endId){
 
-        createLink(startId, endId);
+        createLink(linkId, startId, endId, LinkType.PERSON_ARTIFACT);
 
         Person person = dataModel.getRole(startId);
         person.getArtifacts().add(endId);
@@ -71,8 +51,8 @@ public class SaveDataModel implements ISaveDataModel {
     }
 
 
-    public void createNewPersonToConfigurationRelation(int startId, int endId){
-        createLink(startId, endId);
+    public void createNewPersonToConfigurationRelation(int linkId, int startId, int endId){
+        createLink( linkId, startId, endId, LinkType.PERSON_CONFIGURATION);
 
         Person person = dataModel.getRole(startId);
         person.getConfigurations().add(endId);
@@ -80,8 +60,8 @@ public class SaveDataModel implements ISaveDataModel {
         configuration.getAuthorIndex().add(startId);
     }
 
-    public void createNewArtifacToConfigurationRelation(int startId, int endId){
-        createLink(startId, endId);
+    public void createNewArtifacToConfigurationRelation(int linkId, int startId, int endId){
+        createLink(linkId, startId, endId, LinkType.ARTIFACT_CONFIGURATION);
 
 
         Artifact artifact = dataModel.getArtifact(startId);
@@ -92,26 +72,14 @@ public class SaveDataModel implements ISaveDataModel {
 
 
 
-    public void createCommitToCommitedConfigurationRelation(int startId, int endId) {
+    public void createCommitToCommitedConfigurationRelation(int linkId, int startId, int endId) {
 
-        createLink(startId, endId);
+        createLink(linkId, startId, endId, LinkType.COMMIT_COMMITED_CONFIGURATION);
 
         Commit commit = dataModel.getCommit(startId);
         commit.getCommitedConfiguration().add(endId);
         CommitedConfiguration commitedConfiguration = dataModel.getCommitedConfiguration(endId);
         commitedConfiguration.getCommit().add(startId);
-    }
-
-    public void createWorkUnitRelation(int startIndex, Integer endIndex) {
-
-        Link linkP = objF.createLink();
-
-        linkP.setType("Work_Unit");
-        linkP.setLeftUnitIndex(startIndex);
-        linkP.setRightUnitIndex(endIndex);
-
-        project.getLinks().add(linkP);
-
     }
 
     public void createNewPhase(int id) {

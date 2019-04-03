@@ -1266,7 +1266,15 @@ public class DataModel {
         }
         return idList;
     }
-    
+
+    public int getArtifactId(int index){
+        return project.getArtifacts().get(index).getId();
+    }
+
+    public int getCommitedConfigurationId(int index){
+        return project.getCommitConfiguration().get(index).getId();
+    }
+
     public ArrayList<Integer> getCommitedConfigurationId(List<Integer> artifactForManipulator){
         ArrayList<Integer> idList = new ArrayList<>();
         List<CommitedConfiguration> artifactList = project.getCommitConfiguration();
@@ -1361,5 +1369,18 @@ public class DataModel {
     }
 
 
+    public int getLinkIndexInProject(int arrowId) {
+        List<Link> items = project.getLinks();
 
+        for (int i = 0; i < items.size(); i++) {
+            if (items.get(i).getId() == arrowId) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    public int getCommitId(int commitIndex) {
+        return project.getCommit().get(commitIndex).getId();
+    }
 }

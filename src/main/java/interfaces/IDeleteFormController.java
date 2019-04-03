@@ -37,4 +37,11 @@ import java.util.ArrayList;
       void deleteBranchDialog(ArrayList<BasicTable> selection, TableView view);
 
       void deleteItemWithDialog(ArrayList<BasicTable> list, TableView tableTV, SegmentType segmentType);
+
+      void removePersonArtifactLink(int arrowId, int startId, int endId);
+      void removePersonConfigurationLink(int arrowId, int startId, int endId);
+      void removeArtifactConfiguraionLink(int arrowId, int startId, int endId);
+      void removeCommitedConfigurationConfigurationLink(int arrowId, int startId, int endId);
+      void removeCommitComiitedConfigurationLink(int arrowId, int startId, int endId);
+
   }

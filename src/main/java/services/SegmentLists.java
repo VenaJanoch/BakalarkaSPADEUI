@@ -478,7 +478,15 @@ public class SegmentLists {
 
         return null;
     }
-    
+
+    public BasicTable getPersonTable(int id) {
+        for (BasicTable table : roleObservable){
+            if (table.getId() == id ){
+                return table;
+            }
+        }
+        return null;
+    }
     
     public ObservableList<BasicTable> getVCSTag() {
         return VCSTagObservable;
@@ -487,4 +495,6 @@ public class SegmentLists {
     public NodeLink getArrow(int linkId) {
         return arrows.get(linkId);
     }
+
+
 }

@@ -11,7 +11,6 @@ import model.IdentificatorCreater;
 import services.*;
 import tables.BasicTable;
 import tables.ClassTable;
-import tables.ConfigTable;
 import tables.TagTable;
 
 import java.util.ArrayList;
@@ -339,7 +338,7 @@ public class DeleteFormController implements IDeleteFormController {
         ArrayList list = new ArrayList();
         int id = identificatorCreater.getRoleId(indexForm);
 
-            list.add(segmentLists.getArtifactTable(id));
+            list.add(segmentLists.getPersonTable(id));
             if (Alerts.showDeleteItemCascadeAlert(list, mapperTableToObject.getRoleMaps())) {
 
                 forms.remove(indexForm);
@@ -541,6 +540,39 @@ public class DeleteFormController implements IDeleteFormController {
         }
 
     }
+
+
+    public void removePersonArtifactLink(int arrowId, int startId, int endId){
+        Integer[] result = formController.findResultsFromPersonToArtifactRelation(startId, endId);
+        mapperTableToObject.clearValueList(result[0], mapperTableToObject.getArtifactToRoleMapper(), result[1]);
+        deleteDataModel.removePersonArtifactLink(arrowId, result[0], result[1]);
+    }
+
+    public void removePersonConfigurationLink(int arrowId, int startId, int endId){
+        Integer[] result = formController.findResultsFromPersonToConfigurationRelation(startId, endId);
+        mapperTableToObject.clearValueList(result[0], mapperTableToObject.getConfigurationToRoleMapper(), result[1]);
+        deleteDataModel.removePersonConfigurationLink(arrowId, result[0], result[1]);
+    }
+
+    public void removeArtifactConfiguraionLink(int arrowId, int startId, int endId){
+
+        Integer[] result = formController.findResultsFromArtifactToConfigurationRelation(startId, endId);
+        mapperTableToObject.clearValueList(result[0], mapperTableToObject.getConfigurationToArtifactMapper(), result[1]);
+        deleteDataModel.removeArtifactConfigurationLink(arrowId, result[0], result[1]);
+    }
+
+    public void removeCommitedConfigurationConfigurationLink(int arrowId, int startId, int endId){
+        Integer[] result = formController.findResultsFromCommitedConfigurationToConfigurationRelation(startId, endId);
+        mapperTableToObject.clearValueList(result[0], mapperTableToObject.getConfigurationToCommitedConfigurationMapper(), result[1]);
+        deleteDataModel.removeCommitedConfigurationConfigurationLink(arrowId, result[0], result[1]);
+    }
+
+    public void removeCommitComiitedConfigurationLink(int arrowId, int startId, int endId){
+        Integer[] result = formController.findResultsFromCommitToCommitedConfigurationRelation(startId, endId);
+        mapperTableToObject.clearValueList(result[0], mapperTableToObject.getCommitedConfigurationToCommitMapper(), result[1]);
+        deleteDataModel.removeCommitCommitedConfigurationLink(arrowId, result[0], result[1]);
+    }
+
 
     @Override
     public void deleteItemWithDialog(ArrayList<BasicTable> list, TableView tableTV, SegmentType segmentType) {

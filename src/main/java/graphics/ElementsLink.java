@@ -1,10 +1,13 @@
 package graphics;
 
 import controllers.CanvasController;
+import controllers.LinkController;
 import controllers.ManipulationController;
+import javafx.event.EventHandler;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import controllers.LinkControl;
+import services.LinkType;
 
 public class ElementsLink extends NodeLink {
     /**
@@ -13,8 +16,11 @@ public class ElementsLink extends NodeLink {
      * @param ID          Identifikace spojnice
      * @param linkControl LinkControl
      */
+
+
     public ElementsLink(int ID, LinkControl linkControl, CanvasController canvasController, ManipulationController manipulationController) {
-        super(ID, linkControl,canvasController, manipulationController );
+        super(ID, linkControl,canvasController, manipulationController);
+        backgroundPolygon.setOnMouseClicked(polygonMouseEvent);
     }
 
     /**
@@ -24,7 +30,7 @@ public class ElementsLink extends NodeLink {
     public void deleteArrow() {
         this.setVisible(false);
         backgroundPolygon.setVisible(false);
-        linkControl.deleteArrow(linkController.getLinkId(), linkController.getStartItemId(), linkController.getEndItemId());
+        linkControl.deleteArrow(linkController.getLinkId(), linkController.getStartItemId(), linkController.getEndItemId(), linkType);
 
     }
 
@@ -46,4 +52,24 @@ public class ElementsLink extends NodeLink {
         }
 
     }
+
+    /**
+     * MouseEvent handler pro reakci na kliknutí na šipku
+     */
+    EventHandler<MouseEvent> polygonMouseEvent = new EventHandler<MouseEvent>() {
+
+        @Override
+        public void handle(MouseEvent t) {
+            backgroundPolygon.setVisible(true);
+            if (t.getClickCount() == 2){
+                pressedDeleteArrow(t);
+            }
+        }
+    };
+
+    public LinkController getLinkController(){
+        return linkController;
+    }
+
+
 }

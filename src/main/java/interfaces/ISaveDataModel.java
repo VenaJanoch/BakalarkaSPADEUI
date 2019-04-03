@@ -6,9 +6,6 @@ import java.util.ArrayList;
 
   public interface ISaveDataModel {
 
-      void createChangeArtifactRelation(int artifactIndex, int changeIndex);
-      void createWorkUnitRelation(int startIndex, Integer endIndex);
-
       void createNewPhase(int id);
       void createNewIteration(int id);
       void createNewActivity(int id);
@@ -36,12 +33,12 @@ import java.util.ArrayList;
 
       void createNewCommitedConfiguration(int id);
 
-      void createCommitedConfigurationToConfigurationRelation(Integer startId, Integer endId);
-      void createCommitToCommitedConfigurationRelation(int startId, int endId);
+      void createCommitedConfigurationToConfigurationRelation(int linkId, Integer startId, Integer endId);
+      void createCommitToCommitedConfigurationRelation(int linkId, int startId, int endId);
 
-      void createNewArtifacToConfigurationRelation(int startId, int endId);
+      void createNewArtifacToConfigurationRelation( int linkId,int startId, int endId);
 
-      void createNewPersonToConfigurationRelation(int startId, int endId);
+      void createNewPersonToConfigurationRelation(int linkId, int startId, int endId);
 
-      void createNewPersonToArtifactRelation(int startId, int endId);
+      void createNewPersonToArtifactRelation(int linkId, int startId, int endId);
   }

@@ -481,39 +481,6 @@ public class FormController {
         canvasItemList.put(formIndex,item);
     }
 
-    public void createChangeArtifactRelation(int startId, int endId) {
-        //TODO mozna pridat do FormDataControlleru
-        Integer artifactStartIndex = identificatorCreater.getArtifactIndex(startId);
-        Integer artifactEndIndex = identificatorCreater.getArtifactIndex(endId);
-
-        Integer changeStartIndex = identificatorCreater.getChangeId(startId);
-        Integer changeEndIndex = identificatorCreater.getChangeId(endId);
-
-        int artifactIndex;
-        int changeIndex;
-
-        if( artifactStartIndex != null){
-            artifactIndex = artifactStartIndex;
-        }else{
-            artifactIndex = artifactEndIndex;
-        }
-
-        if(changeStartIndex != null){
-            changeIndex = changeStartIndex;
-        }else {
-            changeIndex = changeEndIndex;
-        }
-
-        saveDataModel.createChangeArtifactRelation(artifactIndex,changeIndex);
-    }
-
-    public void createWorkUnitRelation(int startSegmentId, int endSegmentId) {
-
-        Integer startIndex = identificatorCreater.getWorkUnitIndex(startSegmentId);
-        Integer endIndex = identificatorCreater.getWorkUnitIndex(endSegmentId);
-
-        saveDataModel.createWorkUnitRelation(startIndex, endIndex);
-    }
 
     public void setItemColor(int indexForm, boolean isExist) {
 
@@ -818,64 +785,95 @@ public class FormController {
         return result;
     }
 
-    public void createCommitToCommitedConfigurationRelation(int startId, int endId) {
-        Integer startIndex = identificatorCreater.getCommitId(startId);
-        Integer endIndex = identificatorCreater.getCommitId(endId);
+    public void createCommitToCommitedConfigurationRelation(int linkId, int startId, int endId) {
+          Integer[] result = findResultsFromCommitToCommitedConfigurationRelation(startId, endId);
 
-        Integer startIndex1 = identificatorCreater.getCommitedConfigurationId(startId);
-        Integer endIndex2 = identificatorCreater.getCommitedConfigurationId(endId);
-
-        Integer[] result = findCorectId(startIndex, endIndex, startIndex1, endIndex2);
-
-        formDataController.createCommitToCommitedConfigurationRelation(result[0], result[1]);
+        formDataController.createCommitToCommitedConfigurationRelation(linkId, result[0], result[1]);
     }
 
-    public void createCommitedConfigurationToConfigurationRelation(int startSegmentId, int endSegmentId) {
+    public Integer[] findResultsFromCommitToCommitedConfigurationRelation(int startSegmentId, int endSegmentId){
+        Integer startIndex = identificatorCreater.getCommitId(startSegmentId);
+        Integer endIndex = identificatorCreater.getCommitId(endSegmentId);
+
+        Integer startIndex1 = identificatorCreater.getCommitedConfigurationId(startSegmentId);
+        Integer endIndex2 = identificatorCreater.getCommitedConfigurationId(endSegmentId);
+
+        return findCorectId(startIndex, endIndex, startIndex1, endIndex2);
+
+    }
+
+
+    public void createCommitedConfigurationToConfigurationRelation(int linkId, int startSegmentId, int endSegmentId) {
+
+        Integer[] result = findResultsFromCommitedConfigurationToConfigurationRelation(startSegmentId, endSegmentId);
+        formDataController.createCommitedConfigurationToConfigurationRelation(linkId, result[0], result[1]);
+
+    }
+
+    public Integer[] findResultsFromCommitedConfigurationToConfigurationRelation(int startSegmentId, int endSegmentId){
         Integer startIndex = identificatorCreater.getCommitedConfigurationId(startSegmentId);
         Integer endIndex = identificatorCreater.getCommitedConfigurationId(endSegmentId);
 
         Integer startIndex1 = identificatorCreater.getConfigurationId(startSegmentId);
         Integer endIndex2 = identificatorCreater.getConfigurationId(endSegmentId);
 
-        Integer[] result = findCorectId(startIndex, endIndex, startIndex1, endIndex2);
-        formDataController.createCommitedConfigurationToConfigurationRelation(result[0], result[1]);
-
+        return findCorectId(startIndex, endIndex, startIndex1, endIndex2);
     }
 
-    public void createArtifactToConfigurationRelation(int startSegmentId, int endSegmentId) {
+
+    public Integer[] findResultsFromArtifactToConfigurationRelation(int startSegmentId, int endSegmentId){
         Integer startIndex = identificatorCreater.getArtifactId(startSegmentId);
         Integer endIndex = identificatorCreater.getArtifactId(endSegmentId);
 
         Integer startIndex1 = identificatorCreater.getConfigurationId(startSegmentId);
         Integer endIndex2 = identificatorCreater.getConfigurationId(endSegmentId);
 
-        Integer[] result = findCorectId(startIndex, endIndex, startIndex1, endIndex2);
-        formDataController.createArtifactToConfigurationRelation(result[0], result[1]);
+        return findCorectId(startIndex, endIndex, startIndex1, endIndex2);
+    }
+
+
+    public void createArtifactToConfigurationRelation(int linkId, int startSegmentId, int endSegmentId) {
+
+        Integer[] result = findResultsFromArtifactToConfigurationRelation(startSegmentId, endSegmentId);
+        formDataController.createArtifactToConfigurationRelation(linkId, result[0], result[1]);
 
     }
 
-    public void createRoleToConfigurationRelation(int startSegmentId, int endSegmentId) {
-        Integer startIndex = identificatorCreater.getRoleId(startSegmentId);
-        Integer endIndex = identificatorCreater.getRoleId(endSegmentId);
-
-        Integer startIndex1 = identificatorCreater.getConfigurationId(startSegmentId);
-        Integer endIndex2 = identificatorCreater.getConfigurationId(endSegmentId);
-
-        Integer[] result = findCorectId(startIndex, endIndex, startIndex1, endIndex2);
-
-        saveDataModel.createNewPersonToConfigurationRelation(result[0], result[1]);
-    }
-
-    public void createRoleToArtifactRelation(int startSegmentId, int endSegmentId) {
+    public Integer[] findResultsFromPersonToArtifactRelation(int startSegmentId, int endSegmentId){
         Integer startIndex = identificatorCreater.getRoleId(startSegmentId);
         Integer endIndex = identificatorCreater.getRoleId(endSegmentId);
 
         Integer startIndex1 = identificatorCreater.getArtifactId(startSegmentId);
         Integer endIndex2 = identificatorCreater.getArtifactId(endSegmentId);
 
-        Integer[] result = findCorectId(startIndex, endIndex, startIndex1, endIndex2);
+        return findCorectId(startIndex, endIndex, startIndex1, endIndex2);
 
-        saveDataModel.createNewPersonToArtifactRelation(result[0], result[1]);
+    }
+
+    public Integer[] findResultsFromPersonToConfigurationRelation(int startSegmentId, int endSegmentId){
+        Integer startIndex = identificatorCreater.getRoleId(startSegmentId);
+        Integer endIndex = identificatorCreater.getRoleId(endSegmentId);
+
+        Integer startIndex1 = identificatorCreater.getConfigurationId(startSegmentId);
+        Integer endIndex2 = identificatorCreater.getConfigurationId(endSegmentId);
+
+        return findCorectId(startIndex, endIndex, startIndex1, endIndex2);
+
+    }
+
+
+    public void createRoleToConfigurationRelation(int linkId, int startSegmentId, int endSegmentId) {
+
+        Integer[] result = findResultsFromPersonToConfigurationRelation(startSegmentId, endSegmentId);
+        formDataController.createNewPersonToConfigurationRelation(linkId, result[0], result[1]);
+
+    }
+
+    public void createRoleToArtifactRelation(int linkId, int startSegmentId, int endSegmentId) {
+
+        Integer[] result = findResultsFromPersonToArtifactRelation(startSegmentId, endSegmentId);
+        formDataController.createNewPersonToArtifactRelation(linkId, result[0], result[1]);
+
     }
 }
 
