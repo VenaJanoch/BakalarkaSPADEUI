@@ -1,0 +1,361 @@
+"Test suite name","Odstraneni_Elementu_Segmentu"
+"Created on","2019-04-03 19:39:39 UTC"
+"Updated on","2019-04-04 10:08:30 UTC"
+
+
+"Id","Section","Test case number","Title","Description","Test steps","Expected result","Created at","Updated at"
+"2440935","Untitled","TC26","Odstraneni_Phase","Odstraneni segmentu Phase z tabulky","1) V levem hornim rohu vybrat v boxu ""Phase""
+2) Stiskout 2x tlacitko plus
+3) Zvolit radek tabulky s Id ""0""
+4) Stisknout klavesu ""Delete""
+5) Zvolit ""OK""
+6) Zvolit radek tabulky s Id ""1""
+7) Stisknout tlacitko ""-""
+8) Zvolit ""OK""","Tabulka nebude obsahovat zadne radky","2019-04-03 19:46:50 UTC","2019-04-03 21:09:17 UTC"
+"2440936","Untitled","TC27","Odstraneni_Iteration","Odstraneni segmentu Iteration z tabulky","1) V levem hornim rohu vybrat v boxu ""Iteration""
+2) Stiskout 2x tlacitko plus
+3) Zvolit radek tabulky s Id ""0""
+4) Stisknout klavesu ""Delete""
+5) Zvolit ""OK""
+6) Zvolit radek tabulky s Id ""1""
+7) Stisknout tlacitko ""-""
+8) Zvolit ""OK""","Tabulka nebude obsahovat zadne radky","2019-04-03 19:47:19 UTC","2019-04-03 19:48:00 UTC"
+"2440937","Untitled","TC28","Odstraneni_Activity","Odstraneni segmentu Activity z tabulky","1) V levem hornim rohu vybrat v boxu ""Iteration""
+2) Stiskout 2x tlacitko plus
+3) Zvolit radek tabulky s Id ""0""
+4) Stisknout klavesu ""Delete""
+5) Zvolit ""OK""
+6) Zvolit radek tabulky s Id ""1""
+7) Stisknout tlacitko ""-""
+8) Zvolit ""OK""","Tabulka nebude obsahovat zadne radky","2019-04-03 19:48:07 UTC","2019-04-03 19:48:27 UTC"
+"2440939","Untitled","TC29","Odstraneni_WorkUnit","Odstraneni segmentu Work Unit z tabulky","1) V levem hornim rohu vybrat v boxu ""Worku Unit""
+2) Stiskout 2x tlacitko plus
+3) V levem hormin rohu vybrat v boxu ""Phase""
+4) Stisknout tlacitko ""+""
+5) V pravem panelu na novem radku
+     zaskrtnout kolecko,
+     zvolit ""Worku Units:"",
+     ""NOT CONTAINS"",
+     zvolit druhy prvek
+6) V levem hormin rohu vybrat v boxu ""Iteration""
+7) Stisknout tlacitko ""+""
+8) V pravem panelu na novem radku
+     zaskrtnout kolecko,
+     zvolit ""Worku Units:"",
+     ""NOT CONTAINS"",
+     zvolit druhy prvek
+9) V levem hormin rohu vybrat v boxu ""Activity""
+10) Stisknout tlacitko ""+""
+11) V pravem panelu na novem radku
+     zaskrtnout kolecko, 
+     zvolit ""Worku Units:"",
+     ""NOT CONTAINS"",
+     zvolit druhy prvek
+12) V levem hornim rohu vybrat v boxu ""Worku Unit""
+13) Zvolit radek tabulky s Id ""0""
+14) Stisknout klavesu ""Delete""","Informacni okno by melo obsahovat jmeno Work Unit 
+a dalsi tri radky 
+- prvni Phase 0
+- druhy Iteration 0
+- treti Activity 0","2019-04-03 19:49:59 UTC","2019-04-03 20:05:53 UTC"
+"2440954","Untitled","TC30","Odstraneni_Milestone","Odstraneni segmentu Milestone z tabulky","1) V levem hornim rohu vybrat v boxu ""Milestone""
+2) Stiskout 2x tlacitko plus
+3) V levem hormin rohu vybrat v boxu ""Phase""
+4) Stisknout tlacitko ""+""
+5) V pravem panelu na novem radku
+     zaskrtnout kolecko,
+     zvolit ""Milestones:"",
+     ""NOT CONTAINS"",
+     zvolit druhy prvek
+12) V levem hornim rohu vybrat v boxu ""Milestone""
+13) Zvolit radek tabulky s Id ""0""
+14) Stisknout klavesu ""Delete""","Informacni okno by melo obsahovat jmeno Milestone
+a dalsii radek 
+- Phase 0
+Nasledne po stisku OK prazdna tabulka","2019-04-03 20:06:11 UTC","2019-04-03 20:08:21 UTC"
+"2440960","Untitled","TC31","Odstraneni_Criterion","Odstraneni segmentu Criterion z tabulky","1) V levem hornim rohu vybrat v boxu ""Criterion""
+2) Stiskout 2x tlacitko plus
+3) V levem hormin rohu vybrat v boxu ""Milestone""
+4) Stisknout tlacitko ""+""
+5) V pravem panelu na novem radku
+     zaskrtnout kolecko,
+     zvolit ""Criterions:"",
+     ""NOT CONTAINS"",
+     zvolit druhy a treti prvek. 
+12) V levem hornim rohu vybrat v boxu ""Criterion""
+13) Zvolit radek tabulky s Id ""0""
+14) Stisknout klavesu ""Delete""","Informacni okno by melo obsahovat jmeno Criterion (tedy 0_)
+a dalsii radek 
+- milestone 0
+Nasledne po stisku OK prazdna tabulka
+Milestone v select boxu pro criterion zaskrtnuty treti prvek","2019-04-03 20:08:28 UTC","2019-04-03 20:14:20 UTC"
+"2440968","Untitled","TC32","Odstraneni_Config_Person","Odstraneni element Config_Person z tabulky","1) V hornim panelu stisknout ""Person""
+2) V levem hormin rohu vybrat v boxu ""Config-Person""
+3) Stisknout tlacitko ""+""
+4) V pravem panelu na novem radku
+     zaskrtnout kolecko,
+     zvolit ""Person:"",
+     ""NOT CONTAINS"",
+     zvolit druh prvek. 
+5) V hornim panelu stisknout ""Configuration""
+6) V pravem panelu na novem radku
+     zaskrtnout kolecko,
+     zvolit ""CPRs:"",
+     ""NOT CONTAINS"",
+     zvolit druh prvek. 
+7) V levem hormin rohu vybrat v boxu ""Config-Person""
+8) Zvolit radek tabulky s Id ""0""
+9) Stisknout klavesu ""Delete""","Informacni okno by melo obsahovat jmeno CPR (tedy 0_)
+a dalsii radek 
+- Configuration: 0_
+Nasledne po stisku OK prazdna tabulka
+Configuration v select boxu pro CPR nic zaskrtleho","2019-04-03 20:16:37 UTC","2019-04-03 20:20:12 UTC"
+"2440970","Untitled","TC33","Odstraneni_Role_Type","Odstraneni segmentu Role_Type z tabulky","1) V levem hornim rohu vybrat v boxu ""Role Type""
+2) Stiskout 2x tlacitko plus
+3)1) V hornim panelu stisknout ""Person""
+4) V pravem panelu na novem radku
+     zaskrtnout kolecko,
+     zvolit ""Role Type:"",
+     ""NOT CONTAINS"",
+     zvolit druhy. 
+5) V levem hornim rohu vybrat v boxu ""Role Type""
+6) Zvolit radek tabulky s Id ""0""
+7) Stisknout klavesu ""Delete","Informacni okno by melo obsahovat jmeno Role type (tedy 0_)
+a dalsii radek 
+- Person: 0
+Nasledne po stisku OK prazdna tabulka
+Person v select boxu pro Role Type nevybrana zadna hodnota","2019-04-03 20:20:26 UTC","2019-04-03 20:26:01 UTC"
+"2440971","Untitled","TC34","Odstraneni_Priority","Odstraneni elementu Priority z tabulky","1) V levem hornim rohu vybrat v boxu ""Priority""
+2) Stiskout 2x tlacitko plus
+3) V levem hormin rohu vybrat v boxu ""Work Unit""
+4) Stisknout tlacitko ""+""
+5) V pravem panelu na novem radku
+     zaskrtnout kolecko,
+     zvolit ""Priority:"",
+     ""NOT CONTAINS"",
+     zvolit druhy prvek
+6) V levem hornim rohu vybrat v boxu ""Priority""
+7) Zvolit radek tabulky s Id ""0""
+8) Stisknout klavesu ""Delete""","Informacni okno by melo obsahovat jmeno Priority (tedy 0_
+a dalsii radek 
+- Work unit: 0
+Nasledne po stisku OK prazdna tabulka
+Ve Work unit v select boxu pro Priority nezvolena zadana hodnota","2019-04-03 20:26:25 UTC","2019-04-03 20:28:34 UTC"
+"2440974","Untitled","TC35","Odstraneni_Severity","Odstraneni elementu Severity z tabulky","1) V levem hornim rohu vybrat v boxu ""Severity""
+2) Stiskout 2x tlacitko plus
+3) V levem hormin rohu vybrat v boxu ""Work Unit""
+4) Stisknout tlacitko ""+""
+5) V pravem panelu na novem radku
+     zaskrtnout kolecko,
+     zvolit ""Severity:"",
+     ""NOT CONTAINS"",
+     zvolit druhy prvek
+6) V levem hornim rohu vybrat v boxu ""Severity""
+7) Zvolit radek tabulky s Id ""0""
+8) Stisknout klavesu ""Delete""","Informacni okno by melo obsahovat jmeno Severity (tedy 0_
+a dalsii radek 
+- Work unit: 0
+Nasledne po stisku OK prazdna tabulka
+Ve Work unit v select boxu pro Severity nezvolena zadana hodnota","2019-04-03 20:28:40 UTC","2019-04-03 20:29:49 UTC"
+"2440975","Untitled","TC36","Odstraneni_Relation","Odstraneni elementu Relation z tabulky","1) V levem hornim rohu vybrat v boxu ""Relation""
+2) Stiskout 2x tlacitko plus
+3) V levem hormin rohu vybrat v boxu ""Work Unit""
+4) Stisknout tlacitko ""+""
+5) V pravem panelu na novem radku
+     zaskrtnout kolecko,
+     zvolit ""Relation:"",
+     ""NOT CONTAINS"",
+     zvolit druhy prvek
+6) V levem hornim rohu vybrat v boxu ""Relation""
+7) Zvolit radek tabulky s Id ""0""
+8) Stisknout klavesu ""Delete""","Informacni okno by melo obsahovat jmeno Relation (tedy 0_
+a dalsii radek 
+- Work unit: 0
+Nasledne po stisku OK prazdna tabulka
+Ve Work unit v select boxu pro Relation nezvolena zadana hodnota","2019-04-03 20:29:54 UTC","2019-04-03 20:30:24 UTC"
+"2440978","Untitled","TC37","Odstraneni_Resolution","Odstraneni elementu Resolution z tabulky","1) V levem hornim rohu vybrat v boxu ""Resolution""
+2) Stiskout 2x tlacitko plus
+3) V levem hormin rohu vybrat v boxu ""Work Unit""
+4) Stisknout tlacitko ""+""
+5) V pravem panelu na novem radku
+     zaskrtnout kolecko,
+     zvolit ""Resolution:"",
+     ""NOT CONTAINS"",
+     zvolit druhy prvek
+6) V levem hornim rohu vybrat v boxu ""Resolution""
+7) Zvolit radek tabulky s Id ""0""
+8) Stisknout klavesu ""Delete""","Informacni okno by melo obsahovat jmeno Resolution (tedy 0_
+a dalsii radek 
+- Work unit: 0
+Nasledne po stisku OK prazdna tabulka
+Ve Work unit v select boxu pro Resolution nezvolena zadana hodnota","2019-04-03 20:30:29 UTC","2019-04-03 20:30:55 UTC"
+"2440982","Untitled","TC38","Odstraneni_Status","Odstraneni elementu Status z tabulky","1) V levem hornim rohu vybrat v boxu ""Status""
+2) Stiskout 2x tlacitko plus
+3) V levem hormin rohu vybrat v boxu ""Work Unit""
+4) Stisknout tlacitko ""+""
+5) V pravem panelu na novem radku
+     zaskrtnout kolecko,
+     zvolit ""Status:"",
+     ""NOT CONTAINS"",
+     zvolit druhy prvek
+6) V levem hornim rohu vybrat v boxu ""Priority""
+7) Zvolit radek tabulky s Id ""0""
+8) Stisknout klavesu ""Delete""","Informacni okno by melo obsahovat jmeno Status(tedy 0_
+a dalsii radek 
+- Work unit: 0
+Nasledne po stisku OK prazdna tabulka
+Ve Work unit v select boxu pro Status nezvolena zadana hodnota","2019-04-03 20:31:03 UTC","2019-04-03 20:31:33 UTC"
+"2440983","Untitled","TC39","Odstraneni_Type","Odstraneni elementu Type z tabulky","1) V levem hornim rohu vybrat v boxu ""Type""
+2) Stiskout 2x tlacitko plus
+3) V levem hormin rohu vybrat v boxu ""Work Unit""
+4) Stisknout tlacitko ""+""
+5) V pravem panelu na novem radku
+     zaskrtnout kolecko,
+     zvolit ""Type:"",
+     ""NOT CONTAINS"",
+     zvolit druhy prvek
+6) V levem hornim rohu vybrat v boxu ""Type""
+7) Zvolit radek tabulky s Id ""0""
+8) Stisknout klavesu ""Delete""","Informacni okno by melo obsahovat jmeno Type(tedy 0_
+a dalsii radek 
+- Work unit: 0
+Nasledne po stisku OK prazdna tabulka
+Ve Work unit v select boxu pro Type nezvolena zadana hodnota","2019-04-03 20:31:38 UTC","2019-04-03 20:32:02 UTC"
+"2440985","Untitled","TC40","Odstraneni_Branch","Odstraneni segmentu Branch z tabulky","1) V levem hornim rohu vybrat v boxu ""Branch""
+2) Stiskout 2x tlacitko plus
+3)1) V hornim panelu stisknout ""Commit""
+4) V pravem panelu na novem radku
+     zaskrtnout kolecko,
+     zvolit ""Branch:"",
+     ""NOT CONTAINS"",
+     zvolit druhy. 
+5) V levem hornim rohu vybrat v boxu ""Branch""
+6) Zvolit radek tabulky s Id ""0""
+7) Stisknout klavesu ""Delete","Informacni okno by melo obsahovat jmeno Branch (tedy 0_)
+a dalsii radek 
+- Commit: 0
+Nasledne po stisku OK prazdna tabulka
+Commit v select boxu pro Branch nevybrana zadna hodnota","2019-04-03 20:32:19 UTC","2019-04-03 20:33:35 UTC"
+"2440991","Untitled","TC41","Odstraneni_Change","Odstraneni segmentu Change z tabulky","1) V levem hornim rohu vybrat v boxu ""Change""
+2) Stiskout 2x tlacitko plus
+3)1) V hornim panelu stisknout ""Configuration""
+4) V pravem panelu na novem radku
+     zaskrtnout kolecko,
+     zvolit ""Change:"",
+     ""NOT CONTAINS"",
+     zvolit druhy a treti prvek. 
+5) V levem hornim rohu vybrat v boxu ""Change""
+6) Zvolit radek tabulky s Id ""0""
+7) Stisknout klavesu ""Delete","Informacni okno by melo obsahovat jmeno Change (tedy 0_)
+a dalsii radek 
+- Configuration: 0
+Nasledne po stisku OK prazdna tabulka
+Configuration v select boxu pro Change vybran prvek s oznacenim 1_","2019-04-03 20:33:41 UTC","2019-04-03 20:35:15 UTC"
+"2440995","Untitled","TC42","Odstraneni_VCSTag","Odstraneni segmentu VCSTag z tabulky","1) V levem hornim rohu vybrat v boxu ""VCSTag""
+2) Stiskout 2x tlacitko plus
+3)1) V hornim panelu stisknout ""Commit""
+4) V pravem panelu na novem radku
+     zaskrtnout kolecko,
+     zvolit ""VCSTag:"",
+     ""NOT CONTAINS"",
+     zvolit druhy. 
+5) V levem hornim rohu vybrat v boxu ""VCSTag""
+6) Zvolit radek tabulky s Id ""0""
+7) Stisknout klavesu ""Delete","Informacni okno by melo obsahovat jmeno VCSTag (tedy 0_)
+a dalsii radek 
+- Commit: 0
+Nasledne po stisku OK prazdna tabulka
+Commit v select boxu pro VCSTag nevybrana zadna hodnota","2019-04-03 20:35:23 UTC","2019-04-03 20:35:50 UTC"
+"2441006","Untitled","TC43","Odstraneni_Person","Odstraneni prvku Person z platna","1) V hornim panelu stisknout ""Person""
+2) V hornim panelu stisknout ""Artifact""
+3) V hornim panelu stisknout ""Configuration""
+4) Spojit ""Person"" a ""Configuration"" pomoci spojnice uprosred horniho panelu.  V poradi ""Person"" a ""Configuration""
+5) Spojit ""Person"" a ""Artifact"" pomoci spojnice uprosred horniho panelu.  V poradi ""Artifact"" a ""Person""
+6) Pravym tlacitkem mysi kliknout na ""Person"" a zvolit ""Delete""","Informacni okno by melo obsahovat jmeno Person (tedy 0_)
+a dalsi dva radky
+- Configuration: 0
+- Artifact: 0
+Nasledne po stisku OK zmizi prvek z platna spolu se spojnicemi","2019-04-03 20:43:48 UTC","2019-04-03 20:43:48 UTC"
+"2441009","Untitled","TC44","Odstraneni_Spojnic_Person","Odstraneni prvku spojnic z Person z platna","1) V hornim panelu stisknout ""Person""
+2) V hornim panelu stisknout ""Artifact""
+3) V hornim panelu stisknout ""Configuration""
+4) Spojit ""Person"" a ""Configuration"" pomoci spojnice uprosred horniho panelu.  V poradi ""Person"" a ""Configuration""
+5) Spojit ""Person"" a ""Artifact"" pomoci spojnice uprosred horniho panelu.  V poradi ""Artifact"" a ""Person""
+6) Levim tlacitkem mysi 2xkliknout na spojnici mezi ""Person"" a ""Configuration""
+7) Levim tlacitkem mysi 2xkliknout na spojnici mezi ""Person"" a ""Artifact""
+8) Pravym tlacitkem mysi kliknout na ""Person"" a zvolit ""Delete""","Informacni okno by melo obsahovat jmeno Person (tedy 0_)
+Nasledne po stisku OK zmizi prvek z platna","2019-04-03 20:44:15 UTC","2019-04-03 20:46:50 UTC"
+"2441013","Untitled","TC45","Odstraneni_Artifact","Odstraneni prvku Artifact z platna","1) V hornim panelu stisknout ""Artifact""
+2) V hornim panelu stisknout ""Configuration""
+3) Spojit ""Artifact"" a ""Configuration"" pomoci spojnice uprosred horniho panelu. V poradi ""Artifact"" a ""Configuration""
+4) V hornim panelu stisknout ""Configuration""
+5) Spojit ""Artifact"" a novou ""Configuration"" pomoci spojnice uprosred horniho panelu. V poradi ""Configuration"" a ""Artifact""
+6) Pravym tlacitkem mysi kliknout na ""Artifact"" a zvolit ""Delete""","Informacni okno by melo obsahovat jmeno Artifact (tedy 0_)
+a radek
+- Configuration: 0, 1
+Nasledne po stisku OK zmizi prvek z platna spolu se spojnicemi","2019-04-03 20:49:12 UTC","2019-04-03 20:52:03 UTC"
+"2441014","Untitled","TC46","Odstraneni_Spojnic_Artifact","Odstraneni prvku spojnic z Artifact z platna","1) V hornim panelu stisknout ""Artifact""
+2) V hornim panelu stisknout ""Configuration""
+3) Spojit ""Artifact"" a ""Configuration"" pomoci spojnice uprosred horniho panelu. V poradi ""Artifact"" a ""Configuration""
+4) V hornim panelu stisknout ""Configuration""
+5) Spojit ""Artifact"" a novou ""Configuration"" pomoci spojnice uprosred horniho panelu. V poradi ""Configuration"" a ""Artifact""
+6) Levim tlacitkem mysi 2xkliknout na spojnici mezi ""Aritfact"" a ""Configuration_000""
+7) Levim tlacitkem mysi 2xkliknout na spojnici mezi ""Artifact"" a ""Configuration_001""
+8) Pravym tlacitkem mysi kliknout na ""Artifact"" a zvolit ""Delete""","Informacni okno by melo obsahovat jmeno Artifact (tedy 0_)
+Nasledne po stisku OK zmizi prvek z platna","2019-04-03 20:52:17 UTC","2019-04-03 20:54:02 UTC"
+"2441015","Untitled","TC47","Odstraneni_Commited_Configuration","Odstraneni prvku Commited_Configuration z platna","1) V hornim panelu stisknout ""Commited_Configuration""
+2) V hornim panelu stisknout ""Configuration""
+3) Spojit ""Commited_Configuration"" a ""Configuration"" pomoci spojnice uprosred horniho panelu. V poradi ""Commited_Configuration"" a ""Configuration""
+4) V hornim panelu stisknout ""Configuration""
+5) Spojit ""Commited_Configuration"" a novou ""Configuration"" pomoci spojnice uprosred horniho panelu. V poradi ""Configuration"" a ""Commited_Configuration""
+6) Pravym tlacitkem mysi kliknout na ""Commited_Configuration"" a zvolit ""Delete""","Informacni okno by melo obsahovat jmeno Commited_Configuration (tedy 0_)
+a radek
+- Configuration: 0, 1
+Nasledne po stisku OK zmizi prvek z platna spolu se spojnicemi","2019-04-03 20:54:12 UTC","2019-04-03 20:55:15 UTC"
+"2441016","Untitled","TC48","Odstraneni_Spojnic_Commited_Configuration","Odstraneni prvku spojnic z Commited_Configuration z platna","1) V hornim panelu stisknout ""Commited_Configuration""
+2) V hornim panelu stisknout ""Configuration""
+3) Spojit ""Commited_Configuration"" a ""Configuration"" pomoci spojnice uprosred horniho panelu. V poradi ""Commited_Configuration"" a ""Configuration""
+4) V hornim panelu stisknout ""Configuration""
+5) Spojit ""Commited_Configuration"" a novou ""Configuration"" pomoci spojnice uprosred horniho panelu. V poradi ""Configuration"" a ""Commited_Configuration""
+6) Levim tlacitkem mysi 2xkliknout na spojnici mezi ""Commited_Configuration"" a ""Configuration_000""
+7) Levim tlacitkem mysi 2xkliknout na spojnici mezi ""Commited_Configuration"" a ""Configuration_001""
+8) Pravym tlacitkem mysi kliknout na ""Artifact"" a zvolit ""Delete""","Informacni okno by melo obsahovat jmeno Commited_Configuration (tedy 0_)
+Nasledne po stisku OK zmizi prvek z platna","2019-04-03 20:55:21 UTC","2019-04-03 20:56:05 UTC"
+"2441017","Untitled","TC49","Odstraneni_Commit","Odstraneni prvku Commit z platna","1) V hornim panelu stisknout ""Commit""
+2) V hornim panelu stisknout ""Commited_Configuration""
+3) Spojit ""Commit"" a ""Commited_Configuration"" pomoci spojnice uprosred horniho panelu. V poradi ""Commit"" a ""Commited_Configuration""
+4) V hornim panelu stisknout ""Commit_Configuration""
+5) Spojit ""Commit"" a novou ""Commited_Configuration"" pomoci spojnice uprosred horniho panelu. V poradi ""Commited_Configuration"" a ""Commit""
+6) Pravym tlacitkem mysi kliknout na ""Commit"" a zvolit ""Delete""","Informacni okno by melo obsahovat jmeno Commit (tedy 0_)
+a radek
+- Commited_Configuration: 0, 1
+Nasledne po stisku OK zmizi prvek z platna spolu se spojnicemi","2019-04-03 20:56:42 UTC","2019-04-03 20:58:00 UTC"
+"2441018","Untitled","TC50","Odstraneni_Spojnic_Commit","Odstraneni prvku spojnic z Commit z platna","1) V hornim panelu stisknout ""Commit""
+2) V hornim panelu stisknout ""Commited_Configuration""
+3) Spojit ""Commit"" a ""Commited_Configuration"" pomoci spojnice uprosred horniho panelu. V poradi ""Commit"" a ""Commited_Configuration""
+4) V hornim panelu stisknout ""Commited_Configuration""
+5) Spojit ""Commit"" a novou ""Commited_Configuration"" pomoci spojnice uprosred horniho panelu. V poradi ""Commited_Configuration"" a ""Commit""
+6) Levim tlacitkem mysi 2xkliknout na spojnici mezi ""Commit"" a ""Commited_Configuration_000""
+7) Levim tlacitkem mysi 2xkliknout na spojnici mezi ""Commit"" a ""Commited_Configuration_001""
+8) Pravym tlacitkem mysi kliknout na ""Commit"" a zvolit ""Delete""","Informacni okno by melo obsahovat jmeno Commit (tedy 0_)
+Nasledne po stisku OK zmizi prvek z platna","2019-04-03 21:00:12 UTC","2019-04-03 21:03:58 UTC"
+"2441019","Untitled","TC51","Odstraneni_Configuration","Odstraneni prvku Configuration z platna","1) V hornim panelu stisknout ""Configuration""
+2) V levem hormin rohu vybrat v boxu ""Phase""
+3) Stisknout tlacitko ""+""
+4) V pravem panelu na novem radku
+      zaskrtnout kolecko,
+      zvolit ""Configuration:"",
+      ""NOT CONTAINS"",
+      zvolit druhy prvek
+5) V levem hormin rohu vybrat v boxu ""Iteration""
+6) Stisknout tlacitko ""+""
+7) V pravem panelu na novem radku
+     zaskrtnout kolecko,
+     zvolit ""Configuration:"",
+     ""NOT CONTAINS"",
+     zvolit druhy prvek.
+8) Pravym tlacitkem mysi kliknout na ""Configuration"" a zvolit ""Delete""","Informacni okno by melo obsahovat jmeno Configuration (tedy 0_)
+a dalsi dva radky
+- ""Phase: 0""
+- ""Iterace: 0""
+Nasledne po stisku OK zmizi prvek z platna spolu se spojnicemi","2019-04-03 21:04:12 UTC","2019-04-03 21:08:10 UTC"

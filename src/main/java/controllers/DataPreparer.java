@@ -52,13 +52,13 @@ public class DataPreparer {
         String idName = prepareTableName(nameST, id);
      //   String criterion = prepareDependencyArray(criterionArray, observableList);
 
-        return new MilestoneTable(idName, "", "",true, id);
+        return new MilestoneTable(idName, true, id);
     }
 
     public PersonTable prepareRoleTable(String name, String description, int id, int type, ObservableList<BasicTable> roleTypeObservable) {
         String idName = prepareTableName(name, id);
         String typeName = prepareDependency(type, roleTypeObservable) ;
-        return new PersonTable(idName, description, typeName, true, id);
+        return new PersonTable(idName, true, id);
     }
 
     public CPRTable prepareCPRTable(String name, int id) {
@@ -81,7 +81,7 @@ public class DataPreparer {
         return id + "_" + prepareStringForForm(name);
     }
 
-    private ArrayList<ArrayList<Integer>> prepareIndicesForForm(List<List<Integer>> indices){
+    public ArrayList<ArrayList<Integer>> prepareIndicesForForm(ArrayList<ArrayList<Integer>> indices){
         ArrayList<ArrayList<Integer>> list =  new ArrayList<>();
 
         for(List<Integer> i : indices){

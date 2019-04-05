@@ -13,12 +13,11 @@ public class CriterionTable extends BasicTable{
 	 * 
 	 * @param name
 	 *            jméno criterion
-	 * @param description
-	 *            popis criterion
+	 *
 	 */
-	public CriterionTable(String name, String description,  boolean exist, int id) {
+	public CriterionTable(String name,  boolean exist, int id) {
 		super(name, exist, id);
-		this.description = new SimpleStringProperty(description);
+	//	this.description = new SimpleStringProperty(description);
 	}
 
 	/**

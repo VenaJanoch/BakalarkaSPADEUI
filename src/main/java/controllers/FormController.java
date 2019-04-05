@@ -252,7 +252,7 @@ public class FormController {
 
     public int createNewPersonFormWithoutCreateId(String name, boolean exist, int id, int formIndex){
 
-        PersonTable personTable = new PersonTable(name, "", "", exist, id);
+        PersonTable personTable = new PersonTable(name, exist, id);
 
         PersonControlPanel personControlPanel = new PersonControlPanel(
                 "Edit", formDataController, editFormController,this, personTable, id, formIndex);
@@ -277,9 +277,9 @@ public class FormController {
         return formIndex;
     }
 
-    public int createNewArtifactFormWithoutCreateId(String name, String description, boolean exist, int id, int formIndex){
+    public int createNewArtifactFormWithoutCreateId(String name, boolean exist, int id, int formIndex){
 
-        ArtifactTable artifactTable = new ArtifactTable(name,description, exist, id);
+        ArtifactTable artifactTable = new ArtifactTable(name, exist, id);
 
         ArtifactControlPanel artifactControlPanel = new ArtifactControlPanel(
                 "Edit", formDataController, editFormController,this, artifactTable, id, formIndex);
@@ -293,7 +293,7 @@ public class FormController {
     public int createNewArtifactFormWithoutManipulator(String name, String description, boolean exist){
         int index = identificatorCreater.createArtifactID();
         int id = identificatorCreater.getArtifactIndexToIdMaper().get(index);
-        return createNewArtifactFormWithoutCreateId(name, description, exist, id, index);
+        return createNewArtifactFormWithoutCreateId(name, exist, id, index);
 
     }
 
@@ -521,7 +521,7 @@ public class FormController {
             case Commit:
                 return identificatorCreater.getCommitId(formIndex);
             case Artifact:
-                return identificatorCreater.getArtifactIndex(formIndex);
+                return identificatorCreater.getArtifactId(formIndex);
             default:
                 return -1;
         }
@@ -785,10 +785,10 @@ public class FormController {
         return result;
     }
 
-    public void createCommitToCommitedConfigurationRelation(int linkId, int startId, int endId) {
+    public void createCommitToCommitedConfigurationRelation(int linkId, int startId, int endId, boolean isXML) {
           Integer[] result = findResultsFromCommitToCommitedConfigurationRelation(startId, endId);
 
-        formDataController.createCommitToCommitedConfigurationRelation(linkId, result[0], result[1]);
+        formDataController.createCommitToCommitedConfigurationRelation(linkId, result[0], result[1], isXML);
     }
 
     public Integer[] findResultsFromCommitToCommitedConfigurationRelation(int startSegmentId, int endSegmentId){
@@ -803,10 +803,10 @@ public class FormController {
     }
 
 
-    public void createCommitedConfigurationToConfigurationRelation(int linkId, int startSegmentId, int endSegmentId) {
+    public void createCommitedConfigurationToConfigurationRelation(int linkId, int startSegmentId, int endSegmentId, boolean isXML) {
 
         Integer[] result = findResultsFromCommitedConfigurationToConfigurationRelation(startSegmentId, endSegmentId);
-        formDataController.createCommitedConfigurationToConfigurationRelation(linkId, result[0], result[1]);
+        formDataController.createCommitedConfigurationToConfigurationRelation(linkId, result[0], result[1], isXML);
 
     }
 
@@ -832,10 +832,10 @@ public class FormController {
     }
 
 
-    public void createArtifactToConfigurationRelation(int linkId, int startSegmentId, int endSegmentId) {
+    public void createArtifactToConfigurationRelation(int linkId, int startSegmentId, int endSegmentId, boolean isXML) {
 
         Integer[] result = findResultsFromArtifactToConfigurationRelation(startSegmentId, endSegmentId);
-        formDataController.createArtifactToConfigurationRelation(linkId, result[0], result[1]);
+        formDataController.createArtifactToConfigurationRelation(linkId, result[0], result[1], isXML);
 
     }
 
@@ -862,17 +862,17 @@ public class FormController {
     }
 
 
-    public void createRoleToConfigurationRelation(int linkId, int startSegmentId, int endSegmentId) {
+    public void createRoleToConfigurationRelation(int linkId, int startSegmentId, int endSegmentId, boolean isXML) {
 
         Integer[] result = findResultsFromPersonToConfigurationRelation(startSegmentId, endSegmentId);
-        formDataController.createNewPersonToConfigurationRelation(linkId, result[0], result[1]);
+        formDataController.createNewPersonToConfigurationRelation(linkId, result[0], result[1], isXML);
 
     }
 
-    public void createRoleToArtifactRelation(int linkId, int startSegmentId, int endSegmentId) {
+    public void createRoleToArtifactRelation(int linkId, int startSegmentId, int endSegmentId, boolean isXML) {
 
         Integer[] result = findResultsFromPersonToArtifactRelation(startSegmentId, endSegmentId);
-        formDataController.createNewPersonToArtifactRelation(linkId, result[0], result[1]);
+        formDataController.createNewPersonToArtifactRelation(linkId, result[0], result[1], isXML);
 
     }
 }

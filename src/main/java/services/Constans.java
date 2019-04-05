@@ -194,7 +194,7 @@ public class Constans {
     public static final String linkPicture = "link.svn";
 
     public static final String[] addItemNames = {"Phase", "Iteration", "Activity", "Work Unit", "Milestone", "Criterion", "Config-role",
-            "Role", "Priority", "Severity", "Relation", "Resolution", "Status", "Type", "Branch", "Change", "VCSTag"};
+            "Role Type", "Priority", "Severity", "Relation", "Resolution", "Status", "Type", "Branch", "Change", "VCSTag"};
 
     public static final String[] textIndicatorList = {"IS", "IS NOT","CONTAINS", "NOT CONTAINS"};
     public static final String[] numberIndicatorList = {"EQUEL", "BIGGER", "SMALLER" };
@@ -215,8 +215,8 @@ public class Constans {
     public static final int statusFormIndex = 12;
     public static final int wuTypeFormIndex = 13;
     public static final int branchIndex = 14;
-    public static final int VCSTagIndex = 15;
-    public static final int changeFormIndex = 16;
+    public static final int changeFormIndex = 15;
+    public static final int VCSTagIndex = 16;
     public static final int artifactFormIndex = 17;
     public static final int configurationFormIndex = 18;
     public static final int roleFormIndex = 19;
@@ -229,4 +229,7 @@ public class Constans {
     public static final int indicatorIndex = 2;
 
     public static final LocalDate nullDate = LocalDate.of(1900,1,1);
+
+    public static final String CESTA_K_DATABAZI = "jdbc:mysql://localhost:3306/opswi?allowMultiQueries=true"; //cesta k databázi
+
 }

@@ -1,0 +1,1097 @@
+"Test suite name","Vytvoreni_Elementu_Segmentu"
+"Created on","2019-04-01 20:08:32 UTC"
+"Updated on","2019-04-02 19:20:31 UTC"
+
+
+"Id","Section","Test case number","Title","Description","Test steps","Expected result","Created at","Updated at"
+"2437988","Untitled","TC01","Vytvoreni_Phase","Vytvoreni a naplneni daty segment Phase + kontrola zmeny hodnot v tabulce","1) V levém horním rohu rozkliknout selectBox a zvolit Worku Unit
+2) Stisknout 3x tlačítko ""+""
+3) V levém horním rohu rozkliknout selectBox a zvolit Configuration
+4) Stisknout 3x tlačítko ""+""
+5) V levém horním rohu rozkliknout selectBox a zvolit Milestone
+6) Stisknout 3x tlačítko ""+""
+7) V levém horním rohu rozkliknout selectBox a zvolit Phase
+8) Stisknout tlacitko ""+"" v novem panelu na leve strane
+9) V novem editacnim panelu na prave strane
+            zaskrtnout kolecko v prvnim radku, 
+            zvolit ""Name:"",
+            ""IS NOT"",
+           zadat text ""Test"",
+           stisknout tlacitko plus.
+10) Na novem radku 
+           zaskrtnout kolecko, 
+            zvolit ""Description:"",
+            ""IS"",
+           zadat text ""DescriptionTest"",
+           stisknout tlacitko plus.
+11) Na novem radku 
+           zaskrtnout kolecko, 
+            zvolit ""Created:"",
+            ""SMALLER"",
+           zvolit datum ""01.04.2019"",
+           stisknout tlacitko plus.
+12) Na novem radku 
+           zaskrtnout kolecko, 
+            zvolit ""Worku Units:"",
+            ""NOT CONTAINS"",
+           zvolit druhy a treti prvek,
+           stisknout tlacitko plus.
+13) Na novem radku 
+           zaskrtnout kolecko, 
+            zvolit ""Configuration:"",
+            ""CONTAINS"",
+           zvolit druhy prvek,
+           stisknout tlacitko plus.
+14) Na novem radku 
+          zaskrtnout kolecko, 
+            zvolit ""Milestone:"",
+            ""IS"",
+           zvolit druhy prvek,
+           stisknout tlacitko plus.
+
+15) Na novem radku 
+            zvolit ""Configuration:"",
+           stisknout tlacitko plus.
+
+16) Na novem radku 
+            zvolit ""Work Unit:"",
+           stisknout tlacitko plus.
+17) Na novem radku 
+            zvolit ""Description:"",
+           stisknout tlacitko plus.
+18) Od zaskrtnout volbu ""Exist""
+19) Stisknout tlacitko ""Edit""
+20) Kliknout mimo editacni panel
+21) Kliknout dvakrat do tabulky na radek s ""Id"" 0.","Z prave strany vyjede editacni panel
+Prvni radek obsahuje 
+           zaskrtnute kolecko
+           pole ""Name:"",
+           ""IS NOT"",
+           text ""Test"",
+          
+7) Druhy radek obsahuje
+            zaskrtnute kolecko
+            pole""Description:"",
+            ""IS"",
+           text ""DescriptionTest"",
+8) Treti radek obsahuje
+           zaskrtnute kolecko
+            ""Created:"",
+            ""SMALLER"",
+           datum ""01.04.2019"",
+9) Ctvrty radek obsahuje
+           zaskrtnute kolecko, 
+            ""End date:"",
+            ""BiGGER"",
+           zvolit datum ""01.08.2019"".
+10) Paty radek 
+           zaskrtnute kolecko, 
+            ""Worku Units:"",
+            ""NOT CONTAINS"",
+           zvoleny druhy a treti prvek,
+11) Sesty radek 
+           zaskrtnute kolecko, 
+            ""Configuration:"",
+            ""CONTAINS"",
+           zvoleny druhy prvek.
+11) Sedmy radek 
+           zaskrtnute kolecko, 
+            ""Milestone:"",
+            ""CONTAINS"",
+           zvoleny druhy prvek.
+
+V tabulce se zmeni Exist na ""NO""","2019-04-01 20:18:35 UTC","2019-04-02 18:14:17 UTC"
+"2437990","Untitled","TC02","Vytvoreni_Iteration","Vytvoreni a naplneni daty segment Iteration + kontrola zmeny hodnot v tabulce","1) V levém horním rohu rozkliknout selectBox a zvolit Worku Unit
+2) Stisknout 3x tlačítko ""+""
+3) V levém horním rohu rozkliknout selectBox a zvolit Configuration
+4) Stisknout 3x tlačítko ""+""
+5) V levém horním rohu rozkliknout selectBox a zvolit Iteration
+6) Stisknout tlacitko ""+"" v panelu na leve strane
+7) V novem editacnim panelu na prave strane
+            zaskrtnout kolecko v prvnim radku, 
+            zvolit ""Name:"",
+            ""IS NOT"",
+           zadat text ""Test"",
+           stisknout tlacitko plus.
+8) Na novem radku 
+           zaskrtnout kolecko, 
+            zvolit ""Description:"",
+            ""IS"",
+           zadat text ""DescriptionTest"",
+           stisknout tlacitko plus.
+9) Na novem radku 
+           zaskrtnout kolecko, 
+            zvolit ""Created:"",
+            ""SMALLER"",
+           zvolit datum ""01.04.2019"",
+           stisknout tlacitko plus.
+10) Na novem radku 
+           zaskrtnout kolecko, 
+            zvolit ""End date:"",
+            ""BiGGER"",
+           zvolit datum ""01.08.2019"",
+           stisknout tlacitko plus.
+11) Na novem radku 
+           zaskrtnout kolecko, 
+            zvolit ""Worku Units:"",
+            ""NOT CONTAINS"",
+           zvolit druhy a treti prvek,
+           stisknout tlacitko plus.
+12) Na novem radku 
+           zaskrtnout kolecko, 
+            zvolit ""Configuration:"",
+            ""CONTAINS"",
+           zvolit druhy prvek,
+           stisknout tlacitko plus.
+
+13) Na novem radku 
+            zvolit ""Configuration:"",
+           stisknout tlacitko plus.
+
+14) Na novem radku 
+            zvolit ""Work Unit:"",
+           stisknout tlacitko plus.
+15) Od zaskrtnout volbu ""Exist""
+16) Stisknout tlacitko ""Edit""
+17) Kliknout mimo editacni panel
+18) Kliknout dvakrat do tabulky na radek s ""Id"" 0.","Z prave strany vyjede editacni panel
+Prvni radek obsahuje 
+           zaskrtnute kolecko
+           pole ""Name:"",
+           ""IS NOT"",
+           text ""Test"",
+          
+7) Druhy radek obsahuje
+            zaskrtnute kolecko
+            pole""Description:"",
+            ""IS"",
+           text ""DescriptionTest"",
+8) Treti radek obsahuje
+           zaskrtnute kolecko
+            ""Created:"",
+            ""SMALLER"",
+           datum ""01.04.2019"",
+9) Ctvrty radek obsahuje
+           zaskrtnute kolecko, 
+            ""End date:"",
+            ""BiGGER"",
+           zvolit datum ""01.08.2019"".
+10) Paty radek 
+           zaskrtnute kolecko, 
+            ""Worku Units:"",
+            ""NOT CONTAINS"",
+           zvoleny druhy a treti prvek,
+11) Sesty radek 
+           zaskrtnute kolecko, 
+            ""Configuration:"",
+            ""CONTAINS"",
+           zvoleny druhy prvek.
+
+V tabulce se zmeni Exist na ""NO""","2019-04-01 20:20:00 UTC","2019-04-02 18:12:54 UTC"
+"2438005","Untitled","TC03","Vytvoreni_Activity","Vytvoreni a naplneni daty segment Activity + kontrola zmeny hodnot v tabulce","1) V levém horním rohu rozkliknout selectBox a zvolit Worku Unit
+2) Stisknout 3x tlačítko ""+""
+3) V levém horním rohu rozkliknout selectBox a zvolit Activity
+4) Stisknout tlacitko ""+"" v panelu na leve strane
+5) V novem editacnim panelu na prave strane
+            zaskrtnout kolecko v prvnim radku, 
+            zvolit ""Name:"",
+            ""IS NOT"",
+           zadat text ""Test"",
+           stisknout tlacitko plus.
+6) Na novem radku 
+           zaskrtnout kolecko, 
+            zvolit ""Description:"",
+            ""IS"",
+           zadat text ""DescriptionTest"",
+           stisknout tlacitko plus.
+7) Na novem radku 
+           zaskrtnout kolecko, 
+            zvolit ""Description:"",
+            ""NOT CONTAINS"",
+           zadat text ""DescriptionTest2"",
+           stisknout tlacitko plus.
+8) Na novem radku 
+           zaskrtnout kolecko, 
+            zvolit ""Worku Units:"",
+            ""NOT CONTAINS"",
+           zvolit druhy a treti prvek,
+           stisknout tlacitko plus.
+
+9) Na novem radku 
+            zvolit ""Configuration:"",
+           stisknout tlacitko plus.
+
+10) Na novem radku 
+            zvolit ""Work Unit:"",
+           stisknout tlacitko plus.
+
+11) Na novem radku 
+            zvolit ""Name:"",
+           stisknout tlacitko plus.
+12) Od zaskrtnout volbu ""Exist""
+13) Stisknout tlacitko ""Edit""
+14) Kliknout mimo editacni panel
+15) Kliknout dvakrat do tabulky na radek s ""Id"" 0.","Z prave strany vyjede editacni panel
+Prvni radek obsahuje 
+           zaskrtnute kolecko
+           pole ""Name:"",
+           ""IS NOT"",
+           text ""Test"",
+ Druhy radek obsahuje
+            zaskrtnute kolecko
+            pole""Description:"",
+            ""IS"",
+           text ""DescriptionTest"",
+Treti radek obsahuje
+            zaskrtnute kolecko
+            pole""Description:"",
+            ""IS"",
+           text ""DescriptionTest2"",
+Ctvrty radek 
+           zaskrtnute kolecko, 
+            ""Worku Units:"",
+            ""NOT CONTAINS"",
+           zvoleny druhy a treti prvek,
+
+
+V tabulce se zmeni Exist na ""NO""","2019-04-01 20:53:14 UTC","2019-04-02 18:11:57 UTC"
+"2438211","Untitled","TC04","Vytvoreni_Milestone","Vytvoreni a naplneni daty element Milestone + kontrola zmeny hodnot v tabulce","1) V levém horním rohu rozkliknout selectBox a zvolit Criterion
+2) Stisknout 3x tlačítko ""+""
+3) V levém horním rohu rozkliknout selectBox a zvolit Milestone
+4) Stisknout tlacitko ""+"" v novem panelu na leve strane
+5) V novem editacnim panelu na prave strane
+            zaskrtnout kolecko v prvnim radku, 
+            zvolit ""Name:"",
+            ""IS NOT"",
+           zadat text ""Test"",
+           stisknout tlacitko plus.
+6) Na novem radku 
+           zaskrtnout kolecko, 
+            zvolit ""Description:"",
+            ""IS"",
+           zadat text ""DescriptionTest"",
+           stisknout tlacitko plus.
+7) Na novem radku 
+           zaskrtnout kolecko, 
+            zvolit ""Description:"",
+            ""NOT CONTAINS"",
+           zadat text ""DescriptionTest2"",
+           stisknout tlacitko plus.
+8) Na novem radku 
+            zvolit ""Criterions:"",
+           stisknout tlacitko plus.
+
+9) Na novem radku
+            zaskrtnout kolecko,
+            zvolit ""Criterions:"",
+            ""CONTAINS"",
+           zvolit druhy a treti prvek,
+           stisknout tlacitko plus.
+10) Na novem radku
+            zaskrtnout kolecko,
+            zvolit ""Criterions:"",
+            ""NOT CONTAINS"",
+           zvolit ctvrty prvek,
+           stisknout tlacitko plus.
+
+11) Na novem radku 
+            zvolit ""Name:"",
+           stisknout tlacitko plus.
+
+12) Od zaskrtnout volbu ""Exist""
+13) Stisknout tlacitko ""Edit""
+14) Kliknout mimo editacni panel
+15) Kliknout dvakrat do tabulky na radek s ""Id"" 0.","Z prave strany vyjede editacni panel
+Prvni radek obsahuje 
+           zaskrtnute kolecko
+           pole ""Name:"",
+           ""IS NOT"",
+           text ""Test"",
+ Druhy radek obsahuje
+            zaskrtnute kolecko
+            pole""Description:"",
+            ""IS"",
+           text ""DescriptionTest"",
+Treti radek obsahuje
+            zaskrtnute kolecko
+            pole""Description:"",
+            ""NOT CONTAINS"",
+           text ""DescriptionTest2"",
+Ctvrty radek 
+           zaskrtnute kolecko, 
+            zvolit ""Criterions:"",
+            ""CONTAINS"",
+           zvoleny druhy a treti prvek,
+V tabulce se zmeni Exist na ""NO""","2019-04-02 08:05:19 UTC","2019-04-02 18:10:57 UTC"
+"2438237","Untitled","TC05","Vytvoreni_Criterion","Vytvoreni a naplneni daty segment Criterion + kontrola zmeny hodnot v tabulce","1) V levém horním rohu rozkliknout selectBox a zvolit Criterion
+2) Stisknout tlacitko ""+"" v novem panelu na leve strane
+3) V novem editacnim panelu na prave strane
+            zaskrtnout kolecko v prvnim radku, 
+            zvolit ""Name:"",
+            ""IS NOT"",
+           zadat text ""Test"",
+           stisknout tlacitko plus.
+4) Na novem radku 
+           zaskrtnout kolecko, 
+            zvolit ""Description:"",
+            ""IS"",
+           zadat text ""DescriptionTest"",
+           stisknout tlacitko plus.
+5) Na novem radku 
+            zvolit ""Description:"",
+           stisknout tlacitko plus.
+6) Na novem radku 
+           zaskrtnout kolecko, 
+            zvolit ""Description:"",
+            ""NOT CONTAINS"",
+           zadat text ""DescriptionTest2"",
+           stisknout tlacitko plus.
+7) Na novem radku 
+            zvolit ""Name:"",
+           stisknout tlacitko plus.
+8) Od zaskrtnout volbu ""Exist""
+9) Stisknout tlacitko ""Edit""
+10) Kliknout mimo editacni panel
+11) Kliknout dvakrat do tabulky na radek s ""Id"" 0.","Z prave strany vyjede editacni panel
+Prvni radek obsahuje 
+           zaskrtnute kolecko
+           pole ""Name:"",
+           ""IS NOT"",
+           text ""Test"",
+ Druhy radek obsahuje
+            zaskrtnute kolecko
+            pole ""Description:"",
+            ""IS"",
+           text ""DescriptionTest"",
+Treti radek obsahuje
+            zaskrtnute kolecko
+            pole""Description:"",
+            ""IS"",
+           text ""DescriptionTest2"",
+
+V tabulce se zmeni Exist na ""NO""","2019-04-02 08:22:03 UTC","2019-04-02 18:09:56 UTC"
+"2438442","Untitled","TC06","Vytvoreni_Config_Person_Relation","Vytvoreni a naplneni daty element CPR + kontrola zmeny hodnot v tabulce","1) Na hlavnim panelu stisknout 3x tlacitko Person
+2) V levém horním rohu rozkliknout selectBox a zvolit Milestone
+3) Stisknout tlacitko ""+"" v novem panelu na leve strane
+4) V novem editacnim panelu na prave strane
+            zaskrtnout kolecko v prvnim radku, 
+            zvolit ""Name:"",
+            ""IS NOT"",
+           zadat text ""Test"",
+           stisknout tlacitko plus.
+5) Na novem radku 
+           zaskrtnout kolecko, 
+            zvolit ""Person:"",
+            ""IS"",
+           zvolit druhy a treti prvek,
+           stisknout tlacitko plus.
+6) Na novem radku 
+           zaskrtnout kolecko, 
+            zvolit ""Person:"",
+            ""NOT CONTAINS"",
+          zvolit treti prvek
+           stisknout tlacitko plus.
+7) Na novem radku 
+            zvolit ""Person:"",
+           stisknout tlacitko plus.
+8) Na novem radku 
+            zvolit ""Name:"",
+           stisknout tlacitko plus.
+
+9) Od zaskrtnout volbu ""Exist""
+10) Stisknout tlacitko ""Edit""
+11) Kliknout mimo editacni panel
+12) Kliknout dvakrat do tabulky na radek s ""Id"" 0.","Z prave strany vyjede editacni panel
+Prvni radek obsahuje 
+           zaskrtnute kolecko
+           pole ""Name:"",
+           ""IS NOT"",
+           text ""Test"",
+ Druhy radek obsahuje
+            zaskrtnute kolecko
+            pole""Person:"",
+            ""IS"",
+          zvoleno druhe a treti policko.
+Treti radek obsahuje
+            zaskrtnute kolecko
+            pole""Person:"",
+            ""NOT CONTAINS"",
+           zvoleno ctvrte policko.
+V tabulce se zmeni Exist na ""NO""","2019-04-02 11:29:29 UTC","2019-04-02 18:09:17 UTC"
+"2438447","Untitled","TC07","Vytvoreni_Role_Type","Vytvoreni a naplneni daty element Role Type + kontrola zmeny hodnot v tabulce","1) V levém horním rohu rozkliknout selectBox a zvolit Role Type
+2) Stisknout tlacitko ""+"" v novem panelu na leve strane
+3) V novem editacnim panelu na prave strane
+            zaskrtnout kolecko v prvnim radku, 
+            zvolit ""Name:"",
+            ""IS NOT"",
+           zadat text ""Test"",
+           stisknout tlacitko plus.
+4) Na novem radku 
+           zaskrtnout kolecko, 
+            zvolit ""Description:"",
+            ""IS"",
+           zadat text ""DescriptionTest"",
+           stisknout tlacitko plus.
+5) Na novem radku 
+           zaskrtnout kolecko, 
+            zvolit ""Description:"",
+            ""NOT CONTAINS"",
+           zadat text ""DescriptionTest2"",
+           stisknout tlacitko plus.
+6) Na novem radku 
+            zvolit ""Name:"",
+
+7) Na  radku s class 
+            zvolit ""TEAM_MEMBER:"",
+          
+8) Od zaskrtnout volbu ""Exist""
+9) Stisknout tlacitko ""Edit""
+10) Kliknout mimo editacni panel
+11) Kliknout dvakrat do tabulky na radek s ""Id"" 0.","Z prave strany vyjede editacni panel
+Prvni radek obsahuje 
+           zaskrtnute kolecko
+           pole ""Name:"",
+           ""IS NOT"",
+           text ""Test"",
+ Druhy radek obsahuje
+            zaskrtnute kolecko
+            pole""Description:"",
+            ""IS"",
+           text ""DescriptionTest"",
+Treti radek obsahuje
+            zaskrtnute kolecko
+            pole""Description:"",
+            ""NOT CONTAINS"",
+           text ""DescriptionTest2"",
+Radek s ""class"" obsahuje  
+            u ""class:"" TEAM_MEMBER
+            u ""super class"" TEAM_MEMBER
+           
+V tabulce se zmeni Exist na ""NO""","2019-04-02 11:36:44 UTC","2019-04-02 18:08:37 UTC"
+"2438469","Untitled","TC08","Vytvoreni_Priority","Vytvoreni a naplneni daty element Priority + kontrola zmeny hodnot v tabulce","1) V levém horním rohu rozkliknout selectBox a zvolit Priority
+2) Stisknout tlacitko ""+"" v novem panelu na leve strane
+3) V novem editacnim panelu na prave strane
+            zaskrtnout kolecko v prvnim radku, 
+            zvolit ""Name:"",
+            ""IS NOT"",
+           zadat text ""Test"",
+           stisknout tlacitko plus.
+4) Na novem radku 
+            zvolit ""NAME:"",
+           stisknout tlacitko plus.
+5) Na  radku s class 
+            zvolit ""LOWEST:"",
+          
+6) Od zaskrtnout volbu ""Exist""
+7) Stisknout tlacitko ""Edit""
+8) Kliknout mimo editacni panel
+9) Kliknout dvakrat do tabulky na radek s ""Id"" 0.","Z prave strany vyjede editacni panel
+Prvni radek obsahuje 
+           zaskrtnute kolecko
+           pole ""Name:"",
+           ""IS NOT"",
+           text ""Test"",
+ 
+Radek s ""class"" obsahuje  
+            u ""class:"" LOWEST
+            u ""super class"" LOW
+
+V tabulce se zmeni Exist na ""NO""","2019-04-02 12:22:39 UTC","2019-04-02 18:07:54 UTC"
+"2438473","Untitled","TC09","Vytvoreni_Severity","Vytvoreni a naplneni daty element Severity + kontrola zmeny hodnot v tabulce","1) V levém horním rohu rozkliknout selectBox a zvolit Severity
+2) Stisknout tlacitko ""+"" v novem panelu na leve strane
+3) V novem editacnim panelu na prave strane
+            zaskrtnout kolecko v prvnim radku, 
+            zvolit ""Name:"",
+            ""IS NOT"",
+           zadat text ""Test"",
+           stisknout tlacitko plus.
+4) Na novem radku 
+            zvolit ""NAME:"",
+           stisknout tlacitko plus.
+5) Na  radku s class 
+            zvolit ""MAJOR:"",
+          
+6) Od zaskrtnout volbu ""Exist""
+7) Stisknout tlacitko ""Edit""
+8) Kliknout mimo editacni panel
+9) Kliknout dvakrat do tabulky na radek s ""Id"" 0.","Z prave strany vyjede editacni panel
+Prvni radek obsahuje 
+           zaskrtnute kolecko
+           pole ""Name:"",
+           ""IS NOT"",
+           text ""Test"",
+ 
+Radek s ""class"" obsahuje  
+            u ""class:"" MAJOR
+            u ""super class""  MAJOR
+
+V tabulce se zmeni Exist na ""NO""","2019-04-02 12:27:46 UTC","2019-04-02 18:07:05 UTC"
+"2438485","Untitled","TC10","Vytvoreni_Relation","Vytvoreni a naplneni daty element Relation + kontrola zmeny hodnot v tabulce","1) V levém horním rohu rozkliknout selectBox a zvolit Relation
+2) Stisknout tlacitko ""+"" v novem panelu na leve strane
+3) V novem editacnim panelu na prave strane
+            zaskrtnout kolecko v prvnim radku, 
+            zvolit ""Name:"",
+            ""IS NOT"",
+           zadat text ""Test"",
+           stisknout tlacitko plus.
+4) Na novem radku 
+            zvolit ""NAME:"",
+           stisknout tlacitko plus.
+5) Na  radku s class 
+            zvolit ""BLOCKS:"",
+          
+6) Od zaskrtnout volbu ""Exist""
+7) Stisknout tlacitko ""Edit""
+8) Kliknout mimo editacni panel
+9) Kliknout dvakrat do tabulky na radek s ""Id"" 0.","Z prave strany vyjede editacni panel
+Prvni radek obsahuje 
+           zaskrtnute kolecko
+           pole ""Name:"",
+           ""IS NOT"",
+           text ""Test"",
+ 
+Radek s ""class"" obsahuje  
+            u ""class:"" BLOCKS
+            u ""super class"" UNFINISHED
+
+V tabulce se zmeni Exist na ""NO""","2019-04-02 12:47:20 UTC","2019-04-02 18:06:02 UTC"
+"2438488","Untitled","TC11","Vytvoreni_Resolution","Vytvoreni a naplneni daty element Resolution + kontrola zmeny hodnot v tabulce","1) V levém horním rohu rozkliknout selectBox a zvolit Resolution
+2) Stisknout tlacitko ""+"" v novem panelu na leve strane
+3) V novem editacnim panelu na prave strane
+            zaskrtnout kolecko v prvnim radku, 
+            zvolit ""Name:"",
+            ""IS NOT"",
+           zadat text ""Test"",
+           stisknout tlacitko plus.
+4) Na novem radku 
+            zvolit ""NAME:"",
+           stisknout tlacitko plus.
+5) Na  radku s class 
+            zvolit ""FIXED:"",
+          
+6) Od zaskrtnout volbu ""Exist""
+7) Stisknout tlacitko ""Edit""
+8) Kliknout mimo editacni panel
+9) Kliknout dvakrat do tabulky na radek s ""Id"" 0.","Z prave strany vyjede editacni panel
+Prvni radek obsahuje 
+           zaskrtnute kolecko
+           pole ""Name:"",
+           ""IS NOT"",
+           text ""Test"",
+ 
+Radek s ""class"" obsahuje  
+            u ""class:"" FIXTED
+            u ""super class"" FINISHED
+
+V tabulce se zmeni Exist na ""NO""","2019-04-02 12:49:09 UTC","2019-04-02 18:04:40 UTC"
+"2438489","Untitled","TC12","Vytvoreni_Status","Vytvoreni a naplneni daty element Status + kontrola zmeny hodnot v tabulce","1) V levém horním rohu rozkliknout selectBox a zvolit Status
+2) Stisknout tlacitko ""+"" v novem panelu na leve strane
+3) V novem editacnim panelu na prave strane
+            zaskrtnout kolecko v prvnim radku, 
+            zvolit ""Name:"",
+            ""IS NOT"",
+           zadat text ""Test"",
+           stisknout tlacitko plus.
+4) Na novem radku 
+            zvolit ""NAME:"",
+           stisknout tlacitko plus.
+5) Na  radku s class 
+            zvolit ""NEW:"",
+          
+6) Od zaskrtnout volbu ""Exist""
+7) Stisknout tlacitko ""Edit""
+8) Kliknout mimo editacni panel
+9) Kliknout dvakrat do tabulky na radek s ""Id"" 0.","Z prave strany vyjede editacni panel
+Prvni radek obsahuje 
+           zaskrtnute kolecko
+           pole ""Name:"",
+           ""IS NOT"",
+           text ""Test"",
+ 
+Radek s ""class"" obsahuje  
+            u ""class:"" NEW
+            u ""super class"" OPEN
+
+V tabulce se zmeni Exist na ""NO""","2019-04-02 12:50:48 UTC","2019-04-02 18:05:01 UTC"
+"2438491","Untitled","TC13","Vytvoreni_Type","Vytvoreni a naplneni daty element Type + kontrola zmeny hodnot v tabulce","1) V levém horním rohu rozkliknout selectBox a zvolit Type
+2) Stisknout tlacitko ""+"" v novem panelu na leve strane
+3) V novem editacnim panelu na prave strane
+            zaskrtnout kolecko v prvnim radku, 
+            zvolit ""Name:"",
+            ""IS NOT"",
+           zadat text ""Test"",
+           stisknout tlacitko plus.
+4) Na novem radku 
+            zvolit ""NAME:"".
+5) Na  radku s class 
+            zvolit ""FEATURE:"",
+          
+6) Od zaskrtnout volbu ""Exist""
+7) Stisknout tlacitko ""Edit""
+8) Kliknout mimo editacni panel
+9) Kliknout dvakrat do tabulky na radek s ""Id"" 0.","Z prave strany vyjede editacni panel
+Prvni radek obsahuje 
+           zaskrtnute kolecko
+           pole ""Name:"",
+           ""IS NOT"",
+           text ""Test"",
+ 
+Radek s ""class"" obsahuje  
+            u ""class:"" FEATURE
+            u ""super class"" CREATION
+
+V tabulce se zmeni Exist na ""NO""","2019-04-02 12:51:52 UTC","2019-04-02 18:05:22 UTC"
+"2438492","Untitled","TC14","Vytvoreni_Branch","Vytvoreni a naplneni daty element Branch + kontrola zmeny hodnot v tabulce","1) V levém horním rohu rozkliknout selectBox a zvolit Branch
+2) Stisknout tlacitko ""+"" v novem panelu na leve strane
+3) V novem editacnim panelu na prave strane
+            zaskrtnout kolecko v prvnim radku, 
+            zvolit ""Name:"",
+            ""IS NOT"",
+           zadat text ""Test"",
+           stisknout tlacitko plus.
+4) Na novem radku 
+            zvolit ""NAME:"",
+           stisknout tlacitko plus.
+5) Na radku s ""Main:""
+            zvolit ""YES"".     
+6) Od zaskrtnout volbu ""Exist""
+7) Stisknout tlacitko ""Edit""
+8) Kliknout mimo editacni panel
+9) Kliknout dvakrat do tabulky na radek s ""Id"" 0.","Z prave strany vyjede editacni panel
+Prvni radek obsahuje 
+           zaskrtnute kolecko
+           pole ""Name:"",
+           ""IS NOT"",
+           text ""Test"",
+ 
+Radek s ""Main:"" ma zaskrtnutou volbu ""YES"".  
+V tabulce se zmeni Exist na ""NO""","2019-04-02 12:54:22 UTC","2019-04-02 18:02:39 UTC"
+"2438668","Untitled","TC15","Vytvoreni_Branch","Vytvoreni a naplneni daty element Branch + kontrola zmeny hodnot v tabulce","1) V levém horním rohu rozkliknout selectBox a zvolit Branch
+2) Stisknout tlacitko ""+"" v novem panelu na leve strane
+3) V novem editacnim panelu na prave strane
+            zaskrtnout kolecko v prvnim radku, 
+            zvolit ""Name:"",
+            ""IS"",
+           zadat text ""Test"",
+4) Na radku s ""Main:""
+            zvolit ""NO"".     
+7) Stisknout tlacitko ""Edit""
+8) Kliknout mimo editacni panel
+9) Kliknout dvakrat do tabulky na radek s ""Id"" 0.","Z prave strany vyjede editacni panel
+Prvni radek obsahuje 
+           zaskrtnute kolecko
+           pole ""Name:"",
+           ""IS"",
+           text ""Test"",
+ 
+Radek s ""Main:"" ma zaskrtnutou volbu ""NO"".  
+V tabulce se zmeni Exist na ""YES""","2019-04-02 17:58:44 UTC","2019-04-02 18:00:43 UTC"
+"2438672","Untitled","TC16","Vytvoreni_VCSTag","Vytvoreni a naplneni daty element VCSTag + kontrola zmeny hodnot v tabulce","1) V levém horním rohu rozkliknout selectBox a zvolit VCSTag
+2) Stisknout tlacitko ""+"" v novem panelu na leve strane
+3) V novem editacnim panelu na prave strane
+            zaskrtnout kolecko v prvnim radku, 
+            zvolit ""Name:"",
+            ""IS NOT"",
+           zadat text ""Test"",
+           stisknout tlacitko plus.
+4) Na novem radku 
+           zaskrtnout kolecko, 
+            zvolit ""Description:"",
+            ""IS"",
+           zadat text ""DescriptionTest"",
+           stisknout tlacitko plus.
+5) Na novem radku 
+           zaskrtnout kolecko, 
+            zvolit ""Description:"",
+            ""NOT CONTAINS"",
+           zadat text ""DescriptionTest2"",
+           stisknout tlacitko plus.
+6) Na novem radku 
+            zvolit ""Description:"",
+           stisknout tlacitko plus.
+7) Na novem radku 
+            zvolit ""Name:"",
+           stisknout tlacitko plus.
+
+8) Od zaskrtnout volbu ""Exist""
+9) Stisknout tlacitko ""Edit""
+10) Kliknout mimo editacni panel
+11) Kliknout dvakrat do tabulky na radek s ""Id"" 0.","Z prave strany vyjede editacni panel
+Prvni radek obsahuje 
+           zaskrtnute kolecko
+           pole ""Name:"",
+           ""IS NOT"",
+           text ""Test"",
+ Druhy radek obsahuje
+            zaskrtnute kolecko
+            pole""Description:"",
+            ""IS"",
+           text ""DescriptionTest"",
+Treti radek obsahuje
+            zaskrtnute kolecko
+            pole""Description:"",
+            ""NOT CONTAINS"",
+           text ""DescriptionTest2"",
+V tabulce se zmeni Exist na ""NO""","2019-04-02 18:15:37 UTC","2019-04-02 18:37:07 UTC"
+"2438679","Untitled","TC17","Vytvoreni_Person","Vytvoreni a naplneni daty element Person + kontrola zmeny hodnot v tabulce","1) V levém horním rohu rozkliknout selectBox a zvolit Role Type
+2) Stisknout 3x tlačítko ""+""
+3) Na hornímj panelu kliknout na Person
+4) V novem editacnim panelu na prave strane
+            zaskrtnout kolecko v prvnim radku, 
+            zvolit ""Name:"",
+            ""IS NOT"",
+           zadat text ""Test"",
+           stisknout tlacitko plus.
+5) Na novem radku 
+            zvolit ""Name:"",
+           stisknout tlacitko plus.
+6) Na novem radku 
+           zaskrtnout kolecko, 
+            zvolit ""Role Type:"",
+            ""NOT CONTAINS"",
+           zvolit treti prvek,
+           stisknout tlacitko plus.
+
+7) Na novem radku 
+            zvolit ""Role Type:"",
+           stisknout tlacitko plus.
+
+8) Na novem radku 
+            zvolit ""Name:"",
+           stisknout tlacitko plus.
+9) Zadat hodnotu 12 do policka ""Instance count:""
+10) Od zaskrtnout volbu ""Exist""
+11) Stisknout tlacitko ""Edit""
+12) Kliknout mimo editacni panel
+13) Kliknout dvakrat prvek na platne s ""Id"" Person_000.","Z prave strany vyjede editacni panel
+Prvni radek obsahuje 
+           zaskrtnute kolecko
+           pole ""Name:"",
+           ""IS NOT"",
+           text ""Test"",
+ Druhy radek obsahuje
+            zaskrtnute kolecko
+            pole""Role Type:"",
+            ""NOT CONTAINS"",
+           zvoleny treti prvek.
+U ikonky na platne se zmeni cislovka na 12.
+Zmeni se barva inkonky na cervenou.","2019-04-02 18:39:04 UTC","2019-04-02 18:46:05 UTC"
+"2438684","Untitled","TC18","Vytvoreni_Configuration","Vytvoreni a naplneni daty element Configuration + kontrola zmeny instance na platne","1) V levém horním rohu rozkliknout selectBox a zvolit CPR
+2) Stisknout 3x tlačítko ""+""
+3) V levém horním rohu rozkliknout selectBox a zvolit Change
+4) Stisknout 3x tlačítko ""+""
+5) Na hornímj panelu kliknout na Configuration
+6) V novem editacnim panelu na prave strane
+            zaskrtnout kolecko v prvnim radku, 
+            zvolit ""Name:"",
+            ""IS NOT"",
+           zadat text ""Test"",
+           stisknout tlacitko plus.
+7) Na novem radku 
+            zvolit ""Name:"",
+           stisknout tlacitko plus.
+8) Na novem radku 
+           zaskrtnout kolecko, 
+            zvolit ""Date:"",
+            ""EQUEL"",
+           nastavit datum 23.3.2019,
+           stisknout tlacitko plus.
+
+9) Na novem radku 
+            zvolit ""Date:"",
+           stisknout tlacitko plus.
+
+10) Na novem radku 
+            zvolit ""Name:"",
+           stisknout tlacitko plus.
+11) Na novem radku 
+           zaskrtnout kolecko, 
+            zvolit ""CPRs:"",
+            ""IS"",
+           zvolit druhy a treti prvek,
+           stisknout tlacitko plus.
+12) Na novem radku 
+           zaskrtnout kolecko, 
+            zvolit ""Change:"",
+            ""IS NOT"",
+           zvolit druhy a treti prvek,
+           stisknout tlacitko plus.
+13) Na novem radku 
+            zvolit ""CPRs:"",
+           stisknout tlacitko plus.
+14) Na novem radku 
+            zvolit ""Change:"",
+           stisknout tlacitko plus.
+15) Zadat hodnotu 12 do policka ""Instance count:""
+16) Od zaskrtnout volbu ""Exist""
+17) Stisknout tlacitko ""Edit""
+18) Kliknout mimo editacni panel
+19) Kliknout dvakrat prvek na platne s ""Id"" Configuration_000.","Z prave strany vyjede editacni panel
+Prvni radek obsahuje 
+           zaskrtnute kolecko
+           pole ""Name:"",
+           ""IS NOT"",
+           text ""Test"",
+ Druhy radek obsahuje
+            zaskrtnute kolecko
+            pole""Date:"",
+            ""EQUEL"",
+           hodnotu 23.3.2019,
+ Treti radek obsahuje
+            zaskrtnute kolecko
+            pole""CPRs:"",
+            ""IS"",
+           zvoleny druhy a treti prvek.
+ Treti radek obsahuje
+            zaskrtnute kolecko
+            pole""Change:"",
+            ""IS NOT"",
+           zvoleny druhy a treti prvek.
+U ikonky na platne se zmeni cislovka na 12.
+Zmeni se barva inkonky na cervenou.","2019-04-02 18:49:18 UTC","2019-04-02 19:01:18 UTC"
+"2438686","Untitled","TC19","Vytvoreni_Commited_Configuration","Vytvoreni a naplneni daty element Commited_Configuration + kontrola zmeny instance na platne","1) Na hornímj panelu kliknout na Commited_Configuration
+2) V novem editacnim panelu na prave strane
+            zaskrtnout kolecko v prvnim radku, 
+            zvolit ""Name:"",
+            ""IS NOT"",
+           zadat text ""Test"",
+           stisknout tlacitko plus.
+3) Na novem radku 
+            zvolit ""Name:"",
+           stisknout tlacitko plus.
+4) Na novem radku 
+           zaskrtnout kolecko, 
+            zvolit ""Date:"",
+            ""BIGGER"",
+           nastavit datum 23.3.2019,
+           stisknout tlacitko plus.
+
+5) Na novem radku 
+            zvolit ""Date:"",
+           stisknout tlacitko plus.
+
+6) Na novem radku 
+            zvolit ""Name:"",
+           stisknout tlacitko plus.
+7) Zadat hodnotu 12 do policka ""Instance count:""
+8) Od zaskrtnout volbu ""Exist""
+9) Stisknout tlacitko ""Edit""
+10) Kliknout mimo editacni panel
+11) Kliknout dvakrat prvek na platne s ""Id"" Commited_Configuration_000.","Z prave strany vyjede editacni panel
+Prvni radek obsahuje 
+           zaskrtnute kolecko
+           pole ""Name:"",
+           ""IS NOT"",
+           text ""Test"",
+ Druhy radek obsahuje
+            zaskrtnute kolecko
+            pole""Date:"",
+            ""EQUEL"",
+           hodnotu 23.3.2019,
+U ikonky na platne se zmeni cislovka na 12.
+Zmeni se barva inkonky na cervenou.","2019-04-02 18:56:41 UTC","2019-04-02 19:00:03 UTC"
+"2438687","Untitled","TC20","Vytvoreni_Commit","Vytvoreni a naplneni daty element Commit + kontrola zmeny hodnot v tabulce","1) V levém horním rohu rozkliknout selectBox a zvolit ""Branch""
+2) Stisknout 3x tlačítko ""+""
+3) V levém horním rohu rozkliknout selectBox a zvolit ""VCSTag""
+4) Stisknout 3x tlačítko ""+""
+5) Na hornímj panelu kliknout na Commit
+6) V novem editacnim panelu na prave strane
+            zaskrtnout kolecko v prvnim radku, 
+            zvolit ""Name:"",
+            ""IS NOT"",
+           zadat text ""Test"",
+           stisknout tlacitko plus.
+7) Na novem radku 
+            zvolit ""Name:"",
+           stisknout tlacitko plus.
+8) Na novem radku 
+           zaskrtnout kolecko, 
+            zvolit ""VCSTag:"",
+            ""NOT CONTAINS"",
+           zvolit treti prvek,
+           stisknout tlacitko plus.
+9) Na novem radku 
+           zaskrtnout kolecko, 
+            zvolit ""Branch:"",
+            ""CONTAINS"",
+           zvolit treti prvek,
+           stisknout tlacitko plus.
+10) Na novem radku 
+            zvolit ""VCSTag:"",
+           stisknout tlacitko plus.
+
+11) Na novem radku 
+            zvolit ""Name:"",
+           stisknout tlacitko plus.
+12) Na novem radku 
+            zvolit ""Branch:"",
+           stisknout tlacitko plus.
+13) Zadat hodnotu 12 do policka ""Instance count:""
+14) Od zaskrtnout volbu ""Exist""
+15) Stisknout tlacitko ""Edit""
+16) Kliknout mimo editacni panel
+17) Kliknout dvakrat prvek na platne s ""Id"" Commit_000.","Z prave strany vyjede editacni panel
+Prvni radek obsahuje 
+           zaskrtnute kolecko
+           pole ""Name:"",
+           ""IS NOT"",
+           text ""Test"",
+ Druhy radek obsahuje
+            zaskrtnute kolecko
+            pole""VCSTag:"",
+            ""NOT CONTAINS"",
+           zvoleny treti prvek.
+ Treti radek obsahuje
+            zaskrtnute kolecko
+            pole""Branch:"",
+            ""CONTAINS"",
+           zvoleny treti prvek.
+U ikonky na platne se zmeni cislovka na 12.
+Do spodni casti ikonky je pridan text ""Test""
+Zmeni se barva inkonky na cervenou.","2019-04-02 19:01:56 UTC","2019-04-02 19:06:47 UTC"
+"2438688","Untitled","TC21","Vytvoreni_Artifact","Vytvoreni a naplneni daty element Artifact + kontrola zmeny instance na platne","5) Na hornímj panelu kliknout na Artifact
+6) V novem editacnim panelu na prave strane
+            zaskrtnout kolecko v prvnim radku, 
+            zvolit ""Name:"",
+            ""IS NOT"",
+           zadat text ""Test"",
+           stisknout tlacitko plus.
+7) Na novem radku 
+            zvolit ""Name:"",
+           stisknout tlacitko plus.
+4) Na novem radku
+           zaskrtnout kolecko,
+           zvolit ""Description:"",
+           ""IS"",
+          zadat text ""DescriptionTest"",
+          stisknout tlacitko plus.
+5) Na novem radku
+          zvolit ""Description:"",
+          stisknout tlacitko plus.
+6) Na novem radku
+          zaskrtnout kolecko,
+          zvolit ""Description:"",
+          ""NOT CONTAINS"",
+          zadat text ""DescriptionTest2"",
+8) Na novem radku 
+           zaskrtnout kolecko, 
+            zvolit ""Date:"",
+            ""EQUEL"",
+           nastavit datum 23.3.2019,
+           stisknout tlacitko plus.
+
+9) Na novem radku 
+            zvolit ""Date:"",
+           stisknout tlacitko plus.
+
+10) Na novem radku 
+            zvolit ""Name:"",
+           stisknout tlacitko plus.
+11) Na novem radku 
+           zaskrtnout kolecko, 
+            zvolit ""Type:"",
+            ""IS"",
+           zvolit FOLDER,
+           stisknout tlacitko plus.
+12) Na novem radku 
+            zvolit ""Type:"",
+15) Zadat hodnotu 12 do policka ""Instance count:""
+16) Od zaskrtnout volbu ""Exist""
+17) Stisknout tlacitko ""Edit""
+18) Kliknout mimo editacni panel
+19) Kliknout dvakrat prvek na platne s ""Id"" Artifact_000.","Z prave strany vyjede editacni panel
+Prvni radek obsahuje 
+           zaskrtnute kolecko
+           pole ""Name:"",
+           ""IS NOT"",
+           text ""Test"",
+Druhy radek obsahuje
+           zaskrtnute kolecko
+           pole ""Description:"",
+           ""IS"",
+           text ""DescriptionTest"",
+Treti radek obsahuje
+           zaskrtnute kolecko
+           pole""Description:"",
+           ""IS"",
+           text ""DescriptionTest2"",
+ Ctvrty radek obsahuje
+            zaskrtnute kolecko
+            pole""Date:"",
+            ""EQUEL"",
+           hodnotu 23.3.2019,
+ Paty radek obsahuje
+            zaskrtnute kolecko
+            pole""Type:"",
+            ""IS"",
+           zvoleny prvek FOLDER.
+
+U ikonky na platne se zmeni cislovka na 12.
+U ikonky na platne se ve spodni casti zmeni text na ""Test""
+Zmeni se barva inkonky na cervenou.","2019-04-02 19:07:30 UTC","2019-04-02 19:14:03 UTC"
+"2438690","Untitled","TC22","Vytvoreni_Project","Vytvoreni a naplneni daty Project","1) V levém horním rohu rozkliknout selectBox a zvolit Worku Unit
+2) Stisknout 3x tlačítko ""+""
+3) V levém horním rohu kliknout na tlacitko ""Project""
+4) V novem editacnim panelu na prave strane
+            zaskrtnout kolecko v prvnim radku, 
+            zvolit ""Name:"",
+            ""IS NOT"",
+           zadat text ""Test"",
+           stisknout tlacitko plus.
+5) Na novem radku 
+           zaskrtnout kolecko, 
+            zvolit ""Description:"",
+            ""IS"",
+           zadat text ""DescriptionTest"",
+           stisknout tlacitko plus.
+6) Na novem radku 
+           zaskrtnout kolecko, 
+            zvolit ""Created:"",
+            ""SMALLER"",
+           zvolit datum ""01.04.2019"",
+           stisknout tlacitko plus.
+7) Na novem radku 
+           zaskrtnout kolecko, 
+            zvolit ""End date:"",
+            ""BiGGER"",
+           zvolit datum ""01.08.2019"",
+           stisknout tlacitko plus.
+8) Na novem radku 
+           zaskrtnout kolecko, 
+            zvolit ""Worku Units:"",
+            ""NOT CONTAINS"",
+           zvolit druhy a treti prvek,
+           stisknout tlacitko plus.
+9) Na novem radku 
+            zvolit ""Work Unit:"",
+           stisknout tlacitko plus.
+10) Stisknout tlacitko ""Edit""
+11) Kliknout mimo editacni panel
+12) V levém horním rohu kliknout na tlacitko ""Project""","Z prave strany vyjede editacni panel
+Prvni radek obsahuje 
+           zaskrtnute kolecko
+           pole ""Name:"",
+           ""IS NOT"",
+           text ""Test"",
+          
+7) Druhy radek obsahuje
+            zaskrtnute kolecko
+            pole""Description:"",
+            ""IS"",
+           text ""DescriptionTest"",
+8) Treti radek obsahuje
+           zaskrtnute kolecko
+            ""Created:"",
+            ""SMALLER"",
+           datum ""01.04.2019"",
+9) Ctvrty radek obsahuje
+           zaskrtnute kolecko, 
+            ""End date:"",
+            ""BiGGER"",
+           datum ""01.08.2019"".
+10) Paty radek 
+           zaskrtnute kolecko, 
+            ""Worku Units:"",
+            ""NOT CONTAINS"",
+           zvoleny druhy a treti prvek,","2019-04-02 19:15:03 UTC","2019-04-02 19:19:49 UTC"
+"2438696","Untitled","TC23","Testovaci","","","","2019-04-02 19:20:31 UTC","2019-04-02 19:20:31 UTC"

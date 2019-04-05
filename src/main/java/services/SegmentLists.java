@@ -81,7 +81,7 @@ public class SegmentLists {
 
 
         VCSTagObservable = FXCollections.observableArrayList();
-        VCSTagObservable.add(new VCSTagTable("",  "",true, -1));
+        VCSTagObservable.add(new VCSTagTable("", true, -1));
 
 
         workUnitsObservable = FXCollections.observableArrayList();
@@ -89,24 +89,24 @@ public class SegmentLists {
 
 
         roleObservable = FXCollections.observableArrayList();
-        roleObservable.add(new PersonTable("","","",true,-1));
+        roleObservable.add(new PersonTable("",true,-1));
 
         branchObservable = FXCollections.observableArrayList();
         branchObservable.add(new BranchTable("","", false,true,-1));
 
 
         artifactObservable = FXCollections.observableArrayList();
-        artifactObservable.add(new ArtifactTable("","",true,-1));
+        artifactObservable.add(new ArtifactTable("",true,-1));
 
         changeObservable = FXCollections.observableArrayList();
-        changeObservable.add(new ChangeTable("","",true,-1));
+        changeObservable.add(new ChangeTable("",true,-1));
 
 
         criterionObservable = FXCollections.observableArrayList();
-        criterionObservable.add(new CriterionTable("","",true,-1));
+        criterionObservable.add(new CriterionTable("",true,-1));
 
         milestoneObservable = FXCollections.observableArrayList();
-        milestoneObservable.add(new MilestoneTable("","","",true,-1));
+        milestoneObservable.add(new MilestoneTable("",true,-1));
 
         CPRObservable = FXCollections.observableArrayList();
         CPRObservable.add(new CPRTable("", "", true,-1));

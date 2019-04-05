@@ -69,7 +69,7 @@ public class CanvasItemController {
             if (canvasController.isArrow()) {
 
                 linkControl.ArrowManipulation(canvasController.isStartArrow(), canvasController, item.getFormIdentificator(), segmentType, item.getTranslateX(),
-                        item.getTranslateY(), item.getLength(), item.getHeight());
+                        item.getTranslateY(), item.getLength(), item.getHeight(), false, -1);
             } else {
 
                 if (t.getClickCount() == 2) {
@@ -137,7 +137,6 @@ public class CanvasItemController {
      */
     public void repaintArrows(SegmentType segmentType, int itemIdentificator, double translateX, double translateY, double width, double height) {
         linkControl.repaintArrow(segmentType, itemIdentificator, translateX, translateY, width, height);
-
     }
 
     public void deleteItem(CanvasItem chooseCanvasItem) {

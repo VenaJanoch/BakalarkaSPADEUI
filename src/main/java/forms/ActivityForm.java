@@ -144,7 +144,7 @@ public class ActivityForm extends TableBasicForm implements ISegmentTableForm {
 		int id = formController.createTableItem(SegmentType.Activity);
 		String idName = id + "_" + nameST;
 
-		ActivityTable table = new ActivityTable(idName, "", true, id);
+		ActivityTable table = new ActivityTable(idName, true, id);
 
 		tableTV.getItems().add(table);
 		tableTV.sort();

@@ -118,13 +118,13 @@ public interface IFormDataController {
 
     void saveDataFromVCSTag(String nameST, VCSTagTable table);
 
-    void createArtifactToConfigurationRelation(int linkId, Integer startId, Integer endId);
+    void createArtifactToConfigurationRelation(int linkId, Integer startId, Integer endId, boolean isXML);
 
-    void createCommitToCommitedConfigurationRelation(int linkId, Integer startId, Integer endId);
+    void createCommitToCommitedConfigurationRelation(int linkId, Integer startId, Integer endId, boolean isXML);
 
-    void createCommitedConfigurationToConfigurationRelation(int linkId, Integer startId, Integer endId);
+    void createCommitedConfigurationToConfigurationRelation(int linkId, Integer startId, Integer endId, boolean isXML);
 
-    void createNewPersonToConfigurationRelation(int linkId, Integer startId, Integer endId);
+    void createNewPersonToConfigurationRelation(int linkId, Integer startId, Integer endId, boolean isXML);
 
-    void createNewPersonToArtifactRelation(int linkId, Integer startId, Integer endId);
+    void createNewPersonToArtifactRelation(int linkId, Integer startId, Integer endId, boolean isXML);
 }

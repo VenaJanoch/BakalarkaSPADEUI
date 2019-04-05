@@ -5,15 +5,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import SPADEPAC.Link;
 import graphics.ElementsLink;
 import graphics.NodeLink;
-import graphics.WorkUnitLink;
-import interfaces.IDeleteDataModel;
 import interfaces.IDeleteFormController;
 import javafx.geometry.Point2D;
 import model.DataManipulator;
-import model.DataModel;
 import model.IdentificatorCreater;
 import services.*;
 
@@ -64,21 +60,21 @@ public class LinkControl {
      * přídá ji do seznamu Rozhodne o počátečním a koncovém prvku
      */
     public void ArrowManipulation(boolean startArrow, CanvasController canvasController, int segmentIdAct, SegmentType segmentType,
-                                  double x, double y, double width, double height) {
+                                  double x, double y, double width, double height, boolean isXML, int id) {
 
         if (!startArrow) {
-
+            this.id = id;
             if (segmentControl(segmentType) == -1) { // Zvoleny prvek neni konfigurace muze byt zalozena relace
                 Alerts.showConfigurationAsStartElement();
             } else {
-                changeArtifactLink = createChangeArtifactLink(canvasController, segmentIdAct, x, y, width, height);
+                changeArtifactLink = createLink(canvasController, segmentIdAct, x, y, width, height, isXML);
             }
 
 
         } else {
             int operation = segmentControl(segmentType);
             if (operation < 10) {
-                finishLinkFromOperation(operation, segmentIdAct, x, y, height, canvasController);
+                    finishLinkFromOperation(operation, segmentIdAct, x, y, height, canvasController, isXML);
             } else {
                 startSegmentId = -1;
                 endSegmentId = -1;
@@ -103,27 +99,35 @@ public class LinkControl {
         }
     }
 
-    private void finishLinkFromOperation(int operation, int segmentIdAct, double x, double y, double height, CanvasController canvasController) {
+    private void finishLinkFromOperationWithOutCreateLink(int operation, double x, double y, double height, CanvasController canvasController) {
+        if (operation == 1) {
+                    } else if (operation == 2) {
+         } else if (operation == 3) {
+        } else if (operation == 5) {
+           } else if (operation == 4) {
+
+        }
+    }
+    private void finishLinkFromOperation(int operation, int segmentIdAct, double x, double y, double height, CanvasController canvasController, boolean isXML) {
         if (operation == 1) {
             endSegmentId = segmentIdAct;
-            formController.createCommitToCommitedConfigurationRelation(id, startSegmentId, endSegmentId);
+            formController.createCommitToCommitedConfigurationRelation(id, startSegmentId, endSegmentId, isXML);
             finisLink(x, y, height, canvasController, LinkType.Commit_Commited_Configuration);
         } else if (operation == 2) {
             endSegmentId = segmentIdAct;
-            formController.createCommitedConfigurationToConfigurationRelation(id, startSegmentId, endSegmentId);
+            formController.createCommitedConfigurationToConfigurationRelation(id, startSegmentId, endSegmentId, isXML);
             finisLink(x, y, height, canvasController, LinkType.Commited_Configuration_Configuration);
         } else if (operation == 3) {
             endSegmentId = segmentIdAct;
-            formController.createArtifactToConfigurationRelation(id, startSegmentId, endSegmentId);
+            formController.createArtifactToConfigurationRelation(id, startSegmentId, endSegmentId, isXML);
             finisLink(x, y, height, canvasController, LinkType.Artifact_Configuration);
         } else if (operation == 5) {
             endSegmentId = segmentIdAct;
-            formController.createRoleToConfigurationRelation(id, startSegmentId, endSegmentId);
+            formController.createRoleToConfigurationRelation(id, startSegmentId, endSegmentId, isXML);
             finisLink(x, y, height, canvasController, LinkType.Person_Configuration);
         } else if (operation == 4) {
             endSegmentId = segmentIdAct;
-
-            formController.createRoleToArtifactRelation(id ,startSegmentId, endSegmentId);
+            formController.createRoleToArtifactRelation(id ,startSegmentId, endSegmentId, isXML);
             finisLink(x, y, height, canvasController, LinkType.Person_Artifact);
         }
     }
@@ -132,18 +136,20 @@ public class LinkControl {
     private void finisLink(double x, double y, double height, CanvasController canvasController, LinkType linkType) {
         changeArtifactLink.setEndPoint(new Point2D(x, y + (height / 2)));
         canvasController.setStartArrow(false);
-        NodeLink link = segmentLists.getArrow(id);
-        link.setLinkType(linkType);
-        link.setIdsToController(startSegmentId, endSegmentId);
+        changeArtifactLink.setLinkType(linkType);
+        changeArtifactLink.setIdsToController(startSegmentId, endSegmentId);
+        changeArtifactLink.setVisible(true);
         startLinkIdMap.get(startSegmentId).add(id);
         endLinkIdMap.get(endSegmentId).add(id);
         startSegmentId = -1;
         endSegmentId = -1;
     }
 
-    private ElementsLink createChangeArtifactLink(CanvasController canvasController, int startSegmentIdAct, double x, double y, double width, double height) {
+    private ElementsLink createLink(CanvasController canvasController, int startSegmentIdAct, double x, double y, double width, double height, boolean isXML) {
 
-        id = identificatorCreater.createLineID();
+        if(!isXML){
+            id = identificatorCreater.createLineID();
+        }
         ElementsLink link = new ElementsLink(id, this, canvasController, manipulationController);
 
         canvasController.addLinkToCanvas(link);

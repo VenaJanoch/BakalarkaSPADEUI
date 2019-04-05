@@ -16,9 +16,9 @@ public class VCSTagTable extends BasicTable {
 
 	 *
 	 */
-	public VCSTagTable(String name, String description,  boolean exist, int id) {
+	public VCSTagTable(String name,  boolean exist, int id) {
 		super(name, exist, id);
-		this.description = new SimpleStringProperty(description);
+	//	this.description = new SimpleStringProperty(description);
 	}
 	
 	/**

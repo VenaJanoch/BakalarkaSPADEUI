@@ -146,7 +146,7 @@ public class ArtifactForm extends TableBasicForm implements ISegmentTableForm {
         int id = formController.createTableItem(SegmentType.Artifact);
         String idName = id + "_" + nameST;
 
-        ArtifactTable table = new ArtifactTable(idName, "", true, id);
+        ArtifactTable table = new ArtifactTable(idName, true, id);
         tableTV.getItems().add(table);
         tableTV.sort();
 

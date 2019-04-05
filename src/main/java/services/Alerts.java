@@ -178,26 +178,6 @@ public class Alerts {
         return showDeleteItemCascadeAlert(deleteList);
     }
 
-    public static ObservableList<TagTable> showDeleteItemTagAlert(TableView<TagTable> table, ObservableList selection) {
-
-        List<TagTable> list = null;
-        Alert alert = new Alert(AlertType.CONFIRMATION);
-        alert.setTitle("Deleting selection");
-        alert.setHeaderText("Do you want to delete selected elements?");
-        alert.setGraphic(new ListView<CriterionTable>(selection));
-
-        Optional<ButtonType> result = alert.showAndWait();
-        if (result.get() == ButtonType.OK) {
-
-            list = table.getSelectionModel().getSelectedItems();
-
-            table.getItems().removeAll(selection);
-
-            table.getSelectionModel().clearSelection();
-        }
-
-        return selection;
-    }
 
     /**
      * Alert s infomací o zavření formuláře bez uložení a možnostmi uložení

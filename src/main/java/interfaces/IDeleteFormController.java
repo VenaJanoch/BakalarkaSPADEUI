@@ -5,8 +5,6 @@ import javafx.scene.control.TableView;
 import services.SegmentType;
 import tables.BasicTable;
 import tables.ClassTable;
-import tables.ConfigTable;
-import tables.TagTable;
 
 import java.util.ArrayList;
 
@@ -24,7 +22,6 @@ import java.util.ArrayList;
       boolean deleteCommitedConfigurationWithDialog(int formIndex);
       void deleteTypeWithDialog(ArrayList<BasicTable> selection, TableView view);
       void deleteStatusWithDialog(ArrayList<BasicTable> selection, TableView view);
-      void deleteTag(int configId, ObservableList<TagTable> list);
       void deleteRoleTypeWithDialog(ArrayList<BasicTable> selection, TableView tableView);
       boolean deleteRoleWithDialog(int indexForm);
       void deleteRelationWithDialog(ArrayList<BasicTable> list, TableView<ClassTable> view);

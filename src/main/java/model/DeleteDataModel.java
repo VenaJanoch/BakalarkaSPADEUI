@@ -110,7 +110,7 @@ public class DeleteDataModel implements IDeleteDataModel {
 
         int linkIndexInProject = dataModel.getLinkIndexInProject(arrowId);
         project.getLinks().remove(linkIndexInProject);
-        Artifact artifact = dataModel.getArtifact(arrowId);
+        Artifact artifact = dataModel.getArtifact(artifactID);
         List<Integer> list = artifact.getAuthorIndex();
         removePersonFromList(list, personId);
     }
@@ -159,7 +159,7 @@ public class DeleteDataModel implements IDeleteDataModel {
 
         int linkIndexInProject = dataModel.getLinkIndexInProject(arrowId);
         project.getLinks().remove(linkIndexInProject);
-        Configuration configuration = dataModel.getConfiguration(arrowId);
+        Configuration configuration = dataModel.getConfiguration(configurationID);
         List<Integer> list = configuration.getAuthorIndex();
         removeArtifactFromList(list, artifactId);
 
@@ -168,8 +168,9 @@ public class DeleteDataModel implements IDeleteDataModel {
     public void removePersonConfigurationLink(int arrowId, int personId, int configurationID) {
 
         int linkIndexInProject = dataModel.getLinkIndexInProject(arrowId);
-        project.getLinks().remove(linkIndexInProject);
-        Configuration configuration = dataModel.getConfiguration(arrowId);
+        List link = dataModel.getProject().getLinks();
+        link.remove(linkIndexInProject);
+        Configuration configuration = dataModel.getConfiguration(configurationID);
         List<Integer> list = configuration.getAuthorIndex();
         removePersonFromList(list, personId);
 
@@ -181,7 +182,7 @@ public class DeleteDataModel implements IDeleteDataModel {
 
         int linkIndexInProject = dataModel.getLinkIndexInProject(arrowId);
         project.getLinks().remove(linkIndexInProject);
-        Configuration configuration = dataModel.getConfiguration(arrowId);
+        Configuration configuration = dataModel.getConfiguration(configurationID);
         List<Integer> list = configuration.getCommitedConfiguration();
         removeCommitedConfigurationFromList(list, commitedConfigurationId);
 
@@ -191,7 +192,7 @@ public class DeleteDataModel implements IDeleteDataModel {
 
         int linkIndexInProject = dataModel.getLinkIndexInProject(arrowId);
         project.getLinks().remove(linkIndexInProject);
-        CommitedConfiguration configuration = dataModel.getCommitedConfiguration(arrowId);
+        CommitedConfiguration configuration = dataModel.getCommitedConfiguration(commitedConfigurationId);
         List<Integer> list = configuration.getCommit();
         removeCommitFromList(list, commitedConfigurationId);
 

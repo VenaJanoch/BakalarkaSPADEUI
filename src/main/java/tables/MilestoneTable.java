@@ -17,15 +17,11 @@ public class MilestoneTable extends BasicTable {
 	 * 
 	 * @param name
 	 *            jméno milestone
-	 * @param description
-	 *            description
-	 * @param criterium
-	 *            criterio array
 	 */
-	public MilestoneTable(String name, String description, String criterium,  boolean exist, int id) {
+	public MilestoneTable(String name,  boolean exist, int id) {
 		super(name, exist, id);
-		this.criterion = new SimpleStringProperty(criterium);
-		this.description = new SimpleStringProperty(description);
+//		this.criterion = new SimpleStringProperty(criterium);
+//		this.description = new SimpleStringProperty(description);
 	}
 	
 	/**

@@ -11,7 +11,6 @@ import model.IdentificatorCreater;
 import services.*;
 import tables.BasicTable;
 import tables.ClassTable;
-import tables.TagTable;
 
 import java.util.ArrayList;
 
@@ -299,14 +298,6 @@ public class DeleteFormController implements IDeleteFormController {
 
         editDataModel.updateItemList(SegmentType.Work_Unit, SegmentType.Status, new ArrayList<>(statusListObservable));
         mapperTableToObject.deleteFromMap( mapperTableToObject.getWUStatusMapper(), indexList);
-    }
-
-    public void deleteTag(int configId, ObservableList<TagTable> list) {
-
-        ArrayList indexList = deleteControl.deleteTag(list);
-        deleteDataModel.removeTag(indexList, configId);
-        segmentLists.removeItemFromObservableList(SegmentType.Tag, indexList);
-
     }
 
     public void deleteRoleTypeWithDialog(ArrayList<BasicTable> selection, TableView tableView) {

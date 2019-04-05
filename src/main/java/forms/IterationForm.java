@@ -152,7 +152,7 @@ public class IterationForm extends TableBasicForm implements ISegmentTableForm {
 		int id = formController.createTableItem(SegmentType.Iteration);
 		String idName = id + "_" + nameST;
 
-		IterationTable table = new IterationTable(idName, "", true, id);
+		IterationTable table = new IterationTable(idName, true, id);
 
 		tableTV.getItems().add(table);
 		tableTV.sort();

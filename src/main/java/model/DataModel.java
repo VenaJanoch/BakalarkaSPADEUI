@@ -493,7 +493,6 @@ public class DataModel {
         phase.getEndDateIndicator().addAll(endDateIndicator);
         phase.getMilestoneIndicator().addAll(milestoneIndicator);
         phase.getWorkUnitsIndicator().addAll(workUnitIndicators);
-        phase.getWorkUnits().clear();
         phase.setExist(exist);
     }
 

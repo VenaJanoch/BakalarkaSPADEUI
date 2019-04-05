@@ -37,7 +37,7 @@ public class WindowController {
         this.mainWindow = new MainWindow(this, drawersStack, drawerPanelController, selectItemController, applicationController);
         setSceneToPrimaryStage(mainWindow.getScene(), mainWindow.getTitle());
         applicationController.getFormFillController().setProjectCanvasController(mainWindow.getCanvasController());
-        primaryStage.setMaximized(true);
+
         }
 
     private void initApplication(){
@@ -64,6 +64,8 @@ public class WindowController {
     public void setSceneToPrimaryStage(Scene scene, String title){
         this.primaryStage.setTitle(title);
         this.primaryStage.setScene(scene);
+        primaryStage.setMaximized(false);
+        primaryStage.setMaximized(true);
 
     }
 
@@ -81,7 +83,7 @@ public class WindowController {
         this.mainWindow = new MainWindow(this, drawersStack, drawerPanelController, selectItemController, applicationController);
         setSceneToPrimaryStage(mainWindow.getScene(), mainWindow.getTitle());
         applicationController.getFormFillController().setProjectCanvasController(mainWindow.getCanvasController());
-
+        primaryStage.setMaximized(true);
     }
 
     public void openProccesXMLAction() {

@@ -146,7 +146,7 @@ public class CriterionForm extends TableBasicForm implements ISegmentTableForm {
 		int id = formController.createTableItem(SegmentType.Criterion);
 		String idName = id + "_" + nameST;
 
-		CriterionTable criterion = new CriterionTable(idName, descriptionST, true, id);
+		CriterionTable criterion = new CriterionTable(idName,true, id);
 		tableTV.getItems().add(criterion);
 		tableTV.sort();
 		formDataController.saveDataFromCriterionForm(nameST, criterion);

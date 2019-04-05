@@ -86,6 +86,9 @@ public class SaveDataModel implements ISaveDataModel {
         Phase phase = objF.createPhase();
         phase.setId(id);
         phase.setExist(true);
+        ArrayList list = new ArrayList();
+        list.add("");
+        phase.getName().addAll(list);
         project.getPhases().add(phase);
     }
 
@@ -93,6 +96,9 @@ public class SaveDataModel implements ISaveDataModel {
         Iteration iteration = objF.createIteration();
         iteration.setId(id);
         iteration.setExist(true);
+        ArrayList list = new ArrayList();
+        list.add("");
+        iteration.getName().addAll(list);
         project.getIterations().add(iteration);
     }
 
@@ -100,6 +106,9 @@ public class SaveDataModel implements ISaveDataModel {
         Activity activity = objF.createActivity();
         activity.setId(id);
         activity.setExist(true);
+        ArrayList list = new ArrayList();
+        list.add("");
+        activity.getName().addAll(list);
         project.getActivities().add(activity);
 
     }
@@ -108,6 +117,9 @@ public class SaveDataModel implements ISaveDataModel {
         WorkUnit workUnit = objF.createWorkUnit();
         workUnit.setId(id);
         workUnit.setExist(true);
+        ArrayList list = new ArrayList();
+        list.add("");
+        workUnit.getName().addAll(list);
         project.getWorkUnits().add(workUnit);
     }
 
@@ -116,6 +128,9 @@ public class SaveDataModel implements ISaveDataModel {
         configuration.setId(id);
         configuration.setCount(1);
         configuration.setExist(true);
+        ArrayList list = new ArrayList();
+        list.add("");
+        configuration.getName().addAll(list);
         project.getConfiguration().add(configuration);
     }
 
@@ -123,6 +138,9 @@ public class SaveDataModel implements ISaveDataModel {
         Change change = objF.createChange();
         change.setId(id);
         change.setExist(true);
+        ArrayList list = new ArrayList();
+        list.add("");
+        change.getName().addAll(list);
         project.getChanges().add(change);
     }
 
@@ -131,6 +149,9 @@ public class SaveDataModel implements ISaveDataModel {
         artifact.setId(id);
         artifact.setCount(1);
         artifact.setExist(true);
+        ArrayList list = new ArrayList();
+        list.add("");
+        artifact.getName().addAll(list);
         project.getArtifacts().add(artifact);
     }
 
@@ -138,6 +159,9 @@ public class SaveDataModel implements ISaveDataModel {
         Branch branch = objF.createBranch();
         branch.setId(id);
         branch.setExist(true);
+        ArrayList list = new ArrayList();
+        list.add("");
+        branch.getName().addAll(list);
         project.getBranches().add(branch);
     }
 
@@ -146,6 +170,9 @@ public class SaveDataModel implements ISaveDataModel {
         ConfigPersonRelation cpr = objF.createConfigPersonRelation();
         cpr.setExist(true);
         cpr.setId(id);
+        ArrayList list = new ArrayList();
+        list.add("");
+        cpr.getName().addAll(list);
         project.getCpr().add(cpr);
     }
 
@@ -154,6 +181,9 @@ public class SaveDataModel implements ISaveDataModel {
         Criterion criterion = objF.createCriterion();
         criterion.setExist(true);
         criterion.setId(id);
+        ArrayList list = new ArrayList();
+        list.add("");
+        criterion.getName().addAll(list);
         project.getCriterions().add(criterion);
     }
 
@@ -162,6 +192,9 @@ public class SaveDataModel implements ISaveDataModel {
         Priority priority = objF.createPriority();
         priority.setExist(true);
         priority.setId(id);
+        ArrayList list = new ArrayList();
+        list.add("");
+        priority.getName().addAll(list);
         project.getPriority().add(priority);
     }
 
@@ -170,6 +203,9 @@ public class SaveDataModel implements ISaveDataModel {
         Severity severity = objF.createSeverity();
         severity.setId(id);
         severity.setExist(true);
+        ArrayList list = new ArrayList();
+        list.add("");
+        severity.getName().addAll(list);
         project.getSeverity().add(severity);
     }
 
@@ -178,6 +214,9 @@ public class SaveDataModel implements ISaveDataModel {
         Relation relation = objF.createRelation();
         relation.setId(id);
        relation.setExist(true);
+        ArrayList list = new ArrayList();
+        list.add("");
+        relation.getName().addAll(list);
         project.getRelation().add(relation);
     }
 
@@ -186,6 +225,9 @@ public class SaveDataModel implements ISaveDataModel {
         Resolution resolution = objF.createResolution();
         resolution.setId(id);
         resolution.setExist(true);
+        ArrayList list = new ArrayList();
+        list.add("");
+        resolution.getName().addAll(list);
         project.getResolution().add(resolution);
 
     }
@@ -196,6 +238,9 @@ public class SaveDataModel implements ISaveDataModel {
         role.setId(id);
         role.setCount(1);
         role.setExist(true);
+        ArrayList list = new ArrayList();
+        list.add("");
+        role.getName().addAll(list);
         project.getRoles().add(role);
     }
 
@@ -204,6 +249,9 @@ public class SaveDataModel implements ISaveDataModel {
         Milestone milestone = objF.createMilestone();
         milestone.setId(id);
         milestone.setExist(true);
+        ArrayList list = new ArrayList();
+        list.add("");
+        milestone.getName().addAll(list);
         project.getMilestones().add(milestone);
     }
 
@@ -212,7 +260,9 @@ public class SaveDataModel implements ISaveDataModel {
         RoleType roleType = objF.createRoleType();
         roleType.setId(id);
         roleType.setExist(true);
-   //     dataModel.addDataToRoleType(roleType, nameForManipulator, classST, superST);
+        ArrayList list = new ArrayList();
+        list.add("");
+        roleType.getName().addAll(list);
         project.getRoleType().add(roleType);
     }
 
@@ -226,6 +276,9 @@ public class SaveDataModel implements ISaveDataModel {
         Status status = objF.createStatus();
         status.setId(id);
         status.setExist(true);
+        ArrayList list = new ArrayList();
+        list.add("");
+        status.getName().addAll(list);
   //      dataModel.addDataToStatus(status, nameForManipulator, classST, superST);
         project.getStatus().add(status);
     }
@@ -235,6 +288,9 @@ public class SaveDataModel implements ISaveDataModel {
         Type type = objF.createType();
         type.setId(id);
         type.setExist(true);
+        ArrayList list = new ArrayList();
+        list.add("");
+        type.getName().addAll(list);
   //      dataModel.addDataToType(type, nameForManipulator, classST, superST);
         project.getTypes().add(type);
     }
@@ -244,6 +300,9 @@ public class SaveDataModel implements ISaveDataModel {
         VCSTag vcsTag = objF.createVCSTag();
         vcsTag.setId(id);
         vcsTag.setExist(true);
+        ArrayList list = new ArrayList();
+        list.add("");
+        vcsTag.getName().addAll(list);
         project.getVcsTag().add(vcsTag);
     }
 
@@ -254,6 +313,9 @@ public class SaveDataModel implements ISaveDataModel {
         commit.setCount(1);
         commit.getNameIndicator().add(0);
         commit.setExist(true);
+        ArrayList list = new ArrayList();
+        list.add("");
+        commit.getName().addAll(list);
         project.getCommit().add(commit);
     }
 
@@ -264,6 +326,9 @@ public class SaveDataModel implements ISaveDataModel {
         commitedConfiguration.setCount(1);
         commitedConfiguration.setExist(true);
         commitedConfiguration.getNameIndicator().add(0);
+        ArrayList list = new ArrayList();
+        list.add("");
+        commitedConfiguration.getName().addAll(list);
         project.getCommitConfiguration().add(commitedConfiguration);
     }
 }

@@ -18,9 +18,9 @@ public class RoleTypeTable extends ClassTable {
      * @param classType class
      * @param superType super class
      */
-    public RoleTypeTable(String name, String description, String classType, boolean exist, String superType, int id) {
+    public RoleTypeTable(String name, String classType, boolean exist, String superType, int id) {
         super(name, classType, superType, exist, id);
-        this.description = new SimpleStringProperty(description);
+      //  this.description = new SimpleStringProperty(description);
         }
 
 

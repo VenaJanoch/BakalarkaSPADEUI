@@ -131,22 +131,6 @@ public class DeleteControl {
     }
 
 
-    /**
-     * Vymazání informací o elementu Tag a smazání ze seznamů
-     *
-     * @param tables
-     */
-    public ArrayList deleteTag(ObservableList<TagTable> tables) {
-        ArrayList indexForDelete = new ArrayList();
-
-        for (TagTable table : tables) {
-
-            int index = lists.getPriorityTypeObservable().indexOf(table.getTag());
-            indexForDelete.add(index);
-        }
-        return indexForDelete;
-    }
-
     public ArrayList<Integer> findIndicesForDelete(ArrayList<BasicTable> tables) {
         ArrayList idForDelete = new ArrayList();
 

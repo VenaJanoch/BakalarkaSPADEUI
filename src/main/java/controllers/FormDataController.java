@@ -191,34 +191,44 @@ public class FormDataController implements IFormDataController {
        lists.getVCSTag().add(table);
     }
 
-    public void createArtifactToConfigurationRelation(int linkId, Integer startId, Integer endId){
-        saveDataModel.createNewArtifacToConfigurationRelation(linkId, startId, endId);
+    public void createArtifactToConfigurationRelation(int linkId, Integer startId, Integer endId, boolean isXML){
+        if (!isXML){
+            saveDataModel.createNewArtifacToConfigurationRelation(linkId, startId, endId);
+        }
         mapperTableToObject.mapTableToObjects(SegmentType.Configuration, SegmentType.Artifact, startId, new TableToObjectInstanc( String.valueOf(endId), startId, SegmentType.Configuration));
     }
 
 
-    public void createCommitToCommitedConfigurationRelation(int linkId, Integer startId, Integer endId){
-        saveDataModel.createCommitToCommitedConfigurationRelation(linkId, startId, endId);
+    public void createCommitToCommitedConfigurationRelation(int linkId, Integer startId, Integer endId, boolean isXML){
+        if (!isXML) {
+            saveDataModel.createCommitToCommitedConfigurationRelation(linkId, startId, endId);
+        }
         mapperTableToObject.mapTableToObjects(SegmentType.Committed_Configuration, null, startId, new TableToObjectInstanc( String.valueOf(endId), startId, SegmentType.Committed_Configuration));
     }
 
-    public void createCommitedConfigurationToConfigurationRelation(int linkId, Integer startId, Integer endId){
-        saveDataModel.createCommitedConfigurationToConfigurationRelation( linkId, startId, endId);
+    public void createCommitedConfigurationToConfigurationRelation(int linkId, Integer startId, Integer endId, boolean isXML){
+        if (!isXML) {
+            saveDataModel.createCommitedConfigurationToConfigurationRelation(linkId, startId, endId);
+        }
         mapperTableToObject.mapTableToObjects(SegmentType.Configuration, SegmentType.Committed_Configuration, startId,
                 new TableToObjectInstanc( String.valueOf(endId), startId, SegmentType.Configuration));
     }
 
 
 
-    public void createNewPersonToConfigurationRelation(int linkId, Integer startId, Integer endId){
-        saveDataModel.createNewPersonToConfigurationRelation(linkId, startId, endId);
+    public void createNewPersonToConfigurationRelation(int linkId, Integer startId, Integer endId, boolean isXML){
+        if (!isXML) {
+            saveDataModel.createNewPersonToConfigurationRelation(linkId, startId, endId);
+        }
         mapperTableToObject.mapTableToObjects(SegmentType.Configuration, SegmentType.Person, startId,
                 new TableToObjectInstanc( String.valueOf(endId), startId, SegmentType.Configuration));
     }
 
 
-    public void createNewPersonToArtifactRelation(int linkId, Integer startId, Integer endId){
-        saveDataModel.createNewPersonToArtifactRelation(linkId, startId, endId);
+    public void createNewPersonToArtifactRelation(int linkId, Integer startId, Integer endId, boolean isXML){
+        if (!isXML) {
+            saveDataModel.createNewPersonToArtifactRelation(linkId, startId, endId);
+        }
         mapperTableToObject.mapTableToObjects(SegmentType.Artifact, SegmentType.Person, startId,
                 new TableToObjectInstanc( String.valueOf(endId), startId, SegmentType.Artifact));
     }
@@ -365,8 +375,8 @@ public class FormDataController implements IFormDataController {
 
     public List[] getPersonStringData(int id) {
         List[] data = dataManipulator.getRoleData(id);
-        ArrayList<Integer> typeIndices = dataPreparer.prepareIndiciesForForm(data[2]);
-        data[2] = typeIndices;
+        ArrayList<Integer> typeIndices = dataPreparer.prepareIndiciesForForm(data[1]);
+        data[1] = typeIndices;
         return data ;
     }
 
@@ -448,7 +458,7 @@ public class FormDataController implements IFormDataController {
                 return null;
         }
 
-        return dataPreparer.prepareIndicesForManipulator(indexList);
+        return dataPreparer.prepareIndicesForForm(indexList);
 
     }
 
@@ -532,16 +542,19 @@ public class FormDataController implements IFormDataController {
 
     @Override
     public ArrayList<ArrayList<Integer>> getCPRFromConfiguration(int configId) {
-        return dataManipulator.getCPRFromConfiguration(configId);
+        ArrayList<ArrayList<Integer>> list = dataPreparer.prepareIndicesForForm(dataManipulator.getCPRFromConfiguration(configId));
+        return list ;
     }
 
     @Override
     public ArrayList<ArrayList<Integer>> getBranchesFromCommit(int configId) {
-        return dataManipulator.getBranchfromCommit(configId);
+        ArrayList<ArrayList<Integer>> list = dataPreparer.prepareIndicesForForm(dataManipulator.getBranchfromCommit(configId));
+        return list;
     }
     @Override
     public ArrayList<ArrayList<Integer>> getChangesFromConfiguration(int configId) {
-        return dataManipulator.getChangeFromConfiguration(configId);
+        ArrayList<ArrayList<Integer>> list = dataPreparer.prepareIndicesForForm(dataManipulator.getChangeFromConfiguration(configId));
+        return list;
     }
 
     @Override

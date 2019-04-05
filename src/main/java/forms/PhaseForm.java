@@ -145,7 +145,7 @@ public class PhaseForm extends TableBasicForm implements ISegmentTableForm {
         int id = formController.createTableItem(SegmentType.Phase);
         String idName = id + "_" + nameST;
 
-        PhaseTable table = new PhaseTable(idName, "", "", true, id);
+        PhaseTable table = new PhaseTable(idName,true, id);
         tableTV.getItems().add(table);
         tableTV.sort();
 

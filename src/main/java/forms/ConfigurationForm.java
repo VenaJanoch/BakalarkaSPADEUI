@@ -65,8 +65,6 @@ public class ConfigurationForm extends DateBasicForm implements ISegmentForm {
     private ArrayList<Integer> branchIndex;
     private ObservableList<Integer> cprIndex;
 
-    private TagForm tagForm;
-
     private ObservableList<BasicTable> cprList;
     private ObservableList<BasicTable> branchList;
     private ObservableList<BasicTable> roleList;
@@ -84,7 +82,6 @@ public class ConfigurationForm extends DateBasicForm implements ISegmentForm {
         this.roleList = roleList;
         this.indexForm = indexForm;
 
-        this.tagForm = new TagForm(formController, formDataController, editFormController, deleteFormController, SegmentType.Tag, indexForm);
         isNew = true;
         isRelease = true;
 
@@ -255,14 +252,6 @@ public class ConfigurationForm extends DateBasicForm implements ISegmentForm {
     }
 
     /*** Getrs and Setrs ***/
-
-    public TagForm getTagForm() {
-        return tagForm;
-    }
-
-    public void setTagForm(TagForm tagForm) {
-        this.tagForm = tagForm;
-    }
 
     public boolean isRelease() {
         return isRelease;

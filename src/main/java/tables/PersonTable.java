@@ -16,13 +16,11 @@ public class PersonTable extends BasicTable {
      * Zinicializuje globální proměnné
      *
      * @param name Jméno typu role
-     * @param desc popis description
-     * @param type typ role
      */
-    public PersonTable(String name, String desc, String type,  boolean exist, int id) {
+    public PersonTable(String name,  boolean exist, int id) {
         super(name, exist, id);
-        this.type = new SimpleStringProperty(type);
-        this.description = new SimpleStringProperty(desc);
+     //   this.type = new SimpleStringProperty(type);
+     //   this.description = new SimpleStringProperty(desc);
     }
 
     /**

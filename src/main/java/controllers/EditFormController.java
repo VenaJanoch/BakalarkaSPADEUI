@@ -107,14 +107,6 @@ public class EditFormController implements IEditFormController {
         segmentLists.updateListItem(SegmentType.Priority, classTable.getId(), classTable);
     }
 
-    public void editDataFromTag(String tag, TagTable tagTable, int configFormId, int id) {
-        tagTable.setName(id + "_" + tag);
-        int configurationId = identificatorCreater.getConfigurationId(configFormId);
-        dataManipulator.editTagInConfiguration(tag, configurationId, id);
-        tagTable.setTag(tag);
-        tagTable.setName(tag);
-    }
-
     public void editDataFromRoleType(ArrayList<String> name, ArrayList<Integer> nameIndicators,
                                      ArrayList<String> description, ArrayList<Integer> descriptionIndicators, ArrayList<Integer> classListIndex,
                                      ArrayList<Integer> superClassListIndex, ArrayList<String> classList, ArrayList<String> superClassList,

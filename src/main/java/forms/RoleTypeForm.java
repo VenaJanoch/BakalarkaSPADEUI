@@ -159,7 +159,7 @@ public class RoleTypeForm extends TableBasicForm implements ISegmentTableForm {
 		int id = formController.createTableItem(SegmentType.Role_Type);
 		String idName = id + "_" + nameST;
 
-		RoleTypeTable table = new RoleTypeTable(idName, "", "", true, "",  id);
+		RoleTypeTable table = new RoleTypeTable(idName, "", true, "",  id);
 		tableTV.getItems().add(table);
 		tableTV.sort();
 		formDataController.saveDataFromRoleTypeForm(nameST, table);

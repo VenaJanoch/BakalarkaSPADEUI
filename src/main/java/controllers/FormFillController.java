@@ -4,6 +4,7 @@ import SPADEPAC.*;
 import abstractform.BasicForm;
 import forms.*;
 import graphics.CanvasItem;
+import javafx.geometry.Point2D;
 import model.DataManipulator;
 import model.DataModel;
 import model.IdentificatorCreater;
@@ -94,7 +95,6 @@ public class FormFillController {
     private void fillConfigurationForm(int segmentId, int formId, CanvasController canvasController){
 
         Configuration configuration = dataModel.getConfiguration(segmentId);
-        ConfigurationForm form = (ConfigurationForm) forms.get(formId);
         String name = configuration.getName().get(0);
         canvasController.addCanvasItemFromExistData(SegmentType.Configuration, formId, name, configuration.getCoordinates().getXCoordinate(),
                 configuration.getCoordinates().getYCoordinate(), configuration.getCount(), configuration.isExist());
@@ -121,8 +121,7 @@ public class FormFillController {
             
             int id = formController.createTableItem(SegmentType.Change);
             String idName = segment.getName().get(0);
-            String description = segment.getDescription().get(0);
-            ChangeTable table = new ChangeTable(idName, description, segment.isExist(), id);
+            ChangeTable table = new ChangeTable(idName, segment.isExist(), id);
 
             form.getTableTV().getItems().add(table);
             segmentLists.getChangeObservable().add(table);
@@ -213,10 +212,10 @@ public class FormFillController {
         for (Artifact artifact : project.getArtifacts()){
             
             String name = artifact.getName().get(0);
-            String description = artifact.getDescription().get(0);
+           // String description = artifact.getDescription().get(0);
 
             int formId =  identificatorCreater.setDataToArtifactMappers(artifact.getId());
-            formController.createNewArtifactFormWithoutCreateId(name, description, artifact.isExist(), artifact.getId(), formId);
+            formController.createNewArtifactFormWithoutCreateId(name, artifact.isExist(), artifact.getId(), formId);
             fillArtifactForm(artifact.getId(), formId, projectCanvasController);
             }
     }
@@ -381,10 +380,9 @@ public class FormFillController {
             formController.createTableItem(SegmentType.Role_Type);
 
             String name = segment.getName().get(0);
-            String description = segment.getDescription().get(0);
             String classType = segment.getRoleTypeClass().get(0);
             String superClassType = segment.getRoleTypeSuperClass().get(0);
-            RoleTypeTable table = new RoleTypeTable(name, description, classType, segment.isExist(), superClassType, segment.getId());
+            RoleTypeTable table = new RoleTypeTable(name, classType, segment.isExist(), superClassType, segment.getId());
             TableView<RoleTypeTable> roleType = roleTypeForm.getTableTV();
             roleType.getItems().add(table);
             segmentLists.getRoleTypeObservable().add(table);
@@ -398,7 +396,7 @@ public class FormFillController {
             int id = milestone.getId();
             formController.createTableItem(SegmentType.Milestone);
             String idName = milestone.getName().get(0);
-            MilestoneTable milestoneTable = new MilestoneTable(idName, milestone.getDescription().get(0), "", milestone.isExist(), id);
+            MilestoneTable milestoneTable = new MilestoneTable(idName, milestone.isExist(), id);
             milestoneForm.getTableTV().getItems().add(milestoneTable);
             segmentLists.getMilestoneObservable().add(milestoneTable);
         }
@@ -410,7 +408,7 @@ public class FormFillController {
         for (Criterion criterion : project.getCriterions()){
             formController.createTableItem(SegmentType.Criterion);
             TableView<CriterionTable> criterionView =  criterionForm.getTableTV();
-            CriterionTable criterionTable = new CriterionTable(criterion.getName().get(0), "", criterion.isExist(), criterion.getId());
+            CriterionTable criterionTable = new CriterionTable(criterion.getName().get(0), criterion.isExist(), criterion.getId());
             criterionView.getItems().add(criterionTable);
            segmentLists.getCriterionObservable().add(criterionTable);
         }
@@ -424,7 +422,7 @@ public class FormFillController {
         for (Phase phase : project.getPhases()){
             identificatorCreater.createPhaseID();
             TableView<PhaseTable> phaseView =  phaseForm.getTableTV();
-            PhaseTable phaseTable = new PhaseTable(phase.getName().get(0), "", "", phase.isExist(), phase.getId());
+            PhaseTable phaseTable = new PhaseTable(phase.getName().get(0), phase.isExist(), phase.getId());
             phaseView.getItems().add(phaseTable);
         }
 
@@ -435,7 +433,7 @@ public class FormFillController {
         for (Activity activity : project.getActivities()){
             identificatorCreater.createActivityID();
             TableView<ActivityTable> activityView =  activityForm.getTableTV();
-            ActivityTable activityTable = new ActivityTable(activity.getName().get(0), "", activity.isExist(), activity.getId());
+            ActivityTable activityTable = new ActivityTable(activity.getName().get(0), activity.isExist(), activity.getId());
             activityView.getItems().add(activityTable);
         }
 
@@ -446,7 +444,7 @@ public class FormFillController {
         for (Iteration iteration : project.getIterations()){
             identificatorCreater.createIterationID();
             TableView<IterationTable> iterationView =  iterationForm.getTableTV();
-            IterationTable iterationTable = new IterationTable(iteration.getName().get(0), "", iteration.isExist(), iteration.getId());
+            IterationTable iterationTable = new IterationTable(iteration.getName().get(0), iteration.isExist(), iteration.getId());
             iterationView.getItems().add(iterationTable);
         }
 
@@ -468,43 +466,121 @@ public class FormFillController {
         for (VCSTag tag : project.getVcsTag()){
             identificatorCreater.createVCSTagID();
             TableView<VCSTagTable> tagView =  tagForm.getTableTV();
-            VCSTagTable tagTable = new VCSTagTable(tag.getName().get(0), "", tag.isExist(), tag.getId());
+            VCSTagTable tagTable = new VCSTagTable(tag.getName().get(0), tag.isExist(), tag.getId());
             tagView.getItems().add(tagTable);
         }
 
     }
+    
+    private void repaintLink(CanvasItem item, int formId){
+
+        double x = item.getTranslateX();
+        double y = item.getTranslateY();
+        double width = item.getLength();
+        double height = item.getHeight();
+
+        linkControl.repaintArrow(SegmentType.Artifact, formId, x+1, y+1, width, height );
+        Point2D point = new Point2D(x, y);
+        item.setPosition(point);
+    }
 
     public void fillLink(){
-        for(int i = 0; i < project.getLinks().size(); i++){
+        for(int i = 0; i < project.getLinks().size(); i++) {
             Link link = project.getLinks().get(i);
+            int linkId = link.getId();
+            int startId;
+            int endId;
+            int startFormId;
+            int endFormId;
+            CanvasItem item;
+            CanvasItem endItem;
+            switch (link.getType()){
+                case PERSON_ARTIFACT:
+                    startId = link.getStartIndex();
+                    startFormId = identificatorCreater.getRoleSegmentIndexToFormMaper().get(startId);
+                    item = projectCanvasController.getListOfItemOnCanvas().get(startFormId);
+                    linkControl.ArrowManipulation(false, projectCanvasController, item.getFormIdentificator(), SegmentType.Person, item.getTranslateX(),
+                            item.getTranslateY(), item.getLength(), item.getHeight(), true, linkId);
+                    repaintLink(item, startFormId);
+                   endId = link.getEndIndex();
+                   endFormId = identificatorCreater.getArtifactSegmentIdToFormIndexMaper().get(endId);
+                    endItem = projectCanvasController.getListOfItemOnCanvas().get(endFormId);
+                    
+                    linkControl.ArrowManipulation(true, projectCanvasController, endItem.getFormIdentificator(), SegmentType.Artifact,
+                            endItem.getTranslateX(), endItem.getTranslateY(), endItem.getLength(), endItem.getHeight(),
+                            true, linkId);
+                    repaintLink(endItem, endFormId);
+                    identificatorCreater.setLinkId(linkId);
+                    break;
+                case PERSON_CONFIGURATION:
+                    startId = link.getStartIndex();
+                    startFormId = identificatorCreater.getRoleSegmentIndexToFormMaper().get(startId);
+                    item = projectCanvasController.getListOfItemOnCanvas().get(startFormId);
+                    linkControl.ArrowManipulation(false, projectCanvasController, item.getFormIdentificator(), SegmentType.Person, item.getTranslateX(),
+                            item.getTranslateY(), item.getLength(), item.getHeight(), true, linkId);
+                    repaintLink(item, startFormId);
+                    endId = link.getEndIndex();
+                    endFormId = identificatorCreater.getConfigurationFormIndex(endId);
+                   endItem = projectCanvasController.getListOfItemOnCanvas().get(endFormId);
 
-            if (link.getLeftUnitIndex() == null){
-                int startIndexItem = identificatorCreater.getRoleSegmentIndexToFormMaper().get(link.getChangeIndex());
-                int endIndexItem = identificatorCreater.getArtifactSegmentIdToFormIndexMaper().get(link.getArtifactIndex());
+                    linkControl.ArrowManipulation(true, projectCanvasController, endItem.getFormIdentificator(), SegmentType.Configuration,
+                            endItem.getTranslateX(), endItem.getTranslateY(), endItem.getLength(), endItem.getHeight(),
+                            true, linkId);
+                    repaintLink(endItem, endFormId);
+                    identificatorCreater.setLinkId(linkId);
+                    break;
+                case ARTIFACT_CONFIGURATION:
+                    startId = link.getStartIndex();
+                    startFormId = identificatorCreater.getArtifactIndex(startId);
+                    item = projectCanvasController.getListOfItemOnCanvas().get(startFormId);
+                    linkControl.ArrowManipulation(false, projectCanvasController, item.getFormIdentificator(), SegmentType.Artifact, item.getTranslateX(),
+                            item.getTranslateY(), item.getLength(), item.getHeight(), true, linkId);
+                    repaintLink(item, startFormId);
+                    endId = link.getEndIndex();
+                    endFormId = identificatorCreater.getConfigurationFormIndex(endId);
+                    endItem = projectCanvasController.getListOfItemOnCanvas().get(endFormId);
 
-                CanvasItem startItem = canvasItemList.get(startIndexItem);
-                CanvasItem endItem = canvasItemList.get(endIndexItem);
-                CanvasController canvasController = startItem.getCanvasController();
+                    linkControl.ArrowManipulation(true, projectCanvasController, endItem.getFormIdentificator(), SegmentType.Configuration,
+                            endItem.getTranslateX(), endItem.getTranslateY(), endItem.getLength(), endItem.getHeight(),
+                            true, linkId);
+                    repaintLink(endItem, endFormId);
+                    identificatorCreater.setLinkId(linkId);
+                    break;
+                case COMMITED_CONFIGURATION_CONFIGURATION:
+                    startId = link.getStartIndex();
+                    startFormId = identificatorCreater.getCommitedConfigurationFormIndex(startId);
+                    item = projectCanvasController.getListOfItemOnCanvas().get(startFormId);
+                    linkControl.ArrowManipulation(false, projectCanvasController, item.getFormIdentificator(), SegmentType.Committed_Configuration, item.getTranslateX(),
+                            item.getTranslateY(), item.getLength(), item.getHeight(), true, linkId);
+                    repaintLink(item, startFormId);
+                    endId = link.getEndIndex();
+                    endFormId = identificatorCreater.getConfigurationFormIndex(endId);
+                    endItem = projectCanvasController.getListOfItemOnCanvas().get(endFormId);
 
-                //      linkControl.ArrowManipulation(true, false, canvasController, startIndexItem, SegmentType.Change, startItem.getTranslateX()
-                //              ,startItem.getTranslateY(), startItem.getWidth(), startItem.getHeight() );
-                //      linkControl.ArrowManipulation(true, true, canvasController, endIndexItem, SegmentType.Artifact, endItem.getTranslateX()
-                //              ,endItem.getTranslateY(), endItem.getWidth(), endItem.getHeight() );
+                    linkControl.ArrowManipulation(true, projectCanvasController, endItem.getFormIdentificator(), SegmentType.Configuration,
+                            endItem.getTranslateX(), endItem.getTranslateY(), endItem.getLength(), endItem.getHeight(),
+                            true, linkId);
+                    repaintLink(endItem, endFormId);
+                    identificatorCreater.setLinkId(linkId);
+                    break;
+                case COMMIT_COMMITED_CONFIGURATION:
+                    startId = link.getStartIndex();
+                    startFormId = identificatorCreater.getCommitFormIndex(startId);
+                    item = projectCanvasController.getListOfItemOnCanvas().get(startFormId);
+                    linkControl.ArrowManipulation(false, projectCanvasController, item.getFormIdentificator(), SegmentType.Commit, item.getTranslateX(),
+                            item.getTranslateY(), item.getLength(), item.getHeight(), true, linkId);
+                    repaintLink(item, startFormId);
+                    endId = link.getEndIndex();
+                    endFormId = identificatorCreater.getCommitedConfigurationFormIndex(endId);
+                    endItem = projectCanvasController.getListOfItemOnCanvas().get(endFormId);
 
-            }else{
-                int startIndexItem = identificatorCreater.getWorkUnitSegmentIdToFormIndexMaper().get(link.getLeftUnitIndex());
-                int endIndexItem = identificatorCreater.getWorkUnitSegmentIdToFormIndexMaper().get(link.getRightUnitIndex());
-
-                CanvasItem startItem = canvasItemList.get(startIndexItem);
-                CanvasItem endItem = canvasItemList.get(endIndexItem);
-                CanvasController canvasController = startItem.getCanvasController();
-
-                linkControl.ArrowManipulation(false, canvasController, startIndexItem, SegmentType.Work_Unit, startItem.getTranslateX()
-                        ,startItem.getTranslateY(), startItem.getWidth(), startItem.getHeight() );
-                //      linkControl.ArrowManipulation( true, canvasController, endIndexItem, SegmentType.Work_Unit, endItem.getTranslateX()
-                //              ,endItem.getTranslateY(), endItem.getWidth(), endItem.getHeight(), dataPreparer.prepareIndexForForm(link.getRelationIndex()));
+                    linkControl.ArrowManipulation(true, projectCanvasController, endItem.getFormIdentificator(), SegmentType.Committed_Configuration,
+                            endItem.getTranslateX(), endItem.getTranslateY(), endItem.getLength(), endItem.getHeight(),
+                            true, linkId);
+                    repaintLink(endItem, endFormId);
+                    identificatorCreater.setLinkId(linkId);
+                    break;
             }
-
         }
 
     }

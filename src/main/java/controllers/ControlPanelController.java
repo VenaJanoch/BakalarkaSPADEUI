@@ -65,14 +65,15 @@ public class ControlPanelController {
     public void setValueTextField(ControlPanel controlPanel, ObservableList<ControlPanelLineObject> lineList,
                                   ParamType type, List<String>[] values, List<Integer> indicatorList, int index) {
         int i = 0;
-        for (String value : values[index]){
-            createNewLineWithExist(controlPanel, lineList);
-            ControlPanelLine line = controlPanelLines.get(controlPanelLines.size() -1);
-            line.fillTextLine(value, indicatorList.get(i), type );
-            i++;
-            incrementLineCounter();
+        if (indicatorList.size() != 0) {
+            for (String value : values[index]) {
+                createNewLineWithExist(controlPanel, lineList);
+                ControlPanelLine line = controlPanelLines.get(controlPanelLines.size() - 1);
+                line.fillTextLine(value, indicatorList.get(i), type);
+                i++;
+                incrementLineCounter();
+            }
         }
-
     }
 
     public void setValueRelationBox(ControlPanel controlPanel, ObservableList<ControlPanelLineObject> lineList,
@@ -90,14 +91,15 @@ public class ControlPanelController {
     public void setValueComboBox(ControlPanel controlPanel, ObservableList<ControlPanelLineObject> lineList,
                                  ParamType type, ArrayList<Integer> values, List<Integer> indicatorList) {
         int i = 0;
-        for ( int value : values){
-            createNewLineWithExist(controlPanel, lineList);
-            ControlPanelLine line = controlPanelLines.get(controlPanelLines.size() -1);
-                line.fillComboBoxLine(value, indicatorList.get(i), type );
-            i++;
-            incrementLineCounter();
+        if (indicatorList.size() != 0 ) {
+            for (int value : values) {
+                createNewLineWithExist(controlPanel, lineList);
+                ControlPanelLine line = controlPanelLines.get(controlPanelLines.size() - 1);
+                line.fillComboBoxLine(value, indicatorList.get(i), type);
+                i++;
+                incrementLineCounter();
+            }
         }
-
     }
 
     public void setValueDatePicker(ControlPanel controlPanel, ObservableList<ControlPanelLineObject> lineList,
@@ -315,9 +317,11 @@ public class ControlPanelController {
     public ArrayList<ArrayList<Integer>> processCheckComboBoxLines(ParamType type, ArrayList<Integer> indicators){
         ArrayList<ArrayList<Integer>> list = new ArrayList<>();
         for ( ControlPanelLine line : controlPanelLines){
-            if (line.getType() == type){
-                list.add(new ArrayList<>(line.getCheckComboBoxItem().getChoosedIndicies()));
-                indicators.add(line.getCheckComboBoxItem().getIndicatorIndex());
+            if ( line.getExitButton().isSelected()) {
+                if (line.getType() == type) {
+                    list.add(new ArrayList<>(line.getCheckComboBoxItem().getChoosedIndicies()));
+                    indicators.add(line.getCheckComboBoxItem().getIndicatorIndex());
+                }
             }
         }
         return list;

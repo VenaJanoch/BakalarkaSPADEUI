@@ -17,10 +17,10 @@ public class PhaseTable extends BasicTable {
 
 	 *
 	 */
-	public PhaseTable(String name, String milestone, String configuration,  boolean exist, int id) {
+	public PhaseTable(String name,  boolean exist, int id) {
 		super(name, exist, id);
-		this.milestone = new SimpleStringProperty(milestone);
-		this.configuration = new SimpleStringProperty(configuration);
+//		this.milestone = new SimpleStringProperty(milestone);
+//		this.configuration = new SimpleStringProperty(configuration);
 	}
 	
 	/**

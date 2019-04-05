@@ -279,7 +279,7 @@ public class IdentificatorCreater {
     }
 
     public Integer getArtifactIndex(int formIndex) {
-        return getArtifactIndexToIdMaper().get(formIndex);
+        return artifactSegmentIdToFormIndexMaper.get(formIndex);
     }
 
     public Integer getWorkUnitIndex(int startSegmentId) {
@@ -340,4 +340,7 @@ public class IdentificatorCreater {
     }
 
 
+    public void setLinkId(Integer id) {
+        linesID = id;
+    }
 }

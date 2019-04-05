@@ -16,9 +16,9 @@ public class ActivityTable extends BasicTable {
 
 	 *
 	 */
-	public ActivityTable(String name, String description, boolean exist, int id) {
+	public ActivityTable(String name, boolean exist, int id) {
 		super(name, exist, id);
-		this.description = new SimpleStringProperty(description);
+		//this.description = new SimpleStringProperty(description);
 	}
 	
 	/**
