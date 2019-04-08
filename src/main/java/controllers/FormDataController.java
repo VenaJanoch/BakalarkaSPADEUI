@@ -466,18 +466,22 @@ public class FormDataController implements IFormDataController {
     public List[] getIterationStringData(int id) {
         List[] data = dataManipulator.getIterationStringData(id);
         ArrayList indices1 = dataPreparer.prepareIndiciesForForm(data[2]);
-        ArrayList date1 = dataPreparer.prepareIndiciesForForm(data[3]);
+        ArrayList date1 = dataPreparer.prepareDateForForm(data[3]);
         ArrayList date2 = dataPreparer.prepareDateForForm(data[4]);
         data[2] = indices1;
         data[3] = date1;
         data[4] = date2;
 
-        return dataManipulator.getIterationStringData(id);
+        return data;
     }
 
     @Override
     public List[] getActivityStringData(int id) {
-        return dataManipulator.getActivityStringData(id);
+
+        List[] data = dataManipulator.getActivityStringData(id);
+        ArrayList date1 = dataPreparer.prepareDateForForm(data[6]);
+        data[6] = date1;
+        return data;
     }
 
     @Override

@@ -472,8 +472,7 @@ public class DataManipulator{
             data[2] = relation.getRelationSuperClassIndex();
         }
 
-
-        if(relation.getNameIndicator().size() != 0){
+        if(relation.getNameIndicator() != null){
             data[3] = relation.getNameIndicator();
         }
 
@@ -761,7 +760,7 @@ public class DataManipulator{
     }
 
     public List[] getActivityStringData(int id) {
-        List[] data = new List[6];
+        List[] data = new List[8];
         Activity activity = dataModel.getActivity(id);;
         if(activity.getName() != null){
             data[0] = activity.getName();
@@ -786,6 +785,14 @@ public class DataManipulator{
         List list = new ArrayList();
         list.add(activity.isExist());
         data[5] = list;
+
+        if(activity.getEndDate() != null){
+            data[6] = activity.getEndDate();
+        }
+
+        if(activity.getEndDateIndicator() != null){
+            data[4] = activity.getEndDateIndicator();
+        }
 
         return data;
     }

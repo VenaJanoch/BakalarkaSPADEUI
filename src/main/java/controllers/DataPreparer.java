@@ -175,7 +175,7 @@ public class DataPreparer {
         return values;
     }
 
-    public ArrayList<LocalDate> prepareDateForForm(List<XMLGregorianCalendar> dateXML) {
+    public static ArrayList<LocalDate> prepareDateForForm(List<XMLGregorianCalendar> dateXML) {
         ArrayList<LocalDate> values = new ArrayList();
         for (XMLGregorianCalendar date : dateXML){
             values.add(convertDateFromXML(date));
@@ -190,7 +190,7 @@ public class DataPreparer {
      * @param xmlDate XMLGregorianCalendar
      * @return LocalDate
      */
-    public LocalDate convertDateFromXML(XMLGregorianCalendar xmlDate) {
+    public static LocalDate convertDateFromXML(XMLGregorianCalendar xmlDate) {
 
         if (xmlDate == null) {
             return null;

@@ -3,6 +3,7 @@ package controllers;
 import XML.ProcessGenerator;
 import com.jfoenix.controls.JFXDrawer;
 import com.jfoenix.controls.JFXDrawersStack;
+import graphics.LogInWindow;
 import graphics.MainWindow;
 import javafx.application.Platform;
 import javafx.scene.Scene;
@@ -26,6 +27,7 @@ public class WindowController {
     private DrawerPanelController drawerPanelController;
     private SelectItemController selectItemController;
     private ApplicationController applicationController;
+    private LogInWindow logInWindow;
     private Alerts alerts;
     private MainWindow mainWindow;
     private JFXDrawer leftDrawer;
@@ -57,6 +59,7 @@ public class WindowController {
         this.applicationController = new ApplicationController(dataModel, identificatorCreater, segmentLists, drawerPanelController, selectItemController );
         selectItemController.setFormController(applicationController.getFormController());
         this.formFillController = applicationController.getFormFillController();
+        this.logInWindow = new LogInWindow(applicationController.getDatabaseController());
 
 
     }
@@ -117,10 +120,14 @@ public class WindowController {
         }
     }
 
+    public void showConfirmWindow() {
+        logInWindow.show();
+    }
 
     /********* Getrs and Setrs *************/
     public boolean isClose() {
         return isClose;
     }
+
 
 }

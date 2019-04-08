@@ -20,6 +20,8 @@ public class ApplicationController {
     private DeleteControl deleteControl;
     private DeleteFormController deleteFormController;
     private EditFormController editFormController;
+    private DatabaseController databaseController;
+    private VerifyController verifyController;
 
 
     public ApplicationController(DataModel dataModel, IdentificatorCreater identificatorCreater, SegmentLists segmentLists,
@@ -40,6 +42,8 @@ public class ApplicationController {
        formController.initBasicForms(formDataController, editFormController, deleteFormController);
         formController.setFormFillController(formFillController);
         this.manipulationController.setFormFillController(formFillController);
+        this.verifyController = new VerifyController(dataModel);
+        this.databaseController = new DatabaseController(verifyController);
     }
 
     /** Getrs and Setrs **/
@@ -61,5 +65,9 @@ public class ApplicationController {
 
     public EditFormController getEditFormController() {
         return editFormController;
+    }
+
+    public DatabaseController getDatabaseController() {
+        return databaseController;
     }
 }

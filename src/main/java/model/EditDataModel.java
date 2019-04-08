@@ -69,9 +69,10 @@ public class EditDataModel implements IEditDataModel {
 
     public void editDataInActivity(ArrayList<String> nameForManipulator, ArrayList<String> descriptionForManipulator,
                                    ArrayList<ArrayList<Integer>> setOfItemOnCanvas, ArrayList<Integer> nameIndicators,  ArrayList<Integer> descIndicators,
-                                   ArrayList<Integer> workUnitIndicators, boolean exist, int id) {
+                                   ArrayList<Integer> workUnitIndicators,  ArrayList<LocalDate> endDate,  ArrayList<Integer> endDateIndicators, boolean exist, int id) {
         Activity activity = dataModel.getActivity(id);
-        dataModel.addDataToActivity(activity, nameForManipulator, descriptionForManipulator, setOfItemOnCanvas, nameIndicators,  descIndicators,  workUnitIndicators, exist);
+        dataModel.addDataToActivity(activity, nameForManipulator, descriptionForManipulator, setOfItemOnCanvas, nameIndicators,  descIndicators,
+                workUnitIndicators, endDate, endDateIndicators, exist);
 
     }
 

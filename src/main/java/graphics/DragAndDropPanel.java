@@ -28,6 +28,7 @@ public class DragAndDropPanel extends BorderPane {
     private DragAndDropItemPanel items;
     private Button[] addButtons;
     private Button projectButton;
+    private Button projectConfirmButton;
     private HBox buttonBox;
 
     private FormController formController;
@@ -51,6 +52,7 @@ public class DragAndDropPanel extends BorderPane {
         this.selectItemController = selectItemController;
 
         this.projectButton = new Button("Project");
+        this.projectConfirmButton = new Button("Confirm project");
         this.setPrefWidth(Constans.width);
         this.buttonBox = new HBox(5);
         this.setPadding(new Insets(10));
@@ -75,6 +77,8 @@ public class DragAndDropPanel extends BorderPane {
 
         });
 
+        projectConfirmButton.setOnAction(event -> windowController.showConfirmWindow());
+
 
 
         //createButtons();
@@ -87,6 +91,7 @@ public class DragAndDropPanel extends BorderPane {
         this.setLeft(projectButton);
         this.setCenter(items);
         this.setBottom(formBox);
+        this.setRight(projectConfirmButton);
         this.setAlignment(formBox, Pos.BOTTOM_LEFT);
 
     }

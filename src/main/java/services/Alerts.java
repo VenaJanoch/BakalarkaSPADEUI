@@ -242,7 +242,25 @@ public class Alerts {
         alert.showAndWait();
     }
 
+    public static void SQLConnectionError() {
+        Alert alert = new Alert(AlertType.ERROR);
+        alert.setTitle("Connection Error");
+        alert.setHeaderText("Conntection to Database is not ");
+        alert.setContentText("Try again");
+        Optional<ButtonType> result = alert.showAndWait();
 
+
+    }
+
+    public static void SQLLogError() {
+        Alert alert = new Alert(AlertType.ERROR);
+        alert.setTitle("Log Error");
+        alert.setHeaderText("Your name or password is bad");
+        alert.setContentText("Try again");
+        Optional<ButtonType> result = alert.showAndWait();
+
+
+    }
 
 
     /**

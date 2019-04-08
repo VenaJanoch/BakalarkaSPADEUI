@@ -45,7 +45,6 @@ public class DataModel {
     public int getPhaseIndexInProject(int id) {
         List<Phase> items = project.getPhases();
         for (int i = 0; i < items.size(); i++) {
-
             if (items.get(i).getId() == id) {
                 return i;
             }
@@ -580,17 +579,19 @@ public class DataModel {
 
     public void addDataToActivity(Activity activity, List<String> nameForManipulator, ArrayList<String> descriptionForManipulator,
                                   ArrayList<ArrayList<Integer>> setOfItemOnCanvas, ArrayList<Integer> nameIndicators,
-                                  ArrayList<Integer> descIndicators,  ArrayList<Integer> workUnitIndicators, boolean exist) {
+                                  ArrayList<Integer> descIndicators,  ArrayList<Integer> workUnitIndicators,  ArrayList<LocalDate> endDate,  ArrayList<Integer> endDateIndicators, boolean exist) {
         
         clearDataInActivity(activity);
         activity.getDescription().addAll(descriptionForManipulator);
         activity.getName().addAll(nameForManipulator);
+        activity.getEndDate().addAll(convertDate(endDate));
         for (List<Integer> list : setOfItemOnCanvas){
             activity.getWorkUnits().add(addWorkUnitList(list));
         }
         activity.getNameIndicator().addAll(nameIndicators);
         activity.getDescriptionIndicator().addAll(descIndicators);
         activity.getWorkUnitsIndicator().addAll(workUnitIndicators);
+        activity.getEndDateIndicator().addAll(endDateIndicators);
         activity.setExist(exist);
     }
 
@@ -601,6 +602,8 @@ public class DataModel {
         activity.getDescription().clear();
         activity.getWorkUnits().clear();
         activity.getDescriptionIndicator().clear();
+        activity.getEndDateIndicator().clear();
+        activity.getEndDate().clear();
     }
 
 

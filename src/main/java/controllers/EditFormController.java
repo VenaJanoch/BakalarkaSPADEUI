@@ -286,7 +286,7 @@ public class EditFormController implements IEditFormController {
         ArrayList<Integer> configIdForManipulator = dataPreparer.prepareIndexForManipulator(confIndex);
         ArrayList<ArrayList<Integer>> workUnitsForManipulator = dataPreparer.prepareIndicesForManipulator(workUnitIndexList);
 
-       dataManipulator.editDataInIteration(nameForManipulator, startDate1, endDate1, descriptionForManipulator, configIdForManipulator,
+       dataManipulator.editDataInIteration(nameForManipulator, endDate1, startDate1, descriptionForManipulator, configIdForManipulator,
                workUnitsForManipulator, workUnitIndicators, nameIndicator, endDateIndicator, startDateIndicator, descIndicator, confIndicator, exist, id);
 
         String iterationName = dataPreparer.createTableItemIdName(id, nameForManipulator.get(0));
@@ -318,13 +318,16 @@ public class EditFormController implements IEditFormController {
 
     @Override
     public void editDataFromActivity(ArrayList<String> name, ArrayList<String> description,  ArrayList<ArrayList<Integer>> workUnits,
-                                     ArrayList<Integer> nameIndicators,  ArrayList<Integer> descIndicators,  ArrayList<Integer> workUnitIndicators, ActivityTable activityTable, boolean exist, int id) {
+                                     ArrayList<Integer> nameIndicators,  ArrayList<Integer> descIndicators,  ArrayList<Integer> workUnitIndicators,
+                                     ArrayList<LocalDate> endDate,  ArrayList<Integer> endDateIndicators, ActivityTable activityTable, boolean exist, int id) {
         ArrayList<String> nameForManipulator = InputController.fillNameTextMapper(name);
         ArrayList<String> descriptionForManipulator = InputController.fillTextMapper(description);
 
         ArrayList<ArrayList<Integer>> workUnitsForManipulator = dataPreparer.prepareIndicesForManipulator(workUnits);
+        ArrayList<LocalDate> endDate1 = InputController.checkDate(endDate);
+
         dataManipulator.editDataInActivity(nameForManipulator, descriptionForManipulator, workUnitsForManipulator,
-                nameIndicators,  descIndicators, workUnitIndicators, exist, id);
+                nameIndicators,  descIndicators, workUnitIndicators, endDate1, endDateIndicators, exist, id);
 
         activityTable.setExist(exist);
         ArrayList<Integer> workUnitIndicies = dataModel.getWorkUnitIds(workUnitsForManipulator);

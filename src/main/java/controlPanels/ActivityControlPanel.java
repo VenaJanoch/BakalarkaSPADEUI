@@ -5,12 +5,15 @@ import interfaces.IEditFormController;
 import interfaces.IFormDataController;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableView;
+import services.ControlPanelLineObject;
+import services.ControlPanelLineType;
 import services.ParamType;
 import services.SegmentType;
 import tables.ActivityTable;
 import tables.BasicTable;
 import abstractControlPane.WorkUnitControlPanel;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,6 +30,7 @@ public class ActivityControlPanel extends WorkUnitControlPanel {
     public ActivityControlPanel(String buttonName, IFormDataController formDataController,
                                 IEditFormController editFormController, FormController formController) {
         super(buttonName, formDataController, editFormController, formController);
+        lineList.add(new ControlPanelLineObject("End date: ", ControlPanelLineType.Date, ParamType.EndDate));
         addItemsToControlPanel();
         }
 
@@ -41,7 +45,7 @@ public class ActivityControlPanel extends WorkUnitControlPanel {
 
         controlPanelController.setValueTextField(this, lineList ,ParamType.Name, activityData, activityData[3], 0);
         controlPanelController.setValueTextField(this, lineList ,ParamType.Description, activityData, activityData[4], 1);
-
+        controlPanelController.setValueDatePicker(this, lineList ,ParamType.Date, (ArrayList<LocalDate>)activityData[6],  activityData[7]);
         ArrayList<ArrayList<Integer>> workUnits = formDataController.getWorkUnitFromSegment(id, SegmentType.Activity);
         controlPanelController.setValueCheckComboBox(this, lineList ,ParamType.WorkUnit, workUnits, activityData[2]);
 
@@ -66,11 +70,13 @@ public class ActivityControlPanel extends WorkUnitControlPanel {
         ArrayList<Integer> nameIndicators = new ArrayList<>();
         ArrayList<Integer> descIndicators = new ArrayList<>();
         ArrayList<Integer> workUnitIndicators = new ArrayList<>();
+        ArrayList<Integer> endDateIndicators = new ArrayList<>();
         ArrayList<String> name = controlPanelController.processTextLines(ParamType.Name, nameIndicators);
         ArrayList<String> desc = controlPanelController.processTextLines(ParamType.Description, descIndicators);
+        ArrayList<LocalDate> endDate = controlPanelController.processDateLines(ParamType.EndDate, endDateIndicators);
         ArrayList<ArrayList<Integer>> workUnit = controlPanelController.processCheckComboBoxLines(ParamType.WorkUnit, workUnitIndicators);
         editFormController.editDataFromActivity(name, desc, workUnit, nameIndicators, descIndicators,
-                workUnitIndicators, activityTable, controlPanelController.isExist(), id);
+                workUnitIndicators, endDate, endDateIndicators, activityTable ,controlPanelController.isExist(), id);
 
         clearPanelCB(tableView);
     }

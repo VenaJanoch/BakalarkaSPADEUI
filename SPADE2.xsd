@@ -9,13 +9,21 @@
     </xs:complexType>
 
     <xs:complexType name="Link">
-        <xs:attribute name="ChangeIndex" type="xs:int"/>
-        <xs:attribute name="ArtifactIndex" type="xs:int"/>
-        <xs:attribute name="leftUnitIndex" type="xs:int"/>
-        <xs:attribute name="rightUnitIndex" type="xs:int"/>
-        <xs:attribute name="relationIndex" type="xs:int"/>
-        <xs:attribute name="Type" type="xs:string"/>
+        <xs:attribute name="StartIndex" type="xs:int"/>
+        <xs:attribute name="EndIndex" type="xs:int"/>
+        <xs:attribute name="Type" type="LinkType"/>
+        <xs:attribute name="id" type="xs:int"/>
     </xs:complexType>
+
+    <xs:simpleType name="LinkType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="PersonArtifact"/>
+            <xs:enumeration value="PersonConfiguration"/>
+            <xs:enumeration value="ArtifactConfiguration"/>
+            <xs:enumeration value="CommitCommitedConfiguration"/>
+            <xs:enumeration value="CommitedConfigurationConfiguration"/>
+        </xs:restriction>
+    </xs:simpleType>
 
     <xs:complexType name="Project">
         <xs:sequence>
@@ -188,6 +196,10 @@
                         maxOccurs="unbounded" />
             <xs:element name="descriptionIndicator" type="xs:int" minOccurs="0"
                         maxOccurs="unbounded" />
+            <xs:element name="endDate" type="xs:date" minOccurs="0"
+                        maxOccurs="unbounded"/>
+            <xs:element name="endDateIndicator" type="xs:int" minOccurs="0"
+                        maxOccurs="unbounded"/>
 
         </xs:sequence>
         <xs:attribute name="id" type="xs:int"/>

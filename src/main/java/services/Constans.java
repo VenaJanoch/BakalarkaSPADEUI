@@ -8,6 +8,7 @@ import javafx.scene.input.KeyCombination;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 
+import java.sql.Connection;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -199,6 +200,9 @@ public class Constans {
     public static final String[] textIndicatorList = {"IS", "IS NOT","CONTAINS", "NOT CONTAINS"};
     public static final String[] numberIndicatorList = {"EQUEL", "BIGGER", "SMALLER" };
 
+    public static final String[] NUMBER_INDICATORS = {"=", ">", "<"};
+    public static final String[] INDICATORS = {"=", "!=", "<"};
+
     public static final int projectFormIndex = 0;
     public static final int phaseFormIndex = 0;
     public static final int iterationFormIndex = 1;
@@ -230,6 +234,14 @@ public class Constans {
 
     public static final LocalDate nullDate = LocalDate.of(1900,1,1);
 
-    public static final String CESTA_K_DATABAZI = "jdbc:mysql://localhost:3306/opswi?allowMultiQueries=true"; //cesta k databázi
+  //  public static final String CESTA_K_DATABAZI = "jdbc:mysql://students.kiv.zcu.cz:3306/ppicha?allowMultiQueries=true"; //cesta k databázi
+    public static final String CESTA_K_DATABAZI = "jdbc:mysql://localhost:3306/opswi?allowMultiQueries=true";
+    public static final double PROJECT_CHOOSE_WINDOW_WIDTH = 400;
+    public static final double PROJECT_CHOOSE_WINDOW_HEIGHT = 400;
+    public static final double PROJECT_TABLE_WIDTH = 700;
+    public static final double PROJECT_TABLE_HEIGHT = 500;
+    public static final String OK_VERIFY_RESULT = "\u2713";
+    public static final String BAD_VERIFY_RESULT = "\u274C";
+    public static Connection CONNECTION = null;																			 //připojení k databázi
 
 }
