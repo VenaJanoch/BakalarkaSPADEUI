@@ -138,6 +138,7 @@ public class ChangeForm extends TableBasicForm implements ISegmentTableForm {
         String idName = id + "_" + nameST;
 
         ChangeTable table = new ChangeTable(idName, true, id);
+        formDataController.saveDataFromChange(table);
 
         tableTV.getItems().add(table);
         tableTV.sort();

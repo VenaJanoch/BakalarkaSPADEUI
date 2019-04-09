@@ -1,6 +1,7 @@
 package graphics;
 
 import controllers.VerifyController;
+import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -9,6 +10,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import services.Constans;
 import tables.VerifyTable;
@@ -89,18 +91,33 @@ public class VerifyWindow extends Stage {
         result.setMinWidth(50);
         result.setMaxWidth(50);
         result.setCellFactory(TextFieldTableCell.forTableColumn());
-
+        result.setEditable(false);
         sql.setCellValueFactory(new PropertyValueFactory("sql"));
         sql.setMinWidth(300);
         sql.setResizable(true);
-        sql.setCellFactory(TextFieldTableCell.forTableColumn());
+        sql.setCellFactory(param ->  {
+                final TableCell<VerifyTable, String> cell = new TableCell<VerifyTable, String>() {
+                    private Text text;
+                    @Override
+                    public void updateItem(String item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (!isEmpty()) {
+                            text = new Text(item.toString());
+                            text.setWrappingWidth(200); // Setting the wrapping width to the Text
+                            setGraphic(text);
+                        }
+                    }
+                };
+                return cell;
+
+        });
         sql.setEditable(true);
 
 
 
         tableTV.getColumns().addAll(elementNameColumn, exist, isProjectExistColumn, result, sql);
         //tableTV.setOnMousePressed(OnMousePressedEventHandler);
-        tableTV.setEditable(false);
+        tableTV.setEditable(true);
 
         tableTV.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 

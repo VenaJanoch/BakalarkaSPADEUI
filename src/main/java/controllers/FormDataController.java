@@ -11,6 +11,7 @@ import model.DataManipulator;
 import model.DataModel;
 import model.IdentificatorCreater;
 import services.*;
+import sun.util.resources.cldr.zh.CalendarData_zh_Hant_TW;
 import tables.*;
 
 import java.time.LocalDate;
@@ -156,16 +157,9 @@ public class FormDataController implements IFormDataController {
     }
 
 
-    public boolean saveDataFromChange(String actName, String desc, boolean selected, int indexForm) {
+    public boolean saveDataFromChange(ChangeTable table) {
 
-        String nameForManipulator = InputController.fillTextMapper(actName);
-        String descForManipulator = InputController.fillTextMapper(desc);
-
-        int[] coords = formController.getCoordsFromItem(indexForm);
-
-        formController.setItemColor(indexForm, selected);
-       // editDataModel.editDataInChange(nameForManipulator, descForManipulator, selected, identificatorCreater.getChangeId(indexForm));
-        formController.setNameToItem(indexForm, nameForManipulator);
+        lists.getChangeObservable().add(table);
         return true;
     }
 

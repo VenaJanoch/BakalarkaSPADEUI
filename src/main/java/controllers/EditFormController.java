@@ -379,6 +379,7 @@ public class EditFormController implements IEditFormController {
         formController.setNameToItem(formIndex, nameForManipulator.get(0));
         formController.setItemInstanceCount(formIndex, instanceCount);
         formController.setItemColor(formIndex, exist);
+
         }catch (NumberFormatException e){
             Alerts.showWrongNumberFormat("Instance count");
             e.printStackTrace();
@@ -456,7 +457,7 @@ public class EditFormController implements IEditFormController {
             int formIndex = identificatorCreater.getConfigurationFormIndex(configId);
             ConfigTable configTable = new ConfigTable(itemName, "", formIndex, exist, configId);
             configTable.setExist(exist);
-            segmentLists.getConfigObservable().add(formIndex, configTable);
+            segmentLists.getConfigObservable().add(configTable);
 
             formController.setNameToItem(formIndex, itemName);
             formController.setItemInstanceCount(formIndex, instanceCount);

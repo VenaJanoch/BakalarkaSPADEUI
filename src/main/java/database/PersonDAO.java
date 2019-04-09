@@ -5,7 +5,6 @@ import controllers.VerifyController;
 import services.Constans;
 import services.SQLAtributeCreator;
 
-import javax.xml.datatype.XMLGregorianCalendar;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,8 +28,8 @@ public class PersonDAO {
 	 * @param idProjekt id projektu pro výběr artefaktů
 	 * @return seznam artefaktů
 	 */
-	public ArrayList<SQLVerifyObject> getPersonyProjekt(int idProjekt) {
-		return getPersonyProjekt(idProjekt, null);
+	public ArrayList<SQLVerifyObject> getPersonProjekt(int idProjekt) {
+		return getPersonProjekt(idProjekt, null);
 	}
 
 
@@ -48,20 +47,16 @@ public class PersonDAO {
 	}
 
 
-	public ArrayList<SQLVerifyObject> getPersonyProjekt(int projectVerifyId, List<String> name, List<Integer> nameIndicator) {
+	public ArrayList<SQLVerifyObject> getPersonProjekt(int projectVerifyId, List<String> name, List<Integer> nameIndicator, List<Integer> roleTypeIds) {
 
 		String atributeSection = "";
-		atributeSection += SQLAtributeCreator.createStringAttribute("name", name, nameIndicator);
+		atributeSection += SQLAtributeCreator.createStringAttribute("p.name", name, nameIndicator);
+		atributeSection += SQLAtributeCreator.createIntAttribute("pr.roleId", roleTypeIds);
+		String sql = "SELECT * FROM person p join person_role pr on pr.personId = p.id AND p.projectId = ? " + atributeSection;
 
-		String sql = "SELECT * FROM person  WHERE projectId = ? " + atributeSection;
-
-		//	if(seznamIdPersonu != null && !seznamIdPersonu.isEmpty())
-		//		sql += " and a.id in ("+ Konstanty.getZnakyParametru(seznamIdPersonu) +")";
-
-		return SQLAtributeCreator.getAtributesFromDB(pripojeni,verifyController, sql, projectVerifyId, null);
+		return SQLAtributeCreator.getAtributesFromDB(pripojeni, verifyController, sql, projectVerifyId, null);
 
 	}
-
 
 
 	/**
@@ -70,7 +65,7 @@ public class PersonDAO {
 	 * @param seznamIdPersonu seznam povolených artefaktů
 	 * @return seznam artefaktů
 	 */
-	public ArrayList<SQLVerifyObject> getPersonyProjekt(int idProjekt, ArrayList<Integer> seznamIdPersonu) {
+	public ArrayList<SQLVerifyObject> getPersonProjekt(int idProjekt, ArrayList<Integer> seznamIdPersonu) {
 
 		String sql = "SELECT i.id FROM person i WHERE superProjectId = 18 ";
 

@@ -1286,6 +1286,11 @@ public class DataModel {
         return idList;
     }
 
+    public int getRoleTypeId(int index){
+        return project.getRoleType().get(index).getId();
+    }
+
+
     public ArrayList<Integer> getRoleTypeId(List<Integer> roleTypeForManipulator) {
 
         ArrayList<Integer> idList = new ArrayList<>();
@@ -1384,5 +1389,9 @@ public class DataModel {
 
     public int getCommitId(int commitIndex) {
         return project.getCommit().get(commitIndex).getId();
+    }
+
+    public int getChangeId(int i) {
+        return project.getChanges().get(i).getId();
     }
 }

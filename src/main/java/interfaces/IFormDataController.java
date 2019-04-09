@@ -25,7 +25,7 @@ public interface IFormDataController {
 
     void setEditItemInConfigurationTable(ConfigTable configTable);
 
-    boolean saveDataFromChange(String actName, String desc, boolean selected, int indexForm);
+    boolean saveDataFromChange(ChangeTable changeTable);
 
     boolean saveDataFromArtifact(String actName, LocalDate createdDate, String type, String desc, int authorIndex,
                                  int typeIndex, boolean selected, int indexForm);
