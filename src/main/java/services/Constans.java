@@ -54,7 +54,7 @@ public class Constans {
      * Konstanty určující tlačítka pro formulářová plátna
      */
 
-    public static final int[] projectDragTextIndexs = {11, 6, 21, 22, 10};
+    public static final int[] projectDragTextIndexs = {11, 21, 22, 6, 10};
     public static final int[] phaseDragTextIndexs = {3};
     public static final int[] iterationDragTextIndexs = {3};
     public static final int[] activityDragTextIndexs = {3};
@@ -244,9 +244,11 @@ public class Constans {
     public static final String BAD_VERIFY_RESULT = "\u274C";
     public static final double SQL_TEXT_WRAPPING = 400;
     public static final double INSTACE_COUNT_RADIUS = 20;
-    public static final String[] PANEL_BUTTONS = {"d:\\dokumenty\\SPADEUI\\Images\\Person.png", "d:\\dokumenty\\SPADEUI\\Images\\Commit.png",
-            "d:\\dokumenty\\SPADEUI\\Images\\Commited.png", "d:\\dokumenty\\SPADEUI\\Images\\Configuration.png",
-            "d:\\dokumenty\\SPADEUI\\Images\\Artifact.png"};
+    public static final String[] PANEL_BUTTONS = {"c:\\Users\\venaj\\OneDrive\\ZCU\\Diplomka\\KristinaDesign\\Ikony\\Person1.png",
+            "c:\\Users\\venaj\\OneDrive\\ZCU\\Diplomka\\KristinaDesign\\Ikony\\Commited.png",
+            "c:\\Users\\venaj\\OneDrive\\ZCU\\Diplomka\\KristinaDesign\\Ikony\\Commit.png",
+            "c:\\Users\\venaj\\OneDrive\\ZCU\\Diplomka\\KristinaDesign\\Ikony\\Configuration.png",
+            "c:\\Users\\venaj\\OneDrive\\ZCU\\Diplomka\\KristinaDesign\\Ikony\\Artifact.png"};
     public static Connection CONNECTION = null;																			 //připojení k databázi
 
     private static Stop[] stops = new Stop[] { new Stop(0, Color.WHITE), new Stop(1, Color.rgb(187, 225, 243))};

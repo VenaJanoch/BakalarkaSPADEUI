@@ -1178,7 +1178,6 @@ public class DataModel {
             dateXML = DatatypeFactory.newInstance().newXMLGregorianCalendar(c);
 
         } catch (DatatypeConfigurationException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
         return dateXML;

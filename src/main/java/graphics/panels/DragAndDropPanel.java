@@ -70,7 +70,7 @@ public class DragAndDropPanel extends BorderPane {
         selectItemController.setBox(formBox);
 
         items = new DragAndDropItemPanel(canvasController, Constans.projectDragTextIndexs, drawerPanelController);
-        this.setAlignment(items, Pos.BOTTOM_LEFT);
+
 
         addButtons = new Button[Constans.addButtonCount];
         projectButton.setOnAction(event -> {
@@ -91,6 +91,7 @@ public class DragAndDropPanel extends BorderPane {
 //		this.setTop(buttonBox);
         this.setLeft(projectButton);
         this.setCenter(items);
+        BorderPane.setAlignment(items, Pos.CENTER);
         this.setBottom(formBox);
         this.setRight(projectConfirmButton);
         this.setAlignment(formBox, Pos.BOTTOM_LEFT);

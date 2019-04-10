@@ -5,6 +5,7 @@ import javafx.scene.control.Button;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
+import javafx.scene.layout.Background;
 import javafx.scene.text.Font;
 import services.SegmentType;
 /**
@@ -27,9 +28,10 @@ public class DragSegmentButton extends Button {
 	 */
 	public DragSegmentButton(SegmentType type, CanvasController canvasController) {
 		super();
-		this.setText(type.name());
+		//this.setText(type.name());
 		this.setFont(Font.font ("Verdana", 15));
 		this.setId("dg"+ type);
+		this.setBackground(Background.EMPTY);
 		setDragDetected();
 		setDragDone();
 		this.setOnAction(event -> canvasController.addCanvasItemFromPanel(type.name(),x,y));

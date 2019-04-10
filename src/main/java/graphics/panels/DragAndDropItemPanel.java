@@ -12,7 +12,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.HBox;
+import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 import services.Constans;
 import services.SegmentType;
@@ -44,7 +44,7 @@ public class DragAndDropItemPanel extends HBox {
      * @param itemArray int[]
      */
     public DragAndDropItemPanel(int[] itemArray, DrawerPanelController drawerPanelController) {
-        super(5);
+        super();
         this.setPrefWidth(Constans.width);
         this.setPadding(new Insets(5));
         this.itemArray = itemArray;
@@ -80,8 +80,15 @@ public class DragAndDropItemPanel extends HBox {
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
-            Image image = new Image(input);
-            dragSegmnets[i].setGraphic(new ImageView(image));
+            Image image = new Image( input);
+            BackgroundImage backgroundImage = new BackgroundImage( image, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT,
+                    BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+
+            Background background = new Background(backgroundImage);
+            dragSegmnets[i].setMinWidth(image.getWidth());
+            dragSegmnets[i].setMinHeight(image.getHeight());
+            dragSegmnets[i].setBackground(background);
+
             this.getChildren().add(dragSegmnets[i]);
 
         }
@@ -99,22 +106,28 @@ public class DragAndDropItemPanel extends HBox {
         linkButton = canvasController.getLinkButton();
         FileInputStream input = null;
         try {
-            input = new FileInputStream("d:\\dokumenty\\SPADEUI\\Images\\Sipka.png");
+            input = new FileInputStream("c:\\Users\\venaj\\OneDrive\\ZCU\\Diplomka\\KristinaDesign\\Ikony\\sipka.png");
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-        Image image = new Image(input);
-        linkButton.setGraphic(new ImageView(image));
+        Image image = new Image( input);
+        BackgroundImage backgroundImage = new BackgroundImage( image, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT,
+                BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+
+        Background background = new Background(backgroundImage);
+        linkButton.setMinWidth(image.getWidth());
+        linkButton.setMinHeight(image.getHeight());
+        linkButton.setBackground(background);
         linkButton.setId("linkButton");
         box.setMinWidth(80);
         box.getChildren().add(linkButton);
         box.setAlignment(Pos.BASELINE_RIGHT);
-        SplitPane splitPane = new SplitPane();
+       // SplitPane splitPane = new SplitPane();
         linkButton.setFont(Font.font("Verdana", 25));
         linkButton.setOnAction(event -> createArrowButtonEvent());
         linkButton.setOnKeyPressed(event -> presESC(event));
 
-        this.getChildren().addAll(splitPane, box);
+        this.getChildren().addAll(box);
 
     }
 

@@ -52,17 +52,24 @@ public class FileManipulator {
      * Rozhodne o vyvolání okna pro uložení nebo automatickém uložení do již
      * zvoleného souboru
      */
-    public void saveFile() {
+    public boolean saveFile() {
 
         if (XMLProcessFile == null || firstSave) {
 
-            saveAsFile();
-            firstSave = false;
-            save = true;
+            boolean isSave = saveAsFile();
+
+            if (isSave){
+                firstSave = false;
+                save = true;
+                return true;
+            }else {
+                return false;
+            }
+
         } else {
             dataModel.saveProcess(XMLProcessFile);
+            return true;
         }
-
     }
 
     /**
@@ -70,7 +77,7 @@ public class FileManipulator {
      * soubor do globální proměnné XMLProcessFile pro další polužití
      */
 
-    public void saveAsFile() {
+    public boolean saveAsFile() {
         if (!save) {
             fileChooser.setTitle("Save Process");
 
@@ -78,11 +85,15 @@ public class FileManipulator {
 
             if (XMLProcessFile != null) {
                 dataModel.saveProcess(XMLProcessFile);
+                save = true;
+            }else {
+                return false;
             }
+
         } else {
             save = false;
         }
-
+        return true;
     }
 
     /**

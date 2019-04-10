@@ -4,9 +4,12 @@ import com.jfoenix.controls.JFXDrawersStack;
 import controllers.*;
 import graphics.panels.DragAndDropPanel;
 import graphics.panels.MenuPanel;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import services.*;
 
@@ -78,7 +81,7 @@ public class MainWindow extends Stage {
         mainPanel.setId("main");
         topPanel.getChildren().addAll(menu, dragAndDrop);
         mainPanel.setTop(topPanel);
-
+        mainPanel.setAlignment(dragAndDrop, Pos.CENTER_RIGHT);
         drawersStack.setContent(canvasController.getCanvas());
         mainPanel.setCenter(drawersStack);
 
