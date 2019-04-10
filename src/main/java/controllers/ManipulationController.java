@@ -1,8 +1,8 @@
 package controllers;
 
-import graphics.CanvasItem;
-import graphics.DragAndDropCanvas;
-import graphics.NodeLink;
+import graphics.canvas.CanvasItem;
+import graphics.canvas.DragAndDropCanvas;
+import graphics.canvas.NodeLink;
 import interfaces.IDeleteFormController;
 import services.*;
 

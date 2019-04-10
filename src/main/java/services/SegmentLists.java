@@ -2,12 +2,11 @@ package services;
 
 import java.util.ArrayList;
 
-import graphics.ElementsLink;
-import graphics.NodeLink;
-import graphics.WorkUnitLink;
+import graphics.canvas.ElementsLink;
+import graphics.canvas.NodeLink;
+import graphics.canvas.WorkUnitLink;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.geometry.Point2D;
 import tables.*;
 
 public class SegmentLists {

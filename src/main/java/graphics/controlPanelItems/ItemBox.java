@@ -1,24 +1,19 @@
-package graphics;
+package graphics.controlPanelItems;
 
 import abstractControlPane.ControlPanel;
 import controllers.ControlPanelController;
 import controllers.ItemBoxController;
+import graphics.controlPanelItems.ControlPanelLine;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import services.Constans;
 import services.ControlPanelLineObject;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 
 public class ItemBox extends HBox {
 

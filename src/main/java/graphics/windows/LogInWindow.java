@@ -1,4 +1,4 @@
-package graphics;
+package graphics.windows;
 
 import controllers.DatabaseController;
 import javafx.geometry.Insets;

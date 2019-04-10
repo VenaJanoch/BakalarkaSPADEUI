@@ -1,9 +1,8 @@
 package controllers;
 
-import graphics.NodeLink;
+import graphics.canvas.NodeLink;
 import javafx.geometry.Point2D;
 import services.Constans;
-import services.SegmentLists;
 
 public class LinkController {
 

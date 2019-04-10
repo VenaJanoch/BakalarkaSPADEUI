@@ -1,17 +1,11 @@
 package controllers;
 
 import abstractControlPane.ControlPanel;
-import graphics.*;
+import graphics.controlPanelItems.*;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.collections.FXCollections;
-import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
-import javafx.scene.control.ComboBox;
-import javafx.scene.layout.GridPane;
-import org.controlsfx.control.CheckComboBox;
 import services.ControlPanelLineObject;
-import tables.BasicTable;
 
 public class ControlPanelLineController {
 

@@ -1,4 +1,4 @@
-package graphics;
+package graphics.controlPanelItems;
 
 import abstractControlPane.ControlPanel;
 import controllers.ControlPanelController;
@@ -6,8 +6,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
-import javafx.scene.control.Label;
-import javafx.scene.layout.HBox;
 import services.Constans;
 import services.ControlPanelLineObject;
 

@@ -26,22 +26,27 @@ public class WorkUnitDAO {
 
 	public ArrayList<SQLVerifyObject> getWorkUnitProjekt(int projectVerifyId, List<String> name, List<Integer> nameIndicator, List<Double> estimateTime, List<Integer> category,
 														 List<Integer> assigneeIds, List<Integer> priorityIds, List<Integer> severityIds, List<Integer> resolutionIds,
-														 List<Integer> statusIds, List<Integer> typeIds, List<Integer> relation ) {
+														 List<Integer> statusIds, List<Integer> typeIds, List<Integer> relationIds, List<Integer> workUnitsInRelationIds ) {
 
 		String atributeSection = "";
 		//atributeSection += SQLAtributeCreator.createStringAttribute("wi.name", name, nameIndicator);
 		//atributeSection += SQLAtributeCreator.createDateAttribute("wi.created", endDate, endDateIndicator);
 		atributeSection += SQLAtributeCreator.createIdAttribute("wuc.categoryId", category);
-		atributeSection += SQLAtributeCreator.createDoubleAttribute("p.estimatedTime", estimateTime);
-		atributeSection += SQLAtributeCreator.createIdAttribute("p.assigneeId", assigneeIds);
-		atributeSection += SQLAtributeCreator.createIdAttribute("p.priorityId", priorityIds);
-		atributeSection += SQLAtributeCreator.createIdAttribute("p.severityId", severityIds);
-		atributeSection += SQLAtributeCreator.createIdAttribute("p.statusId", statusIds);
-		atributeSection += SQLAtributeCreator.createIdAttribute("p.wuTypeId", typeIds);
-		atributeSection += SQLAtributeCreator.createIdAttribute("p.resolutionId", resolutionIds);
+		atributeSection += SQLAtributeCreator.createDoubleAttribute("wu.estimatedTime", estimateTime);
+		atributeSection += SQLAtributeCreator.createIdAttribute("wu.assigneeId", assigneeIds);
+		atributeSection += SQLAtributeCreator.createIdAttribute("wu.priorityId", priorityIds);
+		atributeSection += SQLAtributeCreator.createIdAttribute("wu.severityId", severityIds);
+		atributeSection += SQLAtributeCreator.createIdAttribute("wu.statusId", statusIds);
+		atributeSection += SQLAtributeCreator.createIdAttribute("wu.wuTypeId", typeIds);
+		atributeSection += SQLAtributeCreator.createIdAttribute("wu.resolutionId", resolutionIds);
+		atributeSection += SQLAtributeCreator.createIdAttribute("wir.relationId", relationIds);
+		atributeSection += SQLAtributeCreator.createIdAttribute("wir.rightId", workUnitsInRelationIds);
 
 
-		String sql = "SELECT p.id FROM work_unit p join work_unit_category wuc on p.id = wuc.workUnitId AND p.projectId = ? " + atributeSection;
+		String sql = "SELECT wu.id FROM work_unit wu " +
+				"join work_unit_category wuc on wu.id = wuc.workUnitId " +
+				//"join work_item_relation wir on wir.leftItemId = wu.id " +
+				"AND wu.projectId = ? " + atributeSection;
 
 		return SQLAtributeCreator.getAtributesFromDB(pripojeni, verifyController, sql, projectVerifyId, null);
 

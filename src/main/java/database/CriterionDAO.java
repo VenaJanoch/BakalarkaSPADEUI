@@ -54,7 +54,7 @@ public class CriterionDAO {
 		atributeSection += SQLAtributeCreator.createStringAttribute("name", name, nameIndicator).substring(5);
 		atributeSection += SQLAtributeCreator.createStringAttribute("description", description, descriptionIndicator);
 
-		String sql = "SELECT * FROM criterion  WHERE " + atributeSection;
+		String sql = "SELECT c.id FROM criterion c WHERE " + atributeSection;
 
 		//	if(seznamIdcriterions != null && !seznamIdcriterions.isEmpty())
 		//		sql += " and a.id in ("+ Konstanty.getZnakyParametru(seznamIdcriterions) +")";

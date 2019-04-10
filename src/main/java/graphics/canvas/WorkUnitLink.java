@@ -1,11 +1,11 @@
-package graphics;
+package graphics.canvas;
 
 import controllers.CanvasController;
 import controllers.ManipulationController;
+import graphics.controlPanelItems.LineComboBox;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
-import javafx.event.EventHandler;
 import javafx.geometry.Point2D;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;

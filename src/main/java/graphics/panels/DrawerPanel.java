@@ -1,4 +1,4 @@
-package graphics;
+package graphics.panels;
 
 import abstractform.BasicForm;
 import com.jfoenix.controls.JFXDrawer;

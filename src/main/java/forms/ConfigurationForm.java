@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import controllers.CanvasController;
 import controllers.FormController;
 import abstractform.DateBasicForm;
-import graphics.DragAndDropItemPanel;
+import graphics.panels.DragAndDropItemPanel;
 import interfaces.IDeleteFormController;
 import interfaces.IEditFormController;
 import interfaces.IFormDataController;

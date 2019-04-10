@@ -3,7 +3,7 @@ package controlPanels;
 import SPADEPAC.ArtifactClass;
 import abstractControlPane.DateDescControlPanel;
 import controllers.FormController;
-import graphics.ControlPanelLine;
+import graphics.controlPanelItems.ControlPanelLine;
 import interfaces.IControlPanel;
 import interfaces.IEditFormController;
 import interfaces.IFormDataController;

@@ -1,4 +1,4 @@
-package graphics;
+package graphics.canvas;
 
 import controllers.CanvasController;
 import controllers.LinkController;
@@ -7,7 +7,6 @@ import javafx.event.EventHandler;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import controllers.LinkControl;
-import services.LinkType;
 
 public class ElementsLink extends NodeLink {
     /**

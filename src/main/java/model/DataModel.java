@@ -329,6 +329,10 @@ public class DataModel {
         return project.getCriterions().get(getCriterionIndexInProject(id));
     }
 
+    public int getCriterionId(int index) {
+        return project.getCriterions().get(index).getId();
+    }
+
     public Iteration getIteration(int id) {
         return project.getIterations().get(getIterationIndexInProject(id));
     }
@@ -1393,5 +1397,9 @@ public class DataModel {
 
     public int getChangeId(int i) {
         return project.getChanges().get(i).getId();
+    }
+
+    public int getWorkUnitId(int workUnitIndex) {
+        return project.getWorkUnits().get(workUnitIndex).getId();
     }
 }

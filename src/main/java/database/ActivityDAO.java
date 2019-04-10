@@ -54,7 +54,7 @@ public class ActivityDAO {
 		String atributeSection = "";
 		atributeSection += SQLAtributeCreator.createDateAttribute("endDate", endDate, endDateIndicator);
 
-		String sql = "SELECT * FROM activity  WHERE superProjectId = ? " + atributeSection;
+		String sql = "SELECT a.id FROM activity a join work_unit wu on wu.activityId = a.id AND superProjectId = ? " + atributeSection;
 
 		//	if(seznamIdActivityu != null && !seznamIdActivityu.isEmpty())
 		//		sql += " and a.id in ("+ Konstanty.getZnakyParametru(seznamIdActivityu) +")";

@@ -1,6 +1,6 @@
 package controllers;
 
-import graphics.CanvasItem;
+import graphics.canvas.CanvasItem;
 import javafx.geometry.Point2D;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;

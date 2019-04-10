@@ -2,7 +2,7 @@ package controlPanels;
 
 import controllers.FormController;
 import abstractControlPane.NameControlPanel;
-import graphics.ControlPanelLine;
+import graphics.controlPanelItems.ControlPanelLine;
 import interfaces.IEditFormController;
 import interfaces.IFormDataController;
 import javafx.collections.FXCollections;

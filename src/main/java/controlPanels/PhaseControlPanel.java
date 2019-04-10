@@ -2,7 +2,7 @@ package controlPanels;
 
 import abstractControlPane.WorkUnitDateControlPanel;
 import controllers.FormController;
-import graphics.ComboBoxItem;
+import graphics.controlPanelItems.ComboBoxItem;
 import interfaces.IEditFormController;
 import interfaces.IFormDataController;
 import javafx.scene.control.*;

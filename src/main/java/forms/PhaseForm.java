@@ -1,19 +1,12 @@
 package forms;
 
-import java.time.LocalDate;
-
 import abstractform.TableBasicForm;
-import controlPanels.CriterionControlPanel;
 import controlPanels.PhaseControlPanel;
 import controllers.CanvasController;
 import controllers.FormController;
-import abstractform.DateDescBasicForm;
-import graphics.DragAndDropItemPanel;
+import graphics.panels.DragAndDropItemPanel;
 import interfaces.*;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
-import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.*;
@@ -25,8 +18,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import services.*;
-import tables.BasicTable;
-import tables.CriterionTable;
 import tables.PhaseTable;
 
 /**

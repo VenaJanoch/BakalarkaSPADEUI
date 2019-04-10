@@ -1,6 +1,6 @@
 package interfaces;
 
-import graphics.CanvasItem;
+import graphics.canvas.CanvasItem;
 import javafx.collections.ObservableList;
 import services.SegmentType;
 import tables.*;

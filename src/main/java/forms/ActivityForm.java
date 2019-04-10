@@ -2,12 +2,9 @@ package forms;
 
 import abstractform.TableBasicForm;
 import controlPanels.ActivityControlPanel;
-import controlPanels.IterationControlPanel;
 import controllers.CanvasController;
 import controllers.FormController;
-import SPADEPAC.Activity;
-import abstractform.DescriptionBasicForm;
-import graphics.DragAndDropItemPanel;
+import graphics.panels.DragAndDropItemPanel;
 import interfaces.*;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -24,7 +21,6 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import services.*;
 import tables.ActivityTable;
-import tables.IterationTable;
 
 /**
  * Třída představující formuláře segmentu Activity, děděná od

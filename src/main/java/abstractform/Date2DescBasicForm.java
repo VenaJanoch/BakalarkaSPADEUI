@@ -5,7 +5,7 @@ package abstractform;
 
 import controllers.CanvasController;
 import controllers.FormController;
-import graphics.DragAndDropItemPanel;
+import graphics.panels.DragAndDropItemPanel;
 import interfaces.IDeleteFormController;
 import interfaces.IEditFormController;
 import interfaces.IFormDataController;

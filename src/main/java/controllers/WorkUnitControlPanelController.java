@@ -1,11 +1,7 @@
 package controllers;
 
 import controlPanels.WorkUnitControlPanel;
-import graphics.ComboBoxItem;
-import graphics.ControlPanelLine;
-import javafx.geometry.HPos;
-import javafx.scene.control.Button;
-import javafx.scene.control.RadioButton;
+import graphics.controlPanelItems.ControlPanelLine;
 import javafx.scene.layout.GridPane;
 import services.SegmentLists;
 

@@ -1,23 +1,15 @@
-package graphics;
+package graphics.controlPanelItems;
 
 import abstractControlPane.ControlPanel;
 import controllers.ControlPanelController;
-import controllers.ItemBoxController;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
-import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.layout.HBox;
 import org.controlsfx.control.CheckComboBox;
 import services.Constans;
 import services.ControlPanelLineObject;
 import tables.BasicTable;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 

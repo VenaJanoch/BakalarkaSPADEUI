@@ -1,7 +1,6 @@
-package graphics;
+package graphics.controlPanelItems;
 
 import abstractControlPane.ControlPanel;
-import com.sun.javafx.image.impl.IntArgb;
 import controllers.ControlPanelController;
 import controllers.ControlPanelLineController;
 import javafx.beans.value.ChangeListener;

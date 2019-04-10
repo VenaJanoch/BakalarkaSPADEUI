@@ -2,7 +2,7 @@ package controllers;
 
 import SPADEPAC.*;
 import database.*;
-import graphics.VerifyWindow;
+import graphics.windows.VerifyWindow;
 import model.DataModel;
 import services.Constans;
 import services.SQLAtributeCreator;
@@ -126,6 +126,11 @@ public class VerifyController {
         }
 
         verifyTmp = addWorkUnitTOVerifyTable(project.getWorkUnits());
+        if (verifyTmp.get(0) != null){
+            verifyTables.addAll(verifyTmp);
+        }
+
+        verifyTmp = addMilestoneTOVerifyTable(project.getMilestones());
         if (verifyTmp.get(0) != null){
             verifyTables.addAll(verifyTmp);
         }
@@ -681,12 +686,44 @@ public class VerifyController {
                 ArrayList<Integer> resolutionDBId = SQLAtributeCreator.createResolutionAttribute(modelWorkUnit.getResolutionIndex(), verifyDataModel, workUnitElementDAO, projectVerifyId);
                 ArrayList<Integer> categoryDBId = SQLAtributeCreator.createCategoryAttribute(modelWorkUnit.getCategory(), modelWorkUnit.getCategoryIndicator(), verifyDataModel, categoryDAO, projectVerifyId);
                 ArrayList<Integer> relationDBId = SQLAtributeCreator.createRelationAttribute(modelWorkUnit.getRelationIndex(), verifyDataModel, workUnitElementDAO, projectVerifyId);
+                ArrayList<Integer> workUntiInRelationDBId = SQLAtributeCreator.createWorkUnitAttribute(modelWorkUnit.getWorkUnits(), verifyDataModel, databazeProjekt, workUnitElementDAO, personDAO, roleDAO, categoryDAO, projectVerifyId);
 
                 projectWorkUnits = databazeProjekt.getWorkUnitProjekt(projectVerifyId, modelWorkUnit.getName(), modelWorkUnit.getNameIndicator(), modelWorkUnit.getEstimatedTime(), categoryDBId,
-                        roleDBId, priorityDBId, severityDBId, resolutionDBId, statusDBId, typeDBId, relationDBId);
+                        roleDBId, priorityDBId, severityDBId, resolutionDBId, statusDBId, typeDBId, relationDBId, workUntiInRelationDBId);
 
                 SQLVerifyObject workUnit = projectWorkUnits.get(0);
                 verifyTable = createVerifyTable("WorkUnit : ", modelWorkUnit.getId(), modelWorkUnit.isExist(), workUnit.isExist(), workUnit.getSqlCommand());
+
+            }
+
+
+        } catch (Exception e) {
+            //   JOptionPane.showMessageDialog(null, Konstanty.POPISY.getProperty("chybaNacteniProjektu"));
+            e.printStackTrace();
+        }
+
+        verifyTables.add(verifyTable);
+        return verifyTables;
+    }
+
+    private ArrayList<VerifyTable> addMilestoneTOVerifyTable(List<Milestone> milestones) {
+
+        ArrayList<SQLVerifyObject> projectMilestones;
+        ArrayList<VerifyTable> verifyTables = new ArrayList<>();
+        VerifyTable verifyTable = null;
+        try {
+            MilestoneDAO databazeProjekt = new MilestoneDAO(this);
+            CriterionDAO criterionDAO = new CriterionDAO(this);
+
+            for (Milestone modelMilestone : milestones){
+
+                ArrayList<Integer> criterionDBId = SQLAtributeCreator.createCriterionAttribute(modelMilestone.getCriteriaIndexs(), verifyDataModel, criterionDAO, projectVerifyId);
+
+                projectMilestones = databazeProjekt.getMilestoneProjekt(projectVerifyId, modelMilestone.getName(), modelMilestone.getNameIndicator(), modelMilestone.getDescription(), modelMilestone.getDescriptionIndicator(),
+                        criterionDBId);
+
+                SQLVerifyObject milestone = projectMilestones.get(0);
+                verifyTable = createVerifyTable("Milestone : ", modelMilestone.getId(), modelMilestone.isExist(), milestone.isExist(), milestone.getSqlCommand());
 
             }
 

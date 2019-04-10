@@ -2,7 +2,7 @@ package abstractControlPane;
 
 import controllers.ControlPanelController;
 import controllers.FormController;
-import graphics.ControlPanelLine;
+import graphics.controlPanelItems.ControlPanelLine;
 import interfaces.IEditFormController;
 import interfaces.IFormDataController;
 import javafx.collections.FXCollections;
@@ -12,6 +12,9 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.GridPane;
 import services.Constans;
 import services.ControlPanelLineObject;
@@ -63,6 +66,10 @@ public abstract class ControlPanel extends ScrollPane {
         controlPane.setHalignment(button, HPos.RIGHT);
         controlPane.setAlignment(Pos.CENTER);
         controlPane.setPadding(new Insets(5));
+
+        controlPane.setBackground(new Background(new BackgroundFill(Constans.lg1, CornerRadii.EMPTY, Insets.EMPTY)));
+
+
         this.getChildren().add(controlPane);
         this.setHbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
         this.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);

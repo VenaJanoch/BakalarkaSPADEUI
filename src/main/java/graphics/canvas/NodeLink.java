@@ -1,4 +1,4 @@
-package graphics;
+package graphics.canvas;
 
 import controllers.CanvasController;
 import controllers.LinkController;

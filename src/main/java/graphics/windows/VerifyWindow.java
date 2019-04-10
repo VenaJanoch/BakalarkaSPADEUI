@@ -1,7 +1,9 @@
-package graphics;
+package graphics.windows;
 
 import controllers.VerifyController;
 import javafx.beans.property.ReadOnlyObjectWrapper;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -27,13 +29,19 @@ public class VerifyWindow extends Stage {
     private Button submitBT;
     private VerifyController verifyController;
     private TableView<VerifyTable> tableTV;
-
-
+    private ArrayList<Text> textList;
+    private TableColumn<VerifyTable, String> sql = new TableColumn<VerifyTable, String>("SQL Command");
 
     public VerifyWindow(VerifyController verifyController) {
         this.verifyController = verifyController;
         tableTV = getTable();
+        textList = new ArrayList<>();
         this.setScene(creatScene());
+        this.widthProperty().addListener(new ChangeListener<Number>() {
+            @Override public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneWidth, Number newSceneWidth) {
+                repaintText();
+            }
+        });
     }
 
     /**
@@ -63,6 +71,7 @@ public class VerifyWindow extends Stage {
         return mainPanel;
     }
 
+
     public TableView<VerifyTable> getTable() {
         tableTV = new TableView<VerifyTable>();
 
@@ -70,11 +79,11 @@ public class VerifyWindow extends Stage {
         TableColumn<VerifyTable, String> exist = new TableColumn<VerifyTable, String>("Exist");
         TableColumn<VerifyTable, String> isProjectExistColumn = new TableColumn<VerifyTable, String>("Exist in Project");
         TableColumn<VerifyTable, String> result = new TableColumn<VerifyTable, String>("Result");
-        TableColumn<VerifyTable, String> sql = new TableColumn<VerifyTable, String>("SQL Command");
+
        
         elementNameColumn.setCellValueFactory(new PropertyValueFactory("name"));
-        elementNameColumn.setMinWidth(100);
-        elementNameColumn.setMaxWidth(100);
+        elementNameColumn.setMinWidth(200);
+        elementNameColumn.setMaxWidth(200);
         elementNameColumn.setCellFactory(TextFieldTableCell.forTableColumn());
 
         exist.setCellValueFactory(new PropertyValueFactory("existString"));
@@ -83,8 +92,8 @@ public class VerifyWindow extends Stage {
         exist.setCellFactory(TextFieldTableCell.forTableColumn());
 
         isProjectExistColumn.setCellValueFactory(new PropertyValueFactory("isExistInProject"));
-        isProjectExistColumn.setMinWidth(100);
-        isProjectExistColumn.setMaxWidth(100);
+        isProjectExistColumn.setMinWidth(200);
+        isProjectExistColumn.setMaxWidth(200);
         isProjectExistColumn.setCellFactory(TextFieldTableCell.forTableColumn());
 
         result.setCellValueFactory(new PropertyValueFactory("result"));
@@ -93,27 +102,24 @@ public class VerifyWindow extends Stage {
         result.setCellFactory(TextFieldTableCell.forTableColumn());
         result.setEditable(false);
         sql.setCellValueFactory(new PropertyValueFactory("sql"));
-        sql.setMinWidth(300);
+        sql.setMinWidth(400);
         sql.setResizable(true);
-        sql.setCellFactory(param ->  {
-                final TableCell<VerifyTable, String> cell = new TableCell<VerifyTable, String>() {
-                    private Text text;
-                    @Override
-                    public void updateItem(String item, boolean empty) {
-                        super.updateItem(item, empty);
-                        if (!isEmpty()) {
-                            text = new Text(item.toString());
-                            text.setWrappingWidth(200); // Setting the wrapping width to the Text
-                            setGraphic(text);
-                        }
-                    }
-                };
-                return cell;
+        sql.setCellFactory( param ->  {
+            final TableCell<VerifyTable, String> cell = new TableCell<VerifyTable, String>() {
+                @Override
+                public void updateItem(String item, boolean empty) {
+                    super.updateItem(item, empty);
+                    Text text = new Text(item);
+                    text.setWrappingWidth(sql.getWidth()); // Setting the wrapping width to the Text
+                    setGraphic(text);
+                    textList.add(text);
+                }
+
+            };
+            cell.setEditable(true);
+            return cell;
 
         });
-        sql.setEditable(true);
-
-
 
         tableTV.getColumns().addAll(elementNameColumn, exist, isProjectExistColumn, result, sql);
         //tableTV.setOnMousePressed(OnMousePressedEventHandler);
@@ -122,7 +128,11 @@ public class VerifyWindow extends Stage {
         tableTV.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
         tableTV.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-
+        tableTV.widthProperty().addListener(new ChangeListener<Number>() {
+            @Override public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneWidth, Number newSceneWidth) {
+                repaintText();
+            }
+        });
         BorderPane.setMargin(tableTV, new Insets(5));
 
         return tableTV;
@@ -133,5 +143,11 @@ public class VerifyWindow extends Stage {
         tableTV.getItems().clear();
         tableTV.getItems().addAll(verifyTables);
       //  tableTV.getItems().addAll(new VerifyTable("Name", 3, true, "Yes", "Yes", "Nevim"));
+    }
+
+    public void repaintText(){
+        for(Text text : textList){
+            text.setWrappingWidth(sql.getWidth() - Constans.offset);
+        }
     }
 }

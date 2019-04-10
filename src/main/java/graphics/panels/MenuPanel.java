@@ -1,4 +1,4 @@
-package graphics;
+package graphics.panels;
 
 import javafx.geometry.Insets;
 import javafx.scene.control.Menu;

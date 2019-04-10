@@ -7,8 +7,8 @@ import abstractform.BasicForm;
 import controlPanels.*;
 import forms.ConfigurationForm;
 import forms.*;
-import graphics.CanvasItem;
-import graphics.DragAndDropItemPanel;
+import graphics.canvas.CanvasItem;
+import graphics.panels.DragAndDropItemPanel;
 import interfaces.*;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
@@ -72,6 +72,7 @@ public class FormController {
     private DataPreparer dataPreparer;
     private DrawerPanelController drawerPanelController;
     private SelectItemController selectItemController;
+
     public FormController(IdentificatorCreater identificatorCreater, DataModel dataModel,
                           ApplicationController applicationController, SegmentLists segmentLists, DataPreparer dataPreparer,
                           DrawerPanelController drawerPanelController, SelectItemController selectItemController) {

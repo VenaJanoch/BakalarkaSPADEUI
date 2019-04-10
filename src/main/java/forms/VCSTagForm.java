@@ -2,9 +2,7 @@ package forms;
 
 import abstractform.TableBasicForm;
 import controlPanels.VCSTagControlPanel;
-import controllers.CanvasController;
 import controllers.FormController;
-import graphics.DragAndDropItemPanel;
 import interfaces.IDeleteFormController;
 import interfaces.IEditFormController;
 import interfaces.IFormDataController;

@@ -1,14 +1,14 @@
-package graphics;
+package graphics.windows;
 
-import com.jfoenix.controls.JFXDrawer;
 import com.jfoenix.controls.JFXDrawersStack;
 import controllers.*;
+import graphics.panels.DragAndDropPanel;
+import graphics.panels.MenuPanel;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import services.*;
-import sun.plugin.javascript.navig.Anchor;
 
 /**
  * Třída s hlavní layoutem aplikace

@@ -1,23 +1,26 @@
-package graphics;
+package graphics.panels;
 
 import controllers.CanvasController;
 import controllers.DrawerPanelController;
-import controllers.SelectItemController;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+import graphics.canvas.DragSegmentButton;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.SplitPane;
 import javafx.scene.control.ToggleButton;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Font;
 import services.Constans;
 import services.SegmentType;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 
 /**
  * Třída vytvářející panel tlačítek umožnujících přidání prvku na plátno
@@ -71,7 +74,14 @@ public class DragAndDropItemPanel extends HBox {
 
         for (int i = 0; i < itemArray.length; i++) {
             dragSegmnets[i] = new DragSegmentButton(SegmentType.values()[itemArray[i]], canvasController);
-
+            FileInputStream input = null;
+            try {
+                input = new FileInputStream(Constans.PANEL_BUTTONS[i]);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+            Image image = new Image(input);
+            dragSegmnets[i].setGraphic(new ImageView(image));
             this.getChildren().add(dragSegmnets[i]);
 
         }
@@ -87,12 +97,19 @@ public class DragAndDropItemPanel extends HBox {
 
         HBox box = new HBox();
         linkButton = canvasController.getLinkButton();
+        FileInputStream input = null;
+        try {
+            input = new FileInputStream("d:\\dokumenty\\SPADEUI\\Images\\Sipka.png");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        Image image = new Image(input);
+        linkButton.setGraphic(new ImageView(image));
         linkButton.setId("linkButton");
         box.setMinWidth(80);
         box.getChildren().add(linkButton);
         box.setAlignment(Pos.BASELINE_RIGHT);
         SplitPane splitPane = new SplitPane();
-        linkButton.setText(Constans.linkSimbol);
         linkButton.setFont(Font.font("Verdana", 25));
         linkButton.setOnAction(event -> createArrowButtonEvent());
         linkButton.setOnKeyPressed(event -> presESC(event));

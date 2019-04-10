@@ -1,7 +1,11 @@
 package controllers;
 
 import com.jfoenix.controls.JFXDrawer;
-import graphics.*;
+import graphics.canvas.CanvasItem;
+import graphics.canvas.DragAndDropCanvas;
+import graphics.canvas.NodeLink;
+import graphics.controlPanelItems.ItemContexMenu;
+import graphics.controlPanelItems.LineComboBox;
 import javafx.event.EventHandler;
 import javafx.scene.Cursor;
 import javafx.scene.control.ToggleButton;

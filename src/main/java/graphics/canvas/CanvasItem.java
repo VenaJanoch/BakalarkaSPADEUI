@@ -1,7 +1,8 @@
-package graphics;
+package graphics.canvas;
 
 import controllers.CanvasController;
 import controllers.CanvasItemController;
+import graphics.controlPanelItems.ItemContexMenu;
 import javafx.geometry.Point2D;
 import javafx.scene.control.Tooltip;
 import javafx.scene.layout.AnchorPane;
@@ -80,7 +81,7 @@ public class CanvasItem extends AnchorPane {
 	}
 
 	public void setInstanceCountToItem(int instanceCount){
-		segmentInfo.getInstanceCount().setText(Integer.toString(instanceCount));
+		segmentInfo.setInstanceCount(Integer.toString(instanceCount));
 	}
 
 

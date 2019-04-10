@@ -5,8 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import graphics.ElementsLink;
-import graphics.NodeLink;
+import graphics.canvas.ElementsLink;
+import graphics.canvas.NodeLink;
 import interfaces.IDeleteFormController;
 import javafx.geometry.Point2D;
 import model.DataManipulator;

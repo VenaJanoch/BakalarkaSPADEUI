@@ -1,13 +1,12 @@
-package graphics;
+package graphics.controlPanelItems;
 
 import abstractControlPane.ControlPanel;
 import controllers.ControlPanelController;
-import javafx.collections.FXCollections;
+import graphics.controlPanelItems.ControlPanelLine;
+import graphics.controlPanelItems.ItemBox;
 import javafx.collections.ObservableList;
 import javafx.scene.control.*;
 import services.ControlPanelLineObject;
-
-import java.util.Arrays;
 
 public class RadioButtonItem extends ItemBox {
 

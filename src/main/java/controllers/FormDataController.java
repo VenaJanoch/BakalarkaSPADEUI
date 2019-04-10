@@ -1,7 +1,7 @@
 package controllers;
 
 import forms.ConfigurationTableForm;
-import graphics.CanvasItem;
+import graphics.canvas.CanvasItem;
 import interfaces.IEditDataModel;
 import interfaces.IFormDataController;
 import interfaces.ISaveDataModel;
@@ -11,7 +11,6 @@ import model.DataManipulator;
 import model.DataModel;
 import model.IdentificatorCreater;
 import services.*;
-import sun.util.resources.cldr.zh.CalendarData_zh_Hant_TW;
 import tables.*;
 
 import java.time.LocalDate;

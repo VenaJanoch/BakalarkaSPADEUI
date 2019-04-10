@@ -1,12 +1,10 @@
 package abstractControlPane;
 
 import controllers.FormController;
-import graphics.TextFieldItem;
+import graphics.controlPanelItems.TextFieldItem;
 import interfaces.IEditFormController;
 import interfaces.IFormDataController;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.HBox;
 import services.ControlPanelLineObject;
 import services.ControlPanelLineType;
 import services.ParamType;

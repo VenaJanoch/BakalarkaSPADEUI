@@ -1,5 +1,6 @@
-package graphics;
+package graphics.canvas;
 
+import graphics.canvas.CanvasItem;
 import javafx.scene.Group;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -20,7 +21,7 @@ public class InfoBoxSegment extends Group {
 	private Rectangle topRectangle;
 	private Rectangle botomRectangle;
 	private Text segmentName;
-	private Text instanceCount;
+	private InstanceCount instanceCount;
 	private Text name;
 	private double length;
 	private CanvasItem canItem;
@@ -43,13 +44,11 @@ public class InfoBoxSegment extends Group {
 		this.name = new Text(name);
 
 		this.segmentName = new Text(type.name());
-		this.instanceCount = new Text(instanceCount);
-		this.instanceCount.setFill(Color.RED);
-		this.instanceCount.setFont(Font.font(null, FontWeight.BOLD, 25));
+		this.instanceCount = new InstanceCount(instanceCount);
 		this.length = Constans.minCanvasItemWidth;
 
 		this.topRectangle = new Rectangle(length, Constans.infoBoxHeightRectangle);
-		this.botomRectangle = new Rectangle(length, Constans.infoBoxHeightRectangle);
+				this.botomRectangle = new Rectangle(length, Constans.infoBoxHeightRectangle);
 		height = Constans.infoBoxHeight;
 		this.getChildren().addAll(topRectangle, botomRectangle, this.segmentName, this.name, this.instanceCount);
 
@@ -77,12 +76,11 @@ public class InfoBoxSegment extends Group {
 
 		setRectangleColor(Constans.rectangleBorderColor);
 
-		topRectangle.setFill(Color.TRANSPARENT);
-		botomRectangle.setFill(Color.TRANSPARENT);
+		this.botomRectangle.setFill(Color.rgb(174, 219, 241));
+		this.topRectangle.setFill(Color.rgb(216,217,217));
 
-		topRectangle.setStrokeWidth(3);
-
-		botomRectangle.setStrokeWidth(3);
+		topRectangle.setStrokeWidth(1);
+		botomRectangle.setStrokeWidth(1);
 
 		topRectangle.setTranslateX(0);
 		topRectangle.setTranslateY(0);
@@ -95,8 +93,8 @@ public class InfoBoxSegment extends Group {
 		name.setTranslateX(Constans.offset);
 		name.setTranslateY(33);
 
-		instanceCount.setTranslateX(botomRectangle.getWidth() + Constans.offset);
-		instanceCount.setTranslateY(topRectangle.getHeight() + botomRectangle.getHeight() + Constans.offset);
+		instanceCount.setPosition(botomRectangle.getWidth(),
+				topRectangle.getHeight() + botomRectangle.getHeight() );
 
 		height = botomRectangle.getHeight();
 
@@ -160,10 +158,7 @@ public class InfoBoxSegment extends Group {
 		canItem.setMaxHeight(height);
 		canItem.setMaxWidth(length);
 
-		instanceCount.setTranslateX(length + Constans.offset);
-		instanceCount.setTranslateY(topRectangle.getHeight() + botomRectangle.getHeight() + Constans.offset);
-
-
+		instanceCount.setPosition(length, topRectangle.getHeight() + botomRectangle.getHeight());
 	}
 
 	/** Getrs and Setrs **/
@@ -200,7 +195,7 @@ public class InfoBoxSegment extends Group {
 		this.height = height;
 	}
 
-	public Text getInstanceCount() {
-		return instanceCount;
+	public void setInstanceCount(String instanceCount) {
+		this.instanceCount.setInstaceCount(instanceCount);
 	}
 }

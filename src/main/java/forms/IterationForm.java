@@ -1,19 +1,12 @@
 package forms;
 
-import java.time.LocalDate;
-
 import abstractform.TableBasicForm;
 import controlPanels.IterationControlPanel;
-import controlPanels.PhaseControlPanel;
 import controllers.CanvasController;
 import controllers.FormController;
-import abstractform.Date2DescBasicForm;
-import graphics.DragAndDropItemPanel;
+import graphics.panels.DragAndDropItemPanel;
 import interfaces.*;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
-import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.*;
@@ -24,12 +17,8 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
-import services.Alerts;
-import services.CanvasType;
 import services.SegmentType;
-import tables.BasicTable;
 import tables.IterationTable;
-import tables.PhaseTable;
 
 /**
  * Třída představující formulář pro segment Iteration, odděděná od třídy

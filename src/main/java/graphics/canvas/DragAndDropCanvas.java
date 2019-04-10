@@ -1,7 +1,7 @@
-package graphics;
+package graphics.canvas;
 
-import com.jfoenix.controls.JFXDrawer;
 import controllers.CanvasController;
+import graphics.controlPanelItems.ItemContexMenu;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.ScrollPane;
@@ -55,7 +55,7 @@ public class DragAndDropCanvas extends ScrollPane {
 		this.setHbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
 		this.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
 
-		canvas.setBackground(new Background(new BackgroundFill(Color.ANTIQUEWHITE, CornerRadii.EMPTY, Insets.EMPTY)));
+		canvas.setBackground(new Background(new BackgroundFill(Color.rgb(248, 248, 248), CornerRadii.EMPTY, Insets.EMPTY)));
 
 		canvas.setOnMouseClicked(canvasController.getOnMousePressedHandler());
 

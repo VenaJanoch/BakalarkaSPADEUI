@@ -5,9 +5,9 @@ import javafx.collections.ObservableList;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
-import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
+import javafx.scene.paint.*;
 
+import java.io.File;
 import java.sql.Connection;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -36,7 +36,7 @@ public class Constans {
     public static final int twoFormWidth = 1250;
     public static final int twoFormHeight = 850;
 
-    public static final double minCanvasItemWidth = 210;
+    public static final double minCanvasItemWidth = 220;
     public static final double maxCanvasItemWidth = 210;
 
     /**
@@ -227,7 +227,7 @@ public class Constans {
 
 
 
-    public static final double rightDrawerWidth = 470;
+    public static final double rightDrawerWidth = 550;
     public static final double tableControlButtonWidth = 70;
     public static final double tableControlButtonHeight = 70;
     public static final int indicatorIndex = 2;
@@ -238,10 +238,19 @@ public class Constans {
     public static final String CESTA_K_DATABAZI = "jdbc:mysql://localhost:3306/opswi?allowMultiQueries=true&characterEncoding=UTF-8";
     public static final double PROJECT_CHOOSE_WINDOW_WIDTH = 400;
     public static final double PROJECT_CHOOSE_WINDOW_HEIGHT = 400;
-    public static final double PROJECT_TABLE_WIDTH = 700;
-    public static final double PROJECT_TABLE_HEIGHT = 500;
+    public static final double PROJECT_TABLE_WIDTH = 900;
+    public static final double PROJECT_TABLE_HEIGHT = 600;
     public static final String OK_VERIFY_RESULT = "\u2713";
     public static final String BAD_VERIFY_RESULT = "\u274C";
+    public static final double SQL_TEXT_WRAPPING = 400;
+    public static final double INSTACE_COUNT_RADIUS = 20;
+    public static final String[] PANEL_BUTTONS = {"d:\\dokumenty\\SPADEUI\\Images\\Person.png", "d:\\dokumenty\\SPADEUI\\Images\\Commit.png",
+            "d:\\dokumenty\\SPADEUI\\Images\\Commited.png", "d:\\dokumenty\\SPADEUI\\Images\\Configuration.png",
+            "d:\\dokumenty\\SPADEUI\\Images\\Artifact.png"};
     public static Connection CONNECTION = null;																			 //připojení k databázi
+
+    private static Stop[] stops = new Stop[] { new Stop(0, Color.WHITE), new Stop(1, Color.rgb(187, 225, 243))};
+    public static final LinearGradient lg1 = new LinearGradient(0, 0, 1, 1, true, CycleMethod.NO_CYCLE, stops);
+
 
 }

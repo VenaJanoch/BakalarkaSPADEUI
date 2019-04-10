@@ -2,7 +2,7 @@ package controlPanels;
 
 import controllers.FormController;
 import abstractControlPane.NameControlPanel;
-import graphics.ComboBoxItem;
+import graphics.controlPanelItems.ComboBoxItem;
 import interfaces.IEditFormController;
 import interfaces.IFormDataController;
 import javafx.scene.control.TableView;

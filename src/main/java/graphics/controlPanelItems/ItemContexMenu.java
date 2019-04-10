@@ -1,4 +1,4 @@
-package graphics;
+package graphics.controlPanelItems;
 
 import controllers.CanvasController;
 import controllers.CanvasItemController;

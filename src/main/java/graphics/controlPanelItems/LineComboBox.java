@@ -1,4 +1,4 @@
-package graphics;
+package graphics.controlPanelItems;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;

@@ -322,6 +322,50 @@ public class SQLAtributeCreator {
         return categoryDBId;
     }
 
+    public static ArrayList<Integer> createCriterionAttribute(List<CriterionList> criteriaIndexs, DataModel verifyDataModel, CriterionDAO criterionDAO, int projectVerifyId) {
+        ArrayList<Integer> criterionDBId = new ArrayList<>();
+        SQLVerifyObject criterionArtifacts;
+        for (CriterionList list : criteriaIndexs){
+            for (int criterionIndex : list.getCriterions() ){
+                Criterion criterion = verifyDataModel.getCriterion(verifyDataModel.getCriterionId(criterionIndex));
+                criterionArtifacts = criterionDAO.getCriterionProjekt(projectVerifyId, criterion.getName(),
+                        criterion.getNameIndicator(), criterion.getDescription(), criterion.getDescriptionIndicator()).get(0);
+                if (criterionArtifacts != null){
+                    criterionDBId.add(criterionArtifacts.getId());
+                }
+            }
+        }
+        return criterionDBId;
+    }
+
+    public static ArrayList<Integer> createWorkUnitAttribute(List<WorkUnitList> workUnits, DataModel verifyDataModel, WorkUnitDAO workUnitDAO, WorkUnitElementDAO workUnitElementDAO,
+                                                             PersonDAO personDAO, RoleDAO roleDAO, CategoryDAO categoryDAO, int projectVerifyId) {
+        ArrayList<Integer> workUnitDBId = new ArrayList<>();
+        SQLVerifyObject workUnitArtifacts;
+        for (WorkUnitList list : workUnits){
+            for (int workUnitIndex : list.getWorkUnits() ){
+                WorkUnit workUnit = verifyDataModel.getWorkUnit(verifyDataModel.getWorkUnitId(workUnitIndex));
+                ArrayList<Integer> roleDBId = SQLAtributeCreator.createPersonAttribute(workUnit.getAuthorIndex(), verifyDataModel, personDAO, roleDAO, projectVerifyId);
+                ArrayList<Integer> priorityDBId = SQLAtributeCreator.createPriorityAttribute(workUnit.getPriorityIndex(), verifyDataModel, workUnitElementDAO, projectVerifyId);
+                ArrayList<Integer> severityDBId = SQLAtributeCreator.createSeverityAttribute(workUnit.getSeverityIndex(), verifyDataModel, workUnitElementDAO, projectVerifyId);
+                ArrayList<Integer> statusDBId = SQLAtributeCreator.createStatusAttribute(workUnit.getStatusIndex(), verifyDataModel, workUnitElementDAO, projectVerifyId);
+                ArrayList<Integer> typeDBId = SQLAtributeCreator.createTypeAttribute(workUnit.getTypeIndex(), verifyDataModel, workUnitElementDAO, projectVerifyId);
+                ArrayList<Integer> resolutionDBId = SQLAtributeCreator.createResolutionAttribute(workUnit.getResolutionIndex(), verifyDataModel, workUnitElementDAO, projectVerifyId);
+                ArrayList<Integer> categoryDBId = SQLAtributeCreator.createCategoryAttribute(workUnit.getCategory(), workUnit.getCategoryIndicator(), verifyDataModel, categoryDAO, projectVerifyId);
+                ArrayList<Integer> relationDBId = SQLAtributeCreator.createRelationAttribute(workUnit.getRelationIndex(), verifyDataModel, workUnitElementDAO, projectVerifyId);
+
+                workUnitArtifacts = workUnitDAO.getWorkUnitProjekt(projectVerifyId, workUnit.getName(), workUnit.getNameIndicator(), workUnit.getEstimatedTime(), categoryDBId,
+                        roleDBId, priorityDBId, severityDBId, resolutionDBId, statusDBId, typeDBId, relationDBId, new ArrayList<>()).get(0);
+
+                if (workUnitArtifacts != null){
+                    workUnitDBId.add(workUnitArtifacts.getId());
+                }
+            }
+        }
+        return workUnitDBId;
+    }
+    
+
     public static ArrayList<Integer> createArtifactAttribute(List<Integer> artifactIndex, DataModel verifyDataModel, ArtifactDAO artifactDAO,
                                                              int projectVerifyId,  PersonDAO personDAO, RoleDAO roleDAO) {
         SQLVerifyObject artifactChanges;
@@ -339,5 +383,5 @@ public class SQLAtributeCreator {
             return artifactDBId;
     }
 
-
+   
 }

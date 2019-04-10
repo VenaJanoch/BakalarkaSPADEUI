@@ -1,7 +1,7 @@
 package controllers;
 
 import abstractControlPane.ControlPanel;
-import graphics.*;
+import graphics.controlPanelItems.*;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;

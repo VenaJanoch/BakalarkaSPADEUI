@@ -1,4 +1,4 @@
-package graphics;
+package graphics.panels;
 
 import controllers.*;
 import javafx.collections.FXCollections;
@@ -56,7 +56,8 @@ public class DragAndDropPanel extends BorderPane {
         this.setPrefWidth(Constans.width);
         this.buttonBox = new HBox(5);
         this.setPadding(new Insets(10));
-        this.setBackground(new Background(new BackgroundFill(Color.BROWN, CornerRadii.EMPTY, Insets.EMPTY)));
+
+        this.setBackground(new Background(new BackgroundFill(Color.rgb(0, 146, 202), CornerRadii.EMPTY, Insets.EMPTY)));
         this.setId("panelTable");
 
         ObservableList<String> itemsList = FXCollections.observableArrayList();
