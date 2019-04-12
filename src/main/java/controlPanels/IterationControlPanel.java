@@ -45,9 +45,9 @@ public class IterationControlPanel extends WorkUnitDateControlPanel {
         controlPanelController.resetPanel(controlPane);
         addItemsToControlPanel();
 
-        controlPanelController.setValueTextField(this, lineList ,ParamType.Name, iterationData, iterationData[5], 0);
-        controlPanelController.setValueTextField(this, lineList ,ParamType.Description, iterationData, iterationData[6], 1);
-        controlPanelController.setValueTextField(this, lineList ,ParamType.Configuration, iterationData, iterationData[7], 2);
+        controlPanelController.setValueTextField(this, lineList, ParamType.Name, iterationData, iterationData[5], 0);
+        controlPanelController.setValueTextField(this, lineList, ParamType.Description, iterationData, iterationData[6], 1);
+        controlPanelController.setValueComboBox(this, lineList, ParamType.Configuration, (ArrayList<Integer>)iterationData[2], iterationData[7]);
         controlPanelController.setValueDatePicker(this, lineList ,ParamType.Date, (ArrayList<LocalDate>)iterationData[3],  iterationData[8]);
         controlPanelController.setValueDatePicker(this, lineList ,ParamType.Date, (ArrayList<LocalDate>)iterationData[4],  iterationData[9]);
 

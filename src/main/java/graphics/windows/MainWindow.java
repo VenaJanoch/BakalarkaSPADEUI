@@ -49,7 +49,6 @@ public class MainWindow extends Stage {
         this.formController = applicationController.getFormController();
         this.drawerPanelController = drawerPanelController;
         this.setTitle(Constans.mainWindowTitle);
-
         windowController.closeProjectWindow();
 
         this.setScene(creatScene());

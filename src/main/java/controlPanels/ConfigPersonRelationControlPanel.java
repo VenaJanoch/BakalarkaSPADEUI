@@ -50,7 +50,7 @@ public class ConfigPersonRelationControlPanel extends NameControlPanel {
         createControlPanel();
 
         controlPanelController.setValueTextField(this, lineList ,ParamType.Name, configPersonRelation, configPersonRelation[2], 0);
-        controlPanelController.setValueTextField(this, lineList ,ParamType.Role, configPersonRelation, configPersonRelation[3], 1);
+        controlPanelController.setValueComboBox(this, lineList ,ParamType.Role, (ArrayList<Integer>)configPersonRelation[1], configPersonRelation[3]);
         List boolList = configPersonRelation[4];
         boolean exist = (boolean) boolList.get(0);
 

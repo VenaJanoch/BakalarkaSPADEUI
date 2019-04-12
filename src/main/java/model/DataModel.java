@@ -34,9 +34,9 @@ public class DataModel {
         this.objF = new ObjectFactory();
         this.project = objF.createProject();
         this.processGenerator = processGenerator;
-        this.editDataModel = new EditDataModel(project, this);
-        this.saveDataModel = new SaveDataModel(project, this, objF);
-        this.deleteDataModel = new DeleteDataModel(project, this);
+        this.editDataModel = new EditDataModel(this);
+        this.saveDataModel = new SaveDataModel(this, objF);
+        this.deleteDataModel = new DeleteDataModel(this);
         this.dataManipulator = new DataManipulator(processGenerator, this);
 
 
@@ -1224,18 +1224,6 @@ public class DataModel {
         return dataManipulator;
     }
 
-    public List<Milestone> getMilestones() {
-        return project.getMilestones();
-    }
-
-    public List<Person> getRoles() {
-        return project.getRoles();
-    }
-
-    public List<ConfigPersonRelation> getCpr() {
-        return project.getCpr();
-    }
-
     public Project getProject() {
         return project;
     }
@@ -1401,4 +1389,99 @@ public class DataModel {
     public int getWorkUnitId(int workUnitIndex) {
         return project.getWorkUnits().get(workUnitIndex).getId();
     }
+
+    public List<Activity> getActivities() {
+        return project.getActivities();
+    }
+
+    public List<Artifact> getArtifacts() {
+        return project.getArtifacts();
+    }
+
+    public List<Branch> getBranches() {
+        return project.getBranches();
+    }
+
+    public List<Change> getChanges() {
+        return project.getChanges();
+    }
+
+    public List<Commit> getCommits() {
+        return project.getCommit();
+    }
+
+    public List<CommitedConfiguration> getCommitedConfiguration() {
+        return project.getCommitConfiguration();
+    }
+
+    public List<VCSTag> getVCSTags() {
+        return project.getVcsTag();
+    }
+
+    public List<ConfigPersonRelation> getConfigPersonRelations() {
+        return project.getCpr();
+    }
+
+    public List<Configuration> getConfigurations() {
+        return project.getConfiguration();
+    }
+
+    public List<Criterion> getCriterions() {
+        return project.getCriterions();
+    }
+
+
+    public List<Iteration> getIterations() {
+        return project.getIterations();
+    }
+
+    public List<Milestone> getMilestones() {
+        return project.getMilestones();
+    }
+
+    public List<Phase> getPhases() {
+        return project.getPhases();
+    }
+
+    public List<Priority> getPriorities() {
+        return project.getPriority();
+    }
+
+    public List<Relation> getRelations() {
+        return project.getRelation();
+    }
+
+    public List<Resolution> getResolutions() {
+        return project.getResolution();
+    }
+
+    public List<Person> getPersons() {
+        return project.getRoles();
+    }
+
+    public List<RoleType> getRoleTypes() {
+        return project.getRoleType();
+    }
+
+    public List<Severity> getSeverities() {
+        return project.getSeverity();
+    }
+
+    public List<Status> getStatuses() {
+        return project.getStatus();
+    }
+
+    public List<Type> getTypes() {
+        return project.getTypes();
+    }
+
+    public List<WorkUnit> getWorkUnits() {
+        return project.getWorkUnits();
+    }
+
+    public List<Link> getLinks() {
+        return project.getLinks();
+    }
+
+
 }

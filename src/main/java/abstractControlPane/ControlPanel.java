@@ -16,6 +16,7 @@ import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.GridPane;
+import javafx.scene.paint.Color;
 import services.Constans;
 import services.ControlPanelLineObject;
 
@@ -55,9 +56,10 @@ public abstract class ControlPanel extends ScrollPane {
 
 
         button = new Button(buttonText);
-        button.setPrefWidth(60);
-        button.setPrefHeight(60);
-
+        button.setMinSize(70, 70);
+        button.setBackground(new Background(new BackgroundFill(Color.rgb(0,163, 211), CornerRadii.EMPTY, Insets.EMPTY)));
+        button.setTextFill(Color.WHITE);
+        button.setStyle("-fx-font-size: 20px;");
         controlPane = new GridPane();
         controlPane.setVgap(5);
 

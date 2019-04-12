@@ -426,7 +426,7 @@ public class FormController {
                 break;
 
             case Config_Person_Relation:
-                List<ConfigPersonRelation> cprlist = dataModel.getCpr();
+                List<ConfigPersonRelation> cprlist = dataModel.getConfigPersonRelations();
                 ConfigPersonRelationForm cprForm = (ConfigPersonRelationForm) form;
                 TableView cprTableView = cprForm.getTableTV();
                 cprTableView.getItems().clear();

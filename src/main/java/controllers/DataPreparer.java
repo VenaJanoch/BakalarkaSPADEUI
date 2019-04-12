@@ -202,4 +202,13 @@ public class DataPreparer {
         LocalDate localDate = zdt.toLocalDate();
         return localDate;
     }
+
+    public ArrayList convertDoubleToString(List estimates) {
+        ArrayList list = new ArrayList<Double>();
+        for (double estimate : (List<Double>) estimates){
+            list.add(String.valueOf(estimate));
+        }
+
+        return list;
+    }
 }

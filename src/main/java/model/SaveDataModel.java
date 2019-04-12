@@ -1,22 +1,17 @@
 package model;
 
 import SPADEPAC.*;
-import XML.ProcessGenerator;
 import interfaces.ISaveDataModel;
-import tables.CommitTable;
-import tables.CommitedConfigurationTable;
 
 import java.util.ArrayList;
 
 public class SaveDataModel implements ISaveDataModel {
 
-    private Project project;
     private DataModel dataModel;
     private ObjectFactory objF;
 
-    public SaveDataModel(Project project,DataModel dataModel,  ObjectFactory objF) {
+    public SaveDataModel(DataModel dataModel,  ObjectFactory objF) {
         this.dataModel = dataModel;
-        this.project = project;
         this.objF = objF;
     }
 
@@ -37,7 +32,7 @@ public class SaveDataModel implements ISaveDataModel {
         linkP.setStartIndex(startId);
         linkP.setEndIndex(endId);
 
-        project.getLinks().add(linkP);
+        dataModel.getLinks().add(linkP);
     }
 
     public void createNewPersonToArtifactRelation(int linkId, int startId, int endId){
@@ -89,7 +84,7 @@ public class SaveDataModel implements ISaveDataModel {
         ArrayList list = new ArrayList();
         list.add("");
         phase.getName().addAll(list);
-        project.getPhases().add(phase);
+        dataModel.getPhases().add(phase);
     }
 
     public void createNewIteration(int id) {
@@ -99,7 +94,7 @@ public class SaveDataModel implements ISaveDataModel {
         ArrayList list = new ArrayList();
         list.add("");
         iteration.getName().addAll(list);
-        project.getIterations().add(iteration);
+        dataModel.getIterations().add(iteration);
     }
 
     public void createNewActivity(int id) {
@@ -109,7 +104,7 @@ public class SaveDataModel implements ISaveDataModel {
         ArrayList list = new ArrayList();
         list.add("");
         activity.getName().addAll(list);
-        project.getActivities().add(activity);
+        dataModel.getActivities().add(activity);
 
     }
 
@@ -120,7 +115,7 @@ public class SaveDataModel implements ISaveDataModel {
         ArrayList list = new ArrayList();
         list.add("");
         workUnit.getName().addAll(list);
-        project.getWorkUnits().add(workUnit);
+        dataModel.getWorkUnits().add(workUnit);
     }
 
     public void createNewConfiguration(int id) {
@@ -131,7 +126,7 @@ public class SaveDataModel implements ISaveDataModel {
         ArrayList list = new ArrayList();
         list.add("");
         configuration.getName().addAll(list);
-        project.getConfiguration().add(configuration);
+        dataModel.getConfigurations().add(configuration);
     }
 
     public void createNewChange(int id) {
@@ -141,7 +136,7 @@ public class SaveDataModel implements ISaveDataModel {
         ArrayList list = new ArrayList();
         list.add("");
         change.getName().addAll(list);
-        project.getChanges().add(change);
+        dataModel.getChanges().add(change);
     }
 
     public void createNewArtifact(int id) {
@@ -152,7 +147,7 @@ public class SaveDataModel implements ISaveDataModel {
         ArrayList list = new ArrayList();
         list.add("");
         artifact.getName().addAll(list);
-        project.getArtifacts().add(artifact);
+        dataModel.getArtifacts().add(artifact);
     }
 
     public void createNewBranch(String nameForManipulator, int id, boolean isMain) {
@@ -162,7 +157,7 @@ public class SaveDataModel implements ISaveDataModel {
         ArrayList list = new ArrayList();
         list.add("");
         branch.getName().addAll(list);
-        project.getBranches().add(branch);
+        dataModel.getBranches().add(branch);
     }
 
     public void createNewCPR(int id) {
@@ -173,7 +168,7 @@ public class SaveDataModel implements ISaveDataModel {
         ArrayList list = new ArrayList();
         list.add("");
         cpr.getName().addAll(list);
-        project.getCpr().add(cpr);
+        dataModel.getConfigPersonRelations().add(cpr);
     }
 
     public void createNewCriterion(String nameForManipulator, String descForManipulator, int id) {
@@ -184,7 +179,7 @@ public class SaveDataModel implements ISaveDataModel {
         ArrayList list = new ArrayList();
         list.add("");
         criterion.getName().addAll(list);
-        project.getCriterions().add(criterion);
+        dataModel.getCriterions().add(criterion);
     }
 
     public void createNewPriority(String nameForManipulator, String classST, String superST, int id) {
@@ -195,7 +190,7 @@ public class SaveDataModel implements ISaveDataModel {
         ArrayList list = new ArrayList();
         list.add("");
         priority.getName().addAll(list);
-        project.getPriority().add(priority);
+        dataModel.getPriorities().add(priority);
     }
 
     public void createNewSeverity(String nameForManipulator, String classST, String superST, int id) {
@@ -206,7 +201,7 @@ public class SaveDataModel implements ISaveDataModel {
         ArrayList list = new ArrayList();
         list.add("");
         severity.getName().addAll(list);
-        project.getSeverity().add(severity);
+        dataModel.getSeverities().add(severity);
     }
 
     public void createNewRelation(String nameForManipulator, String classST, String superST, int id) {
@@ -217,7 +212,7 @@ public class SaveDataModel implements ISaveDataModel {
         ArrayList list = new ArrayList();
         list.add("");
         relation.getName().addAll(list);
-        project.getRelation().add(relation);
+        dataModel.getRelations().add(relation);
     }
 
     public void createNewResolution(String nameForManipulator, String classST, String superST, int id) {
@@ -228,7 +223,7 @@ public class SaveDataModel implements ISaveDataModel {
         ArrayList list = new ArrayList();
         list.add("");
         resolution.getName().addAll(list);
-        project.getResolution().add(resolution);
+        dataModel.getResolutions().add(resolution);
 
     }
 
@@ -241,7 +236,7 @@ public class SaveDataModel implements ISaveDataModel {
         ArrayList list = new ArrayList();
         list.add("");
         role.getName().addAll(list);
-        project.getRoles().add(role);
+        dataModel.getPersons().add(role);
     }
 
     public void createNewMilestone(String nameForManipulator, String description, ArrayList<Integer> criterionIndex, int id) {
@@ -252,7 +247,7 @@ public class SaveDataModel implements ISaveDataModel {
         ArrayList list = new ArrayList();
         list.add("");
         milestone.getName().addAll(list);
-        project.getMilestones().add(milestone);
+        dataModel.getMilestones().add(milestone);
     }
 
     public void createNewRoleType(String nameForManipulator, String classST, String superST, int id) {
@@ -263,11 +258,11 @@ public class SaveDataModel implements ISaveDataModel {
         ArrayList list = new ArrayList();
         list.add("");
         roleType.getName().addAll(list);
-        project.getRoleType().add(roleType);
+        dataModel.getRoleTypes().add(roleType);
     }
 
     public void addTagToConfiguration(String tag, int configId, int index) {
-        Configuration configuration = project.getConfiguration().get(configId);
+        Configuration configuration = dataModel.getConfigurations().get(configId);
         configuration.getTags().add(tag);
     }
 
@@ -280,7 +275,7 @@ public class SaveDataModel implements ISaveDataModel {
         list.add("");
         status.getName().addAll(list);
   //      dataModel.addDataToStatus(status, nameForManipulator, classST, superST);
-        project.getStatus().add(status);
+        dataModel.getStatuses().add(status);
     }
 
     public void createNewType(String nameForManipulator, String classST, String superST, int id) {
@@ -292,7 +287,7 @@ public class SaveDataModel implements ISaveDataModel {
         list.add("");
         type.getName().addAll(list);
   //      dataModel.addDataToType(type, nameForManipulator, classST, superST);
-        project.getTypes().add(type);
+        dataModel.getTypes().add(type);
     }
 
     @Override
@@ -303,7 +298,7 @@ public class SaveDataModel implements ISaveDataModel {
         ArrayList list = new ArrayList();
         list.add("");
         vcsTag.getName().addAll(list);
-        project.getVcsTag().add(vcsTag);
+        dataModel.getVCSTags().add(vcsTag);
     }
 
     @Override
@@ -316,7 +311,7 @@ public class SaveDataModel implements ISaveDataModel {
         ArrayList list = new ArrayList();
         list.add("");
         commit.getName().addAll(list);
-        project.getCommit().add(commit);
+        dataModel.getCommits().add(commit);
     }
 
     @Override
@@ -329,6 +324,6 @@ public class SaveDataModel implements ISaveDataModel {
         ArrayList list = new ArrayList();
         list.add("");
         commitedConfiguration.getName().addAll(list);
-        project.getCommitConfiguration().add(commitedConfiguration);
+        dataModel.getCommitedConfiguration().add(commitedConfiguration);
     }
 }

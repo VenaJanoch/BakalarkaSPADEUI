@@ -11,29 +11,28 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DeleteDataModel implements IDeleteDataModel {
-
-    private Project project;
+    
     private DataModel dataModel;
 
-    public  DeleteDataModel(Project project, DataModel dataModel){
-        this.project = project;
+    public  DeleteDataModel(DataModel dataModel){
+       
         this.dataModel = dataModel;
     }
 
     public void removeType(ObservableList<Integer> indexList) {
         for(int i = indexList.size() -1; i >= 0; i-- ){
-            project.getTypes().remove((int)indexList.get(i));
+            dataModel.getTypes().remove((int)indexList.get(i));
         }
     }
 
     public void removeStatus(ObservableList<Integer> indexList) {
         for(int i = indexList.size() -1; i >= 0; i-- ){
-            project.getStatus().remove((int)indexList.get(i));
+            dataModel.getStatuses().remove((int)indexList.get(i));
         }
     }
 
     public void removeTag(ArrayList<Integer> indexList, int configId) {
-        Configuration configuration = project.getConfiguration().get(configId);
+        Configuration configuration = dataModel.getConfigurations().get(configId);
         for(Integer i : indexList){
             configuration.getTags().remove(i);
         }
@@ -42,74 +41,74 @@ public class DeleteDataModel implements IDeleteDataModel {
 
     public void removeRoleType(ObservableList<Integer> indexList) {
         for(int i = indexList.size() -1; i >= 0; i-- ){
-            project.getRoleType().remove((int)indexList.get(i));
+            dataModel.getRoleTypes().remove((int)indexList.get(i));
         }
     }
 
     public void removeMilestone(ObservableList<Integer> indexList) {
         for(int i = indexList.size() -1; i >= 0; i-- ){
-            project.getMilestones().remove((int)indexList.get(i));
+            dataModel.getMilestones().remove((int)indexList.get(i));
         }
     }
 
     public void removeRole(int id) {
-        int projectIndex = dataModel.getRoleIndexInProject(id);
-            project.getRoles().remove(projectIndex);
+        int dataModelIndex = dataModel.getRoleIndexInProject(id);
+            dataModel.getPersons().remove(dataModelIndex);
 
     }
 
     public void removeResolution(ObservableList<Integer> indexList) {
         for(int i = indexList.size() -1; i >= 0; i-- ){
-            project.getResolution().remove((int)indexList.get(i));
+            dataModel.getResolutions().remove((int)indexList.get(i));
         }
     }
 
     public void removeRelation(ObservableList<Integer> indexList) {
         for(int i = indexList.size() -1; i >= 0; i-- ){
-            project.getRelation().remove((int)indexList.get(i));
+            dataModel.getRelations().remove((int)indexList.get(i));
         }
     }
 
     public void removeSeverity(ObservableList<Integer> indexList) {
         for(int i = indexList.size() -1; i >= 0; i-- ){
-            project.getSeverity().remove((int)indexList.get(i));
+            dataModel.getSeverities().remove((int)indexList.get(i));
         }
     }
 
     public void removePriority(ObservableList<Integer> indexList) {
         for(int i = indexList.size() -1; i >= 0; i-- ){
-            project.getPriority().remove((int)indexList.get(i));
+            dataModel.getPriorities().remove((int)indexList.get(i));
         }
     }
 
     public void removeCriterion(ObservableList<Integer> indexList) {
         for(int i = indexList.size() -1; i >= 0; i-- ){
-            project.getCriterions().remove((int)indexList.get(i));
+            dataModel.getCriterions().remove((int)indexList.get(i));
         }
     }
 
     public void removeCPR(ObservableList<Integer> indexList) {
         for(int i = indexList.size() -1; i >= 0; i-- ){
-            project.getCpr().remove((int)indexList.get(i));
+            dataModel.getConfigPersonRelations().remove((int)indexList.get(i));
         }
     }
 
     public void removeBranch(ObservableList<Integer> indexList) {
         for(int i = indexList.size() -1; i >= 0; i-- ){
-            project.getBranches().remove((int)indexList.get(i));
+            dataModel.getBranches().remove((int)indexList.get(i));
         }
     }
 
     public void removeVCSTag(ObservableList<Integer> indexList) {
         for(int i = indexList.size() -1; i >= 0; i-- ){
-            project.getVcsTag().remove((int)indexList.get(i));
+            dataModel.getVCSTags().remove((int)indexList.get(i));
         }
     }
 
     public void removePersonArtifactLink(int arrowId, int personId, int artifactID) {
 
         int linkIndexInProject = dataModel.getLinkIndexInProject(arrowId);
-        project.getLinks().remove(linkIndexInProject);
+        dataModel.getLinks().remove(linkIndexInProject);
         Artifact artifact = dataModel.getArtifact(artifactID);
         List<Integer> list = artifact.getAuthorIndex();
         removePersonFromList(list, personId);
@@ -158,7 +157,7 @@ public class DeleteDataModel implements IDeleteDataModel {
     public void removeArtifactConfigurationLink(int arrowId, int artifactId, int configurationID) {
 
         int linkIndexInProject = dataModel.getLinkIndexInProject(arrowId);
-        project.getLinks().remove(linkIndexInProject);
+        dataModel.getLinks().remove(linkIndexInProject);
         Configuration configuration = dataModel.getConfiguration(configurationID);
         List<Integer> list = configuration.getAuthorIndex();
         removeArtifactFromList(list, artifactId);
@@ -181,7 +180,7 @@ public class DeleteDataModel implements IDeleteDataModel {
     public void removeCommitedConfigurationConfigurationLink(int arrowId, int commitedConfigurationId, int configurationID) {
 
         int linkIndexInProject = dataModel.getLinkIndexInProject(arrowId);
-        project.getLinks().remove(linkIndexInProject);
+        dataModel.getLinks().remove(linkIndexInProject);
         Configuration configuration = dataModel.getConfiguration(configurationID);
         List<Integer> list = configuration.getCommitedConfiguration();
         removeCommitedConfigurationFromList(list, commitedConfigurationId);
@@ -191,7 +190,7 @@ public class DeleteDataModel implements IDeleteDataModel {
     public void removeCommitCommitedConfigurationLink(int arrowId, int commitedConfigurationId, int configurationID) {
 
         int linkIndexInProject = dataModel.getLinkIndexInProject(arrowId);
-        project.getLinks().remove(linkIndexInProject);
+        dataModel.getLinks().remove(linkIndexInProject);
         CommitedConfiguration configuration = dataModel.getCommitedConfiguration(commitedConfigurationId);
         List<Integer> list = configuration.getCommit();
         removeCommitFromList(list, commitedConfigurationId);
@@ -199,58 +198,58 @@ public class DeleteDataModel implements IDeleteDataModel {
     }
     
     public void removeArtifact(int id) {
-        project.getArtifacts().remove(dataModel.getArtifactIndexInProject(id));
+        dataModel.getArtifacts().remove(dataModel.getArtifactIndexInProject(id));
     }
 
     public void removeConfiguration(int id){
-        int projectIndex = dataModel.getConfigurationIndexInProject(id);
-        project.getConfiguration().remove(projectIndex);
+        int dataModelIndex = dataModel.getConfigurationIndexInProject(id);
+        dataModel.getConfigurations().remove(dataModelIndex);
     }
 
     public void removeWorkUnit(ObservableList<Integer> indexList) {
             for(int i = indexList.size() -1; i >= 0; i-- ){
-                project.getWorkUnits().remove((int)indexList.get(i));
+                dataModel.getWorkUnits().remove((int)indexList.get(i));
             }
     }
 
     public void removeActivity(ObservableList<Integer> indexList) {
         for(int i = indexList.size() -1; i >= 0; i-- ){
-            project.getActivities().remove((int)indexList.get(i));
+            dataModel.getActivities().remove((int)indexList.get(i));
         }
     }
 
     public void removeWorkUnitRelation(int startItemId, int endItemId) {
 
-   //     project.getWorkUnits().get(startItemId).setRelationIndex(null);
-   //     project.getWorkUnits().get(endItemId).setRelationIndex(null);
+   //     dataModel.getWorkUnits().get(startItemId).setRelationIndex(null);
+   //     dataModel.getWorkUnits().get(endItemId).setRelationIndex(null);
 
     }
     public void removeIteration(ObservableList<Integer> indexList) {
         for(int i = indexList.size() -1; i >= 0; i-- ){
-            project.getIterations().remove((int)indexList.get(i));
+            dataModel.getIterations().remove((int)indexList.get(i));
         }
     }
 
     public void removePhase(ObservableList<Integer> indexList) {
         for(int i = indexList.size() -1; i >= 0; i-- ){
-            project.getPhases().remove((int)indexList.get(i));
+            dataModel.getPhases().remove((int)indexList.get(i));
         }
     }
 
     public void removeChange(ObservableList<Integer> indexList) {
         for(int i = indexList.size() -1; i >= 0; i-- ){
-            project.getChanges().remove((int)indexList.get(i));
+            dataModel.getChanges().remove((int)indexList.get(i));
         }
     }
 
     public void removeCommitedConfiguration(int id){
-        int projectIndex = dataModel.getCommitedConfigurationIndexInProject(id);
-        project.getCommitConfiguration().remove(projectIndex);
+        int dataModelIndex = dataModel.getCommitedConfigurationIndexInProject(id);
+        dataModel.getCommitedConfiguration().remove(dataModelIndex);
     }
 
     public void removeCommit(int id){
-        int projectIndex = dataModel.getCommitIndexInProject(id);
-        project.getCommit().remove(projectIndex);
+        int dataModelIndex = dataModel.getCommitIndexInProject(id);
+        dataModel.getCommits().remove(dataModelIndex);
     }
 
 }

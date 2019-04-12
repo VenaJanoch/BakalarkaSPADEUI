@@ -10,12 +10,10 @@ import java.util.List;
 
 public class EditDataModel implements IEditDataModel {
 
-    private Project project;
     private DataModel dataModel;
 
 
-    public  EditDataModel(Project project, DataModel dataModel){
-        this.project = project;
+    public  EditDataModel(DataModel dataModel){
         this.dataModel = dataModel;
     }
 
@@ -235,7 +233,7 @@ public class EditDataModel implements IEditDataModel {
             case Change:
                 switch (elementType ) {
                     case Artifact:
-                        for (Change segment : project.getChanges()) {
+                        for (Change segment : dataModel.getChanges()) {
                             List<Integer> type = segment.getArtifactIndex();
                             List<Integer> artifactIdId = dataModel.getArtifactId(type);
                                 int deleteIndexInProject = dataModel.getArtifactIndexInProject(elementIdList);
@@ -255,7 +253,7 @@ public class EditDataModel implements IEditDataModel {
             case Configuration:
                 switch (elementType ) {
                     case Committed_Configuration:
-                        for (Configuration segment : project.getConfiguration()) {
+                        for (Configuration segment : dataModel.getConfigurations()) {
                             List<Integer> type = segment.getCommitedConfiguration();
                             List<Integer> commitedConfigurationId = dataModel.getCommitedConfigurationId(type);
                             int deleteIndexInProject = dataModel.getCommitedConfigurationIndexInProject(elementIdList);
@@ -289,7 +287,7 @@ public class EditDataModel implements IEditDataModel {
 
                 switch (elementType ) {
                     case Criterion:
-                        for (Milestone segment : project.getMilestones()) {
+                        for (Milestone segment : dataModel.getMilestones()) {
                             int i = 0;
                             for (CriterionList list : segment.getCriteriaIndexs()){
                                 updateElementListFromSegment(elementIdList, list.getCriterions());
@@ -304,7 +302,7 @@ public class EditDataModel implements IEditDataModel {
                 }
                 break;
             case Person:
-                for (Person segment : project.getRoles()) {
+                for (Person segment : dataModel.getPersons()) {
                     List<Integer> type = segment.getType();
                     List<Integer> roleTypeId = dataModel.getRoleTypeId(type);
                     for(int deleteId : elementIdList) {
@@ -327,7 +325,7 @@ public class EditDataModel implements IEditDataModel {
             case Config_Person_Relation:
                 switch (elementType ) {
                     case Person:
-                        for (ConfigPersonRelation segment : project.getCpr()) {
+                        for (ConfigPersonRelation segment : dataModel.getConfigPersonRelations()) {
 
                             List<Integer> type = segment.getPersonIndex();
                             List<Integer> personId = dataModel.getRoleId(type);
@@ -355,7 +353,7 @@ public class EditDataModel implements IEditDataModel {
             case Artifact:
                 switch (elementType ) {
                     case Person:
-                        for (Artifact segment : project.getArtifacts()) {
+                        for (Artifact segment : dataModel.getArtifacts()) {
 
                             List<Integer> type = segment.getAuthorIndex();
                             List<Integer> personId = dataModel.getRoleId(type);
@@ -381,7 +379,7 @@ public class EditDataModel implements IEditDataModel {
             case Phase:
                 switch (elementType ) {
                     case Milestone:
-                        for (Phase segment : project.getPhases()) {
+                        for (Phase segment : dataModel.getPhases()) {
 
                             List<Integer> type = segment.getMilestoneIndex();
                             List<Integer> milestoneId = dataModel.getMilestoneId(type);
@@ -403,7 +401,7 @@ public class EditDataModel implements IEditDataModel {
                         }
                         break;
                     case Configuration:
-                        for (Phase segment : project.getPhases()) {
+                        for (Phase segment : dataModel.getPhases()) {
 
                             List<Integer> type = segment.getConfiguration();
                             List<Integer> configurationId = dataModel.getConfigurationId(type);
@@ -429,7 +427,7 @@ public class EditDataModel implements IEditDataModel {
             case Iteration:
                 switch (elementType ) {
                     case Configuration:
-                        for (Iteration segment : project.getIterations()) {
+                        for (Iteration segment : dataModel.getIterations()) {
                           List<Integer> type = segment.getConfiguration();
                             List<Integer> configurationId = dataModel.getConfigurationId(type);
                             for(int deleteId : elementIdList){
@@ -452,7 +450,7 @@ public class EditDataModel implements IEditDataModel {
             case Commit:
                 switch (elementType) {
                     case Branch:
-                        for (Commit segment : project.getCommit()) {
+                        for (Commit segment : dataModel.getCommits()) {
                             int i = 0;
                             for (BranchList list : segment.getBranch()) {
                                 updateElementListFromSegment(elementIdList, list.getBranches());
@@ -463,7 +461,7 @@ public class EditDataModel implements IEditDataModel {
                             }
                         }
                     case VCSTag:
-                        for (Commit segment : project.getCommit()) {
+                        for (Commit segment : dataModel.getCommits()) {
                             List<Integer> type = segment.getTags();
                             List<Integer> tagId = dataModel.getTagId(type);
                             for(int deleteId : elementIdList){
@@ -487,7 +485,7 @@ public class EditDataModel implements IEditDataModel {
 
                 switch (elementType ) {
                     case Person:
-                        for (Configuration segment : project.getConfiguration()) {
+                        for (Configuration segment : dataModel.getConfigurations()) {
                             List<Integer> type = segment.getAuthorIndex();
                             List<Integer> personId = dataModel.getRoleId(type);
                             for(int deleteId : elementIdList){
@@ -507,7 +505,7 @@ public class EditDataModel implements IEditDataModel {
                         }
                         break;
                     case Config_Person_Relation:
-                        for (Configuration segment : project.getConfiguration()) {
+                        for (Configuration segment : dataModel.getConfigurations()) {
                             int i = 0;
                             for (CPRSList list : segment.getCPRsIndexs()){
                                 updateElementListFromSegment(elementIdList, list.getCPRs());
@@ -582,7 +580,7 @@ public class EditDataModel implements IEditDataModel {
 
         switch (element) {
             case Priority:
-                for (WorkUnit segment : project.getWorkUnits()) {
+                for (WorkUnit segment : dataModel.getWorkUnits()) {
 //                    int type = segment.getPriorityIndex();
 //                    int priorityId = dataModel.getPriorityId(type);
 //
@@ -597,7 +595,7 @@ public class EditDataModel implements IEditDataModel {
                 }
                 break;
             case Severity:
-                for (WorkUnit segment : project.getWorkUnits()) {
+                for (WorkUnit segment : dataModel.getWorkUnits()) {
 //                    int type = segment.getSeverityIndex();
 //                    int priorityId = dataModel.getSeverityId(type);
 //
@@ -612,7 +610,7 @@ public class EditDataModel implements IEditDataModel {
                 }
                 break;
             case Person:
-                for (WorkUnit segment : project.getWorkUnits()) {
+                for (WorkUnit segment : dataModel.getWorkUnits()) {
 //                    int index = segment.getAuthorIndex();
 //                    int index2 = segment.getAssigneeIndex();
 //                    int personId = dataModel.getRoleId(index);
@@ -633,7 +631,7 @@ public class EditDataModel implements IEditDataModel {
                 }
                 break;
             case Resolution:
-                for (WorkUnit segment : project.getWorkUnits()) {
+                for (WorkUnit segment : dataModel.getWorkUnits()) {
 //                    int type = segment.getResolutionIndex();
 //                    int priorityId = dataModel.getResolutionId(type);
 //
@@ -648,7 +646,7 @@ public class EditDataModel implements IEditDataModel {
                 }
                 break;
             case Status:
-                for (WorkUnit segment : project.getWorkUnits()) {
+                for (WorkUnit segment : dataModel.getWorkUnits()) {
 //                    int type = segment.getStatusIndex();
 //                    int priorityId = dataModel.getStatusId(type);
 //
@@ -664,7 +662,7 @@ public class EditDataModel implements IEditDataModel {
                 break;
             case Type:
 
-                for (WorkUnit segment : project.getWorkUnits()) {
+                for (WorkUnit segment : dataModel.getWorkUnits()) {
 //                    int type = segment.getTypeIndex();
 //                    int priorityId = dataModel.getTypeId(type);
 //                    for(int deleteId : elementIdList){

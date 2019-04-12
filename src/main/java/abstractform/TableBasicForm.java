@@ -16,6 +16,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import services.*;
 import tables.BasicTable;
@@ -85,17 +86,31 @@ public abstract class TableBasicForm extends BasicForm {
 
         this.setPadding(new Insets(5));
 
-        HBox buttonPanel = new HBox(25);
-        buttonPanel.setAlignment(Pos.CENTER);
+        GridPane buttonPanel = new GridPane();
+
         buttonPanel.setMinHeight(100);
         addButton = new Button("+");
         addButton.setMinSize(Constans.tableControlButtonWidth, Constans.tableControlButtonHeight);
-        addButton.setMinHeight(70);
+        addButton.setBackground(new Background(new BackgroundFill(Color.rgb(129,129, 129), CornerRadii.EMPTY, Insets.EMPTY)));
+        addButton.setTextFill(Color.WHITE);
+        addButton.setStyle("-fx-font-size: 30px;");
         removeButton = new Button("-");
         removeButton.setMinSize(Constans.tableControlButtonWidth, Constans.tableControlButtonHeight);
+        removeButton.setBackground(new Background(new BackgroundFill(Color.rgb(129,129, 129), CornerRadii.EMPTY, Insets.EMPTY)));
+        removeButton.setTextFill(Color.WHITE);
+        removeButton.setStyle("-fx-font-size: 30px;");
         editButton = new Button("Edit");
         editButton.setMinSize(Constans.tableControlButtonWidth, Constans.tableControlButtonHeight);
-        buttonPanel.getChildren().addAll(addButton, removeButton, editButton);
+        editButton.setBackground(new Background(new BackgroundFill(Color.rgb(0,163, 211), CornerRadii.EMPTY, Insets.EMPTY)));
+        editButton.setTextFill(Color.WHITE);
+        editButton.setStyle("-fx-font-size: 20px;");
+
+        buttonPanel.add(addButton, 0,0);
+        buttonPanel.add(removeButton, 1,0);
+        buttonPanel.add(editButton, 15,0);
+        //buttonPanel.setAlignment(Pos.);
+        buttonPanel.setHgap(15);
+        GridPane.setMargin(addButton, new Insets(0,0,0,15));
         this.setBottom(buttonPanel);
         return this;
     }

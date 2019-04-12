@@ -505,6 +505,7 @@ public class FormDataController implements IFormDataController {
         List[] data = dataManipulator.getWorkUnitStringData(id);
 
         ArrayList priorityIndicies = dataPreparer.prepareIndexForManipulator(data[4]);
+        ArrayList estimate = dataPreparer.convertDoubleToString(data[2]);
         ArrayList indicies1 = dataPreparer.prepareIndexForManipulator(data[5]);
         ArrayList indicies2 = dataPreparer.prepareIndexForManipulator(data[6]);
         ArrayList indicies3 = dataPreparer.prepareIndexForManipulator(data[7]);
@@ -512,6 +513,7 @@ public class FormDataController implements IFormDataController {
         ArrayList indicies5 = dataPreparer.prepareIndexForManipulator(data[9]);
         ArrayList indicies6 = dataPreparer.prepareIndexForManipulator(data[10]);
 
+        data[2] = estimate;
         data[4] = priorityIndicies;
         data[5] = indicies1;
         data[6] = indicies2;

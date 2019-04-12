@@ -7,13 +7,15 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.CornerRadii;
-import javafx.scene.layout.HBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.SplitPane;
+import javafx.scene.image.Image;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import services.Constans;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 
 /**
  * Třída tvořící panel tlačítek
@@ -51,7 +53,24 @@ public class DragAndDropPanel extends BorderPane {
         this.canvasController = canvasController;
         this.selectItemController = selectItemController;
 
-        this.projectButton = new Button("Project");
+        this.projectButton = new Button();
+        FileInputStream input = null;
+        try {
+            input = new FileInputStream("c:\\Users\\venaj\\OneDrive\\ZCU\\Diplomka\\KristinaDesign\\Ikony\\Project.png");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        Image image = new Image( input);
+        BackgroundImage backgroundImage = new BackgroundImage( image, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT,
+                BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+
+        Background background = new Background(backgroundImage);
+        projectButton.setMinWidth(image.getWidth());
+        projectButton.setMinHeight(image.getHeight());
+        projectButton.setBackground(background);
+
+
+
         this.projectConfirmButton = new Button("Confirm project");
         this.setPrefWidth(Constans.width);
         this.buttonBox = new HBox(5);
@@ -89,13 +108,27 @@ public class DragAndDropPanel extends BorderPane {
 
 //		buttonBox.setPadding(new Insets(0,0,0,5));
 //		this.setTop(buttonBox);
-        this.setLeft(projectButton);
-        this.setCenter(items);
-        BorderPane.setAlignment(items, Pos.CENTER);
-        this.setBottom(formBox);
-        this.setRight(projectConfirmButton);
-        this.setAlignment(formBox, Pos.BOTTOM_LEFT);
 
+        HBox projectPanel = new HBox(10);
+       // projectPanel.setBackground(new Background(new BackgroundFill(Color.RED, CornerRadii.EMPTY, Insets.EMPTY )));
+        SplitPane splitPane = new SplitPane();
+        splitPane.setMaxHeight(projectButton.getMaxHeight());
+        projectPanel.getChildren().addAll(projectButton, splitPane);
+        projectPanel.setMinWidth(150);
+        projectPanel.setAlignment(Pos.CENTER_RIGHT);
+        this.setLeft(projectPanel);
+        this.setCenter(items);
+        HBox bottomPanel = new HBox(10);
+        Label tableLabel = new Label("Review tables: ");
+        tableLabel.setTextFill(Color.WHITE);
+        bottomPanel.getChildren().addAll(tableLabel, formBox, projectConfirmButton);
+
+        HBox.setMargin(projectConfirmButton, new Insets(0,0,0, 700));
+        this.setBottom(bottomPanel);
+        //this.setRight(projectConfirmButton);
+        this.setAlignment(formBox, Pos.BOTTOM_LEFT);
+        BorderPane.setMargin(bottomPanel, new Insets(0,0,0,160));
+        BorderPane.setMargin(items, new Insets(0,0,0,50));
     }
 
 

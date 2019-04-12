@@ -4,6 +4,7 @@ import controllers.CanvasController;
 import controllers.DrawerPanelController;
 import graphics.canvas.DragSegmentButton;
 import javafx.geometry.Insets;
+import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.control.SplitPane;
@@ -13,6 +14,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import services.Constans;
 import services.SegmentType;
@@ -71,15 +73,17 @@ public class DragAndDropItemPanel extends HBox {
      * Pomocná metoda pro vytvoření tlačítek v hlavním okně
      */
     public void createDragItems() {
-
         for (int i = 0; i < itemArray.length; i++) {
             dragSegmnets[i] = new DragSegmentButton(SegmentType.values()[itemArray[i]], canvasController);
             FileInputStream input = null;
             try {
+                //String path = DragAndDropItemPanel.class.getClassLoader().getResource(Constans.PANEL_BUTTONS[i]).toString();
                 input = new FileInputStream(Constans.PANEL_BUTTONS[i]);
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
+
+
             Image image = new Image( input);
             BackgroundImage backgroundImage = new BackgroundImage( image, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT,
                     BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
@@ -93,7 +97,7 @@ public class DragAndDropItemPanel extends HBox {
 
         }
         createLinkButton();
-
+       // this.setAlignment(Pos.CENTER);
     }
 
     /**
@@ -102,7 +106,7 @@ public class DragAndDropItemPanel extends HBox {
      */
     public void createLinkButton() {
 
-        HBox box = new HBox();
+        HBox box = new HBox(10);
         linkButton = canvasController.getLinkButton();
         FileInputStream input = null;
         try {
@@ -120,9 +124,11 @@ public class DragAndDropItemPanel extends HBox {
         linkButton.setBackground(background);
         linkButton.setId("linkButton");
         box.setMinWidth(80);
-        box.getChildren().add(linkButton);
-        box.setAlignment(Pos.BASELINE_RIGHT);
-       // SplitPane splitPane = new SplitPane();
+
+        SplitPane splitPane = new SplitPane();
+        box.getChildren().addAll(splitPane, linkButton);
+        HBox.setMargin(splitPane, new Insets(0,0,0, 5) );
+
         linkButton.setFont(Font.font("Verdana", 25));
         linkButton.setOnAction(event -> createArrowButtonEvent());
         linkButton.setOnKeyPressed(event -> presESC(event));
