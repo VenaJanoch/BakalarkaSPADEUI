@@ -1,6 +1,5 @@
 package tables;
 
-import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 public class IterationTable extends BasicTable {
@@ -28,7 +27,7 @@ public class IterationTable extends BasicTable {
 	@Override
 	public String toString() {
 
-		return getName();
+		return getAlias();
 	}
 
 	/** Globální proměnné třídy **/

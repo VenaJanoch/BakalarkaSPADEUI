@@ -55,7 +55,7 @@ public class IterationControlPanel extends WorkUnitDateControlPanel {
         boolean exist = (boolean) boolList.get(0);
 
         controlPanelController.setValueExistRadioButton(exist);
-
+        controlPanelController.setAlias((String)boolList.get(2), this);
         ArrayList<ArrayList<Integer>> workUnits = formDataController.getWorkUnitFromSegment(id, SegmentType.Iteration);
         controlPanelController.setValueCheckComboBox(this, lineList ,ParamType.WorkUnit, workUnits, iterationData[10]);
 
@@ -86,7 +86,7 @@ public class IterationControlPanel extends WorkUnitDateControlPanel {
         ArrayList<Integer> configIndex = controlPanelController.processComboBoxLines(ParamType.Configuration, configIndicators);
 
 
-        editFormController.editDataFromIteration(name, endDate, startDate, desc, configIndex,
+        editFormController.editDataFromIteration(aliasTF.getText(), name, endDate, startDate, desc, configIndex,
                 workUnit, workUnitIndicators, nameIndicators, date2Indicators, date1Indicators, descIndicators, configIndicators,
                 iterationTable, controlPanelController.isExist(), id);
 

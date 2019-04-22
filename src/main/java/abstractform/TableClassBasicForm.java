@@ -80,12 +80,12 @@ public abstract class TableClassBasicForm extends TableBasicForm implements ISeg
 
 		tableTV = new TableView<ClassTable>();
 		tableTV.setId("classTable");
-		TableColumn<ClassTable, String> nameColumn = new TableColumn<ClassTable, String>("Name");
+		TableColumn<ClassTable, String> nameColumn = new TableColumn<ClassTable, String>("Alias");
 		TableColumn<ClassTable, String> classColumn = new TableColumn<ClassTable, String>("Class");
 		TableColumn<ClassTable, String> superColumn = new TableColumn<ClassTable, String>("Super Class");
 		TableColumn<ClassTable, String> existColumn = new TableColumn<ClassTable, String>("Exist");
 
-		nameColumn.setCellValueFactory(new PropertyValueFactory("idString"));
+		nameColumn.setCellValueFactory(new PropertyValueFactory("alias"));
 		nameColumn.setMinWidth(150);
 		nameColumn.setCellFactory(TextFieldTableCell.forTableColumn());
 
@@ -134,10 +134,10 @@ public abstract class TableClassBasicForm extends TableBasicForm implements ISeg
 
 	@Override
 	public void addItem() {
-		String nameST = ""; // classControlPanel.getName();
+		String nameST = ""; // classControlPanel.getAlias();
 
 		int id = formController.createTableItem(getSegmentType());
-		String idName = id + "_" + nameST;
+		String idName = id + "";
 
 		String classST = ""; // classControlPanel.getClassName();
 		String superST = ""; //classControlPanel.getSuperClassName();

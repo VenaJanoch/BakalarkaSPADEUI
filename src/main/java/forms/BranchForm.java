@@ -94,10 +94,10 @@ public class BranchForm extends TableBasicForm implements ISegmentTableForm {
         tableTV = new TableView<BranchTable>();
         tableTV.setId("branchTable");
         tableTV.setEditable(false);
-        TableColumn<BranchTable, String> nameColumn = new TableColumn<BranchTable, String>("Id");
+        TableColumn<BranchTable, String> nameColumn = new TableColumn<BranchTable, String>("Alias");
         TableColumn<BranchTable, String> exist = new TableColumn<BranchTable, String>("Exist");
 
-        nameColumn.setCellValueFactory(new PropertyValueFactory("idString"));
+        nameColumn.setCellValueFactory(new PropertyValueFactory("alias"));
         nameColumn.setMinWidth(150);
         nameColumn.setCellFactory(TextFieldTableCell.forTableColumn());
 
@@ -141,14 +141,14 @@ public class BranchForm extends TableBasicForm implements ISegmentTableForm {
     @Override
     public void addItem() {
 
-        String nameST = ""; //branchoneControlPanel.getName();
+        String nameST = ""; //branchoneControlPanel.getAlias();
         int id = formController.createTableItem(SegmentType.Branch);
 
-        BranchTable branch = formDataController.prepareBranchToTable(nameST, true, id);
+        BranchTable branch = new BranchTable(id + "", "YES",true, true, id);
         tableTV.getItems().add(branch);
         tableTV.sort();
 
-        formDataController.saveDataFromBranch(nameST,branch);
+        formDataController.saveDataFromBranch(id + "", branch);
 
         int lastItem = tableTV.getItems().size();
         tableTV.getSelectionModel().select(lastItem - 1);

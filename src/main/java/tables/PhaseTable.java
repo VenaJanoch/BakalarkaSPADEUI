@@ -1,6 +1,5 @@
 package tables;
 
-import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 public class PhaseTable extends BasicTable {
@@ -29,7 +28,7 @@ public class PhaseTable extends BasicTable {
 	@Override
 	public String toString() {
 
-		return getName();
+		return getAlias();
 	}
 
 	/** Globální proměnné třídy **/

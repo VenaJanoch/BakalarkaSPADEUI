@@ -97,10 +97,10 @@ public class MilestoneForm extends TableBasicForm implements ISegmentTableForm {
     public Node getTable() {
         tableTV = new TableView<MilestoneTable>();
 
-        TableColumn<MilestoneTable, String> nameColumn = new TableColumn<MilestoneTable, String>("Id");
+        TableColumn<MilestoneTable, String> nameColumn = new TableColumn<MilestoneTable, String>("Alias");
         TableColumn<MilestoneTable, String> exist = new TableColumn<MilestoneTable, String>("Exist");
 
-        nameColumn.setCellValueFactory(new PropertyValueFactory("idString"));
+        nameColumn.setCellValueFactory(new PropertyValueFactory("alias"));
         nameColumn.setMinWidth(150);
         nameColumn.setCellFactory(TextFieldTableCell.forTableColumn());
 
@@ -144,13 +144,13 @@ public class MilestoneForm extends TableBasicForm implements ISegmentTableForm {
     @Override
     public void addItem() {
 
-        String nameST = "";//milestoneControlPanel.getName();
+        String nameST = "";//milestoneControlPanel.getAlias();
         String descriptionST = ""; // milestoneControlPanel.getDescriptionText();
 
         int id = formController.createTableItem(SegmentType.Milestone);
 
         ArrayList criterionList = new ArrayList<>();//new ArrayList<>(milestoneControlPanel.getChoosedIndicies());
-        MilestoneTable milestone = formDataController.prepareMilestoneToTable(nameST, descriptionST, id, criterionList);
+        MilestoneTable milestone = new MilestoneTable(id + "", true, id);
 
         tableTV.getItems().add(milestone);
         tableTV.sort();

@@ -77,10 +77,10 @@ public class ActivityForm extends TableBasicForm implements ISegmentTableForm {
 	public Node getTable() {
 		tableTV = new TableView<ActivityTable>();
 
-		TableColumn<ActivityTable, String> nameColumn = new TableColumn<ActivityTable, String>("Id");
+		TableColumn<ActivityTable, String> nameColumn = new TableColumn<ActivityTable, String>("Alias");
 		TableColumn<ActivityTable, String> exist = new TableColumn<ActivityTable, String>("Exist");
 
-		nameColumn.setCellValueFactory(new PropertyValueFactory("idString"));
+		nameColumn.setCellValueFactory(new PropertyValueFactory("alias"));
 		nameColumn.setMinWidth(150);
 		nameColumn.setCellFactory(TextFieldTableCell.forTableColumn());
 
@@ -135,12 +135,11 @@ public class ActivityForm extends TableBasicForm implements ISegmentTableForm {
 
 	@Override
 	public void addItem() {
-		String nameST = "";// criterionControlPanel.getName();
+		String nameST = "";// criterionControlPanel.getAlias();
 
 		int id = formController.createTableItem(SegmentType.Activity);
-		String idName = id + "_" + nameST;
 
-		ActivityTable table = new ActivityTable(idName, true, id);
+		ActivityTable table = new ActivityTable(String.valueOf(id), true, id);
 
 		tableTV.getItems().add(table);
 		tableTV.sort();

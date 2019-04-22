@@ -4,7 +4,6 @@ import controllers.DataPreparer;
 import controllers.InputController;
 import forms.ConfigurationTableForm;
 import graphics.canvas.CanvasItem;
-import interfaces.IEditDataModel;
 import interfaces.IFormDataController;
 import interfaces.ISaveDataModel;
 import javafx.collections.ObservableList;
@@ -253,7 +252,7 @@ public class FormDataController implements IFormDataController {
         saveDataModel.createNewMilestone(nameForManipulator,descForManipulator, criterionIndex, milestoneTable.getId());
         lists.getMilestoneObservable().add(milestoneTable);
        // ArrayList<Integer> criterionIndicies = dataModel.getCriterionIds(criterionIndex);
-      //  mapperTableToObject.mapTableToObject(SegmentType.Milestone, criterionIndicies, new TableToObjectInstanc(milestoneTable.getName(), milestoneTable.getId(),
+      //  mapperTableToObject.mapTableToObject(SegmentType.Milestone, criterionIndicies, new TableToObjectInstanc(milestoneTable.getAlias(), milestoneTable.getId(),
       //          SegmentType.Milestone));
 }
 
@@ -288,11 +287,11 @@ public class FormDataController implements IFormDataController {
         String descForManipulator = InputController.fillTextMapper(personTable.getDescription());
         int typeFormManipulator = dataPreparer.prepareIndexForManipulator(typeIndex);
 
-        saveDataModel.createNewRole(personTable.getId());
+        saveDataModel.createNewPerson(personTable.getId());
         lists.getRoleObservable().add(personTable);
 
        // int roleTypeIndex = dataModel.getRoleTypeIndex(typeFormManipulator);
-       // mapperTableToObject.mapTableToObject(SegmentType.Person, roleTypeIndex, new TableToObjectInstanc(personTable.getName(), personTable.getId(), SegmentType.Person));
+       // mapperTableToObject.mapTableToObject(SegmentType.Person, roleTypeIndex, new TableToObjectInstanc(personTable.getAlias(), personTable.getId(), SegmentType.Person));
 }
 
     public void saveDataFromRoleTypeForm(String nameST, ClassTable classTable) {
@@ -506,6 +505,7 @@ public class FormDataController implements IFormDataController {
         ArrayList indicies4 = dataPreparer.prepareIndiciesForForm(data[8]);
         ArrayList indicies5 = dataPreparer.prepareIndiciesForForm(data[9]);
         ArrayList indicies6 = dataPreparer.prepareIndiciesForForm(data[10]);
+        ArrayList indicies23 = dataPreparer.prepareIndiciesForForm(data[23]);
 
         data[2] = estimate;
         data[4] = priorityIndicies;
@@ -515,7 +515,7 @@ public class FormDataController implements IFormDataController {
         data[8] = indicies4;
         data[9] = indicies5;
         data[10] = indicies6;
-
+        data[23] = indicies23;
         return data;
     }
 

@@ -1,6 +1,5 @@
 package tables;
 
-import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 public class ArtifactTable extends BasicTable {
@@ -27,7 +26,7 @@ public class ArtifactTable extends BasicTable {
 	@Override
 	public String toString() {
 
-		return getName();
+		return getAlias();
 	}
 
 	/** Globální proměnné třídy **/

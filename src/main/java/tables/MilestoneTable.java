@@ -1,10 +1,6 @@
 package tables;
 
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-import javafx.collections.ObservableList;
 
 public class MilestoneTable extends BasicTable {
 
@@ -30,7 +26,7 @@ public class MilestoneTable extends BasicTable {
 	@Override
 	public String toString() {
 
-		return getName();
+		return getAlias();
 	}
 
 	/** Globální proměnné třídy **/

@@ -73,10 +73,10 @@ public class PhaseForm extends TableBasicForm implements ISegmentTableForm {
     @Override
     public Node getTable() {
         tableTV = new TableView<PhaseTable>();
-        TableColumn<PhaseTable, String> nameColumn = new TableColumn<PhaseTable, String>("Id");
+        TableColumn<PhaseTable, String> nameColumn = new TableColumn<PhaseTable, String>("Alias");
         TableColumn<PhaseTable, String> exist = new TableColumn<PhaseTable, String>("Exist");
 
-        nameColumn.setCellValueFactory(new PropertyValueFactory("idString"));
+        nameColumn.setCellValueFactory(new PropertyValueFactory("alias"));
         nameColumn.setMinWidth(150);
         nameColumn.setCellFactory(TextFieldTableCell.forTableColumn());
 
@@ -131,10 +131,10 @@ public class PhaseForm extends TableBasicForm implements ISegmentTableForm {
 
     @Override
     public void addItem() {
-        String nameST = "";// criterionControlPanel.getName();
+        String nameST = "";// criterionControlPanel.getAlias();
 
         int id = formController.createTableItem(SegmentType.Phase);
-        String idName = id + "_" + nameST;
+        String idName = id + "";
 
         PhaseTable table = new PhaseTable(idName,true, id);
         tableTV.getItems().add(table);

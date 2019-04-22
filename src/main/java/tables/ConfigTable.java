@@ -36,7 +36,7 @@ public class ConfigTable extends BasicTable {
 	@Override
 	public String toString() {
 
-		return getName();
+		return getAlias();
 	}
 
 	/**

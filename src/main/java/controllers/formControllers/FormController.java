@@ -39,7 +39,7 @@ public class FormController {
     private ArrayList<BasicForm> forms;
     private ArrayList<ControlPanel> controlPanels;
 
-    private Map<Integer,CanvasItem> canvasItemList;
+    private Map<Integer, CanvasItem> canvasItemList;
 
     private PhaseForm phaseForm;
     private IterationForm iterationForm;
@@ -96,26 +96,26 @@ public class FormController {
 
         this.identificatorCreater = identificatorCreater;
 
-        }
+    }
 
-    public void initBasicForms(IFormDataController formDataController, IEditFormController editFormController, IDeleteFormController deleteFormController){
+    public void initBasicForms(IFormDataController formDataController, IEditFormController editFormController, IDeleteFormController deleteFormController) {
 
         this.formDataController = formDataController;
         this.editFormController = editFormController;
         this.deleteFormController = deleteFormController;
 
-        controlPanels.add(new ProjectControlPanel("Edit", formDataController, editFormController,this));
+        controlPanels.add(new ProjectControlPanel("Edit", formDataController, editFormController, this));
 
         CanvasController canvasController = new CanvasController(CanvasType.Phase, applicationController);
-        phaseForm =new PhaseForm(this, formDataController, editFormController, deleteFormController, canvasController ,
+        phaseForm = new PhaseForm(this, formDataController, editFormController, deleteFormController, canvasController,
                 new DragAndDropItemPanel(canvasController, Constans.phaseDragTextIndexs, drawerPanelController), SegmentType.Phase, Constans.phaseFormIndex);
         forms.add(phaseForm);
 
-        iterationForm = new IterationForm(this, formDataController, editFormController, deleteFormController,  canvasController, new DragAndDropItemPanel(canvasController,
-                Constans.iterationDragTextIndexs, drawerPanelController),SegmentType.Iteration, Constans.iterationFormIndex);
+        iterationForm = new IterationForm(this, formDataController, editFormController, deleteFormController, canvasController, new DragAndDropItemPanel(canvasController,
+                Constans.iterationDragTextIndexs, drawerPanelController), SegmentType.Iteration, Constans.iterationFormIndex);
         forms.add(iterationForm);
 
-        activityForm =  new ActivityForm(this, formDataController, editFormController, deleteFormController,  canvasController, new DragAndDropItemPanel(canvasController,
+        activityForm = new ActivityForm(this, formDataController, editFormController, deleteFormController, canvasController, new DragAndDropItemPanel(canvasController,
                 Constans.activityDragTextIndexs, drawerPanelController), SegmentType.Activity, Constans.activityFormIndex);
         forms.add(activityForm);
 
@@ -124,7 +124,7 @@ public class FormController {
         forms.add(workUnitForm);
 
         milestoneForm = new MilestoneForm(
-                this, formDataController, editFormController, deleteFormController,  SegmentType.Milestone);
+                this, formDataController, editFormController, deleteFormController, SegmentType.Milestone);
         forms.add(milestoneForm);
 
         criterionForm = new CriterionForm(this, formDataController, editFormController, deleteFormController, SegmentType.Criterion);
@@ -168,32 +168,32 @@ public class FormController {
         forms.add(roleForm);
 
 
-
     }
 
 
     /**
      * Metoda pro určení metody pro vytvoření konkrétního segmentu nebo elementu
+     * <p>
+     * kořenový formulář
      *
-     *            kořenový formulář
      * @return identifikátory objektu pro CanvasItem
      */
     public int createNewForm(SegmentType type, CanvasType canvasType) {
 
-            switch (type) {
-                case Configuration:
-                    return createNewConfigurationPanel();
-                case Person:
-                    return createNewRolePanel();
-                case Artifact:
-                    return createNewArtifactPanel();
-                case Commit:
-                    return createNewCommitPanel();
-                case Committed_Configuration:
-                    return createNewCommitedConfigurationPanel();
-                default:
-                    return -1;
-            }
+        switch (type) {
+            case Configuration:
+                return createNewConfigurationPanel();
+            case Person:
+                return createNewRolePanel();
+            case Artifact:
+                return createNewArtifactPanel();
+            case Commit:
+                return createNewCommitPanel();
+            case Committed_Configuration:
+                return createNewCommitedConfigurationPanel();
+            default:
+                return -1;
+        }
 
     }
 
@@ -205,11 +205,11 @@ public class FormController {
     }
 
 
-    public int createNewCommitFormWithoutCreateId(String name, boolean exist, int id, int formIndex){
-        CommitTable commitTable = new CommitTable(name, "", true, exist, id);
+    public int createNewCommitFormWithoutCreateId(String name, boolean exist, int id, int formIndex) {
+        CommitTable commitTable = new CommitTable(String.valueOf(id), "", true, exist, id);
 
         CommitControlPanel commitControlPanel = new CommitControlPanel(
-                "Edit", formDataController, editFormController,this, commitTable, id, formIndex);
+                "Edit", formDataController, editFormController, this, commitTable, id, formIndex);
         segmentLists.getCommitObservable().add(commitTable);
         controlPanels.add(commitControlPanel);
         return formIndex;
@@ -217,7 +217,7 @@ public class FormController {
     }
 
 
-        public int createNewCommitFormWithoutManipulator(String name, boolean exist){
+    public int createNewCommitFormWithoutManipulator(String name, boolean exist) {
 
         int index = identificatorCreater.createCommitID();
         int id = identificatorCreater.getCommitId(index);
@@ -225,11 +225,11 @@ public class FormController {
     }
 
 
-    public int createNewCommitedConfigurationFormWithoutCreateId(String name, boolean exist, int id, int formIndex){
-        CommitedConfigurationTable commitTable = new CommitedConfigurationTable(name,"", exist, id);
+    public int createNewCommitedConfigurationFormWithoutCreateId(String name, boolean exist, int id, int formIndex) {
+        CommitedConfigurationTable commitTable = new CommitedConfigurationTable(String.valueOf(id), "", exist, id);
 
         CommitedConfigurationControlPanel commitControlPanel = new CommitedConfigurationControlPanel(
-                "Edit", formDataController, editFormController,this, commitTable, id, formIndex);
+                "Edit", formDataController, editFormController, this, commitTable, id, formIndex);
         segmentLists.getCommitedConfigurationObservable().add(commitTable);
         controlPanels.add(commitControlPanel);
         return formIndex;
@@ -242,26 +242,26 @@ public class FormController {
         return formIndex;
     }
 
-    public int createNewCommitedConfigurationPanelFormWithoutManipulator(String name, boolean exist){
+    public int createNewCommitedConfigurationPanelFormWithoutManipulator(String name, boolean exist) {
 
         int index = identificatorCreater.createCommiedConfigurationtID();
         int id = identificatorCreater.getCommitedConfigurationId(index);
         return createNewCommitedConfigurationFormWithoutCreateId(name, exist, id, index);
     }
-    
+
     private int createNewRolePanel() {
         int formIndex = createNewRoleFormWithoutManipulator("", true);
         int id = identificatorCreater.getRoleIndexToIdMaper().get(formIndex);
-        saveDataModel.createNewRole(id);
+        saveDataModel.createNewPerson(id);
         return formIndex;
     }
 
-    public int createNewPersonFormWithoutCreateId(String name, boolean exist, int id, int formIndex){
+    public int createNewPersonFormWithoutCreateId(String name, boolean exist, int id, int formIndex) {
 
-        PersonTable personTable = new PersonTable(name, exist, id);
+        PersonTable personTable = new PersonTable(String.valueOf(id), exist, id);
 
         PersonControlPanel personControlPanel = new PersonControlPanel(
-                "Edit", formDataController, editFormController,this, personTable, id, formIndex);
+                "Edit", formDataController, editFormController, this, personTable, id, formIndex);
 
         segmentLists.getRoleObservable().add(personTable);
         controlPanels.add(personControlPanel);
@@ -269,26 +269,26 @@ public class FormController {
     }
 
 
-    public int createNewRoleFormWithoutManipulator(String name, boolean exist){
+    public int createNewRoleFormWithoutManipulator(String name, boolean exist) {
 
         int index = identificatorCreater.createRoleID();
         int id = identificatorCreater.getRoleIndexToIdMaper().get(index);
         return createNewPersonFormWithoutCreateId(name, exist, id, index);
     }
 
-        private int createNewArtifactPanel() {
-        int formIndex = createNewArtifactFormWithoutManipulator("","", true);
+    private int createNewArtifactPanel() {
+        int formIndex = createNewArtifactFormWithoutManipulator("", "", true);
         int id = identificatorCreater.getArtifactIndexToIdMaper().get(formIndex);
         saveDataModel.createNewArtifact(id);
         return formIndex;
     }
 
-    public int createNewArtifactFormWithoutCreateId(String name, boolean exist, int id, int formIndex){
+    public int createNewArtifactFormWithoutCreateId(String name, boolean exist, int id, int formIndex) {
 
-        ArtifactTable artifactTable = new ArtifactTable(name, exist, id);
+        ArtifactTable artifactTable = new ArtifactTable(String.valueOf(id), exist, id);
 
         ArtifactControlPanel artifactControlPanel = new ArtifactControlPanel(
-                "Edit", formDataController, editFormController,this, artifactTable, id, formIndex);
+                "Edit", formDataController, editFormController, this, artifactTable, id, formIndex);
 
         segmentLists.getArtifactObservable().add(artifactTable);
         controlPanels.add(artifactControlPanel);
@@ -296,7 +296,7 @@ public class FormController {
 
     }
 
-    public int createNewArtifactFormWithoutManipulator(String name, String description, boolean exist){
+    public int createNewArtifactFormWithoutManipulator(String name, String description, boolean exist) {
         int index = identificatorCreater.createArtifactID();
         int id = identificatorCreater.getArtifactIndexToIdMaper().get(index);
         return createNewArtifactFormWithoutCreateId(name, exist, id, index);
@@ -304,11 +304,12 @@ public class FormController {
     }
 
     private int createNewChangeForm(int id) {
-      saveDataModel.createNewChange(id);
+        saveDataModel.createNewChange(id);
 
-        return  id;
+        return id;
     }
-    public int createNewChangeFormWithoutManipulator(){
+
+    public int createNewChangeFormWithoutManipulator() {
 
         int index = identificatorCreater.createChangeID();
         ChangeForm changeForm = new ChangeForm(this, formDataController, editFormController, deleteFormController, SegmentType.Change);
@@ -323,12 +324,12 @@ public class FormController {
         return formIndex;
     }
 
-    public int createNewConfigurationFormWithoutCreateId(String name, boolean exist, int id, int formIndex){
+    public int createNewConfigurationFormWithoutCreateId(String name, boolean exist, int id, int formIndex) {
 
-        ConfigTable configTable = new ConfigTable(name, "", formIndex, exist, id);
+        ConfigTable configTable = new ConfigTable(String.valueOf(id), "", formIndex, exist, id);
 
         ConfigurationControlPanel roleControlPanel = new ConfigurationControlPanel(
-                "Edit", formDataController, editFormController,this, configTable, id, formIndex);
+                "Edit", formDataController, editFormController, this, configTable, id, formIndex);
 
         segmentLists.getConfigObservable().add(configTable);
         controlPanels.add(roleControlPanel);
@@ -336,7 +337,7 @@ public class FormController {
     }
 
 
-        public int createNewConfiguratioFormWithoutManipulator(String name, boolean exist){
+    public int createNewConfiguratioFormWithoutManipulator(String name, boolean exist) {
         int index = identificatorCreater.createConfigurationID();
         int id = identificatorCreater.getConfigurationId(index);
 
@@ -348,7 +349,7 @@ public class FormController {
         return id;
     }
 
-    public int createNewWorkUnitFormWithoutManipulator(CanvasType canvasType){
+    public int createNewWorkUnitFormWithoutManipulator(CanvasType canvasType) {
         int index = identificatorCreater.createWorkUnitID();
         int id = identificatorCreater.getWorkUnitIndexToIdMaper().get(index);
         CanvasController canvasController = new CanvasController(canvasType, applicationController);
@@ -357,7 +358,7 @@ public class FormController {
 
         forms.add(index, workUnitForm);
 
-        return  index;
+        return index;
     }
 
     private int createNewActivityForm(int id) {
@@ -367,54 +368,54 @@ public class FormController {
         return id;
     }
 
-    public int createNewActivityFormWithoutManipulator(){
+    public int createNewActivityFormWithoutManipulator() {
         int index = identificatorCreater.createActivityID();
         CanvasController canvasController = new CanvasController(CanvasType.Activity, applicationController);
-        ActivityForm activityForm = new ActivityForm(this, formDataController, editFormController, deleteFormController,  canvasController, new DragAndDropItemPanel(canvasController,
+        ActivityForm activityForm = new ActivityForm(this, formDataController, editFormController, deleteFormController, canvasController, new DragAndDropItemPanel(canvasController,
                 Constans.activityDragTextIndexs, drawerPanelController), SegmentType.Activity, index);
         forms.add(index, activityForm);
 
-        return  index;
+        return index;
     }
 
-    public int createNewPhaseForm(int id){
+    public int createNewPhaseForm(int id) {
         //int index = createNewPhaseFormWithoutManipulator();
         saveDataModel.createNewPhase(id);
-        return  id;
+        return id;
     }
 
-    public int createNewPhaseFormWithoutManipulator(){
+    public int createNewPhaseFormWithoutManipulator() {
 
         int index = identificatorCreater.createPhaseID();
         CanvasController canvasController = new CanvasController(CanvasType.Phase, applicationController);
-        PhaseForm phaseForm = new PhaseForm(this, formDataController, editFormController, deleteFormController,  canvasController, new DragAndDropItemPanel(canvasController,
+        PhaseForm phaseForm = new PhaseForm(this, formDataController, editFormController, deleteFormController, canvasController, new DragAndDropItemPanel(canvasController,
                 Constans.phaseDragTextIndexs, drawerPanelController), SegmentType.Phase, index);
         forms.add(index, phaseForm);
 
-        return  index;
+        return index;
     }
 
-    int createNewIterationForm(int id){
+    int createNewIterationForm(int id) {
 
         saveDataModel.createNewIteration(id);
 
         return id;
     }
 
-    public int createNewIterationFormWithoutManipulator(){
+    public int createNewIterationFormWithoutManipulator() {
         int index = identificatorCreater.createIterationID();
 
         CanvasController canvasController = new CanvasController(CanvasType.Iteration, applicationController);
 
-        IterationForm iterationForm = new IterationForm(this, formDataController, editFormController, deleteFormController,  canvasController, new DragAndDropItemPanel(canvasController,
-                Constans.iterationDragTextIndexs, drawerPanelController),SegmentType.Iteration, index);
+        IterationForm iterationForm = new IterationForm(this, formDataController, editFormController, deleteFormController, canvasController, new DragAndDropItemPanel(canvasController,
+                Constans.iterationDragTextIndexs, drawerPanelController), SegmentType.Iteration, index);
 
-        return  index;
+        return index;
     }
 
     public void showForm(int formIdentificator) {
         BasicForm form = forms.get(formIdentificator);
-        switch (form.getSegmentType()){
+        switch (form.getSegmentType()) {
             case Milestone:
 
                 List<Milestone> milestones = dataModel.getMilestones();
@@ -449,12 +450,12 @@ public class FormController {
         }
 
 
-       // form.show();
-       // form.toFront();
+        // form.show();
+        // form.toFront();
 
     }
 
-    public int[] getCoordsFromItem(int indexForm){
+    public int[] getCoordsFromItem(int indexForm) {
 
         CanvasItem item = canvasItemList.get(indexForm);
         int x = (int) item.getTranslateX();
@@ -474,24 +475,24 @@ public class FormController {
         item.setInstanceCountToItem(instanceCount);
     }
 
-    public String getSegmentIdentificator(int indexForm){
+    public String getSegmentIdentificator(int indexForm) {
         CanvasItem item = canvasItemList.get(indexForm);
         return item.getSegmentIdentificator();
     }
 
     public void removeCanvasItemFromList(int id) {
-        canvasItemList.put(id,null);
+        canvasItemList.put(id, null);
     }
 
     public void addCanvasItemToList(int formIndex, CanvasItem item) {
-        canvasItemList.put(formIndex,item);
+        canvasItemList.put(formIndex, item);
     }
 
 
     public void setItemColor(int indexForm, boolean isExist) {
 
         CanvasItem item = canvasItemList.get(indexForm);
-        if(!isExist){
+        if (!isExist) {
             item.getSegmentInfo().setRectangleColor(Constans.nonExistRectangleBorderColor);
         } else {
             item.getSegmentInfo().setRectangleColor(Constans.rectangleBorderColor);
@@ -566,15 +567,15 @@ public class FormController {
             case Priority:
                 return identificatorCreater.createPriorityID();
             case Severity:
-            return identificatorCreater.createSeverityID();
+                return identificatorCreater.createSeverityID();
             case Milestone:
-             return identificatorCreater.createMilestoneID();
+                return identificatorCreater.createMilestoneID();
             case Criterion:
-             return  identificatorCreater.createCriterionID();
+                return identificatorCreater.createCriterionID();
             case Person:
-               return identificatorCreater.createRoleID();
+                return identificatorCreater.createRoleID();
             case Role_Type:
-               return identificatorCreater.createRoleTypeID();
+                return identificatorCreater.createRoleTypeID();
             case Config_Person_Relation:
                 id = identificatorCreater.createCPRID();
                 createNewCPRForm(id);
@@ -601,7 +602,7 @@ public class FormController {
 
     private int createNewVCSTagForm(int id) {
         saveDataModel.createNewVCSTag(id);
-        return  id;
+        return id;
     }
 
 
@@ -618,88 +619,10 @@ public class FormController {
     }
 
 
-
-    public void setConfigurationFormToTableForm(){
+    public void setConfigurationFormToTableForm() {
         ConfigurationTableForm configurationTableForm = (ConfigurationTableForm) forms.get(Constans.configurationFormIndex);
         configurationTableForm.getMainPanel().setLeft(getMainPanelFromForm(lastConfigurationFormIndex));
     }
-
-
-
-
-    public void upDateComboBox(ComboBox<BasicTable> cb, int position){
-        cb.getSelectionModel().select(position);
-    }
-
-    public void upDateCheckComboBox(CheckComboBox<BasicTable> cb, ArrayList<Integer> positions) {
-        for (int i : positions) {
-            cb.getCheckModel().check(i);
-        }
-    }
-
-    public void updateCheckComboBoxItem(SegmentType formType, SegmentType comboBoxType, ArrayList<Integer> formList, ArrayList<Integer> indices) {
-        switch (formType) {
-            case Configuration:
-                ComboBox<BasicTable> cb = null;
-
-                for (int i : formList) {
-                    ConfigurationForm form = (ConfigurationForm) forms.get(i);
-                    switch (comboBoxType ) {
-                        case Config_Person_Relation:
-                        upDateCheckComboBox(form.getCprCB(), indices);
-                        break;
-                        default:
-                    }
-                }
-                break;
-
-        }
-    }
-    private void updateWUListItem(SegmentType type, ArrayList<Integer> wuList) {
-            switch (type) {
-                case Priority:
-                    for (int i : wuList){
-                        WorkUnitForm form = (WorkUnitForm) forms.get(i);
-                    //    form.getPriorityCB().getSelectionModel().select(0);
-                    }
-                    break;
-                case Severity:
-                    for (int i : wuList){
-                        WorkUnitForm form = (WorkUnitForm) forms.get(i);
-                   //     form.getSeverityCB().getSelectionModel().select(0);
-                    }
-                    break;
-                case Person:
-                    for (int i : wuList){
-                        WorkUnitForm form = (WorkUnitForm) forms.get(i);
-                 //       form.getAuthorRoleCB().getSelectionModel().select(0);
-                 //       form.getAsigneeRoleCB().getSelectionModel().select(0);
-                    }
-                    break;
-                case Resolution:
-                    for (int i : wuList){
-                        WorkUnitForm form = (WorkUnitForm) forms.get(i);
-                  //      form.getResolutionCB().getSelectionModel().select(0);
-                    }
-                    break;
-                case Status:
-                    for (int i : wuList){
-                        WorkUnitForm form = (WorkUnitForm) forms.get(i);
-                  //      form.getStatusCB().getSelectionModel().select(0);
-                    }
-                    break;
-                case Type:
-                    for (int i : wuList){
-                        WorkUnitForm form = (WorkUnitForm) forms.get(i);
-                 //       form.getTypeCB().getSelectionModel().select(0);
-                    }
-                    break;
-                default:
-
-            }
-
-        }
-
 
     public void setFormFillController(FormFillController formFillController) {
         this.formFillController = formFillController;
@@ -744,7 +667,7 @@ public class FormController {
 
     public void setCoordinatesToCanvasItem(SegmentType segmentType, double newTranslateX, double newTranslateY, int fromIndex) {
         int id = 0;
-        switch (segmentType){
+        switch (segmentType) {
             case Person:
                 id = identificatorCreater.getRoleId(fromIndex);
                 editFormController.editCoordsInRole(newTranslateX, newTranslateY, id);
@@ -752,7 +675,7 @@ public class FormController {
             case Commit:
                 id = identificatorCreater.getCommitId(fromIndex);
                 editFormController.editCoordsInCommit(newTranslateX, newTranslateY, id);
-            break;
+                break;
 
             case Committed_Configuration:
                 id = identificatorCreater.getCommitedConfigurationId(fromIndex);
@@ -769,21 +692,21 @@ public class FormController {
         }
     }
 
-    private Integer[] findCorectId(Integer startIndex, Integer endIndex, Integer startIndex1, Integer endIndex1){
+    private Integer[] findCorectId(Integer startIndex, Integer endIndex, Integer startIndex1, Integer endIndex1) {
         Integer[] result = new Integer[2];
 
         Integer firstResult = -1;
         Integer secondResult = -1;
 
-        if( startIndex != null){
+        if (startIndex != null) {
             firstResult = startIndex;
-        }else{
+        } else {
             firstResult = endIndex;
         }
 
-        if(startIndex1 != null){
+        if (startIndex1 != null) {
             secondResult = startIndex1;
-        }else {
+        } else {
             secondResult = endIndex1;
         }
         result[0] = firstResult;
@@ -792,12 +715,12 @@ public class FormController {
     }
 
     public void createCommitToCommitedConfigurationRelation(int linkId, int startId, int endId, boolean isXML) {
-          Integer[] result = findResultsFromCommitToCommitedConfigurationRelation(startId, endId);
+        Integer[] result = findResultsFromCommitToCommitedConfigurationRelation(startId, endId);
 
         formDataController.createCommitToCommitedConfigurationRelation(linkId, result[0], result[1], isXML);
     }
 
-    public Integer[] findResultsFromCommitToCommitedConfigurationRelation(int startSegmentId, int endSegmentId){
+    public Integer[] findResultsFromCommitToCommitedConfigurationRelation(int startSegmentId, int endSegmentId) {
         Integer startIndex = identificatorCreater.getCommitId(startSegmentId);
         Integer endIndex = identificatorCreater.getCommitId(endSegmentId);
 
@@ -816,7 +739,7 @@ public class FormController {
 
     }
 
-    public Integer[] findResultsFromCommitedConfigurationToConfigurationRelation(int startSegmentId, int endSegmentId){
+    public Integer[] findResultsFromCommitedConfigurationToConfigurationRelation(int startSegmentId, int endSegmentId) {
         Integer startIndex = identificatorCreater.getCommitedConfigurationId(startSegmentId);
         Integer endIndex = identificatorCreater.getCommitedConfigurationId(endSegmentId);
 
@@ -827,7 +750,7 @@ public class FormController {
     }
 
 
-    public Integer[] findResultsFromArtifactToConfigurationRelation(int startSegmentId, int endSegmentId){
+    public Integer[] findResultsFromArtifactToConfigurationRelation(int startSegmentId, int endSegmentId) {
         Integer startIndex = identificatorCreater.getArtifactId(startSegmentId);
         Integer endIndex = identificatorCreater.getArtifactId(endSegmentId);
 
@@ -845,7 +768,7 @@ public class FormController {
 
     }
 
-    public Integer[] findResultsFromPersonToArtifactRelation(int startSegmentId, int endSegmentId){
+    public Integer[] findResultsFromPersonToArtifactRelation(int startSegmentId, int endSegmentId) {
         Integer startIndex = identificatorCreater.getRoleId(startSegmentId);
         Integer endIndex = identificatorCreater.getRoleId(endSegmentId);
 
@@ -856,7 +779,7 @@ public class FormController {
 
     }
 
-    public Integer[] findResultsFromPersonToConfigurationRelation(int startSegmentId, int endSegmentId){
+    public Integer[] findResultsFromPersonToConfigurationRelation(int startSegmentId, int endSegmentId) {
         Integer startIndex = identificatorCreater.getRoleId(startSegmentId);
         Integer endIndex = identificatorCreater.getRoleId(endSegmentId);
 

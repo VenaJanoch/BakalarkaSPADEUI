@@ -59,7 +59,7 @@ public class CommitControlPanel extends NameControlPanel implements IControlPane
             String count = controlPanelController.getInstanceCount();
             boolean exist = controlPanelController.isMain();
 
-            editFormController.editDataFromCommit(name, nameIndicators, tag, tagIndicators, branchs, branchIndicators, exist, count,
+            editFormController.editDataFromCommit(aliasTF.getText(), name, nameIndicators, tag, tagIndicators, branchs, branchIndicators, exist, count,
                     controlPanelController.isExist(), commitId);
 
         });
@@ -91,6 +91,7 @@ public class CommitControlPanel extends NameControlPanel implements IControlPane
         controlPanelController.setValueExistRadioButton(exist);
         controlPanelController.setValueRadioButton(release);
         controlPanelController.setCountToCountLine((int) boolList.get(1));
+        controlPanelController.setAlias((String)boolList.get(2), this);
     }
 
 

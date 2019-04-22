@@ -55,6 +55,7 @@ public class ConfigPersonRelationControlPanel extends NameControlPanel {
         boolean exist = (boolean) boolList.get(0);
 
         controlPanelController.setValueExistRadioButton(exist);
+        controlPanelController.setAlias((String)boolList.get(2), this);
         button.setOnAction(event ->{
 
             ArrayList<Integer> nameIndicators = new ArrayList<>();
@@ -62,7 +63,7 @@ public class ConfigPersonRelationControlPanel extends NameControlPanel {
             ArrayList<String> name = controlPanelController.processTextLines(ParamType.Name, nameIndicators);
             ArrayList<Integer> role = controlPanelController.processComboBoxLines(ParamType.Role, roleIndicators);
 
-            editFormController.editDataFromCPR(name, nameIndicators, role, roleIndicators, controlPanelController.isExist(), cprTable);
+            editFormController.editDataFromCPR(aliasTF.getText(), name, nameIndicators, role, roleIndicators, controlPanelController.isExist(), cprTable);
             clearPanel(tableView);
 
         });

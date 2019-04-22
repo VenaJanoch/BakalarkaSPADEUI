@@ -55,7 +55,7 @@ public class MilestoneControlPanel extends DescriptionControlPanel {
         boolean exist = (boolean) boolList.get(0);
 
         controlPanelController.setValueExistRadioButton(exist);
-
+        controlPanelController.setAlias((String)boolList.get(2), this);
         button.setOnAction(event ->{
 
             saveDataFromPanel(milestoneTable, tableView);
@@ -76,7 +76,7 @@ public class MilestoneControlPanel extends DescriptionControlPanel {
         ArrayList<ArrayList<Integer>> criterion = controlPanelController.processCheckComboBoxLines(ParamType.Criterion, criterionIndicators);
 
 
-        editFormController.editDataFromMilestone(name, nameIndicators, desc, descIndicators, milestoneTable, criterion, criterionIndicators,
+        editFormController.editDataFromMilestone(aliasTF.getText(), name, nameIndicators, desc, descIndicators, milestoneTable, criterion, criterionIndicators,
                 controlPanelController.isExist(), id);
 
         clearPanelCB(tableView);

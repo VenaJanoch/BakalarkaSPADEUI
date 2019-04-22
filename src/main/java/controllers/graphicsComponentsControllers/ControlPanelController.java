@@ -251,6 +251,7 @@ public class ControlPanelController {
 
     public ControlPanelLineController createNewLineWithExist(ControlPanel controlPane, ObservableList<ControlPanelLineObject> lineList) {
         setExistRadioButton(controlPane, 1);
+        controlPane.setAliasToPanel();
         return createNewLine(controlPane, lineList);
     }
     public ControlPanelLineController createNewLine(ControlPanel controlPane, ObservableList<ControlPanelLineObject> lineList) {
@@ -469,7 +470,7 @@ public class ControlPanelController {
     }
 
     public void shiftStaticObjects(ControlPanel controlPanel){
-        int shift = 1;
+        int shift = 2;
 
         if (isClass){
             ComboBoxItem classBox = classLine.getComboBoxItem();
@@ -557,7 +558,7 @@ public class ControlPanelController {
 
 
     public void resetPanel() {
-        this.lineCount = 0;
+        this.lineCount = 1;
         this.isRadioButtonLine = false;
         this.isSecondRadioButtonLine = false;
         this.isCountLine = false;
@@ -568,6 +569,10 @@ public class ControlPanelController {
 
     public int getLineCount() {
         return lineCount;
+    }
+
+    public void setAlias(String alias, ControlPanel controlPanel) {
+        controlPanel.getAliasTF().setText(alias);
     }
 }
 

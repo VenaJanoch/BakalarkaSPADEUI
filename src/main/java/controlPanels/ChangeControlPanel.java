@@ -50,7 +50,7 @@ public class ChangeControlPanel extends DescriptionControlPanel {
 
         List boolList = changeData[4];
         controlPanelController.setValueExistRadioButton((boolean) boolList.get(0));
-
+        controlPanelController.setAlias((String)boolList.get(2), this);
         button.setOnAction(event -> saveDataFromPanel(changeTable, tableView));
     }
 
@@ -71,7 +71,7 @@ public class ChangeControlPanel extends DescriptionControlPanel {
 
         exist = controlPanelController.isExist();
 
-        editFormController.editDataFromChange(name, nameIndicators, desc, aritifacts, descIndicators, exist, changeTable, id);
+        editFormController.editDataFromChange(aliasTF.getText(), name, nameIndicators, desc, aritifacts, descIndicators, exist, changeTable, id);
 
         clearPanelCB(tableView);
     }

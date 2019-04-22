@@ -1,7 +1,5 @@
 package tables;
 
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
@@ -35,7 +33,7 @@ public class ClassTable extends BasicTable {
     @Override
     public String toString() {
 
-        return getName();
+        return getAlias();
     }
 
 

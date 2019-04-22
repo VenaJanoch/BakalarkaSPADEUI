@@ -1,6 +1,5 @@
 package tables;
 
-import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 public class RoleTypeTable extends ClassTable {
@@ -30,7 +29,7 @@ public class RoleTypeTable extends ClassTable {
     @Override
     public String toString() {
 
-        return getName();
+        return getAlias();
     }
 
 

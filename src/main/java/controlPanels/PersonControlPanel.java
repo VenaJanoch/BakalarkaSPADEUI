@@ -43,7 +43,7 @@ public class PersonControlPanel extends NameControlPanel implements IControlPane
 
             String count = controlPanelController.getInstanceCount();
 
-            editFormController.editDataFromPerson(name, nameIndicators, count, roleType, roleTypeIndicators, personTable,
+            editFormController.editDataFromPerson(aliasTF.getText(), name, nameIndicators, count, roleType, roleTypeIndicators, personTable,
                     controlPanelController.isExist(), roleId);
 
         });
@@ -65,7 +65,7 @@ public class PersonControlPanel extends NameControlPanel implements IControlPane
 
         controlPanelController.setValueExistRadioButton(exist);
         controlPanelController.setCountToCountLine((int) boolList.get(1));
-
+        controlPanelController.setAlias((String)boolList.get(2), this);
     }
 
     @Override

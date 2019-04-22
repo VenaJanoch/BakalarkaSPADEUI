@@ -53,6 +53,7 @@ public class CommitedConfigurationControlPanel extends DateControlPanel implemen
         controlPanelController.setCountToCountLine((int)boolList.get(1));
         boolean exist = (boolean) boolList.get(0);
         controlPanelController.setValueExistRadioButton(exist);
+        controlPanelController.setAlias((String)boolList.get(2), this);
     }
 
 
@@ -74,7 +75,7 @@ public class CommitedConfigurationControlPanel extends DateControlPanel implemen
 
         String count = controlPanelController.getInstanceCount();
 
-        editFormController.editDataFromCommitedConfiguration(name, date, nameIndicators, dateIndicators, count, controlPanelController.isExist(), commitedConfigurationId);
+        editFormController.editDataFromCommitedConfiguration(aliasTF.getText(), name, date, nameIndicators, dateIndicators, count, controlPanelController.isExist(), commitedConfigurationId);
 
     }
 

@@ -46,19 +46,19 @@ public class BranchControlPanel extends NameControlPanel {
         controlPanelController.setValueTextField(this, lineList ,ParamType.Name, branchData, branchData[1], 0);
        boolean main = false;
         List boolList = branchData[2];
-        if(boolList.size() > 1) {
+        if(boolList.get(1) != null) {
             main = (boolean) boolList.get(1);
         }
 
         controlPanelController.setValueRadioButton(main);
         controlPanelController.setValueExistRadioButton((boolean)boolList.get(0));
-
+        controlPanelController.setAlias((String)boolList.get(2), this);
 
         button.setOnAction(event ->{
             ArrayList<Integer> nameIndicators = new ArrayList<>();
             ArrayList<String> name = controlPanelController.processTextLines(ParamType.Name, nameIndicators);
 
-            editFormController.editDataFromBranch(name, nameIndicators, controlPanelController.isMain(), controlPanelController.isExist(), branchTable);
+            editFormController.editDataFromBranch(aliasTF.getText(), name, nameIndicators, controlPanelController.isMain(), controlPanelController.isExist(), branchTable);
             clearPanel(tableView);
         });
     }

@@ -70,10 +70,10 @@ public class WorkUnitForm extends TableBasicForm implements ISegmentTableForm {
 	public Node getTable() {
 		tableTV = new TableView<WorkUnitTable>();
 
-		TableColumn<WorkUnitTable, String> nameColumn = new TableColumn<WorkUnitTable, String>("Id");
+		TableColumn<WorkUnitTable, String> nameColumn = new TableColumn<WorkUnitTable, String>("Alias");
 		TableColumn<WorkUnitTable, String> exist = new TableColumn<WorkUnitTable, String>("Exist");
 
-		nameColumn.setCellValueFactory(new PropertyValueFactory("idString"));
+		nameColumn.setCellValueFactory(new PropertyValueFactory("alias"));
 		nameColumn.setMinWidth(150);
 		nameColumn.setCellFactory(TextFieldTableCell.forTableColumn());
 
@@ -128,10 +128,10 @@ public class WorkUnitForm extends TableBasicForm implements ISegmentTableForm {
 
 	@Override
 	public void addItem() {
-		String nameST = "";// criterionControlPanel.getName();
+		String nameST = "";// criterionControlPanel.getAlias();
 
 		int id = formController.createTableItem(SegmentType.Work_Unit);
-		String idName = id + "_" + nameST;
+		String idName = id + "";
 
 		WorkUnitTable table = new WorkUnitTable(idName, true, id);
 		tableTV.getItems().add(table);

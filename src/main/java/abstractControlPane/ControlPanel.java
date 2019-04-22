@@ -11,7 +11,9 @@ import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
@@ -28,7 +30,8 @@ public abstract class ControlPanel extends ScrollPane {
     protected Button button;
     protected ObservableList<ControlPanelLineObject> lineList;
     protected ArrayList<ControlPanelLine> controlPanelLines;
-
+    protected TextField aliasTF;
+    private Label aliasLB;
     protected IFormDataController formDataController;
     protected IEditFormController editFormController;
     protected FormController formController;
@@ -54,6 +57,10 @@ public abstract class ControlPanel extends ScrollPane {
 
     private void createMainPanel(String buttonText){
 
+        aliasLB = new Label("Alias: ");
+
+        aliasTF = new TextField();
+        aliasTF.setMaxWidth(60);
 
         button = new Button(buttonText);
         button.setMinSize(70, 70);
@@ -71,7 +78,6 @@ public abstract class ControlPanel extends ScrollPane {
 
         controlPane.setBackground(new Background(new BackgroundFill(Constans.lg1, CornerRadii.EMPTY, Insets.EMPTY)));
 
-
         this.getChildren().add(controlPane);
         this.setHbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
         this.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
@@ -85,5 +91,15 @@ public abstract class ControlPanel extends ScrollPane {
 
     public GridPane getControlPane() {
         return controlPane;
+    }
+
+    public TextField getAliasTF() {
+        return aliasTF;
+    }
+
+    public void setAliasToPanel() {
+        controlPane.add(aliasLB, 1, 0);
+        controlPane.add(aliasTF, 2, 0);
+
     }
 }

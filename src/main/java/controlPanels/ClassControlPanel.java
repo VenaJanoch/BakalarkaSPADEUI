@@ -74,6 +74,7 @@ public class ClassControlPanel extends NameControlPanel {
         boolean exist = (boolean) boolList.get(0);
 
         controlPanelController.setValueExistRadioButton(exist);
+        controlPanelController.setAlias((String)boolList.get(2), this);
     }
 
     protected void saveClassData(){
@@ -104,7 +105,7 @@ public class ClassControlPanel extends NameControlPanel {
 
           saveClassData();
 
-            editFormController.editDataFromClass(segmentType, name, nameIndicators, classListIndex, superClassListIndex, classList, superClassList,
+            editFormController.editDataFromClass(segmentType, aliasTF.getText(), name, nameIndicators, classListIndex, superClassListIndex, classList, superClassList,
                     classTable, controlPanelController.isExist(), id);
             clearPanel(tableView);
         });

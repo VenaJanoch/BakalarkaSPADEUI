@@ -10,7 +10,7 @@ public class WorkUnitTable extends BasicTable {
     @Override
     public String toString() {
 
-        return getName();
+        return getAlias();
     }
 
 }

@@ -1,29 +1,33 @@
 package graphics.windows;
 
 import controllers.DatabaseController;
+import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
+import javafx.util.Pair;
 import services.Constans;
 import tables.ProjectTable;
 
 import java.util.ArrayList;
+import java.util.Optional;
 
 public class LogInWindow extends Stage {
     /**
      * Globální proměnné třídy
      */
-    private Label nameLB;
-    private TextField nameTF;
-    private Label passwordLB;
-    private PasswordField passwordField;
+    private String name;
+    private String password;
+
     private BorderPane mainPanel;
     private GridPane centralPanel;
     private Scene scena;
@@ -66,22 +70,8 @@ public class LogInWindow extends Stage {
         submitBT = new Button("OK");
         submitBT.setId("formSubmit");
         submitBT.setAlignment(Pos.BOTTOM_CENTER);
-
-        nameLB = new Label("Name: ");
-        nameTF = new TextField();
-        nameTF.setId("formName");
-        submitBT = new Button("Connect");
-        submitBT.setOnAction(event -> logInToDatabase() );
-        passwordLB = new Label("Password: ");
-        passwordField = new PasswordField();
-        nameTF.setText("vasek");
-        passwordField.setText("janoch");
         centralPanel = new GridPane();
         centralPanel.setVgap(10);
-        centralPanel.add(nameLB,1,1);
-        centralPanel.add(nameTF,2,1);
-        centralPanel.add(passwordLB,1,2);
-        centralPanel.add(passwordField,2,2);
         centralPanel.add(submitBT, 3, 4);
 
         mainPanel.setCenter(centralPanel);
@@ -90,8 +80,71 @@ public class LogInWindow extends Stage {
         return mainPanel;
     }
 
+    public void showLogDialog(){
+        // Create the custom dialog.
+        Dialog<Pair<String, String>> dialog = new Dialog<>();
+        dialog.setTitle("Login Dialog");
+        dialog.setHeaderText("Look, a Custom Login Dialog");
+
+// Set the icon (must be included in the project).
+   //     dialog.setGraphic(new ImageView(this.getClass().getResource("login.png").toString()));
+
+// Set the button types.
+        ButtonType loginButtonType = new ButtonType("Login", ButtonBar.ButtonData.OK_DONE);
+        dialog.getDialogPane().getButtonTypes().addAll(loginButtonType, ButtonType.CANCEL);
+
+// Create the username and password labels and fields.
+        GridPane grid = new GridPane();
+        grid.setHgap(10);
+        grid.setVgap(10);
+        grid.setPadding(new Insets(20, 150, 10, 10));
+
+        TextField username = new TextField("vasek");
+        username.setPromptText("Username");
+        PasswordField password = new PasswordField();
+        password.setText("janoch");
+        password.setPromptText("Password");
+
+        grid.add(new Label("Username:"), 0, 0);
+        grid.add(username, 1, 0);
+        grid.add(new Label("Password:"), 0, 1);
+        grid.add(password, 1, 1);
+
+// Enable/Disable login button depending on whether a username was entered.
+        Node loginButton = dialog.getDialogPane().lookupButton(loginButtonType);
+        loginButton.setDisable(true);
+
+// Do some validation (using the Java 8 lambda syntax).
+        username.textProperty().addListener((observable, oldValue, newValue) -> {
+            loginButton.setDisable(newValue.trim().isEmpty());
+        });
+
+        dialog.getDialogPane().setContent(grid);
+
+// Request focus on the username field by default.
+        Platform.runLater(() -> username.requestFocus());
+
+// Convert the result to a username-password-pair when the login button is clicked.
+        dialog.setResultConverter(dialogButton -> {
+            if (dialogButton == loginButtonType) {
+                return new Pair<>(username.getText(), password.getText());
+            }
+            return null;
+        });
+
+        Optional<Pair<String, String>> result = dialog.showAndWait();
+
+        result.ifPresent(usernamePassword -> {
+            name = usernamePassword.getKey();
+            this.password = usernamePassword.getValue();
+            logInToDatabase();
+            this.show();
+        });
+    }
+
+
     private void logInToDatabase(){
-      if(databaseController.logIn(nameTF.getText(),passwordField.getText())){
+      if(databaseController.logIn(name, password)){
           fillProjectTable();
       }
     }
@@ -123,7 +176,7 @@ public class LogInWindow extends Stage {
         TableColumn<ProjectTable, String> nameColumn = new TableColumn<ProjectTable, String>("Name");
         TableColumn<ProjectTable, String> id = new TableColumn<ProjectTable, String>("Id");
 
-        nameColumn.setCellValueFactory(new PropertyValueFactory("name"));
+        nameColumn.setCellValueFactory(new PropertyValueFactory("alias"));
         nameColumn.setMinWidth(300);
         nameColumn.setCellFactory(TextFieldTableCell.forTableColumn());
 
@@ -147,10 +200,6 @@ public class LogInWindow extends Stage {
 
     /**** Getrs and Setrs ***/
 
-    public TextField getNameTF() {
-        return nameTF;
-    }
-
     public Button getSubmitBT() {
         return submitBT;
     }
@@ -167,13 +216,6 @@ public class LogInWindow extends Stage {
         this.mainPanel = mainPanel;
     }
 
-    public Label getNameLB() {
-        return nameLB;
-    }
-
-    public void setNameLB(Label nameLB) {
-        this.nameLB = nameLB;
-    }
 
 
 

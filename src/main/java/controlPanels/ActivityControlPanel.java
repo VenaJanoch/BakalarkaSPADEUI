@@ -54,7 +54,7 @@ public class ActivityControlPanel extends WorkUnitControlPanel {
         exist = (boolean) boolList.get(0);
 
         controlPanelController.setValueExistRadioButton(exist);
-
+        controlPanelController.setAlias((String)activityData[5].get(2), this);
         button.setOnAction(event -> saveDataFromPanel(activityTable, tableView));
     }
 
@@ -75,7 +75,7 @@ public class ActivityControlPanel extends WorkUnitControlPanel {
         ArrayList<String> desc = controlPanelController.processTextLines(ParamType.Description, descIndicators);
         ArrayList<LocalDate> endDate = controlPanelController.processDateLines(ParamType.EndDate, endDateIndicators);
         ArrayList<ArrayList<Integer>> workUnit = controlPanelController.processCheckComboBoxLines(ParamType.WorkUnit, workUnitIndicators);
-        editFormController.editDataFromActivity(name, desc, workUnit, nameIndicators, descIndicators,
+        editFormController.editDataFromActivity(aliasTF.getText(), name, desc, workUnit, nameIndicators, descIndicators,
                 workUnitIndicators, endDate, endDateIndicators, activityTable ,controlPanelController.isExist(), id);
 
         clearPanelCB(tableView);

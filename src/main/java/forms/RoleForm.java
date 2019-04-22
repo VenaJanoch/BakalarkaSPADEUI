@@ -146,7 +146,7 @@ public class RoleForm extends TableBasicForm implements ISegmentTableForm {
 
 	@Override
 	public void addItem() {
-		String nameST = ""; // roleControlPanel.getName();
+		String nameST = ""; // roleControlPanel.getAlias();
 		String descritpST = ""; //roleControlPanel.getDescriptionText();
 		int roleIndex = 0;// roleControlPanel.getRoleTypeIndex();
 		int id = formController.createTableItem(SegmentType.Person);

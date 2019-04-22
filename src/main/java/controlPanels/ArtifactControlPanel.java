@@ -81,7 +81,7 @@ public class ArtifactControlPanel extends DateDescControlPanel implements IContr
 
         controlPanelController.setValueExistRadioButton(exist);
         controlPanelController.setCountToCountLine((Integer)boolList.get(1));
-
+        controlPanelController.setAlias((String)boolList.get(2), this);
     }
 
     public void saveDataFromPanel(){
@@ -101,7 +101,7 @@ public class ArtifactControlPanel extends DateDescControlPanel implements IContr
 
         exist = controlPanelController.isExist();
         String count = controlPanelController.getInstanceCount();
-        editFormController.editDataFromArtifact(name, desc , exist, role, type, date, nameIndicators, descIndicators, roleIndicators,
+        editFormController.editDataFromArtifact(aliasTF.getText(), name, desc , exist, role, type, date, nameIndicators, descIndicators, roleIndicators,
                 typeIndicators, dateIndicators, artifactTable, count, id);
 
     }

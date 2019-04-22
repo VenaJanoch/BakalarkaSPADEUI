@@ -244,10 +244,10 @@ public class FormFillController {
     private ClassTable createClassTable(int id, List<String> name, List<String> lclass, List<String> lsuperClass, boolean exist){
 
         String  idName = name.get(0);
-        String classType = lclass.get(0);
-        String superClass = lsuperClass.get(0);
+//        String classType = lclass.get(0);
+//        String superClass = lsuperClass.get(0);
         
-       return  new ClassTable(idName, classType, superClass, exist, id);
+       return  new ClassTable(idName, "", "", exist, id);
     }
 
     private void fillTypeForm() {
@@ -460,6 +460,7 @@ public class FormFillController {
             TableView<WorkUnitTable> workUnitView =  workUnitForm.getTableTV();
             WorkUnitTable workUnitTable = new WorkUnitTable(workUnit.getName().get(0), workUnit.isExist(), workUnit.getId());
             workUnitView.getItems().add(workUnitTable);
+            segmentLists.getWorkUnitsObservable().add(workUnitTable);
         }
 
     }

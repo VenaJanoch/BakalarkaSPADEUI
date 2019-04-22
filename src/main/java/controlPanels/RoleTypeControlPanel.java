@@ -37,7 +37,7 @@ public class RoleTypeControlPanel extends ClassControlPanel {
             saveClassData();
             ArrayList<Integer> descriptionIndicators = new ArrayList<>();
             ArrayList<String> description = controlPanelController.processTextLines(ParamType.Description, descriptionIndicators);
-            editFormController.editDataFromRoleType(name, nameIndicators, description, descriptionIndicators, classListIndex, superClassListIndex,
+            editFormController.editDataFromRoleType(aliasTF.getText(), name, nameIndicators, description, descriptionIndicators, classListIndex, superClassListIndex,
                     classList, superClassList,  table, controlPanelController.isExist(), id);
             clearPanel(tableView);
         });

@@ -28,7 +28,7 @@ public class CommitTable extends BasicTable{
 	@Override
 	public String toString() {
 
-		return getName();
+		return getAlias();
 	}
 	
 	/** Getrs and Setrs **/

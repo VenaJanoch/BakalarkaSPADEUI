@@ -69,10 +69,10 @@ public class ChangeForm extends TableBasicForm implements ISegmentTableForm {
     public Node getTable() {
         tableTV = new TableView<ChangeTable>();
 
-        TableColumn<ChangeTable, String> nameColumn = new TableColumn<ChangeTable, String>("Id");
+        TableColumn<ChangeTable, String> nameColumn = new TableColumn<ChangeTable, String>("Alias");
         TableColumn<ChangeTable, String> exist = new TableColumn<ChangeTable, String>("Exist");
 
-        nameColumn.setCellValueFactory(new PropertyValueFactory("idString"));
+        nameColumn.setCellValueFactory(new PropertyValueFactory("alias"));
         nameColumn.setMinWidth(150);
         nameColumn.setCellFactory(TextFieldTableCell.forTableColumn());
 
@@ -127,10 +127,10 @@ public class ChangeForm extends TableBasicForm implements ISegmentTableForm {
 
     @Override
     public void addItem() {
-        String nameST = "";// criterionControlPanel.getName();
+        String nameST = "";// criterionControlPanel.getAlias();
 
         int id = formController.createTableItem(SegmentType.Change);
-        String idName = id + "_" + nameST;
+        String idName = id + "";
 
         ChangeTable table = new ChangeTable(idName, true, id);
         formDataController.saveDataFromChange(table);

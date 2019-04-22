@@ -92,10 +92,10 @@ public class RoleTypeForm extends TableBasicForm implements ISegmentTableForm {
 	public Node getTable() {
 		tableTV = new TableView<RoleTypeTable>();
 
-		TableColumn<RoleTypeTable, String> nameColumn = new TableColumn<RoleTypeTable, String>("Id");
+		TableColumn<RoleTypeTable, String> nameColumn = new TableColumn<RoleTypeTable, String>("Alias");
 		TableColumn<RoleTypeTable, String> exist = new TableColumn<RoleTypeTable, String>("Exist");
 
-		nameColumn.setCellValueFactory(new PropertyValueFactory("idString"));
+		nameColumn.setCellValueFactory(new PropertyValueFactory("alias"));
 		nameColumn.setMinWidth(150);
 		nameColumn.setCellFactory(TextFieldTableCell.forTableColumn());
 
@@ -154,10 +154,10 @@ public class RoleTypeForm extends TableBasicForm implements ISegmentTableForm {
 
 	@Override
 	public void addItem() {
-		String nameST = "";// criterionControlPanel.getName();
+		String nameST = "";// criterionControlPanel.getAlias();
 
 		int id = formController.createTableItem(SegmentType.Role_Type);
-		String idName = id + "_" + nameST;
+		String idName = id + "";
 
 		RoleTypeTable table = new RoleTypeTable(idName, "", true, "",  id);
 		tableTV.getItems().add(table);

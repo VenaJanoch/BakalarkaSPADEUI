@@ -66,7 +66,7 @@ public class ConfigurationControlPanel extends DateControlPanel implements ICont
             String instanceCount = controlPanelController.getInstanceCount();
 
 
-            editFormController.editDataFromConfiguration(name, dates, false, role, cprs, changes, cprsIndicators,
+            editFormController.editDataFromConfiguration(aliasTF.getText(), name, dates, false, role, cprs, changes, cprsIndicators,
                     nameIndicators, dateIndicators, roleIndicators, changeIndicators, instanceCount, controlPanelController.isExist(),  configId);
         });
 
@@ -96,6 +96,7 @@ public class ConfigurationControlPanel extends DateControlPanel implements ICont
 
         controlPanelController.setValueExistRadioButton(exist);
         controlPanelController.setCountToCountLine((int) boolList.get(1));
+        controlPanelController.setAlias((String)boolList.get(2), this);
     }
 
     @Override

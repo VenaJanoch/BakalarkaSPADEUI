@@ -31,9 +31,13 @@ public class VerifyTable extends BasicTable {
 
 	public VerifyTable(String name, int id, boolean exist, int instanceCont, int projectInstanceCount, String isExistInProject, String result, String sql) {
 		this(name, id, exist, isExistInProject, result, sql);
-		this.projectInstanceCount = new SimpleStringProperty(String.valueOf(projectInstanceCount));
-		this.instanceCount = new SimpleStringProperty(String.valueOf(instanceCont));
-
+		if (instanceCont == -1){
+			this.projectInstanceCount = new SimpleStringProperty("----");
+			this.instanceCount = new SimpleStringProperty("----");
+		}else {
+			this.projectInstanceCount = new SimpleStringProperty(String.valueOf(projectInstanceCount));
+			this.instanceCount = new SimpleStringProperty(String.valueOf(instanceCont));
+		}
 	}
 
 	/**
@@ -42,7 +46,7 @@ public class VerifyTable extends BasicTable {
 	@Override
 	public String toString() {
 
-		return getName();
+		return getAlias();
 	}
 
 	public String getIsExistInProject() {

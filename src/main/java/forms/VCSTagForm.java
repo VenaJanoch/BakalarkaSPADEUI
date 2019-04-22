@@ -78,10 +78,10 @@ public class VCSTagForm extends TableBasicForm implements ISegmentTableForm {
 	public Node getTable() {
 		tableTV = new TableView<VCSTagTable>();
 
-		TableColumn<VCSTagTable, String> nameColumn = new TableColumn<VCSTagTable, String>("Id");
+		TableColumn<VCSTagTable, String> nameColumn = new TableColumn<VCSTagTable, String>("Alias");
 		TableColumn<VCSTagTable, String> exist = new TableColumn<VCSTagTable, String>("Exist");
 
-		nameColumn.setCellValueFactory(new PropertyValueFactory("idString"));
+		nameColumn.setCellValueFactory(new PropertyValueFactory("alias"));
 		nameColumn.setMinWidth(150);
 		nameColumn.setCellFactory(TextFieldTableCell.forTableColumn());
 
@@ -136,10 +136,10 @@ public class VCSTagForm extends TableBasicForm implements ISegmentTableForm {
 
 	@Override
 	public void addItem() {
-		String nameST = "";// criterionControlPanel.getName();
+		String nameST = "";// criterionControlPanel.getAlias();
 
 		int id = formController.createTableItem(SegmentType.VCSTag);
-		String idName = id + "_" + nameST;
+		String idName = id + "";
 
 		VCSTagTable table = new VCSTagTable(idName,true, id);
 		formDataController.saveDataFromVCSTag(nameST,table);

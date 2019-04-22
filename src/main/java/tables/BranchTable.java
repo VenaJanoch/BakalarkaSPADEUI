@@ -28,7 +28,7 @@ public class BranchTable extends BasicTable{
 	@Override
 	public String toString() {
 
-		return getName();
+		return getAlias();
 	}
 	
 	/** Getrs and Setrs **/

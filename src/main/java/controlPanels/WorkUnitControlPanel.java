@@ -75,7 +75,7 @@ public class WorkUnitControlPanel extends DescriptionControlPanel {
         List boolList = workUnitData[22];
         exist = (boolean) boolList.get(0);
         controlPanelController.setValueExistRadioButton(exist);
-
+        controlPanelController.setAlias((String)boolList.get(2), this);
         button.setOnAction(event -> saveDataFromPanel(basicTable, tableView));
     }
 
@@ -111,7 +111,7 @@ public class WorkUnitControlPanel extends DescriptionControlPanel {
         boolean exist = controlPanelController.isExist();
 
 
-        editFormController.editDataFromWorkUnit(name, desc, category, assignee, role, priority, severity, type, resolution, status, estimated, nameIndicators,
+        editFormController.editDataFromWorkUnit(aliasTF.getText(), name, desc, category, assignee, role, priority, severity, type, resolution, status, estimated, nameIndicators,
                 descIndicators, categoryIndicators, assigneeIndicators, roleIndicators, priorityIndicators, severityIndicators, typeIndicators, resolutionIndicators,
                 statusIndicators, estimatedIndicators, exist, relation, workUnit, workUnitTable, id);
 

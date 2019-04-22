@@ -78,14 +78,17 @@ public class SQLAtributeCreator {
 
 
     public static String createStringAttribute(String atributName, List<String> name1, List<Integer> nameIndicator) {
-        int i = 0;
+
         String atributeSection = "";
-        for (String namel : name1){
-            atributeSection += " AND ";
-            atributeSection += atributName + " ";
-            atributeSection += String.valueOf(Constans.INDICATORS[nameIndicator.get(i)] + " ");
-            atributeSection += "'" + namel + "'";
-            i++;
+        if (nameIndicator.size() != 0){
+            int i = 0;
+            for (String namel : name1){
+                atributeSection += " AND ";
+                atributeSection += atributName + " ";
+                atributeSection += String.valueOf(Constans.INDICATORS[nameIndicator.get(i)] + " ");
+                atributeSection += "'" + namel + "'";
+                i++;
+            }
         }
 
         return atributeSection;

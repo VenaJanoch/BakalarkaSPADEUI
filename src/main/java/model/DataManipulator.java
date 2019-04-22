@@ -28,7 +28,7 @@ public class DataManipulator{
         Activity newActivity = dataModel.getActivities().get(newActivityId);
 
       //  newActivity.setCoordinates(oldActivity.getCoordinates());
-     //   newActivity.setName(oldActivity.getName());
+     //   newActivity.setAlias(oldActivity.getAlias());
      //   newActivity.setDescription(oldActivity.getDescription());
 
        int workUnitSize = dataModel.getWorkUnits().size();
@@ -59,7 +59,7 @@ public class DataManipulator{
 //        newWu.setTypeIndex(oldWu.getTypeIndex());
 //        newWu.setSeverityIndex(oldWu.getSeverityIndex());
 //        newWu.setPriorityIndex(oldWu.getPriorityIndex());
-//        newWu.setName(oldWu.getName());
+//        newWu.setAlias(oldWu.getAlias());
 //        newWu.setExist(oldWu.isExist());
 //        newWu.setEstimatedTime(oldWu.getEstimatedTime());
 //        newWu.setDescription(oldWu.getDescription());
@@ -75,7 +75,7 @@ public class DataManipulator{
         Iteration newIteration = dataModel.getIterations().get(newIterationId);
 
 //        newIteration.setCoordinates(oldIteration.getCoordinates());
-//        newIteration.setName(oldIteration.getName());
+//        newIteration.setAlias(oldIteration.getAlias());
 //        newIteration.setDescription(oldIteration.getDescription());
 //        newIteration.setStartDate(oldIteration.getStartDate());
 //        newIteration.setEndDate(oldIteration.getEndDate());
@@ -95,7 +95,7 @@ public class DataManipulator{
         Phase newPhase = dataModel.getPhases().get(newPhaseId);
 
 //        newPhase.setCoordinates(oldPhase.getCoordinates());
-//        newPhase.setName(oldPhase.getName());
+//        newPhase.setAlias(oldPhase.getAlias());
 //        newPhase.setDescription(oldPhase.getDescription());
 //        newPhase.setEndDate(oldPhase.getEndDate());
 //        newPhase.setConfiguration(oldPhase.getConfiguration());
@@ -116,7 +116,7 @@ public class DataManipulator{
         Change newChange = dataModel.getChanges().get(newchangeId);
 
 //        newChange.setCoordinates(oldChange.getCoordinates());
-//        newChange.setName(oldChange.getName());
+//        newChange.setAlias(oldChange.getAlias());
 //        newChange.setDescriptoin(oldChange.getDescriptoin());
 //        newChange.setExist(oldChange.isExist());
         }
@@ -222,6 +222,8 @@ public class DataManipulator{
 
         List list = new ArrayList();
         list.add(criterion.isExist());
+        list.add(null);
+        list.add(criterion.getAlias());
         data[4] = list;
 
         return data;
@@ -263,6 +265,8 @@ public class DataManipulator{
 
         List list = new ArrayList();
         list.add(milestone.isExist());
+        list.add(null);
+        list.add(milestone.getAlias());
         data[5] = list;
 
 
@@ -306,6 +310,7 @@ public class DataManipulator{
         ArrayList list = new ArrayList();
         list.add(role.isExist());
         list.add(role.getCount());
+        list.add(role.getAlias());
         data[4] = list;
 
 
@@ -335,6 +340,8 @@ public class DataManipulator{
 
         List list = new ArrayList();
         list.add(roleType.isExist());
+        list.add(null);
+        list.add(roleType.getAlias());
         data[4] = list;
 
         if(roleType.getDescription() != null){
@@ -373,6 +380,8 @@ public class DataManipulator{
 
         List list = new ArrayList();
         list.add(severity.isExist());
+        list.add(null);
+        list.add(severity.getAlias());
         data[4] = list;
         return data;
     }
@@ -399,6 +408,8 @@ public class DataManipulator{
         
         List list = new ArrayList();
         list.add(priority.isExist());
+        list.add(null);
+        list.add(priority.getAlias());
         data[4] = list;
         return data;
     }
@@ -425,6 +436,8 @@ public class DataManipulator{
 
         List list = new ArrayList();
         list.add(status.isExist());
+        list.add(null);
+        list.add(status.getAlias());
         data[4] = list;
         return data;
     }
@@ -451,6 +464,8 @@ public class DataManipulator{
 
         List list = new ArrayList();
         list.add(type.isExist());
+        list.add(null);
+        list.add(type.getAlias());
         data[4] = list;
         return data;
     }
@@ -476,6 +491,8 @@ public class DataManipulator{
 
         List list = new ArrayList();
         list.add(relation.isExist());
+        list.add(null);
+        list.add(relation.getAlias());
         data[4] = list;
 
         return data;
@@ -503,6 +520,8 @@ public class DataManipulator{
 
         List list = new ArrayList();
         list.add(resolution.isExist());
+        list.add(null);
+        list.add(resolution.getAlias());
         data[4] = list;
 
         return data;
@@ -529,6 +548,8 @@ public class DataManipulator{
         }
         List list = new ArrayList();
         list.add(cpr.isExist());
+        list.add(null);
+        list.add(cpr.getAlias());
         data[4] = list;
         return data;
     }
@@ -544,6 +565,8 @@ public class DataManipulator{
         }
         List list = new ArrayList();
         list.add(branch.isExist());
+        list.add(null);
+        list.add(branch.getAlias());
         data[2] = list;
         if(branch.isIsMain() != null){
 
@@ -609,6 +632,8 @@ public class DataManipulator{
 
         List list = new ArrayList();
         list.add(phase.isExist());
+        list.add(null);
+        list.add(phase.getAlias());
         data[11] = list;
 
         return data;
@@ -752,6 +777,8 @@ public class DataManipulator{
 
         List list = new ArrayList();
         list.add(iteration.isExist());
+        list.add(null);
+        list.add(iteration.getAlias());
         data[11] = list;
 
         return data;
@@ -782,6 +809,8 @@ public class DataManipulator{
 
         List list = new ArrayList();
         list.add(activity.isExist());
+        list.add(null);
+        list.add(activity.getAlias());
         data[5] = list;
 
         if(activity.getEndDate() != null){
@@ -821,8 +850,9 @@ public class DataManipulator{
         if(change.isExist() != null){
 
             list.add(change.isExist());
-            data[4] = list;
         }
+        list.add(null);
+        list.add(change.getAlias());
 
         if(change.getArtifactIndex() != null){
             data[5] = change.getArtifactIndex();
@@ -879,6 +909,7 @@ public class DataManipulator{
         List list = new ArrayList();
         list.add(artifact.isExist());
         list.add(artifact.getCount());
+        list.add(artifact.getAlias());
         data[10] = list;
 
 
@@ -981,6 +1012,8 @@ public class DataManipulator{
 
         List list = new ArrayList();
         list.add(workUnit.isExist());
+        list.add(null);
+        list.add(workUnit.getAlias());
         data[22] = list;
 
 
@@ -991,6 +1024,7 @@ public class DataManipulator{
         if(workUnit.getWorkUnits() != null){
             data[24] = workUnit.getWorkUnits();
         }
+
 
         return data;
         
@@ -1040,6 +1074,7 @@ public class DataManipulator{
         List list = new ArrayList();
         list.add(configuration.isExist());
         list.add(configuration.getCount());
+        list.add(configuration.getAlias());
         data[9] = list;
 
         return data;
@@ -1118,6 +1153,8 @@ public class DataManipulator{
 
         List list = new ArrayList();
         list.add(vcsTag.isExist());
+        list.add(null);
+        list.add(vcsTag.getAlias());
         data[4] = list;
         return data;
     }
@@ -1149,6 +1186,7 @@ public class DataManipulator{
         ArrayList list = new ArrayList();
         list.add(commit.isExist());
         list.add(commit.getCount());
+        list.add(commit.getAlias());
         data[5] = list;
         if(commit.isRelease() != null){
             list.add(commit.isRelease());
@@ -1180,6 +1218,7 @@ public class DataManipulator{
         ArrayList list = new ArrayList();
         list.add(commitedConfiguration.isExist());
         list.add(commitedConfiguration.getCount());
+        list.add(commitedConfiguration.getAlias());
         data[4] = list;
 
         return data;

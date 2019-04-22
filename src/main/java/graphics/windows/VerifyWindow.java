@@ -4,20 +4,24 @@ import controllers.VerifyController;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Priority;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import services.Constans;
 import tables.VerifyTable;
 
 import java.util.ArrayList;
+import java.util.Optional;
 
 public class VerifyWindow extends Stage {
     /**
@@ -31,9 +35,11 @@ public class VerifyWindow extends Stage {
     private TableView<VerifyTable> tableTV;
     private ArrayList<Text> textList;
     private TableColumn<VerifyTable, String> sql = new TableColumn<VerifyTable, String>("SQL Command");
+    private EventHandler<MouseEvent> OnMousePressedEventHandler;
 
     public VerifyWindow(VerifyController verifyController) {
         this.verifyController = verifyController;
+        setEventHandler();
         tableTV = getTable();
         textList = new ArrayList<>();
         this.setScene(creatScene());
@@ -71,6 +77,40 @@ public class VerifyWindow extends Stage {
         return mainPanel;
     }
 
+    protected void setEventHandler() {
+        OnMousePressedEventHandler = new EventHandler<MouseEvent>() {
+
+            @Override
+            public void handle(MouseEvent t) {
+                if(t.getClickCount() == 2) {
+                    VerifyTable table = tableTV.getSelectionModel().getSelectedItem();
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("SQL QUERY");
+                    alert.setContentText("Query for " + table.getAlias());
+
+                    TextArea textArea = new TextArea(table.getSql());
+                    textArea.setEditable(true);
+                    textArea.setWrapText(true);
+
+                    textArea.setMaxWidth(Double.MAX_VALUE);
+                    textArea.setMaxHeight(Double.MAX_VALUE);
+                    GridPane.setVgrow(textArea, Priority.ALWAYS);
+                    GridPane.setHgrow(textArea, Priority.ALWAYS);
+
+                    GridPane expContent = new GridPane();
+                    expContent.setMaxWidth(Double.MAX_VALUE);
+                    expContent.add(textArea, 0, 1);
+
+// Set expandable Exception into the dialog pane.
+                    alert.getDialogPane().setExpandableContent(expContent);
+
+                    ButtonType buttonTypeOne = new ButtonType("OK");
+                    alert.showAndWait();
+                }
+            }
+        };
+    }
+
 
     public TableView<VerifyTable> getTable() {
         tableTV = new TableView<VerifyTable>();
@@ -79,9 +119,11 @@ public class VerifyWindow extends Stage {
         TableColumn<VerifyTable, String> exist = new TableColumn<VerifyTable, String>("Exist");
         TableColumn<VerifyTable, String> isProjectExistColumn = new TableColumn<VerifyTable, String>("Exist in Project");
         TableColumn<VerifyTable, String> result = new TableColumn<VerifyTable, String>("Result");
+        TableColumn<VerifyTable, String> modelCount = new TableColumn<VerifyTable, String>("Model count");
+        TableColumn<VerifyTable, String> projectCount = new TableColumn<VerifyTable, String>("Project count");
 
        
-        elementNameColumn.setCellValueFactory(new PropertyValueFactory("name"));
+        elementNameColumn.setCellValueFactory(new PropertyValueFactory("alias"));
         elementNameColumn.setMinWidth(200);
         elementNameColumn.setMaxWidth(200);
         elementNameColumn.setCellFactory(TextFieldTableCell.forTableColumn());
@@ -90,6 +132,17 @@ public class VerifyWindow extends Stage {
         exist.setMinWidth(50);
         exist.setMaxWidth(50);
         exist.setCellFactory(TextFieldTableCell.forTableColumn());
+
+        modelCount.setCellValueFactory(new PropertyValueFactory("instanceCount"));
+        modelCount.setMinWidth(150);
+        modelCount.setMaxWidth(150);
+        modelCount.setCellFactory(TextFieldTableCell.forTableColumn());
+
+        projectCount.setCellValueFactory(new PropertyValueFactory("instanceCount"));
+        projectCount.setMinWidth(150);
+        projectCount.setMaxWidth(150);
+        projectCount.setCellFactory(TextFieldTableCell.forTableColumn());
+
 
         isProjectExistColumn.setCellValueFactory(new PropertyValueFactory("isExistInProject"));
         isProjectExistColumn.setMinWidth(200);
@@ -121,9 +174,9 @@ public class VerifyWindow extends Stage {
 
         });
 
-        tableTV.getColumns().addAll(elementNameColumn, exist, isProjectExistColumn, result, sql);
-        //tableTV.setOnMousePressed(OnMousePressedEventHandler);
-        tableTV.setEditable(true);
+        tableTV.getColumns().addAll(elementNameColumn, exist, isProjectExistColumn, modelCount, projectCount, result, sql);
+        tableTV.setOnMousePressed(OnMousePressedEventHandler);
+        tableTV.setEditable(false);
 
         tableTV.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 

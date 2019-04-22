@@ -1,6 +1,5 @@
 package tables;
 
-import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 public class CriterionTable extends BasicTable{
@@ -26,7 +25,7 @@ public class CriterionTable extends BasicTable{
 	@Override
 	public String toString() {
 
-		return getName();
+		return getAlias();
 	}
 
 	/** Getrs and Setrs **/

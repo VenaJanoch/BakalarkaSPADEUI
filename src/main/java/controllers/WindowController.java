@@ -36,6 +36,8 @@ public class WindowController {
     private JFXDrawer leftDrawer;
     private JFXDrawer rightDrawer;
     private JFXDrawersStack drawersStack;
+    private boolean logToDB = false;
+
     public WindowController(Stage primaryStage){
         this.primaryStage = primaryStage;
         initApplication();
@@ -124,8 +126,13 @@ public class WindowController {
     }
 
     public void showConfirmWindow() {
-        logInWindow.show();
+        if (!logToDB){
+            logInWindow.showLogDialog();
+        }else {
+            logInWindow.show();
+        }
     }
+
 
     /********* Getrs and Setrs *************/
     public boolean isClose() {

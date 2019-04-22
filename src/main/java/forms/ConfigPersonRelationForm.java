@@ -108,10 +108,10 @@ public class ConfigPersonRelationForm extends TableBasicForm implements ISegment
 	public Node getTable() {
 		tableTV = new TableView<CPRTable>();
 		tableTV.setId("cprTable");
-		TableColumn<CPRTable, String> nameColumn = new TableColumn<CPRTable, String>("Id");
+		TableColumn<CPRTable, String> nameColumn = new TableColumn<CPRTable, String>("Alias");
 		TableColumn<CPRTable, String> exist = new TableColumn<CPRTable, String>("Exist");
 
-		nameColumn.setCellValueFactory(new PropertyValueFactory("idString"));
+		nameColumn.setCellValueFactory(new PropertyValueFactory("alias"));
 		nameColumn.setMinWidth(150);
 		nameColumn.setCellFactory(TextFieldTableCell.forTableColumn());
 
@@ -139,10 +139,10 @@ public class ConfigPersonRelationForm extends TableBasicForm implements ISegment
 	@Override
 	public void addItem() {
 
-		String nameST = ""; // cprControlPanel.getName();
+		String nameST = ""; // cprControlPanel.getAlias();
 		int id = formController.createTableItem(SegmentType.Config_Person_Relation);
 		int roleIndex = 0;
-		CPRTable cpr = formDataController.prepareCPRToTable(nameST, roleIndex, id);
+		CPRTable cpr = new CPRTable(id + "", "",true, id);
 		formDataController.saveDataFromCPR(nameST, roleIndex, cpr);
 		tableTV.getItems().add(cpr);
 		tableTV.sort();

@@ -21,7 +21,7 @@ public class RoleValueTest {
             FormDataController formDataController = warmUp.getFormDataController();
             FormController formController = warmUp.getFormController();
 
-            warmUp.getDataModel().getSaveDataModel().createNewRole(2);
+            warmUp.getDataModel().getSaveDataModel().createNewPerson(2);
             role = warmUp.getDataModel().getRole(2);
         }
     @Test

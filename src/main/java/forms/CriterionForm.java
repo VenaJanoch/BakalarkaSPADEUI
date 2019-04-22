@@ -76,10 +76,10 @@ public class CriterionForm extends TableBasicForm implements ISegmentTableForm {
 	public Node getTable() {
 		tableTV = new TableView<CriterionTable>();
 
-		TableColumn<CriterionTable, String> nameColumn = new TableColumn<CriterionTable, String>("Id");
+		TableColumn<CriterionTable, String> nameColumn = new TableColumn<CriterionTable, String>("Alias");
 		TableColumn<CriterionTable, String> exist = new TableColumn<CriterionTable, String>("Exist");
 
-		nameColumn.setCellValueFactory(new PropertyValueFactory("idString"));
+		nameColumn.setCellValueFactory(new PropertyValueFactory("alias"));
 		nameColumn.setMinWidth(150);
 		nameColumn.setCellFactory(TextFieldTableCell.forTableColumn());
 
@@ -134,11 +134,11 @@ public class CriterionForm extends TableBasicForm implements ISegmentTableForm {
 
 	@Override
 	public void addItem() {
-		String nameST = "";// criterionControlPanel.getName();
+		String nameST = "";// criterionControlPanel.getAlias();
 		String descriptionST = "" ;// criterionControlPanel.getDescriptionText();
 
 		int id = formController.createTableItem(SegmentType.Criterion);
-		String idName = id + "_" + nameST;
+		String idName = id + "";
 
 		CriterionTable criterion = new CriterionTable(idName,true, id);
 		tableTV.getItems().add(criterion);

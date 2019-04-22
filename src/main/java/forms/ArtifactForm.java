@@ -129,10 +129,10 @@ public class ArtifactForm extends TableBasicForm implements ISegmentTableForm {
 
     @Override
     public void addItem() {
-        String nameST = "";// criterionControlPanel.getName();
+        String nameST = "";// criterionControlPanel.getAlias();
 
         int id = formController.createTableItem(SegmentType.Artifact);
-        String idName = id + "_" + nameST;
+        String idName = id + "";
 
         ArtifactTable table = new ArtifactTable(idName, true, id);
         tableTV.getItems().add(table);
