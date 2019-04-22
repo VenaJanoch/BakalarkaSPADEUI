@@ -1,8 +1,8 @@
 package graphics.canvas;
 
-import controllers.CanvasController;
-import controllers.LinkController;
-import controllers.ManipulationController;
+import controllers.graphicsComponentsControllers.CanvasController;
+import controllers.graphicsComponentsControllers.LinkController;
+import controllers.formControllers.ManipulationController;
 import javafx.geometry.Point2D;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;

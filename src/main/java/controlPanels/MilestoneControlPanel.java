@@ -1,6 +1,6 @@
 package controlPanels;
 
-import controllers.FormController;
+import controllers.formControllers.FormController;
 import abstractControlPane.DescriptionControlPanel;
 import interfaces.IEditFormController;
 import interfaces.IFormDataController;

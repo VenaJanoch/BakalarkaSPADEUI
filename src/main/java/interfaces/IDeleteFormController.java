@@ -32,9 +32,7 @@ import java.util.ArrayList;
       void deleteCriterionWithDialog(ArrayList<BasicTable> selection, TableView tableView);
       void deleteCPRWithDialog(ArrayList<BasicTable> selection, TableView view);
       void deleteBranchDialog(ArrayList<BasicTable> selection, TableView view);
-
       void deleteItemWithDialog(ArrayList<BasicTable> list, TableView tableTV, SegmentType segmentType);
-
       void removePersonArtifactLink(int arrowId, int startId, int endId);
       void removePersonConfigurationLink(int arrowId, int startId, int endId);
       void removeArtifactConfiguraionLink(int arrowId, int startId, int endId);

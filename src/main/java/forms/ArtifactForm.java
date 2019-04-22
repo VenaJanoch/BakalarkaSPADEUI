@@ -1,19 +1,10 @@
 package forms;
 
-import java.time.LocalDate;
-
 import abstractform.TableBasicForm;
 import controlPanels.ArtifactControlPanel;
-import controlPanels.PhaseControlPanel;
-import controllers.FormController;
-import SPADEPAC.ArtifactClass;
-import abstractform.DateDescBasicForm;
+import controllers.formControllers.FormController;
 import interfaces.*;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.collections.FXCollections;
 import javafx.event.EventHandler;
-import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.*;
@@ -24,11 +15,8 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
-import services.Alerts;
-import services.Constans;
 import services.SegmentType;
 import tables.ArtifactTable;
-import tables.PhaseTable;
 
 /**
  * Třída představující formulář pro segment Artifact, odděděná od třídy

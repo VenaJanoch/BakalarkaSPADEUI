@@ -7,6 +7,4 @@ public interface IControlPanel {
 
     void showEditControlPanel();
 
-
-
 }

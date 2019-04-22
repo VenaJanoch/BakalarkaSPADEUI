@@ -1,12 +1,10 @@
-package controllers;
+package controllers.graphicsComponentsControllers;
 
 import abstractform.BasicForm;
+import controllers.formControllers.FormController;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.control.ComboBox;
-import javafx.scene.layout.AnchorPane;
-import services.FormControl;
-import sun.plugin.javascript.navig.Anchor;
 
 public class SelectItemController {
 

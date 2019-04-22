@@ -1,5 +1,7 @@
-package controllers;
+package controllers.formControllers;
 
+import controllers.DataPreparer;
+import controllers.InputController;
 import interfaces.IEditDataModel;
 import interfaces.IEditFormController;
 import model.DataModel;
@@ -131,7 +133,6 @@ public class EditFormController implements IEditFormController {
         try {
             instanceCount = Integer.parseInt(count);
             ArrayList<String> nameForManipulator = InputController.fillNameTextMapper(name);
-
             ArrayList<Integer> typeFormManipulator = dataPreparer.prepareIndexForManipulator(roleTypeIndex);
 
             String roleName = nameForManipulator.get(0);
@@ -309,6 +310,7 @@ public class EditFormController implements IEditFormController {
         ArrayList<LocalDate> endDate1 = InputController.checkDate(endDate);
 
         ArrayList<ArrayList<Integer>> workUnitsForManipulator = dataPreparer.prepareIndicesForManipulator(workUnit);
+
         dataManipulator.editDataInProject(nameForManipulator, startDate1, endDate1, descriptionForManipulator,
                 workUnitsForManipulator, workUnitIndicators, nameIndicators, date1Indicators, date2Indicators, descIndicators);
 
@@ -457,12 +459,12 @@ public class EditFormController implements IEditFormController {
             int formIndex = identificatorCreater.getConfigurationFormIndex(configId);
             ConfigTable configTable = new ConfigTable(itemName, "", formIndex, exist, configId);
             configTable.setExist(exist);
-            segmentLists.getConfigObservable().add(configTable);
+            segmentLists.updateListItem(SegmentType.Configuration,configId, configTable);
 
             formController.setNameToItem(formIndex, itemName);
             formController.setItemInstanceCount(formIndex, instanceCount);
             formController.setItemColor(formIndex, exist);
-            mapperTableToObject.mapTableToConfiguration(roleIdForManipulator, cprsForManipulator, null, itemName, configId);
+            mapperTableToObject.mapTableToConfiguration(roleIdForManipulator, cprsForManipulator, changesForManipulator, itemName, configId);
 
 
         }catch (NumberFormatException e){

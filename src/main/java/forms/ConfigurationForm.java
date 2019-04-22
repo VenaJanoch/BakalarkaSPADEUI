@@ -3,8 +3,8 @@ package forms;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-import controllers.CanvasController;
-import controllers.FormController;
+import controllers.graphicsComponentsControllers.CanvasController;
+import controllers.formControllers.FormController;
 import abstractform.DateBasicForm;
 import graphics.panels.DragAndDropItemPanel;
 import interfaces.IDeleteFormController;

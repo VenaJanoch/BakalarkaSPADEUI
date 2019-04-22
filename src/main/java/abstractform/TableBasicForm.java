@@ -1,6 +1,6 @@
 package abstractform;
 
-import controllers.FormController;
+import controllers.formControllers.FormController;
 import interfaces.IDeleteFormController;
 import interfaces.IEditFormController;
 import interfaces.IFormDataController;
@@ -8,19 +8,15 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
 import services.*;
 import tables.BasicTable;
-import tables.CriterionTable;
 
 import java.util.ArrayList;
 
@@ -40,7 +36,6 @@ public abstract class TableBasicForm extends BasicForm {
     protected Button removeButton;
     protected Button editButton;
 
-    private Label formName;
     protected EventHandler<MouseEvent> OnMousePressedEventHandler;
 
     /**
@@ -50,7 +45,7 @@ public abstract class TableBasicForm extends BasicForm {
         super(formController, formDataController, editFormController, deleteFormController, type);
         this.setBackground(new Background(new BackgroundFill(Constans.lg1, CornerRadii.EMPTY, Insets.EMPTY)));
 
-        creatPanel();
+        createPanel();
     }
 
 
@@ -71,7 +66,7 @@ public abstract class TableBasicForm extends BasicForm {
         }
         else{
             ArrayList<BasicTable> list = new ArrayList<>(selection);
-            deleteFormController.deleteItemWithDialog(list, tableTV, getSegmentType()); //todo prenastavit na vsechny prvky
+            deleteFormController.deleteItemWithDialog(list, tableTV, getSegmentType());
         }
     }
 
@@ -82,7 +77,7 @@ public abstract class TableBasicForm extends BasicForm {
      *
      * @return BorderPane
      */
-    private Parent creatPanel() {
+    private Parent createPanel() {
 
         this.setPadding(new Insets(5));
 

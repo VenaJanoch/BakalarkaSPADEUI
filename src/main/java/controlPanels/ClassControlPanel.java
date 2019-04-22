@@ -1,6 +1,6 @@
 package controlPanels;
 
-import controllers.FormController;
+import controllers.formControllers.FormController;
 import abstractControlPane.NameControlPanel;
 import graphics.controlPanelItems.ControlPanelLine;
 import interfaces.IEditFormController;
@@ -60,7 +60,7 @@ public class ClassControlPanel extends NameControlPanel {
 
         oClassList.addAll(classList);
         oSuperClassList.addAll(superClassList);
-        controlPanelController.setStaticClassBoxes(this, 1,
+        controlPanelController.setStaticClassBoxes(this, 2,
                 new ControlPanelLine(this, controlPanelController, controlPanelController.getClassListener(segmentType), oClassList ),
                 new ControlPanelLine( this, controlPanelController, controlPanelController.getSuperClassListener(), oSuperClassList));
         controlPanelController.createNewLineWithExist(this, lineList);

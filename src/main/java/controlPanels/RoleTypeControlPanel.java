@@ -1,13 +1,11 @@
 package controlPanels;
 
-import SPADEPAC.RoleType;
-import controllers.FormController;
+import controllers.formControllers.FormController;
 import interfaces.IEditFormController;
 import interfaces.IFormDataController;
 import javafx.scene.control.TableView;
 import services.*;
 import tables.BasicTable;
-import tables.ClassTable;
 import tables.RoleTypeTable;
 
 import java.util.ArrayList;

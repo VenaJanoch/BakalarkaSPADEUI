@@ -1,7 +1,7 @@
 package controlPanels;
 
 import abstractControlPane.DateControlPanel;
-import controllers.FormController;
+import controllers.formControllers.FormController;
 import graphics.controlPanelItems.ControlPanelLine;
 import interfaces.IControlPanel;
 import interfaces.IEditFormController;

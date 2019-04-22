@@ -1,14 +1,11 @@
 package modelControllerTests;
 
-import controllers.FormController;
-import controllers.FormDataController;
+import controllers.formControllers.FormController;
+import controllers.formControllers.FormDataController;
 import SPADEPAC.Milestone;
 import org.junit.Before;
 import org.junit.Test;
 import services.SegmentLists;
-import services.SegmentType;
-import tables.CriterionTable;
-import tables.MilestoneTable;
 
 import java.util.ArrayList;
 

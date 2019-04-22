@@ -264,6 +264,9 @@ public class SegmentLists {
             case Configuration:
                 removeDataFromListTest(configObservable, indexList);
                 break;
+            case Change:
+                removeDataFromListTest(changeObservable, indexList);
+                break;
             default:
 
         }

@@ -8,7 +8,6 @@ import java.util.*;
 public class DataManipulator{
 
 
-    private Project project;
     private ProcessGenerator procesGener;
     private DataModel dataModel;
     private ObjectFactory objF;
@@ -16,24 +15,23 @@ public class DataManipulator{
     public DataManipulator(ProcessGenerator processGenerator, DataModel dataModel) {
         this.procesGener = processGenerator;
         this.dataModel = dataModel;
-        this.project = dataModel.getProject();
         this.objF = dataModel.getObjF();
     }
 
 
     public void setRelationIndexToLink(int id, int relationIndex) {
- //   project.getLinks().get(id).setRelationIndex(relationIndex);
+ //   dataModel.getLinks().get(id).setRelationIndex(relationIndex);
     }
 
     public void copyDataFromActivity(int oldActivityId, int newActivityId) {
-        Activity oldActivity = project.getActivities().get(oldActivityId);
-        Activity newActivity = project.getActivities().get(newActivityId);
+        Activity oldActivity = dataModel.getActivities().get(oldActivityId);
+        Activity newActivity = dataModel.getActivities().get(newActivityId);
 
       //  newActivity.setCoordinates(oldActivity.getCoordinates());
      //   newActivity.setName(oldActivity.getName());
      //   newActivity.setDescription(oldActivity.getDescription());
 
-       int workUnitSize = project.getWorkUnits().size();
+       int workUnitSize = dataModel.getWorkUnits().size();
       //  for (int i =0; i < oldActivity.getWorkUnits().size(); i++){
       //      copyDataFromWorkUnit(oldActivity.getWorkUnits().get(i));
       //      newActivity.getWorkUnits().add(workUnitSize + i);
@@ -41,16 +39,16 @@ public class DataManipulator{
     }
 
     public void copyDataFromWorkUnit(int oldWUId){
-        WorkUnit oldWu = project.getWorkUnits().get(oldWUId);
+        WorkUnit oldWu = dataModel.getWorkUnits().get(oldWUId);
         WorkUnit newWu = objF.createWorkUnit();
         copyDataFromWorkUnit(oldWu, newWu);
-        project.getWorkUnits().add(newWu);
+        dataModel.getWorkUnits().add(newWu);
 
     }
 
     public void copyDataFromWorkUnit(int oldWUId, int newWUId){
-        WorkUnit oldWu = project.getWorkUnits().get(oldWUId);
-        WorkUnit newWu = project.getWorkUnits().get(newWUId);
+        WorkUnit oldWu = dataModel.getWorkUnits().get(oldWUId);
+        WorkUnit newWu = dataModel.getWorkUnits().get(newWUId);
         copyDataFromWorkUnit(oldWu, newWu);
 
     }
@@ -73,8 +71,8 @@ public class DataManipulator{
     }
 
     public void copyDataFromIteration(int oldIteratationId, int newIterationId) {
-        Iteration oldIteration = project.getIterations().get(oldIteratationId);
-        Iteration newIteration = project.getIterations().get(newIterationId);
+        Iteration oldIteration = dataModel.getIterations().get(oldIteratationId);
+        Iteration newIteration = dataModel.getIterations().get(newIterationId);
 
 //        newIteration.setCoordinates(oldIteration.getCoordinates());
 //        newIteration.setName(oldIteration.getName());
@@ -83,7 +81,7 @@ public class DataManipulator{
 //        newIteration.setEndDate(oldIteration.getEndDate());
 //        newIteration.setConfiguration(oldIteration.getConfiguration());
 //
-//        int workUnitSize = project.getWorkUnits().size();
+//        int workUnitSize = dataModel.getWorkUnits().size();
 //        for (int i =0; i < oldIteration.getWorkUnits().size(); i++){
 //            copyDataFromWorkUnit(oldIteration.getWorkUnits().get(i));
 //            newIteration.getWorkUnits().add(workUnitSize + i);
@@ -93,8 +91,8 @@ public class DataManipulator{
 
 
     public void copyDataFromPhase(int phaseId, int newPhaseId) {
-        Phase oldPhase = project.getPhases().get(phaseId);
-        Phase newPhase = project.getPhases().get(newPhaseId);
+        Phase oldPhase = dataModel.getPhases().get(phaseId);
+        Phase newPhase = dataModel.getPhases().get(newPhaseId);
 
 //        newPhase.setCoordinates(oldPhase.getCoordinates());
 //        newPhase.setName(oldPhase.getName());
@@ -104,7 +102,7 @@ public class DataManipulator{
 //        newPhase.setConfiguration(oldPhase.getConfiguration());
 //        newPhase.setMilestoneIndex(oldPhase.getMilestoneIndex());
 //
-//        int workUnitSize = project.getWorkUnits().size();
+//        int workUnitSize = dataModel.getWorkUnits().size();
 //        for (int i =0; i < oldPhase.getWorkUnits().size(); i++){
 //            copyDataFromWorkUnit(oldPhase.getWorkUnits().get(i));
 //            newPhase.getWorkUnits().add(workUnitSize + i);
@@ -114,8 +112,8 @@ public class DataManipulator{
 
     public void copyDataFromChange(int changeId, int newchangeId) {
 
-        Change oldChange = project.getChanges().get(changeId);
-        Change newChange = project.getChanges().get(newchangeId);
+        Change oldChange = dataModel.getChanges().get(changeId);
+        Change newChange = dataModel.getChanges().get(newchangeId);
 
 //        newChange.setCoordinates(oldChange.getCoordinates());
 //        newChange.setName(oldChange.getName());
@@ -204,7 +202,7 @@ public class DataManipulator{
 
     public List[] getCriterionData(int id) {
         List[] data = new List[5];
-        Criterion criterion = project.getCriterions().get(getCriterionIndexInProject(id));
+        Criterion criterion = dataModel.getCriterions().get(getCriterionIndexInProject(id));
         
         if(criterion.getName() != null){
             data[0] = criterion.getName();
@@ -230,7 +228,7 @@ public class DataManipulator{
     }
 
     private int getCriterionIndexInProject(int id) {
-        List<Criterion> items = project.getCriterions();
+        List<Criterion> items = dataModel.getCriterions();
         for ( int i = 0; i < items.size(); i++){
 
             if (items.get(i).getId() == id){
@@ -242,7 +240,7 @@ public class DataManipulator{
 
     public List[] getMilestoneData(int id) {
         List[] data = new List[6];
-        Milestone milestone = project.getMilestones().get(id);
+        Milestone milestone = dataModel.getMilestones().get(id);
         if(milestone.getName() != null){
             data[0] = milestone.getName();
         }
@@ -791,7 +789,7 @@ public class DataManipulator{
         }
 
         if(activity.getEndDateIndicator() != null){
-            data[4] = activity.getEndDateIndicator();
+            data[7] = activity.getEndDateIndicator();
         }
 
         return data;

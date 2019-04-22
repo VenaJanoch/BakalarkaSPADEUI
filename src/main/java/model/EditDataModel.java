@@ -516,6 +516,19 @@ public class EditDataModel implements IEditDataModel {
                             }
                         }
                         break;
+                    case Change:
+                        for (Configuration segment : dataModel.getConfigurations()) {
+                            int i = 0;
+                            ArrayList<ChangeList> tmp = new ArrayList(segment.getChangesIndexs());
+                            for (ChangeList list : tmp ){
+                                updateElementListFromSegment(elementIdList, list.getChanges());
+                                if (list.getChanges().size() == 0){
+                                    segment.getChangesIndexs().remove(i);
+                                }
+                                i++;
+                            }
+                        }
+                        break;
 
 
                     default:

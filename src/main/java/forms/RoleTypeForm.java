@@ -2,7 +2,7 @@ package forms;
 
 import abstractform.TableBasicForm;
 import controlPanels.RoleTypeControlPanel;
-import controllers.FormController;
+import controllers.formControllers.FormController;
 import SPADEPAC.RoleClass;
 import SPADEPAC.RoleSuperClass;
 import interfaces.IDeleteFormController;

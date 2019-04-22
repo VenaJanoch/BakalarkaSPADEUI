@@ -3,8 +3,8 @@
  */
 package abstractform;
 
-import controllers.CanvasController;
-import controllers.FormController;
+import controllers.graphicsComponentsControllers.CanvasController;
+import controllers.formControllers.FormController;
 import graphics.panels.DragAndDropItemPanel;
 import interfaces.IDeleteFormController;
 import interfaces.IEditFormController;

@@ -1,15 +1,11 @@
 package modelControllerTests;
 
-import controllers.FormController;
-import controllers.FormDataController;
+import controllers.formControllers.FormController;
+import controllers.formControllers.FormDataController;
 import SPADEPAC.Priority;
-import SPADEPAC.WorkUnitPriorityClass;
-import SPADEPAC.WorkUnitPrioritySuperClass;
 import org.junit.Before;
 import org.junit.Test;
 import services.SegmentLists;
-import services.SegmentType;
-import tables.ClassTable;
 
 import static org.junit.Assert.*;
 

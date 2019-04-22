@@ -1,6 +1,6 @@
 package abstractControlPane;
 
-import controllers.FormController;
+import controllers.formControllers.FormController;
 import graphics.controlPanelItems.CheckComboBoxItem;
 import interfaces.IEditFormController;
 import interfaces.IFormDataController;

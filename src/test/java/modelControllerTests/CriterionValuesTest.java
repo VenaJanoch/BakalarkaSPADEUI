@@ -1,13 +1,11 @@
 package modelControllerTests;
 
-import controllers.FormController;
-import controllers.FormDataController;
+import controllers.formControllers.FormController;
+import controllers.formControllers.FormDataController;
 import SPADEPAC.Criterion;
 import org.junit.Before;
 import org.junit.Test;
 import services.SegmentLists;
-import services.SegmentType;
-import tables.CriterionTable;
 
 import static org.junit.Assert.*;
 

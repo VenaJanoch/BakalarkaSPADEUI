@@ -1,15 +1,12 @@
 package forms;
 
-import abstractControlPane.ControlPanel;
-import controllers.FormController;
+import controllers.formControllers.FormController;
 import abstractform.TableBasicForm;
 import controlPanels.CriterionControlPanel;
 import interfaces.IDeleteFormController;
 import interfaces.IEditFormController;
 import interfaces.IFormDataController;
 import interfaces.ISegmentTableForm;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
@@ -21,11 +18,8 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
-import services.Alerts;
 import services.SegmentType;
 import tables.*;
-
-import java.util.ArrayList;
 
 /**
  * Třída představující tabulkový formulář pro element Criterion, odděděná od

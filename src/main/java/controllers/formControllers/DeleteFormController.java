@@ -1,4 +1,4 @@
-package controllers;
+package controllers.formControllers;
 
 import abstractform.BasicForm;
 import interfaces.IDeleteDataModel;
@@ -86,13 +86,15 @@ public class DeleteFormController implements IDeleteFormController {
     private void deleteChange(ObservableList changeList, ArrayList<BasicTable> selection) {
 
         ArrayList indexList = deleteControl.findIndicesForDelete(selection);
-        deleteDataModel.removeChange(changeList);
+        mapperTableToObject.deleteFromMap(mapperTableToObject.getConfigurationToChangeMapper(), indexList);
+        editDataModel.updateItemList(SegmentType.Configuration, SegmentType.Change, indexList);
         segmentLists.removeItemFromObservableList(SegmentType.Change, indexList);
+        deleteDataModel.removeChange(changeList);
 
     }
 
     public void deleteChangeWithDialog(ArrayList<BasicTable> selection, TableView view) {
-        if(Alerts.showDeleteItemCascadeAlert(selection)){
+        if(Alerts.showDeleteItemCascadeAlert(selection, mapperTableToObject.getConfigurationToChangeMapper())){
 
             ObservableList phaseListObservable = view.getSelectionModel().getSelectedIndices();
 

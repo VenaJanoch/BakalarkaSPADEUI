@@ -1,4 +1,4 @@
-package controllers;
+package controllers.graphicsComponentsControllers;
 
 import graphics.canvas.NodeLink;
 import javafx.geometry.Point2D;

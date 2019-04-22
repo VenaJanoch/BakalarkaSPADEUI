@@ -2,14 +2,16 @@ package graphics.windows;
 
 import com.jfoenix.controls.JFXDrawersStack;
 import controllers.*;
+import controllers.formControllers.FormController;
+import controllers.graphicsComponentsControllers.CanvasController;
+import controllers.graphicsComponentsControllers.DrawerPanelController;
+import controllers.graphicsComponentsControllers.SelectItemController;
 import graphics.panels.DragAndDropPanel;
 import graphics.panels.MenuPanel;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import services.*;
 
@@ -30,7 +32,7 @@ public class MainWindow extends Stage {
     private DragAndDropPanel dragAndDrop;
     private WindowController windowController;
     private FormController formController;
-     private JFXDrawersStack drawersStack;
+    private JFXDrawersStack drawersStack;
     private DrawerPanelController drawerPanelController;
     private SelectItemController selectItemController;
 

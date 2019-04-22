@@ -1,7 +1,7 @@
 package controlPanels;
 
 import abstractControlPane.DateControlPanel;
-import controllers.FormController;
+import controllers.formControllers.FormController;
 import graphics.controlPanelItems.ControlPanelLine;
 import interfaces.IControlPanel;
 import interfaces.IEditFormController;
@@ -88,7 +88,7 @@ public class ConfigurationControlPanel extends DateControlPanel implements ICont
         controlPanelController.setValueCheckComboBox(this, lineList ,ParamType.CPR, cprList, configData[6]);
 
         ArrayList<ArrayList<Integer>> changeList = formDataController.getChangesFromConfiguration(configId);
-        controlPanelController.setValueCheckComboBox(this, lineList ,ParamType.WorkUnit, changeList, configData[8]);
+        controlPanelController.setValueCheckComboBox(this, lineList ,ParamType.Change, changeList, configData[8]);
 
 
         List boolList = configData[9];

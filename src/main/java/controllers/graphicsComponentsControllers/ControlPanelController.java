@@ -1,4 +1,4 @@
-package controllers;
+package controllers.graphicsComponentsControllers;
 
 import abstractControlPane.ControlPanel;
 import graphics.controlPanelItems.*;
@@ -67,7 +67,7 @@ public class ControlPanelController {
         int i = 0;
         if (indicatorList.size() != 0) {
             for (String value : values[index]) {
-                createNewLineWithExist(controlPanel, lineList);
+                createNewLine(controlPanel, lineList);
                 ControlPanelLine line = controlPanelLines.get(controlPanelLines.size() - 1);
                 line.fillTextLine(value, indicatorList.get(i), type);
                 i++;
@@ -80,7 +80,7 @@ public class ControlPanelController {
                                     ParamType type, ArrayList<Integer> relation, ArrayList<ArrayList<Integer>> workUnit) {
         int i = 0;
         for ( int value : relation){
-            createNewLineWithExist(controlPanel, lineList);
+            createNewLine(controlPanel, lineList);
             ControlPanelLine line = controlPanelLines.get(controlPanelLines.size() -1);
             line.fillRelationComboBoxLine(value, workUnit.get(i), type );
             i++;
@@ -93,7 +93,7 @@ public class ControlPanelController {
         int i = 0;
         if (indicatorList.size() != 0 ) {
             for (int value : values) {
-                createNewLineWithExist(controlPanel, lineList);
+                createNewLine(controlPanel, lineList);
                 ControlPanelLine line = controlPanelLines.get(controlPanelLines.size() - 1);
                 line.fillComboBoxLine(value, indicatorList.get(i), type);
                 i++;
@@ -106,9 +106,9 @@ public class ControlPanelController {
                                    ParamType type, ArrayList<LocalDate> values, List<Integer> indicatorList) {
         int i = 0;
 
-        if(values != null) {
+        if(indicatorList.size() != 0) {
             for (LocalDate value : values) {
-                createNewLineWithExist(controlPanel, lineList);
+                createNewLine(controlPanel, lineList);
                 ControlPanelLine line = controlPanelLines.get(controlPanelLines.size() - 1);
                 line.fillDateLine(value, indicatorList.get(i), type);
                 i++;
@@ -122,7 +122,7 @@ public class ControlPanelController {
        int i = 0;
        if(values != null) {
            for (List<Integer> value : values) {
-               createNewLineWithExist(controlPanel, lineList);
+               createNewLine(controlPanel, lineList);
                ControlPanelLine line = controlPanelLines.get(controlPanelLines.size() - 1);
                line.fillCheckComboBoxLine(value, indicatorList.get(i), type);
                i++;
@@ -371,7 +371,8 @@ public class ControlPanelController {
 
     public void setExistRadioButton(ControlPanel controlPanel, int lineShift){
         staticObjectCount++;
-        radioExistButtonLine = new ControlPanelLine(FXCollections.observableArrayList(), controlPanel, this, lineCount + lineShift );
+        radioExistButtonLine = new ControlPanelLine(FXCollections.observableArrayList(), controlPanel, this,
+                lineCount + lineShift );
         setExistRadioButton(controlPanel.getControlPane(), lineShift);
     }
 
@@ -524,7 +525,7 @@ public class ControlPanelController {
     public void setValueToClassBox(List classIndex, List superClassIndex) {
         if (classIndex != null){
             ComboBoxItem item1 = classLine.getComboBoxItem();
-            item1.getItemCB().getSelectionModel().select((Integer)classIndex.get(0));
+            item1.selectItemInComboBox((Integer)classIndex.get(0));
         }
 
         if(superClassIndex != null){
@@ -536,11 +537,11 @@ public class ControlPanelController {
     }
 
     public Integer getSuperClassIndex() {
-        return superClassLine.getComboBoxItem().getItemIndex();
+        return superIndex ;
     }
 
     public Integer getClassIndex() {
-        return classLine.getComboBoxItem().getItemIndex();
+        return classIndex;
     }
 
     public void setCountToCountLine(Integer value) {

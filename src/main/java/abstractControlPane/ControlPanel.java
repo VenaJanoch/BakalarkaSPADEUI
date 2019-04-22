@@ -1,7 +1,7 @@
 package abstractControlPane;
 
-import controllers.ControlPanelController;
-import controllers.FormController;
+import controllers.graphicsComponentsControllers.ControlPanelController;
+import controllers.formControllers.FormController;
 import graphics.controlPanelItems.ControlPanelLine;
 import interfaces.IEditFormController;
 import interfaces.IFormDataController;

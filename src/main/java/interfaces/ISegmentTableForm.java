@@ -15,26 +15,26 @@ public interface ISegmentTableForm {
 	/**
 	 * Metoda pro přídání prvku do interního gridPanelu
 	 */
-	public void createForm();
+	void createForm();
 	/**
 	 * Metoda pro přídání TableView do formuláře
 	 */
-	public Node getTable();
+	Node getTable();
 	/**
 	 * Metoda pro nastavení reakce na klávesu delete
 	 */
-	public void deleteSelected(KeyEvent event);
+	void deleteSelected(KeyEvent event);
 	/**
 	 * Metoda pro přídání prvku do gridPanelu
 	 */
-	public GridPane createControlPane();
+	GridPane createControlPane();
 	/**
 	 * Metoda pro přídání prvku dané tabulky
 	 */
-	public void addItem();
+	void addItem();
 	/**
 	 * Metoda pro určení reakce stisknutí tlačítka pro potvrzení formuláře
 	 */
-	public void setActionSubmitButton();
+	void setActionSubmitButton();
 	
 }

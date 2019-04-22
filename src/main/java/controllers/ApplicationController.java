@@ -1,6 +1,9 @@
 package controllers;
 
-import com.jfoenix.controls.JFXDrawer;
+import controllers.formControllers.*;
+import controllers.graphicsComponentsControllers.CanvasItemController;
+import controllers.graphicsComponentsControllers.DrawerPanelController;
+import controllers.graphicsComponentsControllers.SelectItemController;
 import model.DataModel;
 import model.IdentificatorCreater;
 import services.DeleteControl;

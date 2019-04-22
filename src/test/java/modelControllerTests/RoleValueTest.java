@@ -1,14 +1,11 @@
 package modelControllerTests;
 
 import SPADEPAC.Person;
-import SPADEPAC.RoleClass;
-import SPADEPAC.RoleSuperClass;
-import controllers.FormController;
-import controllers.FormDataController;
+import controllers.formControllers.FormController;
+import controllers.formControllers.FormDataController;
 import org.junit.Before;
 import org.junit.Test;
 import services.SegmentLists;
-import services.SegmentType;
 
 import static org.junit.Assert.*;
 

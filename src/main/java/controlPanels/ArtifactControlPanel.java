@@ -2,7 +2,7 @@ package controlPanels;
 
 import SPADEPAC.ArtifactClass;
 import abstractControlPane.DateDescControlPanel;
-import controllers.FormController;
+import controllers.formControllers.FormController;
 import graphics.controlPanelItems.ControlPanelLine;
 import interfaces.IControlPanel;
 import interfaces.IEditFormController;
@@ -63,8 +63,6 @@ public class ArtifactControlPanel extends DateDescControlPanel implements IContr
 
     @Override
     public void showEditControlPanel() {
-
-
 
         List[] artifactData = formDataController.getArtifactStringData(artifactId);
         controlPanelController.resetPanel(controlPane);

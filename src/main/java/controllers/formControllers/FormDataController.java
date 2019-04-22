@@ -1,5 +1,7 @@
-package controllers;
+package controllers.formControllers;
 
+import controllers.DataPreparer;
+import controllers.InputController;
 import forms.ConfigurationTableForm;
 import graphics.canvas.CanvasItem;
 import interfaces.IEditDataModel;
@@ -21,8 +23,6 @@ public class FormDataController implements IFormDataController {
     private SegmentLists lists;
     private DataManipulator dataManipulator;
     private ISaveDataModel saveDataModel;
-    private IEditDataModel editDataModel;
-    private DataModel dataModel;
     private FormController formController;
     private IdentificatorCreater identificatorCreater;
     private MapperTableToObject mapperTableToObject;
@@ -33,10 +33,8 @@ public class FormDataController implements IFormDataController {
                               IdentificatorCreater identificatorCreater, DataPreparer dataPreparer){
         this.formController = formController;
         this.lists = lists;
-        this.dataModel = dataModel;
         this.saveDataModel = dataModel.getSaveDataModel();
         this.dataManipulator = dataModel.getDataManipulator();
-        this.editDataModel = dataModel.getEditDataModel();
         this.identificatorCreater = identificatorCreater;
         this.mapperTableToObject = mapperTableToObject;
         this.dataPreparer = dataPreparer;
@@ -188,7 +186,7 @@ public class FormDataController implements IFormDataController {
         if (!isXML){
             saveDataModel.createNewArtifacToConfigurationRelation(linkId, startId, endId);
         }
-        mapperTableToObject.mapTableToObjects(SegmentType.Configuration, SegmentType.Artifact, startId, new TableToObjectInstanc( String.valueOf(endId), startId, SegmentType.Configuration));
+        mapperTableToObject.mapTableToObjects(SegmentType.Configuration, SegmentType.Artifact, startId, new TableToObjectInstanc( String.valueOf(endId), endId, SegmentType.Configuration));
     }
 
 
@@ -196,7 +194,7 @@ public class FormDataController implements IFormDataController {
         if (!isXML) {
             saveDataModel.createCommitToCommitedConfigurationRelation(linkId, startId, endId);
         }
-        mapperTableToObject.mapTableToObjects(SegmentType.Committed_Configuration, null, startId, new TableToObjectInstanc( String.valueOf(endId), startId, SegmentType.Committed_Configuration));
+        mapperTableToObject.mapTableToObjects(SegmentType.Committed_Configuration, null, startId, new TableToObjectInstanc( String.valueOf(endId), endId, SegmentType.Committed_Configuration));
     }
 
     public void createCommitedConfigurationToConfigurationRelation(int linkId, Integer startId, Integer endId, boolean isXML){
@@ -204,7 +202,7 @@ public class FormDataController implements IFormDataController {
             saveDataModel.createCommitedConfigurationToConfigurationRelation(linkId, startId, endId);
         }
         mapperTableToObject.mapTableToObjects(SegmentType.Configuration, SegmentType.Committed_Configuration, startId,
-                new TableToObjectInstanc( String.valueOf(endId), startId, SegmentType.Configuration));
+                new TableToObjectInstanc( String.valueOf(endId), endId, SegmentType.Configuration));
     }
 
 
@@ -214,7 +212,7 @@ public class FormDataController implements IFormDataController {
             saveDataModel.createNewPersonToConfigurationRelation(linkId, startId, endId);
         }
         mapperTableToObject.mapTableToObjects(SegmentType.Configuration, SegmentType.Person, startId,
-                new TableToObjectInstanc( String.valueOf(endId), startId, SegmentType.Configuration));
+                new TableToObjectInstanc( String.valueOf(endId), endId, SegmentType.Configuration));
     }
 
 
@@ -223,7 +221,7 @@ public class FormDataController implements IFormDataController {
             saveDataModel.createNewPersonToArtifactRelation(linkId, startId, endId);
         }
         mapperTableToObject.mapTableToObjects(SegmentType.Artifact, SegmentType.Person, startId,
-                new TableToObjectInstanc( String.valueOf(endId), startId, SegmentType.Artifact));
+                new TableToObjectInstanc( String.valueOf(endId), endId, SegmentType.Artifact));
     }
 
 
@@ -234,11 +232,7 @@ public class FormDataController implements IFormDataController {
         saveDataModel.createNewBranch(nameForManipulator, branchTable.getId(), branchTable.isMainBool());
         lists.getBranchObservable().add(branchTable);
     }
-
-
-
-
-
+    
     public void saveDataFromCPR(String nameST, int roleListIndex, CPRTable cprTable) {
 
         lists.getCPRObservable().add(cprTable);
@@ -246,8 +240,8 @@ public class FormDataController implements IFormDataController {
 
     public void saveDataFromCriterionForm(String nameST, CriterionTable criterionTable) {
         String nameForManipulator = InputController.fillTextMapper(nameST);
-        String descForManipulator = InputController.fillTextMapper(criterionTable.getDescription());
-        saveDataModel.createNewCriterion(nameForManipulator, descForManipulator, criterionTable.getId());
+
+        saveDataModel.createNewCriterion(nameForManipulator, "", criterionTable.getId());
         lists.getCriterionObservable().add(criterionTable);
     }
 
@@ -504,14 +498,14 @@ public class FormDataController implements IFormDataController {
 
         List[] data = dataManipulator.getWorkUnitStringData(id);
 
-        ArrayList priorityIndicies = dataPreparer.prepareIndexForManipulator(data[4]);
+        ArrayList priorityIndicies = dataPreparer.prepareIndiciesForForm(data[4]);
         ArrayList estimate = dataPreparer.convertDoubleToString(data[2]);
-        ArrayList indicies1 = dataPreparer.prepareIndexForManipulator(data[5]);
-        ArrayList indicies2 = dataPreparer.prepareIndexForManipulator(data[6]);
-        ArrayList indicies3 = dataPreparer.prepareIndexForManipulator(data[7]);
-        ArrayList indicies4 = dataPreparer.prepareIndexForManipulator(data[8]);
-        ArrayList indicies5 = dataPreparer.prepareIndexForManipulator(data[9]);
-        ArrayList indicies6 = dataPreparer.prepareIndexForManipulator(data[10]);
+        ArrayList<Integer> indicies1 = dataPreparer.prepareIndiciesForForm(data[5]);
+        ArrayList indicies2 = dataPreparer.prepareIndiciesForForm(data[6]);
+        ArrayList indicies3 = dataPreparer.prepareIndiciesForForm(data[7]);
+        ArrayList indicies4 = dataPreparer.prepareIndiciesForForm(data[8]);
+        ArrayList indicies5 = dataPreparer.prepareIndiciesForForm(data[9]);
+        ArrayList indicies6 = dataPreparer.prepareIndiciesForForm(data[10]);
 
         data[2] = estimate;
         data[4] = priorityIndicies;

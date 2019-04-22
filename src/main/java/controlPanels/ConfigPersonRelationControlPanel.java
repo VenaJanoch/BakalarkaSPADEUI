@@ -1,6 +1,6 @@
 package controlPanels;
 
-import controllers.FormController;
+import controllers.formControllers.FormController;
 import abstractControlPane.NameControlPanel;
 import graphics.controlPanelItems.ComboBoxItem;
 import interfaces.IEditFormController;

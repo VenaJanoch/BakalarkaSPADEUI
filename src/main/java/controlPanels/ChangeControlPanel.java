@@ -1,7 +1,7 @@
 package controlPanels;
 
 import abstractControlPane.DescriptionControlPanel;
-import controllers.FormController;
+import controllers.formControllers.FormController;
 import interfaces.IEditFormController;
 import interfaces.IFormDataController;
 import javafx.scene.control.*;
@@ -57,8 +57,6 @@ public class ChangeControlPanel extends DescriptionControlPanel {
     @Override
     protected void addItemsToControlPanel() {
         controlPanelController.createNewLineWithExist(this, lineList);
-
-
     }
 
     public void saveDataFromPanel(BasicTable table, TableView tableView){

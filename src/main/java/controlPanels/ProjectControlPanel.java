@@ -1,7 +1,7 @@
 package controlPanels;
 
 import abstractControlPane.WorkUnitDateControlPanel;
-import controllers.FormController;
+import controllers.formControllers.FormController;
 import interfaces.IControlPanel;
 import interfaces.IEditFormController;
 import interfaces.IFormDataController;
@@ -64,18 +64,18 @@ public class ProjectControlPanel extends WorkUnitDateControlPanel implements ICo
         ArrayList<Integer> nameIndicators = new ArrayList<>();
         ArrayList<Integer> descIndicators = new ArrayList<>();
         ArrayList<Integer> workUnitIndicators = new ArrayList<>();
-        ArrayList<Integer> date1Indicators = new ArrayList<>();
-        ArrayList<Integer> date2Indicators = new ArrayList<>();
+        ArrayList<Integer> startDateIndicators = new ArrayList<>();
+        ArrayList<Integer> endDateIndicators = new ArrayList<>();
 
         ArrayList<String> name = controlPanelController.processTextLines(ParamType.Name, nameIndicators);
         ArrayList<String> desc = controlPanelController.processTextLines(ParamType.Description, descIndicators);
         ArrayList<ArrayList<Integer>> workUnit = controlPanelController.processCheckComboBoxLines(ParamType.WorkUnit, workUnitIndicators);
-        ArrayList<LocalDate> startDate = controlPanelController.processDateLines(ParamType.Date, date1Indicators);
-        ArrayList<LocalDate> endDate = controlPanelController.processDateLines(ParamType.EndDate, date2Indicators);
+        ArrayList<LocalDate> startDate = controlPanelController.processDateLines(ParamType.Date, startDateIndicators);
+        ArrayList<LocalDate> endDate = controlPanelController.processDateLines(ParamType.EndDate, endDateIndicators);
 
 
         editFormController.editDataFromProject(name, startDate, endDate, desc, workUnit, workUnitIndicators, nameIndicators,
-                date1Indicators, date2Indicators, descIndicators);
+                startDateIndicators, endDateIndicators, descIndicators);
     }
     public Button getButton() {
         return button;

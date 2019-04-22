@@ -1,14 +1,12 @@
 package forms;
 
-import controllers.FormController;
+import controllers.formControllers.FormController;
 import abstractform.TableBasicForm;
 import controlPanels.BranchControlPanel;
 import interfaces.IDeleteFormController;
 import interfaces.IEditFormController;
 import interfaces.IFormDataController;
 import interfaces.ISegmentTableForm;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
@@ -23,12 +21,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import services.*;
-import tables.ActivityTable;
-import tables.BasicTable;
 import tables.BranchTable;
-import tables.CriterionTable;
-
-import java.util.ArrayList;
 
 /**
  * Třída představující tabulkový formulář pro element Branch, odděděná od třídy

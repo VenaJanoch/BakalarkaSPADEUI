@@ -1,12 +1,12 @@
-package graphics.controlPanelItems;
+package graphics.canvas;
 
-import controllers.CanvasController;
-import controllers.CanvasItemController;
+import controllers.graphicsComponentsControllers.CanvasController;
+import controllers.graphicsComponentsControllers.CanvasItemController;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SeparatorMenuItem;
 import services.Constans;
-import controllers.ManipulationController;
+import controllers.formControllers.ManipulationController;
 
 /**
  * Třída definující kontextové menu pro prvku plátna odděděná od třídy

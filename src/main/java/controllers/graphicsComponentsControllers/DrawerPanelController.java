@@ -1,4 +1,4 @@
-package controllers;
+package controllers.graphicsComponentsControllers;
 
 import abstractControlPane.ControlPanel;
 import abstractform.BasicForm;
@@ -51,7 +51,6 @@ public class DrawerPanelController {
         leftDrawerStackPane.getChildren().clear();
         leftDrawerStackPane.getChildren().add(form);
         showPanel(leftDrawerPanel, leftDrawerStackPane);
-        leftDrawerPanel.setOnDrawerClosed(event -> System.out.println("Ahoj zaviram se") );
     }
 
     public void hideRightPanel(){

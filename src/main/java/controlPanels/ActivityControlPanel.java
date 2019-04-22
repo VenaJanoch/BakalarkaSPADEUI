@@ -1,6 +1,6 @@
 package controlPanels;
 
-import controllers.FormController;
+import controllers.formControllers.FormController;
 import interfaces.IEditFormController;
 import interfaces.IFormDataController;
 import javafx.scene.control.Button;
@@ -45,7 +45,7 @@ public class ActivityControlPanel extends WorkUnitControlPanel {
 
         controlPanelController.setValueTextField(this, lineList ,ParamType.Name, activityData, activityData[3], 0);
         controlPanelController.setValueTextField(this, lineList ,ParamType.Description, activityData, activityData[4], 1);
-        controlPanelController.setValueDatePicker(this, lineList ,ParamType.Date, (ArrayList<LocalDate>)activityData[6],  activityData[7]);
+        controlPanelController.setValueDatePicker(this, lineList ,ParamType.EndDate, (ArrayList<LocalDate>)activityData[6],  activityData[7]);
         ArrayList<ArrayList<Integer>> workUnits = formDataController.getWorkUnitFromSegment(id, SegmentType.Activity);
         controlPanelController.setValueCheckComboBox(this, lineList ,ParamType.WorkUnit, workUnits, activityData[2]);
 

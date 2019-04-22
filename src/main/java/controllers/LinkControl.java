@@ -5,6 +5,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import controllers.formControllers.DeleteFormController;
+import controllers.formControllers.FormController;
+import controllers.formControllers.ManipulationController;
+import controllers.graphicsComponentsControllers.CanvasController;
 import graphics.canvas.ElementsLink;
 import graphics.canvas.NodeLink;
 import interfaces.IDeleteFormController;

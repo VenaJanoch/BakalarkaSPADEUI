@@ -1,7 +1,7 @@
 package graphics.canvas;
 
-import controllers.CanvasController;
-import controllers.ManipulationController;
+import controllers.graphicsComponentsControllers.CanvasController;
+import controllers.formControllers.ManipulationController;
 import graphics.controlPanelItems.LineComboBox;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;

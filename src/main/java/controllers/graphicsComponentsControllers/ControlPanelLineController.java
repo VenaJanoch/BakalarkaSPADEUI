@@ -1,6 +1,7 @@
-package controllers;
+package controllers.graphicsComponentsControllers;
 
 import abstractControlPane.ControlPanel;
+import controllers.graphicsComponentsControllers.ControlPanelController;
 import graphics.controlPanelItems.*;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -9,7 +10,7 @@ import services.ControlPanelLineObject;
 
 public class ControlPanelLineController {
 
-    private  ControlPanelController controlPanelController;
+    private ControlPanelController controlPanelController;
     private  ControlPanel controlPanel;
     private ChangeListener<Number> listener;
     private ControlPanelLine line;
@@ -18,7 +19,9 @@ public class ControlPanelLineController {
     private int itemIndex = 0;
     private ObservableList<ControlPanelLineObject> paramList;
     private boolean isSetType = false;
-    public ControlPanelLineController(ControlPanelLine line, ControlPanel controlPanel, ControlPanelController controlPanelController, ObservableList<ControlPanelLineObject> paramList, int lineIndex){
+
+    public ControlPanelLineController(ControlPanelLine line, ControlPanel controlPanel, ControlPanelController controlPanelController,
+                                      ObservableList<ControlPanelLineObject> paramList, int lineIndex){
         this.controlPanelController = controlPanelController;
         this.controlPanel = controlPanel;
         this.line = line;

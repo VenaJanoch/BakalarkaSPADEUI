@@ -1,28 +1,22 @@
 package graphics.panels;
 
-import controllers.CanvasController;
-import controllers.DrawerPanelController;
+import controllers.graphicsComponentsControllers.CanvasController;
+import controllers.graphicsComponentsControllers.DrawerPanelController;
 import graphics.canvas.DragSegmentButton;
 import javafx.geometry.Insets;
-import javafx.geometry.Orientation;
-import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.control.SplitPane;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import services.Constans;
 import services.SegmentType;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.InputStream;
 
 /**
  * Třída vytvářející panel tlačítek umožnujících přidání prvku na plátno
@@ -110,7 +104,7 @@ public class DragAndDropItemPanel extends HBox {
         linkButton = canvasController.getLinkButton();
         FileInputStream input = null;
         try {
-            input = new FileInputStream("c:\\Users\\venaj\\OneDrive\\ZCU\\Diplomka\\KristinaDesign\\Ikony\\sipka.png");
+            input = new FileInputStream(Constans.SIPKA);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }

@@ -1,5 +1,7 @@
-package controllers;
+package controllers.formControllers;
 
+import controllers.graphicsComponentsControllers.CanvasController;
+import controllers.graphicsComponentsControllers.CanvasItemController;
 import graphics.canvas.CanvasItem;
 import graphics.canvas.DragAndDropCanvas;
 import graphics.canvas.NodeLink;

@@ -2,8 +2,8 @@ package forms;
 
 import abstractform.TableBasicForm;
 import controlPanels.PhaseControlPanel;
-import controllers.CanvasController;
-import controllers.FormController;
+import controllers.graphicsComponentsControllers.CanvasController;
+import controllers.formControllers.FormController;
 import graphics.panels.DragAndDropItemPanel;
 import interfaces.*;
 import javafx.event.EventHandler;

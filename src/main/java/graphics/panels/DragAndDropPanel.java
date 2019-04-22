@@ -1,6 +1,10 @@
 package graphics.panels;
 
 import controllers.*;
+import controllers.formControllers.FormController;
+import controllers.graphicsComponentsControllers.CanvasController;
+import controllers.graphicsComponentsControllers.DrawerPanelController;
+import controllers.graphicsComponentsControllers.SelectItemController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
@@ -56,7 +60,7 @@ public class DragAndDropPanel extends BorderPane {
         this.projectButton = new Button();
         FileInputStream input = null;
         try {
-            input = new FileInputStream("c:\\Users\\venaj\\OneDrive\\ZCU\\Diplomka\\KristinaDesign\\Ikony\\Project.png");
+            input = new FileInputStream(Constans.PROJECT);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }

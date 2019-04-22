@@ -1,9 +1,8 @@
 package graphics.controlPanelItems;
 
 import abstractControlPane.ControlPanel;
-import controllers.ControlPanelController;
-import controllers.ItemBoxController;
-import graphics.controlPanelItems.ControlPanelLine;
+import controllers.graphicsComponentsControllers.ControlPanelController;
+import controllers.graphicsComponentsControllers.ItemBoxController;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;

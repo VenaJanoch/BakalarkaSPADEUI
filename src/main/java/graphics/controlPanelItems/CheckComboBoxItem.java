@@ -1,7 +1,7 @@
 package graphics.controlPanelItems;
 
 import abstractControlPane.ControlPanel;
-import controllers.ControlPanelController;
+import controllers.graphicsComponentsControllers.ControlPanelController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Button;

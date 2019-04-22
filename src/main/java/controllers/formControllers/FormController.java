@@ -1,10 +1,15 @@
-package controllers;
+package controllers.formControllers;
 
 import SPADEPAC.ConfigPersonRelation;
 import SPADEPAC.Milestone;
 import abstractControlPane.ControlPanel;
 import abstractform.BasicForm;
 import controlPanels.*;
+import controllers.ApplicationController;
+import controllers.DataPreparer;
+import controllers.graphicsComponentsControllers.CanvasController;
+import controllers.graphicsComponentsControllers.DrawerPanelController;
+import controllers.graphicsComponentsControllers.SelectItemController;
 import forms.ConfigurationForm;
 import forms.*;
 import graphics.canvas.CanvasItem;

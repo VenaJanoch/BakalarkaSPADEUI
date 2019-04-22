@@ -1,7 +1,7 @@
 package controlPanels;
 
 import abstractControlPane.DescriptionControlPanel;
-import controllers.FormController;
+import controllers.formControllers.FormController;
 import interfaces.IEditFormController;
 import interfaces.IFormDataController;
 import javafx.scene.control.Button;

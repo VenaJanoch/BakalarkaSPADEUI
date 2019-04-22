@@ -1,8 +1,7 @@
 package controlPanels;
 
 import abstractControlPane.DescriptionControlPanel;
-import controllers.FormController;
-import controllers.WorkUnitControlPanelController;
+import controllers.formControllers.FormController;
 import interfaces.IEditFormController;
 import interfaces.IFormDataController;
 import javafx.scene.control.*;
@@ -22,7 +21,6 @@ public class WorkUnitControlPanel extends DescriptionControlPanel {
     private SegmentLists segmentLists;
 
     private WorkUnitTable workUnitTable;
-    private WorkUnitControlPanelController controller;
 
     private boolean exist;
 
@@ -30,7 +28,6 @@ public class WorkUnitControlPanel extends DescriptionControlPanel {
                                 IEditFormController editFormController, FormController formController){
         super(buttonName, formDataController, editFormController, formController);
         this.segmentLists = formController.getSegmentLists();
-        this.controller = new WorkUnitControlPanelController(this, segmentLists);
         lineList.add(new ControlPanelLineObject("Estimated time: ", ControlPanelLineType.Text, ParamType.EstimateTime));
         lineList.add(new ControlPanelLineObject("Category: ", ControlPanelLineType.Text, ParamType.Category));
         lineList.add(new ControlPanelLineObject("Priority: ", ControlPanelLineType.ComboBox, ParamType.Priority, segmentLists.getPriorityTypeObservable()));

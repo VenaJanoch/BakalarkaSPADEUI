@@ -1,7 +1,6 @@
 package graphics.canvas;
 
-import controllers.CanvasController;
-import graphics.controlPanelItems.ItemContexMenu;
+import controllers.graphicsComponentsControllers.CanvasController;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.ScrollPane;

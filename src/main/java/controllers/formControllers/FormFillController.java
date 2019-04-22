@@ -1,7 +1,11 @@
-package controllers;
+package controllers.formControllers;
 
 import SPADEPAC.*;
 import abstractform.BasicForm;
+import controllers.DataPreparer;
+import controllers.LinkControl;
+import controllers.graphicsComponentsControllers.CanvasController;
+import controllers.graphicsComponentsControllers.CanvasItemController;
 import forms.*;
 import graphics.canvas.CanvasItem;
 import javafx.geometry.Point2D;

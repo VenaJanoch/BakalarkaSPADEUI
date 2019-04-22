@@ -602,12 +602,12 @@ public class DataModel {
     private void clearDataInActivity(Activity activity) {
         activity.getNameIndicator().clear();
         activity.getName().clear();
-        activity.getDescriptionIndicator().clear();
         activity.getDescription().clear();
         activity.getWorkUnits().clear();
         activity.getDescriptionIndicator().clear();
         activity.getEndDateIndicator().clear();
         activity.getEndDate().clear();
+        activity.getWorkUnitsIndicator().clear();
     }
 
 
@@ -947,8 +947,8 @@ public class DataModel {
 
         project.getNameIndicator().addAll(nameIndicators);
         project.getDescriptionIndicator().addAll(descIndicators);
-        project.getEndDateIndicator().addAll(date1Indicators);
-        project.getStartDateIndicator().addAll(date2Indicators);
+        project.getEndDateIndicator().addAll(date2Indicators);
+        project.getStartDateIndicator().addAll(date1Indicators);
         project.getWorkUnitsIndicator().addAll(workUnitIndicators);
 
     }

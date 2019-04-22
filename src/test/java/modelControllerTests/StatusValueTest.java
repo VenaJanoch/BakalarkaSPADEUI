@@ -1,7 +1,7 @@
 package modelControllerTests;
 
-import controllers.FormController;
-import controllers.FormDataController;
+import controllers.formControllers.FormController;
+import controllers.formControllers.FormDataController;
 import SPADEPAC.Status;
 import org.junit.Before;
 import org.junit.Test;

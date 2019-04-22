@@ -1,6 +1,6 @@
 package forms;
 
-import controllers.FormController;
+import controllers.formControllers.FormController;
 import abstractform.Table2BasicForm;
 import interfaces.IDeleteFormController;
 import interfaces.IEditFormController;
@@ -10,7 +10,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.SelectionMode;

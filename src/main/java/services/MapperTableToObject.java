@@ -25,6 +25,8 @@ public class MapperTableToObject {
 
     private Map<Integer, ArrayList<TableToObjectInstanc>> changeToArtifactMapper;
     private Map<Integer, ArrayList<TableToObjectInstanc>> configurationToArtifactMapper;
+    private Map<Integer, ArrayList<TableToObjectInstanc>> configurationToChangeMapper;
+    private Map<Integer, ArrayList<TableToObjectInstanc>> configurationToCPRMapper;
 
     private Map<Integer, ArrayList<TableToObjectInstanc>> WUToPriorityMapper; // Vazba mezi Priority a WU, vychazejici z WU
     private Map<Integer, ArrayList<TableToObjectInstanc>> WUToSeverityMapper; // Vazba mezi Severity a WU, vychazejici z WU
@@ -42,9 +44,6 @@ public class MapperTableToObject {
 
     private Map<Integer, ArrayList<TableToObjectInstanc>> commitToBranchMapper;
     private Map<Integer, ArrayList<TableToObjectInstanc>> commitToVCSTagMapper;
-
-    private Map<Integer, ArrayList<TableToObjectInstanc>> configurationToCPRMapper;
-
 
     private ArrayList<Map<Integer, ArrayList<TableToObjectInstanc>>> roleMaps;
     private ArrayList<Map<Integer, ArrayList<TableToObjectInstanc>>> configurationMaps;
@@ -66,6 +65,7 @@ public class MapperTableToObject {
         this.CPRToRoleMapper = new HashMap<>();
         this.configurationToRoleMapper = new HashMap<>();
         this.configurationToCPRMapper = new HashMap<>();
+        this.configurationToChangeMapper = new HashMap<>();
         this.phaseToMilestone = new HashMap<>();
         this.phaseToConfigurationMapper = new HashMap<>();
         this.iterationToConfigurationMapper = new HashMap<>();
@@ -190,11 +190,12 @@ public class MapperTableToObject {
         addInstanceToMap(authorIndex, lists.getRoleObservable(), new TableToObjectInstanc(WUName, indexForm, SegmentType.Work_Unit), wuToRoleMapper);
     }
 
-    public void mapTableToConfiguration(ArrayList<Integer> roleIndex, ArrayList<ArrayList<Integer>> cprIndicies, ArrayList<ArrayList<Integer>> branches,
+    public void mapTableToConfiguration(ArrayList<Integer> roleIndex, ArrayList<ArrayList<Integer>> cprIndicies, ArrayList<ArrayList<Integer>> changes,
                                         String configName, int configIndex){
         addInstanceToMap(roleIndex, lists.getRoleObservable(), new TableToObjectInstanc(configName, configIndex, SegmentType.Configuration), configurationToRoleMapper);
         addInstancesToMap(cprIndicies, lists.getCPRObservable(), new TableToObjectInstanc(configName, configIndex, SegmentType.Configuration), configurationToCPRMapper);
-     }
+        addInstancesToMap(changes, lists.getChangeObservable(), new TableToObjectInstanc(configName, configIndex, SegmentType.Configuration), configurationToChangeMapper);
+    }
 
     public void mapTableToPhase(ArrayList<Integer> milestoneId, ArrayList<Integer> configurationId, ArrayList<Integer> workUnitId,  String phaseName, int phaseId){
         addInstanceToMap(milestoneId, lists.getMilestoneObservable(), new TableToObjectInstanc(phaseName, phaseId, SegmentType.Phase), phaseToMilestone);
@@ -484,7 +485,7 @@ public class MapperTableToObject {
         return workUnitMaps;
     }
 
-
-
-
+    public Map<Integer, ArrayList<TableToObjectInstanc>> getConfigurationToChangeMapper() {
+        return configurationToChangeMapper;
+    }
 }

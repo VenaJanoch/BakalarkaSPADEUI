@@ -1,10 +1,8 @@
 package forms;
 
 import abstractform.TableBasicForm;
-import controlPanels.ActivityControlPanel;
 import controlPanels.ChangeControlPanel;
-import controllers.FormController;
-import abstractform.DescriptionBasicForm;
+import controllers.formControllers.FormController;
 import interfaces.*;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -17,10 +15,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
-import services.Alerts;
-import services.Constans;
 import services.SegmentType;
-import tables.ActivityTable;
 import tables.ChangeTable;
 
 /**

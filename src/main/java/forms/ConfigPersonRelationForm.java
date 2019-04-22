@@ -1,6 +1,6 @@
 package forms;
 
-import controllers.FormController;
+import controllers.formControllers.FormController;
 import abstractform.TableBasicForm;
 import controlPanels.ConfigPersonRelationControlPanel;
 import interfaces.IDeleteFormController;

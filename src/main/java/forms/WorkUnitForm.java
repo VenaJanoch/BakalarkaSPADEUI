@@ -2,8 +2,8 @@ package forms;
 
 import abstractform.TableBasicForm;
 import controlPanels.WorkUnitControlPanel;
-import controllers.CanvasController;
-import controllers.FormController;
+import controllers.graphicsComponentsControllers.CanvasController;
+import controllers.formControllers.FormController;
 import interfaces.*;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;

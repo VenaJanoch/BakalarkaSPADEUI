@@ -1,7 +1,7 @@
 package forms;
 
 import abstractform.TableBasicForm;
-import controllers.FormController;
+import controllers.formControllers.FormController;
 import controlPanels.MilestoneControlPanel;
 import interfaces.IDeleteFormController;
 import interfaces.IEditFormController;
@@ -10,12 +10,8 @@ import javafx.event.EventHandler;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 
-import abstractform.Table2BasicForm;
 import interfaces.ISegmentTableForm;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
@@ -23,9 +19,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.text.Font;
 import services.*;
-import tables.BasicTable;
 import tables.MilestoneTable;
 
 import java.util.ArrayList;

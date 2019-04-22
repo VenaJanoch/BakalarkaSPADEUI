@@ -1,5 +1,8 @@
-package controllers;
+package controllers.graphicsComponentsControllers;
 
+import controllers.formControllers.FormController;
+import controllers.LinkControl;
+import controllers.formControllers.ManipulationController;
 import graphics.canvas.CanvasItem;
 import javafx.geometry.Point2D;
 import javafx.scene.input.MouseButton;

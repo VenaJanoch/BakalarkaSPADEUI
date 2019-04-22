@@ -1,8 +1,8 @@
 package graphics.controlPanelItems;
 
 import abstractControlPane.ControlPanel;
-import controllers.ControlPanelController;
-import controllers.ControlPanelLineController;
+import controllers.graphicsComponentsControllers.ControlPanelController;
+import controllers.graphicsComponentsControllers.ControlPanelLineController;
 import javafx.beans.value.ChangeListener;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ComboBox;
@@ -185,7 +185,7 @@ public class ControlPanelLine {
     public void fillDateLine(LocalDate value, int indicator, ParamType type) {
         paramBox.getSelectionModel().select(findTypeIndex(type));
         dateItem.setDateToPicker(value);
-        comboBoxItem.getIndicatorCB().getSelectionModel().select(indicator);
+        dateItem.getIndicatorCB().getSelectionModel().select(indicator);
         exitButton.setSelected(true);
     }
 

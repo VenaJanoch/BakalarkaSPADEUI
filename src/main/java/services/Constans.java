@@ -194,7 +194,7 @@ public class Constans {
     public static final KeyCode delete = KeyCode.DELETE;
     public static final String linkPicture = "link.svn";
 
-    public static final String[] addItemNames = {"Phase", "Iteration", "Activity", "Work Unit", "Milestone", "Criterion", "Config-role",
+    public static final String[] addItemNames = {"Phase", "Iteration", "Activity", "Work Unit", "Milestone", "Criterion", "Config-Person",
             "Role Type", "Priority", "Severity", "Relation", "Resolution", "Status", "Type", "Branch", "Change", "VCSTag"};
 
     public static final String[] textIndicatorList = {"IS", "IS NOT","CONTAINS", "NOT CONTAINS"};
@@ -251,6 +251,10 @@ public class Constans {
             "Images/Configuration.png",
             "Images/Artifact.png"
     };
+
+    public static final String PROJECT = "Images/Project.png";
+    public static final String SIPKA = "Images/sipka.png";
+
     public static Connection CONNECTION = null;																			 //připojení k databázi
 
     private static Stop[] stops = new Stop[] { new Stop(0, Color.WHITE), new Stop(1, Color.rgb(187, 225, 243))};
