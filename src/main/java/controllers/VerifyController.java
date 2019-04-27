@@ -5,7 +5,7 @@ import database.*;
 import graphics.windows.VerifyWindow;
 import model.DataModel;
 import services.Constans;
-import services.SQLAtributeCreator;
+import database.SQLAtributeCreator;
 import services.SegmentType;
 import tables.VerifyTable;
 
@@ -18,12 +18,12 @@ public class VerifyController {
     private VerifyWindow verifyWindow;
     private DataModel verifyDataModel;
 
-    public VerifyController(DataModel dataModel){
+    public VerifyController(DataModel dataModel) {
         this.verifyWindow = new VerifyWindow(this);
         this.verifyDataModel = dataModel;
     }
 
-    public void verifyInstanceInProject(int projectVerifyId){
+    public void verifyInstanceInProject(int projectVerifyId) {
         this.projectVerifyId = projectVerifyId;
         verifyWindow.show();
         ArrayList<VerifyTable> verifyTables = fillVerifyTables();
@@ -34,105 +34,105 @@ public class VerifyController {
         ArrayList<VerifyTable> verifyTables = new ArrayList<>();
         ArrayList<VerifyTable> verifyTmp = new ArrayList<>();
         Project project = verifyDataModel.getProject();
-  //      verifyTables.addAll(addCriterionTOVerifyTable(project.getCriterions()));
-        
+        //      verifyTables.addAll(addCriterionTOVerifyTable(project.getCriterions()));
+
         verifyTmp = addPhaseTOVerifyTable(project.getPhases());
-        if (verifyTmp.get(0) != null){
+        if (verifyTmp.get(0) != null) {
             verifyTables.addAll(verifyTmp);
         }
-        
-        verifyTmp =addIterationTOVerifyTable(project.getIterations());
-        if (verifyTmp.get(0) != null){
+
+        verifyTmp = addIterationTOVerifyTable(project.getIterations());
+        if (verifyTmp.get(0) != null) {
             verifyTables.addAll(verifyTmp);
         }
 
         verifyTmp = addActivityTOVerifyTable(project.getActivities());
-        if (verifyTmp.get(0) != null){
+        if (verifyTmp.get(0) != null) {
             verifyTables.addAll(verifyTmp);
         }
 
         verifyTmp = addPriorityTOVerifyTable(project.getPriority());
-        if (verifyTmp.get(0) != null){
+        if (verifyTmp.get(0) != null) {
             verifyTables.addAll(verifyTmp);
         }
 
         verifyTmp = addSeverityTOVerifyTable(project.getSeverity());
-        if (verifyTmp.get(0) != null){
+        if (verifyTmp.get(0) != null) {
             verifyTables.addAll(verifyTmp);
         }
 
         verifyTmp = addStatusTOVerifyTable(project.getStatus());
-        if (verifyTmp.get(0) != null){
+        if (verifyTmp.get(0) != null) {
             verifyTables.addAll(verifyTmp);
         }
 
         verifyTmp = addTypeTOVerifyTable(project.getTypes());
-        if (verifyTmp.get(0) != null){
+        if (verifyTmp.get(0) != null) {
             verifyTables.addAll(verifyTmp);
         }
 
         verifyTmp = addRelationTOVerifyTable(project.getRelation());
-        if (verifyTmp.get(0) != null){
+        if (verifyTmp.get(0) != null) {
             verifyTables.addAll(verifyTmp);
         }
 
         verifyTmp = addResolutionTOVerifyTable(project.getResolution());
-        if (verifyTmp.get(0) != null){
+        if (verifyTmp.get(0) != null) {
             verifyTables.addAll(verifyTmp);
         }
-        
+
         verifyTmp = addPersonTOVerifyTable(project.getRoles());
-        if (verifyTmp.get(0) != null){
+        if (verifyTmp.get(0) != null) {
             verifyTables.addAll(verifyTmp);
         }
 
         verifyTmp = addRoleTypeTOVerifyTable(project.getRoleType());
-        if (verifyTmp.get(0) != null){
+        if (verifyTmp.get(0) != null) {
             verifyTables.addAll(verifyTmp);
         }
 
         verifyTmp = addBranchTOVerifyTable(project.getBranches());
-        if (verifyTmp.get(0) != null){
+        if (verifyTmp.get(0) != null) {
             verifyTables.addAll(verifyTmp);
         }
 
         verifyTmp = addCriterionTOVerifyTable(project.getCriterions());
-        if (verifyTmp.get(0) != null){
+        if (verifyTmp.get(0) != null) {
             verifyTables.addAll(verifyTmp);
         }
 
         verifyTmp = addArtifactTOVerifyTable(project.getArtifacts());
-        if (verifyTmp.get(0) != null){
+        if (verifyTmp.get(0) != null) {
             verifyTables.addAll(verifyTmp);
         }
 
         verifyTmp = addChangeTOVerifyTable(project.getChanges());
-        if (verifyTmp.get(0) != null){
+        if (verifyTmp.get(0) != null) {
             verifyTables.addAll(verifyTmp);
         }
 
         verifyTmp = addCommitTOVerifyTable(project.getCommit());
-        if (verifyTmp.get(0) != null){
+        if (verifyTmp.get(0) != null) {
             verifyTables.addAll(verifyTmp);
         }
 
         verifyTmp = addCommitedConfigurationTOVerifyTable(project.getCommitConfiguration());
-        if (verifyTmp.get(0) != null){
+        if (verifyTmp.get(0) != null) {
             verifyTables.addAll(verifyTmp);
         }
 
         verifyTmp = addConfigurationTOVerifyTable(project.getConfiguration());
-        if (verifyTmp.get(0) != null){
+        if (verifyTmp.get(0) != null) {
             verifyTables.addAll(verifyTmp);
         }
 
         verifyTmp = addWorkUnitTOVerifyTable(project.getWorkUnits());
-        if (verifyTmp.get(0) != null){
+        if (verifyTmp.get(0) != null) {
             verifyTables.addAll(verifyTmp);
         }
 
         verifyTmp = addMilestoneTOVerifyTable(project.getMilestones());
-        if (verifyTmp.get(0) != null){
+        if (verifyTmp.get(0) != null) {
             verifyTables.addAll(verifyTmp);
         }
 
@@ -140,23 +140,23 @@ public class VerifyController {
     }
 
     private VerifyTable createVerifyTable(SegmentType type, String alias, int modelCount, int projectCount, int id, boolean isExist,
-                                          boolean isExistInProject, String sql){
+                                          boolean isExistInProject, String sql) {
 
         String result = Constans.OK_VERIFY_RESULT;
         String projectExist = "YES";
-        if (isExist && !isExistInProject){
+        if (isExist && !isExistInProject) {
             projectExist = "NO";
             result = Constans.BAD_VERIFY_RESULT;
-        }else if ((!isExist && isExistInProject)){
+        } else if ((!isExist && isExistInProject)) {
             result = Constans.BAD_VERIFY_RESULT;
         }
 
-        if (modelCount != projectCount){
+        if (modelCount > projectCount) {
             projectExist = "NO";
             result = Constans.BAD_VERIFY_RESULT;
         }
 
-        return new VerifyTable( type + ": " + alias, id, isExist, modelCount, projectCount, projectExist, result, sql);
+        return new VerifyTable(type + ": " + alias, id, isExist, modelCount, projectCount, projectExist, result, sql);
     }
 
     private ArrayList<VerifyTable> addCommitedConfigurationTOVerifyTable(List<CommitedConfiguration> commitedConfigurations) {
@@ -167,7 +167,7 @@ public class VerifyController {
         try {
             CommitedConfigurationDAO databazeProjekt = new CommitedConfigurationDAO(this);
 
-            for (CommitedConfiguration modelCommitedConfiguration : commitedConfigurations){
+            for (CommitedConfiguration modelCommitedConfiguration : commitedConfigurations) {
                 projectCommitedConfigurations = databazeProjekt.getCommitedConfigurationProjekt(projectVerifyId,
                         modelCommitedConfiguration.getName(), modelCommitedConfiguration.getNameIndicator(), modelCommitedConfiguration.getCommitedDay(), modelCommitedConfiguration.getCommitedDayIndicator());
 
@@ -188,8 +188,6 @@ public class VerifyController {
         return verifyTables;
     }
 
-    
-
 
     private ArrayList<VerifyTable> addPhaseTOVerifyTable(List<Phase> phases) {
 
@@ -199,7 +197,7 @@ public class VerifyController {
         try {
             PhaseDAO databazeProjekt = new PhaseDAO(this);
 
-            for (Phase modelPhase : phases){
+            for (Phase modelPhase : phases) {
                 projectPhases = databazeProjekt.getPhaseyProjekt(projectVerifyId, modelPhase.getEndDate(), modelPhase.getEndDateIndicator());
 
                 SQLVerifyObject phase = projectPhases.get(0);
@@ -225,11 +223,11 @@ public class VerifyController {
         try {
             CommitDAO databazeProjekt = new CommitDAO(this);
 
-            for (Commit modelCommit : commits){
+            for (Commit modelCommit : commits) {
                 projectCommits = databazeProjekt.getCommitProjekt(projectVerifyId, modelCommit.getName(), modelCommit.getNameIndicator(), modelCommit.isRelease(), modelCommit.getBranch(), modelCommit.getTags());
 
                 SQLVerifyObject commit = projectCommits.get(0);
-                verifyTable = createVerifyTable(SegmentType.Commit, modelCommit.getAlias(), modelCommit.getCount(), projectCommits.size(),  modelCommit.getId(), modelCommit.isExist(), commit.isExist(), commit.getSqlCommand());
+                verifyTable = createVerifyTable(SegmentType.Commit, modelCommit.getAlias(), modelCommit.getCount(), projectCommits.size(), modelCommit.getId(), modelCommit.isExist(), commit.isExist(), commit.getSqlCommand());
 
             }
 
@@ -242,7 +240,7 @@ public class VerifyController {
         verifyTables.add(verifyTable);
         return verifyTables;
     }
-    
+
 
     private ArrayList<VerifyTable> addCriterionTOVerifyTable(List<Criterion> criterions) {
 
@@ -252,7 +250,7 @@ public class VerifyController {
         try {
             CriterionDAO databazeProjekt = new CriterionDAO(this);
 
-            for (Criterion modelCriterion : criterions){
+            for (Criterion modelCriterion : criterions) {
                 projectCriterions = databazeProjekt.getCriterionProjekt(projectVerifyId, modelCriterion.getName(), modelCriterion.getNameIndicator(),
                         modelCriterion.getDescription(), modelCriterion.getDescriptionIndicator());
 
@@ -279,8 +277,8 @@ public class VerifyController {
         try {
             ActivityDAO databazeProjekt = new ActivityDAO(this);
 
-            for (Activity modelActivity : activitys){
-                projectActivitys = databazeProjekt.getActivityyProjekt(projectVerifyId, modelActivity.getEndDate(), modelActivity.getEndDateIndicator());
+            for (Activity modelActivity : activitys) {
+                projectActivitys = databazeProjekt.getActivityFormProjekt(projectVerifyId, modelActivity.getEndDate(), modelActivity.getEndDateIndicator());
 
                 SQLVerifyObject activity = projectActivitys.get(0);
                 verifyTable = createVerifyTable(SegmentType.Activity, modelActivity.getAlias(), -1, -1, modelActivity.getId(), modelActivity.isExist(), activity.isExist(), activity.getSqlCommand());
@@ -305,7 +303,7 @@ public class VerifyController {
         try {
             BranchDAO databazeProjekt = new BranchDAO(this);
 
-            for (Branch modelBranch : branchs){
+            for (Branch modelBranch : branchs) {
                 projectBranchs = databazeProjekt.getBranchyProjekt(projectVerifyId, modelBranch.getName(), modelBranch.getNameIndicator(), modelBranch.isIsMain());
 
                 SQLVerifyObject branch = projectBranchs.get(0);
@@ -331,7 +329,7 @@ public class VerifyController {
         try {
             WorkUnitElementDAO databazeProjekt = new WorkUnitElementDAO(this);
 
-            for (Severity modelSeverity : severitys){
+            for (Severity modelSeverity : severitys) {
                 projectSeveritys = databazeProjekt.getSeverityProjekt(projectVerifyId, modelSeverity.getName(), modelSeverity.getNameIndicator(),
                         modelSeverity.getSeverityClassIndex().get(0), modelSeverity.getSeveritySuperClassIndex().get(0));
 
@@ -358,7 +356,7 @@ public class VerifyController {
         try {
             RoleDAO databazeProjekt = new RoleDAO(this);
 
-            for (RoleType modelRoleType : severitys){
+            for (RoleType modelRoleType : severitys) {
                 projectRoleTypes = databazeProjekt.getRoleProjekt(projectVerifyId, modelRoleType.getName(), modelRoleType.getNameIndicator(),
                         modelRoleType.getRoleTypeClassIndex().get(0), modelRoleType.getRoleTypeSuperClassIndex().get(0));
 
@@ -385,7 +383,7 @@ public class VerifyController {
         try {
             WorkUnitElementDAO databazeProjekt = new WorkUnitElementDAO(this);
 
-            for (Priority modelPriority : prioritys){
+            for (Priority modelPriority : prioritys) {
                 projectPrioritys = databazeProjekt.getPriorityProjekt(projectVerifyId, modelPriority.getName(), modelPriority.getNameIndicator(),
                         modelPriority.getPriorityClassIndex().get(0), modelPriority.getPrioritySuperClassIndex().get(0));
 
@@ -412,7 +410,7 @@ public class VerifyController {
         try {
             PersonDAO databazeProjekt = new PersonDAO(this);
             RoleDAO roleDAO = new RoleDAO(this);
-            for (Person modelPerson : persons){
+            for (Person modelPerson : persons) {
 
                 ArrayList<Integer> roleDBId = SQLAtributeCreator.createRoleTypeAttribute(modelPerson.getType(), verifyDataModel, roleDAO, projectVerifyId);
 
@@ -443,16 +441,16 @@ public class VerifyController {
             PersonDAO personDAO = new PersonDAO(this);
             RoleDAO roleDAO = new RoleDAO(this);
 
-            for (Artifact modelArtifact : artifacts){
+            for (Artifact modelArtifact : artifacts) {
 
 
                 ArrayList<Integer> roleDBId = SQLAtributeCreator.createPersonAttribute(modelArtifact.getAuthorIndex(), verifyDataModel, personDAO, roleDAO, projectVerifyId);
 
                 projectArtifacts = databazeProjekt.getArtifactProjekt(projectVerifyId, modelArtifact.getName(), modelArtifact.getNameIndicator(), modelArtifact.getDescription(), modelArtifact.getDescriptionIndicator(),
-                        modelArtifact.getCreated(), modelArtifact.getCreatedIndicator(), roleDBId);
+                        modelArtifact.getCreated(), modelArtifact.getCreatedIndicator(), roleDBId, modelArtifact.getMimeType(), modelArtifact.getMimeTypeIndicator());
 
                 SQLVerifyObject artifact = projectArtifacts.get(0);
-                verifyTable = createVerifyTable(SegmentType.Artifact, modelArtifact.getAlias(), modelArtifact.getCount(), projectArtifacts.size(),  modelArtifact.getId(), modelArtifact.isExist(), artifact.isExist(), artifact.getSqlCommand());
+                verifyTable = createVerifyTable(SegmentType.Artifact, modelArtifact.getAlias(), modelArtifact.getCount(), projectArtifacts.size(), modelArtifact.getId(), modelArtifact.isExist(), artifact.isExist(), artifact.getSqlCommand());
 
             }
 
@@ -478,7 +476,7 @@ public class VerifyController {
             ChangeDAO changeDAO = new ChangeDAO(this);
             CommitedConfigurationDAO commitedConfigurationDAO = new CommitedConfigurationDAO(this);
             ArtifactDAO artifactDAO = new ArtifactDAO(this);
-            for (Configuration modelConfiguration : configurations){
+            for (Configuration modelConfiguration : configurations) {
 
                 ArrayList<Integer> roleDBId = SQLAtributeCreator.createPersonAttribute(modelConfiguration.getAuthorIndex(), verifyDataModel, personDAO, roleDAO, projectVerifyId);
                 ArrayList<Integer> changeDBId = SQLAtributeCreator.createChangeAttribute(modelConfiguration.getChangesIndexs(), verifyDataModel, changeDAO, artifactDAO, personDAO, roleDAO, projectVerifyId);
@@ -503,7 +501,7 @@ public class VerifyController {
         verifyTables.add(verifyTable);
         return verifyTables;
     }
-    
+
 
     private ArrayList<VerifyTable> addChangeTOVerifyTable(List<Change> changes) {
 
@@ -515,12 +513,12 @@ public class VerifyController {
             ArtifactDAO artifactDAO = new ArtifactDAO(this);
             PersonDAO personDAO = new PersonDAO(this);
             RoleDAO roleDAO = new RoleDAO(this);
-            for (Change modelChange : changes){
+            for (Change modelChange : changes) {
 
 
                 ArrayList<Integer> artifactDBId = SQLAtributeCreator.createArtifactAttribute(modelChange.getArtifactIndex(), verifyDataModel, artifactDAO, projectVerifyId, personDAO, roleDAO);
                 projectChanges = databazeProjekt.getChangeProjekt(projectVerifyId, modelChange.getName(), modelChange.getNameIndicator(), modelChange.getDescription(), modelChange.getDescriptionIndicator()
-                       , artifactDBId);
+                        , artifactDBId);
 
                 SQLVerifyObject change = projectChanges.get(0);
                 verifyTable = createVerifyTable(SegmentType.Change, modelChange.getAlias(), -1, -1, modelChange.getId(), modelChange.isExist(), change.isExist(), change.getSqlCommand());
@@ -536,9 +534,8 @@ public class VerifyController {
         verifyTables.add(verifyTable);
         return verifyTables;
     }
-    
-    
-    
+
+
     private ArrayList<VerifyTable> addIterationTOVerifyTable(List<Iteration> iterations) {
 
         ArrayList<SQLVerifyObject> projectIterations = new ArrayList<>();
@@ -547,7 +544,7 @@ public class VerifyController {
         try {
             IterationDAO databazeProjekt = new IterationDAO(this);
 
-            for (Iteration modelIteration : iterations){
+            for (Iteration modelIteration : iterations) {
                 projectIterations = databazeProjekt.getIterationyProjekt(projectVerifyId, modelIteration.getEndDate(), modelIteration.getStartDate(),
                         modelIteration.getEndDateIndicator(), modelIteration.getStartDateIndicator());
 
@@ -562,7 +559,7 @@ public class VerifyController {
             e.printStackTrace();
         }
 
-       verifyTables.add(verifyTable);
+        verifyTables.add(verifyTable);
         return verifyTables;
     }
 
@@ -575,7 +572,7 @@ public class VerifyController {
         try {
             WorkUnitElementDAO databazeProjekt = new WorkUnitElementDAO(this);
 
-            for (Status modelStatus : statuss){
+            for (Status modelStatus : statuss) {
                 projectStatuss = databazeProjekt.getStatusProjekt(projectVerifyId, modelStatus.getName(), modelStatus.getNameIndicator(),
                         modelStatus.getStatusClassIndex().get(0), modelStatus.getStatusSuperClassIndex().get(0));
 
@@ -602,7 +599,7 @@ public class VerifyController {
         try {
             WorkUnitElementDAO databazeProjekt = new WorkUnitElementDAO(this);
 
-            for (Relation modelRelation : relations){
+            for (Relation modelRelation : relations) {
                 projectRelations = databazeProjekt.getRelationProjekt(projectVerifyId, modelRelation.getName(), modelRelation.getNameIndicator(),
                         modelRelation.getRelationClassIndex().get(0), modelRelation.getRelationSuperClassIndex().get(0));
 
@@ -629,7 +626,7 @@ public class VerifyController {
         try {
             WorkUnitElementDAO databazeProjekt = new WorkUnitElementDAO(this);
 
-            for (Resolution modelResolution : resolutions){
+            for (Resolution modelResolution : resolutions) {
                 projectResolutions = databazeProjekt.getResolutionProjekt(projectVerifyId, modelResolution.getName(), modelResolution.getNameIndicator(),
                         modelResolution.getResolutionClassIndex().get(0), modelResolution.getResolutionSuperClassIndex().get(0));
 
@@ -654,12 +651,12 @@ public class VerifyController {
         try {
             WorkUnitElementDAO databazeProjekt = new WorkUnitElementDAO(this);
 
-            for (Type modelType : types){
+            for (Type modelType : types) {
                 projectTypes = databazeProjekt.getTypeProjekt(projectVerifyId, modelType.getName(), modelType.getNameIndicator(),
                         modelType.getTypeClassIndex().get(0), modelType.getTypeSuperClassIndex().get(0));
 
                 SQLVerifyObject type = projectTypes.get(0);
-                verifyTable = createVerifyTable(SegmentType.Type, modelType.getAlias(),-1, -1, modelType.getId(), modelType.isExist(), type.isExist(), type.getSqlCommand());
+                verifyTable = createVerifyTable(SegmentType.Type, modelType.getAlias(), -1, -1, modelType.getId(), modelType.isExist(), type.isExist(), type.getSqlCommand());
 
             }
 
@@ -684,7 +681,7 @@ public class VerifyController {
             RoleDAO roleDAO = new RoleDAO(this);
             WorkUnitElementDAO workUnitElementDAO = new WorkUnitElementDAO(this);
             CategoryDAO categoryDAO = new CategoryDAO(this);
-            for (WorkUnit modelWorkUnit : workUnits){
+            for (WorkUnit modelWorkUnit : workUnits) {
 
                 ArrayList<Integer> roleDBId = SQLAtributeCreator.createPersonAttribute(modelWorkUnit.getAuthorIndex(), verifyDataModel, personDAO, roleDAO, projectVerifyId);
                 ArrayList<Integer> priorityDBId = SQLAtributeCreator.createPriorityAttribute(modelWorkUnit.getPriorityIndex(), verifyDataModel, workUnitElementDAO, projectVerifyId);
@@ -723,7 +720,7 @@ public class VerifyController {
             MilestoneDAO databazeProjekt = new MilestoneDAO(this);
             CriterionDAO criterionDAO = new CriterionDAO(this);
 
-            for (Milestone modelMilestone : milestones){
+            for (Milestone modelMilestone : milestones) {
 
                 ArrayList<Integer> criterionDBId = SQLAtributeCreator.createCriterionAttribute(modelMilestone.getCriteriaIndexs(), verifyDataModel, criterionDAO, projectVerifyId);
 
@@ -731,7 +728,7 @@ public class VerifyController {
                         criterionDBId);
 
                 SQLVerifyObject milestone = projectMilestones.get(0);
-                verifyTable = createVerifyTable(SegmentType.Milestone, modelMilestone.getAlias(),  -1, -1, modelMilestone.getId(), modelMilestone.isExist(), milestone.isExist(), milestone.getSqlCommand());
+                verifyTable = createVerifyTable(SegmentType.Milestone, modelMilestone.getAlias(), -1, -1, modelMilestone.getId(), modelMilestone.isExist(), milestone.isExist(), milestone.getSqlCommand());
 
             }
 

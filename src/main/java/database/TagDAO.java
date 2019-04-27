@@ -2,7 +2,6 @@ package database;
 
 import controllers.VerifyController;
 import services.Constans;
-import services.SQLAtributeCreator;
 
 import java.sql.Connection;
 import java.util.ArrayList;
@@ -33,6 +32,6 @@ public class TagDAO {
 
 		String sql = "SELECT p.id FROM tag p WHERE " + atributeSection;
 
-		return SQLAtributeCreator.getAtributesFromDB(pripojeni, verifyController, sql, -1, null);
+		return SQLAtributeCreator.findInstanceInDB(pripojeni, verifyController, sql, -1, null);
 	}
 }

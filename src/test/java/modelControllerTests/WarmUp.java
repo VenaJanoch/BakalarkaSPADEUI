@@ -28,7 +28,7 @@ public class WarmUp {
         IdentificatorCreater idCreator = new IdentificatorCreater();
         ProcessGenerator processGenerator = new ProcessGenerator();
         dataModel = new DataModel(processGenerator);
-        data =  new DataManipulator(processGenerator, dataModel);
+        data =  new DataManipulator(dataModel);
 
         FileManipulator file = new FileManipulator(dataModel);
         Alerts alerts = new Alerts(file);

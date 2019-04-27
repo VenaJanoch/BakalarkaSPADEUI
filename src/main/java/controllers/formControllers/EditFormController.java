@@ -470,8 +470,7 @@ public class EditFormController implements IEditFormController {
 
         dataManipulator.editDataInVCSTag(alias, nameForManipulator, descriptionForManipulator, nameIndicator, descriptionIndicator, exist, id);
         tagTable.setExist(exist);
-        String VCSTagName = dataPreparer.createTableItemIdName(id, alias);
-        tagTable.setAlias(VCSTagName);
+        tagTable.setAlias(alias);
         segmentLists.getVCSTag().add(tagTable);
     }
 

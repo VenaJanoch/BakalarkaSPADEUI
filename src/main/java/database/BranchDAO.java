@@ -3,7 +3,6 @@ package database;
 import SPADEPAC.Branch;
 import controllers.VerifyController;
 import services.Constans;
-import services.SQLAtributeCreator;
 
 import java.sql.Connection;
 import java.util.ArrayList;
@@ -53,12 +52,12 @@ public class BranchDAO {
 		atributeSection += SQLAtributeCreator.createStringAttribute("name", name, nameIndicator).substring(5);
 		atributeSection += SQLAtributeCreator.createBooleanAttribute("isMain", isMain);
 
-		String sql = "SELECT * FROM branch  WHERE " + atributeSection;
+		String sql = "SELECT b.id FROM branch b  WHERE " + atributeSection;
 
 		//	if(seznamIdBranchu != null && !seznamIdBranchu.isEmpty())
 		//		sql += " and a.id in ("+ Konstanty.getZnakyParametru(seznamIdBranchu) +")";
 
-		return SQLAtributeCreator.getAtributesFromDB(pripojeni,verifyController, sql, -1, null);
+		return SQLAtributeCreator.findInstanceInDB(pripojeni,verifyController, sql, -1, null);
 
 	}
 

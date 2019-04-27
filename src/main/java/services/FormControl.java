@@ -33,7 +33,7 @@ public class FormControl {
 	 */
 	public static boolean copyControl(SegmentType itemType, CanvasType canvasType) {
 
-		if (itemType == SegmentType.Work_Unit) {
+		if (itemType == SegmentType.Person) {
 
 			if (canvasType == canvasType.Phase || canvasType == canvasType.Iteration
 					|| canvasType == canvasType.Activity || canvasType == canvasType.Project) {

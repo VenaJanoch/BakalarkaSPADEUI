@@ -7,125 +7,20 @@ import java.util.*;
 
 public class DataManipulator{
 
-
-    private ProcessGenerator procesGener;
     private DataModel dataModel;
-    private ObjectFactory objF;
 
-    public DataManipulator(ProcessGenerator processGenerator, DataModel dataModel) {
-        this.procesGener = processGenerator;
+
+    public DataManipulator(DataModel dataModel) {
         this.dataModel = dataModel;
-        this.objF = dataModel.getObjF();
     }
 
-
-    public void setRelationIndexToLink(int id, int relationIndex) {
- //   dataModel.getLinks().get(id).setRelationIndex(relationIndex);
-    }
-
-    public void copyDataFromActivity(int oldActivityId, int newActivityId) {
-        Activity oldActivity = dataModel.getActivities().get(oldActivityId);
-        Activity newActivity = dataModel.getActivities().get(newActivityId);
-
-      //  newActivity.setCoordinates(oldActivity.getCoordinates());
-     //   newActivity.setAlias(oldActivity.getAlias());
-     //   newActivity.setDescription(oldActivity.getDescription());
-
-       int workUnitSize = dataModel.getWorkUnits().size();
-      //  for (int i =0; i < oldActivity.getWorkUnits().size(); i++){
-      //      copyDataFromWorkUnit(oldActivity.getWorkUnits().get(i));
-      //      newActivity.getWorkUnits().add(workUnitSize + i);
-       // }
-    }
-
-    public void copyDataFromWorkUnit(int oldWUId){
-        WorkUnit oldWu = dataModel.getWorkUnits().get(oldWUId);
-        WorkUnit newWu = objF.createWorkUnit();
-        copyDataFromWorkUnit(oldWu, newWu);
-        dataModel.getWorkUnits().add(newWu);
-
-    }
-
-    public void copyDataFromWorkUnit(int oldWUId, int newWUId){
-        WorkUnit oldWu = dataModel.getWorkUnits().get(oldWUId);
-        WorkUnit newWu = dataModel.getWorkUnits().get(newWUId);
-        copyDataFromWorkUnit(oldWu, newWu);
-
-    }
-
-    public  void copyDataFromWorkUnit(WorkUnit oldWu, WorkUnit newWu){
-//        newWu.setResolutionIndex(oldWu.getResolutionIndex());
-//        newWu.setStatusIndex(oldWu.getStatusIndex());
-//        newWu.setTypeIndex(oldWu.getTypeIndex());
-//        newWu.setSeverityIndex(oldWu.getSeverityIndex());
-//        newWu.setPriorityIndex(oldWu.getPriorityIndex());
-//        newWu.setAlias(oldWu.getAlias());
-//        newWu.setExist(oldWu.isExist());
-//        newWu.setEstimatedTime(oldWu.getEstimatedTime());
-//        newWu.setDescription(oldWu.getDescription());
-//        newWu.setCoordinates(oldWu.getCoordinates());
-//        newWu.setCategory(oldWu.getCategory());
-//        newWu.setAuthorIndex(oldWu.getAuthorIndex());
-//        newWu.setAssigneeIndex(oldWu.getAssigneeIndex());
-//        newWu.setRelationIndex(oldWu.getRelationIndex());
-    }
-
-    public void copyDataFromIteration(int oldIteratationId, int newIterationId) {
-        Iteration oldIteration = dataModel.getIterations().get(oldIteratationId);
-        Iteration newIteration = dataModel.getIterations().get(newIterationId);
-
-//        newIteration.setCoordinates(oldIteration.getCoordinates());
-//        newIteration.setAlias(oldIteration.getAlias());
-//        newIteration.setDescription(oldIteration.getDescription());
-//        newIteration.setStartDate(oldIteration.getStartDate());
-//        newIteration.setEndDate(oldIteration.getEndDate());
-//        newIteration.setConfiguration(oldIteration.getConfiguration());
-//
-//        int workUnitSize = dataModel.getWorkUnits().size();
-//        for (int i =0; i < oldIteration.getWorkUnits().size(); i++){
-//            copyDataFromWorkUnit(oldIteration.getWorkUnits().get(i));
-//            newIteration.getWorkUnits().add(workUnitSize + i);
-//        }
-
-    }
-
-
-    public void copyDataFromPhase(int phaseId, int newPhaseId) {
-        Phase oldPhase = dataModel.getPhases().get(phaseId);
-        Phase newPhase = dataModel.getPhases().get(newPhaseId);
-
-//        newPhase.setCoordinates(oldPhase.getCoordinates());
-//        newPhase.setAlias(oldPhase.getAlias());
-//        newPhase.setDescription(oldPhase.getDescription());
-//        newPhase.setEndDate(oldPhase.getEndDate());
-//        newPhase.setConfiguration(oldPhase.getConfiguration());
-//        newPhase.setConfiguration(oldPhase.getConfiguration());
-//        newPhase.setMilestoneIndex(oldPhase.getMilestoneIndex());
-//
-//        int workUnitSize = dataModel.getWorkUnits().size();
-//        for (int i =0; i < oldPhase.getWorkUnits().size(); i++){
-//            copyDataFromWorkUnit(oldPhase.getWorkUnits().get(i));
-//            newPhase.getWorkUnits().add(workUnitSize + i);
-//        }
-
-    }
-
-    public void copyDataFromChange(int changeId, int newchangeId) {
-
-        Change oldChange = dataModel.getChanges().get(changeId);
-        Change newChange = dataModel.getChanges().get(newchangeId);
-
-//        newChange.setCoordinates(oldChange.getCoordinates());
-//        newChange.setAlias(oldChange.getAlias());
-//        newChange.setDescriptoin(oldChange.getDescriptoin());
-//        newChange.setExist(oldChange.isExist());
-        }
-
-    public void copyDataFromArtifact(int artifactId, int newArtifactId) {
+    public void copyDataFromArtifact(int artifactId, int newArtifactId, double x, double y) {
         Artifact oldArtifact = dataModel.getArtifact(artifactId);
         Artifact newArtifact = dataModel.getArtifact(newArtifactId);
+        Coordinates coordinates = dataModel.createCoords((int)x,(int) y);
 
-        newArtifact.setCoordinates(oldArtifact.getCoordinates());
+        newArtifact.setAlias(oldArtifact.getAlias());
+        newArtifact.setCoordinates(coordinates);
         newArtifact.getName().addAll(oldArtifact.getName());
         newArtifact.getNameIndicator().addAll(oldArtifact.getNameIndicator());
         newArtifact.getDescription().addAll(oldArtifact.getDescription());
@@ -141,11 +36,13 @@ public class DataManipulator{
     }
 
 
-    public void copyDataFromCommitedConfiguration(int commitedConfigurationId, int newCommitedConfigurationId) {
+    public void copyDataFromCommitedConfiguration(int commitedConfigurationId, int newCommitedConfigurationId, double x, double y) {
         CommitedConfiguration oldCommitedConfiguration = dataModel.getCommitedConfiguration(commitedConfigurationId);
         CommitedConfiguration newCommitedConfiguration = dataModel.getCommitedConfiguration(newCommitedConfigurationId);
+        Coordinates coordinates = dataModel.createCoords((int)x,(int) y);
 
-        newCommitedConfiguration.setCoordinates(oldCommitedConfiguration.getCoordinates());
+        newCommitedConfiguration.setAlias(oldCommitedConfiguration.getAlias());
+        newCommitedConfiguration.setCoordinates(coordinates);
         newCommitedConfiguration.getName().addAll(oldCommitedConfiguration.getName());
         newCommitedConfiguration.getNameIndicator().addAll(oldCommitedConfiguration.getNameIndicator());
         newCommitedConfiguration.setExist(oldCommitedConfiguration.isExist());
@@ -154,11 +51,13 @@ public class DataManipulator{
     }
     
 
-    public void copyDataFromCommit(int commitId, int newCommitId) {
+    public void copyDataFromCommit(int commitId, int newCommitId, double x, double y) {
         Commit oldCommit = dataModel.getCommit(commitId);
         Commit newCommit = dataModel.getCommit(newCommitId);
+        Coordinates coordinates = dataModel.createCoords((int)x,(int) y);
 
-        newCommit.setCoordinates(oldCommit.getCoordinates());
+        newCommit.setAlias(oldCommit.getAlias());
+        newCommit.setCoordinates(coordinates);
         newCommit.getName().addAll(oldCommit.getName());
         newCommit.getNameIndicator().addAll(oldCommit.getNameIndicator());
         newCommit.setExist(oldCommit.isExist());
@@ -169,11 +68,13 @@ public class DataManipulator{
     }
     
 
-    public void copyDataFromConfiguration(int configurationId, int newConfigurationId) {
+    public void copyDataFromConfiguration(int configurationId, int newConfigurationId, double x, double y) {
         Configuration oldConfiguration = dataModel.getConfiguration(configurationId);
         Configuration newConfiguration = dataModel.getConfiguration(newConfigurationId);
 
-        newConfiguration.setCoordinates(oldConfiguration.getCoordinates());
+        Coordinates coordinates = dataModel.createCoords((int)x,(int) y);
+        newConfiguration.setAlias(oldConfiguration.getAlias());
+        newConfiguration.setCoordinates(coordinates);
         newConfiguration.getName().addAll(oldConfiguration.getName());
         newConfiguration.getNameIndicator().addAll(oldConfiguration.getNameIndicator());
         newConfiguration.setExist(oldConfiguration.isExist());
@@ -188,16 +89,19 @@ public class DataManipulator{
     }
     
     
-    public void copyDataFromPerson(int artifactId, int newPersonId) {
+    public void copyDataFromPerson(int artifactId, int newPersonId, double x, double y) {
         Person oldPerson = dataModel.getRole(artifactId);
         Person newPerson = dataModel.getRole(newPersonId);
 
-        newPerson.setCoordinates(oldPerson.getCoordinates());
+        Coordinates coordinates = dataModel.createCoords((int) x,(int) y);
+
+        newPerson.setCoordinates(coordinates);
         newPerson.getName().addAll(oldPerson.getName());
         newPerson.getNameIndicator().addAll(oldPerson.getNameIndicator());
         newPerson.setExist(oldPerson.isExist());
         newPerson.getType().addAll(oldPerson.getType());
         newPerson.getTypeIndicator().addAll(oldPerson.getTypeIndicator());
+        newPerson.setAlias(oldPerson.getAlias());
     }
 
     public List[] getCriterionData(int id) {
@@ -813,6 +717,7 @@ public class DataManipulator{
         list.add(activity.getAlias());
         data[5] = list;
 
+
         if(activity.getEndDate() != null){
             data[6] = activity.getEndDate();
         }
@@ -820,7 +725,6 @@ public class DataManipulator{
         if(activity.getEndDateIndicator() != null){
             data[7] = activity.getEndDateIndicator();
         }
-
         return data;
     }
 

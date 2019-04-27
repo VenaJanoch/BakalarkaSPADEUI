@@ -1,9 +1,7 @@
 package database;
 
-import SPADEPAC.Milestone;
 import controllers.VerifyController;
 import services.Constans;
-import services.SQLAtributeCreator;
 
 import java.sql.Connection;
 import java.util.ArrayList;
@@ -31,11 +29,12 @@ public class MilestoneDAO {
 		atributeSection += SQLAtributeCreator.createStringAttribute("name", name, nameIndicator);
 		atributeSection += SQLAtributeCreator.createStringAttribute("description", description, descriptionIndicator);
 		atributeSection += SQLAtributeCreator.createIdAttribute("mc.criterionId", criterions);
-
+		ArrayList<List<Integer>> paramIds = new ArrayList<>();
+		paramIds.add(criterions);
 
 		String sql = "SELECT p.id FROM milestone p join milestone_criterion mc on mc.milestoneId = p.id " + atributeSection;
 
-		return SQLAtributeCreator.getAtributesFromDB(pripojeni,verifyController, sql, -1, null);
+		return SQLAtributeCreator.findInstanceInDB(pripojeni,verifyController, sql, -1, null);
 
 	}
 

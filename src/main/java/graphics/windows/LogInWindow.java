@@ -27,6 +27,7 @@ public class LogInWindow extends Stage {
      */
     private String name;
     private String password;
+    private boolean isLog = false;
 
     private BorderPane mainPanel;
     private GridPane centralPanel;
@@ -80,7 +81,7 @@ public class LogInWindow extends Stage {
         return mainPanel;
     }
 
-    public void showLogDialog(){
+    public boolean showLogDialog(){
         // Create the custom dialog.
         Dialog<Pair<String, String>> dialog = new Dialog<>();
         dialog.setTitle("Login Dialog");
@@ -137,16 +138,20 @@ public class LogInWindow extends Stage {
         result.ifPresent(usernamePassword -> {
             name = usernamePassword.getKey();
             this.password = usernamePassword.getValue();
-            logInToDatabase();
+          isLog = logInToDatabase();
             this.show();
         });
+
+        return isLog;
     }
 
 
-    private void logInToDatabase(){
+    private boolean logInToDatabase(){
       if(databaseController.logIn(name, password)){
           fillProjectTable();
+          return true;
       }
+      return false;
     }
 
     private void fillProjectTable(){

@@ -234,8 +234,8 @@ public class Constans {
 
     public static final LocalDate nullDate = LocalDate.of(1900,1,1);
 
-  //  public static final String CESTA_K_DATABAZI = "jdbc:mysql://students.kiv.zcu.cz:3306/ppicha?allowMultiQueries=true"; //cesta k databázi
-    public static final String CESTA_K_DATABAZI = "jdbc:mysql://localhost:3306/opswi?allowMultiQueries=true&characterEncoding=UTF-8";
+  //  public static final String DATABASE_PATH = "jdbc:mysql://students.kiv.zcu.cz:3306/ppicha?allowMultiQueries=true"; //cesta k databázi
+    public static final String DATABASE_PATH = "jdbc:mysql://localhost:3306/opswi?allowMultiQueries=true&characterEncoding=UTF-8";
     public static final double PROJECT_CHOOSE_WINDOW_WIDTH = 400;
     public static final double PROJECT_CHOOSE_WINDOW_HEIGHT = 400;
     public static final double PROJECT_TABLE_WIDTH = 900;

@@ -3,7 +3,6 @@ package database;
 import SPADEPAC.Criterion;
 import controllers.VerifyController;
 import services.Constans;
-import services.SQLAtributeCreator;
 
 import java.sql.Connection;
 import java.util.ArrayList;
@@ -59,7 +58,7 @@ public class CriterionDAO {
 		//	if(seznamIdcriterions != null && !seznamIdcriterions.isEmpty())
 		//		sql += " and a.id in ("+ Konstanty.getZnakyParametru(seznamIdcriterions) +")";
 
-		return SQLAtributeCreator.getAtributesFromDB(pripojeni,verifyController, sql, -1, null);
+		return SQLAtributeCreator.findInstanceInDB(pripojeni,verifyController, sql, -1, null);
 
 	}
 

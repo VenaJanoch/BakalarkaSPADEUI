@@ -2,7 +2,6 @@ package database;
 
 import controllers.VerifyController;
 import services.Constans;
-import services.SQLAtributeCreator;
 
 import javax.xml.datatype.XMLGregorianCalendar;
 import java.sql.Connection;
@@ -34,6 +33,6 @@ public class CommitedConfigurationDAO {
 
 		String sql = "SELECT wi.id FROM work_item wi join committed_configuration p on p.id = wi.id" + atributeSection;
 
-		return SQLAtributeCreator.getAtributesFromDB(pripojeni, verifyController, sql, -1, null);
+		return SQLAtributeCreator.findInstanceInDB(pripojeni, verifyController, sql, -1, null);
 	}
 }

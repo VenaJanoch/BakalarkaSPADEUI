@@ -2,7 +2,6 @@ package database;
 
 import controllers.VerifyController;
 import services.Constans;
-import services.SQLAtributeCreator;
 
 import java.sql.Connection;
 import java.util.ArrayList;
@@ -33,7 +32,7 @@ public class CategoryDAO {
 		//	if(seznamIdCategoryu != null && !seznamIdCategoryu.isEmpty())
 		//		sql += " and a.id in ("+ Konstanty.getZnakyParametru(seznamIdCategoryu) +")";
 
-		return SQLAtributeCreator.getAtributesFromDB(pripojeni,verifyController, sql, projectVerifyId, null);
+		return SQLAtributeCreator.findInstanceInDB(pripojeni,verifyController, sql, projectVerifyId, new ArrayList<>());
 
 	}
 }

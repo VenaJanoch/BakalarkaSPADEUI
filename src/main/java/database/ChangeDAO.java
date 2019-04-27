@@ -2,9 +2,7 @@ package database;
 
 import controllers.VerifyController;
 import services.Constans;
-import services.SQLAtributeCreator;
 
-import javax.xml.datatype.XMLGregorianCalendar;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,8 +30,11 @@ public class ChangeDAO {
 		atributeSection += SQLAtributeCreator.createStringAttribute("p.description", description, descriptionIndicator);
 		atributeSection += SQLAtributeCreator.createArtifactAttribute("p.workItemId", artifactIds);
 
+		ArrayList<List<Integer>> paramIds = new ArrayList<>();
+		paramIds.add(artifactIds);
+
 		String sql = "SELECT fch.id FROM work_item_change p join field_change fch on fch.workItemChangeId = p.id " + atributeSection;
 
-		return SQLAtributeCreator.getAtributesFromDB(pripojeni, verifyController, sql, -1, null);
+		return SQLAtributeCreator.findInstanceInDB(pripojeni, verifyController, sql, -1, paramIds);
 	}
 }

@@ -178,7 +178,7 @@ public class CanvasController {
      */
 
     private void pasteItem() {
-        manipulationController.pasteItem(this, canvasItemController);
+        manipulationController.pasteItem(this, canvasItemController, 0,0);
     }
 
     /**

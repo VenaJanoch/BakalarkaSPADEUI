@@ -84,21 +84,18 @@ public class ManipulationController {
     /**
      * Vloží nový pvek na plátno
      */
-    public void pasteItem(CanvasController canvasController, CanvasItemController canvasItemController) {
+    public void pasteItem(CanvasController canvasController, CanvasItemController canvasItemController, double x, double y) {
         SegmentType segmentType = canvasItemController.getSegmentType(chooseCanvasItem);
         CanvasType canvasType = canvasController.getCanvasType();
 
         if (chooseCanvasItem != null) {
 
-            if (FormControl.copyControl(segmentType, canvasType)) {
                 if(isCut){
-                    createCopyForm(chooseCanvasItem.getFormIdentificator(), segmentType, canvasController);
+                    createCopyForm(chooseCanvasItem.getFormIdentificator(), segmentType, canvasController, x, y);
                     deleteItem(canvasItemController);
                 }else  {
-                    createCopyForm(chooseCanvasItem.getFormIdentificator(), segmentType, canvasController);
+                    createCopyForm(chooseCanvasItem.getFormIdentificator(), segmentType, canvasController, x, y);
                 }
-
-            }
         } else {
             Alerts.badCopyItem(segmentType, canvasType);
         }
@@ -112,23 +109,23 @@ public class ManipulationController {
      *            instance seznamu formulářů
      * @return pole identifikátorů prvku
      */
-    public void createCopyForm(int oldFormIndex, SegmentType segmentType, CanvasController canvasController) {
+    public void createCopyForm(int oldFormIndex, SegmentType segmentType, CanvasController canvasController, double x, double y) {
 
         switch (segmentType) {
             case Configuration:
-                formFillController.fillConfigurationForm(oldFormIndex);
+                formFillController.fillConfigurationForm(oldFormIndex, x, y);
                 break;
             case Committed_Configuration:
-                formFillController.fillCommitedConfigurationForm(oldFormIndex);
+                formFillController.fillCommitedConfigurationForm(oldFormIndex, x , y);
                 break;
             case Commit:
-                formFillController.fillCommitForm(oldFormIndex);
+                formFillController.fillCommitForm(oldFormIndex, x , y);
                 break;
-            case Work_Unit:
-                formFillController.fillPersonForm(oldFormIndex);
+            case Person:
+                formFillController.fillPersonForm(oldFormIndex, x, y);
                 break;
             case Artifact:
-                formFillController.fillArtifactForm(oldFormIndex);
+                formFillController.fillArtifactForm(oldFormIndex, x, y);
                 break;
             default:
                 break;

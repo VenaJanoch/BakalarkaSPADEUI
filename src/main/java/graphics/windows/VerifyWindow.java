@@ -28,9 +28,7 @@ public class VerifyWindow extends Stage {
      * Globální proměnné třídy
      */
     private BorderPane mainPanel;
-    private GridPane centralPanel;
     private Scene scena;
-    private Button submitBT;
     private VerifyController verifyController;
     private TableView<VerifyTable> tableTV;
     private ArrayList<Text> textList;
@@ -103,7 +101,7 @@ public class VerifyWindow extends Stage {
 
 // Set expandable Exception into the dialog pane.
                     alert.getDialogPane().setExpandableContent(expContent);
-
+                    alert.getDialogPane().getExpandableContent().setVisible(true);
                     ButtonType buttonTypeOne = new ButtonType("OK");
                     alert.showAndWait();
                 }
@@ -195,7 +193,6 @@ public class VerifyWindow extends Stage {
     public void setItemsToTable(ArrayList<VerifyTable> verifyTables) {
         tableTV.getItems().clear();
         tableTV.getItems().addAll(verifyTables);
-      //  tableTV.getItems().addAll(new VerifyTable("Name", 3, true, "Yes", "Yes", "Nevim"));
     }
 
     public void repaintText(){

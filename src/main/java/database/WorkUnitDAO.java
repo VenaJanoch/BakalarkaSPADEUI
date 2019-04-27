@@ -2,9 +2,7 @@ package database;
 
 import controllers.VerifyController;
 import services.Constans;
-import services.SQLAtributeCreator;
 
-import javax.xml.datatype.XMLGregorianCalendar;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
@@ -42,13 +40,24 @@ public class WorkUnitDAO {
 		atributeSection += SQLAtributeCreator.createIdAttribute("wir.relationId", relationIds);
 		atributeSection += SQLAtributeCreator.createIdAttribute("wir.rightId", workUnitsInRelationIds);
 
+		ArrayList<List<Integer>> paramIds = new ArrayList<>();
+		paramIds.add(assigneeIds);
+		paramIds.add(priorityIds);
+		paramIds.add(severityIds);
+		paramIds.add(statusIds);
+		paramIds.add(typeIds);
+		paramIds.add(resolutionIds);
+		paramIds.add(relationIds);
+		paramIds.add(workUnitsInRelationIds);
+
+
 
 		String sql = "SELECT wu.id FROM work_unit wu " +
 				"join work_unit_category wuc on wu.id = wuc.workUnitId " +
-				//"join work_item_relation wir on wir.leftItemId = wu.id " +
+				"join work_item_relation wir on wir.leftItemId = wu.id " +
 				"AND wu.projectId = ? " + atributeSection;
 
-		return SQLAtributeCreator.getAtributesFromDB(pripojeni, verifyController, sql, projectVerifyId, null);
+		return SQLAtributeCreator.findInstanceInDB(pripojeni, verifyController, sql, projectVerifyId, null);
 
 	}
 }

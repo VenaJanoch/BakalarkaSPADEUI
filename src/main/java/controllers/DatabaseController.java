@@ -51,33 +51,7 @@ public class DatabaseController {
         else {
             try {
                 Class.forName("com.mysql.jdbc.Driver").newInstance();
-                Constans.CONNECTION = DriverManager.getConnection(Constans.CESTA_K_DATABAZI, login, heslo);
-
-                /*vlákno zobrazuje okno s progresem načítání*/
-//            Thread t1 = new Thread(new Runnable(){
-//                public void run() {
-//                    OknoProgresNacitani oknoProgres = new OknoProgresNacitani();
-//                    while(Konstanty.CITAC_PROGRESU <= Konstanty.POCET_KROKU_PROGRESU){
-//                        oknoProgres.nastavProgres();
-//                        if(Konstanty.CITAC_PROGRESU >= Konstanty.POCET_KROKU_PROGRESU){
-//                            break;
-//                        }
-//                        Thread.yield();
-//                    }
-//                    oknoProgres.setVisible(false);
-//                }
-//            });
-
-                /*vlákno spustí hlavní okno programu*/
-//            Thread t2 = new Thread(new Runnable(){
-//                public void run() {
-//                    new OknoHlavni(pripojeni);
-//                }
-//            });
-//            t1.start();
-//            t2.start();
-
-//            this.setVisible(false);
+                Constans.CONNECTION = DriverManager.getConnection(Constans.DATABASE_PATH, login, heslo);
             } catch (SQLException e) {
                 Alerts.SQLConnectionError();
                 return false;

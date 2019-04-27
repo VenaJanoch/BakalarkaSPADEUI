@@ -60,7 +60,8 @@ public class VCSTagControlPanel extends DescriptionControlPanel {
         ArrayList<String> name = controlPanelController.processTextLines(ParamType.Name, nameIndicators);
         ArrayList<String> desc = controlPanelController.processTextLines(ParamType.Description, descIndicators);
 
-        editFormController.editDataFromVCSTag(aliasTF.getText(), name, desc, nameIndicators, descIndicators, tagTable, controlPanelController.isExist(), id);
+        editFormController.editDataFromVCSTag(aliasTF.getText(), name, desc, nameIndicators, descIndicators, tagTable,
+                controlPanelController.isExist(), id);
         clearPanelCB(tableView);
     }
 

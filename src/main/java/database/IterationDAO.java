@@ -6,14 +6,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.JOptionPane;
 import javax.xml.datatype.XMLGregorianCalendar;
 
 import SPADEPAC.Iteration;
-import controllers.DataPreparer;
 import controllers.VerifyController;
 import services.Constans;
-import services.SQLAtributeCreator;
 
 /**
  * Třída zajišťující výběr dat artefaktů z databáze implementující rozhraní IIterationDAO
@@ -61,12 +58,12 @@ public class IterationDAO{
 		atributeSection += SQLAtributeCreator.createDateAttribute("endDate", endDate, endDateIndicator);
 		atributeSection += SQLAtributeCreator.createDateAttribute("startDate", startDate, startDateIndicator);
 
-		String sql = "SELECT * FROM iteration  WHERE superProjectId = ? " + atributeSection;
+		String sql = "SELECT i.id FROM iteration i WHERE superProjectId = ? " + atributeSection;
 
 		//	if(seznamIdIterationu != null && !seznamIdIterationu.isEmpty())
 		//		sql += " and a.id in ("+ Konstanty.getZnakyParametru(seznamIdIterationu) +")";
 
-		return SQLAtributeCreator.getAtributesFromDB(pripojeni, verifyController, sql, projectVerifyId,null);
+		return SQLAtributeCreator.findInstanceInDB(pripojeni, verifyController, sql, projectVerifyId,null);
 
 	}
 

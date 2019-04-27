@@ -2,7 +2,6 @@ package database;
 
 import controllers.VerifyController;
 import services.Constans;
-import services.SQLAtributeCreator;
 
 import javax.xml.datatype.XMLGregorianCalendar;
 import java.sql.Connection;
@@ -38,8 +37,10 @@ public class ConfigurationDAO {
 
 		//	atributeSection += SQLAtributeCreator.createCPRAttribute("wi.authorId", roleIds);
 		String sql = "SELECT p.id FROM work_item wi join configuration p on p.id = wi.id join configuration_change ch on ch.configurationId = p.id AND p.projectId = ? " + atributeSection;
-
-		return SQLAtributeCreator.getAtributesFromDB(pripojeni, verifyController, sql, projectVerifyId, null);
+		ArrayList<List<Integer>> paramIds = new ArrayList<>();
+		paramIds.add(personIds);
+		paramIds.add(changeId);
+		return SQLAtributeCreator.findInstanceInDB(pripojeni, verifyController, sql, projectVerifyId, paramIds);
 
 	}
 }

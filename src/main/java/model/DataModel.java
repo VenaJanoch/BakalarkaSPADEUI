@@ -38,7 +38,7 @@ public class DataModel {
         this.editDataModel = new EditDataModel(this);
         this.saveDataModel = new SaveDataModel(this, objF);
         this.deleteDataModel = new DeleteDataModel(this);
-        this.dataManipulator = new DataManipulator(processGenerator, this);
+        this.dataManipulator = new DataManipulator(this);
 
 
     }
@@ -433,6 +433,7 @@ public class DataModel {
         artifact.setCount(instanceCount);
         
         artifact.getMimeType().addAll(getItemFormEnumList(ArtifactClass.values(), typeIndex));
+        artifact.getMimeTypeIndex().addAll(typeIndex);
         artifact.getNameIndicator().addAll(nameIndicators);
         artifact.getDescriptionIndicator().addAll(descriptionIndicators);
         artifact.getCreatedIndicator().addAll(dateIndicator);
@@ -452,6 +453,7 @@ public class DataModel {
         artifact.getDescription().clear();
         artifact.getMimeTypeIndicator().clear();
         artifact.getMimeType().clear();
+        artifact.getMimeTypeIndex().clear();
     }
 
     private ArrayList<String> getItemFormEnumList(ArtifactClass[] values, ArrayList<Integer> typeIndex) {

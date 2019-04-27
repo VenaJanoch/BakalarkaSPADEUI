@@ -127,7 +127,7 @@ public class WindowController {
 
     public void showConfirmWindow() {
         if (!logToDB){
-            logInWindow.showLogDialog();
+           logToDB = logInWindow.showLogDialog();
         }else {
             logInWindow.show();
         }

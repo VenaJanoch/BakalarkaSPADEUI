@@ -3,7 +3,6 @@ package database;
 import SPADEPAC.BranchList;
 import controllers.VerifyController;
 import services.Constans;
-import services.SQLAtributeCreator;
 
 import java.sql.Connection;
 import java.util.ArrayList;
@@ -34,7 +33,7 @@ public class CommitDAO {
 		//atributeSection += " AND p.configurationId = " + configIds;
 
 		String sql = "SELECT wi.id FROM work_item wi join commit p on p.id = wi.id" + atributeSection;
-
-		return SQLAtributeCreator.getAtributesFromDB(pripojeni, verifyController, sql, -1, null);
+		ArrayList<List<Integer>> paramIds = new ArrayList<>();
+		return SQLAtributeCreator.findInstanceInDB(pripojeni, verifyController, sql, -1, null);
 	}
 }

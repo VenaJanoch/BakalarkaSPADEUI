@@ -1,10 +1,10 @@
-package services;
+package database;
 
 import SPADEPAC.*;
 import controllers.DataPreparer;
 import controllers.VerifyController;
-import database.*;
 import model.DataModel;
+import services.Constans;
 
 import javax.xml.datatype.XMLGregorianCalendar;
 import java.sql.Connection;
@@ -36,8 +36,8 @@ public class SQLAtributeCreator {
      * @param id identifikátor výběru
      * @return seznam artefaktů
      */
-    public static ArrayList<SQLVerifyObject> getAtributesFromDB(Connection pripojeni, VerifyController verifyController, String sql, int id,
-                                                                int[] paramsInt) {
+    public static ArrayList<SQLVerifyObject> findInstanceInDB(Connection pripojeni, VerifyController verifyController, String sql, int id,
+                                                              ArrayList<List<Integer>> ids) {
         PreparedStatement stmt = null;
         ResultSet rs = null;
         ArrayList<SQLVerifyObject> list = new ArrayList<SQLVerifyObject>();
@@ -46,12 +46,20 @@ public class SQLAtributeCreator {
             int i = 1;
             if (id != -1){
                 stmt.setInt(1, id);
+
             }
 
+            for (List<Integer> identificators : ids){
+
+                for (int j : identificators){
+                    i++;
+                    stmt.setInt(i, j);
+                }
+            }
 
             rs = stmt.executeQuery();
             while(rs.next()){
-                list.add(verifyController.createSQLVerifyObject(rs.getInt("id"), sql, true));
+                list.add(verifyController.createSQLVerifyObject(rs.getInt("id"), stmt.toString().substring(48), true));
             }
 
             if (list.size() == 0){
@@ -113,7 +121,7 @@ public class SQLAtributeCreator {
     public static String createClassAttribute(String element_classification, int classId) {
 
         String atributeSection = "";
-        atributeSection += " left join " + element_classification + " c on p.classId = " + classId ;
+        atributeSection += " left join " + element_classification + " c on p.classId = ? "; // + classId ;
         atributeSection += " left join project_instance i on p.projectInstanceId = i.id ";
 
         return atributeSection;
@@ -132,7 +140,7 @@ public class SQLAtributeCreator {
         String atributeSection = "";
         for (int id : attributsId){
             atributeSection += " AND ";
-            atributeSection += elementName + " = " + id;
+            atributeSection += elementName + " = ?"; // + id;
         }
         return atributeSection;
     }
@@ -142,18 +150,21 @@ public class SQLAtributeCreator {
         String atributeSection = "";
         for (int roleId : roleIds){
             atributeSection += " AND ";
-            atributeSection += elementName + " = " + roleId;
+            atributeSection += elementName + " = ?"; // +  roleId;
         }
         return atributeSection + " ";
     }
 
-    public static String createArtifactAttribute(String elementName, List<Integer> artifactIds) {
+    public static String[] createArtifactAttribute(String elementName, List<Integer> artifactIds) {
         String atributeSection = "";
+        String atributeSectionText = "";
         for (int artifactId : artifactIds){
             atributeSection += " AND ";
-            atributeSection += elementName + " = " + artifactId;
+            atributeSection += elementName + " = ?"; //+ artifactId;
+            atributeSectionText += " AND ";
+            atributeSectionText += elementName + " = " + artifactId;
         }
-        return atributeSection;
+        return new String[] {atributeSection, atributeSectionText};
     }
 
     public static String createDoubleAttribute(String elementName, List<Double> estimateTimes) {
@@ -378,7 +389,7 @@ public class SQLAtributeCreator {
             ArrayList<Integer> roleDBId = SQLAtributeCreator.createPersonAttribute(artifact.getAuthorIndex(), verifyDataModel, personDAO, roleDAO, projectVerifyId);
 
             artifactChanges = artifactDAO.getArtifactProjekt(projectVerifyId, artifact.getName(), artifact.getNameIndicator(),
-                    artifact.getDescription(), artifact.getDescriptionIndicator(), artifact.getCreated(), artifact.getCreatedIndicator(), roleDBId).get(0);
+                    artifact.getDescription(), artifact.getDescriptionIndicator(), artifact.getCreated(), artifact.getCreatedIndicator(), roleDBId, artifact.getMimeType(), artifact.getMimeTypeIndicator()).get(0);
             if (artifactChanges != null){
                 artifactDBId.add(artifactChanges.getId());
             }

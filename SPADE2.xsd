@@ -619,7 +619,6 @@
         <xs:sequence>
             <xs:element name="artifactIndex" type="xs:int" minOccurs="0"
                         maxOccurs="unbounded"/>
-            <xs:element name="coordinates" type="Coordinates"/>
             <xs:element name="name" type="xs:string" minOccurs="0"
                         maxOccurs="unbounded" />
             <xs:element name="nameIndicator" type="xs:int" minOccurs="0"

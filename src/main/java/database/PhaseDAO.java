@@ -1,16 +1,11 @@
 package database;
 
 import SPADEPAC.Phase;
-import controllers.DataPreparer;
 import controllers.VerifyController;
 import services.Constans;
-import services.SQLAtributeCreator;
 
 import javax.xml.datatype.XMLGregorianCalendar;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -57,12 +52,12 @@ public class PhaseDAO {
 		String atributeSection = "";
 		atributeSection += SQLAtributeCreator.createDateAttribute("endDate", endDate, endDateIndicator);
 
-		String sql = "SELECT * FROM phase  WHERE superProjectId = ?" + atributeSection;
+		String sql = "SELECT p.id FROM phase p  WHERE superProjectId = ?" + atributeSection;
 
 		//	if(seznamIdPhaseu != null && !seznamIdPhaseu.isEmpty())
 		//		sql += " and a.id in ("+ Konstanty.getZnakyParametru(seznamIdPhaseu) +")";
 
-		return SQLAtributeCreator.getAtributesFromDB(pripojeni,verifyController, sql, projectVerifyId, null);
+		return SQLAtributeCreator.findInstanceInDB(pripojeni,verifyController, sql, projectVerifyId, null);
 
 	}
 

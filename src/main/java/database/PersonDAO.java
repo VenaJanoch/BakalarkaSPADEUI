@@ -3,8 +3,8 @@ package database;
 import SPADEPAC.Person;
 import controllers.VerifyController;
 import services.Constans;
-import services.SQLAtributeCreator;
 
+import javax.xml.bind.attachment.AttachmentMarshaller;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
@@ -52,9 +52,10 @@ public class PersonDAO {
 		String atributeSection = "";
 		atributeSection += SQLAtributeCreator.createStringAttribute("p.name", name, nameIndicator);
 		atributeSection += SQLAtributeCreator.createIntAttribute("pr.roleId", roleTypeIds);
-		String sql = "SELECT * FROM person p join person_role pr on pr.personId = p.id AND p.projectId = ? " + atributeSection;
-
-		return SQLAtributeCreator.getAtributesFromDB(pripojeni, verifyController, sql, projectVerifyId, null);
+		String sql = "SELECT p.id FROM person p join person_role pr on pr.personId = p.id AND p.projectId = ? " + atributeSection;
+		ArrayList<List<Integer>> ids = new ArrayList<>();
+		ids.add(roleTypeIds);
+		return SQLAtributeCreator.findInstanceInDB(pripojeni, verifyController, sql, projectVerifyId, ids);
 
 	}
 
