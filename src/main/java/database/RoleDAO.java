@@ -36,7 +36,7 @@ public class RoleDAO {
 	public ArrayList<SQLVerifyObject> getRoleProjekt(int projectVerifyId, List<String> name, List<Integer> nameIndicators, int classId, int superClassId) {
 
 		String atributeSection = "";
-		//atributeSection += SQLAtributeCreator.createStringAttribute("name", name, nameIndicators);
+		atributeSection += SQLAtributeCreator.createStringAttribute("name", name, nameIndicators);
 		atributeSection += SQLAtributeCreator.createClassAttribute("role_classification", classId);
 		String sql = "SELECT p.id FROM role p" + atributeSection + "WHERE i.projectId = ?";
 

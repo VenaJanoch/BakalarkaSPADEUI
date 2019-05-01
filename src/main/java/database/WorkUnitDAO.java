@@ -3,6 +3,7 @@ package database;
 import controllers.VerifyController;
 import services.Constans;
 
+import javax.xml.datatype.XMLGregorianCalendar;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,11 +25,12 @@ public class WorkUnitDAO {
 
 	public ArrayList<SQLVerifyObject> getWorkUnitProjekt(int projectVerifyId, List<String> name, List<Integer> nameIndicator, List<Double> estimateTime, List<Integer> category,
 														 List<Integer> assigneeIds, List<Integer> priorityIds, List<Integer> severityIds, List<Integer> resolutionIds,
-														 List<Integer> statusIds, List<Integer> typeIds, List<Integer> relationIds, List<Integer> workUnitsInRelationIds ) {
+														 List<Integer> statusIds, List<Integer> typeIds, List<Integer> relationIds, List<Integer> workUnitsInRelationIds,
+														 List<XMLGregorianCalendar> createdDate, List<Integer> createdDateIndicator) {
 
 		String atributeSection = "";
-		//atributeSection += SQLAtributeCreator.createStringAttribute("wi.name", name, nameIndicator);
-		//atributeSection += SQLAtributeCreator.createDateAttribute("wi.created", endDate, endDateIndicator);
+		atributeSection += SQLAtributeCreator.createStringAttribute("wi.name", name, nameIndicator);
+		atributeSection += SQLAtributeCreator.createDateAttribute("wi.created", createdDate, createdDateIndicator);
 		atributeSection += SQLAtributeCreator.createIdAttribute("wuc.categoryId", category);
 		atributeSection += SQLAtributeCreator.createDoubleAttribute("wu.estimatedTime", estimateTime);
 		atributeSection += SQLAtributeCreator.createIdAttribute("wu.assigneeId", assigneeIds);
@@ -57,7 +59,7 @@ public class WorkUnitDAO {
 				"join work_item_relation wir on wir.leftItemId = wu.id " +
 				"AND wu.projectId = ? " + atributeSection;
 
-		return SQLAtributeCreator.findInstanceInDB(pripojeni, verifyController, sql, projectVerifyId, null);
+		return SQLAtributeCreator.findInstanceInDB(pripojeni, verifyController, sql, projectVerifyId, paramIds);
 
 	}
 }

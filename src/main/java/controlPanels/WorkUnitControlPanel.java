@@ -1,5 +1,6 @@
 package controlPanels;
 
+import abstractControlPane.DateDescControlPanel;
 import abstractControlPane.DescriptionControlPanel;
 import controllers.formControllers.FormController;
 import interfaces.IEditFormController;
@@ -9,10 +10,11 @@ import services.*;
 import tables.BasicTable;
 import tables.WorkUnitTable;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class WorkUnitControlPanel extends DescriptionControlPanel {
+public class WorkUnitControlPanel extends DateDescControlPanel {
 
     /**
      * Globální proměnné třídy
@@ -60,6 +62,7 @@ public class WorkUnitControlPanel extends DescriptionControlPanel {
         addItemsToControlPanel();
 
         controlPanelController.setValueTextField(this, lineList ,ParamType.Name, workUnitData, workUnitData[11], 0);
+        controlPanelController.setValueDatePicker(this, lineList ,ParamType.Date, (ArrayList<LocalDate>) workUnitData[25], workUnitData[26]);
         controlPanelController.setValueTextField(this, lineList ,ParamType.Description, workUnitData, workUnitData[12], 1);
         controlPanelController.setValueTextField(this, lineList ,ParamType.EstimateTime, workUnitData, workUnitData[13], 2);
         controlPanelController.setValueTextField(this, lineList ,ParamType.Category, workUnitData, workUnitData[14], 3);
@@ -94,9 +97,11 @@ public class WorkUnitControlPanel extends DescriptionControlPanel {
         ArrayList<Integer> assigneeIndicators = new ArrayList<>();
         ArrayList<Integer> roleIndicators = new ArrayList<>();
         ArrayList<ArrayList<Integer>> workUnit = new ArrayList<>();
+        ArrayList<Integer> createIndicators = new ArrayList<>();
 
         ArrayList<String> name = controlPanelController.processTextLines(ParamType.Name, nameIndicators);
         ArrayList<String> desc = controlPanelController.processTextLines(ParamType.Description, descIndicators);
+        ArrayList<LocalDate> created = controlPanelController.processDateLines(ParamType.Date, createIndicators);
         ArrayList<String> estimated = controlPanelController.processTextLines(ParamType.EstimateTime, estimatedIndicators);
         ArrayList<String> category = controlPanelController.processTextLines(ParamType.Category, categoryIndicators);
         ArrayList<Integer> priority = controlPanelController.processComboBoxLines(ParamType.Priority, priorityIndicators);
@@ -113,7 +118,7 @@ public class WorkUnitControlPanel extends DescriptionControlPanel {
 
         editFormController.editDataFromWorkUnit(aliasTF.getText(), name, desc, category, assignee, role, priority, severity, type, resolution, status, estimated, nameIndicators,
                 descIndicators, categoryIndicators, assigneeIndicators, roleIndicators, priorityIndicators, severityIndicators, typeIndicators, resolutionIndicators,
-                statusIndicators, estimatedIndicators, exist, relation, workUnit, workUnitTable, id);
+                statusIndicators, estimatedIndicators, exist, relation, workUnit, created, createIndicators, workUnitTable, id);
 
         clearPanelCB(tableView);
     }

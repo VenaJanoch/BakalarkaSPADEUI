@@ -19,6 +19,8 @@
         <xs:restriction base="xs:string">
             <xs:enumeration value="PersonArtifact"/>
             <xs:enumeration value="PersonConfiguration"/>
+            <xs:enumeration value="PersonCommit"/>
+            <xs:enumeration value="PersonCommittedConfiguration"/>
             <xs:enumeration value="ArtifactConfiguration"/>
             <xs:enumeration value="CommitCommitedConfiguration"/>
             <xs:enumeration value="CommitedConfigurationConfiguration"/>
@@ -214,13 +216,25 @@
         <xs:sequence>
             <xs:element name="commitedDay" type="xs:date" minOccurs="0"
                         maxOccurs="unbounded"/>
+            <xs:element name="created" type="xs:date" minOccurs="0"
+                        maxOccurs="unbounded"/>
             <xs:element name="name" type="xs:string" minOccurs="0"
+                        maxOccurs="unbounded" />
+            <xs:element name="description" type="xs:string" minOccurs="0"
                         maxOccurs="unbounded" />
             <xs:element name="commitedDayIndicator" type="xs:int" minOccurs="0"
                         maxOccurs="unbounded"/>
+            <xs:element name="createdIndicator" type="xs:int" minOccurs="0"
+                        maxOccurs="unbounded"/>
             <xs:element name="commit" type="xs:int" minOccurs="0"
                         maxOccurs="unbounded"/>
+            <xs:element name="role" type="xs:int" minOccurs="0"
+                        maxOccurs="unbounded" />
+            <xs:element name="roleIndicator" type="xs:int" minOccurs="0"
+                        maxOccurs="unbounded" />
             <xs:element name="nameIndicator" type="xs:int" minOccurs="0"
+                        maxOccurs="unbounded" />
+            <xs:element name="descriptionIndicator" type="xs:int" minOccurs="0"
                         maxOccurs="unbounded" />
             <xs:element name="coordinates" type="Coordinates"/>
             <xs:element name="count" type="xs:int" minOccurs="0"
@@ -252,24 +266,22 @@
         <xs:sequence>
             <xs:element name="commitedConfiguration" type="xs:int" minOccurs="0"
                         maxOccurs="unbounded"/>
-            <xs:element name="branch" type="BranchList" minOccurs="0"
-                        maxOccurs="unbounded"/>
-            <xs:element name="tags" type="xs:int" minOccurs="0"
-                        maxOccurs="unbounded"/>
-            <xs:element name="commitedDay" type="xs:date" minOccurs="0"
-                        maxOccurs="unbounded"/>
             <xs:element name="name" type="xs:string" minOccurs="0"
                         maxOccurs="unbounded" />
-            <xs:element name="commitedDayIndicator" type="xs:int" minOccurs="0"
-                        maxOccurs="unbounded"/>
             <xs:element name="nameIndicator" type="xs:int" minOccurs="0"
                         maxOccurs="unbounded" />
-            <xs:element name="cprsIndicator" type="xs:int" minOccurs="0"
-                        maxOccurs="unbounded"/>
-            <xs:element name="branchIndicator" type="xs:int" minOccurs="0"
-                        maxOccurs="unbounded"/>
-            <xs:element name="tagsIndicator" type="xs:int" minOccurs="0"
-                        maxOccurs="unbounded"/>
+            <xs:element name="description" type="xs:string" minOccurs="0"
+                        maxOccurs="unbounded" />
+            <xs:element name="descriptionIndicator" type="xs:int" minOccurs="0"
+                        maxOccurs="unbounded" />
+            <xs:element name="created" type="xs:date" minOccurs="0"
+                        maxOccurs="unbounded" />
+            <xs:element name="createdIndicator" type="xs:int" minOccurs="0"
+                        maxOccurs="unbounded" />
+            <xs:element name="author" type="xs:int" minOccurs="0"
+                        maxOccurs="unbounded" />
+            <xs:element name="authorIndicator" type="xs:int" minOccurs="0"
+                        maxOccurs="unbounded" />
             <xs:element name="coordinates" type="Coordinates"/>
             <xs:element name="count" type="xs:int" minOccurs="0"
                         maxOccurs="1" />
@@ -317,7 +329,10 @@
                         maxOccurs="unbounded"/>
             <xs:element name="workUnits" type="WorkUnitList" minOccurs="0"
                         maxOccurs="unbounded"/>
-
+            <xs:element name="created" type="xs:date" minOccurs="0"
+                        maxOccurs="unbounded" />
+            <xs:element name="createdIndicator" type="xs:int" minOccurs="0"
+                        maxOccurs="unbounded" />
             <xs:element name="priorityIndicator" type="xs:int" minOccurs="0"
                         maxOccurs="unbounded"/>
             <xs:element name="severityIndicator" type="xs:int" minOccurs="0"
@@ -547,7 +562,13 @@
                         minOccurs="0" maxOccurs="unbounded"/>
             <xs:element name="changesIndexs" type="ChangeList" minOccurs="0"
                         maxOccurs="unbounded"/>
-            <xs:element name="tags" type="xs:string" minOccurs="0"
+            <xs:element name="branchIndexs" type="BranchList" minOccurs="0"
+                        maxOccurs="unbounded"/>
+            <xs:element name="tagIndex" type="xs:int" minOccurs="0"
+                        maxOccurs="unbounded"/>
+            <xs:element name="branchIndicator" type="xs:int" minOccurs="0"
+                        maxOccurs="unbounded"/>
+            <xs:element name="tagsIndicator" type="xs:int" minOccurs="0"
                         maxOccurs="unbounded"/>
             <xs:element name="commitedConfiguration" type="xs:int" minOccurs="0"
                         maxOccurs="unbounded"/>
@@ -555,23 +576,23 @@
                         maxOccurs="unbounded"/>
             <xs:element name="created" type="xs:date" minOccurs="0"
                         maxOccurs="unbounded" />
+            <xs:element name="createdIndicator" type="xs:int" minOccurs="0"
+                        maxOccurs="unbounded" />
             <xs:element name="name" type="xs:string" minOccurs="0"
                         maxOccurs="unbounded" />
             <xs:element name="nameIndicator" type="xs:int" minOccurs="0"
+                        maxOccurs="unbounded" />
+            <xs:element name="description" type="xs:string" minOccurs="0"
+                        maxOccurs="unbounded" />
+            <xs:element name="descriptionIndicator" type="xs:int" minOccurs="0"
                         maxOccurs="unbounded" />
             <xs:element name="authorIndicator" type="xs:int" minOccurs="0" maxOccurs="unbounded"/>
             <xs:element name="artifactsIndicator" type="xs:int"
                         minOccurs="0" maxOccurs="unbounded"/>
             <xs:element name="changesIndicator" type="xs:int" minOccurs="0"
                         maxOccurs="unbounded"/>
-            <xs:element name="tagsIndicator" type="xs:int" minOccurs="0"
-                        maxOccurs="unbounded"/>
-            <xs:element name="branchesIndicator" type="xs:int" minOccurs="0"
-                        maxOccurs="unbounded"/>
             <xs:element name="CPRsIndicator" type="xs:int" minOccurs="0"
                         maxOccurs="unbounded"/>
-            <xs:element name="createdIndicator" type="xs:int" minOccurs="0"
-                        maxOccurs="unbounded" />
             <xs:element name="count" type="xs:int" minOccurs="0"
                         maxOccurs="1" />
             <xs:element name="coordinates" type="Coordinates"/>
@@ -593,6 +614,10 @@
             <xs:element name="name" type="xs:string" minOccurs="0"
                         maxOccurs="unbounded" />
             <xs:element name="nameIndicator" type="xs:int" minOccurs="0"
+                        maxOccurs="unbounded" />
+            <xs:element name="description" type="xs:string" minOccurs="0"
+                        maxOccurs="unbounded" />
+            <xs:element name="descriptionIndicator" type="xs:int" minOccurs="0"
                         maxOccurs="unbounded" />
             
         </xs:sequence>
@@ -626,6 +651,10 @@
             <xs:element name="description" type="xs:string" minOccurs="0"
                         maxOccurs="unbounded" />
             <xs:element name="descriptionIndicator" type="xs:int" minOccurs="0"
+                        maxOccurs="unbounded" />
+            <xs:element name="created" type="xs:date" minOccurs="0"
+                        maxOccurs="unbounded" />
+            <xs:element name="createdIndicator" type="xs:int" minOccurs="0"
                         maxOccurs="unbounded" />
         </xs:sequence>
         <xs:attribute name="alias" type="xs:string"/>
@@ -686,6 +715,10 @@
             <xs:element name="configurations" type="xs:int" minOccurs="0"
                         maxOccurs="unbounded" />
             <xs:element name="artifacts" type="xs:int" minOccurs="0"
+                        maxOccurs="unbounded" />
+            <xs:element name="commit" type="xs:int" minOccurs="0"
+                        maxOccurs="unbounded" />
+            <xs:element name="committedConfiguration" type="xs:int" minOccurs="0"
                         maxOccurs="unbounded" />
             <xs:element name="count" type="xs:int" minOccurs="0"
                         maxOccurs="1" />

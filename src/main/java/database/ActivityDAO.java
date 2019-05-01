@@ -23,9 +23,13 @@ public class ActivityDAO {
 	}
 
 
-	public ArrayList<SQLVerifyObject> getActivityFormProjekt(int projectVerifyId, List<XMLGregorianCalendar> endDate, List<Integer> endDateIndicator) {
+	public ArrayList<SQLVerifyObject> getActivityFormProjekt(int projectVerifyId, List<String> name, List<Integer> nameIndicator,
+															 List<String> description, List<Integer> descriptionIndicator,
+															 List<XMLGregorianCalendar> endDate, List<Integer> endDateIndicator, List<Integer> workUnits) {
 
 		String atributeSection = "";
+		atributeSection += SQLAtributeCreator.createStringAttribute("a.name", name, nameIndicator);
+		atributeSection += SQLAtributeCreator.createStringAttribute("a.description", description, descriptionIndicator);
 		atributeSection += SQLAtributeCreator.createDateAttribute("endDate", endDate, endDateIndicator);
 
 		String sql = "SELECT a.id FROM activity a join work_unit wu on wu.activityId = a.id AND superProjectId = ? " + atributeSection;

@@ -12,13 +12,13 @@ import java.util.List;
  * Třída zajišťující výběr dat artefaktů z databáze implementující rozhraní IArtifactDAO
  */
 public class ArtifactDAO {
-	private Connection pripojeni;				//připojení k databázi
+	private Connection connection;				//připojení k databázi
 	private VerifyController verifyController;
 	/**
 	 * Konstruktor třídy
 	 */
 	public ArtifactDAO(VerifyController verifyController){
-		this.pripojeni = Constans.CONNECTION;	//nastaví připojení uložené ve třídě Konstanty
+		this.connection = Constans.CONNECTION;	//nastaví připojení uložené ve třídě Konstanty
 		this.verifyController = verifyController;
 	}
 
@@ -38,9 +38,7 @@ public class ArtifactDAO {
 		String sql = "SELECT wi.id FROM work_item wi join artifact p on p.id = wi.id" + atributeSection;
 		ArrayList<List<Integer>> paramIds = new ArrayList<>();
 		paramIds.add(roleIds);
-		//	if(seznamIdArtifactu != null && !seznamIdArtifactu.isEmpty())
-		//		sql += " and a.id in ("+ Konstanty.getZnakyParametru(seznamIdArtifactu) +")";
-		return SQLAtributeCreator.findInstanceInDB(pripojeni, verifyController, sql, -1, paramIds);
+		return SQLAtributeCreator.findInstanceInDB(connection, verifyController, sql, -1, paramIds);
 
 	}
 }

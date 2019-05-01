@@ -45,6 +45,25 @@ public class SaveDataModel implements ISaveDataModel {
         artifact.getAuthorIndex().add(startId);
     }
 
+    public void createNewPersonToCommitRelation(int linkId, int startId, int endId){
+
+        createLink(linkId, startId, endId, LinkType.PERSON_COMMIT);
+
+        Person person = dataModel.getRole(startId);
+        person.getCommit().add(endId);
+        Commit commit = dataModel.getCommit(endId);
+        commit.getAuthor().add(startId);
+    }
+
+    public void createNewPersonToCommittedConfigurationRelation(int linkId, int startId, int endId){
+
+        createLink(linkId, startId, endId, LinkType.PERSON_COMMITTED_CONFIGURATION);
+
+        Person person = dataModel.getRole(startId);
+        person.getCommittedConfiguration().add(endId);
+        CommitedConfiguration commitedConfiguration = dataModel.getCommitedConfiguration(endId);
+        commitedConfiguration.getRole().add(startId);
+    }
 
     public void createNewPersonToConfigurationRelation(int linkId, int startId, int endId){
         createLink( linkId, startId, endId, LinkType.PERSON_CONFIGURATION);
@@ -237,11 +256,6 @@ public class SaveDataModel implements ISaveDataModel {
         roleType.setExist(true);
         roleType.setAlias(String.valueOf(id));
         dataModel.getRoleTypes().add(roleType);
-    }
-
-    public void addTagToConfiguration(String tag, int configId, int index) {
-        Configuration configuration = dataModel.getConfigurations().get(configId);
-        configuration.getTags().add(tag);
     }
 
     public void createNewStatus(String nameForManipulator, String classST, String superST, int id) {

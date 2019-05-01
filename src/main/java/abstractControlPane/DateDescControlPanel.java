@@ -17,7 +17,7 @@ public abstract class DateDescControlPanel extends DescriptionControlPanel {
 
     public DateDescControlPanel(String buttonText, IFormDataController formDataController, IEditFormController editFormController, FormController formController) {
         super(buttonText, formDataController, editFormController, formController);
-        addItemsToControlPanel();
+        lineList.add(new ControlPanelLineObject("Created: ", ControlPanelLineType.Date, ParamType.Date));
     }
 
     public DateDescControlPanel(String buttonText, IFormDataController formDataController, IEditFormController editFormController) {
@@ -27,7 +27,7 @@ public abstract class DateDescControlPanel extends DescriptionControlPanel {
 
     protected void addItemsToControlPanel() {
 
-        lineList.add(new ControlPanelLineObject("Date: ", ControlPanelLineType.Date, ParamType.Date));
+
 
 //        controlPanelController.setDateItemToControlPanel(controlPane, dateDP, 0, 2);
     }

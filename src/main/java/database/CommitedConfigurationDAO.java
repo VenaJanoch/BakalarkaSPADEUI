@@ -24,15 +24,22 @@ public class CommitedConfigurationDAO {
 
 
 	public ArrayList<SQLVerifyObject> getCommitedConfigurationProjekt(int projectVerifyId, List<String> name, List<Integer> nameIndicator,
-																	  List<XMLGregorianCalendar> commitedDay, List<Integer> commitedDayIndicator) {
+																	  List<XMLGregorianCalendar> commitedDay, List<Integer> commitedDayIndicator, List<String> description,
+																	  List<Integer> descriptionIndicator, List<XMLGregorianCalendar> createdDate,
+																	  List<Integer> createdDateIndicator, List<Integer> commitId, List<Integer> personIds) {
 
 		String atributeSection = "";
-		//atributeSection += SQLAtributeCreator.createStringAttribute("p.name", name, nameIndicator).substring(5);
+		atributeSection += SQLAtributeCreator.createStringAttribute("wi.name", name, nameIndicator).substring(5);
 		atributeSection += SQLAtributeCreator.createDateAttribute("p.committed", commitedDay, commitedDayIndicator);
-		//atributeSection += SQLAtributeCreator.createCommitAttribute("p.committed", commitedDay, commitedDayIndicator).substring(5);
+		atributeSection += SQLAtributeCreator.createStringAttribute("wi.description", description, descriptionIndicator);
+		atributeSection += SQLAtributeCreator.createDateAttribute("wi.created", createdDate, createdDateIndicator);
+		atributeSection += SQLAtributeCreator.createIdAttribute("wir.rightItemId", commitId);
+		atributeSection += SQLAtributeCreator.createIdAttribute("wi.authorId", personIds);
 
-		String sql = "SELECT wi.id FROM work_item wi join committed_configuration p on p.id = wi.id" + atributeSection;
-
-		return SQLAtributeCreator.findInstanceInDB(pripojeni, verifyController, sql, -1, null);
+		String sql = "SELECT wi.id FROM work_item wi join committed_configuration p on p.id = wi.id join worku_item_relation wir on wir.leftItemId = wi.id " + atributeSection;
+		ArrayList<List<Integer>> paramIds = new ArrayList<>();
+		paramIds.add(commitId);
+		paramIds.add(personIds);
+		return SQLAtributeCreator.findInstanceInDB(pripojeni, verifyController, sql, -1, paramIds);
 	}
 }

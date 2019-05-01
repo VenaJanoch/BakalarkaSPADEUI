@@ -48,6 +48,10 @@ public class DataManipulator{
         newCommitedConfiguration.setExist(oldCommitedConfiguration.isExist());
         newCommitedConfiguration.getCommitedDay().addAll(oldCommitedConfiguration.getCommitedDay());
         newCommitedConfiguration.getCommitedDayIndicator().addAll(oldCommitedConfiguration.getCommitedDayIndicator());
+        newCommitedConfiguration.getDescription().addAll(oldCommitedConfiguration.getDescription());
+        newCommitedConfiguration.getDescriptionIndicator().addAll(oldCommitedConfiguration.getDescriptionIndicator());
+        newCommitedConfiguration.getCreated().addAll(oldCommitedConfiguration.getCreated());
+        newCommitedConfiguration.getCreatedIndicator().addAll(oldCommitedConfiguration.getCreatedIndicator());
     }
     
 
@@ -61,10 +65,7 @@ public class DataManipulator{
         newCommit.getName().addAll(oldCommit.getName());
         newCommit.getNameIndicator().addAll(oldCommit.getNameIndicator());
         newCommit.setExist(oldCommit.isExist());
-        newCommit.getBranch().addAll(oldCommit.getBranch());
-        newCommit.getBranchIndicator().addAll(oldCommit.getBranchIndicator());
-        newCommit.getTags().addAll(oldCommit.getTags());
-        newCommit.getTagsIndicator().addAll(oldCommit.getTagsIndicator());
+
     }
     
 
@@ -86,6 +87,10 @@ public class DataManipulator{
         newConfiguration.getChangesIndicator().addAll(oldConfiguration.getChangesIndicator());
         newConfiguration.getChangesIndexs().addAll(oldConfiguration.getChangesIndexs());
         newConfiguration.getCreatedIndicator().addAll(oldConfiguration.getCreatedIndicator());
+        newConfiguration.getBranchIndexs().addAll(oldConfiguration.getBranchIndexs());
+        newConfiguration.getBranchIndicator().addAll(oldConfiguration.getBranchIndicator());
+        newConfiguration.getTagIndex().addAll(oldConfiguration.getTagIndex());
+        newConfiguration.getTagsIndicator().addAll(oldConfiguration.getTagsIndicator());
     }
     
     
@@ -428,11 +433,20 @@ public class DataManipulator{
         list.add(resolution.getAlias());
         data[4] = list;
 
+        if(resolution.getResolutionSuperClassIndex().size() != 0){
+            data[2] = resolution.getResolutionSuperClassIndex();
+        }
+
+
+        if(resolution.getNameIndicator() != null){
+            data[3] = resolution.getNameIndicator();
+        }
+
         return data;
     }
 
     public List[] getCPRData(int id) {
-        List[] data = new List[5];
+        List[] data = new List[7];
         ConfigPersonRelation cpr = dataModel.getConfigPersonRelation(id);
 
         if(cpr.getName() != null){
@@ -455,6 +469,15 @@ public class DataManipulator{
         list.add(null);
         list.add(cpr.getAlias());
         data[4] = list;
+
+        if(cpr.getDescription() != null){
+            data[5] = cpr.getDescription();
+        }
+
+        if(cpr.getDescriptionIndicator() != null){
+            data[6] = cpr.getDescriptionIndicator();
+        }
+
         return data;
     }
 
@@ -478,12 +501,6 @@ public class DataManipulator{
         }
 
         return data;
-    }
-
-
-    public String getTagStringData(int id, int configId) {
-        Configuration configuration = dataModel.getConfiguration(configId);
-        return configuration.getTags().get(id);
     }
 
     public List[] getPhaseStringData(int id) {
@@ -823,7 +840,7 @@ public class DataManipulator{
 
     public List[] getWorkUnitStringData(int id) {
 
-        List[] data = new List[25];
+        List[] data = new List[27];
         WorkUnit workUnit = dataModel.getWorkUnit(id);;
        
         if(workUnit.getName() != null){
@@ -929,6 +946,13 @@ public class DataManipulator{
             data[24] = workUnit.getWorkUnits();
         }
 
+        if(workUnit.getCreated() != null){
+            data[25] = workUnit.getCreated();
+        }
+
+        if(workUnit.getCreatedIndicator() != null){
+            data[26] = workUnit.getCreatedIndicator();
+        }
 
         return data;
         
@@ -936,7 +960,7 @@ public class DataManipulator{
 
     public List[] getConfigurationStringData(int id) {
 
-        List[] data = new List[10];
+        List[] data = new List[11];
         Configuration configuration = dataModel.getConfiguration(id);;
 
         if(configuration.getName() != null){
@@ -947,8 +971,8 @@ public class DataManipulator{
             data[1] = configuration.getCreated();
         }
 
-        if(configuration.getAuthorIndex() != null){
-            data[2] = configuration.getAuthorIndex();
+        if(configuration.getTagIndex() != null){
+            data[2] = configuration.getTagsIndicator();
         }
 
         if(configuration.getNameIndicator() != null){
@@ -967,8 +991,8 @@ public class DataManipulator{
             data[6] = configuration.getCPRsIndicator();
         }
 
-        if(configuration.getBranchesIndicator() != null){
-            data[7] = configuration.getBranchesIndicator();
+        if(configuration.getBranchIndicator() != null){
+            data[7] = configuration.getBranchIndicator();
         }
 
         if(configuration.getChangesIndicator() != null){
@@ -981,6 +1005,9 @@ public class DataManipulator{
         list.add(configuration.getAlias());
         data[9] = list;
 
+        if(configuration.getTagsIndicator() != null){
+            data[10] = configuration.getTagsIndicator();
+        }
         return data;
         
     }
@@ -1020,14 +1047,11 @@ public class DataManipulator{
         return list;
     }
 
-    public  ArrayList<ArrayList<Integer>> getBranchfromCommit(int commidId) {
-        Commit commit = dataModel.getCommit(commidId);
-        return getBranchFrom(commit.getBranch());
-    }
+
 
     public  ArrayList<ArrayList<Integer>> getBranchfromConfiguration(int configId) {
         Configuration configuration = dataModel.getConfiguration(configId);
-        return null; // getBranchFrom(configuration.getBranchesIndexs());
+        return getBranchFrom(configuration.getBranchIndexs());
     }
 
     public  ArrayList<ArrayList<Integer>> getChangeFromConfiguration(int configId) {
@@ -1064,7 +1088,7 @@ public class DataManipulator{
     }
 
     public List[] getCommitStringData(int commitId) {
-            List[] data = new List[6];
+            List[] data = new List[7];
             Commit commit = dataModel.getCommit(commitId);;
         if(commit.getName() != null){
             data[0] = commit.getName();
@@ -1074,34 +1098,36 @@ public class DataManipulator{
             data[1] = commit.getNameIndicator();
         }
 
-        if(commit.getTags() != null){
-            data[2] = commit.getTags();
-        }
-
-        if(commit.getTagsIndicator() != null){
-            data[3] = commit.getTagsIndicator();
-        }
-
-        if(commit.getBranchIndicator() != null){
-            data[4] = commit.getBranchIndicator();
-        }
-
-
         ArrayList list = new ArrayList();
         list.add(commit.isExist());
         list.add(commit.getCount());
         list.add(commit.getAlias());
-        data[5] = list;
+        data[2] = list;
         if(commit.isRelease() != null){
             list.add(commit.isRelease());
         }
 
+        if(commit.getDescription() != null){
+            data[3] = commit.getDescription();
+        }
+
+        if(commit.getDescriptionIndicator() != null){
+            data[4] = commit.getDescriptionIndicator();
+        }
+
+        if(commit.getCreated() != null){
+            data[5] = commit.getCreated();
+        }
+
+        if(commit.getCreatedIndicator() != null){
+            data[6] = commit.getCreatedIndicator();
+        }
 
             return data;
     }
 
     public List[] getCommitedConfigurationStringData(int commitedId) {
-        List[] data = new List[6];
+        List[] data = new List[9];
         CommitedConfiguration commitedConfiguration = dataModel.getCommitedConfiguration(commitedId);;
 
         if(commitedConfiguration.getName() != null){
@@ -1124,6 +1150,21 @@ public class DataManipulator{
         list.add(commitedConfiguration.getCount());
         list.add(commitedConfiguration.getAlias());
         data[4] = list;
+
+        if(commitedConfiguration.getCreated() != null){
+            data[5] = commitedConfiguration.getCreated();
+        }
+        if(commitedConfiguration.getCreatedIndicator() != null){
+            data[6] = commitedConfiguration.getCreatedIndicator();
+        }
+
+        if(commitedConfiguration.getDescription() != null){
+            data[7] = commitedConfiguration.getDescription();
+        }
+
+        if(commitedConfiguration.getDescriptionIndicator() != null){
+            data[8] = commitedConfiguration.getDescriptionIndicator();
+        }
 
         return data;
 

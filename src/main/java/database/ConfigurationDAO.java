@@ -23,23 +23,33 @@ public class ConfigurationDAO {
 	}
 
 
-	public ArrayList<SQLVerifyObject> getConfigurationProjekt(int projectVerifyId, List<String> name, List<Integer> nameIndicator, 
-														 List<XMLGregorianCalendar> endDate, List<Integer> endDateIndicator,
-														 List<Integer> changeId, List<Integer> committedId, List<Integer> personIds, List<Integer> artifactIds ) {
+	public ArrayList<SQLVerifyObject> getConfigurationProjekt(int projectVerifyId, List<String> name, List<Integer> nameIndicator, List<String> description, List<Integer> descriptionIndicator,
+																List<XMLGregorianCalendar> createdDate, List<Integer> createdDateIndicator,
+														 		List<Integer> changeId, List<Integer> branchId, List<Integer> cprId,  List<Integer> tagId, List<Integer> committedId, List<Integer> personIds, List<Integer> artifactIds ) {
 
 		String atributeSection = "";
-		//atributeSection += SQLAtributeCreator.createStringAttribute("wi.name", name, nameIndicator);
-		atributeSection += SQLAtributeCreator.createDateAttribute("wi.created", endDate, endDateIndicator);
+		atributeSection += SQLAtributeCreator.createStringAttribute("wi.name", name, nameIndicator);
+		atributeSection += SQLAtributeCreator.createDateAttribute("wi.created", createdDate, createdDateIndicator);
 		atributeSection += SQLAtributeCreator.createIdAttribute("wi.authorId", personIds);
-		atributeSection += SQLAtributeCreator.createIdAttribute("ch.change", changeId).substring(5);
-		//atributeSection += SQLAtributeCreator.createArtifactAttribute("p.workItemId", artifactIds);
-		//atributeSection += SQLAtributeCreator.createIdAttribute("wi.id", committedId);
+		atributeSection += SQLAtributeCreator.createIdAttribute("ch.changeId", changeId).substring(5);
+		atributeSection += SQLAtributeCreator.createIdAttribute("br.branchId", branchId).substring(5);
+		atributeSection += SQLAtributeCreator.createIdAttribute("cpr.id", cprId).substring(5);
+		atributeSection += SQLAtributeCreator.createIdAttribute("wir.rightItemId", artifactIds);
+		atributeSection += SQLAtributeCreator.createIdAttribute("wir.rightItemId", committedId);
 
-		//	atributeSection += SQLAtributeCreator.createCPRAttribute("wi.authorId", roleIds);
-		String sql = "SELECT p.id FROM work_item wi join configuration p on p.id = wi.id join configuration_change ch on ch.configurationId = p.id AND p.projectId = ? " + atributeSection;
+		String sql = "SELECT p.id FROM work_item wi join configuration p on p.id = wi.id " +
+				"join configuration_change ch on ch.configurationId = p.id" +
+				"join configuration_branch br on br.configurationId = p.id " +
+				"join configuration_person_relation cpr on cpr.configurationId = p.id  " +
+				"join work_item_relation wir wir on wir.leftItemId = wi.id  " +
+				"AND p.projectId = ? " + atributeSection;
 		ArrayList<List<Integer>> paramIds = new ArrayList<>();
 		paramIds.add(personIds);
 		paramIds.add(changeId);
+		paramIds.add(branchId);
+		paramIds.add(cprId);
+		paramIds.add(artifactIds);
+		paramIds.add(committedId);
 		return SQLAtributeCreator.findInstanceInDB(pripojeni, verifyController, sql, projectVerifyId, paramIds);
 
 	}

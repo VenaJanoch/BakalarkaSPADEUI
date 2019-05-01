@@ -133,6 +133,14 @@ public class LinkControl {
             endSegmentId = segmentIdAct;
             formController.createRoleToArtifactRelation(id ,startSegmentId, endSegmentId, isXML);
             finisLink(x, y, height, canvasController, LinkType.Person_Artifact);
+        }else if (operation == 6) {
+            endSegmentId = segmentIdAct;
+            formController.createRoleToCommitRelation(id ,startSegmentId, endSegmentId, isXML);
+            finisLink(x, y, height, canvasController, LinkType.Person_Commit);
+        }else if (operation == 7) {
+            endSegmentId = segmentIdAct;
+            formController.createRoleToCommttedConfigurationRelation(id ,startSegmentId, endSegmentId, isXML);
+            finisLink(x, y, height, canvasController, LinkType.Person_Commtted_Configuration);
         }
     }
 
@@ -180,14 +188,21 @@ public class LinkControl {
             firstSegmentType = segmentType;
             return 0;
         } else if (endSegmentId == -1 && (segmentType != firstSegmentType)) {
-            if (firstSegmentType == SegmentType.Commit && segmentType == SegmentType.Committed_Configuration) {
-                return 1;
+            if (firstSegmentType == SegmentType.Commit) {
+                if (segmentType == SegmentType.Committed_Configuration){
+                    return 1;
+                }else if (segmentType == SegmentType.Person){
+                    return 6;
+                }
+
             } else if (firstSegmentType == SegmentType.Committed_Configuration) {
 
                 if (segmentType == SegmentType.Commit) {
                     return 1;
                 } else if (segmentType == SegmentType.Configuration) {
                     return 2;
+                } else if (segmentType == SegmentType.Person) {
+                    return 7;
                 }
                 return 11;
             } else if (firstSegmentType == SegmentType.Artifact) {
@@ -202,6 +217,10 @@ public class LinkControl {
                     return 4;
                 } else if (segmentType == SegmentType.Configuration) {
                     return 5;
+                }else if (segmentType == SegmentType.Commit) {
+                    return 6;
+                }else if (segmentType == SegmentType.Committed_Configuration) {
+                    return 7;
                 }
                 return 13;
             } else if (firstSegmentType == SegmentType.Configuration) {

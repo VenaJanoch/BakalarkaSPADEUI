@@ -26,7 +26,7 @@ public class WorkUnitElementDAO {
 	public ArrayList<SQLVerifyObject> getPriorityProjekt(int projectVerifyId, List<String> name, List<Integer> nameIndicators, int classId, int superClassId) {
 
 		String atributeSection = "";
-		//atributeSection += SQLAtributeCreator.createStringAttribute("name", name, nameIndicators);
+		atributeSection += SQLAtributeCreator.createStringAttribute("name", name, nameIndicators);
 		atributeSection += SQLAtributeCreator.createClassAttribute("priority_classification", classId);
 		String sql = "SELECT p.id FROM priority p" + atributeSection + "WHERE i.projectId = ?";
 
@@ -34,5 +34,61 @@ public class WorkUnitElementDAO {
 
 	}
 
+	public ArrayList<SQLVerifyObject> getStatusProjekt(int projectVerifyId, List<String> name, List<Integer> nameIndicators, int classId, int superClassId) {
+
+		String atributeSection = "";
+		atributeSection += SQLAtributeCreator.createStringAttribute("name", name, nameIndicators);
+		atributeSection += SQLAtributeCreator.createClassAttribute("status_classification", classId);
+		String sql = "SELECT p.id FROM status p" + atributeSection + "WHERE i.projectId = ?";
+
+		return SQLAtributeCreator.findInstanceInDB(pripojeni, verifyController, sql, projectVerifyId, null);
+
+	}
+
+	public ArrayList<SQLVerifyObject> getSeverityProjekt(int projectVerifyId, List<String> name, List<Integer> nameIndicators, int classId, int superClassId) {
+
+		String atributeSection = "";
+		atributeSection += SQLAtributeCreator.createStringAttribute("name", name, nameIndicators);
+		atributeSection += SQLAtributeCreator.createClassAttribute("severity_classification", classId);
+		String sql = "SELECT p.id FROM severity p" + atributeSection + "WHERE i.projectId = ?";
+
+		return SQLAtributeCreator.findInstanceInDB(pripojeni,verifyController, sql, projectVerifyId, null);
+
+	}
+
+	public ArrayList<SQLVerifyObject> getTypeProjekt(int projectVerifyId, List<String> name, List<Integer> nameIndicators, int classId, int superClassId) {
+
+		String atributeSection = "";
+		atributeSection += SQLAtributeCreator.createStringAttribute("name", name, nameIndicators);
+		atributeSection += SQLAtributeCreator.createClassAttribute("wu_type_classification", classId);
+		String sql = "SELECT p.id FROM wu_type p" + atributeSection + "WHERE i.projectId = ?";
+
+		return SQLAtributeCreator.findInstanceInDB(pripojeni,verifyController, sql, projectVerifyId, null);
+
+	}
+
+	public ArrayList<SQLVerifyObject> getRelationProjekt(int projectVerifyId, List<String> name, List<Integer> nameIndicators, int classId, int superClassId) {
+
+		String atributeSection = "";
+		atributeSection += SQLAtributeCreator.createStringAttribute("name", name, nameIndicators);
+		atributeSection += SQLAtributeCreator.createClassAttribute("relation_classification", classId);
+		String sql = "SELECT p.id FROM relation p" + atributeSection + "WHERE i.projectId = ?";
+
+		int[] paramsInt = new int[1];
+		paramsInt[0] = classId;
+		return SQLAtributeCreator.findInstanceInDB(pripojeni,verifyController, sql, projectVerifyId, null);
+
+	}
+
+	public ArrayList<SQLVerifyObject> getResolutionProjekt(int projectVerifyId, List<String> name, List<Integer> nameIndicators, int classId, int superClassId) {
+
+		String atributeSection = "";
+		atributeSection += SQLAtributeCreator.createStringAttribute("name", name, nameIndicators);
+		atributeSection += SQLAtributeCreator.createClassAttribute("resolution_classification", classId);
+		String sql = "SELECT p.id FROM resolution p" + atributeSection + "WHERE i.projectId = ?";
+
+		return SQLAtributeCreator.findInstanceInDB(pripojeni,verifyController, sql, projectVerifyId, null);
+
+	}
 
 }

@@ -194,15 +194,20 @@ public class SQLAtributeCreator {
         return roleDBId;
     }
 
-    public static ArrayList<Integer> createCommittedAttribute(List<Integer> commitedConfiguration, DataModel verifyDataModel, CommitedConfigurationDAO commitedConfigurationDAO, int projectVerifyId) {
+    public static ArrayList<Integer> createCommittedAttribute(List<Integer> commitedConfiguration, DataModel verifyDataModel, CommitedConfigurationDAO commitedConfigurationDAO, CommitDAO commitDAO,
+                                                              PersonDAO personDAO, RoleDAO roleDAO, int projectVerifyId) {
         ArrayList<Integer> committedDBId = new ArrayList<>();
         SQLVerifyObject projectCommitted;
 
         for (int i : commitedConfiguration){
             CommitedConfiguration commitedConfiguration1 = verifyDataModel.getCommitedConfiguration(verifyDataModel.getCommitedConfigurationId(i));
+            ArrayList<Integer> roleDBId = SQLAtributeCreator.createPersonAttribute(commitedConfiguration1.getRole(), verifyDataModel, personDAO, roleDAO, projectVerifyId);
+            ArrayList<Integer> commitDBId =  SQLAtributeCreator.createCommitAttribute(commitedConfiguration1.getCommit(), verifyDataModel, commitDAO, personDAO, roleDAO, projectVerifyId);
 
-            projectCommitted = commitedConfigurationDAO.getCommitedConfigurationProjekt(projectVerifyId, commitedConfiguration1.getName(), commitedConfiguration1.getNameIndicator(),
-                    commitedConfiguration1.getCommitedDay(), commitedConfiguration1.getCommitedDayIndicator()).get(0);
+            projectCommitted = commitedConfigurationDAO.getCommitedConfigurationProjekt(projectVerifyId,commitedConfiguration1.getName(), commitedConfiguration1.getNameIndicator(),
+                    commitedConfiguration1.getCommitedDay(), commitedConfiguration1.getCommitedDayIndicator(),
+                    commitedConfiguration1.getDescription(), commitedConfiguration1.getDescriptionIndicator(), commitedConfiguration1.getCreated(),
+                    commitedConfiguration1.getCreatedIndicator(), commitDBId, roleDBId).get(0);
 
 
             if (projectCommitted != null){
@@ -229,6 +234,23 @@ public class SQLAtributeCreator {
               if (projectChanges != null){
                     roleDBId.add(projectChanges.getId());
                  }
+            }
+        return roleDBId;
+    }
+
+    public static ArrayList<Integer> createBranchAttribute(List<BranchList> branchsIndexs, DataModel verifyDataModel, BranchDAO branchDAO, ArtifactDAO artifactDAO, PersonDAO personDAO, RoleDAO roleDAO, int projectVerifyId) {
+        ArrayList<Integer> roleDBId = new ArrayList<>();
+        SQLVerifyObject projectBranchs;
+        for (BranchList branchlist : branchsIndexs)
+            for (int i : branchlist.getBranches()){
+                Branch branch = verifyDataModel.getBranch(verifyDataModel.getBranchId(i));
+                
+                projectBranchs = branchDAO.getBranchyProjekt(projectVerifyId, branch.getName(), branch.getNameIndicator(), branch.isIsMain()).get(0);
+
+
+                if (projectBranchs != null){
+                    roleDBId.add(projectBranchs.getId());
+                }
             }
         return roleDBId;
     }
@@ -369,7 +391,7 @@ public class SQLAtributeCreator {
                 ArrayList<Integer> relationDBId = SQLAtributeCreator.createRelationAttribute(workUnit.getRelationIndex(), verifyDataModel, workUnitElementDAO, projectVerifyId);
 
                 workUnitArtifacts = workUnitDAO.getWorkUnitProjekt(projectVerifyId, workUnit.getName(), workUnit.getNameIndicator(), workUnit.getEstimatedTime(), categoryDBId,
-                        roleDBId, priorityDBId, severityDBId, resolutionDBId, statusDBId, typeDBId, relationDBId, new ArrayList<>()).get(0);
+                        roleDBId, priorityDBId, severityDBId, resolutionDBId, statusDBId, typeDBId, relationDBId, new ArrayList<>(), workUnit.getCreated(), workUnit.getCreatedIndicator()).get(0);
 
                 if (workUnitArtifacts != null){
                     workUnitDBId.add(workUnitArtifacts.getId());
@@ -397,5 +419,102 @@ public class SQLAtributeCreator {
             return artifactDBId;
     }
 
-   
+    public static ArrayList<Integer> createVCSTagAttribute(List<Integer> vcsTagIndex, DataModel verifyDataModel, VCSTagDAO vcsTagDAO, int projectVerifyId) {
+        SQLVerifyObject vcsTagChanges;
+        ArrayList<Integer> vcsTagDBId = new ArrayList<>();
+        for (int i : vcsTagIndex){
+            VCSTag vcsTag = verifyDataModel.getVCSTag(verifyDataModel.getTagId(i));
+            vcsTagChanges = vcsTagDAO.getVCSTagProjekt(projectVerifyId, vcsTag.getName(), vcsTag.getNameIndicator(),
+                    vcsTag.getDescription(), vcsTag.getDescriptionIndicator()).get(0);
+            if (vcsTagChanges != null){
+                vcsTagDBId.add(vcsTagChanges.getId());
+            }
+        }
+        return vcsTagDBId;
+    }
+
+
+    public static ArrayList<Integer> createCommitAttribute(List<Integer> commitIndexs, DataModel verifyDataModel, CommitDAO commitDAO, PersonDAO personDAO,
+                     RoleDAO roleDAO, int projectVerifyId) {
+        
+        SQLVerifyObject commitCommitted;
+        ArrayList<Integer> artifactDBId = new ArrayList<>();
+        for (int i : commitIndexs){
+            Commit commit = verifyDataModel.getCommit(verifyDataModel.getCommitId(i));
+            ArrayList<Integer> roleDBId = SQLAtributeCreator.createPersonAttribute(commit.getAuthor(), verifyDataModel, personDAO, roleDAO, projectVerifyId);
+
+            commitCommitted = commitDAO.getCommitProjekt(projectVerifyId, commit.getName(), commit.getNameIndicator(),
+                    commit.isRelease(),commit.getDescription(), commit.getDescriptionIndicator(),  commit.getCreated(),
+                    commit.getCreatedIndicator(), roleDBId).get(0);
+            if (commitCommitted != null){
+                artifactDBId.add(commitCommitted.getId());
+            }
+        }
+        return artifactDBId;
+    }
+
+    public static ArrayList<Integer> createCPRAttribute(List<CPRSList> cprIndexs, DataModel verifyDataModel, CPRDAO cprDAO, PersonDAO personDAO,
+                                                           RoleDAO roleDAO, int projectVerifyId) {
+
+        SQLVerifyObject cprCPRted;
+        ArrayList<Integer> cprDBId = new ArrayList<>();
+        for (CPRSList cprsList : cprIndexs){
+        for (int i : cprsList.getCPRs()){
+            ConfigPersonRelation cpr = verifyDataModel.getConfigPersonRelation(verifyDataModel.getCPRId(i));
+            ArrayList<Integer> roleDBId = SQLAtributeCreator.createPersonAttribute(cpr.getPersonIndex(), verifyDataModel, personDAO, roleDAO, projectVerifyId);
+
+            cprCPRted = cprDAO.getCPRProjekt(projectVerifyId, cpr.getName(), cpr.getNameIndicator(), cpr.getDescription(), cpr.getDescriptionIndicator(), roleDBId).get(0);
+            if (cprCPRted != null){
+                cprDBId.add(cprCPRted.getId());
+            }
+        }
+        }
+        return cprDBId;
+    }
+
+    public static ArrayList<Integer> createMilestoneAttribute(List<Integer> milestoneIndex, DataModel verifyDataModel, MilestoneDAO milestoneDAO, CriterionDAO criterionDAO,
+                                                             int projectVerifyId) {
+        SQLVerifyObject milestoneChanges;
+        ArrayList<Integer> milestoneDBId = new ArrayList<>();
+        for (int i : milestoneIndex){
+            Milestone milestone = verifyDataModel.getMilestone(verifyDataModel.getMilestoneId(i));
+            ArrayList<Integer> criterionDBId = SQLAtributeCreator.createCriterionAttribute(milestone.getCriteriaIndexs(), verifyDataModel, criterionDAO, projectVerifyId);
+
+            milestoneChanges = milestoneDAO.getMilestoneProjekt(projectVerifyId, milestone.getName(), milestone.getNameIndicator(), milestone.getDescription(), milestone.getDescriptionIndicator(),
+                    criterionDBId).get(0); 
+            
+            if (milestoneChanges != null){
+                milestoneDBId.add(milestoneChanges.getId());
+            }
+        }
+        return milestoneDBId;
+    }
+
+    public static ArrayList<Integer> createConfigurationAttribute(List<Integer> configurationIndex, DataModel verifyDataModel, ConfigurationDAO configurationDAO, PersonDAO personDAO, RoleDAO roleDAO,
+                                                                  ChangeDAO changeDAO, BranchDAO branchDAO, VCSTagDAO vcsTagDAO, CPRDAO cprdao, ArtifactDAO artifactDAO, CommitedConfigurationDAO commitedConfigurationDAO, CommitDAO commitDAO,
+                                                              int projectVerifyId) {
+        SQLVerifyObject configurationChanges;
+        ArrayList<Integer> configurationDBId = new ArrayList<>();
+        for (int i : configurationIndex){
+            Configuration configuration = verifyDataModel.getConfiguration(verifyDataModel.getConfigurationId(i));
+            ArrayList<Integer> roleDBId = SQLAtributeCreator.createPersonAttribute(configuration.getAuthorIndex(), verifyDataModel, personDAO, roleDAO, projectVerifyId);
+            ArrayList<Integer> changeDBId = SQLAtributeCreator.createChangeAttribute(configuration.getChangesIndexs(), verifyDataModel, changeDAO, artifactDAO, personDAO, roleDAO, projectVerifyId);
+            ArrayList<Integer> artifactDBId = SQLAtributeCreator.createArtifactAttribute(configuration.getArtifactsIndexs(), verifyDataModel, artifactDAO, projectVerifyId, personDAO, roleDAO);
+            ArrayList<Integer> committedConfigurationDBId = SQLAtributeCreator.createCommittedAttribute(configuration.getCommitedConfiguration(), verifyDataModel, commitedConfigurationDAO, commitDAO, personDAO, roleDAO, projectVerifyId);
+            ArrayList<Integer> branchDBId = SQLAtributeCreator.createBranchAttribute(configuration.getBranchIndexs(), verifyDataModel, branchDAO, artifactDAO, personDAO, roleDAO, projectVerifyId);
+            ArrayList<Integer> tagDBId = SQLAtributeCreator.createVCSTagAttribute(configuration.getTagIndex(), verifyDataModel, vcsTagDAO, projectVerifyId);
+            ArrayList<Integer> cprDBId = SQLAtributeCreator.createCPRAttribute(configuration.getCPRsIndexs(), verifyDataModel, cprdao, personDAO, roleDAO, projectVerifyId);
+
+            configurationChanges = configurationDAO.getConfigurationProjekt(projectVerifyId, configuration.getName(), configuration.getNameIndicator(),
+                    configuration.getDescription(), configuration.getDescriptionIndicator(), configuration.getCreated(), configuration.getCreatedIndicator(),
+                    changeDBId, branchDBId, cprDBId, tagDBId, committedConfigurationDBId, roleDBId, artifactDBId).get(0);
+
+
+            if (configurationChanges != null){
+                configurationDBId.add(configurationChanges.getId());
+            }
+        }
+        return configurationDBId;
+    }
+    
 }

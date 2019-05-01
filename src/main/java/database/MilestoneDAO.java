@@ -34,7 +34,7 @@ public class MilestoneDAO {
 
 		String sql = "SELECT p.id FROM milestone p join milestone_criterion mc on mc.milestoneId = p.id " + atributeSection;
 
-		return SQLAtributeCreator.findInstanceInDB(pripojeni,verifyController, sql, -1, null);
+		return SQLAtributeCreator.findInstanceInDB(pripojeni,verifyController, sql, -1, paramIds);
 
 	}
 

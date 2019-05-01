@@ -1,6 +1,6 @@
 package controllers;
 
-import database.ProjektDAO;
+import database.ProjectDAO;
 import services.Alerts;
 import services.Constans;
 import tables.ProjectTable;
@@ -21,8 +21,8 @@ public class DatabaseController {
     public ArrayList<ProjectTable> findProjectInDatabase(){
         ArrayList<ProjectTable> projekty = new ArrayList<>();
         try {
-            ProjektDAO databazeProjekt = new ProjektDAO();
-            projekty = databazeProjekt.getProjekt();
+            ProjectDAO databazeProjekt = new ProjectDAO();
+            projekty = databazeProjekt.getProject();
         } catch (Exception e) {
             //   JOptionPane.showMessageDialog(null, Konstanty.POPISY.getProperty("chybaNacteniProjektu"));
             e.printStackTrace();

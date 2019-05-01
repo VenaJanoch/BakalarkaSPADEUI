@@ -23,42 +23,22 @@ public class PhaseDAO {
 		this.verifyController = verifyController;
 	}
 
-	/**
-	 * Vrací seznam artefaktů patřících do projektu s id v parametru
-	 * @param idProjekt id projektu pro výběr artefaktů
-	 * @return seznam artefaktů
-	 */
-	public ArrayList<SQLVerifyObject> getPhaseyProjekt(int idProjekt) {
-		return getPhaseyProjekt(idProjekt, null);
-	}
-
-
-//	public ArrayList<Phase> getPhaseyConfiguration(int configurationId) {
-//		return getPhaseyKonfigurace(configurationId, null);
-//	}
-	
-	/**
-	 * Vrací seznam artefaktů patřících osobě s id v parametru
-	 * @param idOsoby id osoby pro výběr artefaktů
-	 * @return seznam artefaktů
-	 */
-	public ArrayList<Phase> getPhaseyOsoba(int idOsoby) {
-		return getPhaseyOsoba(idOsoby);
-	}
-
-
-	public ArrayList<SQLVerifyObject> getPhaseyProjekt(int projectVerifyId, List<XMLGregorianCalendar> endDate, List<Integer> endDateIndicator) {
+	public ArrayList<SQLVerifyObject> getPhaseyProjekt(int projectVerifyId, List<String> name, List<Integer> nameIndicator,
+													   List<String> description, List<Integer> descriptionIndicator, List<XMLGregorianCalendar> endDate,
+													   List<Integer> endDateIndicator, List<Integer> milestoneId, List<Integer> configId) {
 
 		String atributeSection = "";
+		atributeSection += SQLAtributeCreator.createStringAttribute("i.name", name, nameIndicator);
+		atributeSection += SQLAtributeCreator.createStringAttribute("i.description", description, descriptionIndicator);
 		atributeSection += SQLAtributeCreator.createDateAttribute("endDate", endDate, endDateIndicator);
+		atributeSection += SQLAtributeCreator.createIdAttribute("i.milestoneId", milestoneId);
+		atributeSection += SQLAtributeCreator.createIdAttribute("i.configurationId", configId);
+		String sql = "SELECT i.id FROM iteration i join work_unit wu on wu.phaseId = i.id WHERE i.superProjectId = ? " + atributeSection;
+		ArrayList<List<Integer>> paramIds = new ArrayList<>();
+		paramIds.add(milestoneId);
+		paramIds.add(configId);
 
-		String sql = "SELECT p.id FROM phase p  WHERE superProjectId = ?" + atributeSection;
-
-		//	if(seznamIdPhaseu != null && !seznamIdPhaseu.isEmpty())
-		//		sql += " and a.id in ("+ Konstanty.getZnakyParametru(seznamIdPhaseu) +")";
-
-		return SQLAtributeCreator.findInstanceInDB(pripojeni,verifyController, sql, projectVerifyId, null);
-
+		return SQLAtributeCreator.findInstanceInDB(pripojeni,verifyController, sql, projectVerifyId, paramIds);
 	}
 
 

@@ -277,7 +277,7 @@ public class DeleteFormController implements IDeleteFormController {
         ArrayList indexList = deleteControl.findIndicesForDelete(selection);
         deleteDataModel.removeType(typeListObservable);
         segmentLists.removeItemFromObservableList(SegmentType.Type, indexList);
-        editDataModel.updateItemList(SegmentType.Work_Unit,SegmentType.Type, new ArrayList<>(typeListObservable));
+        editDataModel.updateItemList(SegmentType.Work_Unit,SegmentType.Type, indexList);
         mapperTableToObject.deleteFromMap(mapperTableToObject.getWUTotypeMapper(), indexList);
 
     }

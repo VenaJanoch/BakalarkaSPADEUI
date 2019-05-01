@@ -383,7 +383,8 @@ public class DataModel {
     }
 
 
-    public void addDataToCPR(ConfigPersonRelation cpr, String alias, ArrayList<String> nameForManipulator, ArrayList<Integer> nameIndicators, ArrayList<Integer> roleIndex
+    public void addDataToCPR(ConfigPersonRelation cpr, String alias, ArrayList<String> nameForManipulator, ArrayList<Integer> nameIndicators,
+                             ArrayList<String> description, ArrayList<Integer> descriptionIndicators, ArrayList<Integer> roleIndex
         , ArrayList<Integer> roleIndicators, boolean exist) {
        
         clearDataInCPR(cpr);
@@ -392,6 +393,8 @@ public class DataModel {
         cpr.getPersonIndicator().addAll(roleIndicators);
         cpr.getName().addAll(nameForManipulator);
         cpr.getNameIndicator().addAll(nameIndicators);
+        cpr.getDescription().addAll(description);
+        cpr.getDescriptionIndicator().addAll(descriptionIndicators);
         cpr.setExist(exist);
     }
     
@@ -400,6 +403,8 @@ public class DataModel {
         cpr.getPersonIndex().clear();
         cpr.getNameIndicator().clear();
         cpr.getName().clear();
+        cpr.getDescriptionIndicator().clear();
+        cpr.getDescription().clear();
     }
 
     public void addDataToBranch(Branch branch, String alias, ArrayList<String> nameForManipulator, ArrayList<Integer> nameIndicators, boolean isMain, boolean exist) {
@@ -564,15 +569,23 @@ public class DataModel {
     }
 
     public void addDataToCommitedConfiguration(CommitedConfiguration commitedConfiguration, String alias, ArrayList<String> nameForManipulator, ArrayList<Integer> nameIndicator,
+                                               ArrayList<String> descriptions, ArrayList<Integer> descriptionsIndicator, ArrayList<LocalDate> createDate, ArrayList<Integer> createIndicator,
                                                ArrayList<LocalDate> startDate, ArrayList<Integer> dateIndicator, int instanceCount, boolean exist) {
         
         clearDataInCommitedConfiguration(commitedConfiguration);
         commitedConfiguration.setAlias(alias);
         commitedConfiguration.getName().addAll(nameForManipulator);
         commitedConfiguration.getNameIndicator().addAll(nameIndicator);
+        commitedConfiguration.getDescription().addAll(descriptions);
+        commitedConfiguration.getDescriptionIndicator().addAll(descriptionsIndicator);
         commitedConfiguration.getCommitedDayIndicator().addAll(dateIndicator);
         commitedConfiguration.getCommitedDay().addAll(convertDate(startDate));
+        commitedConfiguration.getCreated().addAll(convertDate(createDate));
+        commitedConfiguration.getCreatedIndicator().addAll(createIndicator);
+        commitedConfiguration.getDescription().addAll(descriptions);
+        commitedConfiguration.getDescriptionIndicator().addAll(descriptionsIndicator);
         commitedConfiguration.setCount(instanceCount);
+
         commitedConfiguration.setExist(exist);
     }
 
@@ -581,6 +594,10 @@ public class DataModel {
         commitedConfiguration.getName().clear();
         commitedConfiguration.getCommitedDayIndicator().clear();
         commitedConfiguration.getCommitedDay().clear();
+        commitedConfiguration.getDescriptionIndicator().clear();
+        commitedConfiguration.getDescription().clear();
+        commitedConfiguration.getCreatedIndicator().clear();
+        commitedConfiguration.getCreated().clear();
     }
 
 
@@ -628,10 +645,12 @@ public class DataModel {
                                   ArrayList<Double> estimateForDataManipulator, List<Integer> nameIndicator, List<Integer> descriptionIndicator, List<Integer> categoryIndicator,
                                   ArrayList<Integer> assigneIndicator, ArrayList<Integer> authorIndicator, ArrayList<Integer> priorityIndicator, ArrayList<Integer> severityIndicator,
                                   ArrayList<Integer> typeIndicator, ArrayList<Integer> resolutionIndicator, ArrayList<Integer> statusIndicator,
-                                  ArrayList<Integer> estimateIndicator, boolean isExist, ArrayList<Integer> relations,
+                                  ArrayList<Integer> estimateIndicator, ArrayList<LocalDate> createDate, ArrayList<Integer> createIndicator, boolean isExist, ArrayList<Integer> relations,
                                   ArrayList<ArrayList<Integer>> workUnits) {
         clearDataInWorkUnit(workUnit);
         workUnit.setAlias(alias);
+        workUnit.getCreated().addAll(convertDate(createDate));
+        workUnit.getCreatedIndicator().addAll(createIndicator);
         workUnit.getAssigneeIndex().addAll(assigneIndex);
         workUnit.getAuthorIndex().addAll(authorIndex);
         workUnit.getCategory().addAll(categoryForManipulator);
@@ -662,6 +681,8 @@ public class DataModel {
     }
 
     private void clearDataInWorkUnit(WorkUnit workUnit) {
+        workUnit.getCreatedIndicator().clear();
+        workUnit.getCreated().clear();
         workUnit.getAssigneeIndex().clear();
         workUnit.getAuthorIndex().clear();
         workUnit.getCategory().clear();
@@ -690,23 +711,26 @@ public class DataModel {
      
     }
 
-    public void addDataToConfiguration(Configuration configuration, String alias, ArrayList<String> actName, ArrayList<LocalDate> createDate,
-                                       boolean isRelease, ArrayList<Integer> authorIndex, ArrayList<ArrayList<Integer>> cprs,
-                                       ArrayList<ArrayList<Integer>> changeIndexs,
-                                       ArrayList<Integer> cprIndicators, ArrayList<Integer> nameIndicator, ArrayList<Integer> createdIndicator,
-                                       ArrayList<Integer> authorIndicator, ArrayList<Integer> changeIndicator, int instanceCount, boolean exist) {
+    public void addDataToConfiguration(Configuration configuration, String alias, ArrayList<String> actName, ArrayList<String> description, ArrayList<LocalDate> createDate,
+                                       boolean isRelease, ArrayList<ArrayList<Integer>> cprs,
+                                       ArrayList<ArrayList<Integer>> changeIndexs, ArrayList<ArrayList<Integer>> branchIndexs,
+                                       ArrayList<Integer> cprIndicators, ArrayList<Integer> nameIndicator, ArrayList<Integer> descriptionIndicator, ArrayList<Integer> tag, ArrayList<Integer> tagIndicator, ArrayList<Integer> createdIndicator,
+                                       ArrayList<Integer> changeIndicator, ArrayList<Integer> branchIndicator, int instanceCount, boolean exist) {
         clearDataInConfiguration(configuration);
         configuration.setAlias(alias);
         configuration.getName().addAll(actName);
+        configuration.getDescription().addAll(description);
+        configuration.getDescriptionIndicator().addAll(descriptionIndicator);
         configuration.getCreated().addAll(convertDate(createDate));
-        configuration.getAuthorIndex().addAll(authorIndex);
         configuration.getNameIndicator().addAll(nameIndicator);
         configuration.getCreatedIndicator().addAll(createdIndicator);
-        configuration.getAuthorIndicator().addAll(authorIndicator);
         configuration.getCPRsIndicator().addAll(cprIndicators);
         configuration.getChangesIndicator().addAll(changeIndicator);
+        configuration.getBranchIndicator().addAll(branchIndicator);
         configuration.setIsRelease(isRelease);
         configuration.setCount(instanceCount);
+        configuration.getTagIndex().addAll(tag);
+        configuration.getTagsIndicator().addAll(tagIndicator);
         configuration.setExist(exist);
         for (List<Integer> list : cprs){
             CPRSList cprList = objF.createCPRSList();
@@ -714,7 +738,11 @@ public class DataModel {
             configuration.getCPRsIndexs().add(cprList);
         }
 
-
+        for (List<Integer> list : branchIndexs){
+            BranchList branchList = objF.createBranchList();
+            branchList.getBranches().addAll(list);
+            configuration.getBranchIndexs().add(branchList);
+        }
 
         for (List<Integer> list : changeIndexs){
             ChangeList cprList = objF.createChangeList();
@@ -734,7 +762,10 @@ public class DataModel {
         configuration.getAuthorIndicator().clear();
         configuration.getCPRsIndicator().clear();
         configuration.getChangesIndicator().clear();
-        configuration.getBranchesIndicator().clear();
+        configuration.getBranchIndicator().clear();
+        configuration.getBranchIndexs().clear();
+        configuration.getDescription().clear();
+        configuration.getDescriptionIndicator().clear();
     }
 
 
@@ -1032,21 +1063,17 @@ public class DataModel {
         tag.getDescription().clear();
     }
 
-    public void addDataToCommit(Commit commit, ArrayList<String> nameForManipulator, ArrayList<Integer> nameIndicator,  ArrayList<Integer> tag,
-                                ArrayList<Integer> tagIndicator, ArrayList<ArrayList<Integer>> branches, ArrayList<Integer> branchIndicator,
-                                boolean release, int instanceCount, boolean exist) {
+    public void addDataToCommit(Commit commit, String alias, ArrayList<String> nameForManipulator, ArrayList<Integer> nameIndicator, ArrayList<String> descriptions, ArrayList<Integer> descriptionsIndicator,
+                                ArrayList<LocalDate> createDate, ArrayList<Integer> createIndicator, boolean release, int instanceCount, boolean exist) {
         clearDataInCommit(commit);
         commit.setRelease(release);
+        commit.setAlias(alias);
         commit.getName().addAll(nameForManipulator);
         commit.getNameIndicator().addAll(nameIndicator);
-        commit.getTags().addAll(tag);
-        commit.getTagsIndicator().addAll(tagIndicator);
-        for (List<Integer> list : branches){
-            BranchList cprList = objF.createBranchList();
-            cprList.getBranches().addAll(list);
-            commit.getBranch().add(cprList);
-        }
-        commit.getBranchIndicator().addAll(branchIndicator);
+        commit.getCreated().addAll(convertDate(createDate));
+        commit.getCreatedIndicator().addAll(createIndicator);
+        commit.getDescription().addAll(descriptions);
+        commit.getDescriptionIndicator().addAll(descriptionsIndicator);
         commit.setCount(instanceCount);
         commit.setExist(exist);
     }
@@ -1074,17 +1101,22 @@ public class DataModel {
     private void clearDataInCommit(Commit commit) {
         commit.getNameIndicator().clear();
         commit.getName().clear();
-        commit.getTagsIndicator().clear();
-        commit.getTags().clear();
-        commit.getBranchIndicator().clear();
-        commit.getBranch().clear();
+        commit.getCreated().clear();
+        commit.getCreatedIndicator().clear();
+        commit.getDescription().clear();
+        commit.getDescriptionIndicator().clear();
+
     }
 
 
     public int getMilestoneId(int milestoneIndexForManipulator) {
 
         return project.getMilestones().get(milestoneIndexForManipulator).getId();
+    }
 
+    public int getConfigurationId(int configIndex) {
+
+        return project.getConfiguration().get(configIndex).getId();
     }
 
     public ArrayList<Integer> getMilestoneId(List<Integer> milestoneIndex) {
@@ -1402,8 +1434,19 @@ public class DataModel {
         return project.getCommit().get(commitIndex).getId();
     }
 
+    public int getCPRId(int cprIndex) {
+        return project.getCpr().get(cprIndex).getId();
+    }
+
+    public int getTagId(int tagIndex) {
+        return project.getVcsTag().get(tagIndex).getId();
+    }
+
     public int getChangeId(int i) {
         return project.getChanges().get(i).getId();
+    }
+    public int getBranchId(int i) {
+        return project.getBranches().get(i).getId();
     }
 
     public int getWorkUnitId(int workUnitIndex) {

@@ -15,6 +15,8 @@ public class MapperTableToObject {
     private Map<Integer, ArrayList<TableToObjectInstanc>> CPRToRoleMapper;
     private Map<Integer, ArrayList<TableToObjectInstanc>> configurationToRoleMapper;
     private Map<Integer, ArrayList<TableToObjectInstanc>> artifactToRoleMapper;
+    private Map<Integer, ArrayList<TableToObjectInstanc>> commitToRoleMapper;
+    private Map<Integer, ArrayList<TableToObjectInstanc>> committedConfigurationToRoleMapper;
 
     private Map<Integer, ArrayList<TableToObjectInstanc>> phaseToConfigurationMapper;
     private Map<Integer, ArrayList<TableToObjectInstanc>> iterationToConfigurationMapper;
@@ -78,6 +80,8 @@ public class MapperTableToObject {
         this.configurationToCommitedConfigurationMapper = new HashMap<>();
         this.commitedConfigurationToCommitMapper = new HashMap<>();
         this.configurationToArtifactMapper = new HashMap<>();
+        this.commitToRoleMapper = new HashMap<>();
+        this.committedConfigurationToRoleMapper = new HashMap<>();
         this.roleMaps = new ArrayList<>();
         this.configurationMaps = new ArrayList<>();
         this.artifactMaps = new ArrayList<>();
@@ -109,6 +113,8 @@ public class MapperTableToObject {
         roleMaps.add(configurationToRoleMapper);
         roleMaps.add(artifactToRoleMapper);
         roleMaps.add(CPRToRoleMapper);
+        roleMaps.add(commitToRoleMapper);
+        roleMaps.add(committedConfigurationToRoleMapper);
     }
 
     public void mapTableToObjects(SegmentType segmentType, ArrayList<ArrayList<Integer>> indexList, TableToObjectInstanc instanc) {
@@ -141,10 +147,22 @@ public class MapperTableToObject {
 
                 break;
             case Committed_Configuration:
-                addInstanceToMap(indexList, lists.getCommitedConfigurationObservable(), instanc, commitedConfigurationToCommitMapper);
+                switch (destinationSegment){
+                    case Commit:
+                        addInstanceToMap(indexList, lists.getCommitedConfigurationObservable(), instanc, commitedConfigurationToCommitMapper);
+                        break;
+                    case Person:
+                        addInstanceToMap(indexList, lists.getRoleObservable(), instanc, committedConfigurationToRoleMapper);
+                        break;
+                        default:
+                }
+
                 break;
             case Artifact:
                 addInstanceToMap(indexList, lists.getRoleObservable(), instanc, artifactToRoleMapper);
+                break;
+            case Commit:
+                addInstanceToMap(indexList, lists.getRoleObservable(), instanc, commitToRoleMapper);
                 break;
             default:
 
@@ -190,11 +208,12 @@ public class MapperTableToObject {
         addInstanceToMap(authorIndex, lists.getRoleObservable(), new TableToObjectInstanc(WUName, indexForm, SegmentType.Work_Unit), wuToRoleMapper);
     }
 
-    public void mapTableToConfiguration(ArrayList<Integer> roleIndex, ArrayList<ArrayList<Integer>> cprIndicies, ArrayList<ArrayList<Integer>> changes,
+    public void mapTableToConfiguration(ArrayList<ArrayList<Integer>> branchesIndicies, ArrayList<ArrayList<Integer>> cprIndicies, ArrayList<ArrayList<Integer>> changes, ArrayList<Integer> tag,
                                         String configName, int configIndex){
-        addInstanceToMap(roleIndex, lists.getRoleObservable(), new TableToObjectInstanc(configName, configIndex, SegmentType.Configuration), configurationToRoleMapper);
+        addInstancesToMap(branchesIndicies, lists.getBranchObservable(), new TableToObjectInstanc(configName, configIndex, SegmentType.Configuration), configurationToRoleMapper);
         addInstancesToMap(cprIndicies, lists.getCPRObservable(), new TableToObjectInstanc(configName, configIndex, SegmentType.Configuration), configurationToCPRMapper);
         addInstancesToMap(changes, lists.getChangeObservable(), new TableToObjectInstanc(configName, configIndex, SegmentType.Configuration), configurationToChangeMapper);
+        addInstanceToMap(tag, lists.getVCSTag(), new TableToObjectInstanc(configName, configIndex, SegmentType.Configuration), configurationToChangeMapper);
     }
 
     public void mapTableToPhase(ArrayList<Integer> milestoneId, ArrayList<Integer> configurationId, ArrayList<Integer> workUnitId,  String phaseName, int phaseId){
@@ -207,14 +226,6 @@ public class MapperTableToObject {
         addInstanceToMap(configurationId, lists.getConfigObservable(), new TableToObjectInstanc(iterationName, iterationId, SegmentType.Iteration), iterationToConfigurationMapper);
         addInstanceToMap(workUnitId, lists.getWorkUnitsObservable(), new TableToObjectInstanc(iterationName, iterationId, SegmentType.Iteration), iterationToWUMapper);
     }
-
-    public void mapTableToCommit(ArrayList<Integer> branches, ArrayList<Integer> tags,  String commitName, int commitId){
-        addInstanceToMap(branches, lists.getBranchObservable(), new TableToObjectInstanc(commitName, commitId, SegmentType.Commit), commitToBranchMapper);
-        addInstanceToMap(tags, lists.getVCSTag(), new TableToObjectInstanc(commitName, commitId, SegmentType.Commit), commitToVCSTagMapper);
-    }
-
-
-
 
     private void addInstanceToMap(ArrayList<Integer> criterionIndex, ObservableList<BasicTable> list, TableToObjectInstanc instanc,
                                  Map<Integer, ArrayList<TableToObjectInstanc>> map ) {
@@ -337,6 +348,8 @@ public class MapperTableToObject {
         CPRToRoleMapper.remove(id);
         configurationToRoleMapper.remove(id);
         artifactToRoleMapper.remove(id);
+        commitToRoleMapper.remove(id);
+        committedConfigurationToRoleMapper.remove(id);
     }
 
 

@@ -26,7 +26,7 @@ public interface IEditFormController {
                               ArrayList<Integer> criterionIndicators, boolean exist,  int id);
    void editDataFromCriterion(String alias, ArrayList<String> nameST, ArrayList<Integer> nameIndicators, ArrayList<String>description, ArrayList<Integer> descriptionIndicators,
                               CriterionTable criterionTable, boolean exist, int id);
-   void editDataFromCPR(String alias, ArrayList<String> nameST, ArrayList<Integer> nameIndicators, ArrayList<Integer> roleIndex,
+   void editDataFromCPR(String alias, ArrayList<String> nameST, ArrayList<Integer> nameIndicators, ArrayList<String> description, ArrayList<Integer> descriptionIndicators, ArrayList<Integer> roleIndex,
                         ArrayList<Integer> roleIndicators, boolean exist, CPRTable cprTable);
    void editDataFromBranch(String alias, ArrayList<String> nameST, ArrayList<Integer> nameIndicators,  boolean isMainBranch, boolean exist, BranchTable branchTable);
 
@@ -61,23 +61,23 @@ public interface IEditFormController {
                               ArrayList<String> estimatedTime, List<Integer> nameIndicator, List<Integer> descriptionIndicator, List<Integer> categoryIndicator,
                               ArrayList<Integer> assigneIndicator, ArrayList<Integer> authorIndicator, ArrayList<Integer> priorityIndicator, ArrayList<Integer> severityIndicator,
                               ArrayList<Integer> typeIndicator, ArrayList<Integer> resolutionIndicator, ArrayList<Integer> statusIndicator,
-                              ArrayList<Integer> estimateIndicator, boolean isExist, ArrayList<Integer> relations,  ArrayList<ArrayList<Integer>> workUnits, WorkUnitTable workUnitTable, int id);
+                              ArrayList<Integer> estimateIndicator,  boolean isExist, ArrayList<Integer> relations,  ArrayList<ArrayList<Integer>> workUnits,
+                              ArrayList<LocalDate> createDate, ArrayList<Integer> createdIndicator, WorkUnitTable workUnitTable, int id);
 
-    void editDataFromConfiguration(String alias, ArrayList<String> actName, ArrayList<LocalDate> createDate,
-                                   boolean isRelease, ArrayList<Integer> authorIndex, ArrayList<ArrayList<Integer>> cprs,
-                                    ArrayList<ArrayList<Integer>> changeIndexs,
-                                   ArrayList<Integer> cprIndicators, ArrayList<Integer> nameIndicator, ArrayList<Integer> createdIndicator,
-                                   ArrayList<Integer> authorIndicator, ArrayList<Integer> changeIndicator,
-                                   String instanceCount, boolean exist, int configId);
+    void editDataFromConfiguration(String alias, ArrayList<String> actName, ArrayList<String> description, ArrayList<LocalDate> createDate,
+                                   boolean isRelease, ArrayList<Integer> authorIndex, ArrayList<ArrayList<Integer>> cprs, ArrayList<ArrayList<Integer>> branchIndexs, ArrayList<Integer> branchIndicators,
+                                   ArrayList<ArrayList<Integer>> changeIndexs, ArrayList<Integer> cprIndicators, ArrayList<Integer> nameIndicator, ArrayList<Integer> descriptionIndicator,
+                                   ArrayList<Integer> createdIndicator, ArrayList<Integer> authorIndicator, ArrayList<Integer> changeIndicator,
+                                   String count, boolean exist, int configId);
 
     void editDataFromVCSTag(String alias, ArrayList<String> name, ArrayList<String> description,
                             ArrayList<Integer> nameIndicator, ArrayList<Integer> descriptionIndicator, VCSTagTable tagTable, boolean exist, int id);
 
-    void editDataFromCommit(String alias, ArrayList<String> name, ArrayList<Integer> nameIndicator, ArrayList<Integer> tag, ArrayList<Integer> tagIndicator, ArrayList<ArrayList<Integer>> branches,
-                            ArrayList<Integer> branchIndicator,boolean release, String count, boolean exist, int id);
+    void editDataFromCommit(String alias, ArrayList<String> name, ArrayList<Integer> nameIndicator,  ArrayList<String> descriptions, ArrayList<Integer> descriptionsIndicator,
+                            ArrayList<LocalDate> createDate, ArrayList<Integer> createIndicator, boolean release, String count, boolean exist, int id);
 
-    void editDataFromCommitedConfiguration(String alias, ArrayList<String> name, ArrayList<LocalDate>  dateFromDatePicker, ArrayList<Integer> nameIndicator,
-                                           ArrayList<Integer> dateIndicator, String count, boolean exist, int commitedConfigurationId);
+    void editDataFromCommitedConfiguration(String alias, ArrayList<String> name, ArrayList<Integer> nameIndicator, ArrayList<String> description,  ArrayList<Integer> descriptionIndicator, ArrayList<LocalDate>  created,
+                                           ArrayList<Integer>  createdIndicator, ArrayList<LocalDate> committed,   ArrayList<Integer> committedIndicator, String count, boolean exist, int commitedConfigurationId);
 
     void editDataFromProject(ArrayList<String> name, ArrayList<LocalDate> startDate, ArrayList<LocalDate> endDate, ArrayList<String> desc, ArrayList<ArrayList<Integer>> workUnit, ArrayList<Integer> workUnitIndicators,
                              ArrayList<Integer> nameIndicators, ArrayList<Integer> date1Indicators, ArrayList<Integer> date2Indicators,

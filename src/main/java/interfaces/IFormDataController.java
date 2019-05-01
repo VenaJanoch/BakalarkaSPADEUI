@@ -50,8 +50,6 @@ public interface IFormDataController {
 
     void saveDataFromRoleTypeForm(String nameST, ClassTable classTable);
 
-    void saveDataFromTagForm(String tag, int configId, int id);
-
     void saveDataFromStatusForm(String nameST, ClassTable classTable);
 
     void saveDataFromTypeForm(String nameST, ClassTable classTable);
@@ -82,8 +80,6 @@ public interface IFormDataController {
 
     List[] getBranchStringData(int id);
 
-    String getTagData(int id, int configFormId);
-
     List[] getPhaseStringData(int id);
 
     ArrayList<ArrayList<Integer>> getWorkUnitFromSegment(int id, SegmentType phase);
@@ -102,7 +98,7 @@ public interface IFormDataController {
 
     ArrayList<ArrayList<Integer>> getCPRFromConfiguration(int configId);
 
-    ArrayList<ArrayList<Integer>> getBranchesFromCommit(int configId);
+    ArrayList<ArrayList<Integer>> getBranchesFromConfiguration(int configId);
 
     ArrayList<ArrayList<Integer>> getChangesFromConfiguration(int configId);
 
@@ -127,4 +123,9 @@ public interface IFormDataController {
     void createNewPersonToConfigurationRelation(int linkId, Integer startId, Integer endId, boolean isXML);
 
     void createNewPersonToArtifactRelation(int linkId, Integer startId, Integer endId, boolean isXML);
+
+    void createNewPersonToCommitRelation(int linkId, Integer startId, Integer endId, boolean isXML);
+
+    void createNewPersonToCommittedConfigurationRelation(int linkId, Integer startId, Integer endId, boolean isXML);
+
 }

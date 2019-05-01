@@ -24,13 +24,11 @@ public class CategoryDAO {
 	public ArrayList<SQLVerifyObject> getCategoryyProjekt(int projectVerifyId, List<String> name, List<Integer> nameIndicator) {
 
 		String atributeSection = "";
-		atributeSection += SQLAtributeCreator.createStringAttribute("name", name, nameIndicator);
+		atributeSection += SQLAtributeCreator.createStringAttribute("c.name", name, nameIndicator);
 
 
-		String sql = "SELECT c.id FROM category c  WHERE c. projectInstanceId = ? " + atributeSection;
+		String sql = "SELECT c.id FROM category c  WHERE c.projectInstanceId = ? " + atributeSection;
 
-		//	if(seznamIdCategoryu != null && !seznamIdCategoryu.isEmpty())
-		//		sql += " and a.id in ("+ Konstanty.getZnakyParametru(seznamIdCategoryu) +")";
 
 		return SQLAtributeCreator.findInstanceInDB(pripojeni,verifyController, sql, projectVerifyId, new ArrayList<>());
 

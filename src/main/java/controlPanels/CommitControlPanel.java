@@ -1,21 +1,22 @@
 package controlPanels;
 
+import abstractControlPane.DateDescControlPanel;
 import abstractControlPane.NameControlPanel;
 import controllers.formControllers.FormController;
 import graphics.controlPanelItems.ControlPanelLine;
 import interfaces.IControlPanel;
 import interfaces.IEditFormController;
 import interfaces.IFormDataController;
-import services.ControlPanelLineObject;
-import services.ControlPanelLineType;
+import javafx.scene.control.TableView;
 import services.ParamType;
-import services.SegmentLists;
+import tables.BasicTable;
 import tables.CommitTable;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CommitControlPanel extends NameControlPanel implements IControlPanel {
+public class CommitControlPanel extends DateDescControlPanel implements IControlPanel {
 
 
     private int commitId;
@@ -28,17 +29,8 @@ public class CommitControlPanel extends NameControlPanel implements IControlPane
         this.commitFormId = formIndex;
         this.commitId = id;
         this.commitTable = branchTable;
-        SegmentLists segmentLists = formController.getSegmentLists();
-        lineList.add(new ControlPanelLineObject("VCS Tag: ", ControlPanelLineType.ComboBox, ParamType.VCSTag, segmentLists.getVCSTag() ));
-        lineList.add(new ControlPanelLineObject("Branches: ", ControlPanelLineType.CheckBox, ParamType.Branch, segmentLists.getBranchObservable()));
         createControlPanel();
     }
-
-    @Override
-    protected void createBaseControlPanel() {
-
-    }
-
 
 
     public void createControlPanel(){
@@ -50,16 +42,18 @@ public class CommitControlPanel extends NameControlPanel implements IControlPane
         button.setOnAction(event ->{
             ArrayList<Integer> nameIndicators = new ArrayList<>();
             ArrayList<String> name = controlPanelController.processTextLines(ParamType.Name, nameIndicators);
-            ArrayList<Integer> branchIndicators = new ArrayList<>();
-            ArrayList<ArrayList<Integer>> branchs = controlPanelController.processCheckComboBoxLines(ParamType.Branch, branchIndicators);
 
-            ArrayList<Integer> tagIndicators = new ArrayList<>();
-            ArrayList<Integer> tag = controlPanelController.processComboBoxLines(ParamType.VCSTag, tagIndicators);
+            ArrayList<Integer> descriptionIndicators = new ArrayList<>();
+            ArrayList<Integer> createdIndicators = new ArrayList<>();
+            ArrayList<String> description = controlPanelController.processTextLines(ParamType.Description, descriptionIndicators);
+            ArrayList<LocalDate> created = controlPanelController.processDateLines(ParamType.Date, createdIndicators);
+
+
 
             String count = controlPanelController.getInstanceCount();
             boolean exist = controlPanelController.isMain();
 
-            editFormController.editDataFromCommit(aliasTF.getText(), name, nameIndicators, tag, tagIndicators, branchs, branchIndicators, exist, count,
+            editFormController.editDataFromCommit(aliasTF.getText(), name, nameIndicators, description, descriptionIndicators, created, createdIndicators, exist, count,
                     controlPanelController.isExist(), commitId);
 
         });
@@ -75,13 +69,12 @@ public class CommitControlPanel extends NameControlPanel implements IControlPane
         createControlPanel();
 
         controlPanelController.setValueTextField(this, lineList ,ParamType.Name, commitData, commitData[1], 0);
-        ArrayList<ArrayList<Integer>> branches = formDataController.getBranchesFromCommit(commitId);
-        controlPanelController.setValueCheckComboBox(this, lineList ,ParamType.Branch, branches, commitData[4]);
-        controlPanelController.setValueComboBox(this, lineList ,ParamType.VCSTag, (ArrayList<Integer>) commitData[2], commitData[3]);
+        controlPanelController.setValueTextField(this, lineList ,ParamType.Description, commitData, commitData[4], 3);
+        controlPanelController.setValueDatePicker(this, lineList ,ParamType.Date, (ArrayList<LocalDate>) commitData[5], commitData[6]);
 
 
         boolean release = false;
-        List boolList = commitData[5];
+        List boolList = commitData[2];
         if (boolList.size() > 2){
             release = true;
         }
@@ -94,5 +87,8 @@ public class CommitControlPanel extends NameControlPanel implements IControlPane
         controlPanelController.setAlias((String)boolList.get(2), this);
     }
 
+    @Override
+    public void showEditControlPanel(BasicTable basicTable, TableView tableView) {
 
+    }
 }

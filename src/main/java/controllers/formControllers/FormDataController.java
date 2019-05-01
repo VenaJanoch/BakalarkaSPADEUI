@@ -1,5 +1,6 @@
 package controllers.formControllers;
 
+import SPADEPAC.Commit;
 import controllers.DataPreparer;
 import controllers.InputController;
 import forms.ConfigurationTableForm;
@@ -193,7 +194,8 @@ public class FormDataController implements IFormDataController {
         if (!isXML) {
             saveDataModel.createCommitToCommitedConfigurationRelation(linkId, startId, endId);
         }
-        mapperTableToObject.mapTableToObjects(SegmentType.Committed_Configuration, null, startId, new TableToObjectInstanc( String.valueOf(endId), endId, SegmentType.Committed_Configuration));
+        mapperTableToObject.mapTableToObjects(SegmentType.Committed_Configuration, SegmentType.Commit, startId,
+                new TableToObjectInstanc( String.valueOf(endId), endId, SegmentType.Committed_Configuration));
     }
 
     public void createCommitedConfigurationToConfigurationRelation(int linkId, Integer startId, Integer endId, boolean isXML){
@@ -221,6 +223,22 @@ public class FormDataController implements IFormDataController {
         }
         mapperTableToObject.mapTableToObjects(SegmentType.Artifact, SegmentType.Person, startId,
                 new TableToObjectInstanc( String.valueOf(endId), endId, SegmentType.Artifact));
+    }
+
+    public void createNewPersonToCommitRelation(int linkId, Integer startId, Integer endId, boolean isXML){
+        if (!isXML) {
+            saveDataModel.createNewPersonToCommitRelation(linkId, startId, endId);
+        }
+        mapperTableToObject.mapTableToObjects(SegmentType.Commit, SegmentType.Person, startId,
+                new TableToObjectInstanc( String.valueOf(endId), endId, SegmentType.Commit));
+    }
+
+    public void createNewPersonToCommittedConfigurationRelation(int linkId, Integer startId, Integer endId, boolean isXML){
+        if (!isXML) {
+            saveDataModel.createNewPersonToCommittedConfigurationRelation(linkId, startId, endId);
+        }
+        mapperTableToObject.mapTableToObjects(SegmentType.Committed_Configuration, SegmentType.Person, startId,
+                new TableToObjectInstanc( String.valueOf(endId), endId, SegmentType.Committed_Configuration));
     }
 
 
@@ -301,11 +319,7 @@ public class FormDataController implements IFormDataController {
         lists.getRoleTypeObservable().add(classTable);
     }
 
-    public void saveDataFromTagForm(String tag, int configId, int id) {
-        String tagForManipulator = InputController.fillTextMapper(tag);
 
-        saveDataModel.addTagToConfiguration(tagForManipulator, configId, id);
-    }
 
     public void saveDataFromStatusForm(String nameST, ClassTable classTable) {
 
@@ -405,10 +419,6 @@ public class FormDataController implements IFormDataController {
     }
 
 
-    public  String getTagData(int id, int configFormId) {
-        return dataManipulator.getTagStringData(id, identificatorCreater.getConfigurationId(configFormId));
-    }
-
     public  List[] getPhaseStringData(int id){
         List[] data = dataManipulator.getPhaseStringData(id);
         ArrayList indices1 = dataPreparer.prepareIndiciesForForm(data[2]);
@@ -506,7 +516,7 @@ public class FormDataController implements IFormDataController {
         ArrayList indicies5 = dataPreparer.prepareIndiciesForForm(data[9]);
         ArrayList indicies6 = dataPreparer.prepareIndiciesForForm(data[10]);
         ArrayList indicies23 = dataPreparer.prepareIndiciesForForm(data[23]);
-
+        ArrayList<LocalDate> dates = dataPreparer.prepareDateForForm(data[25]);
         data[2] = estimate;
         data[4] = priorityIndicies;
         data[5] = indicies1;
@@ -516,6 +526,7 @@ public class FormDataController implements IFormDataController {
         data[9] = indicies5;
         data[10] = indicies6;
         data[23] = indicies23;
+        data[25] = dates;
         return data;
     }
 
@@ -540,8 +551,8 @@ public class FormDataController implements IFormDataController {
     }
 
     @Override
-    public ArrayList<ArrayList<Integer>> getBranchesFromCommit(int configId) {
-        ArrayList<ArrayList<Integer>> list = dataPreparer.prepareIndicesForForm(dataManipulator.getBranchfromCommit(configId));
+    public ArrayList<ArrayList<Integer>> getBranchesFromConfiguration(int configId) {
+        ArrayList<ArrayList<Integer>> list = dataPreparer.prepareIndicesForForm(dataManipulator.getBranchfromConfiguration(configId));
         return list;
     }
     @Override
@@ -557,15 +568,19 @@ public class FormDataController implements IFormDataController {
 
     @Override
     public List[] getCommitStringData(int commidId){
-        return dataManipulator.getCommitStringData(commidId);
+        List[] data = dataManipulator.getCommitStringData(commidId);
+        ArrayList<LocalDate> created = dataPreparer.prepareDateForForm(data[5]);
+        data[5] = created;
+        return data;
     }
 
     @Override
     public List[] getCommitedConfigurationStringData(int commitedId){
         List[] data = dataManipulator.getCommitedConfigurationStringData(commitedId);
         ArrayList<LocalDate> dates = dataPreparer.prepareDateForForm(data[2]);
-
+        ArrayList<LocalDate> created = dataPreparer.prepareDateForForm(data[5]);
         data[2] = dates;
+        data[5] = created;
         return data;
     }
 

@@ -205,13 +205,15 @@ public class EditFormController implements IEditFormController {
         segmentLists.updateListItem(SegmentType.Criterion, id, criterionTable);
     }
 
-    public void editDataFromCPR(String alias, ArrayList<String> nameST, ArrayList<Integer> nameIndicators, ArrayList<Integer> roleIndex,
+    public void editDataFromCPR(String alias, ArrayList<String> nameST, ArrayList<Integer> nameIndicators, ArrayList<String> description, ArrayList<Integer> descriptionIndicators, ArrayList<Integer> roleIndex,
                                 ArrayList<Integer> roleIndicators, boolean exist, CPRTable cprTable) {
 
         ArrayList<String> nameForManipulator = InputController.fillNameTextMapper(nameST);
+        ArrayList<String> descriptionForManipulator = InputController.fillTextMapper(description);
         ArrayList<Integer> roleManipulatorId = dataPreparer.prepareIndexForManipulator(roleIndex);
+
         int cprId = cprTable.getId();
-        dataManipulator.editDataInCPR(alias, nameForManipulator, nameIndicators, roleManipulatorId, roleIndicators, exist, cprId);
+        dataManipulator.editDataInCPR(alias, nameForManipulator, nameIndicators, descriptionForManipulator, descriptionIndicators, roleManipulatorId, roleIndicators, exist, cprId);
         cprTable.setAlias(alias);
         cprTable.setExist(exist);
 
@@ -381,7 +383,8 @@ public class EditFormController implements IEditFormController {
                                      ArrayList<String> estimatedTime, List<Integer> nameIndicator, List<Integer> descriptionIndicator, List<Integer> categoryIndicator,
                                      ArrayList<Integer> assigneIndicator, ArrayList<Integer> authorIndicator, ArrayList<Integer> priorityIndicator, ArrayList<Integer> severityIndicator,
                                      ArrayList<Integer> typeIndicator, ArrayList<Integer> resolutionIndicator, ArrayList<Integer> statusIndicator,
-                                     ArrayList<Integer> estimateIndicator, boolean isExist, ArrayList<Integer> relations,  ArrayList<ArrayList<Integer>> workUnits, WorkUnitTable workUnitTable, int id) {
+                                     ArrayList<Integer> estimateIndicator, boolean isExist, ArrayList<Integer> relations, ArrayList<ArrayList<Integer>> workUnits,
+                                     ArrayList<LocalDate> createDate, ArrayList<Integer> createdIndicator, WorkUnitTable workUnitTable, int id) {
 
         try {
             ArrayList<Double> estimateForDataManipulator = new ArrayList<>();
@@ -409,7 +412,7 @@ public class EditFormController implements IEditFormController {
                 typeForManipulator, resolutionForManipulator, statusForManipulator,
                 estimateForDataManipulator, nameIndicator,  descriptionIndicator,  categoryIndicator,
                 assigneIndicator, authorIndicator, priorityIndicator,  severityIndicator,
-                typeIndicator, resolutionIndicator, statusIndicator, estimateIndicator, isExist, relationForManipulator, workUnitsForManipulator, id);
+                typeIndicator, resolutionIndicator, statusIndicator, estimateIndicator, createDate, createdIndicator, isExist, relationForManipulator,  workUnitsForManipulator, id);
         workUnitTable.setExist(isExist);
         workUnitTable.setAlias(alias);
         mapperTableToObject.mapTableToWU(assigneForManipulator, authorForManipulator, priorityForManipulator, severityForManipulator, typeForManipulator, resolutionForManipulator
@@ -422,10 +425,10 @@ public class EditFormController implements IEditFormController {
     }
 
     @Override
-    public void editDataFromConfiguration(String alias, ArrayList<String> actName, ArrayList<LocalDate> createDate,
-                                          boolean isRelease, ArrayList<Integer> authorIndex, ArrayList<ArrayList<Integer>> cprs,
-                                          ArrayList<ArrayList<Integer>> changeIndexs, ArrayList<Integer> cprIndicators, ArrayList<Integer> nameIndicator,
-                                          ArrayList<Integer> createdIndicator, ArrayList<Integer> authorIndicator, ArrayList<Integer> changeIndicator,
+    public void editDataFromConfiguration(String alias, ArrayList<String> actName, ArrayList<String> description, ArrayList<LocalDate> createDate,
+                                          boolean isRelease, ArrayList<Integer> tag, ArrayList<ArrayList<Integer>> cprs, ArrayList<ArrayList<Integer>> branchIndexs, ArrayList<Integer> branchIndicators,
+                                          ArrayList<ArrayList<Integer>> changeIndexs, ArrayList<Integer> cprIndicators, ArrayList<Integer> nameIndicator, ArrayList<Integer> descriptionIndicator,
+                                          ArrayList<Integer> createdIndicator, ArrayList<Integer> tagIndicator, ArrayList<Integer> changeIndicator,
                                           String count, boolean exist, int configId) {
 
         int instanceCount;
@@ -433,15 +436,14 @@ public class EditFormController implements IEditFormController {
             instanceCount = Integer.parseInt(count);
             ArrayList<String> nameForManipulator = InputController.fillNameTextMapper(actName);
             ArrayList<LocalDate> date = InputController.checkDate(createDate);
-            ArrayList<Integer> roleIdForManipulator = dataPreparer.prepareIndexForManipulator(authorIndex);
-
+            ArrayList<Integer> tagForManipulator = dataPreparer.prepareIndexForManipulator(tag);
+            ArrayList<ArrayList<Integer>> branchesForManipulator = dataPreparer.prepareIndicesForManipulator(branchIndexs);
             ArrayList<ArrayList<Integer>> cprsForManipulator = dataPreparer.prepareIndicesForManipulator(cprs);
 
             ArrayList<ArrayList<Integer>> changesForManipulator = dataPreparer.prepareIndicesForManipulator(changeIndexs);
 
-            dataManipulator.editDataInConfiguration(alias, nameForManipulator, date, isRelease, roleIdForManipulator,
-                    cprsForManipulator, changesForManipulator, cprIndicators, nameIndicator, createdIndicator,
-                    authorIndicator, changeIndicator, instanceCount, exist, configId);
+            dataManipulator.editDataInConfiguration(alias, nameForManipulator, description, date, isRelease,
+                    cprsForManipulator, changesForManipulator, branchesForManipulator, branchIndicators, cprIndicators, nameIndicator, descriptionIndicator, tagForManipulator, tagIndicator, createdIndicator, changeIndicator, instanceCount, exist, configId);
             int formIndex = identificatorCreater.getConfigurationFormIndex(configId);
             ConfigTable configTable = new ConfigTable(alias, "", formIndex, exist, configId);
             configTable.setExist(exist);
@@ -450,7 +452,7 @@ public class EditFormController implements IEditFormController {
             formController.setNameToItem(formIndex, alias);
             formController.setItemInstanceCount(formIndex, instanceCount);
             formController.setItemColor(formIndex, exist);
-            mapperTableToObject.mapTableToConfiguration(roleIdForManipulator, cprsForManipulator, changesForManipulator, alias, configId);
+            mapperTableToObject.mapTableToConfiguration(branchesForManipulator, cprsForManipulator, changesForManipulator, tagForManipulator, alias, configId);
 
 
         }catch (NumberFormatException e){
@@ -475,27 +477,22 @@ public class EditFormController implements IEditFormController {
     }
 
     @Override
-    public void editDataFromCommit(String alias, ArrayList<String> name, ArrayList<Integer> nameIndicator, ArrayList<Integer> tag, ArrayList<Integer> tagIndicator,
-                                   ArrayList<ArrayList<Integer>> branches, ArrayList<Integer> branchIndicator, boolean release, String count, boolean exist, int id) {
+    public void editDataFromCommit(String alias, ArrayList<String> name, ArrayList<Integer> nameIndicator, ArrayList<String> descriptions, ArrayList<Integer> descriptionsIndicator,
+                                   ArrayList<LocalDate> createDate, ArrayList<Integer> createIndicator, boolean release, String count, boolean exist, int id) {
 
         int instanceCount = 0;
         try {
             instanceCount = Integer.parseInt(count);
             ArrayList<String> nameForManipulator = InputController.fillNameTextMapper(name);
-            ArrayList<Integer> tagForManipulator = dataPreparer.prepareIndexForManipulator(tag);
-            ArrayList<ArrayList<Integer>> branchesForManipulator = dataPreparer.prepareIndicesForManipulator(branches);
-            dataManipulator.editDataInCommit(alias, nameForManipulator, nameIndicator, tagForManipulator, tagIndicator, branchesForManipulator,
-                     branchIndicator, release, instanceCount, exist, id);
+            ArrayList<LocalDate> date = InputController.checkDate(createDate);
+            ArrayList<String> descriptionForManipulator =InputController.fillTextMapper(descriptions);
+            dataManipulator.editDataInCommit(alias, nameForManipulator, nameIndicator, descriptionForManipulator, descriptionsIndicator, date, createIndicator, release, instanceCount, exist, id);
 
             int formIndex = identificatorCreater.getCommitFormIndex(id);
 
             formController.setNameToItem(formIndex, alias);
             formController.setItemInstanceCount(formIndex, instanceCount);
             formController.setItemColor(formIndex, exist);
-
-            ArrayList<Integer> branchIndicies = dataModel.getBranchIndices(branchesForManipulator);
-            ArrayList<Integer> tagIndicies = dataModel.getVCSTagIndices(tagForManipulator);
-            mapperTableToObject.mapTableToCommit(branchIndicies, tagIndicies, String.valueOf(id), id);
 
         }catch (NumberFormatException e){
             Alerts.showWrongNumberFormat("Instance count");
@@ -531,16 +528,17 @@ public class EditFormController implements IEditFormController {
 
 
     @Override
-    public void editDataFromCommitedConfiguration(String alias, ArrayList<String> name, ArrayList<LocalDate>  dateFromDatePicker, ArrayList<Integer> nameIndicator,
-                                                  ArrayList<Integer> dateIndicator, String count, boolean exist, int commitedConfigurationId) {
+    public void editDataFromCommitedConfiguration(String alias, ArrayList<String> name, ArrayList<Integer> nameIndicator, ArrayList<String> description,  ArrayList<Integer> descriptionIndicator, ArrayList<LocalDate>  created,
+                                                    ArrayList<Integer>  createdIndicator, ArrayList<LocalDate> committed,   ArrayList<Integer> committedIndicator, String count, boolean exist, int commitedConfigurationId) {
 
         int instanceCount = 0;
         try {
             instanceCount = Integer.parseInt(count);
             ArrayList<String> nameForManipulator = InputController.fillNameTextMapper(name);
-            ArrayList<LocalDate> date = InputController.checkDate(dateFromDatePicker);
+            ArrayList<LocalDate> date = InputController.checkDate(committed);
+            ArrayList<LocalDate> createdl = InputController.checkDate(created);
 
-            dataManipulator.editDataInCommitedConfiguration(alias, nameForManipulator, nameIndicator, date, dateIndicator, instanceCount, exist, commitedConfigurationId);
+            dataManipulator.editDataInCommitedConfiguration(alias, nameForManipulator, nameIndicator, description, descriptionIndicator, createdl, createdIndicator, date, committedIndicator, instanceCount, exist, commitedConfigurationId);
 
             int formIndex = identificatorCreater.getCommitedConfigurationFormIndex(commitedConfigurationId);
             formController.setNameToItem(formIndex, alias);

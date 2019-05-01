@@ -23,7 +23,6 @@ import java.util.ArrayList;
       void createNewPerson(int id);
       void createNewMilestone(String nameForManipulator, String description, ArrayList<Integer> criterionIndex, int id);
       void createNewRoleType(String nameForManipulator, String classST, String superST, int id);
-      void addTagToConfiguration(String tag, int configId, int index);
       void createNewStatus(String nameForManipulator, String classST, String superST, int id);
       void createNewType(String nameForManipulator, String classST, String superST, int id);
 
@@ -41,4 +40,9 @@ import java.util.ArrayList;
       void createNewPersonToConfigurationRelation(int linkId, int startId, int endId);
 
       void createNewPersonToArtifactRelation(int linkId, int startId, int endId);
+
+      void createNewPersonToCommitRelation(int linkId, int startId, int endId);
+
+      void createNewPersonToCommittedConfigurationRelation(int linkId, int startId, int endId);
+
   }

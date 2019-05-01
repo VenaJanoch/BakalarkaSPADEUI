@@ -17,11 +17,11 @@ public class EditDataModel implements IEditDataModel {
         this.dataModel = dataModel;
     }
 
-    public void editDataInCPR(String alias, ArrayList<String> nameForManipulator, ArrayList<Integer> nameIndicators, ArrayList<Integer> roleIndex,
+    public void editDataInCPR(String alias, ArrayList<String> nameForManipulator, ArrayList<Integer> nameIndicators, ArrayList<String> description, ArrayList<Integer> descriptionIndicators, ArrayList<Integer> roleIndex,
                               ArrayList<Integer> roleIndicator, boolean exist, int id) {
 
         ConfigPersonRelation cpr = dataModel.getConfigPersonRelation(id);
-        dataModel.addDataToCPR(cpr, alias, nameForManipulator, nameIndicators, roleIndex, roleIndicator, exist);
+        dataModel.addDataToCPR(cpr, alias, nameForManipulator, nameIndicators, description, descriptionIndicators, roleIndex, roleIndicator, exist);
 
     }
 
@@ -80,7 +80,7 @@ public class EditDataModel implements IEditDataModel {
                                    ArrayList<Double> estimateForDataManipulator, List<Integer> nameIndicator, List<Integer> descriptionIndicator, List<Integer> categoryIndicator,
                                    ArrayList<Integer> assigneIndicator, ArrayList<Integer> authorIndicator, ArrayList<Integer> priorityIndicator, ArrayList<Integer> severityIndicator,
                                    ArrayList<Integer> typeIndicator, ArrayList<Integer> resolutionIndicator, ArrayList<Integer> statusIndicator,
-                                   ArrayList<Integer> estimateIndicator, boolean isExist, ArrayList<Integer> relations,  ArrayList<ArrayList<Integer>> workUnits, int id) {
+                                   ArrayList<Integer> estimateIndicator, ArrayList<LocalDate> createDate, ArrayList<Integer> createIndicator, boolean isExist, ArrayList<Integer> relations,  ArrayList<ArrayList<Integer>> workUnits, int id) {
         WorkUnit workUnit = dataModel.getWorkUnit(id);
         dataModel.addDataToWorkUnit(workUnit, alias, nameForManipulator, description, categoryForManipulator,
                 assigneIndex, authorIndex, priorityIndex,severityIndex,
@@ -88,17 +88,17 @@ public class EditDataModel implements IEditDataModel {
                 estimateForDataManipulator, nameIndicator, descriptionIndicator, categoryIndicator,
                 assigneIndicator, authorIndicator, priorityIndicator, severityIndicator,
                 typeIndicator, resolutionIndicator, statusIndicator,
-                estimateIndicator, isExist, relations, workUnits);
+                estimateIndicator, createDate, createIndicator, isExist, relations, workUnits);
     }
 
-    public void editDataInConfiguration(String alias, ArrayList<String> actName, ArrayList<LocalDate> createDate,
-                                        boolean isRelease, ArrayList<Integer> authorIndex, ArrayList<ArrayList<Integer>> cprs,
-                                        ArrayList<ArrayList<Integer>> changeIndexs,
-                                        ArrayList<Integer> cprIndicators, ArrayList<Integer> nameIndicator, ArrayList<Integer> createdIndicator,
-                                        ArrayList<Integer> authorIndicator, ArrayList<Integer> changeIndicator, int instanceCount, boolean exist, int id){
+    public void editDataInConfiguration(String alias, ArrayList<String> actName, ArrayList<String> description, ArrayList<LocalDate> createDate,
+                                        boolean isRelease, ArrayList<ArrayList<Integer>> cprs,
+                                        ArrayList<ArrayList<Integer>> changeIndexs, ArrayList<ArrayList<Integer>> branchIndexs,ArrayList<Integer> branchIndicators,
+                                        ArrayList<Integer> cprIndicators, ArrayList<Integer> nameIndicator, ArrayList<Integer> descriptionIndicator, ArrayList<Integer> tag, ArrayList<Integer> tagIndicator, ArrayList<Integer> createdIndicator,
+                                        ArrayList<Integer> changeIndicator, int instanceCount, boolean exist, int id){
         Configuration configuration = dataModel.getConfiguration(id);
-        dataModel.addDataToConfiguration(configuration, alias, actName, createDate, isRelease, authorIndex, cprs, changeIndexs,
-                cprIndicators, nameIndicator, createdIndicator, authorIndicator, changeIndicator, instanceCount, exist);
+        dataModel.addDataToConfiguration(configuration, alias, actName, description, createDate, isRelease, cprs, changeIndexs, branchIndexs,
+                cprIndicators, nameIndicator, descriptionIndicator, tag, tagIndicator, createdIndicator, changeIndicator, branchIndicators, instanceCount, exist);
 
     }
 
@@ -166,22 +166,17 @@ public class EditDataModel implements IEditDataModel {
         dataModel.addDataToType(type, alias, nameForManipulator, nameIndicator, classST, superST, classString, superSting, exist);
     }
 
-    public void editTagInConfiguration(String tag, int configId, int id) {
-        Configuration configuration = dataModel.getConfiguration(configId);
-        configuration.getTags().remove(id);
-        configuration.getTags().add(id, tag);
-    }
-
     public void editDataInVCSTag(String alias, ArrayList<String> nameForManipulator, ArrayList<String> descriptionForManipulator,
                                  ArrayList<Integer> nameIndicator, ArrayList<Integer> descriptionIndicator, boolean exist, int id){
         VCSTag tag = dataModel.getVCSTag(id);
         dataModel.addDataToVCSTag(tag, nameForManipulator, descriptionForManipulator, nameIndicator, descriptionIndicator, exist);
     }
 
-    public void editDataInCommit(String alias, ArrayList<String> nameForManipulator,  ArrayList<Integer> nameIndicator,  ArrayList<Integer> tag, ArrayList<Integer> tagIndicator,
-                                 ArrayList<ArrayList<Integer>> branches, ArrayList<Integer> branchIndicator, boolean release, int instanceCount, boolean exist, int id){
+    public void editDataInCommit(String alias, ArrayList<String> nameForManipulator,  ArrayList<Integer> nameIndicator, ArrayList<String> descriptions, ArrayList<Integer> descriptionsIndicator,
+                                 ArrayList<LocalDate> createDate, ArrayList<Integer> createIndicator,
+                                 boolean release, int instanceCount, boolean exist, int id){
         Commit commit = dataModel.getCommit(id);
-        dataModel.addDataToCommit(commit, nameForManipulator, nameIndicator,  tag, tagIndicator,  branches, branchIndicator, release, instanceCount, exist);
+        dataModel.addDataToCommit(commit, alias, nameForManipulator, nameIndicator, descriptions, descriptionsIndicator, createDate, createIndicator,  release, instanceCount, exist);
     }
     
     public void editCoordinatesInCommit(int x, int y, int id){
@@ -214,10 +209,10 @@ public class EditDataModel implements IEditDataModel {
         dataModel.setCoordinatesToRole(coordinates, role);
     }
     
-    public void editDataInCommitedConfiguration(String alias, ArrayList<String> nameForManipulator, ArrayList<Integer> nameIndicator,
-                                                ArrayList<LocalDate> dateFromDatePicker, ArrayList<Integer> dateIndicator, int instanceCount, boolean exist, int id){
+    public void editDataInCommitedConfiguration(String alias, ArrayList<String> nameForManipulator, ArrayList<Integer> nameIndicator, ArrayList<String> description, ArrayList<Integer> descriptionIndicator,
+                                                ArrayList<LocalDate> createDate, ArrayList<Integer> createIndicator, ArrayList<LocalDate> dateFromDatePicker, ArrayList<Integer> dateIndicator, int instanceCount, boolean exist, int id){
         CommitedConfiguration commitedConfiguration = dataModel.getCommitedConfiguration(id);
-        dataModel.addDataToCommitedConfiguration(commitedConfiguration, alias, nameForManipulator, nameIndicator, dateFromDatePicker, dateIndicator, instanceCount, exist);
+        dataModel.addDataToCommitedConfiguration(commitedConfiguration, alias, nameForManipulator, nameIndicator, description, descriptionIndicator, createDate, createIndicator, dateFromDatePicker, dateIndicator, instanceCount, exist);
     }
 
     public void editDataInProject(ArrayList<String> nameForManipulator, ArrayList<LocalDate> startDate1, ArrayList<LocalDate> endDate1, ArrayList<String> descriptionForManipulator, ArrayList<ArrayList<Integer>> workUnitsForManipulator,
@@ -449,36 +444,7 @@ public class EditDataModel implements IEditDataModel {
                 break;
             case Commit:
                 switch (elementType) {
-                    case Branch:
-                        for (Commit segment : dataModel.getCommits()) {
-                            int i = 0;
-                            for (BranchList list : segment.getBranch()) {
-                                updateElementListFromSegment(elementIdList, list.getBranches());
-                                if (list.getBranches().size() != 0) {
-                                    segment.getBranchIndicator().remove(i);
-                                }
-                                i++;
-                            }
-                        }
-                    case VCSTag:
-                        for (Commit segment : dataModel.getCommits()) {
-                            List<Integer> type = segment.getTags();
-                            List<Integer> tagId = dataModel.getTagId(type);
-                            for(int deleteId : elementIdList){
-                                int deleteIndexInProject = dataModel.getVCSTAgProjectIndex(deleteId);
-                                for (int i = 0; i < type.size(); i++) {
-                                    int index = type.get(i);
-                                    if( tagId.get(i) == deleteId ){
-                                        segment.getTags().remove(i);
-                                        segment.getTagsIndicator().remove(i);
-                                    }else if(index > deleteIndexInProject ){
-                                        segment.getTags().remove(i);
-                                        segment.getTags().add(i, index -1);
-                                        segment.getTagsIndicator().remove(i);
-                                    }
-                                }
-                            }
-                        }
+
                 }
                 break;
             case Configuration:
@@ -529,7 +495,36 @@ public class EditDataModel implements IEditDataModel {
                             }
                         }
                         break;
-
+                    case Branch:
+                        for (Configuration segment : dataModel.getConfigurations()) {
+                            int i = 0;
+                            for (BranchList list : segment.getBranchIndexs()) {
+                                updateElementListFromSegment(elementIdList, list.getBranches());
+                                if (list.getBranches().size() != 0) {
+                                    segment.getBranchIndicator().remove(i);
+                                }
+                                i++;
+                            }
+                        }
+                    case VCSTag:
+                        for (Configuration segment : dataModel.getConfigurations()) {
+                            List<Integer> type = segment.getTagIndex();
+                            List<Integer> tagId = dataModel.getTagId(type);
+                            for(int deleteId : elementIdList){
+                                int deleteIndexInProject = dataModel.getVCSTAgProjectIndex(deleteId);
+                                for (int i = 0; i < type.size(); i++) {
+                                    int index = type.get(i);
+                                    if( tagId.get(i) == deleteId ){
+                                        segment.getTagIndex().remove(i);
+                                        segment.getTagsIndicator().remove(i);
+                                    }else if(index > deleteIndexInProject ){
+                                        segment.getTagIndex().remove(i);
+                                        segment.getTagIndex().add(i, index -1);
+                                        segment.getTagsIndicator().remove(i);
+                                    }
+                                }
+                            }
+                        }
 
                     default:
                 }

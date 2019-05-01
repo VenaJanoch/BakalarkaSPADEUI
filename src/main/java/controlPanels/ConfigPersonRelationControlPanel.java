@@ -1,5 +1,6 @@
 package controlPanels;
 
+import abstractControlPane.DescriptionControlPanel;
 import controllers.formControllers.FormController;
 import abstractControlPane.NameControlPanel;
 import graphics.controlPanelItems.ComboBoxItem;
@@ -16,7 +17,7 @@ import tables.CPRTable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ConfigPersonRelationControlPanel extends NameControlPanel {
+public class ConfigPersonRelationControlPanel extends DescriptionControlPanel {
     private ComboBoxItem roleCB;
 
 
@@ -26,11 +27,6 @@ public class ConfigPersonRelationControlPanel extends NameControlPanel {
         lineList.add(new ControlPanelLineObject("Person: ", ControlPanelLineType.ComboBox, ParamType.Role, segmentLists.getRoleObservable()));
 
         createControlPanel();
-    }
-
-    @Override
-    protected void createBaseControlPanel() {
-
     }
 
 
@@ -50,6 +46,7 @@ public class ConfigPersonRelationControlPanel extends NameControlPanel {
         createControlPanel();
 
         controlPanelController.setValueTextField(this, lineList ,ParamType.Name, configPersonRelation, configPersonRelation[2], 0);
+        controlPanelController.setValueTextField(this, lineList ,ParamType.Description, configPersonRelation, configPersonRelation[6], 5);
         controlPanelController.setValueComboBox(this, lineList ,ParamType.Role, (ArrayList<Integer>)configPersonRelation[1], configPersonRelation[3]);
         List boolList = configPersonRelation[4];
         boolean exist = (boolean) boolList.get(0);
@@ -62,13 +59,20 @@ public class ConfigPersonRelationControlPanel extends NameControlPanel {
             ArrayList<Integer> roleIndicators = new ArrayList<>();
             ArrayList<String> name = controlPanelController.processTextLines(ParamType.Name, nameIndicators);
             ArrayList<Integer> role = controlPanelController.processComboBoxLines(ParamType.Role, roleIndicators);
+            ArrayList<Integer> descriptionIndicators = new ArrayList<>();
+            ArrayList<String> description = controlPanelController.processTextLines(ParamType.Description, descriptionIndicators);
 
-            editFormController.editDataFromCPR(aliasTF.getText(), name, nameIndicators, role, roleIndicators, controlPanelController.isExist(), cprTable);
+
+            editFormController.editDataFromCPR(aliasTF.getText(), name, nameIndicators, description, descriptionIndicators, role, roleIndicators, controlPanelController.isExist(), cprTable);
             clearPanel(tableView);
 
         });
     }
 
+    @Override
+    protected void addItemsToControlPanel() {
+
+    }
 
 
     public void clearPanel(TableView<CPRTable> tableView) {

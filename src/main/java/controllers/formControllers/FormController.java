@@ -779,6 +779,28 @@ public class FormController {
 
     }
 
+    public Integer[] findResultsFromPersonToCommitRelation(int startSegmentId, int endSegmentId) {
+        Integer startIndex = identificatorCreater.getRoleId(startSegmentId);
+        Integer endIndex = identificatorCreater.getRoleId(endSegmentId);
+
+        Integer startIndex1 = identificatorCreater.getCommitId(startSegmentId);
+        Integer endIndex2 = identificatorCreater.getCommitId(endSegmentId);
+
+        return findCorectId(startIndex, endIndex, startIndex1, endIndex2);
+
+    }
+
+    public Integer[] findResultsFromPersonToCommittedConfigurationRelation(int startSegmentId, int endSegmentId) {
+        Integer startIndex = identificatorCreater.getRoleId(startSegmentId);
+        Integer endIndex = identificatorCreater.getRoleId(endSegmentId);
+
+        Integer startIndex1 = identificatorCreater.getCommitedConfigurationId(startSegmentId);
+        Integer endIndex2 = identificatorCreater.getCommitedConfigurationId(endSegmentId);
+
+        return findCorectId(startIndex, endIndex, startIndex1, endIndex2);
+
+    }
+
     public Integer[] findResultsFromPersonToConfigurationRelation(int startSegmentId, int endSegmentId) {
         Integer startIndex = identificatorCreater.getRoleId(startSegmentId);
         Integer endIndex = identificatorCreater.getRoleId(endSegmentId);
@@ -802,6 +824,20 @@ public class FormController {
 
         Integer[] result = findResultsFromPersonToArtifactRelation(startSegmentId, endSegmentId);
         formDataController.createNewPersonToArtifactRelation(linkId, result[0], result[1], isXML);
+
+    }
+
+    public void createRoleToCommitRelation(int linkId, int startSegmentId, int endSegmentId, boolean isXML) {
+
+        Integer[] result = findResultsFromPersonToCommitRelation(startSegmentId, endSegmentId);
+        formDataController.createNewPersonToCommitRelation(linkId, result[0], result[1], isXML);
+
+    }
+
+    public void createRoleToCommttedConfigurationRelation(int linkId, int startSegmentId, int endSegmentId, boolean isXML) {
+
+        Integer[] result = findResultsFromPersonToCommittedConfigurationRelation(startSegmentId, endSegmentId);
+        formDataController.createNewPersonToCommittedConfigurationRelation(linkId, result[0], result[1], isXML);
 
     }
 }

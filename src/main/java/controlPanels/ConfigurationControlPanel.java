@@ -1,6 +1,6 @@
 package controlPanels;
 
-import abstractControlPane.DateControlPanel;
+import abstractControlPane.DateDescControlPanel;
 import controllers.formControllers.FormController;
 import graphics.controlPanelItems.ControlPanelLine;
 import interfaces.IControlPanel;
@@ -15,7 +15,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ConfigurationControlPanel extends DateControlPanel implements IControlPanel {
+public class ConfigurationControlPanel extends DateDescControlPanel implements IControlPanel {
 
     private Label isReleaseLB;
 
@@ -35,6 +35,9 @@ public class ConfigurationControlPanel extends DateControlPanel implements ICont
         SegmentLists segmentLists = formController.getSegmentLists();
         lineList.add(new ControlPanelLineObject("CPRs: ", ControlPanelLineType.CheckBox, ParamType.CPR, segmentLists.getCPRObservable() ));
         lineList.add(new ControlPanelLineObject("Changes: ", ControlPanelLineType.CheckBox, ParamType.Change, segmentLists.getChangeObservable()));
+        lineList.add(new ControlPanelLineObject("VCS Tag: ", ControlPanelLineType.ComboBox, ParamType.VCSTag, segmentLists.getVCSTag() ));
+        lineList.add(new ControlPanelLineObject("Branches: ", ControlPanelLineType.CheckBox, ParamType.Branch, segmentLists.getBranchObservable()));
+
         this.addItemsToControlPanel();
     }
 
@@ -51,23 +54,27 @@ public class ConfigurationControlPanel extends DateControlPanel implements ICont
         button.setOnAction(event -> {
 
             ArrayList<Integer> nameIndicators = new ArrayList<>();
+            ArrayList<Integer> descriptionIndicators = new ArrayList<>();
             ArrayList<Integer> dateIndicators = new ArrayList<>();
-            ArrayList<Integer> roleIndicators = new ArrayList<>();
+            ArrayList<Integer> tagIndicator = new ArrayList<>();
 
             ArrayList<Integer> cprsIndicators = new ArrayList<>();
+            ArrayList<Integer> branchIndicators = new ArrayList<>();
 
             ArrayList<Integer> changeIndicators = new ArrayList<>();
 
             ArrayList<String> name = controlPanelController.processTextLines(ParamType.Name, nameIndicators);
-            ArrayList<Integer> role = controlPanelController.processComboBoxLines(ParamType.Role, roleIndicators);
+            ArrayList<String> description = controlPanelController.processTextLines(ParamType.Description, descriptionIndicators);
+            ArrayList<Integer> tag = controlPanelController.processComboBoxLines(ParamType.VCSTag, tagIndicator);
             ArrayList<LocalDate> dates = controlPanelController.processDateLines(ParamType.Date, dateIndicators);
             ArrayList<ArrayList<Integer>> cprs = controlPanelController.processCheckComboBoxLines(ParamType.CPR, cprsIndicators);
             ArrayList<ArrayList<Integer>> changes = controlPanelController.processCheckComboBoxLines(ParamType.Change, changeIndicators);
+            ArrayList<ArrayList<Integer>> branches = controlPanelController.processCheckComboBoxLines(ParamType.Branch, branchIndicators);
             String instanceCount = controlPanelController.getInstanceCount();
 
 
-            editFormController.editDataFromConfiguration(aliasTF.getText(), name, dates, false, role, cprs, changes, cprsIndicators,
-                    nameIndicators, dateIndicators, roleIndicators, changeIndicators, instanceCount, controlPanelController.isExist(),  configId);
+            editFormController.editDataFromConfiguration(aliasTF.getText(), name, description, dates, false, tag, cprs, branches, branchIndicators, changes, cprsIndicators,
+                    nameIndicators, descriptionIndicators, dateIndicators, tagIndicator, changeIndicators, instanceCount, controlPanelController.isExist(),  configId);
         });
 
     }
@@ -82,13 +89,16 @@ public class ConfigurationControlPanel extends DateControlPanel implements ICont
 
         controlPanelController.setValueTextField(this, lineList ,ParamType.Name, configData, configData[3], 0);
         controlPanelController.setValueDatePicker(this, lineList ,ParamType.Date, (ArrayList<LocalDate>) configData[1], configData[4]);
-//        controlPanelController.setValueComboBox(this, lineList ,ParamType.Role, (ArrayList<Integer>) configData[2], configData[5]);
+        controlPanelController.setValueComboBox(this, lineList ,ParamType.VCSTag, (ArrayList<Integer>) configData[2], configData[10]);
 
         ArrayList<ArrayList<Integer>> cprList = formDataController.getCPRFromConfiguration(configId);
         controlPanelController.setValueCheckComboBox(this, lineList ,ParamType.CPR, cprList, configData[6]);
 
         ArrayList<ArrayList<Integer>> changeList = formDataController.getChangesFromConfiguration(configId);
         controlPanelController.setValueCheckComboBox(this, lineList ,ParamType.Change, changeList, configData[8]);
+
+        ArrayList<ArrayList<Integer>> branchList = formDataController.getBranchesFromConfiguration(configId);
+        controlPanelController.setValueCheckComboBox(this, lineList ,ParamType.Branch, branchList, configData[7]);
 
 
         List boolList = configData[9];
