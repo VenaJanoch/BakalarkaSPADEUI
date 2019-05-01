@@ -22,7 +22,7 @@ public class RoleValueTest {
             FormController formController = warmUp.getFormController();
 
             warmUp.getDataModel().getSaveDataModel().createNewPerson(2);
-            role = warmUp.getDataModel().getRole(2);
+            role = warmUp.getDataModel().getPerson(2);
         }
     @Test
     public void testId() {

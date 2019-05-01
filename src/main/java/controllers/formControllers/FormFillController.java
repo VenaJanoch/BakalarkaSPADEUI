@@ -354,7 +354,7 @@ public class FormFillController {
 
     private void fillPersonForm(int segmentId, int formId, CanvasController canvasController){
 
-        Person person = dataModel.getRole(segmentId);
+        Person person = dataModel.getPerson(segmentId);
         String name = person.getAlias();
         canvasController.addCanvasItemFromExistData(SegmentType.Person, formId, name, person.getCoordinates().getXCoordinate(),
                 person.getCoordinates().getYCoordinate(), person.getCount(), person.isExist());

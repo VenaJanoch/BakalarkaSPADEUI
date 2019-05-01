@@ -1,7 +1,6 @@
 package model;
 
 import SPADEPAC.*;
-import XML.ProcessGenerator;
 
 import java.util.*;
 
@@ -95,8 +94,8 @@ public class DataManipulator{
     
     
     public void copyDataFromPerson(int artifactId, int newPersonId, double x, double y) {
-        Person oldPerson = dataModel.getRole(artifactId);
-        Person newPerson = dataModel.getRole(newPersonId);
+        Person oldPerson = dataModel.getPerson(artifactId);
+        Person newPerson = dataModel.getPerson(newPersonId);
 
         Coordinates coordinates = dataModel.createCoords((int) x,(int) y);
 
@@ -197,7 +196,7 @@ public class DataManipulator{
 
     public List[] getRoleData(int id) {
         List[] data = new List[5];
-        Person role = dataModel.getRole(id);
+        Person role = dataModel.getPerson(id);
 
         if(role.getName() != null){
             data[0] = role.getName();

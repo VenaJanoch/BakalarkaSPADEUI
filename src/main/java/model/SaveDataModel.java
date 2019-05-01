@@ -39,7 +39,7 @@ public class SaveDataModel implements ISaveDataModel {
 
         createLink(linkId, startId, endId, LinkType.PERSON_ARTIFACT);
 
-        Person person = dataModel.getRole(startId);
+        Person person = dataModel.getPerson(startId);
         person.getArtifacts().add(endId);
         Artifact artifact = dataModel.getArtifact(endId);
         artifact.getAuthorIndex().add(startId);
@@ -49,7 +49,7 @@ public class SaveDataModel implements ISaveDataModel {
 
         createLink(linkId, startId, endId, LinkType.PERSON_COMMIT);
 
-        Person person = dataModel.getRole(startId);
+        Person person = dataModel.getPerson(startId);
         person.getCommit().add(endId);
         Commit commit = dataModel.getCommit(endId);
         commit.getAuthor().add(startId);
@@ -59,7 +59,7 @@ public class SaveDataModel implements ISaveDataModel {
 
         createLink(linkId, startId, endId, LinkType.PERSON_COMMITTED_CONFIGURATION);
 
-        Person person = dataModel.getRole(startId);
+        Person person = dataModel.getPerson(startId);
         person.getCommittedConfiguration().add(endId);
         CommitedConfiguration commitedConfiguration = dataModel.getCommitedConfiguration(endId);
         commitedConfiguration.getRole().add(startId);
@@ -68,7 +68,7 @@ public class SaveDataModel implements ISaveDataModel {
     public void createNewPersonToConfigurationRelation(int linkId, int startId, int endId){
         createLink( linkId, startId, endId, LinkType.PERSON_CONFIGURATION);
 
-        Person person = dataModel.getRole(startId);
+        Person person = dataModel.getPerson(startId);
         person.getConfigurations().add(endId);
         Configuration configuration = dataModel.getConfiguration(endId);
         configuration.getAuthorIndex().add(startId);

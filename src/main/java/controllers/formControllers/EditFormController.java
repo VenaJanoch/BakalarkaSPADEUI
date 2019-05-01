@@ -135,7 +135,7 @@ public class EditFormController implements IEditFormController {
             ArrayList<String> nameForManipulator = InputController.fillNameTextMapper(name);
             ArrayList<Integer> typeFormManipulator = dataPreparer.prepareIndexForManipulator(roleTypeIndex);
 
-            dataManipulator.editDataInRole(alias, nameForManipulator, typeFormManipulator, nameIndicator, roleTypeIndicators, instanceCount, exist, id);
+            dataManipulator.editDataInPerson(alias, nameForManipulator, typeFormManipulator, nameIndicator, roleTypeIndicators, instanceCount, exist, id);
 
             personTable.setAlias(alias);
             segmentLists.updateListItem(SegmentType.Person, id, personTable);

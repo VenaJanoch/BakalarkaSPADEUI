@@ -51,8 +51,8 @@ public interface IEditDataModel {
                               ArrayList<Integer> classST,  ArrayList<Integer> superST, ArrayList<String> classString,  ArrayList<String> superSting, boolean exist, int id);
       void editDataInResolution(String alias, ArrayList<String> nameForManipulator, ArrayList<Integer> nameIndicator,
                                 ArrayList<Integer> classST,  ArrayList<Integer> superST, ArrayList<String> classString,  ArrayList<String> superSting, boolean exist, int id);
-      void editDataInRole(String alias, ArrayList<String> nameForManipulator, ArrayList<Integer> type, ArrayList<Integer> nameIndicator,
-                          ArrayList<Integer> typeIndicator, int instanceCount, boolean exist, int id);
+      void editDataInPerson(String alias, ArrayList<String> nameForManipulator, ArrayList<Integer> type, ArrayList<Integer> nameIndicator,
+                            ArrayList<Integer> typeIndicator, int instanceCount, boolean exist, int id);
       void editDataInMilestone(String alias, ArrayList<String> nameForManipulator, ArrayList<String> descForManipulator,
                                ArrayList<Integer> nameIndicator, ArrayList<Integer> descIndicator, ArrayList<Integer> criterionIndicator,
                                ArrayList<ArrayList<Integer>> criterionIndex, boolean exist, int id);

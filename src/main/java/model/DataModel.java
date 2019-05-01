@@ -358,7 +358,7 @@ public class DataModel {
         return project.getResolution().get(getResolutionIndexInProject(id));
     }
 
-    public Person getRole(int id) {
+    public Person getPerson(int id) {
         return project.getRoles().get(getRoleIndexInProject(id));
     }
 
@@ -576,8 +576,6 @@ public class DataModel {
         commitedConfiguration.setAlias(alias);
         commitedConfiguration.getName().addAll(nameForManipulator);
         commitedConfiguration.getNameIndicator().addAll(nameIndicator);
-        commitedConfiguration.getDescription().addAll(descriptions);
-        commitedConfiguration.getDescriptionIndicator().addAll(descriptionsIndicator);
         commitedConfiguration.getCommitedDayIndicator().addAll(dateIndicator);
         commitedConfiguration.getCommitedDay().addAll(convertDate(startDate));
         commitedConfiguration.getCreated().addAll(convertDate(createDate));
@@ -766,6 +764,8 @@ public class DataModel {
         configuration.getBranchIndexs().clear();
         configuration.getDescription().clear();
         configuration.getDescriptionIndicator().clear();
+        configuration.getTagIndex().clear();
+        configuration.getTagsIndicator().clear();
     }
 
 
@@ -1018,10 +1018,11 @@ public class DataModel {
         project.getWorkUnitsIndicator().clear();
     }
 
-    public void addDataToMilestone(Milestone milestone, ArrayList<String> nameForManipulator, ArrayList<String> descForManipulator,
+    public void addDataToMilestone(Milestone milestone, String alias, ArrayList<String> nameForManipulator, ArrayList<String> descForManipulator,
                                    ArrayList<Integer> nameIndicator, ArrayList<Integer> descIndicator, ArrayList<Integer> criterionIndicator,
                                    ArrayList<ArrayList<Integer>> criterionIndex, boolean exist) {
         clearDataInMilestone(milestone);
+        milestone.setAlias(alias);
         milestone.getCriteriaIndexs().clear();
         milestone.setExist(exist);
         for (List<Integer> list : criterionIndex){
@@ -1046,9 +1047,10 @@ public class DataModel {
         milestone.getDescriptionIndicator().clear();
     }
 
-    public void addDataToVCSTag(VCSTag tag, ArrayList<String> nameForManipulator, ArrayList<String> descriptionForManipulator,
+    public void addDataToVCSTag(VCSTag tag, String alias,  ArrayList<String> nameForManipulator, ArrayList<String> descriptionForManipulator,
                                 ArrayList<Integer> nameIndicator, ArrayList<Integer> descriptionIndicator, boolean exist) {
         clearDataInVCSTag(tag);
+        tag.setAlias(alias);
         tag.getName().addAll(nameForManipulator);
         tag.getNameIndicator().addAll(nameIndicator);
         tag.getDescription().addAll(descriptionForManipulator);
@@ -1061,6 +1063,7 @@ public class DataModel {
         tag.getName().clear();
         tag.getDescriptionIndicator().clear();
         tag.getDescription().clear();
+
     }
 
     public void addDataToCommit(Commit commit, String alias, ArrayList<String> nameForManipulator, ArrayList<Integer> nameIndicator, ArrayList<String> descriptions, ArrayList<Integer> descriptionsIndicator,

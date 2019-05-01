@@ -182,7 +182,7 @@ public class SQLAtributeCreator {
         ArrayList<Integer> roleDBId = new ArrayList<>();
         SQLVerifyObject roleArtifacts;
         for (int i : authorIndex){
-            Person person = verifyDataModel.getRole(verifyDataModel.getRoleId(i));
+            Person person = verifyDataModel.getPerson(verifyDataModel.getRoleId(i));
             ArrayList<Integer> roleTypeDBId = SQLAtributeCreator.createRoleTypeAttribute(person.getType(), verifyDataModel, roleDAO, projectVerifyId);
 
             roleArtifacts = personDAO.getPersonProjekt(projectVerifyId, person.getName(), person.getNameIndicator(), roleTypeDBId).get(0);

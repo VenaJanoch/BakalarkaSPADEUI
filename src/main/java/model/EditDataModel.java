@@ -134,10 +134,10 @@ public class EditDataModel implements IEditDataModel {
         dataModel.addDataToResolution(relation, alias, nameForManipulator, nameIndicator, classST, superST, classString, superSting, exist);
     }
 
-    public void editDataInRole(String alias, ArrayList<String> nameForManipulator, ArrayList<Integer> type,
-                               ArrayList<Integer> nameIndicator, ArrayList<Integer> typeIndicator, int instanceCount, boolean exist, int id) {
+    public void editDataInPerson(String alias, ArrayList<String> nameForManipulator, ArrayList<Integer> type,
+                                 ArrayList<Integer> nameIndicator, ArrayList<Integer> typeIndicator, int instanceCount, boolean exist, int id) {
 
-        Person role = dataModel.getRole(id);
+        Person role = dataModel.getPerson(id);
         dataModel.addDatToRole(role, alias, nameForManipulator, type, nameIndicator, typeIndicator, instanceCount, exist);
     }
 
@@ -145,7 +145,7 @@ public class EditDataModel implements IEditDataModel {
                                     ArrayList<Integer> nameIndicator, ArrayList<Integer> descIndicator, ArrayList<Integer> criterionIndicator,
                                     ArrayList<ArrayList<Integer>> criterionIndex, boolean exist, int id) {
         Milestone milestone = dataModel.getMilestone(id);
-        dataModel.addDataToMilestone(milestone, nameForManipulator, descForManipulator,
+        dataModel.addDataToMilestone(milestone, alias, nameForManipulator, descForManipulator,
                 nameIndicator, descIndicator, criterionIndicator,criterionIndex, exist);
     }
 
@@ -169,7 +169,7 @@ public class EditDataModel implements IEditDataModel {
     public void editDataInVCSTag(String alias, ArrayList<String> nameForManipulator, ArrayList<String> descriptionForManipulator,
                                  ArrayList<Integer> nameIndicator, ArrayList<Integer> descriptionIndicator, boolean exist, int id){
         VCSTag tag = dataModel.getVCSTag(id);
-        dataModel.addDataToVCSTag(tag, nameForManipulator, descriptionForManipulator, nameIndicator, descriptionIndicator, exist);
+        dataModel.addDataToVCSTag(tag, alias, nameForManipulator, descriptionForManipulator, nameIndicator, descriptionIndicator, exist);
     }
 
     public void editDataInCommit(String alias, ArrayList<String> nameForManipulator,  ArrayList<Integer> nameIndicator, ArrayList<String> descriptions, ArrayList<Integer> descriptionsIndicator,
@@ -204,7 +204,7 @@ public class EditDataModel implements IEditDataModel {
     }
 
     public void editCoordinatesInRole(int x, int y, int id){
-        Person role = dataModel.getRole(id);
+        Person role = dataModel.getPerson(id);
         Coordinates coordinates = dataModel.createCoords(x, y);
         dataModel.setCoordinatesToRole(coordinates, role);
     }
