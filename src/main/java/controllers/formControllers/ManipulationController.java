@@ -4,6 +4,7 @@ import controllers.graphicsComponentsControllers.CanvasController;
 import controllers.graphicsComponentsControllers.CanvasItemController;
 import graphics.canvas.CanvasItem;
 import graphics.canvas.DragAndDropCanvas;
+import graphics.canvas.ElementsLink;
 import graphics.canvas.NodeLink;
 import interfaces.IDeleteFormController;
 import services.*;

@@ -7,6 +7,7 @@ import javafx.event.EventHandler;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import controllers.LinkControl;
+import javafx.scene.paint.Color;
 
 public class ElementsLink extends NodeLink {
     /**
@@ -19,7 +20,14 @@ public class ElementsLink extends NodeLink {
 
     public ElementsLink(int ID, LinkControl linkControl, CanvasController canvasController, ManipulationController manipulationController) {
         super(ID, linkControl,canvasController, manipulationController);
-        backgroundPolygon.setOnMouseClicked(polygonMouseEvent);
+        backgroundPolygon.setOnMouseClicked(event -> {
+            manipulationController.setLink(this);
+            backgroundPolygon.setVisible(true);
+            backgroundPolygon.setStroke(Color.BLACK);
+            if (event.getClickCount() == 2){
+                pressedDeleteArrow(event);
+            }
+        });
     }
 
     /**
@@ -51,20 +59,6 @@ public class ElementsLink extends NodeLink {
         }
 
     }
-
-    /**
-     * MouseEvent handler pro reakci na kliknutí na šipku
-     */
-    EventHandler<MouseEvent> polygonMouseEvent = new EventHandler<MouseEvent>() {
-
-        @Override
-        public void handle(MouseEvent t) {
-            backgroundPolygon.setVisible(true);
-            if (t.getClickCount() == 2){
-                pressedDeleteArrow(t);
-            }
-        }
-    };
 
     public LinkController getLinkController(){
         return linkController;

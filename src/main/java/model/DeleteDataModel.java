@@ -31,13 +31,6 @@ public class DeleteDataModel implements IDeleteDataModel {
         }
     }
 
-    public void removeTag(ArrayList<Integer> indexList, int configId) {
-        Configuration configuration = dataModel.getConfigurations().get(configId);
-        for(Integer i : indexList){
-            configuration.getTags().remove(i);
-        }
-
-    }
 
     public void removeRoleType(ObservableList<Integer> indexList) {
         for(int i = indexList.size() -1; i >= 0; i-- ){

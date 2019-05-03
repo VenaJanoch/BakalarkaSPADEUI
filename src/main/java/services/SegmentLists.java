@@ -267,6 +267,9 @@ public class SegmentLists {
             case Change:
                 removeDataFromListTest(changeObservable, indexList);
                 break;
+            case VCSTag:
+                removeDataFromListTest(VCSTagObservable, indexList);
+                break;
             default:
 
         }

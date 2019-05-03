@@ -51,15 +51,8 @@ public abstract class NodeLink extends Line {
         this.id = Id;
         endPoint = new Point2D(0, 0);
         backgroundPolygon = new Polygon();
-
-        backgroundPolygon.setOnMouseClicked(event -> {
-            backgroundPolygon.setStroke(Color.BLACK);
-            backgroundPolygon.getStrokeDashArray().add(2d);
-            this.manipulationController.setLink(this);
-
-        });
         backgroundPolygon.setFill(Color.TRANSPARENT);
-
+        backgroundPolygon.getStrokeDashArray().add(2d);
         canvasController.addPolygonToCanvas(backgroundPolygon);
     }
 

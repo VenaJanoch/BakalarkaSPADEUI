@@ -444,6 +444,7 @@ public class EditFormController implements IEditFormController {
 
             dataManipulator.editDataInConfiguration(alias, nameForManipulator, description, date, isRelease,
                     cprsForManipulator, changesForManipulator, branchesForManipulator, branchIndicators, cprIndicators, nameIndicator, descriptionIndicator, tagForManipulator, tagIndicator, createdIndicator, changeIndicator, instanceCount, exist, configId);
+
             int formIndex = identificatorCreater.getConfigurationFormIndex(configId);
             ConfigTable configTable = new ConfigTable(alias, "", formIndex, exist, configId);
             configTable.setExist(exist);

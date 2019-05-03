@@ -29,6 +29,8 @@ public class MapperTableToObject {
     private Map<Integer, ArrayList<TableToObjectInstanc>> configurationToArtifactMapper;
     private Map<Integer, ArrayList<TableToObjectInstanc>> configurationToChangeMapper;
     private Map<Integer, ArrayList<TableToObjectInstanc>> configurationToCPRMapper;
+    private Map<Integer, ArrayList<TableToObjectInstanc>> configurationToBranchMapper;
+    private Map<Integer, ArrayList<TableToObjectInstanc>> configurationToVCSTagMapper;
 
     private Map<Integer, ArrayList<TableToObjectInstanc>> WUToPriorityMapper; // Vazba mezi Priority a WU, vychazejici z WU
     private Map<Integer, ArrayList<TableToObjectInstanc>> WUToSeverityMapper; // Vazba mezi Severity a WU, vychazejici z WU
@@ -44,8 +46,7 @@ public class MapperTableToObject {
     private Map<Integer, ArrayList<TableToObjectInstanc>> milestoneToCriterionMapper; //Vazba mezi Criterions a Milestone, vychazejici z Milestone
     private Map<Integer, ArrayList<TableToObjectInstanc>> phaseToMilestone;
 
-    private Map<Integer, ArrayList<TableToObjectInstanc>> commitToBranchMapper;
-    private Map<Integer, ArrayList<TableToObjectInstanc>> commitToVCSTagMapper;
+
 
     private ArrayList<Map<Integer, ArrayList<TableToObjectInstanc>>> roleMaps;
     private ArrayList<Map<Integer, ArrayList<TableToObjectInstanc>>> configurationMaps;
@@ -75,8 +76,8 @@ public class MapperTableToObject {
         this.phaseToWUMapper = new HashMap<>();
         this.iterationToWUMapper = new HashMap<>();
         this.activityToWUMapper = new HashMap<>();
-        this.commitToBranchMapper = new HashMap<>();
-        this.commitToVCSTagMapper = new HashMap<>();
+        this.configurationToBranchMapper = new HashMap<>();
+        this.configurationToVCSTagMapper = new HashMap<>();
         this.configurationToCommitedConfigurationMapper = new HashMap<>();
         this.commitedConfigurationToCommitMapper = new HashMap<>();
         this.configurationToArtifactMapper = new HashMap<>();
@@ -210,10 +211,10 @@ public class MapperTableToObject {
 
     public void mapTableToConfiguration(ArrayList<ArrayList<Integer>> branchesIndicies, ArrayList<ArrayList<Integer>> cprIndicies, ArrayList<ArrayList<Integer>> changes, ArrayList<Integer> tag,
                                         String configName, int configIndex){
-        addInstancesToMap(branchesIndicies, lists.getBranchObservable(), new TableToObjectInstanc(configName, configIndex, SegmentType.Configuration), configurationToRoleMapper);
+        addInstancesToMap(branchesIndicies, lists.getBranchObservable(), new TableToObjectInstanc(configName, configIndex, SegmentType.Configuration), configurationToBranchMapper);
         addInstancesToMap(cprIndicies, lists.getCPRObservable(), new TableToObjectInstanc(configName, configIndex, SegmentType.Configuration), configurationToCPRMapper);
         addInstancesToMap(changes, lists.getChangeObservable(), new TableToObjectInstanc(configName, configIndex, SegmentType.Configuration), configurationToChangeMapper);
-        addInstanceToMap(tag, lists.getVCSTag(), new TableToObjectInstanc(configName, configIndex, SegmentType.Configuration), configurationToChangeMapper);
+        addInstanceToMap(tag, lists.getVCSTag(), new TableToObjectInstanc(configName, configIndex, SegmentType.Configuration), configurationToVCSTagMapper);
     }
 
     public void mapTableToPhase(ArrayList<Integer> milestoneId, ArrayList<Integer> configurationId, ArrayList<Integer> workUnitId,  String phaseName, int phaseId){
@@ -478,12 +479,12 @@ public class MapperTableToObject {
         return activityToWUMapper;
     }
 
-    public Map<Integer, ArrayList<TableToObjectInstanc>> getCommitToBranchMapper() {
-        return commitToBranchMapper;
+    public Map<Integer, ArrayList<TableToObjectInstanc>> getConfigurationToBranchMapper() {
+        return configurationToBranchMapper;
     }
 
-    public Map<Integer, ArrayList<TableToObjectInstanc>> getCommitToVCSTagMapper() {
-        return commitToVCSTagMapper;
+    public Map<Integer, ArrayList<TableToObjectInstanc>> getConfigurationToVCSTagMapper() {
+        return configurationToVCSTagMapper;
     }
 
     public ArrayList<Map<Integer, ArrayList<TableToObjectInstanc>>> getConfigurationMaps() {

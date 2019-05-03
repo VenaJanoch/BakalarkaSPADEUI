@@ -224,8 +224,11 @@ public class CanvasController {
         if (t.getButton().equals(MouseButton.SECONDARY)) {
 
             manipulationController.setChooseCanvas(canvas);
+
             itemContexMenu.show(canvas.getCanvas(), t.getScreenX(), t.getScreenY());
+
         }else {
+
             manipulationController.controlCopyItem();
         }
 

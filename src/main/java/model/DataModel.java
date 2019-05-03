@@ -1347,6 +1347,66 @@ public class DataModel {
         return idList;
     }
 
+    public ArrayList<Integer> getPriorityId(List<Integer> priorityIndicies) {
+
+        ArrayList<Integer> idList = new ArrayList<>();
+        List<Priority> roleTypeList = project.getPriority();
+        for (int artifactIndex : priorityIndicies){
+            idList.add(roleTypeList.get(artifactIndex).getId());
+        }
+        return idList;
+    }
+
+    public ArrayList<Integer> getTypeId(List<Integer> typeIndicies) {
+
+        ArrayList<Integer> idList = new ArrayList<>();
+        List<Type> roleTypeList = project.getTypes();
+        for (int artifactIndex : typeIndicies){
+            idList.add(roleTypeList.get(artifactIndex).getId());
+        }
+        return idList;
+    }
+    
+    public ArrayList<Integer> getStatusId(List<Integer> statusIndicies) {
+
+        ArrayList<Integer> idList = new ArrayList<>();
+        List<Status> roleTypeList = project.getStatus();
+        for (int artifactIndex : statusIndicies){
+            idList.add(roleTypeList.get(artifactIndex).getId());
+        }
+        return idList;
+    }
+
+    public ArrayList<Integer> getSeverityId(List<Integer> severityIndicies) {
+
+        ArrayList<Integer> idList = new ArrayList<>();
+        List<Severity> roleTypeList = project.getSeverity();
+        for (int artifactIndex : severityIndicies){
+            idList.add(roleTypeList.get(artifactIndex).getId());
+        }
+        return idList;
+    }
+    
+    public ArrayList<Integer> getRelationId(List<Integer> relationIndicies) {
+
+        ArrayList<Integer> idList = new ArrayList<>();
+        List<Relation> roleTypeList = project.getRelation();
+        for (int artifactIndex : relationIndicies){
+            idList.add(roleTypeList.get(artifactIndex).getId());
+        }
+        return idList;
+    }
+
+    public ArrayList<Integer> getResolutionId(List<Integer> relationIndicies) {
+
+        ArrayList<Integer> idList = new ArrayList<>();
+        List<Resolution> roleTypeList = project.getResolution();
+        for (int artifactIndex : relationIndicies){
+            idList.add(roleTypeList.get(artifactIndex).getId());
+        }
+        return idList;
+    }
+
     public int getPriorityId(int index) {
 
         return project.getPriority().get(index).getId();
