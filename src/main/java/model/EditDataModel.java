@@ -74,7 +74,7 @@ public class EditDataModel implements IEditDataModel {
 
     }
 
-    public void editDataInWorkUnit(String alias, List<String> nameForManipulator, List<String> description, List<String> categoryForManipulator,
+    public void editDataInWorkUnit(String alias, ArrayList<Integer> progress, ArrayList<Integer> progressIndicator, List<String> nameForManipulator, List<String> description, List<String> categoryForManipulator,
                                    ArrayList<Integer> assigneIndex, ArrayList<Integer> authorIndex, ArrayList<Integer> priorityIndex, ArrayList<Integer> severityIndex,
                                    ArrayList<Integer> typeIndex, ArrayList<Integer> resolutionIndex, ArrayList<Integer> statusIndex,
                                    ArrayList<Double> estimateForDataManipulator, List<Integer> nameIndicator, List<Integer> descriptionIndicator, List<Integer> categoryIndicator,
@@ -82,7 +82,7 @@ public class EditDataModel implements IEditDataModel {
                                    ArrayList<Integer> typeIndicator, ArrayList<Integer> resolutionIndicator, ArrayList<Integer> statusIndicator,
                                    ArrayList<Integer> estimateIndicator, ArrayList<LocalDate> createDate, ArrayList<Integer> createIndicator, boolean isExist, ArrayList<Integer> relations, ArrayList<ArrayList<Integer>> workUnits, int id) {
         WorkUnit workUnit = dataModel.getWorkUnit(id);
-        dataModel.addDataToWorkUnit(workUnit, alias, nameForManipulator, description, categoryForManipulator,
+        dataModel.addDataToWorkUnit(workUnit, alias, progress, progressIndicator, nameForManipulator, description, categoryForManipulator,
                 assigneIndex, authorIndex, priorityIndex, severityIndex,
                 typeIndex, resolutionIndex, statusIndex,
                 estimateForDataManipulator, nameIndicator, descriptionIndicator, categoryIndicator,
@@ -492,17 +492,17 @@ public class EditDataModel implements IEditDataModel {
                 }
                 break;
             case Activity:
-                        for (Activity segment : dataModel.getActivities()) {
-                            int i = 0;
-                            for (WorkUnitList list : segment.getWorkUnits()) {
-                                updateElementListFromSegment(elementIdList, list.getWorkUnits());
-                                if (list.getWorkUnits().size() == 0) {
-                                    segment.getWorkUnitsIndicator().remove(i);
-                                }
-                                i++;
-                            }
+                for (Activity segment : dataModel.getActivities()) {
+                    int i = 0;
+                    for (WorkUnitList list : segment.getWorkUnits()) {
+                        updateElementListFromSegment(elementIdList, list.getWorkUnits());
+                        if (list.getWorkUnits().size() == 0) {
+                            segment.getWorkUnitsIndicator().remove(i);
                         }
-                        break;
+                        i++;
+                    }
+                }
+                break;
             case Commit:
                 switch (elementType) {
 

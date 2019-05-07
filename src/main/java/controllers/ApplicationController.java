@@ -28,7 +28,7 @@ public class ApplicationController {
 
 
     public ApplicationController(DataModel dataModel, IdentificatorCreater identificatorCreater, SegmentLists segmentLists,
-                                 DrawerPanelController drawerPanelController, SelectItemController selectItemController){
+                                 DrawerPanelController drawerPanelController, SelectItemController selectItemController) {
         this.mapperTableToObject = new MapperTableToObject(segmentLists);
         this.dataPreparer = new DataPreparer(identificatorCreater);
         this.deleteControl = new DeleteControl(segmentLists, mapperTableToObject, identificatorCreater);
@@ -40,16 +40,18 @@ public class ApplicationController {
         this.manipulationController = new ManipulationController(deleteFormController);
         this.linkControl = new LinkControl(formController, identificatorCreater, segmentLists, deleteFormController, manipulationController);
         this.canvasItemController = new CanvasItemController(linkControl, formController, manipulationController);
-        this.formFillController = new FormFillController(formController, dataModel, canvasItemController, identificatorCreater,dataPreparer, segmentLists,
-                 linkControl, formController.getCanvasItemList());
-         formController.initBasicForms(formDataController, editFormController, deleteFormController);
+        this.formFillController = new FormFillController(formController, dataModel, canvasItemController, identificatorCreater, dataPreparer, segmentLists,
+                linkControl, formController.getCanvasItemList());
+        formController.initBasicForms(formDataController, editFormController, deleteFormController);
         formController.setFormFillController(formFillController);
         this.manipulationController.setFormFillController(formFillController);
         this.verifyController = new VerifyController(dataModel);
         this.databaseController = new DatabaseController(verifyController);
     }
 
-    /** Getrs and Setrs **/
+    /**
+     * Getrs and Setrs
+     **/
     public CanvasItemController getCanvasItemController() {
         return canvasItemController;
     }

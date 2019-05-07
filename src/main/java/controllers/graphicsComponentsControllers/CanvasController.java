@@ -22,7 +22,7 @@ import java.util.Map;
 
 public class CanvasController {
 
-  //  private Control control;
+    //  private Control control;
     private DragAndDropCanvas canvas;
     private boolean arrow;
     private boolean startArrow;
@@ -42,7 +42,7 @@ public class CanvasController {
     public CanvasController(CanvasType canvasType, JFXDrawer leftDrawerPanel, JFXDrawer rightDrawerPanel, ApplicationController applicationController) {
         this(canvasType, applicationController);
         this.canvas = new DragAndDropCanvas(this);//, leftDrawerPanel, rightDrawerPanel);
-        }
+    }
 
     public CanvasController(CanvasType canvasType, ApplicationController applicationController) {
 
@@ -51,7 +51,7 @@ public class CanvasController {
         this.canvas.setOnKeyPressed(event -> pressESCAction());
         this.canvasItemController = applicationController.getCanvasItemController();
         this.manipulationController = applicationController.getManipulationController();
-        this.itemContexMenu = new ItemContexMenu(manipulationController,this,canvasItemController);
+        this.itemContexMenu = new ItemContexMenu(manipulationController, this, canvasItemController);
         this.formController = applicationController.getFormController();
         this.linkButton = new ToggleButton();
 
@@ -72,17 +72,17 @@ public class CanvasController {
 
         } else if (event.getCode() == KeyCode.ESCAPE) {
             if (manipulationController.getLink() != null) {
-               manipulationController.getLink().coverBackgroundPolygon();
+                manipulationController.getLink().coverBackgroundPolygon();
             }
         }
 
     }
 
-    public void addLinkToCanvas(NodeLink link){
+    public void addLinkToCanvas(NodeLink link) {
         canvas.getCanvas().getChildren().add(link);
     }
 
-    public void addPolygonToCanvas(Polygon backgroundPlygon){
+    public void addPolygonToCanvas(Polygon backgroundPlygon) {
         canvas.getCanvas().getChildren().add(backgroundPlygon);
     }
 
@@ -104,43 +104,43 @@ public class CanvasController {
 
     public CanvasItem addCanvasItemFromPanel(SegmentType type, double x, double y) {
 
-       newFormIndex = getFormIndexFromNewForm(type, canvasType);
+        newFormIndex = getFormIndexFromNewForm(type, canvasType);
         String segmentId = createSegmentId(type, newFormIndex);
-        CanvasItem item = canvasItemController.createCanvasItem(type, segmentId, newFormIndex,"New", 1, x, y, this);
+        CanvasItem item = canvasItemController.createCanvasItem(type, segmentId, newFormIndex, "New", 1, x, y, this);
         canvas.getCanvas().getChildren().add(item);
         listOfItemOnCanvas.put(newFormIndex, item);
         return item;
 
     }
 
-    public void setInstanceCountToItem(int itemIndex, int instanceCount){
-        listOfItemOnCanvas.get(itemIndex).setInstanceCountToItem(instanceCount);
+    public void setInstanceCountToItem(int itemIndex, int instanceCount) {
+        canvasItemController.setInstanceCount(listOfItemOnCanvas.get(itemIndex), instanceCount);
     }
 
-    public CanvasItem addCanvasItemFromExistData(SegmentType type, int formIndex, String name, double x, double y, int instanceCount){
+    public CanvasItem addCanvasItemFromExistData(SegmentType type, int formIndex, String name, double x, double y, int instanceCount) {
         String segmentId = createSegmentId(type, formIndex);
-        CanvasItem item = canvasItemController.createCanvasItem(type,segmentId,formIndex,name, instanceCount, x, y, this);
+        CanvasItem item = canvasItemController.createCanvasItem(type, segmentId, formIndex, name, instanceCount, x, y, this);
         canvas.getCanvas().getChildren().add(item);
         listOfItemOnCanvas.put(formIndex, item);
         return item;
     }
 
-    public CanvasItem addCanvasItemFromExistData(SegmentType type, int formIndex, String name, double x, double y, int instanceCount, boolean isExist){
-        CanvasItem item  =  addCanvasItemFromExistData(type, formIndex, name, x,  y, instanceCount);
+    public CanvasItem addCanvasItemFromExistData(SegmentType type, int formIndex, String name, double x, double y, int instanceCount, boolean isExist) {
+        CanvasItem item = addCanvasItemFromExistData(type, formIndex, name, x, y, instanceCount);
         formController.setItemColor(formIndex, isExist);
         return item;
     }
 
     public String createSegmentId(SegmentType type, int formIndex) {
 
-        int id = formController.getSegmetIdFromFormId(type,formIndex);
+        int id = formController.getSegmetIdFromFormId(type, formIndex);
         String number = String.format("%03d", id);
 
-        return type.name() +  "_" +  number;
+        return type.name() + "_" + number;
 
     }
 
-    private int getFormIndexFromNewForm(SegmentType segmentType, CanvasType  canvasType){
+    private int getFormIndexFromNewForm(SegmentType segmentType, CanvasType canvasType) {
 
         return formController.createNewForm(segmentType, canvasType);
     }
@@ -148,7 +148,7 @@ public class CanvasController {
     public void addCopyCanvasItemToCanvas(SegmentType segmentType, double x, double y) {
 
         int formIndex = getFormIndexFromNewForm(segmentType, canvasType);
-        CanvasItem item = canvasItemController.createCanvasItem(segmentType,"d",formIndex,"New", 5, x, y, this);
+        CanvasItem item = canvasItemController.createCanvasItem(segmentType, "d", formIndex, "New", 5, x, y, this);
         canvas.getCanvas().getChildren().add(item);
     }
 
@@ -178,7 +178,7 @@ public class CanvasController {
      */
 
     private void pasteItem() {
-        manipulationController.pasteItem(this, canvasItemController, 0,0);
+        manipulationController.pasteItem(this, canvasItemController, 0, 0);
     }
 
     /**
@@ -227,7 +227,7 @@ public class CanvasController {
 
             itemContexMenu.show(canvas.getCanvas(), t.getScreenX(), t.getScreenY());
 
-        }else {
+        } else {
 
             manipulationController.controlCopyItem();
         }
@@ -279,8 +279,7 @@ public class CanvasController {
     /**
      * Pomocná metoda pro určení výčtového typu SegmentType pomocí Stringu
      *
-     * @param segmentName
-     *            String s názvem segmentu
+     * @param segmentName String s názvem segmentu
      * @return SegmentType
      */
     public SegmentType findSegmentType(String segmentName) {
@@ -297,7 +296,9 @@ public class CanvasController {
 
     }
 
-    /** Getrs and Setrs **/
+    /**
+     * Getrs and Setrs
+     **/
 
     public Map<Integer, CanvasItem> getListOfItemOnCanvas() {
         return listOfItemOnCanvas;
@@ -326,7 +327,6 @@ public class CanvasController {
     public DragAndDropCanvas getCanvas() {
         return canvas;
     }
-
 
 
 }

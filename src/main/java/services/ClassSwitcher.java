@@ -1,222 +1,219 @@
 package services;
+
 /**
- * 
  * @author Václav Janoch
- *
  */
 public class ClassSwitcher {
 
-	/**
-	 * Rozhodovací metoda pro mapování Person Class na Super Class
-	 * 
-	 * @param classIndex
-	 * @return Super Class index
-	 */
-	public int roleClassToSupperClass(int classIndex) {
+    /**
+     * Rozhodovací metoda pro mapování Person Class na Super Class
+     *
+     * @param classIndex
+     * @return Super Class index
+     */
+    public int roleClassToSupperClass(int classIndex) {
 
-		if (classIndex == Constans.roleTypeManagementClass) {
+        if (classIndex == Constans.roleTypeManagementClass) {
 
-			return Constans.roleTypeManagementSuperClass;
+            return Constans.roleTypeManagementSuperClass;
 
-		} else if (classIndex == 0) {
+        } else if (classIndex == 0) {
 
-			return -1;
+            return -1;
 
-		} else if (classIndex > Constans.roleTypeManagementClass && classIndex <= Constans.roleTypeTeamMemberClass) {
+        } else if (classIndex > Constans.roleTypeManagementClass && classIndex <= Constans.roleTypeTeamMemberClass) {
 
-			return Constans.roleTypeTeamMemberSuperClass;
+            return Constans.roleTypeTeamMemberSuperClass;
 
-		} else if (classIndex > Constans.roleTypeTeamMemberClass && classIndex <= Constans.roleTypeStakeholederClass) {
+        } else if (classIndex > Constans.roleTypeTeamMemberClass && classIndex <= Constans.roleTypeStakeholederClass) {
 
-			return Constans.roleTypeStakeholederSuperClass;
+            return Constans.roleTypeStakeholederSuperClass;
 
-		} else {
+        } else {
 
-			return Constans.roleTypeOtherSuperClass;
-		}
+            return Constans.roleTypeOtherSuperClass;
+        }
 
-	}
+    }
 
-	/**
-	 * Rozhodovací metoda pro mapování Priority Class na Super Class
-	 * 
-	 * @param classIndex
-	 * @return Super Class index
-	 */
-	public int priorityClassToSupperClass(int classIndex) {
+    /**
+     * Rozhodovací metoda pro mapování Priority Class na Super Class
+     *
+     * @param classIndex
+     * @return Super Class index
+     */
+    public int priorityClassToSupperClass(int classIndex) {
 
-		if (classIndex == Constans.priorityTypeNormalClass) {
+        if (classIndex == Constans.priorityTypeNormalClass) {
 
-			return Constans.priorityTypeNormaSuperClass;
+            return Constans.priorityTypeNormaSuperClass;
 
-		} else if (classIndex >= 1 && classIndex <= Constans.priorityTypeLowClass) {
+        } else if (classIndex >= 1 && classIndex <= Constans.priorityTypeLowClass) {
 
-			return Constans.priorityTypeLowSuperClass;
+            return Constans.priorityTypeLowSuperClass;
 
-		} else if (classIndex < 1) {
+        } else if (classIndex < 1) {
 
-			return -1;
+            return -1;
 
-		} else if (classIndex > Constans.priorityTypeNormalClass && classIndex <= Constans.priorityTypeHighClass) {
+        } else if (classIndex > Constans.priorityTypeNormalClass && classIndex <= Constans.priorityTypeHighClass) {
 
-			return Constans.priorityTypeHighClassSuperClass;
+            return Constans.priorityTypeHighClassSuperClass;
 
-		} else {
+        } else {
 
-			return Constans.priorityTypeOtherSuperClass;
-		}
-	}
+            return Constans.priorityTypeOtherSuperClass;
+        }
+    }
 
-	/**
-	 * Rozhodovací metoda pro mapování Severity Class na Super Class
-	 *
-	 * @param classIndex
-	 * @return Super Class index
-	 */
-	public int severityClassToSupperClass(int classIndex) {
+    /**
+     * Rozhodovací metoda pro mapování Severity Class na Super Class
+     *
+     * @param classIndex
+     * @return Super Class index
+     */
+    public int severityClassToSupperClass(int classIndex) {
 
-		if (classIndex == Constans.severityTypeNormalClass) {
+        if (classIndex == Constans.severityTypeNormalClass) {
 
-			return Constans.severityTypeNormalSuperClass;
+            return Constans.severityTypeNormalSuperClass;
 
-		} else if (classIndex >= 1 && classIndex <= Constans.severityTypeMajorlClass) {
+        } else if (classIndex >= 1 && classIndex <= Constans.severityTypeMajorlClass) {
 
-			return Constans.severityTypeMajorClassSuperClass;
+            return Constans.severityTypeMajorClassSuperClass;
 
-		} else if (classIndex < 1) {
+        } else if (classIndex < 1) {
 
-			return -1;
+            return -1;
 
-		} else if (classIndex > Constans.severityTypeNormalClass && classIndex <= Constans.severityTypeMinorClass) {
+        } else if (classIndex > Constans.severityTypeNormalClass && classIndex <= Constans.severityTypeMinorClass) {
 
-			return Constans.severityTypeMinorSuperClass;
+            return Constans.severityTypeMinorSuperClass;
 
-		} else {
+        } else {
 
-			return Constans.severityTypeOtherSuperClass;
-		}
-	}
+            return Constans.severityTypeOtherSuperClass;
+        }
+    }
 
 
+    /**
+     * Rozhodovací metoda pro mapování Relation Class na Super Class
+     *
+     * @param classIndex
+     * @return Super Class index
+     */
+    public int relationClassToSupperClass(int classIndex) {
 
+        if (classIndex == Constans.relationTypeGeneralClass) {
 
-	/**
-	 * Rozhodovací metoda pro mapování Relation Class na Super Class
-	 * 
-	 * @param classIndex
-	 * @return Super Class index
-	 */
-	public int relationClassToSupperClass(int classIndex) {
+            return Constans.relationTypeGeneralSuperClass;
 
-		if (classIndex == Constans.relationTypeGeneralClass) {
+        } else if (classIndex == 0) {
 
-			return Constans.relationTypeGeneralSuperClass;
+            return -1;
 
-		} else if (classIndex == 0) {
+        } else if (classIndex >= 1 && classIndex <= Constans.relationTypeSimilaryClass) {
 
-			return -1;
+            return Constans.relationTypeSimilarySuperClass;
 
-		} else if (classIndex >= 1 && classIndex <= Constans.relationTypeSimilaryClass) {
+        } else if (classIndex > Constans.relationTypeSimilaryClass
+                && classIndex <= Constans.relationTypeTemporalClass) {
 
-			return Constans.relationTypeSimilarySuperClass;
+            return Constans.relationTypeTemporalSuperClass;
 
-		} else if (classIndex > Constans.relationTypeSimilaryClass
-				&& classIndex <= Constans.relationTypeTemporalClass) {
+        } else if (classIndex > Constans.relationTypeTemporalClass
+                && classIndex <= Constans.relationTypeHierachyClass) {
 
-			return Constans.relationTypeTemporalSuperClass;
+            return Constans.relationTypeHierachySuperClass;
 
-		} else if (classIndex > Constans.relationTypeTemporalClass
-				&& classIndex <= Constans.relationTypeHierachyClass) {
+        } else {
 
-			return Constans.relationTypeHierachySuperClass;
+            return Constans.relationTypeCasualSuperClass;
+        }
+    }
 
-		} else {
+    /**
+     * Rozhodovací metoda pro mapování Resolution Class na Super Class
+     *
+     * @param classIndex
+     * @return Super Class index
+     */
+    public int resolutionClassToSupperClass(int classIndex) {
+        if (classIndex <= Constans.resolutionTypeFinishedClass && classIndex > 0) {
 
-			return Constans.relationTypeCasualSuperClass;
-		}
-	}
+            return Constans.resolutionFinishedSuperClass;
 
-	/**
-	 * Rozhodovací metoda pro mapování Resolution Class na Super Class
-	 * 
-	 * @param classIndex
-	 * @return Super Class index
-	 */
-	public int resolutionClassToSupperClass(int classIndex) {
-		if (classIndex <= Constans.resolutionTypeFinishedClass && classIndex > 0) {
+        } else if (classIndex == 0) {
 
-			return Constans.resolutionFinishedSuperClass;
+            return -1;
+        } else {
 
-		} else if (classIndex == 0) {
+            return Constans.resolutionUnFinishedSuperClass;
+        }
+    }
 
-			return -1;
-		} else {
+    /**
+     * Rozhodovací metoda pro mapování Status Class na Super Class
+     *
+     * @param classIndex
+     * @return Super Class index
+     */
+    public int statusClassToSupperClass(int classIndex) {
+        if (classIndex >= 1 && classIndex <= Constans.statusTypeOpenClass) {
 
-			return Constans.resolutionUnFinishedSuperClass;
-		}
-	}
+            return Constans.statusTypeOpenSuperClass;
 
-	/**
-	 * Rozhodovací metoda pro mapování Status Class na Super Class
-	 * 
-	 * @param classIndex
-	 * @return Super Class index
-	 */
-	public int statusClassToSupperClass(int classIndex) {
-		if (classIndex >= 1 && classIndex <= Constans.statusTypeOpenClass) {
+        } else if (classIndex == 0) {
+            return -1;
+        } else {
 
-			return Constans.statusTypeOpenSuperClass;
+            return Constans.statusTypeCloseSuperClass;
+        }
+    }
 
-		} else if (classIndex == 0) {
-			return -1;
-		} else {
+    /**
+     * Rozhodovací metoda pro mapování Type Class na Super Class
+     *
+     * @param classIndex
+     * @return Super Class index
+     */
+    public int typeClassToSupperClass(int classIndex) {
+        if (classIndex >= 1 && classIndex <= Constans.typeEditionClass) {
 
-			return Constans.statusTypeCloseSuperClass;
-		}
-	}
+            return Constans.typeEditionSuperClass;
 
-	/**
-	 * Rozhodovací metoda pro mapování Type Class na Super Class
-	 * 
-	 * @param classIndex
-	 * @return Super Class index
-	 */
-	public int typeClassToSupperClass(int classIndex) {
-		if (classIndex >= 1 && classIndex <= Constans.typeEditionClass) {
+        } else if (classIndex == Constans.typeCreationClass) {
 
-			return Constans.typeEditionSuperClass;
+            return Constans.typeCreationSuperClass;
 
-		} else if (classIndex == Constans.typeCreationClass) {
+        } else if (classIndex == 0) {
 
-			return Constans.typeCreationSuperClass;
+            return -1;
 
-		} else if (classIndex == 0) {
+        } else {
 
-			return -1;
+            return Constans.typeGeneralSuperClass;
+        }
+    }
 
-		} else {
-
-			return Constans.typeGeneralSuperClass;
-		}
-	}
-
-	public int ClassToSuperClass(SegmentType segmentType, int classIndex) {
-		switch (segmentType){
-			case Role_Type:
-				return roleClassToSupperClass(classIndex);
-			case Severity:
-				return severityClassToSupperClass(classIndex);
-			case Priority:
-				return priorityClassToSupperClass(classIndex);
-			case Resolution:
-				return resolutionClassToSupperClass(classIndex);
-			case Relation:
-				return relationClassToSupperClass(classIndex);
-			case Status:
-				return statusClassToSupperClass(classIndex);
-			case Type:
-				return typeClassToSupperClass(classIndex);
-		}
-		return 0;
-	}
+    public int ClassToSuperClass(SegmentType segmentType, int classIndex) {
+        switch (segmentType) {
+            case Role_Type:
+                return roleClassToSupperClass(classIndex);
+            case Severity:
+                return severityClassToSupperClass(classIndex);
+            case Priority:
+                return priorityClassToSupperClass(classIndex);
+            case Resolution:
+                return resolutionClassToSupperClass(classIndex);
+            case Relation:
+                return relationClassToSupperClass(classIndex);
+            case Status:
+                return statusClassToSupperClass(classIndex);
+            case Type:
+                return typeClassToSupperClass(classIndex);
+        }
+        return 0;
+    }
 }

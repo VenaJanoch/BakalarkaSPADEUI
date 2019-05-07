@@ -8,7 +8,7 @@ import javafx.stage.Stage;
 public class DrawerPanel extends AnchorPane {
     private JFXDrawer drawer;
 
-    public DrawerPanel(){
+    public DrawerPanel() {
         super();
         drawer = new JFXDrawer();
     }

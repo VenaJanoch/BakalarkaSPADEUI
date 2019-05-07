@@ -24,7 +24,7 @@ public class CommitControlPanel extends DateDescControlPanel implements IControl
     private CommitTable commitTable;
 
     public CommitControlPanel(String buttonName, IFormDataController formDataController, IEditFormController editFormController,
-                              FormController formController, CommitTable branchTable, int id, int formIndex){
+                              FormController formController, CommitTable branchTable, int id, int formIndex) {
         super(buttonName, formDataController, editFormController, formController);
         this.commitFormId = formIndex;
         this.commitId = id;
@@ -33,13 +33,13 @@ public class CommitControlPanel extends DateDescControlPanel implements IControl
     }
 
 
-    public void createControlPanel(){
+    public void createControlPanel() {
 
-        controlPanelController.setRadioButton(this,1, "Release: ", true);
+        controlPanelController.setRadioButton(this, 1, "Release: ", true);
         controlPanelController.setCountLine(this, 2, new ControlPanelLine(lineList, this, controlPanelController, controlPanelController.getLineCount()));
         controlPanelController.createNewLineWithExist(this, lineList);
 
-        button.setOnAction(event ->{
+        button.setOnAction(event -> {
             ArrayList<Integer> nameIndicators = new ArrayList<>();
             ArrayList<String> name = controlPanelController.processTextLines(ParamType.Name, nameIndicators);
 
@@ -47,7 +47,6 @@ public class CommitControlPanel extends DateDescControlPanel implements IControl
             ArrayList<Integer> createdIndicators = new ArrayList<>();
             ArrayList<String> description = controlPanelController.processTextLines(ParamType.Description, descriptionIndicators);
             ArrayList<LocalDate> created = controlPanelController.processDateLines(ParamType.Date, createdIndicators);
-
 
 
             String count = controlPanelController.getInstanceCount();
@@ -68,14 +67,14 @@ public class CommitControlPanel extends DateDescControlPanel implements IControl
         controlPanelController.resetPanel(controlPane);
         createControlPanel();
 
-        controlPanelController.setValueTextField(this, lineList ,ParamType.Name, commitData, commitData[1], 0);
-        controlPanelController.setValueTextField(this, lineList ,ParamType.Description, commitData, commitData[4], 3);
-        controlPanelController.setValueDatePicker(this, lineList ,ParamType.Date, (ArrayList<LocalDate>) commitData[5], commitData[6]);
+        controlPanelController.setValueTextField(this, lineList, ParamType.Name, commitData, commitData[1], 0);
+        controlPanelController.setValueTextField(this, lineList, ParamType.Description, commitData, commitData[4], 3);
+        controlPanelController.setValueDatePicker(this, lineList, ParamType.Date, (ArrayList<LocalDate>) commitData[5], commitData[6]);
 
 
         boolean release = false;
         List boolList = commitData[2];
-        if (boolList.size() > 2){
+        if (boolList.size() > 2) {
             release = true;
         }
 
@@ -84,7 +83,7 @@ public class CommitControlPanel extends DateDescControlPanel implements IControl
         controlPanelController.setValueExistRadioButton(exist);
         controlPanelController.setValueRadioButton(release);
         controlPanelController.setCountToCountLine((int) boolList.get(1));
-        controlPanelController.setAlias((String)boolList.get(2), this);
+        controlPanelController.setAlias((String) boolList.get(2), this);
     }
 
     @Override

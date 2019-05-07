@@ -41,11 +41,11 @@ public class ControlPanelController {
     private int classIndex;
     private int superIndex;
 
-    private  int staticObjectCount;
+    private int staticObjectCount;
     private ClassSwitcher switcher;
 
 
-    public ControlPanelController(ArrayList<ControlPanelLine> controlPanelLines){
+    public ControlPanelController(ArrayList<ControlPanelLine> controlPanelLines) {
         switcher = new ClassSwitcher();
         this.controlPanelLines = controlPanelLines;
         this.countLB = new Label("Instance count: ");
@@ -54,9 +54,9 @@ public class ControlPanelController {
     }
 
 
-    public String checkValueFromTextItem(TextFieldItem textFieldItem){
+    public String checkValueFromTextItem(TextFieldItem textFieldItem) {
         String desc = "null*";
-        if (textFieldItem.getTextFromTextField() != null){
+        if (textFieldItem.getTextFromTextField() != null) {
             desc = textFieldItem.getTextFromTextField();
         }
         return desc;
@@ -76,13 +76,27 @@ public class ControlPanelController {
         }
     }
 
+    public void setValueNumberField(ControlPanel controlPanel, ObservableList<ControlPanelLineObject> lineList,
+                                  ParamType type, List<String>[] values, List<Integer> indicatorList, int index) {
+        int i = 0;
+        if (indicatorList.size() != 0) {
+            for (String value : values[index]) {
+                createNewLine(controlPanel, lineList);
+                ControlPanelLine line = controlPanelLines.get(controlPanelLines.size() - 1);
+                line.fillNumberLine(value, indicatorList.get(i), type);
+                i++;
+                incrementLineCounter();
+            }
+        }
+    }
+
     public void setValueRelationBox(ControlPanel controlPanel, ObservableList<ControlPanelLineObject> lineList,
                                     ParamType type, ArrayList<Integer> relation, ArrayList<ArrayList<Integer>> workUnit) {
         int i = 0;
-        for ( int value : relation){
+        for (int value : relation) {
             createNewLine(controlPanel, lineList);
-            ControlPanelLine line = controlPanelLines.get(controlPanelLines.size() -1);
-            line.fillRelationComboBoxLine(value, workUnit.get(i), type );
+            ControlPanelLine line = controlPanelLines.get(controlPanelLines.size() - 1);
+            line.fillRelationComboBoxLine(value, workUnit.get(i), type);
             i++;
             incrementLineCounter();
         }
@@ -91,7 +105,7 @@ public class ControlPanelController {
     public void setValueComboBox(ControlPanel controlPanel, ObservableList<ControlPanelLineObject> lineList,
                                  ParamType type, ArrayList<Integer> values, List<Integer> indicatorList) {
         int i = 0;
-        if (indicatorList.size() != 0 ) {
+        if (indicatorList.size() != 0) {
             for (int value : values) {
                 createNewLine(controlPanel, lineList);
                 ControlPanelLine line = controlPanelLines.get(controlPanelLines.size() - 1);
@@ -106,7 +120,7 @@ public class ControlPanelController {
                                    ParamType type, ArrayList<LocalDate> values, List<Integer> indicatorList) {
         int i = 0;
 
-        if(indicatorList.size() != 0) {
+        if (indicatorList.size() != 0) {
             for (LocalDate value : values) {
                 createNewLine(controlPanel, lineList);
                 ControlPanelLine line = controlPanelLines.get(controlPanelLines.size() - 1);
@@ -119,16 +133,16 @@ public class ControlPanelController {
 
     public void setValueCheckComboBox(ControlPanel controlPanel, ObservableList<ControlPanelLineObject> lineList,
                                       ParamType type, ArrayList<ArrayList<Integer>> values, List<Integer> indicatorList) {
-       int i = 0;
-       if(values != null) {
-           for (List<Integer> value : values) {
-               createNewLine(controlPanel, lineList);
-               ControlPanelLine line = controlPanelLines.get(controlPanelLines.size() - 1);
-               line.fillCheckComboBoxLine(value, indicatorList.get(i), type);
-               i++;
-               incrementLineCounter();
-           }
-       }
+        int i = 0;
+        if (values != null) {
+            for (List<Integer> value : values) {
+                createNewLine(controlPanel, lineList);
+                ControlPanelLine line = controlPanelLines.get(controlPanelLines.size() - 1);
+                line.fillCheckComboBoxLine(value, indicatorList.get(i), type);
+                i++;
+                incrementLineCounter();
+            }
+        }
     }
 
 
@@ -141,7 +155,7 @@ public class ControlPanelController {
     public void setComboBoxItemToControlPanel(GridPane controlPane, ComboBoxItem item, int startColomIndex, int lineIndex) {
         controlPane.add(item.getIndicatorCB(), startColomIndex, lineIndex);
         controlPane.add(item.getItemCB(), startColomIndex + 1, lineIndex);
-        controlPane.add(item.getItemButton(), startColomIndex +2, lineIndex);
+        controlPane.add(item.getItemButton(), startColomIndex + 2, lineIndex);
     }
 
     public void setRelationComboBoxItemToControlPanel(GridPane controlPane, ComboBoxItem relationItem, CheckComboBoxItem workUnitItem, int startColomIndex, int lineIndex) {
@@ -154,6 +168,13 @@ public class ControlPanelController {
 
         controlPane.add(item.getIndicatorCB(), startColomIndex, lineIndex);
         controlPane.add(item.getItemDate(), startColomIndex + 1, lineIndex);
+        controlPane.add(item.getItemButton(), startColomIndex + 2, lineIndex);
+    }
+
+    public void setNumberItemToControlPanel(GridPane controlPane, TextFieldItem item, int startColomIndex, int lineIndex) {
+
+        controlPane.add(item.getIndicatorCB(), startColomIndex, lineIndex);
+        controlPane.add(item.getItemTF(), startColomIndex + 1, lineIndex);
         controlPane.add(item.getItemButton(), startColomIndex + 2, lineIndex);
     }
 
@@ -179,9 +200,9 @@ public class ControlPanelController {
                 RadioButton chk = radioButtonLine.getRadioButtonItem().getYesRb();
 
                 if (chk.isSelected()) {
-                  //  isMain = true;
+                    //  isMain = true;
                 } else {
-                  //  isMain = false;
+                    //  isMain = false;
                 }
 
             }
@@ -195,29 +216,30 @@ public class ControlPanelController {
      * metody pro mapování Class na Super Class
      */
 
-    public ChangeListener<Number> getClassListener(SegmentType segmentType){
+    public ChangeListener<Number> getClassListener(SegmentType segmentType) {
 
-    ChangeListener<Number> classListener = new ChangeListener<Number>() {
+        ChangeListener<Number> classListener = new ChangeListener<Number>() {
 
-        @Override
-        public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+            @Override
+            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
 
-            classIndex = newValue.intValue();
-            superIndex = switcher.ClassToSuperClass(segmentType, classIndex);
-            if (superIndex == -1) {
+                classIndex = newValue.intValue();
+                superIndex = switcher.ClassToSuperClass(segmentType, classIndex);
+                if (superIndex == -1) {
 
-                superClassLine.getComboBoxItem().selectItemInComboBox(superIndex);
-                superClassLine.lockComboBox();
-                superIndex = 0;
-            } else {
-                superClassLine.getComboBoxItem().selectItemInComboBox(superIndex);
-                superClassLine.unlockComboBox();
+                    superClassLine.getComboBoxItem().selectItemInComboBox(superIndex);
+                    superClassLine.lockComboBox();
+                    superIndex = 0;
+                } else {
+                    superClassLine.getComboBoxItem().selectItemInComboBox(superIndex);
+                    superClassLine.unlockComboBox();
+                }
             }
-        }
-    };
+        };
 
-    return classListener;
+        return classListener;
     }
+
     /**
      * ChangeListener pro určení indexu prvku z comboBoxu pro Super Class
      */
@@ -244,7 +266,7 @@ public class ControlPanelController {
 
     public void copyLine(ControlPanelLine line, ControlPanel controlPanel, ObservableList<ControlPanelLineObject> lineList, int paramIndex) {
         incrementLineCounter();
-        ControlPanelLineController copyLine = createNewLine(controlPanel,  lineList);
+        ControlPanelLineController copyLine = createNewLine(controlPanel, lineList);
         copyLine.copyLine(line, paramIndex);
         shiftStaticObjects(controlPanel);
     }
@@ -254,6 +276,7 @@ public class ControlPanelController {
         controlPane.setAliasToPanel();
         return createNewLine(controlPane, lineList);
     }
+
     public ControlPanelLineController createNewLine(ControlPanel controlPane, ObservableList<ControlPanelLineObject> lineList) {
 
         ControlPanelLine line = new ControlPanelLine(lineList, controlPane, this, lineCount);
@@ -273,11 +296,11 @@ public class ControlPanelController {
     }
 
 
-    public ArrayList<String> processTextLines(ParamType type, ArrayList<Integer> indicators){
+    public ArrayList<String> processTextLines(ParamType type, ArrayList<Integer> indicators) {
         ArrayList<String> list = new ArrayList<>();
-        for ( ControlPanelLine line : controlPanelLines){
-            if(line.getExitButton().isSelected()){
-                if (line.getType() == type){
+        for (ControlPanelLine line : controlPanelLines) {
+            if (line.getExitButton().isSelected()) {
+                if (line.getType() == type) {
                     list.add(checkValueFromTextItem(line.getTextItem()));
                     indicators.add(line.getTextItem().getIndicatorIndex());
                 }
@@ -286,10 +309,23 @@ public class ControlPanelController {
         return list;
     }
 
-    public ArrayList<Integer> processComboBoxLines(ParamType type, ArrayList<Integer> indicators){
+    public ArrayList<String> processNumberLines(ParamType type, ArrayList<Integer> indicators) {
+        ArrayList<String> list = new ArrayList<>();
+        for (ControlPanelLine line : controlPanelLines) {
+            if (line.getExitButton().isSelected()) {
+                if (line.getType() == type) {
+                    list.add(checkValueFromTextItem(line.getNumberItem()));
+                    indicators.add(line.getTextItem().getIndicatorIndex());
+                }
+            }
+        }
+        return list;
+    }
+
+    public ArrayList<Integer> processComboBoxLines(ParamType type, ArrayList<Integer> indicators) {
         ArrayList<Integer> list = new ArrayList<>();
-        for ( ControlPanelLine line : controlPanelLines){
-            if ( line.getExitButton().isSelected()) {
+        for (ControlPanelLine line : controlPanelLines) {
+            if (line.getExitButton().isSelected()) {
                 if (line.getType() == type) {
                     list.add(line.getComboBoxItem().getItemIndex());
                     indicators.add(line.getComboBoxItem().getIndicatorIndex());
@@ -299,11 +335,11 @@ public class ControlPanelController {
         return list;
     }
 
-    public ArrayList<Integer> processRelationComboBoxLines(ParamType type, ArrayList<ArrayList<Integer>> workUnints){
+    public ArrayList<Integer> processRelationComboBoxLines(ParamType type, ArrayList<ArrayList<Integer>> workUnints) {
         ArrayList<Integer> listRelationList = new ArrayList<>();
-        for ( ControlPanelLine line : controlPanelLines){
-            if ( line.getExitButton().isSelected()){
-                if (line.getType() == type){
+        for (ControlPanelLine line : controlPanelLines) {
+            if (line.getExitButton().isSelected()) {
+                if (line.getType() == type) {
                     listRelationList.add(line.getComboBoxItem().getItemIndex());
                     workUnints.add(new ArrayList<>(line.getCheckComboBoxItem().getChoosedIndicies()));
                 }
@@ -315,10 +351,10 @@ public class ControlPanelController {
         return listRelationList;
     }
 
-    public ArrayList<ArrayList<Integer>> processCheckComboBoxLines(ParamType type, ArrayList<Integer> indicators){
+    public ArrayList<ArrayList<Integer>> processCheckComboBoxLines(ParamType type, ArrayList<Integer> indicators) {
         ArrayList<ArrayList<Integer>> list = new ArrayList<>();
-        for ( ControlPanelLine line : controlPanelLines){
-            if ( line.getExitButton().isSelected()) {
+        for (ControlPanelLine line : controlPanelLines) {
+            if (line.getExitButton().isSelected()) {
                 if (line.getType() == type) {
                     list.add(new ArrayList<>(line.getCheckComboBoxItem().getChoosedIndicies()));
                     indicators.add(line.getCheckComboBoxItem().getIndicatorIndex());
@@ -328,10 +364,10 @@ public class ControlPanelController {
         return list;
     }
 
-    public ArrayList<LocalDate> processDateLines(ParamType type, ArrayList<Integer> indicators){
+    public ArrayList<LocalDate> processDateLines(ParamType type, ArrayList<Integer> indicators) {
         ArrayList<LocalDate> list = new ArrayList<>();
-        for ( ControlPanelLine line : controlPanelLines){
-            if (line.getType() == type){
+        for (ControlPanelLine line : controlPanelLines) {
+            if (line.getType() == type) {
                 list.add(line.getDateItem().getDateFromDatePicker());
                 indicators.add(line.getDateItem().getIndicatorIndex());
             }
@@ -340,12 +376,13 @@ public class ControlPanelController {
         return list;
     }
 
-    public void incrementLineCounter(){
+    public void incrementLineCounter() {
         lineCount++;
     }
 
     public void removeFromControlPanel(ControlPanelLine line, GridPane controlPanel) {
         TextFieldItem text = line.getTextItem();
+        TextFieldItem number = line.getNumberItem();
         CheckComboBoxItem check = line.getCheckComboBoxItem();
         ComboBoxItem combo = line.getComboBoxItem();
         DateItem dateItem = line.getDateItem();
@@ -353,6 +390,9 @@ public class ControlPanelController {
         controlPanel.getChildren().remove(text.getItemTF());
         controlPanel.getChildren().remove(text.getIndicatorCB());
         controlPanel.getChildren().remove(text.getItemButton());
+        controlPanel.getChildren().remove(number.getItemTF());
+        controlPanel.getChildren().remove(number.getIndicatorCB());
+        controlPanel.getChildren().remove(number.getItemButton());
         controlPanel.getChildren().remove(dateItem.getItemDate());
         controlPanel.getChildren().remove(dateItem.getIndicatorCB());
         controlPanel.getChildren().remove(dateItem.getItemButton());
@@ -370,14 +410,14 @@ public class ControlPanelController {
 
     }
 
-    public void setExistRadioButton(ControlPanel controlPanel, int lineShift){
+    public void setExistRadioButton(ControlPanel controlPanel, int lineShift) {
         staticObjectCount++;
         radioExistButtonLine = new ControlPanelLine(FXCollections.observableArrayList(), controlPanel, this,
-                lineCount + lineShift );
+                lineCount + lineShift);
         setExistRadioButton(controlPanel.getControlPane(), lineShift);
     }
 
-    public void setExistRadioButton(GridPane gridPane, int lineShift){
+    public void setExistRadioButton(GridPane gridPane, int lineShift) {
         gridPane.getChildren().remove(radioExistButtonLine.getRadioButtonItem().getNameLb());
         gridPane.getChildren().remove(radioExistButtonLine.getRadioButtonItem().getYesRb());
         gridPane.add(radioExistButtonLine.getRadioButtonItem().getNameLb(), 1, lineCount + lineShift);
@@ -402,34 +442,34 @@ public class ControlPanelController {
         pane.getChildren().remove(item.getNoRb());
         pane.add(item.getNameLb(), 1, lineCount + lineShift);
         setRadioButton(pane, item.getYesRb(), 2, lineShift);
-        if (isSecondRadioButtonLine){
+        if (isSecondRadioButtonLine) {
             setRadioButton(pane, item.getNoRb(), 3, lineShift);
             item.setGroup();
         }
     }
 
-    public void setEditButton(ControlPanel controlPanel, int lineShift){
+    public void setEditButton(ControlPanel controlPanel, int lineShift) {
         GridPane controlPane = controlPanel.getControlPane();
-        Button button  =  controlPanel.getButton();
+        Button button = controlPanel.getButton();
         controlPane.getChildren().remove(button);
         controlPane.add(button, 3, lineCount + lineShift);
     }
 
-    public void setStaticButton(ControlPanel controlPanel, int lineShift, Button button){
+    public void setStaticButton(ControlPanel controlPanel, int lineShift, Button button) {
         staticButton = button;
         isStaticButton = true;
         setStaticButton(controlPanel, lineShift);
         staticObjectCount++;
     }
 
-    public void setStaticButton(ControlPanel controlPanel, int lineShift){
+    public void setStaticButton(ControlPanel controlPanel, int lineShift) {
         GridPane controlPane = controlPanel.getControlPane();
 
         controlPane.getChildren().remove(staticButton);
         controlPane.add(staticButton, 2, lineCount + lineShift);
     }
 
-    public void setStaticClassBoxes(ControlPanel controlPanel, int lineShift, ControlPanelLine classLine,  ControlPanelLine superLine){
+    public void setStaticClassBoxes(ControlPanel controlPanel, int lineShift, ControlPanelLine classLine, ControlPanelLine superLine) {
         this.classLine = classLine;
         this.superClassLine = superLine;
         ComboBoxItem classBox = classLine.getComboBoxItem();
@@ -442,7 +482,7 @@ public class ControlPanelController {
         staticObjectCount++;
     }
 
-    public void setStaticComboBox(ControlPanel controlPanel, int lineShift, ComboBoxItem item, int startColumn){
+    public void setStaticComboBox(ControlPanel controlPanel, int lineShift, ComboBoxItem item, int startColumn) {
 
         GridPane controlPane = controlPanel.getControlPane();
         controlPane.getChildren().remove(item.getLabel());
@@ -451,14 +491,14 @@ public class ControlPanelController {
         controlPane.add(item.getItemCB(), startColumn + 1, lineCount + lineShift);
     }
 
-    public void setCountLine(ControlPanel controlPanel, int lineShift, ControlPanelLine countLine){
+    public void setCountLine(ControlPanel controlPanel, int lineShift, ControlPanelLine countLine) {
         this.countLine = countLine;
         countLine.getTextItem().setTextToTextField("1");
         setCountLine(controlPanel, lineShift);
         staticObjectCount++;
     }
 
-    public void setCountLine(ControlPanel controlPanel, int lineShift){
+    public void setCountLine(ControlPanel controlPanel, int lineShift) {
         GridPane controlPane = controlPanel.getControlPane();
 
         controlPane.getChildren().remove(countLB);
@@ -469,29 +509,29 @@ public class ControlPanelController {
         isCountLine = true;
     }
 
-    public void shiftStaticObjects(ControlPanel controlPanel){
+    public void shiftStaticObjects(ControlPanel controlPanel) {
         int shift = 2;
 
-        if (isClass){
+        if (isClass) {
             ComboBoxItem classBox = classLine.getComboBoxItem();
             ComboBoxItem superClassBox = superClassLine.getComboBoxItem();
-            setStaticComboBox(controlPanel, shift, classBox, 1 );
-            setStaticComboBox(controlPanel, shift, superClassBox, 3 );
+            setStaticComboBox(controlPanel, shift, classBox, 1);
+            setStaticComboBox(controlPanel, shift, superClassBox, 3);
             shift++;
         }
 
-        if (isRadioButtonLine){
+        if (isRadioButtonLine) {
             RadioButtonItem item = radioButtonLine.getRadioButtonItem();
             setRadioButton(controlPanel, item, shift);
             shift++;
         }
 
-        if(isCountLine){
+        if (isCountLine) {
             setCountLine(controlPanel, shift);
             shift++;
         }
 
-        if (isStaticButton){
+        if (isStaticButton) {
             setStaticButton(controlPanel, shift);
             shift++;
         }
@@ -503,18 +543,18 @@ public class ControlPanelController {
     }
 
     public void setValueRadioButton(boolean isRelease) {
-        if (isRelease){
+        if (isRelease) {
             radioButtonLine.getRadioButtonItem().getYesRb().setSelected(true);
-        }else{
+        } else {
             radioButtonLine.getRadioButtonItem().getYesRb().setSelected(false);
         }
 
     }
 
     public void setValueExistRadioButton(boolean exist) {
-        if (exist){
+        if (exist) {
             radioExistButtonLine.getRadioButtonItem().getYesRb().setSelected(true);
-        }else{
+        } else {
             radioExistButtonLine.getRadioButtonItem().getYesRb().setSelected(false);
         }
     }
@@ -524,21 +564,21 @@ public class ControlPanelController {
     }
 
     public void setValueToClassBox(List classIndex, List superClassIndex) {
-        if (classIndex != null){
+        if (classIndex != null) {
             ComboBoxItem item1 = classLine.getComboBoxItem();
-            item1.selectItemInComboBox((Integer)classIndex.get(0));
+            item1.selectItemInComboBox((Integer) classIndex.get(0));
         }
 
-        if(superClassIndex != null){
+        if (superClassIndex != null) {
             ComboBoxItem item2 = superClassLine.getComboBoxItem();
-            item2.getItemCB().getSelectionModel().select((Integer)superClassIndex.get(0));
+            item2.getItemCB().getSelectionModel().select((Integer) superClassIndex.get(0));
         }
 
 
     }
 
     public Integer getSuperClassIndex() {
-        return superIndex ;
+        return superIndex;
     }
 
     public Integer getClassIndex() {

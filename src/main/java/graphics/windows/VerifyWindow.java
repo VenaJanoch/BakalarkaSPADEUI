@@ -42,7 +42,8 @@ public class VerifyWindow extends Stage {
         textList = new ArrayList<>();
         this.setScene(creatScene());
         this.widthProperty().addListener(new ChangeListener<Number>() {
-            @Override public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneWidth, Number newSceneWidth) {
+            @Override
+            public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneWidth, Number newSceneWidth) {
                 repaintText();
             }
         });
@@ -80,7 +81,7 @@ public class VerifyWindow extends Stage {
 
             @Override
             public void handle(MouseEvent t) {
-                if(t.getClickCount() == 2) {
+                if (t.getClickCount() == 2) {
                     VerifyTable table = tableTV.getSelectionModel().getSelectedItem();
                     Alert alert = new Alert(Alert.AlertType.INFORMATION);
                     alert.setTitle("SQL QUERY");
@@ -120,7 +121,7 @@ public class VerifyWindow extends Stage {
         TableColumn<VerifyTable, String> modelCount = new TableColumn<VerifyTable, String>("Model count");
         TableColumn<VerifyTable, String> projectCount = new TableColumn<VerifyTable, String>("Project count");
 
-       
+
         elementNameColumn.setCellValueFactory(new PropertyValueFactory("alias"));
         elementNameColumn.setMinWidth(200);
         elementNameColumn.setMaxWidth(200);
@@ -136,7 +137,7 @@ public class VerifyWindow extends Stage {
         modelCount.setMaxWidth(150);
         modelCount.setCellFactory(TextFieldTableCell.forTableColumn());
 
-        projectCount.setCellValueFactory(new PropertyValueFactory("instanceCount"));
+        projectCount.setCellValueFactory(new PropertyValueFactory("projectInstanceCount"));
         projectCount.setMinWidth(150);
         projectCount.setMaxWidth(150);
         projectCount.setCellFactory(TextFieldTableCell.forTableColumn());
@@ -155,7 +156,7 @@ public class VerifyWindow extends Stage {
         sql.setCellValueFactory(new PropertyValueFactory("sql"));
         sql.setMinWidth(400);
         sql.setResizable(true);
-        sql.setCellFactory( param ->  {
+        sql.setCellFactory(param -> {
             final TableCell<VerifyTable, String> cell = new TableCell<VerifyTable, String>() {
                 @Override
                 public void updateItem(String item, boolean empty) {
@@ -180,7 +181,8 @@ public class VerifyWindow extends Stage {
 
         tableTV.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         tableTV.widthProperty().addListener(new ChangeListener<Number>() {
-            @Override public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneWidth, Number newSceneWidth) {
+            @Override
+            public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneWidth, Number newSceneWidth) {
                 repaintText();
             }
         });
@@ -195,8 +197,8 @@ public class VerifyWindow extends Stage {
         tableTV.getItems().addAll(verifyTables);
     }
 
-    public void repaintText(){
-        for(Text text : textList){
+    public void repaintText() {
+        for (Text text : textList) {
             text.setWrappingWidth(sql.getWidth() - Constans.offset);
         }
     }

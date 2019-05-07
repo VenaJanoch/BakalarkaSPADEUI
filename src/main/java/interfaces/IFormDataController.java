@@ -68,7 +68,7 @@ public interface IFormDataController {
 
     List[] getMilestoneStringData(int id);
 
-    ArrayList<ArrayList<Integer>>  getCriterionFromMilestone(int id);
+    ArrayList<ArrayList<Integer>> getCriterionFromMilestone(int id);
 
     List[] getPersonStringData(int id);
 

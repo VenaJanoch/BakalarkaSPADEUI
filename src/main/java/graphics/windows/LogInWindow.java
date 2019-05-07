@@ -38,7 +38,6 @@ public class LogInWindow extends Stage {
     private TableView<ProjectTable> tableTV;
 
 
-
     public LogInWindow(DatabaseController databaseController) {
         this.databaseController = databaseController;
         tableTV = getTable();
@@ -81,14 +80,14 @@ public class LogInWindow extends Stage {
         return mainPanel;
     }
 
-    public boolean showLogDialog(){
+    public boolean showLogDialog() {
         // Create the custom dialog.
         Dialog<Pair<String, String>> dialog = new Dialog<>();
         dialog.setTitle("Login Dialog");
         dialog.setHeaderText("Look, a Custom Login Dialog");
 
 // Set the icon (must be included in the project).
-   //     dialog.setGraphic(new ImageView(this.getClass().getResource("login.png").toString()));
+        //     dialog.setGraphic(new ImageView(this.getClass().getResource("login.png").toString()));
 
 // Set the button types.
         ButtonType loginButtonType = new ButtonType("Login", ButtonBar.ButtonData.OK_DONE);
@@ -138,7 +137,7 @@ public class LogInWindow extends Stage {
         result.ifPresent(usernamePassword -> {
             name = usernamePassword.getKey();
             this.password = usernamePassword.getValue();
-          isLog = logInToDatabase();
+            isLog = logInToDatabase();
             this.show();
         });
 
@@ -146,17 +145,17 @@ public class LogInWindow extends Stage {
     }
 
 
-    private boolean logInToDatabase(){
-      if(databaseController.logIn(name, password)){
-          fillProjectTable();
-          return true;
-      }
-      return false;
+    private boolean logInToDatabase() {
+        if (databaseController.logIn(name, password)) {
+            fillProjectTable();
+            return true;
+        }
+        return false;
     }
 
-    private void fillProjectTable(){
+    private void fillProjectTable() {
         ArrayList<ProjectTable> projectList = databaseController.findProjectInDatabase();
-        if (projectList.size() != 0){
+        if (projectList.size() != 0) {
             tableTV.getItems().addAll(projectList);
             projectBT.setOnAction(event -> chooseProject());
             mainPanel.setCenter(tableTV);
@@ -220,8 +219,6 @@ public class LogInWindow extends Stage {
     public void setMainPanel(BorderPane mainPanel) {
         this.mainPanel = mainPanel;
     }
-
-
 
 
 }

@@ -27,10 +27,11 @@ public class WorkUnitControlPanel extends DateDescControlPanel {
     private boolean exist;
 
     public WorkUnitControlPanel(String buttonName, IFormDataController formDataController,
-                                IEditFormController editFormController, FormController formController){
+                                IEditFormController editFormController, FormController formController) {
         super(buttonName, formDataController, editFormController, formController);
         this.segmentLists = formController.getSegmentLists();
-        lineList.add(new ControlPanelLineObject("Estimated time: ", ControlPanelLineType.Text, ParamType.EstimateTime));
+        lineList.add(new ControlPanelLineObject("Estimated time: ", ControlPanelLineType.Number, ParamType.EstimateTime));
+        lineList.add(new ControlPanelLineObject("Progress: ", ControlPanelLineType.Number, ParamType.Progress));
         lineList.add(new ControlPanelLineObject("Category: ", ControlPanelLineType.Text, ParamType.Category));
         lineList.add(new ControlPanelLineObject("Priority: ", ControlPanelLineType.ComboBox, ParamType.Priority, segmentLists.getPriorityTypeObservable()));
         lineList.add(new ControlPanelLineObject("Severity: ", ControlPanelLineType.ComboBox, ParamType.Severity, segmentLists.getSeverityTypeObservable()));
@@ -45,7 +46,7 @@ public class WorkUnitControlPanel extends DateDescControlPanel {
         addItemsToControlPanel();
     }
 
-    protected void addItemsToControlPanel(){
+    protected void addItemsToControlPanel() {
 
 
         controlPanelController.createNewLineWithExist(this, lineList);
@@ -61,31 +62,33 @@ public class WorkUnitControlPanel extends DateDescControlPanel {
         controlPanelController.resetPanel(controlPane);
         addItemsToControlPanel();
 
-        controlPanelController.setValueTextField(this, lineList ,ParamType.Name, workUnitData, workUnitData[11], 0);
-        controlPanelController.setValueDatePicker(this, lineList ,ParamType.Date, (ArrayList<LocalDate>) workUnitData[25], workUnitData[26]);
-        controlPanelController.setValueTextField(this, lineList ,ParamType.Description, workUnitData, workUnitData[12], 1);
-        controlPanelController.setValueTextField(this, lineList ,ParamType.EstimateTime, workUnitData, workUnitData[13], 2);
-        controlPanelController.setValueTextField(this, lineList ,ParamType.Category, workUnitData, workUnitData[14], 3);
-        controlPanelController.setValueComboBox(this, lineList ,ParamType.Priority, (ArrayList<Integer>) workUnitData[4], workUnitData[15]);
-        controlPanelController.setValueComboBox(this, lineList ,ParamType.Severity, (ArrayList<Integer>) workUnitData[5], workUnitData[16]);
-        controlPanelController.setValueComboBox(this, lineList ,ParamType.Resolution, (ArrayList<Integer>) workUnitData[6], workUnitData[17]);
-        controlPanelController.setValueComboBox(this, lineList ,ParamType.Status, (ArrayList<Integer>) workUnitData[7], workUnitData[18]);
-        controlPanelController.setValueComboBox(this, lineList ,ParamType.Type, (ArrayList<Integer>) workUnitData[8], workUnitData[19]);
-        controlPanelController.setValueComboBox(this, lineList ,ParamType.AssigneeRole, (ArrayList<Integer>) workUnitData[9], workUnitData[20]);
-        controlPanelController.setValueComboBox(this, lineList ,ParamType.Role, (ArrayList<Integer>) workUnitData[10], workUnitData[21]);
+        controlPanelController.setValueTextField(this, lineList, ParamType.Name, workUnitData, workUnitData[11], 0);
+        controlPanelController.setValueDatePicker(this, lineList, ParamType.Date, (ArrayList<LocalDate>) workUnitData[25], workUnitData[26]);
+        controlPanelController.setValueTextField(this, lineList, ParamType.Description, workUnitData, workUnitData[12], 1);
+        controlPanelController.setValueNumberField(this, lineList, ParamType.EstimateTime, workUnitData, workUnitData[13], 2);
+        controlPanelController.setValueTextField(this, lineList, ParamType.Category, workUnitData, workUnitData[14], 3);
+        controlPanelController.setValueNumberField(this, lineList, ParamType.Progress, workUnitData, workUnitData[28], 27);
+        controlPanelController.setValueComboBox(this, lineList, ParamType.Priority, (ArrayList<Integer>) workUnitData[4], workUnitData[15]);
+        controlPanelController.setValueComboBox(this, lineList, ParamType.Severity, (ArrayList<Integer>) workUnitData[5], workUnitData[16]);
+        controlPanelController.setValueComboBox(this, lineList, ParamType.Resolution, (ArrayList<Integer>) workUnitData[6], workUnitData[17]);
+        controlPanelController.setValueComboBox(this, lineList, ParamType.Status, (ArrayList<Integer>) workUnitData[7], workUnitData[18]);
+        controlPanelController.setValueComboBox(this, lineList, ParamType.Type, (ArrayList<Integer>) workUnitData[8], workUnitData[19]);
+        controlPanelController.setValueComboBox(this, lineList, ParamType.AssigneeRole, (ArrayList<Integer>) workUnitData[9], workUnitData[20]);
+        controlPanelController.setValueComboBox(this, lineList, ParamType.Role, (ArrayList<Integer>) workUnitData[10], workUnitData[21]);
         ArrayList<ArrayList<Integer>> workUnits = formDataController.getWorkUnitFromSegment(id, SegmentType.Work_Unit);
         controlPanelController.setValueRelationBox(this, lineList, ParamType.Relation, (ArrayList<Integer>) workUnitData[23], workUnits);
         List boolList = workUnitData[22];
         exist = (boolean) boolList.get(0);
         controlPanelController.setValueExistRadioButton(exist);
-        controlPanelController.setAlias((String)boolList.get(2), this);
+        controlPanelController.setAlias((String) boolList.get(2), this);
         button.setOnAction(event -> saveDataFromPanel(basicTable, tableView));
     }
 
 
-    public void saveDataFromPanel(BasicTable table, TableView tableView){
+    public void saveDataFromPanel(BasicTable table, TableView tableView) {
         int id = table.getId();
         ArrayList<Integer> nameIndicators = new ArrayList<>();
+        ArrayList<Integer> progressIndicators = new ArrayList<>();
         ArrayList<Integer> descIndicators = new ArrayList<>();
         ArrayList<Integer> estimatedIndicators = new ArrayList<>();
         ArrayList<Integer> categoryIndicators = new ArrayList<>();
@@ -100,9 +103,10 @@ public class WorkUnitControlPanel extends DateDescControlPanel {
         ArrayList<Integer> createIndicators = new ArrayList<>();
 
         ArrayList<String> name = controlPanelController.processTextLines(ParamType.Name, nameIndicators);
+        ArrayList<String> progress = controlPanelController.processNumberLines(ParamType.Progress, progressIndicators);
         ArrayList<String> desc = controlPanelController.processTextLines(ParamType.Description, descIndicators);
         ArrayList<LocalDate> created = controlPanelController.processDateLines(ParamType.Date, createIndicators);
-        ArrayList<String> estimated = controlPanelController.processTextLines(ParamType.EstimateTime, estimatedIndicators);
+        ArrayList<String> estimated = controlPanelController.processNumberLines(ParamType.EstimateTime, estimatedIndicators);
         ArrayList<String> category = controlPanelController.processTextLines(ParamType.Category, categoryIndicators);
         ArrayList<Integer> priority = controlPanelController.processComboBoxLines(ParamType.Priority, priorityIndicators);
         ArrayList<Integer> severity = controlPanelController.processComboBoxLines(ParamType.Severity, severityIndicators);
@@ -116,7 +120,7 @@ public class WorkUnitControlPanel extends DateDescControlPanel {
         boolean exist = controlPanelController.isExist();
 
 
-        editFormController.editDataFromWorkUnit(aliasTF.getText(), name, desc, category, assignee, role, priority, severity, type, resolution, status, estimated, nameIndicators,
+        editFormController.editDataFromWorkUnit(aliasTF.getText(), progress, progressIndicators, name, desc, category, assignee, role, priority, severity, type, resolution, status, estimated, nameIndicators,
                 descIndicators, categoryIndicators, assigneeIndicators, roleIndicators, priorityIndicators, severityIndicators, typeIndicators, resolutionIndicators,
                 statusIndicators, estimatedIndicators, exist, relation, workUnit, created, createIndicators, workUnitTable, id);
 

@@ -12,27 +12,28 @@ import java.util.List;
  * Třída zajišťující výběr dat artefaktů z databáze implementující rozhraní ICriterionDAO
  */
 public class CriterionDAO {
-	private Connection pripojeni;				//připojení k databázi
-	private VerifyController verifyController;
-	/**
-	 * Konstruktor třídy
-	 */
-	public CriterionDAO(VerifyController verifyController){
-		this.pripojeni = Constans.CONNECTION;	//nastaví připojení uložené ve třídě Konstanty
-		this.verifyController = verifyController;
-	}
+    private Connection pripojeni;                //připojení k databázi
+    private VerifyController verifyController;
 
-	public ArrayList<SQLVerifyObject> getCriterionProjekt(int projectVerifyId, List<String> name, List<Integer> nameIndicator, List<String> description,
-														   List<Integer> descriptionIndicator) {
+    /**
+     * Konstruktor třídy
+     */
+    public CriterionDAO(VerifyController verifyController) {
+        this.pripojeni = Constans.CONNECTION;    //nastaví připojení uložené ve třídě Konstanty
+        this.verifyController = verifyController;
+    }
 
-		String atributeSection = "";
-		atributeSection += SQLAtributeCreator.createStringAttribute("name", name, nameIndicator).substring(5);
-		atributeSection += SQLAtributeCreator.createStringAttribute("description", description, descriptionIndicator);
+    public ArrayList<SQLVerifyObject> getCriterionProjekt(int projectVerifyId, List<String> name, List<Integer> nameIndicator, List<String> description,
+                                                          List<Integer> descriptionIndicator) {
 
-		String sql = "SELECT c.id FROM criterion c WHERE " + atributeSection;
+        String atributeSection = "1";
+        atributeSection += SQLAtributeCreator.createStringAttribute("name", name, nameIndicator);
+        atributeSection += SQLAtributeCreator.createStringAttribute("description", description, descriptionIndicator);
 
-		return SQLAtributeCreator.findInstanceInDB(pripojeni,verifyController, sql, -1, null);
+        String sql = "SELECT c.id FROM criterion c WHERE " + atributeSection;
 
-	}
+        return SQLAtributeCreator.findInstanceInDB(pripojeni, verifyController, sql, -1, new ArrayList<>());
+
+    }
 
 }

@@ -23,134 +23,132 @@ import tables.IterationTable;
 /**
  * Třída představující formulář pro segment Iteration, odděděná od třídy
  * Dete2DescBasicForm a implementující ISegmentForm
- * 
- * @author Václav Janoch
  *
+ * @author Václav Janoch
  */
 public class IterationForm extends TableBasicForm implements ISegmentTableForm {
 
-	/**
-	 * Globální proměnné třídy
-	 */
-	private TableView<IterationTable> tableTV;
-	private IterationControlPanel editControlPanel;
+    /**
+     * Globální proměnné třídy
+     */
+    private TableView<IterationTable> tableTV;
+    private IterationControlPanel editControlPanel;
 
-	/**
-	 * Konstruktor třídy Zinicializuje globální proměnné tříd Nastaví reakci na
-	 * uzavření formuláře
-	 * @param indexForm
-	 *            DeleteControl
-	 */
-	public IterationForm(FormController formController, IFormDataController formDataController, IEditFormController editFormController, IDeleteFormController deleteFormController, CanvasController canvas, DragAndDropItemPanel dgItemPanel,
-						 SegmentType type, int indexForm) {
+    /**
+     * Konstruktor třídy Zinicializuje globální proměnné tříd Nastaví reakci na
+     * uzavření formuláře
+     *
+     * @param indexForm DeleteControl
+     */
+    public IterationForm(FormController formController, IFormDataController formDataController, IEditFormController editFormController, IDeleteFormController deleteFormController, CanvasController canvas, DragAndDropItemPanel dgItemPanel,
+                         SegmentType type, int indexForm) {
 
-		super(formController, formDataController, editFormController, deleteFormController, type);
-		editControlPanel = new IterationControlPanel("Edit", formDataController, editFormController, formController);
-		setEventHandler();
-		createForm();
-		setActionSubmitButton();
+        super(formController, formDataController, editFormController, deleteFormController, type);
+        editControlPanel = new IterationControlPanel("Edit", formDataController, editFormController, formController);
+        setEventHandler();
+        createForm();
+        setActionSubmitButton();
 
-	}
-	@Override
-	protected void setEventHandler() {
-		OnMousePressedEventHandler = new EventHandler<MouseEvent>() {
+    }
 
-			@Override
-			public void handle(MouseEvent t) {
-				if(t.getClickCount() == 2) {
-					showEditPanel();
-				}
-			}
-		};
-	}
+    @Override
+    protected void setEventHandler() {
+        OnMousePressedEventHandler = new EventHandler<MouseEvent>() {
 
-
-
-
-	@Override
-	public void createForm() {
-
-		this.setCenter(getTable());
-
-	}
-
-	@Override
-	public Node getTable() {
-		tableTV = new TableView<IterationTable>();
-
-		TableColumn<IterationTable, String> nameColumn = new TableColumn<IterationTable, String>("Alias");
-		TableColumn<IterationTable, String> exist = new TableColumn<IterationTable, String>("Exist");
-
-		nameColumn.setCellValueFactory(new PropertyValueFactory("alias"));
-		nameColumn.setMinWidth(150);
-		nameColumn.setCellFactory(TextFieldTableCell.forTableColumn());
-
-		exist.setCellValueFactory(new PropertyValueFactory("existString"));
-		exist.setMinWidth(150);
-		exist.setCellFactory(TextFieldTableCell.forTableColumn());
+            @Override
+            public void handle(MouseEvent t) {
+                if (t.getClickCount() == 2) {
+                    showEditPanel();
+                }
+            }
+        };
+    }
 
 
-		tableTV.getColumns().addAll(nameColumn, exist);
-		tableTV.setOnMousePressed(OnMousePressedEventHandler);
-		tableTV.setEditable(false);
+    @Override
+    public void createForm() {
 
-		tableTV.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        this.setCenter(getTable());
 
-		tableTV.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+    }
 
-		tableTV.setOnKeyReleased(event -> deleteSelected(event));
+    @Override
+    public Node getTable() {
+        tableTV = new TableView<IterationTable>();
 
-		BorderPane.setMargin(tableTV, new Insets(5));
+        TableColumn<IterationTable, String> nameColumn = new TableColumn<IterationTable, String>("Alias");
+        TableColumn<IterationTable, String> exist = new TableColumn<IterationTable, String>("Exist");
 
-		return tableTV;
-	}
+        nameColumn.setCellValueFactory(new PropertyValueFactory("alias"));
+        nameColumn.setMinWidth(150);
+        nameColumn.setCellFactory(TextFieldTableCell.forTableColumn());
 
-	@Override
-	public void deleteSelected(KeyEvent event) {
-
-		if (event.getCode() == KeyCode.DELETE) {
-			deleteItem(tableTV);
-		}
-	}
-
-	@Override
-	public GridPane createControlPane() {
-		return null;
-	}
-
-	private void showEditPanel(){
-		IterationTable table = tableTV.getSelectionModel().getSelectedItems().get(0);
-		if (table != null) {
-			editControlPanel.showEditControlPanel(table, tableTV);
-			formController.showEditControlPanel(editControlPanel);
-		}
-	}
+        exist.setCellValueFactory(new PropertyValueFactory("existString"));
+        exist.setMinWidth(150);
+        exist.setCellFactory(TextFieldTableCell.forTableColumn());
 
 
-	@Override
-	public void setActionSubmitButton() {
-		addButton.setOnAction(event -> addItem());
-		removeButton.setOnAction(event -> deleteItem(tableTV));
-		editButton.setOnAction(event -> showEditPanel());
-	}
+        tableTV.getColumns().addAll(nameColumn, exist);
+        tableTV.setOnMousePressed(OnMousePressedEventHandler);
+        tableTV.setEditable(false);
 
-	@Override
-	public void addItem() {
-		String nameST = "";// criterionControlPanel.getAlias();
+        tableTV.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
-		int id = formController.createTableItem(SegmentType.Iteration);
-		String idName = id + "";
+        tableTV.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
-		IterationTable table = new IterationTable(idName, true, id);
+        tableTV.setOnKeyReleased(event -> deleteSelected(event));
 
-		tableTV.getItems().add(table);
-		tableTV.sort();
-		int lastItem = tableTV.getItems().size();
-		tableTV.getSelectionModel().select(lastItem - 1);
-		showEditPanel();
-	}
+        BorderPane.setMargin(tableTV, new Insets(5));
 
-	public TableView<IterationTable> getTableTV() {
-		return tableTV;
-	}
+        return tableTV;
+    }
+
+    @Override
+    public void deleteSelected(KeyEvent event) {
+
+        if (event.getCode() == KeyCode.DELETE) {
+            deleteItem(tableTV);
+        }
+    }
+
+    @Override
+    public GridPane createControlPane() {
+        return null;
+    }
+
+    private void showEditPanel() {
+        IterationTable table = tableTV.getSelectionModel().getSelectedItems().get(0);
+        if (table != null) {
+            editControlPanel.showEditControlPanel(table, tableTV);
+            formController.showEditControlPanel(editControlPanel);
+        }
+    }
+
+
+    @Override
+    public void setActionSubmitButton() {
+        addButton.setOnAction(event -> addItem());
+        removeButton.setOnAction(event -> deleteItem(tableTV));
+        editButton.setOnAction(event -> showEditPanel());
+    }
+
+    @Override
+    public void addItem() {
+        String nameST = "";// criterionControlPanel.getAlias();
+
+        int id = formController.createTableItem(SegmentType.Iteration);
+        String idName = id + "";
+
+        IterationTable table = new IterationTable(idName, true, id);
+
+        tableTV.getItems().add(table);
+        tableTV.sort();
+        int lastItem = tableTV.getItems().size();
+        tableTV.getSelectionModel().select(lastItem - 1);
+        showEditPanel();
+    }
+
+    public TableView<IterationTable> getTableTV() {
+        return tableTV;
+    }
 }

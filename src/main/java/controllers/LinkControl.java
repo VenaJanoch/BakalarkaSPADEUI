@@ -78,7 +78,7 @@ public class LinkControl {
         } else {
             int operation = segmentControl(segmentType);
             if (operation < 10) {
-                    finishLinkFromOperation(operation, segmentIdAct, x, y, height, canvasController, isXML);
+                finishLinkFromOperation(operation, segmentIdAct, x, y, height, canvasController, isXML);
             } else {
                 startSegmentId = -1;
                 endSegmentId = -1;
@@ -105,13 +105,14 @@ public class LinkControl {
 
     private void finishLinkFromOperationWithOutCreateLink(int operation, double x, double y, double height, CanvasController canvasController) {
         if (operation == 1) {
-                    } else if (operation == 2) {
-         } else if (operation == 3) {
+        } else if (operation == 2) {
+        } else if (operation == 3) {
         } else if (operation == 5) {
-           } else if (operation == 4) {
+        } else if (operation == 4) {
 
         }
     }
+
     private void finishLinkFromOperation(int operation, int segmentIdAct, double x, double y, double height, CanvasController canvasController, boolean isXML) {
         if (operation == 1) {
             endSegmentId = segmentIdAct;
@@ -131,15 +132,15 @@ public class LinkControl {
             finisLink(x, y, height, canvasController, LinkType.Person_Configuration);
         } else if (operation == 4) {
             endSegmentId = segmentIdAct;
-            formController.createRoleToArtifactRelation(id ,startSegmentId, endSegmentId, isXML);
+            formController.createRoleToArtifactRelation(id, startSegmentId, endSegmentId, isXML);
             finisLink(x, y, height, canvasController, LinkType.Person_Artifact);
-        }else if (operation == 6) {
+        } else if (operation == 6) {
             endSegmentId = segmentIdAct;
-            formController.createRoleToCommitRelation(id ,startSegmentId, endSegmentId, isXML);
+            formController.createRoleToCommitRelation(id, startSegmentId, endSegmentId, isXML);
             finisLink(x, y, height, canvasController, LinkType.Person_Commit);
-        }else if (operation == 7) {
+        } else if (operation == 7) {
             endSegmentId = segmentIdAct;
-            formController.createRoleToCommttedConfigurationRelation(id ,startSegmentId, endSegmentId, isXML);
+            formController.createRoleToCommttedConfigurationRelation(id, startSegmentId, endSegmentId, isXML);
             finisLink(x, y, height, canvasController, LinkType.Person_Commtted_Configuration);
         }
     }
@@ -159,7 +160,7 @@ public class LinkControl {
 
     private ElementsLink createLink(CanvasController canvasController, int startSegmentIdAct, double x, double y, double width, double height, boolean isXML) {
 
-        if(!isXML){
+        if (!isXML) {
             id = identificatorCreater.createLineID();
         }
         ElementsLink link = new ElementsLink(id, this, canvasController, manipulationController);
@@ -189,9 +190,9 @@ public class LinkControl {
             return 0;
         } else if (endSegmentId == -1 && (segmentType != firstSegmentType)) {
             if (firstSegmentType == SegmentType.Commit) {
-                if (segmentType == SegmentType.Committed_Configuration){
+                if (segmentType == SegmentType.Committed_Configuration) {
                     return 1;
-                }else if (segmentType == SegmentType.Person){
+                } else if (segmentType == SegmentType.Person) {
                     return 6;
                 }
 
@@ -217,9 +218,9 @@ public class LinkControl {
                     return 4;
                 } else if (segmentType == SegmentType.Configuration) {
                     return 5;
-                }else if (segmentType == SegmentType.Commit) {
+                } else if (segmentType == SegmentType.Commit) {
                     return 6;
-                }else if (segmentType == SegmentType.Committed_Configuration) {
+                } else if (segmentType == SegmentType.Committed_Configuration) {
                     return 7;
                 }
                 return 13;
@@ -244,22 +245,22 @@ public class LinkControl {
     public void deleteArrow(int arrowId) {
 
         segmentLists.removeArrow(arrowId);
-     //   deleteDataModel.removeArtifactChangeLink(artifactID, changeID);
+        //   deleteDataModel.removeArtifactChangeLink(artifactID, changeID);
 
     }
 
-    public void deleteArrow(int arrowId, int startId, int endId, LinkType linkType){
+    public void deleteArrow(int arrowId, int startId, int endId, LinkType linkType) {
 
         ElementsLink link = (ElementsLink) segmentLists.getArrow(arrowId);
         List<Integer> mStartLinkIds = startLinkIdMap.get(startId);
         List<Integer> mEndLinkIds = endLinkIdMap.get(endId);
         removeLinkFromIds(arrowId, mStartLinkIds);
         removeLinkFromIds(arrowId, mEndLinkIds);
-        switch (linkType){
+        switch (linkType) {
             case Person_Artifact:
                 deleteFormController.removePersonArtifactLink(arrowId, startId, endId);
 
-            break;
+                break;
             case Person_Configuration:
                 deleteFormController.removePersonConfigurationLink(arrowId, startId, endId);
                 break;
@@ -271,6 +272,12 @@ public class LinkControl {
                 break;
             case Artifact_Configuration:
                 deleteFormController.removeArtifactConfiguraionLink(arrowId, startId, endId);
+                break;
+            case Person_Commit:
+                deleteFormController.removePersonCommitLink(arrowId, startId, endId);
+                break;
+            case Person_Commtted_Configuration:
+                deleteFormController.removePersonCommittedConfigurationLink(arrowId, startId, endId);
                 break;
             default:
         }
@@ -334,16 +341,49 @@ public class LinkControl {
         for (int i = 0; i < mStartLinkIds.size(); i++) {
 
             int index = mStartLinkIds.get(i);
-            NodeLink link = segmentLists.getArrow(index);
-            link.repaintArrowStartPoint(index, newWidth, newHeight);
+            if ((Integer) index != null){
+                NodeLink link = segmentLists.getArrow(index);
+                Point2D vector = coutDirectVector(link);
+
+                if (vector.getX() < 0){
+                    newWidth = translateX;
+                }else {
+                    newWidth = translateX + width;
+                }
+
+                link.repaintArrowStartPoint(index, newWidth, newHeight);
+            }
+
         }
 
         for (int i = 0; i < mEndLinkIds.size(); i++) {
 
             int index = mEndLinkIds.get(i);
-            NodeLink link = segmentLists.getArrow(index);
-            link.repaintArrowEndPoint(index, translateX, translateY + (height / 2));
+            if ((Integer)index != null){
+                NodeLink link = segmentLists.getArrow(index);
+                Point2D vector = coutDirectVector(link);
+
+                if (vector.getX() > 0){
+                    newWidth = translateX;
+                }else {
+                    newWidth = translateX + width;
+                }
+                link.repaintArrowEndPoint(index, newWidth, newHeight);
+            }
+
         }
+    }
+
+    private Point2D coutDirectVector(NodeLink link) {
+        Point2D start = link.getStartPoint();
+        Point2D end = link.getEndPoint();
+
+        double x = end.getX() - start.getX();
+        double y = end.getY() - start.getY();
+
+        Point2D directVector = new Point2D(x, y);
+
+        return directVector;
     }
 
     public void createLinkInstanceInMap(int formIndex) {

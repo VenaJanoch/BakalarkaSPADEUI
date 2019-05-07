@@ -34,6 +34,7 @@ public class DragAndDropItemPanel extends HBox {
     private CanvasController canvasController;
 
     private DrawerPanelController drawerPanelController;
+
     /**
      * Konstruktor třídy Zinicializuje globální proměnné třídy
      *
@@ -46,7 +47,7 @@ public class DragAndDropItemPanel extends HBox {
         this.itemArray = itemArray;
         this.drawerPanelController = drawerPanelController;
 
-         this.setId("dgItem");
+        this.setId("dgItem");
 
         dragSegmnets = new DragSegmentButton[itemArray.length];
     }
@@ -78,8 +79,8 @@ public class DragAndDropItemPanel extends HBox {
             }
 
 
-            Image image = new Image( input);
-            BackgroundImage backgroundImage = new BackgroundImage( image, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT,
+            Image image = new Image(input);
+            BackgroundImage backgroundImage = new BackgroundImage(image, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT,
                     BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
 
             Background background = new Background(backgroundImage);
@@ -91,7 +92,7 @@ public class DragAndDropItemPanel extends HBox {
 
         }
         createLinkButton();
-       // this.setAlignment(Pos.CENTER);
+        // this.setAlignment(Pos.CENTER);
     }
 
     /**
@@ -108,8 +109,8 @@ public class DragAndDropItemPanel extends HBox {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-        Image image = new Image( input);
-        BackgroundImage backgroundImage = new BackgroundImage( image, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT,
+        Image image = new Image(input);
+        BackgroundImage backgroundImage = new BackgroundImage(image, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT,
                 BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
 
         Background background = new Background(backgroundImage);
@@ -121,7 +122,7 @@ public class DragAndDropItemPanel extends HBox {
 
         SplitPane splitPane = new SplitPane();
         box.getChildren().addAll(splitPane, linkButton);
-        HBox.setMargin(splitPane, new Insets(0,0,0, 5) );
+        HBox.setMargin(splitPane, new Insets(0, 0, 0, 5));
 
         linkButton.setFont(Font.font("Verdana", 25));
         linkButton.setOnAction(event -> createArrowButtonEvent());
@@ -139,7 +140,7 @@ public class DragAndDropItemPanel extends HBox {
      */
     public void presESC(KeyEvent event) {
         if (event.getCode() == KeyCode.ESCAPE) {
-         canvasController.pressESCAction();
+            canvasController.pressESCAction();
         }
     }
 

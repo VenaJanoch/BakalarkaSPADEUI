@@ -5,7 +5,7 @@ public class TableToObjectInstanc {
     private int id;
     private SegmentType segmentType;
 
-    public TableToObjectInstanc(String name, int id, SegmentType segmentType){
+    public TableToObjectInstanc(String name, int id, SegmentType segmentType) {
         this.name = name;
         this.id = id;
         this.segmentType = segmentType;
@@ -29,14 +29,14 @@ public class TableToObjectInstanc {
     }
 
     @Override
-    public boolean equals(Object object) { {
-        boolean sameSame = false;
-
-        if (object != null && object instanceof TableToObjectInstanc)
+    public boolean equals(Object object) {
         {
-            sameSame = this.id == ((TableToObjectInstanc) object).id;
+            boolean sameSame = false;
+
+            if (object != null && object instanceof TableToObjectInstanc) {
+                sameSame = this.id == ((TableToObjectInstanc) object).id;
+            }
+            return sameSame;
         }
-        return sameSame;
-    }
     }
 }

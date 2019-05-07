@@ -8,13 +8,13 @@ public class SQLVerifyObject {
     private int modelCount;
     private int projectCount;
 
-    public SQLVerifyObject(int id, String sqlCommand, boolean exist){
+    public SQLVerifyObject(int id, String sqlCommand, boolean exist) {
         this.id = id;
         this.sqlCommand = sqlCommand;
         this.exist = exist;
     }
 
-    public SQLVerifyObject(int id, String sqlCommand, boolean exist, int modelCount, int projectCount){
+    public SQLVerifyObject(int id, String sqlCommand, boolean exist, int modelCount, int projectCount) {
         this.id = id;
         this.sqlCommand = sqlCommand;
         this.exist = exist;

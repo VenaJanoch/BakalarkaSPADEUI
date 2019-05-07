@@ -16,10 +16,10 @@ public class PersonTable extends BasicTable {
      *
      * @param name Jméno typu role
      */
-    public PersonTable(String name,  boolean exist, int id) {
+    public PersonTable(String name, boolean exist, int id) {
         super(name, exist, id);
-     //   this.type = new SimpleStringProperty(type);
-     //   this.description = new SimpleStringProperty(desc);
+        //   this.type = new SimpleStringProperty(type);
+        //   this.description = new SimpleStringProperty(desc);
     }
 
     /**
@@ -53,8 +53,6 @@ public class PersonTable extends BasicTable {
         this.description.set(description);
 
     }
-
-
 
 
 }

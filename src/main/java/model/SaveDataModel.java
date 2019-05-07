@@ -10,21 +10,21 @@ public class SaveDataModel implements ISaveDataModel {
     private DataModel dataModel;
     private ObjectFactory objF;
 
-    public SaveDataModel(DataModel dataModel,  ObjectFactory objF) {
+    public SaveDataModel(DataModel dataModel, ObjectFactory objF) {
         this.dataModel = dataModel;
         this.objF = objF;
     }
 
-    public void createCommitedConfigurationToConfigurationRelation(int linkId, Integer startId, Integer endId){
-        createLink(linkId, startId, endId, LinkType.COMMITED_CONFIGURATION_CONFIGURATION );
+    public void createCommitedConfigurationToConfigurationRelation(int linkId, Integer startId, Integer endId) {
+        createLink(linkId, startId, endId, LinkType.COMMITED_CONFIGURATION_CONFIGURATION);
 
         CommitedConfiguration commitedConfiguration = dataModel.getCommitedConfiguration(startId);
-        commitedConfiguration.getCommit().add(endId);
+        commitedConfiguration.getConfiguration().add(endId);
         Configuration configuration = dataModel.getConfiguration(endId);
         configuration.getCommitedConfiguration().add(startId);
     }
 
-    private void createLink(int linkId, int startId, int endId, LinkType linkType){
+    private void createLink(int linkId, int startId, int endId, LinkType linkType) {
         Link linkP = objF.createLink();
 
         linkP.setType(linkType);
@@ -35,7 +35,7 @@ public class SaveDataModel implements ISaveDataModel {
         dataModel.getLinks().add(linkP);
     }
 
-    public void createNewPersonToArtifactRelation(int linkId, int startId, int endId){
+    public void createNewPersonToArtifactRelation(int linkId, int startId, int endId) {
 
         createLink(linkId, startId, endId, LinkType.PERSON_ARTIFACT);
 
@@ -45,7 +45,7 @@ public class SaveDataModel implements ISaveDataModel {
         artifact.getAuthorIndex().add(startId);
     }
 
-    public void createNewPersonToCommitRelation(int linkId, int startId, int endId){
+    public void createNewPersonToCommitRelation(int linkId, int startId, int endId) {
 
         createLink(linkId, startId, endId, LinkType.PERSON_COMMIT);
 
@@ -55,7 +55,7 @@ public class SaveDataModel implements ISaveDataModel {
         commit.getAuthor().add(startId);
     }
 
-    public void createNewPersonToCommittedConfigurationRelation(int linkId, int startId, int endId){
+    public void createNewPersonToCommittedConfigurationRelation(int linkId, int startId, int endId) {
 
         createLink(linkId, startId, endId, LinkType.PERSON_COMMITTED_CONFIGURATION);
 
@@ -65,8 +65,8 @@ public class SaveDataModel implements ISaveDataModel {
         commitedConfiguration.getRole().add(startId);
     }
 
-    public void createNewPersonToConfigurationRelation(int linkId, int startId, int endId){
-        createLink( linkId, startId, endId, LinkType.PERSON_CONFIGURATION);
+    public void createNewPersonToConfigurationRelation(int linkId, int startId, int endId) {
+        createLink(linkId, startId, endId, LinkType.PERSON_CONFIGURATION);
 
         Person person = dataModel.getPerson(startId);
         person.getConfigurations().add(endId);
@@ -74,7 +74,7 @@ public class SaveDataModel implements ISaveDataModel {
         configuration.getAuthorIndex().add(startId);
     }
 
-    public void createNewArtifacToConfigurationRelation(int linkId, int startId, int endId){
+    public void createNewArtifacToConfigurationRelation(int linkId, int startId, int endId) {
         createLink(linkId, startId, endId, LinkType.ARTIFACT_CONFIGURATION);
 
 
@@ -83,7 +83,6 @@ public class SaveDataModel implements ISaveDataModel {
         Configuration configuration = dataModel.getConfiguration(endId);
         configuration.getArtifactsIndexs().add(startId);
     }
-
 
 
     public void createCommitToCommitedConfigurationRelation(int linkId, int startId, int endId) {
@@ -167,6 +166,7 @@ public class SaveDataModel implements ISaveDataModel {
         Branch branch = objF.createBranch();
         branch.setId(id);
         branch.setExist(true);
+        branch.setIsMain(false);
         branch.setAlias(String.valueOf(id));
         dataModel.getBranches().add(branch);
     }
@@ -211,7 +211,7 @@ public class SaveDataModel implements ISaveDataModel {
 
         Relation relation = objF.createRelation();
         relation.setId(id);
-       relation.setExist(true);
+        relation.setExist(true);
         relation.setAlias(String.valueOf(id));
         dataModel.getRelations().add(relation);
     }
@@ -292,6 +292,7 @@ public class SaveDataModel implements ISaveDataModel {
         commit.setCount(1);
         commit.getNameIndicator().add(0);
         commit.setExist(true);
+        commit.setRelease(false);
         commit.setAlias(String.valueOf(id));
         Coordinates cor = objF.createCoordinates();
         cor.setXCoordinate(0);

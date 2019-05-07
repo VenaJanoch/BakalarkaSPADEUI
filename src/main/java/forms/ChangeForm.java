@@ -51,7 +51,7 @@ public class ChangeForm extends TableBasicForm implements ISegmentTableForm {
 
             @Override
             public void handle(MouseEvent t) {
-                if(t.getClickCount() == 2) {
+                if (t.getClickCount() == 2) {
                     showEditPanel();
                 }
             }
@@ -109,7 +109,7 @@ public class ChangeForm extends TableBasicForm implements ISegmentTableForm {
         return null;
     }
 
-    private void showEditPanel(){
+    private void showEditPanel() {
         ChangeTable table = tableTV.getSelectionModel().getSelectedItems().get(0);
         if (table != null) {
             editControlPanel.showEditControlPanel(table, tableTV);

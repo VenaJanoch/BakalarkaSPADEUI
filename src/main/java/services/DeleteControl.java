@@ -83,18 +83,18 @@ public class DeleteControl {
             case Criterion:
                 break;
             case Person:
-                switch (elementType){
+                switch (elementType) {
                     case Work_Unit:
-                        findTableToObjectIndicesForDelete(idList, mapperTableToObject.getRoleMaps().get(0) );
-                    break;
+                        findTableToObjectIndicesForDelete(idList, mapperTableToObject.getRoleMaps().get(0));
+                        break;
                     case Configuration:
-                        findTableToObjectIndicesForDelete(idList, mapperTableToObject.getRoleMaps().get(1) );
+                        findTableToObjectIndicesForDelete(idList, mapperTableToObject.getRoleMaps().get(1));
                         break;
                     case Artifact:
-                        findTableToObjectIndicesForDelete(idList, mapperTableToObject.getRoleMaps().get(2) );
+                        findTableToObjectIndicesForDelete(idList, mapperTableToObject.getRoleMaps().get(2));
                         break;
                     case Config_Person_Relation:
-                        findTableToObjectIndicesForDelete(idList, mapperTableToObject.getRoleMaps().get(3) );
+                        findTableToObjectIndicesForDelete(idList, mapperTableToObject.getRoleMaps().get(3));
                         break;
                     default:
                 }
@@ -123,7 +123,7 @@ public class DeleteControl {
         ArrayList<Integer> list = findTableToObjectIndicesForDelete(indicesList, map);
         ArrayList<Integer> indexDataList = new ArrayList<>();
 
-        for(int i : list){
+        for (int i : list) {
             indexDataList.add(idCreater.getWorkUnitIndexToIdMaper().get(i));
         }
 

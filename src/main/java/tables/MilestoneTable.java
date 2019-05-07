@@ -4,51 +4,54 @@ import javafx.beans.property.StringProperty;
 
 public class MilestoneTable extends BasicTable {
 
-	/** Globální proměnné třídy **/
-	private StringProperty criterion;
-	private StringProperty description;
+    /**
+     * Globální proměnné třídy
+     **/
+    private StringProperty criterion;
+    private StringProperty description;
 
-	/**
-	 * Konstruktor třídy Zinicializuje globální proměnnné třídy
-	 * 
-	 * @param name
-	 *            jméno milestone
-	 */
-	public MilestoneTable(String name,  boolean exist, int id) {
-		super(name, exist, id);
+    /**
+     * Konstruktor třídy Zinicializuje globální proměnnné třídy
+     *
+     * @param name jméno milestone
+     */
+    public MilestoneTable(String name, boolean exist, int id) {
+        super(name, exist, id);
 //		this.criterion = new SimpleStringProperty(criterium);
 //		this.description = new SimpleStringProperty(description);
-	}
-	
-	/**
-	 * Vypíše info o prvku 
-	 */
-	@Override
-	public String toString() {
+    }
 
-		return getAlias();
-	}
+    /**
+     * Vypíše info o prvku
+     */
+    @Override
+    public String toString() {
 
-	/** Globální proměnné třídy **/
+        return getAlias();
+    }
 
-	public final String getCriterion() {
-		return criterion.get();
-	}
+    /**
+     * Globální proměnné třídy
+     **/
 
-	public final void setCriterion(String name) {
-		this.criterion.set(name);
+    public final String getCriterion() {
+        return criterion.get();
+    }
 
-	}
+    public final void setCriterion(String name) {
+        this.criterion.set(name);
 
-	public String getDescription() {
-		return description.get();
-	}
+    }
 
-	public StringProperty descriptionProperty() {
-		return description;
-	}
+    public String getDescription() {
+        return description.get();
+    }
 
-	public void setDescription(String description) {
-		this.description.set(description);
-	}
+    public StringProperty descriptionProperty() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description.set(description);
+    }
 }

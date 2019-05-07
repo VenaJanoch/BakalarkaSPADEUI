@@ -12,11 +12,27 @@ public abstract class WorkUnitDateControlPanel extends WorkUnitControlPanel {
 
     protected DateItem dateDP;
 
+    /**
+     * Konstruktor tridy zavola konstruktor materske tridy a metodu pro vytvoreni grafickych prvku
+     *
+     * @param buttonText         nazev tlacitka
+     * @param formDataController Trida FormDataController
+     * @param editFormController Trida EditFormController
+     * @param formController     Trida FormController
+     */
     public WorkUnitDateControlPanel(String buttonText, IFormDataController formDataController, IEditFormController editFormController, FormController formController) {
         super(buttonText, formDataController, editFormController, formController);
         addItemsToControlPanel3();
     }
 
+
+    /**
+     * Konstruktor tridy zavola konstruktor materske tridy a metodu pro vytvoreni grafickych prvku
+     *
+     * @param buttonText         nazev tlacitka
+     * @param formDataController Trida FormDataController
+     * @param editFormController Trida EditFormController
+     */
     public WorkUnitDateControlPanel(String buttonText, IFormDataController formDataController, IEditFormController editFormController) {
         super(buttonText, formDataController, editFormController);
         addItemsToControlPanel3();
@@ -26,13 +42,14 @@ public abstract class WorkUnitDateControlPanel extends WorkUnitControlPanel {
 
         lineList.add(new ControlPanelLineObject("Created: ", ControlPanelLineType.Date, ParamType.Date));
 
-
-        // dateDP = new DateItem("Created: ");
-
-      // controlPanelController.setDateItemToControlPanel(controlPane, dateDP, 0, 3);
     }
 
-
+    /**
+     * Metoda pro zobrazeni postraniho editacniho panelu
+     *
+     * @param basicTable Instance BasicTable
+     * @param tableView  Instace TableView
+     */
     protected abstract void showEditControlPanel(BasicTable basicTable, TableView tableView);
 
 }

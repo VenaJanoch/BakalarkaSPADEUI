@@ -4,52 +4,58 @@ package tables;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
-public class CommitTable extends BasicTable{
+public class CommitTable extends BasicTable {
 
-	/** Globální proměnné třídy **/
-	private StringProperty main;
-	private boolean mainBool;
-	/**
-	 * Konstruktor třídy
-	 * Zinicializuje globální proměnné
-	 * @param name jméno branch
-	 * @param main hodnota main
-	 */
+    /**
+     * Globální proměnné třídy
+     **/
+    private StringProperty main;
+    private boolean mainBool;
 
-	public CommitTable(String name, String main, boolean isMain, boolean exist, int id) {
-		super(name, exist, id);
-		this.main = new SimpleStringProperty(main);
-		this.mainBool = isMain;
-	}
+    /**
+     * Konstruktor třídy
+     * Zinicializuje globální proměnné
+     *
+     * @param name jméno branch
+     * @param main hodnota main
+     */
 
-	/**
-	 * Vypíše informace o prvku
-	 */
-	@Override
-	public String toString() {
+    public CommitTable(String name, String main, boolean isMain, boolean exist, int id) {
+        super(name, exist, id);
+        this.main = new SimpleStringProperty(main);
+        this.mainBool = isMain;
+    }
 
-		return getAlias();
-	}
-	
-	/** Getrs and Setrs **/
+    /**
+     * Vypíše informace o prvku
+     */
+    @Override
+    public String toString() {
 
-	public String getMain() {
-		return main.get();
-	}
+        return getAlias();
+    }
 
-	public StringProperty mainProperty() {
-		return main;
-	}
+    /**
+     * Getrs and Setrs
+     **/
 
-	public void setMain(String main) {
-		this.main.set(main);
-	}
+    public String getMain() {
+        return main.get();
+    }
 
-	public boolean isMainBool() {
-		return mainBool;
-	}
+    public StringProperty mainProperty() {
+        return main;
+    }
 
-	public void setMainBool(boolean mainBool) {
-		this.mainBool = mainBool;
-	}
+    public void setMain(String main) {
+        this.main.set(main);
+    }
+
+    public boolean isMainBool() {
+        return mainBool;
+    }
+
+    public void setMainBool(boolean mainBool) {
+        this.mainBool = mainBool;
+    }
 }

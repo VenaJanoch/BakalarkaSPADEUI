@@ -17,7 +17,7 @@ public class DateItem extends ItemBox {
     private DatePicker itemDate;
 
     public DateItem(ControlPanelLine controlPanelLine, ControlPanel controlPanel, ControlPanelController controlPanelController,
-                    ObservableList<ControlPanelLineObject> lineList){
+                    ObservableList<ControlPanelLineObject> lineList) {
         super(FXCollections.observableList(Arrays.asList(Constans.numberIndicatorList)), controlPanelController);
 
         itemDate = new DatePicker();
@@ -28,7 +28,7 @@ public class DateItem extends ItemBox {
 
     }
 
-    public LocalDate getDateFromDatePicker(){
+    public LocalDate getDateFromDatePicker() {
         return itemDate.getValue();
     }
 

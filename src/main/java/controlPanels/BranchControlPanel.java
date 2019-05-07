@@ -15,7 +15,7 @@ import java.util.List;
 public class BranchControlPanel extends NameControlPanel {
 
 
-    public BranchControlPanel(String buttonName, IFormDataController formDataController, IEditFormController editFormController, FormController formController){
+    public BranchControlPanel(String buttonName, IFormDataController formDataController, IEditFormController editFormController, FormController formController) {
         super(buttonName, formDataController, editFormController, formController);
         createControlPanel();
     }
@@ -26,11 +26,10 @@ public class BranchControlPanel extends NameControlPanel {
     }
 
 
+    public void createControlPanel() {
 
-    public void createControlPanel(){
 
-
-        controlPanelController.setRadioButton(this, 2,"Main: ", true);
+        controlPanelController.setRadioButton(this, 2, "Main: ", true);
         controlPanelController.createNewLineWithExist(this, lineList);
     }
 
@@ -43,18 +42,18 @@ public class BranchControlPanel extends NameControlPanel {
         controlPanelController.resetPanel(controlPane);
         createControlPanel();
 
-        controlPanelController.setValueTextField(this, lineList ,ParamType.Name, branchData, branchData[1], 0);
-       boolean main = false;
+        controlPanelController.setValueTextField(this, lineList, ParamType.Name, branchData, branchData[1], 0);
+        boolean main = false;
         List boolList = branchData[2];
-        if(boolList.get(1) != null) {
+        if (boolList.get(1) != null) {
             main = (boolean) boolList.get(1);
         }
 
         controlPanelController.setValueRadioButton(main);
-        controlPanelController.setValueExistRadioButton((boolean)boolList.get(0));
-        controlPanelController.setAlias((String)boolList.get(2), this);
+        controlPanelController.setValueExistRadioButton((boolean) boolList.get(0));
+        controlPanelController.setAlias((String) boolList.get(2), this);
 
-        button.setOnAction(event ->{
+        button.setOnAction(event -> {
             ArrayList<Integer> nameIndicators = new ArrayList<>();
             ArrayList<String> name = controlPanelController.processTextLines(ParamType.Name, nameIndicators);
 
@@ -67,7 +66,6 @@ public class BranchControlPanel extends NameControlPanel {
         tableView.refresh();
         tableView.getSelectionModel().clearSelection();
     }
-
 
 
 }

@@ -32,7 +32,7 @@ public class ActivityControlPanel extends WorkUnitControlPanel {
         super(buttonName, formDataController, editFormController, formController);
         lineList.add(new ControlPanelLineObject("End date: ", ControlPanelLineType.Date, ParamType.EndDate));
         addItemsToControlPanel();
-        }
+    }
 
     @Override
     public void showEditControlPanel(BasicTable basicTable, TableView tableView) {
@@ -40,21 +40,21 @@ public class ActivityControlPanel extends WorkUnitControlPanel {
         int id = activityTable.getId();
         List activityData[] = formDataController.getActivityStringData(id);
 
-       controlPanelController.resetPanel(controlPane);
+        controlPanelController.resetPanel(controlPane);
         addItemsToControlPanel();
 
-        controlPanelController.setValueTextField(this, lineList ,ParamType.Name, activityData, activityData[3], 0);
-        controlPanelController.setValueTextField(this, lineList ,ParamType.Description, activityData, activityData[4], 1);
-        controlPanelController.setValueDatePicker(this, lineList ,ParamType.EndDate, (ArrayList<LocalDate>)activityData[6],  activityData[7]);
+        controlPanelController.setValueTextField(this, lineList, ParamType.Name, activityData, activityData[3], 0);
+        controlPanelController.setValueTextField(this, lineList, ParamType.Description, activityData, activityData[4], 1);
+        controlPanelController.setValueDatePicker(this, lineList, ParamType.EndDate, (ArrayList<LocalDate>) activityData[6], activityData[7]);
         ArrayList<ArrayList<Integer>> workUnits = formDataController.getWorkUnitFromSegment(id, SegmentType.Activity);
-        controlPanelController.setValueCheckComboBox(this, lineList ,ParamType.WorkUnit, workUnits, activityData[2]);
+        controlPanelController.setValueCheckComboBox(this, lineList, ParamType.WorkUnit, workUnits, activityData[2]);
 
         boolean exist = false;
         List boolList = activityData[5];
         exist = (boolean) boolList.get(0);
 
         controlPanelController.setValueExistRadioButton(exist);
-        controlPanelController.setAlias((String)activityData[5].get(2), this);
+        controlPanelController.setAlias((String) activityData[5].get(2), this);
         button.setOnAction(event -> saveDataFromPanel(activityTable, tableView));
     }
 
@@ -76,7 +76,7 @@ public class ActivityControlPanel extends WorkUnitControlPanel {
         ArrayList<LocalDate> endDate = controlPanelController.processDateLines(ParamType.EndDate, endDateIndicators);
         ArrayList<ArrayList<Integer>> workUnit = controlPanelController.processCheckComboBoxLines(ParamType.WorkUnit, workUnitIndicators);
         editFormController.editDataFromActivity(aliasTF.getText(), name, desc, workUnit, nameIndicators, descIndicators,
-                workUnitIndicators, endDate, endDateIndicators, activityTable ,controlPanelController.isExist(), id);
+                workUnitIndicators, endDate, endDateIndicators, activityTable, controlPanelController.isExist(), id);
 
         clearPanelCB(tableView);
     }

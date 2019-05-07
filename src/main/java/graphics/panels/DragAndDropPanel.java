@@ -64,15 +64,14 @@ public class DragAndDropPanel extends BorderPane {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-        Image image = new Image( input);
-        BackgroundImage backgroundImage = new BackgroundImage( image, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT,
+        Image image = new Image(input);
+        BackgroundImage backgroundImage = new BackgroundImage(image, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT,
                 BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
 
         Background background = new Background(backgroundImage);
         projectButton.setMinWidth(image.getWidth());
         projectButton.setMinHeight(image.getHeight());
         projectButton.setBackground(background);
-
 
 
         this.projectConfirmButton = new Button("Confirm project");
@@ -85,7 +84,7 @@ public class DragAndDropPanel extends BorderPane {
 
         ObservableList<String> itemsList = FXCollections.observableArrayList();
 
-        for(String item : Constans.addItemNames){
+        for (String item : Constans.addItemNames) {
             itemsList.add(item);
         }
 
@@ -104,7 +103,6 @@ public class DragAndDropPanel extends BorderPane {
         projectConfirmButton.setOnAction(event -> windowController.showConfirmWindow());
 
 
-
         //createButtons();
         //createAction();
 
@@ -114,7 +112,7 @@ public class DragAndDropPanel extends BorderPane {
 //		this.setTop(buttonBox);
 
         HBox projectPanel = new HBox(10);
-       // projectPanel.setBackground(new Background(new BackgroundFill(Color.RED, CornerRadii.EMPTY, Insets.EMPTY )));
+        // projectPanel.setBackground(new Background(new BackgroundFill(Color.RED, CornerRadii.EMPTY, Insets.EMPTY )));
         SplitPane splitPane = new SplitPane();
         splitPane.setMaxHeight(projectButton.getMaxHeight());
         projectPanel.getChildren().addAll(projectButton, splitPane);
@@ -127,12 +125,12 @@ public class DragAndDropPanel extends BorderPane {
         tableLabel.setTextFill(Color.WHITE);
         bottomPanel.getChildren().addAll(tableLabel, formBox, projectConfirmButton);
 
-        HBox.setMargin(projectConfirmButton, new Insets(0,0,0, 700));
+        HBox.setMargin(projectConfirmButton, new Insets(0, 0, 0, 700));
         this.setBottom(bottomPanel);
         //this.setRight(projectConfirmButton);
         this.setAlignment(formBox, Pos.BOTTOM_LEFT);
-        BorderPane.setMargin(bottomPanel, new Insets(0,0,0,160));
-        BorderPane.setMargin(items, new Insets(0,0,0,50));
+        BorderPane.setMargin(bottomPanel, new Insets(0, 0, 0, 160));
+        BorderPane.setMargin(items, new Insets(0, 0, 0, 50));
     }
 
 

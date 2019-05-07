@@ -19,7 +19,7 @@ public class CheckComboBoxItem extends ItemBox {
 
 
     public CheckComboBoxItem(ControlPanelLine controlPanelLine, ControlPanel controlPanel, ControlPanelController controlPanelController,
-                             ObservableList listForBox, ObservableList<ControlPanelLineObject> lineList){
+                             ObservableList listForBox, ObservableList<ControlPanelLineObject> lineList) {
         super(FXCollections.observableList(Arrays.asList(Constans.textIndicatorList)), controlPanelController);
 
 
@@ -34,9 +34,9 @@ public class CheckComboBoxItem extends ItemBox {
     }
 
 
-    public void selectItemsInComboBox(List<Integer> list){
+    public void selectItemsInComboBox(List<Integer> list) {
 
-        for(int i : list){
+        for (int i : list) {
             itemCB.getCheckModel().check(i);
         }
     }

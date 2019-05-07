@@ -15,7 +15,7 @@ public class RadioButtonItem extends ItemBox {
 
 
     public RadioButtonItem(ControlPanelLine controlPanelLine, ControlPanel controlPanel, ControlPanelController controlPanelController,
-                           ObservableList<ControlPanelLineObject> lineList ){
+                           ObservableList<ControlPanelLineObject> lineList) {
         super(null, controlPanelController);
 
         yesRb = new RadioButton();
@@ -28,14 +28,14 @@ public class RadioButtonItem extends ItemBox {
         nameLb = new Label("Exist: ");
     }
 
-    public void setGroup(){
+    public void setGroup() {
         group.selectedToggleProperty().addListener(controlPanelController.radioButtonGroupListener());
 
         yesRb.setToggleGroup(group);
-         noRb.setToggleGroup(group);
+        noRb.setToggleGroup(group);
     }
 
-    public boolean isSelectYes(){
+    public boolean isSelectYes() {
         return yesRb.isSelected();
     }
 

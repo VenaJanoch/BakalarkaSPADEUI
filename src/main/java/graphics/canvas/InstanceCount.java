@@ -21,7 +21,7 @@ public class InstanceCount extends AnchorPane {
     public InstanceCount(String count) {
         super();
         this.circle = new Circle(Constans.INSTACE_COUNT_RADIUS);
-        this.circle.setFill(Color.rgb(0,146,202));
+        this.circle.setFill(Color.rgb(0, 146, 202));
         this.instaceCountText = new Text(count);
         this.instaceCountText.setFill(Color.WHITE);
         this.instaceCountText.setFont(Font.font(null, FontWeight.BOLD, 25));
@@ -29,16 +29,16 @@ public class InstanceCount extends AnchorPane {
 
     }
 
-    public void setPosition(double x, double y){
+    public void setPosition(double x, double y) {
 
         this.setTranslateX(x);
         this.setTranslateY(y);
-        instaceCountText.setTranslateX(-(Constans.INSTACE_COUNT_RADIUS/2));
-        instaceCountText.setTranslateY((Constans.INSTACE_COUNT_RADIUS/2));
+        instaceCountText.setTranslateX(-(Constans.INSTACE_COUNT_RADIUS / 2));
+        instaceCountText.setTranslateY((Constans.INSTACE_COUNT_RADIUS / 2));
 
     }
 
-    public void setInstaceCount(String instaceCount){
+    public void setInstaceCount(String instaceCount) {
         this.instaceCountText.setText(instaceCount);
     }
 

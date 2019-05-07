@@ -30,10 +30,11 @@ public class ArtifactControlPanel extends DateDescControlPanel implements IContr
     private ArtifactTable artifactTable;
     private ObservableList<String> artifactArray;
 
-    private  int artifactId;
-    private  int artifactFormIndex;
+    private int artifactId;
+    private int artifactFormIndex;
+
     public ArtifactControlPanel(String buttonName, IFormDataController formDataController,
-                                IEditFormController editFormController, FormController formController, ArtifactTable artifactTable, int id, int formIndex){
+                                IEditFormController editFormController, FormController formController, ArtifactTable artifactTable, int id, int formIndex) {
         super(buttonName, formDataController, editFormController, formController);
         this.artifactTable = artifactTable;
         this.artifactId = id;
@@ -42,7 +43,7 @@ public class ArtifactControlPanel extends DateDescControlPanel implements IContr
         int i = 0;
 
         artifactArray = FXCollections.observableArrayList();
-        for(ArtifactClass classItem : ArtifactClass.values()){
+        for (ArtifactClass classItem : ArtifactClass.values()) {
             artifactArray.add(classItem.name());
             i++;
         }
@@ -52,14 +53,14 @@ public class ArtifactControlPanel extends DateDescControlPanel implements IContr
         createControlPanel();
     }
 
-    public void createControlPanel(){
+    public void createControlPanel() {
 
 
-        controlPanelController.setCountLine(this, 2, new ControlPanelLine(lineList,this, controlPanelController, controlPanelController.getLineCount() ));
+        controlPanelController.setCountLine(this, 2, new ControlPanelLine(lineList, this, controlPanelController, controlPanelController.getLineCount()));
         controlPanelController.createNewLineWithExist(this, lineList);
 
         button.setOnAction(event -> saveDataFromPanel());
-        }
+    }
 
     @Override
     public void showEditControlPanel() {
@@ -68,11 +69,11 @@ public class ArtifactControlPanel extends DateDescControlPanel implements IContr
         controlPanelController.resetPanel(controlPane);
         createControlPanel();
 
-        controlPanelController.setValueTextField(this, lineList ,ParamType.Name, artifactData, artifactData[5], 0);
-        controlPanelController.setValueTextField(this, lineList ,ParamType.Description, artifactData, artifactData[6], 1);
-        controlPanelController.setValueComboBox(this, lineList ,ParamType.Role, (ArrayList<Integer>) artifactData[2], artifactData[7]);
-        controlPanelController.setValueDatePicker(this, lineList ,ParamType.Date,(ArrayList<LocalDate>) artifactData[3], artifactData[8]);
-        controlPanelController.setValueComboBox(this, lineList ,ParamType.ArtifactType, (ArrayList<Integer>)artifactData[4], artifactData[9]);
+        controlPanelController.setValueTextField(this, lineList, ParamType.Name, artifactData, artifactData[5], 0);
+        controlPanelController.setValueTextField(this, lineList, ParamType.Description, artifactData, artifactData[6], 1);
+        controlPanelController.setValueComboBox(this, lineList, ParamType.Role, (ArrayList<Integer>) artifactData[2], artifactData[7]);
+        controlPanelController.setValueDatePicker(this, lineList, ParamType.Date, (ArrayList<LocalDate>) artifactData[3], artifactData[8]);
+        controlPanelController.setValueComboBox(this, lineList, ParamType.ArtifactType, (ArrayList<Integer>) artifactData[4], artifactData[9]);
 
         boolean exist = false;
         List boolList = artifactData[10];
@@ -80,11 +81,11 @@ public class ArtifactControlPanel extends DateDescControlPanel implements IContr
         exist = (boolean) boolList.get(0);
 
         controlPanelController.setValueExistRadioButton(exist);
-        controlPanelController.setCountToCountLine((Integer)boolList.get(1));
-        controlPanelController.setAlias((String)boolList.get(2), this);
+        controlPanelController.setCountToCountLine((Integer) boolList.get(1));
+        controlPanelController.setAlias((String) boolList.get(2), this);
     }
 
-    public void saveDataFromPanel(){
+    public void saveDataFromPanel() {
         int id = artifactId;
 
 
@@ -101,7 +102,7 @@ public class ArtifactControlPanel extends DateDescControlPanel implements IContr
 
         exist = controlPanelController.isExist();
         String count = controlPanelController.getInstanceCount();
-        editFormController.editDataFromArtifact(aliasTF.getText(), name, desc , exist, role, type, date, nameIndicators, descIndicators, roleIndicators,
+        editFormController.editDataFromArtifact(aliasTF.getText(), name, desc, exist, role, type, date, nameIndicators, descIndicators, roleIndicators,
                 typeIndicators, dateIndicators, artifactTable, count, id);
 
     }

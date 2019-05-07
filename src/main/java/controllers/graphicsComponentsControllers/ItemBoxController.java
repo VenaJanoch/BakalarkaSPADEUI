@@ -15,7 +15,7 @@ public class ItemBoxController {
     private ChangeListener<Number> listener;
 
 
-    public ItemBoxController(){
+    public ItemBoxController() {
         choosedIndicies = FXCollections.observableArrayList();
     }
 
@@ -23,7 +23,7 @@ public class ItemBoxController {
      * ChangeListener pro určení indexu prvku z comboBoxu pro Priority
      */
 
-    public ChangeListener<Number> comboBoxListener () {
+    public ChangeListener<Number> comboBoxListener() {
 
         listener = new ChangeListener<Number>() {
 

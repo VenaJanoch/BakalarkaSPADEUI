@@ -4,7 +4,7 @@ import SPADEPAC.*;
 
 import java.util.*;
 
-public class DataManipulator{
+public class DataManipulator {
 
     private DataModel dataModel;
 
@@ -16,7 +16,7 @@ public class DataManipulator{
     public void copyDataFromArtifact(int artifactId, int newArtifactId, double x, double y) {
         Artifact oldArtifact = dataModel.getArtifact(artifactId);
         Artifact newArtifact = dataModel.getArtifact(newArtifactId);
-        Coordinates coordinates = dataModel.createCoords((int)x,(int) y);
+        Coordinates coordinates = dataModel.createCoords((int) x, (int) y);
 
         newArtifact.setAlias(oldArtifact.getAlias());
         newArtifact.setCoordinates(coordinates);
@@ -38,7 +38,7 @@ public class DataManipulator{
     public void copyDataFromCommitedConfiguration(int commitedConfigurationId, int newCommitedConfigurationId, double x, double y) {
         CommitedConfiguration oldCommitedConfiguration = dataModel.getCommitedConfiguration(commitedConfigurationId);
         CommitedConfiguration newCommitedConfiguration = dataModel.getCommitedConfiguration(newCommitedConfigurationId);
-        Coordinates coordinates = dataModel.createCoords((int)x,(int) y);
+        Coordinates coordinates = dataModel.createCoords((int) x, (int) y);
 
         newCommitedConfiguration.setAlias(oldCommitedConfiguration.getAlias());
         newCommitedConfiguration.setCoordinates(coordinates);
@@ -52,12 +52,12 @@ public class DataManipulator{
         newCommitedConfiguration.getCreated().addAll(oldCommitedConfiguration.getCreated());
         newCommitedConfiguration.getCreatedIndicator().addAll(oldCommitedConfiguration.getCreatedIndicator());
     }
-    
+
 
     public void copyDataFromCommit(int commitId, int newCommitId, double x, double y) {
         Commit oldCommit = dataModel.getCommit(commitId);
         Commit newCommit = dataModel.getCommit(newCommitId);
-        Coordinates coordinates = dataModel.createCoords((int)x,(int) y);
+        Coordinates coordinates = dataModel.createCoords((int) x, (int) y);
 
         newCommit.setAlias(oldCommit.getAlias());
         newCommit.setCoordinates(coordinates);
@@ -66,13 +66,13 @@ public class DataManipulator{
         newCommit.setExist(oldCommit.isExist());
 
     }
-    
+
 
     public void copyDataFromConfiguration(int configurationId, int newConfigurationId, double x, double y) {
         Configuration oldConfiguration = dataModel.getConfiguration(configurationId);
         Configuration newConfiguration = dataModel.getConfiguration(newConfigurationId);
 
-        Coordinates coordinates = dataModel.createCoords((int)x,(int) y);
+        Coordinates coordinates = dataModel.createCoords((int) x, (int) y);
         newConfiguration.setAlias(oldConfiguration.getAlias());
         newConfiguration.setCoordinates(coordinates);
         newConfiguration.getName().addAll(oldConfiguration.getName());
@@ -91,13 +91,13 @@ public class DataManipulator{
         newConfiguration.getTagIndex().addAll(oldConfiguration.getTagIndex());
         newConfiguration.getTagsIndicator().addAll(oldConfiguration.getTagsIndicator());
     }
-    
-    
+
+
     public void copyDataFromPerson(int artifactId, int newPersonId, double x, double y) {
         Person oldPerson = dataModel.getPerson(artifactId);
         Person newPerson = dataModel.getPerson(newPersonId);
 
-        Coordinates coordinates = dataModel.createCoords((int) x,(int) y);
+        Coordinates coordinates = dataModel.createCoords((int) x, (int) y);
 
         newPerson.setCoordinates(coordinates);
         newPerson.getName().addAll(oldPerson.getName());
@@ -111,20 +111,20 @@ public class DataManipulator{
     public List[] getCriterionData(int id) {
         List[] data = new List[5];
         Criterion criterion = dataModel.getCriterions().get(getCriterionIndexInProject(id));
-        
-        if(criterion.getName() != null){
+
+        if (criterion.getName() != null) {
             data[0] = criterion.getName();
         }
 
-        if(criterion.getDescription() != null){
+        if (criterion.getDescription() != null) {
             data[1] = criterion.getDescription();
         }
 
-        if(criterion.getNameIndicator() != null){
+        if (criterion.getNameIndicator() != null) {
             data[2] = criterion.getNameIndicator();
         }
 
-        if(criterion.getDescriptionIndicator() != null){
+        if (criterion.getDescriptionIndicator() != null) {
             data[3] = criterion.getDescriptionIndicator();
         }
 
@@ -139,9 +139,9 @@ public class DataManipulator{
 
     private int getCriterionIndexInProject(int id) {
         List<Criterion> items = dataModel.getCriterions();
-        for ( int i = 0; i < items.size(); i++){
+        for (int i = 0; i < items.size(); i++) {
 
-            if (items.get(i).getId() == id){
+            if (items.get(i).getId() == id) {
                 return i;
             }
         }
@@ -151,23 +151,23 @@ public class DataManipulator{
     public List[] getMilestoneData(int id) {
         List[] data = new List[6];
         Milestone milestone = dataModel.getMilestones().get(id);
-        if(milestone.getName() != null){
+        if (milestone.getName() != null) {
             data[0] = milestone.getName();
         }
 
-        if(milestone.getDescription() != null){
+        if (milestone.getDescription() != null) {
             data[1] = milestone.getDescription();
         }
 
-        if(milestone.getNameIndicator() != null){
+        if (milestone.getNameIndicator() != null) {
             data[2] = milestone.getNameIndicator();
         }
 
-        if(milestone.getDescriptionIndicator() != null){
+        if (milestone.getDescriptionIndicator() != null) {
             data[3] = milestone.getDescriptionIndicator();
         }
 
-        if(milestone.getCriteriaIndicator() != null){
+        if (milestone.getCriteriaIndicator() != null) {
             data[4] = milestone.getCriteriaIndicator();
         }
 
@@ -185,7 +185,7 @@ public class DataManipulator{
         Milestone milestone = dataModel.getMilestone(id);
         ArrayList<ArrayList<Integer>> list = new ArrayList<>();
 
-        for (CriterionList list1 : milestone.getCriteriaIndexs()){
+        for (CriterionList list1 : milestone.getCriteriaIndexs()) {
             list.add((ArrayList<Integer>) list1.getCriterions());
         }
 
@@ -198,23 +198,23 @@ public class DataManipulator{
         List[] data = new List[5];
         Person role = dataModel.getPerson(id);
 
-        if(role.getName() != null){
+        if (role.getName() != null) {
             data[0] = role.getName();
         }
 
-        if(role.getType() != null){
+        if (role.getType() != null) {
             data[1] = role.getType();
         }
-        
-        if(role.getNameIndicator() != null){
+
+        if (role.getNameIndicator() != null) {
             data[2] = role.getNameIndicator();
         }
 
 
-        if(role.getTypeIndicator() != null){
+        if (role.getTypeIndicator() != null) {
             data[3] = role.getTypeIndicator();
         }
-        
+
         ArrayList list = new ArrayList();
         list.add(role.isExist());
         list.add(role.getCount());
@@ -229,20 +229,20 @@ public class DataManipulator{
     public List[] getRoleTypeData(int id) {
         List[] data = new List[7];
         RoleType roleType = dataModel.getRoleType(id);
-        if(roleType.getName() != null){
+        if (roleType.getName() != null) {
             data[0] = roleType.getName();
         }
 
-        if(roleType.getRoleTypeClassIndex().size() != 0){
+        if (roleType.getRoleTypeClassIndex().size() != 0) {
             data[1] = roleType.getRoleTypeClassIndex();
         }
 
-        if(roleType.getRoleTypeSuperClassIndex().size() != 0){
+        if (roleType.getRoleTypeSuperClassIndex().size() != 0) {
             data[2] = roleType.getRoleTypeSuperClassIndex();
         }
 
 
-        if(roleType.getNameIndicator() != null){
+        if (roleType.getNameIndicator() != null) {
             data[3] = roleType.getNameIndicator();
         }
 
@@ -252,16 +252,15 @@ public class DataManipulator{
         list.add(roleType.getAlias());
         data[4] = list;
 
-        if(roleType.getDescription() != null){
+        if (roleType.getDescription() != null) {
             data[5] = roleType.getDescription();
         }
 
-        if(roleType.getDescriptionIndicator() != null){
+        if (roleType.getDescriptionIndicator() != null) {
             data[6] = roleType.getDescriptionIndicator();
         }
 
 
-       
         return data;
     }
 
@@ -269,20 +268,20 @@ public class DataManipulator{
     public List[] getSeverityData(int id) {
         List[] data = new List[5];
         Severity severity = dataModel.getSeverity(id);
-        if(severity.getName() != null){
+        if (severity.getName() != null) {
             data[0] = severity.getName();
         }
-        
-        if(severity.getSeverityClassIndex().size() != 0){
+
+        if (severity.getSeverityClassIndex().size() != 0) {
             data[1] = severity.getSeverityClassIndex();
         }
 
-        if(severity.getSeveritySuperClassIndex().size() != 0){
+        if (severity.getSeveritySuperClassIndex().size() != 0) {
             data[2] = severity.getSeveritySuperClassIndex();
         }
 
 
-        if(severity.getNameIndicator() != null){
+        if (severity.getNameIndicator() != null) {
             data[3] = severity.getNameIndicator();
         }
 
@@ -297,23 +296,23 @@ public class DataManipulator{
     public List[] getPriorityData(int id) {
         List[] data = new List[5];
         Priority priority = dataModel.getPriority(id);
-        if(priority.getName() != null){
+        if (priority.getName() != null) {
             data[0] = priority.getName();
         }
 
-        if(priority.getPriorityClassIndex().size() != 0){
+        if (priority.getPriorityClassIndex().size() != 0) {
             data[1] = priority.getPriorityClassIndex();
         }
 
-        if(priority.getPrioritySuperClassIndex().size() != 0){
+        if (priority.getPrioritySuperClassIndex().size() != 0) {
             data[2] = priority.getPrioritySuperClassIndex();
         }
 
 
-        if(priority.getNameIndicator() != null){
+        if (priority.getNameIndicator() != null) {
             data[3] = priority.getNameIndicator();
         }
-        
+
         List list = new ArrayList();
         list.add(priority.isExist());
         list.add(null);
@@ -325,20 +324,20 @@ public class DataManipulator{
     public List[] getStatusData(int id) {
         List[] data = new List[5];
         Status status = dataModel.getStatus(id);
-        if(status.getName() != null){
+        if (status.getName() != null) {
             data[0] = status.getName();
         }
-        
-        if(status.getStatusClassIndex().size() != 0){
+
+        if (status.getStatusClassIndex().size() != 0) {
             data[1] = status.getStatusClassIndex();
         }
 
-        if(status.getStatusSuperClassIndex().size() != 0){
+        if (status.getStatusSuperClassIndex().size() != 0) {
             data[2] = status.getStatusSuperClassIndex();
         }
 
 
-        if(status.getNameIndicator() != null){
+        if (status.getNameIndicator() != null) {
             data[3] = status.getNameIndicator();
         }
 
@@ -353,20 +352,20 @@ public class DataManipulator{
     public List[] getTypeData(int id) {
         List[] data = new List[5];
         Type type = dataModel.getType(id);
-        if(type.getName() != null){
+        if (type.getName() != null) {
             data[0] = type.getName();
         }
 
-        if(type.getTypeClassIndex().size() != 0){
+        if (type.getTypeClassIndex().size() != 0) {
             data[1] = type.getTypeClassIndex();
         }
 
-        if(type.getTypeSuperClassIndex().size() != 0){
+        if (type.getTypeSuperClassIndex().size() != 0) {
             data[2] = type.getTypeSuperClassIndex();
         }
 
 
-        if(type.getNameIndicator() != null){
+        if (type.getNameIndicator() != null) {
             data[3] = type.getNameIndicator();
         }
 
@@ -382,18 +381,18 @@ public class DataManipulator{
     public List[] getRelationData(int id) {
         List[] data = new List[5];
         Relation relation = dataModel.getRelation(id);
-        if(relation.getName() != null){
+        if (relation.getName() != null) {
             data[0] = relation.getName();
         }
-        if(relation.getRelationClassIndex().size() != 0){
+        if (relation.getRelationClassIndex().size() != 0) {
             data[1] = relation.getRelationClassIndex();
         }
 
-        if(relation.getRelationSuperClassIndex().size() != 0){
+        if (relation.getRelationSuperClassIndex().size() != 0) {
             data[2] = relation.getRelationSuperClassIndex();
         }
 
-        if(relation.getNameIndicator() != null){
+        if (relation.getNameIndicator() != null) {
             data[3] = relation.getNameIndicator();
         }
 
@@ -410,19 +409,19 @@ public class DataManipulator{
         List[] data = new List[5];
         Resolution resolution = dataModel.getResolution(id);
 
-        if(resolution.getName() != null){
+        if (resolution.getName() != null) {
             data[0] = resolution.getName();
         }
-        if(resolution.getResolutionClassIndex().size() != 0){
+        if (resolution.getResolutionClassIndex().size() != 0) {
             data[1] = resolution.getResolutionClassIndex();
         }
 
-        if(resolution.getResolutionSuperClassIndex().size() != 0){
+        if (resolution.getResolutionSuperClassIndex().size() != 0) {
             data[2] = resolution.getResolutionSuperClassIndex();
         }
 
 
-        if(resolution.getNameIndicator() != null){
+        if (resolution.getNameIndicator() != null) {
             data[3] = resolution.getNameIndicator();
         }
 
@@ -432,12 +431,12 @@ public class DataManipulator{
         list.add(resolution.getAlias());
         data[4] = list;
 
-        if(resolution.getResolutionSuperClassIndex().size() != 0){
+        if (resolution.getResolutionSuperClassIndex().size() != 0) {
             data[2] = resolution.getResolutionSuperClassIndex();
         }
 
 
-        if(resolution.getNameIndicator() != null){
+        if (resolution.getNameIndicator() != null) {
             data[3] = resolution.getNameIndicator();
         }
 
@@ -448,19 +447,19 @@ public class DataManipulator{
         List[] data = new List[7];
         ConfigPersonRelation cpr = dataModel.getConfigPersonRelation(id);
 
-        if(cpr.getName() != null){
+        if (cpr.getName() != null) {
             data[0] = cpr.getName();
         }
-        
-        if(cpr.getPersonIndex() != null){
+
+        if (cpr.getPersonIndex() != null) {
             data[1] = cpr.getPersonIndex();
         }
 
-        if(cpr.getNameIndicator() != null){
+        if (cpr.getNameIndicator() != null) {
             data[2] = cpr.getNameIndicator();
         }
 
-        if(cpr.getPersonIndicator() != null){
+        if (cpr.getPersonIndicator() != null) {
             data[3] = cpr.getPersonIndicator();
         }
         List list = new ArrayList();
@@ -469,11 +468,11 @@ public class DataManipulator{
         list.add(cpr.getAlias());
         data[4] = list;
 
-        if(cpr.getDescription() != null){
+        if (cpr.getDescription() != null) {
             data[5] = cpr.getDescription();
         }
 
-        if(cpr.getDescriptionIndicator() != null){
+        if (cpr.getDescriptionIndicator() != null) {
             data[6] = cpr.getDescriptionIndicator();
         }
 
@@ -482,11 +481,12 @@ public class DataManipulator{
 
     public List[] getBranchStringData(int id) {
         List[] data = new List[3];
-        Branch branch = dataModel.getBranch(id);;
-        if(branch.getName() != null){
+        Branch branch = dataModel.getBranch(id);
+        ;
+        if (branch.getName() != null) {
             data[0] = branch.getName();
         }
-        if(branch.getNameIndicator() != null){
+        if (branch.getNameIndicator() != null) {
             data[1] = branch.getNameIndicator();
         }
         List list = new ArrayList();
@@ -494,7 +494,7 @@ public class DataManipulator{
         list.add(null);
         list.add(branch.getAlias());
         data[2] = list;
-        if(branch.isIsMain() != null){
+        if (branch.isIsMain() != null) {
 
             list.add(branch.isIsMain());
         }
@@ -504,49 +504,50 @@ public class DataManipulator{
 
     public List[] getPhaseStringData(int id) {
         List[] data = new List[12];
-        Phase phase = dataModel.getPhase(id);;
-        
-        if(phase.getName() != null){
+        Phase phase = dataModel.getPhase(id);
+        ;
+
+        if (phase.getName() != null) {
             data[0] = phase.getName();
         }
-        
-        if(phase.getDescription() != null){
+
+        if (phase.getDescription() != null) {
             data[1] = phase.getDescription();
         }
-        
-        if(phase.getConfiguration() != null){
+
+        if (phase.getConfiguration() != null) {
             data[2] = phase.getConfiguration();
         }
 
-        if(phase.getMilestoneIndex() != null){
+        if (phase.getMilestoneIndex() != null) {
             data[3] = phase.getMilestoneIndex();
         }
 
-        if(phase.getEndDate() != null){
+        if (phase.getEndDate() != null) {
             data[4] = phase.getEndDate();
         }
 
-        if(phase.getNameIndicator() != null){
+        if (phase.getNameIndicator() != null) {
             data[5] = phase.getNameIndicator();
         }
 
-        if(phase.getDescriptionIndicator() != null){
+        if (phase.getDescriptionIndicator() != null) {
             data[6] = phase.getDescriptionIndicator();
         }
 
-        if(phase.getConfigurationIndicator() != null){
+        if (phase.getConfigurationIndicator() != null) {
             data[7] = phase.getConfigurationIndicator();
         }
 
-        if(phase.getMilestoneIndicator() != null){
+        if (phase.getMilestoneIndicator() != null) {
             data[8] = phase.getMilestoneIndicator();
         }
 
-        if(phase.getEndDateIndicator() != null){
+        if (phase.getEndDateIndicator() != null) {
             data[9] = phase.getEndDateIndicator();
         }
 
-        if(phase.getWorkUnitsIndicator() != null){
+        if (phase.getWorkUnitsIndicator() != null) {
             data[10] = phase.getWorkUnitsIndicator();
         }
 
@@ -582,19 +583,19 @@ public class DataManipulator{
         return getWorkUnitFrom(iteration.getWorkUnits());
     }
 
-    public  ArrayList<ArrayList<Integer>> getWorkUnitFromActivity(int activityId) {
+    public ArrayList<ArrayList<Integer>> getWorkUnitFromActivity(int activityId) {
 
         Activity activity = dataModel.getActivity(activityId);
         return getWorkUnitFrom(activity.getWorkUnits());
     }
-    
-    private ArrayList<ArrayList<Integer>> getWorkUnitFrom( List<WorkUnitList> inputList ){
+
+    private ArrayList<ArrayList<Integer>> getWorkUnitFrom(List<WorkUnitList> inputList) {
         ArrayList<ArrayList<Integer>> list = new ArrayList<>();
 
-        for (WorkUnitList list1 : inputList){
+        for (WorkUnitList list1 : inputList) {
             list.add((ArrayList<Integer>) list1.getWorkUnits());
         }
-        
+
         return list;
     }
 
@@ -603,95 +604,96 @@ public class DataManipulator{
         List[] data = new List[11];
         Project project = dataModel.getProject();
 
-        if(project.getName() != null){
+        if (project.getName() != null) {
             data[0] = project.getName();
         }
 
 
-        if(project.getDescription() != null){
+        if (project.getDescription() != null) {
             data[1] = project.getDescription();
         }
 
-        if(project.getStartDate() != null){
+        if (project.getStartDate() != null) {
             data[2] = project.getStartDate();
         }
 
-        if(project.getEndDate() != null){
+        if (project.getEndDate() != null) {
             data[3] = project.getEndDate();
         }
 
-        if(project.getNameIndicator() != null){
+        if (project.getNameIndicator() != null) {
             data[4] = project.getNameIndicator();
         }
 
 
-        if(project.getDescriptionIndicator() != null){
+        if (project.getDescriptionIndicator() != null) {
             data[5] = project.getDescriptionIndicator();
         }
 
-        if(project.getStartDateIndicator() != null){
+        if (project.getStartDateIndicator() != null) {
             data[6] = project.getStartDateIndicator();
         }
 
-        if(project.getEndDateIndicator() != null){
+        if (project.getEndDateIndicator() != null) {
             data[7] = project.getEndDateIndicator();
         }
 
-        if(project.getWorkUnitsIndicator() != null){
+        if (project.getWorkUnitsIndicator() != null) {
             data[8] = project.getWorkUnitsIndicator();
         }
 
         return data;
 
     }
-    
+
     public List[] getIterationStringData(int id) {
         List[] data = new List[12];
-        Iteration iteration = dataModel.getIteration(id);;
+        Iteration iteration = dataModel.getIteration(id);
+        ;
 
-        if(iteration.getName() != null){
+        if (iteration.getName() != null) {
             data[0] = iteration.getName();
         }
 
 
-        if(iteration.getDescription() != null){
+        if (iteration.getDescription() != null) {
             data[1] = iteration.getDescription();
         }
 
-        if(iteration.getConfiguration() != null){
+        if (iteration.getConfiguration() != null) {
             data[2] = iteration.getConfiguration();
         }
 
-        if(iteration.getStartDate() != null){
+        if (iteration.getStartDate() != null) {
             data[3] = iteration.getStartDate();
         }
 
-        if(iteration.getEndDate() != null){
+        if (iteration.getEndDate() != null) {
             data[4] = iteration.getEndDate();
         }
 
-        if(iteration.getNameIndicator() != null){
+        if (iteration.getNameIndicator() != null) {
             data[5] = iteration.getNameIndicator();
         }
 
 
-        if(iteration.getDescriptionIndicator() != null){
+        if (iteration.getDescriptionIndicator() != null) {
             data[6] = iteration.getDescriptionIndicator();
         }
 
-        if(iteration.getConfigurationIndicator() != null){
+        if (iteration.getConfigurationIndicator() != null) {
             data[7] = iteration.getConfigurationIndicator();
         }
 
-        if(iteration.getStartDateIndicator() != null){
+        if (iteration.getStartDateIndicator() != null) {
             data[8] = iteration.getStartDateIndicator();
         }
 
-        if(iteration.getEndDateIndicator() != null){
+        if (iteration.getEndDateIndicator() != null) {
             data[9] = iteration.getEndDateIndicator();
         }
 
-        if(iteration.getWorkUnitsIndicator() != null){
+        if (iteration.getWorkUnitsIndicator() != null) {
             data[10] = iteration.getWorkUnitsIndicator();
         }
 
@@ -706,24 +708,25 @@ public class DataManipulator{
 
     public List[] getActivityStringData(int id) {
         List[] data = new List[8];
-        Activity activity = dataModel.getActivity(id);;
-        if(activity.getName() != null){
+        Activity activity = dataModel.getActivity(id);
+        ;
+        if (activity.getName() != null) {
             data[0] = activity.getName();
         }
-        
-        if(activity.getDescription() != null){
+
+        if (activity.getDescription() != null) {
             data[1] = activity.getDescription();
         }
 
-        if(activity.getWorkUnitsIndicator() != null){
+        if (activity.getWorkUnitsIndicator() != null) {
             data[2] = activity.getWorkUnitsIndicator();
         }
 
-        if(activity.getNameIndicator() != null){
+        if (activity.getNameIndicator() != null) {
             data[3] = activity.getNameIndicator();
         }
 
-        if(activity.getDescriptionIndicator() != null){
+        if (activity.getDescriptionIndicator() != null) {
             data[4] = activity.getDescriptionIndicator();
         }
 
@@ -734,11 +737,11 @@ public class DataManipulator{
         data[5] = list;
 
 
-        if(activity.getEndDate() != null){
+        if (activity.getEndDate() != null) {
             data[6] = activity.getEndDate();
         }
 
-        if(activity.getEndDateIndicator() != null){
+        if (activity.getEndDateIndicator() != null) {
             data[7] = activity.getEndDateIndicator();
         }
         return data;
@@ -747,34 +750,35 @@ public class DataManipulator{
     public List[] getChangeStringData(int id) {
 
         List[] data = new List[6];
-        Change change = dataModel.getChange(id);;
+        Change change = dataModel.getChange(id);
+        ;
 
-        if(change.getName() != null){
+        if (change.getName() != null) {
             data[0] = change.getName();
         }
-        
-        if(change.getDescription() != null){
+
+        if (change.getDescription() != null) {
             data[1] = change.getDescription();
         }
 
-        if(change.getNameIndicator() != null){
+        if (change.getNameIndicator() != null) {
             data[2] = change.getNameIndicator();
         }
 
-        if(change.getDescriptionIndicator() != null){
+        if (change.getDescriptionIndicator() != null) {
             data[3] = change.getDescriptionIndicator();
         }
 
         List list = new ArrayList();
         data[4] = list;
-        if(change.isExist() != null){
+        if (change.isExist() != null) {
 
             list.add(change.isExist());
         }
         list.add(null);
         list.add(change.getAlias());
 
-        if(change.getArtifactIndex() != null){
+        if (change.getArtifactIndex() != null) {
             data[5] = change.getArtifactIndex();
         }
 
@@ -783,45 +787,46 @@ public class DataManipulator{
 
     public List[] getArtifactStringData(int id) {
         List[] data = new List[11];
-        Artifact artifact = dataModel.getArtifact(id);;
+        Artifact artifact = dataModel.getArtifact(id);
+        ;
 
-        if(artifact.getName() != null){
+        if (artifact.getName() != null) {
             data[0] = artifact.getName();
         }
 
-        if(artifact.getDescription() != null){
+        if (artifact.getDescription() != null) {
             data[1] = artifact.getDescription();
         }
 
-        if(artifact.getAuthorIndex() != null){
+        if (artifact.getAuthorIndex() != null) {
             data[2] = artifact.getAuthorIndex();
         }
 
-        if(artifact.getCreated() != null){
+        if (artifact.getCreated() != null) {
             data[3] = artifact.getCreated();
         }
 
-        if(artifact.getMimeTypeIndex() != null){
+        if (artifact.getMimeTypeIndex() != null) {
             data[4] = artifact.getMimeTypeIndex();
         }
 
-        if(artifact.getNameIndicator() != null){
+        if (artifact.getNameIndicator() != null) {
             data[5] = artifact.getNameIndicator();
         }
 
-        if(artifact.getDescriptionIndicator() != null){
+        if (artifact.getDescriptionIndicator() != null) {
             data[6] = artifact.getDescriptionIndicator();
         }
 
-        if(artifact.getAuthorIndicator() != null){
+        if (artifact.getAuthorIndicator() != null) {
             data[7] = artifact.getAuthorIndicator();
         }
 
-        if(artifact.getCreatedIndicator() != null){
+        if (artifact.getCreatedIndicator() != null) {
             data[8] = artifact.getCreatedIndicator();
         }
 
-        if(artifact.getMimeTypeIndicator() != null){
+        if (artifact.getMimeTypeIndicator() != null) {
             data[9] = artifact.getMimeTypeIndicator();
         }
 
@@ -833,100 +838,100 @@ public class DataManipulator{
         data[10] = list;
 
 
-
         return data;
     }
 
     public List[] getWorkUnitStringData(int id) {
 
-        List[] data = new List[27];
-        WorkUnit workUnit = dataModel.getWorkUnit(id);;
-       
-        if(workUnit.getName() != null){
+        List[] data = new List[29];
+        WorkUnit workUnit = dataModel.getWorkUnit(id);
+        ;
+
+        if (workUnit.getName() != null) {
             data[0] = workUnit.getName();
         }
 
-        if(workUnit.getDescription() != null){
+        if (workUnit.getDescription() != null) {
             data[1] = workUnit.getDescription();
         }
 
-        if(workUnit.getEstimatedTime() != null){
+        if (workUnit.getEstimatedTime() != null) {
             data[2] = workUnit.getEstimatedTime();
         }
 
-        if(workUnit.getCategory() != null){
+        if (workUnit.getCategory() != null) {
             data[3] = workUnit.getCategory();
         }
 
-        if(workUnit.getPriorityIndex() != null){
+        if (workUnit.getPriorityIndex() != null) {
             data[4] = workUnit.getPriorityIndex();
         }
 
-        if(workUnit.getSeverityIndex() != null){
+        if (workUnit.getSeverityIndex() != null) {
             data[5] = workUnit.getSeverityIndex();
         }
 
-        if(workUnit.getResolutionIndex() != null){
+        if (workUnit.getResolutionIndex() != null) {
             data[6] = workUnit.getResolutionIndex();
         }
 
-        if(workUnit.getStatusIndex() != null){
+        if (workUnit.getStatusIndex() != null) {
             data[7] = workUnit.getStatusIndex();
         }
 
-        if(workUnit.getTypeIndex() != null){
+        if (workUnit.getTypeIndex() != null) {
             data[8] = workUnit.getTypeIndex();
         }
 
-        if(workUnit.getAssigneeIndex() != null){
+        if (workUnit.getAssigneeIndex() != null) {
             data[9] = workUnit.getAssigneeIndex();
         }
 
-        if(workUnit.getAuthorIndex() != null){
+        if (workUnit.getAuthorIndex() != null) {
             data[10] = workUnit.getAuthorIndex();
         }
 
-        if(workUnit.getNameIndicator() != null){
+        if (workUnit.getNameIndicator() != null) {
             data[11] = workUnit.getNameIndicator();
         }
 
-        if(workUnit.getDescriptionIndicator() != null){
+        if (workUnit.getDescriptionIndicator() != null) {
             data[12] = workUnit.getDescriptionIndicator();
         }
 
-        if(workUnit.getEstimatedTimeIndicator() != null){
+        if (workUnit.getEstimatedTimeIndicator() != null) {
             data[13] = workUnit.getEstimatedTimeIndicator();
         }
 
-        if(workUnit.getCategoryIndicator() != null){
+        if (workUnit.getCategoryIndicator() != null) {
             data[14] = workUnit.getCategoryIndicator();
         }
 
-        if(workUnit.getPriorityIndicator() != null){
+        if (workUnit.getPriorityIndicator() != null) {
             data[15] = workUnit.getPriorityIndicator();
         }
 
-        if(workUnit.getSeverityIndicator() != null){
+        if (workUnit.getSeverityIndicator() != null) {
             data[16] = workUnit.getSeverityIndicator();
         }
 
-        if(workUnit.getResolutionIndicator() != null){
+        if (workUnit.getResolutionIndicator() != null) {
             data[17] = workUnit.getResolutionIndicator();
         }
 
-        if(workUnit.getStatusIndicator() != null){
+        if (workUnit.getStatusIndicator() != null) {
             data[18] = workUnit.getStatusIndicator();
         }
 
-        if(workUnit.getTypeIndicator() != null){
+        if (workUnit.getTypeIndicator() != null) {
             data[19] = workUnit.getTypeIndicator();
         }
 
-        if(workUnit.getAssigneeIndex() != null){
+        if (workUnit.getAssigneeIndex() != null) {
             data[20] = workUnit.getAssigneeIndicator();
         }
 
-        if(workUnit.getAuthorIndex() != null){
+        if (workUnit.getAuthorIndex() != null) {
             data[21] = workUnit.getAuthorIndex();
         }
 
@@ -937,64 +942,73 @@ public class DataManipulator{
         data[22] = list;
 
 
-        if (workUnit.getRelationIndex() != null){
+        if (workUnit.getRelationIndex() != null) {
             data[23] = workUnit.getRelationIndex();
         }
 
-        if(workUnit.getWorkUnits() != null){
+        if (workUnit.getWorkUnits() != null) {
             data[24] = workUnit.getWorkUnits();
         }
 
-        if(workUnit.getCreated() != null){
+        if (workUnit.getCreated() != null) {
             data[25] = workUnit.getCreated();
         }
 
-        if(workUnit.getCreatedIndicator() != null){
+        if (workUnit.getCreatedIndicator() != null) {
             data[26] = workUnit.getCreatedIndicator();
         }
 
+        if (workUnit.getProgress() != null) {
+            data[27] = workUnit.getProgress();
+        }
+
+        if (workUnit.getProgressIndicator() != null) {
+            data[28] = workUnit.getProgressIndicator();
+        }
+
         return data;
-        
+
     }
 
     public List[] getConfigurationStringData(int id) {
 
         List[] data = new List[11];
-        Configuration configuration = dataModel.getConfiguration(id);;
+        Configuration configuration = dataModel.getConfiguration(id);
+        ;
 
-        if(configuration.getName() != null){
+        if (configuration.getName() != null) {
             data[0] = configuration.getName();
         }
-        
-        if(configuration.getCreated() != null){
+
+        if (configuration.getCreated() != null) {
             data[1] = configuration.getCreated();
         }
 
-        if(configuration.getTagIndex() != null){
+        if (configuration.getTagIndex() != null) {
             data[2] = configuration.getTagsIndicator();
         }
 
-        if(configuration.getNameIndicator() != null){
+        if (configuration.getNameIndicator() != null) {
             data[3] = configuration.getNameIndicator();
         }
 
-        if(configuration.getCreatedIndicator() != null){
+        if (configuration.getCreatedIndicator() != null) {
             data[4] = configuration.getCreatedIndicator();
         }
 
-        if(configuration.getAuthorIndicator() != null){
+        if (configuration.getAuthorIndicator() != null) {
             data[5] = configuration.getAuthorIndicator();
         }
 
-        if(configuration.getCPRsIndicator() != null){
+        if (configuration.getCPRsIndicator() != null) {
             data[6] = configuration.getCPRsIndicator();
         }
 
-        if(configuration.getBranchIndicator() != null){
+        if (configuration.getBranchIndicator() != null) {
             data[7] = configuration.getBranchIndicator();
         }
 
-        if(configuration.getChangesIndicator() != null){
+        if (configuration.getChangesIndicator() != null) {
             data[8] = configuration.getChangesIndicator();
         }
 
@@ -1004,11 +1018,11 @@ public class DataManipulator{
         list.add(configuration.getAlias());
         data[9] = list;
 
-        if(configuration.getTagsIndicator() != null){
+        if (configuration.getTagsIndicator() != null) {
             data[10] = configuration.getTagsIndicator();
         }
         return data;
-        
+
     }
 
     public ArrayList<ArrayList<Integer>> getCPRFromConfiguration(int configId) {
@@ -1016,30 +1030,30 @@ public class DataManipulator{
         return getCPRFrom(configuration.getCPRsIndexs());
     }
 
-    private ArrayList<ArrayList<Integer>> getCPRFrom( List<CPRSList> inputList ){
+    private ArrayList<ArrayList<Integer>> getCPRFrom(List<CPRSList> inputList) {
         ArrayList<ArrayList<Integer>> list = new ArrayList<>();
 
-        for (CPRSList list1 : inputList){
+        for (CPRSList list1 : inputList) {
             list.add((ArrayList<Integer>) list1.getCPRs());
         }
 
         return list;
     }
 
-    private ArrayList<ArrayList<Integer>> getBranchFrom( List<BranchList> inputList ){
+    private ArrayList<ArrayList<Integer>> getBranchFrom(List<BranchList> inputList) {
         ArrayList<ArrayList<Integer>> list = new ArrayList<>();
 
-        for (BranchList list1 : inputList){
+        for (BranchList list1 : inputList) {
             list.add((ArrayList<Integer>) list1.getBranches());
         }
 
         return list;
     }
 
-    private ArrayList<ArrayList<Integer>> getChangeFrom( List<ChangeList> inputList ){
+    private ArrayList<ArrayList<Integer>> getChangeFrom(List<ChangeList> inputList) {
         ArrayList<ArrayList<Integer>> list = new ArrayList<>();
 
-        for (ChangeList list1 : inputList){
+        for (ChangeList list1 : inputList) {
             list.add((ArrayList<Integer>) list1.getChanges());
         }
 
@@ -1047,34 +1061,34 @@ public class DataManipulator{
     }
 
 
-
-    public  ArrayList<ArrayList<Integer>> getBranchfromConfiguration(int configId) {
+    public ArrayList<ArrayList<Integer>> getBranchfromConfiguration(int configId) {
         Configuration configuration = dataModel.getConfiguration(configId);
         return getBranchFrom(configuration.getBranchIndexs());
     }
 
-    public  ArrayList<ArrayList<Integer>> getChangeFromConfiguration(int configId) {
+    public ArrayList<ArrayList<Integer>> getChangeFromConfiguration(int configId) {
         Configuration configuration = dataModel.getConfiguration(configId);
         return getChangeFrom(configuration.getChangesIndexs());
     }
 
     public List[] getVCSTagStringData(int tagId) {
         List[] data = new List[5];
-        VCSTag vcsTag = dataModel.getVCSTag(tagId);;
+        VCSTag vcsTag = dataModel.getVCSTag(tagId);
+        ;
 
-        if(vcsTag.getName() != null){
+        if (vcsTag.getName() != null) {
             data[0] = vcsTag.getName();
         }
 
-        if(vcsTag.getDescription() != null){
+        if (vcsTag.getDescription() != null) {
             data[1] = vcsTag.getDescription();
         }
 
-        if(vcsTag.getNameIndicator() != null){
+        if (vcsTag.getNameIndicator() != null) {
             data[2] = vcsTag.getNameIndicator();
         }
 
-        if(vcsTag.getDescriptionIndicator() != null){
+        if (vcsTag.getDescriptionIndicator() != null) {
             data[3] = vcsTag.getDescriptionIndicator();
         }
 
@@ -1087,13 +1101,14 @@ public class DataManipulator{
     }
 
     public List[] getCommitStringData(int commitId) {
-            List[] data = new List[7];
-            Commit commit = dataModel.getCommit(commitId);;
-        if(commit.getName() != null){
+        List[] data = new List[7];
+        Commit commit = dataModel.getCommit(commitId);
+        ;
+        if (commit.getName() != null) {
             data[0] = commit.getName();
         }
 
-        if(commit.getNameIndicator() != null){
+        if (commit.getNameIndicator() != null) {
             data[1] = commit.getNameIndicator();
         }
 
@@ -1102,45 +1117,46 @@ public class DataManipulator{
         list.add(commit.getCount());
         list.add(commit.getAlias());
         data[2] = list;
-        if(commit.isRelease() != null){
+        if (commit.isRelease() != null) {
             list.add(commit.isRelease());
         }
 
-        if(commit.getDescription() != null){
+        if (commit.getDescription() != null) {
             data[3] = commit.getDescription();
         }
 
-        if(commit.getDescriptionIndicator() != null){
+        if (commit.getDescriptionIndicator() != null) {
             data[4] = commit.getDescriptionIndicator();
         }
 
-        if(commit.getCreated() != null){
+        if (commit.getCreated() != null) {
             data[5] = commit.getCreated();
         }
 
-        if(commit.getCreatedIndicator() != null){
+        if (commit.getCreatedIndicator() != null) {
             data[6] = commit.getCreatedIndicator();
         }
 
-            return data;
+        return data;
     }
 
     public List[] getCommitedConfigurationStringData(int commitedId) {
         List[] data = new List[9];
-        CommitedConfiguration commitedConfiguration = dataModel.getCommitedConfiguration(commitedId);;
+        CommitedConfiguration commitedConfiguration = dataModel.getCommitedConfiguration(commitedId);
+        ;
 
-        if(commitedConfiguration.getName() != null){
+        if (commitedConfiguration.getName() != null) {
             data[0] = commitedConfiguration.getName();
         }
-        if(commitedConfiguration.getNameIndicator() != null){
+        if (commitedConfiguration.getNameIndicator() != null) {
             data[1] = commitedConfiguration.getNameIndicator();
         }
 
-        if(commitedConfiguration.getCommitedDay() != null){
+        if (commitedConfiguration.getCommitedDay() != null) {
             data[2] = commitedConfiguration.getCommitedDay();
         }
 
-        if(commitedConfiguration.getCommitedDayIndicator() != null){
+        if (commitedConfiguration.getCommitedDayIndicator() != null) {
             data[3] = commitedConfiguration.getCommitedDayIndicator();
         }
 
@@ -1150,25 +1166,24 @@ public class DataManipulator{
         list.add(commitedConfiguration.getAlias());
         data[4] = list;
 
-        if(commitedConfiguration.getCreated() != null){
+        if (commitedConfiguration.getCreated() != null) {
             data[5] = commitedConfiguration.getCreated();
         }
-        if(commitedConfiguration.getCreatedIndicator() != null){
+        if (commitedConfiguration.getCreatedIndicator() != null) {
             data[6] = commitedConfiguration.getCreatedIndicator();
         }
 
-        if(commitedConfiguration.getDescription() != null){
+        if (commitedConfiguration.getDescription() != null) {
             data[7] = commitedConfiguration.getDescription();
         }
 
-        if(commitedConfiguration.getDescriptionIndicator() != null){
+        if (commitedConfiguration.getDescriptionIndicator() != null) {
             data[8] = commitedConfiguration.getDescriptionIndicator();
         }
 
         return data;
 
     }
-
 
 
 }

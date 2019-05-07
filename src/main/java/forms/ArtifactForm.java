@@ -36,10 +36,10 @@ public class ArtifactForm extends TableBasicForm implements ISegmentTableForm {
      * okna a reakci na uzavření formuláři
      */
     public ArtifactForm(FormController formController, IFormDataController formDataController, IEditFormController editFormController,
-                        IDeleteFormController deleteFormController,SegmentType type) {
+                        IDeleteFormController deleteFormController, SegmentType type) {
         super(formController, formDataController, editFormController, deleteFormController, type);
 
-        editControlPanel = new ArtifactControlPanel("Edit", formDataController, editFormController, formController, null, 0,0);
+        editControlPanel = new ArtifactControlPanel("Edit", formDataController, editFormController, formController, null, 0, 0);
         setEventHandler();
         createForm();
         setActionSubmitButton();
@@ -82,7 +82,7 @@ public class ArtifactForm extends TableBasicForm implements ISegmentTableForm {
         descriptionColumn.setCellFactory(TextFieldTableCell.forTableColumn());
 
 
-       // tableTV.getColumns().addAll(nameColumn, descriptionColumn);
+        // tableTV.getColumns().addAll(nameColumn, descriptionColumn);
         tableTV.getColumns().add(nameColumn);
         tableTV.setOnMousePressed(OnMousePressedEventHandler);
         tableTV.setEditable(false);

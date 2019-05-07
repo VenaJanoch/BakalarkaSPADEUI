@@ -30,15 +30,15 @@ public class CommitedConfigurationControlPanel extends DateDescControlPanel impl
 
     private int commitedConfigurationId;
     private int commitedConfigurationFormId;
-    
+
     public CommitedConfigurationControlPanel(String buttonName, IFormDataController formDataController,
-                                             IEditFormController editFormController, FormController formController, CommitedConfigurationTable branchTable, int id, int formIndex){
+                                             IEditFormController editFormController, FormController formController, CommitedConfigurationTable branchTable, int id, int formIndex) {
         super(buttonName, formDataController, editFormController, formController);
 
         lineList.add(new ControlPanelLineObject("Committed: ", ControlPanelLineType.Date, ParamType.EndDate));
 
         addItemsToControlPanel();
-       
+
         this.commitedConfigurationFormId = formIndex;
         this.commitedConfigurationId = id;
         this.commitedConfigurationTable = branchTable;
@@ -46,35 +46,35 @@ public class CommitedConfigurationControlPanel extends DateDescControlPanel impl
     }
 
     @Override
-    public void showEditControlPanel(){
+    public void showEditControlPanel() {
         List[] commitedData = formDataController.getCommitedConfigurationStringData(commitedConfigurationId);
 
         controlPanelController.resetPanel(controlPane);
         addItemsToControlPanel();
 
-        controlPanelController.setValueTextField(this, lineList ,ParamType.Name, commitedData, commitedData[1], 0);
-        controlPanelController.setValueTextField(this, lineList ,ParamType.Description, commitedData, commitedData[8], 7);
-        controlPanelController.setValueDatePicker(this, lineList ,ParamType.EndDate, (ArrayList<LocalDate>) commitedData[2], commitedData[3]);
-        controlPanelController.setValueDatePicker(this, lineList ,ParamType.Date, (ArrayList<LocalDate>) commitedData[5], commitedData[6]);
+        controlPanelController.setValueTextField(this, lineList, ParamType.Name, commitedData, commitedData[1], 0);
+        controlPanelController.setValueTextField(this, lineList, ParamType.Description, commitedData, commitedData[8], 7);
+        controlPanelController.setValueDatePicker(this, lineList, ParamType.EndDate, (ArrayList<LocalDate>) commitedData[2], commitedData[3]);
+        controlPanelController.setValueDatePicker(this, lineList, ParamType.Date, (ArrayList<LocalDate>) commitedData[5], commitedData[6]);
 
         List boolList = commitedData[4];
-        controlPanelController.setCountToCountLine((int)boolList.get(1));
+        controlPanelController.setCountToCountLine((int) boolList.get(1));
         boolean exist = (boolean) boolList.get(0);
         controlPanelController.setValueExistRadioButton(exist);
-        controlPanelController.setAlias((String)boolList.get(2), this);
+        controlPanelController.setAlias((String) boolList.get(2), this);
     }
 
 
     protected void addItemsToControlPanel() {
 
-        controlPanelController.setCountLine(this, 2, new ControlPanelLine(lineList,this, controlPanelController, controlPanelController.getLineCount() ));
+        controlPanelController.setCountLine(this, 2, new ControlPanelLine(lineList, this, controlPanelController, controlPanelController.getLineCount()));
         controlPanelController.createNewLineWithExist(this, lineList);
 
         button.setOnAction(event -> saveDataFromPanel());
 
     }
 
-    public void saveDataFromPanel(){
+    public void saveDataFromPanel() {
 
         ArrayList<Integer> nameIndicators = new ArrayList<>();
         ArrayList<Integer> dateIndicators = new ArrayList<>();
@@ -84,7 +84,6 @@ public class CommitedConfigurationControlPanel extends DateDescControlPanel impl
         ArrayList<Integer> createdIndicators = new ArrayList<>();
         ArrayList<String> description = controlPanelController.processTextLines(ParamType.Description, descriptionIndicators);
         ArrayList<LocalDate> created = controlPanelController.processDateLines(ParamType.Date, createdIndicators);
-
 
 
         String count = controlPanelController.getInstanceCount();

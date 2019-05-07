@@ -40,11 +40,14 @@ public class WorkUnitValueTest {
         date = LocalDate.of(2018, 10, 10);
         ArrayList<LocalDate> dates = new ArrayList<>();
         dates.add(date);
+        ArrayList<Integer> progress = new ArrayList<>();
+        progress.add(12);
+        progress.add(23);
         dataModel.getSaveDataModel().createNewWorkUnit(2);
-        dataModel.getEditDataModel().editDataInWorkUnit("Test", name,name, name, indicators, indicators, indicators, indicators, indicators, indicators,
+        dataModel.getEditDataModel().editDataInWorkUnit("Test", progress, indicators, name,name, name, indicators, indicators, indicators, indicators, indicators, indicators,
                 indicators,estimate, indicators,  indicators, indicators, indicators, indicators,indicators, indicators,indicators, indicators,indicators, indicators,
                 dates, indicators, false, indicators, unit, 2);
-        dataModel.getEditDataModel().editDataInWorkUnit("Test", name,name, name, indicators, indicators, indicators, indicators, indicators, indicators,
+        dataModel.getEditDataModel().editDataInWorkUnit("Test", progress, indicators, name,name, name, indicators, indicators, indicators, indicators, indicators, indicators,
                 indicators,estimate, indicators,  indicators, indicators, indicators, indicators,indicators, indicators,indicators, indicators,indicators, indicators,
                 dates, indicators, false, indicators, unit, 2);
         workUnit = dataModel.getWorkUnit(2);
@@ -74,6 +77,12 @@ public class WorkUnitValueTest {
         assertEquals("", workUnit.getDescription().get(0) );
         assertEquals("Test2", workUnit.getDescription().get(1) );
         assertSame(2, workUnit.getDescription().size());
+    }
+
+    @Test
+    public void testProgress() {
+        assertSame(23, workUnit.getProgress().get(1) );
+        assertSame(2, workUnit.getProgress().size());
     }
 
     @Test

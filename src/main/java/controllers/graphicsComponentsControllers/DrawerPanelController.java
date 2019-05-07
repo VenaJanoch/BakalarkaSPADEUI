@@ -22,7 +22,7 @@ public class DrawerPanelController {
     private StackPane leftDrawerStackPane;
     private JFXDrawersStack jfxDrawersStack;
 
-    public DrawerPanelController(JFXDrawer leftDrawerPane, JFXDrawer rightDrawerPane, JFXDrawersStack jfxDrawersStack){
+    public DrawerPanelController(JFXDrawer leftDrawerPane, JFXDrawer rightDrawerPane, JFXDrawersStack jfxDrawersStack) {
         this.leftDrawerPanel = leftDrawerPane;
         this.rightDrawerPanel = rightDrawerPane;
         this.jfxDrawersStack = jfxDrawersStack;
@@ -40,12 +40,13 @@ public class DrawerPanelController {
 
     }
 
-    public void hideLeftPanel(){
+    public void hideLeftPanel() {
         if (leftDrawerPanel.isOpened()) {
             leftDrawerPanel.close();
         }
     }
-    public void showLeftPanel(BasicForm form){
+
+    public void showLeftPanel(BasicForm form) {
         jfxDrawersStack.toggle(leftDrawerPanel);
         leftDrawerPanel.setDefaultDrawerSize(form.getMinWidth());
         leftDrawerStackPane.getChildren().clear();
@@ -53,26 +54,28 @@ public class DrawerPanelController {
         showPanel(leftDrawerPanel, leftDrawerStackPane);
     }
 
-    public void hideRightPanel(){
+    public void hideRightPanel() {
         if (rightDrawerPanel.isOpened()) {
             rightDrawerPanel.close();
         }
     }
-    public void showRightPanel(ControlPanel panel){
+
+    public void showRightPanel(ControlPanel panel) {
         jfxDrawersStack.toggle(rightDrawerPanel);
         rightDrawerPanel.setDefaultDrawerSize(panel.getWidth());
         righDrawerStackPane.getChildren().clear();
         righDrawerStackPane.getChildren().add(panel.getControlPane());
         showPanel(rightDrawerPanel, righDrawerStackPane);
     }
-    public void showPanel(JFXDrawer drawer, StackPane stackPane){
+
+    public void showPanel(JFXDrawer drawer, StackPane stackPane) {
 
         drawer.setSidePane(stackPane);
         if (drawer.isOpened()) {
             drawer.close();
-        }else{
+        } else {
             drawer.open();
         }
     }
-    
+
 }

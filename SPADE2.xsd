@@ -228,6 +228,8 @@
                         maxOccurs="unbounded"/>
             <xs:element name="commit" type="xs:int" minOccurs="0"
                         maxOccurs="unbounded"/>
+            <xs:element name="configuration" type="xs:int" minOccurs="0"
+                        maxOccurs="unbounded"/>
             <xs:element name="role" type="xs:int" minOccurs="0"
                         maxOccurs="unbounded" />
             <xs:element name="roleIndicator" type="xs:int" minOccurs="0"
@@ -352,6 +354,10 @@
             <xs:element name="leftUnitIndex" type="xs:int" minOccurs="0"
                         maxOccurs="unbounded"/>
             <xs:element name="rightUnitIndex" type="xs:int" minOccurs="0"
+                        maxOccurs="unbounded"/>
+            <xs:element name="progress" type="xs:int" minOccurs="0"
+                        maxOccurs="unbounded"/>
+            <xs:element name="progressIndicator" type="xs:int" minOccurs="0"
                         maxOccurs="unbounded"/>
         </xs:sequence>
         <xs:attribute name="alias" type="xs:string"/>

@@ -22,7 +22,7 @@ public class VCSTagControlPanel extends DescriptionControlPanel {
     private VCSTagTable tagTable;
 
     public VCSTagControlPanel(String buttonName, IFormDataController formDataController,
-                              IEditFormController editFormController, FormController formController){
+                              IEditFormController editFormController, FormController formController) {
         super(buttonName, formDataController, editFormController, formController);
         addItemsToControlPanel();
     }
@@ -35,13 +35,13 @@ public class VCSTagControlPanel extends DescriptionControlPanel {
         controlPanelController.resetPanel(controlPane);
         addItemsToControlPanel();
 
-        controlPanelController.setValueTextField(this, lineList ,ParamType.Name, vcsTagStringData, vcsTagStringData[2], 0);
-        controlPanelController.setValueTextField(this, lineList ,ParamType.Description, vcsTagStringData, vcsTagStringData[3], 1);
+        controlPanelController.setValueTextField(this, lineList, ParamType.Name, vcsTagStringData, vcsTagStringData[2], 0);
+        controlPanelController.setValueTextField(this, lineList, ParamType.Description, vcsTagStringData, vcsTagStringData[3], 1);
         List boolList = vcsTagStringData[4];
         boolean exist = (boolean) boolList.get(0);
 
         controlPanelController.setValueExistRadioButton(exist);
-        controlPanelController.setAlias((String)boolList.get(2), this);
+        controlPanelController.setAlias((String) boolList.get(2), this);
         button.setOnAction(event -> saveDataFromPanel(basicTable, tableView));
     }
 
@@ -52,7 +52,7 @@ public class VCSTagControlPanel extends DescriptionControlPanel {
 
     }
 
-    public void saveDataFromPanel(BasicTable basicTable, TableView tableView){
+    public void saveDataFromPanel(BasicTable basicTable, TableView tableView) {
         tagTable = (VCSTagTable) basicTable;
         int id = tagTable.getId();
         ArrayList<Integer> nameIndicators = new ArrayList<>();

@@ -11,26 +11,27 @@ import java.util.List;
  * Třída zajišťující výběr dat artefaktů z databáze implementující rozhraní ICategoryDAO
  */
 public class CategoryDAO {
-	private Connection pripojeni;				//připojení k databázi
-	private VerifyController verifyController;
-	/**
-	 * Konstruktor třídy
-	 */
-	public CategoryDAO(VerifyController verifyController){
-		this.pripojeni = Constans.CONNECTION;	//nastaví připojení uložené ve třídě Konstanty
-		this.verifyController = verifyController;
-	}
+    private Connection pripojeni;                //připojení k databázi
+    private VerifyController verifyController;
 
-	public ArrayList<SQLVerifyObject> getCategoryyProjekt(int projectVerifyId, List<String> name, List<Integer> nameIndicator) {
+    /**
+     * Konstruktor třídy
+     */
+    public CategoryDAO(VerifyController verifyController) {
+        this.pripojeni = Constans.CONNECTION;    //nastaví připojení uložené ve třídě Konstanty
+        this.verifyController = verifyController;
+    }
 
-		String atributeSection = "";
-		atributeSection += SQLAtributeCreator.createStringAttribute("c.name", name, nameIndicator);
+    public ArrayList<SQLVerifyObject> getCategoryyProjekt(int projectVerifyId, List<String> name, List<Integer> nameIndicator) {
 
-
-		String sql = "SELECT c.id FROM category c  WHERE c.projectInstanceId = ? " + atributeSection;
+        String atributeSection = "";
+        atributeSection += SQLAtributeCreator.createStringAttribute("c.name", name, nameIndicator);
 
 
-		return SQLAtributeCreator.findInstanceInDB(pripojeni,verifyController, sql, projectVerifyId, new ArrayList<>());
+        String sql = "SELECT c.id FROM category c  WHERE c.projectInstanceId = ? " + atributeSection;
 
-	}
+
+        return SQLAtributeCreator.findInstanceInDB(pripojeni, verifyController, sql, projectVerifyId, new ArrayList<>());
+
+    }
 }

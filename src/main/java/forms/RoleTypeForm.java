@@ -30,143 +30,142 @@ import java.util.ArrayList;
 /**
  * Třída představující tabulkový formulář pro výčtový typ Person-Type, odděděná od
  * třídy TableClassBasicForm a implementující ISegmentTableForm
- * 
- * @author Václav Janoch
  *
+ * @author Václav Janoch
  */
 public class RoleTypeForm extends TableBasicForm implements ISegmentTableForm {
 
-	private ArrayList<String> classArray = new ArrayList<>();
-	private ArrayList<String> superClassArray = new ArrayList<>();
-	private RoleTypeControlPanel roleTypeControlPanel;
-	private TableView<RoleTypeTable> tableTV;
-	/**
-	 * Konstruktor třídy Zinicializuje globální proměnné třídy Nastaví reakci na
-	 * potvrzovací tlačítko
-	 *
-	 */
-	public RoleTypeForm(FormController formController, IFormDataController formDataController, IEditFormController editFormController, IDeleteFormController deleteFormController, SegmentType type) {
-		super(formController, formDataController, editFormController, deleteFormController, type);
+    private ArrayList<String> classArray = new ArrayList<>();
+    private ArrayList<String> superClassArray = new ArrayList<>();
+    private RoleTypeControlPanel roleTypeControlPanel;
+    private TableView<RoleTypeTable> tableTV;
 
-		roleTypeControlPanel = new RoleTypeControlPanel("Edit", SegmentType.Role_Type, formDataController,editFormController, formController);
-		int i = 0;
-		for(RoleClass roleClass : RoleClass.values()){
-			classArray.add(roleClass.name());
-			i++;
-		}
-		i = 0;
-		for(RoleSuperClass roleSuperClass : RoleSuperClass.values()){
-			superClassArray.add(roleSuperClass.name());
-			i++;
-		}
+    /**
+     * Konstruktor třídy Zinicializuje globální proměnné třídy Nastaví reakci na
+     * potvrzovací tlačítko
+     */
+    public RoleTypeForm(FormController formController, IFormDataController formDataController, IEditFormController editFormController, IDeleteFormController deleteFormController, SegmentType type) {
+        super(formController, formDataController, editFormController, deleteFormController, type);
 
-		roleTypeControlPanel.createControlPanel(classArray, superClassArray);
+        roleTypeControlPanel = new RoleTypeControlPanel("Edit", SegmentType.Role_Type, formDataController, editFormController, formController);
+        int i = 0;
+        for (RoleClass roleClass : RoleClass.values()) {
+            classArray.add(roleClass.name());
+            i++;
+        }
+        i = 0;
+        for (RoleSuperClass roleSuperClass : RoleSuperClass.values()) {
+            superClassArray.add(roleSuperClass.name());
+            i++;
+        }
 
-		setEventHandler();
-		createForm();
-		setActionSubmitButton();
-	}
+        roleTypeControlPanel.createControlPanel(classArray, superClassArray);
 
-	@Override
-	protected void setEventHandler() {
-		OnMousePressedEventHandler = new EventHandler<MouseEvent>() {
+        setEventHandler();
+        createForm();
+        setActionSubmitButton();
+    }
 
-			@Override
-			public void handle(MouseEvent t) {
-				if (t.getClickCount() == 2) {
-					showEditPanel();
-				}
-			}
-		};
-	}
+    @Override
+    protected void setEventHandler() {
+        OnMousePressedEventHandler = new EventHandler<MouseEvent>() {
 
-
-	@Override
-	public void createForm() {
-
-		this.setCenter(getTable());
-
-	}
-
-	@Override
-	public Node getTable() {
-		tableTV = new TableView<RoleTypeTable>();
-
-		TableColumn<RoleTypeTable, String> nameColumn = new TableColumn<RoleTypeTable, String>("Alias");
-		TableColumn<RoleTypeTable, String> exist = new TableColumn<RoleTypeTable, String>("Exist");
-
-		nameColumn.setCellValueFactory(new PropertyValueFactory("alias"));
-		nameColumn.setMinWidth(150);
-		nameColumn.setCellFactory(TextFieldTableCell.forTableColumn());
-
-		exist.setCellValueFactory(new PropertyValueFactory("existString"));
-		exist.setMinWidth(150);
-		exist.setCellFactory(TextFieldTableCell.forTableColumn());
+            @Override
+            public void handle(MouseEvent t) {
+                if (t.getClickCount() == 2) {
+                    showEditPanel();
+                }
+            }
+        };
+    }
 
 
-		tableTV.getColumns().addAll(nameColumn, exist);
-		tableTV.setOnMousePressed(OnMousePressedEventHandler);
-		tableTV.setEditable(false);
+    @Override
+    public void createForm() {
 
-		tableTV.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        this.setCenter(getTable());
 
-		tableTV.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+    }
 
-		tableTV.setOnKeyReleased(event -> deleteSelected(event));
+    @Override
+    public Node getTable() {
+        tableTV = new TableView<RoleTypeTable>();
 
-		BorderPane.setMargin(tableTV, new Insets(5));
+        TableColumn<RoleTypeTable, String> nameColumn = new TableColumn<RoleTypeTable, String>("Alias");
+        TableColumn<RoleTypeTable, String> exist = new TableColumn<RoleTypeTable, String>("Exist");
 
-		return tableTV;
-	}
+        nameColumn.setCellValueFactory(new PropertyValueFactory("alias"));
+        nameColumn.setMinWidth(150);
+        nameColumn.setCellFactory(TextFieldTableCell.forTableColumn());
 
-	@Override
-	public void deleteSelected(KeyEvent event) {
-
-		if (event.getCode() == KeyCode.DELETE) {
-			deleteItem(tableTV);
-		}
-	}
-
-	@Override
-	public GridPane createControlPane() {
-		return null;
-	}
-
-	private void showEditPanel() {
-		RoleTypeTable phaseTable = tableTV.getSelectionModel().getSelectedItems().get(0);
-		if (phaseTable != null) {
-			roleTypeControlPanel.showEditControlPanelRole(phaseTable, tableTV);
-			formController.showEditControlPanel(roleTypeControlPanel);
-		}
-	}
+        exist.setCellValueFactory(new PropertyValueFactory("existString"));
+        exist.setMinWidth(150);
+        exist.setCellFactory(TextFieldTableCell.forTableColumn());
 
 
-	@Override
-	public void setActionSubmitButton() {
-		addButton.setOnAction(event -> addItem());
-		removeButton.setOnAction(event -> deleteItem(tableTV));
-		editButton.setOnAction(event -> showEditPanel());
-	}
+        tableTV.getColumns().addAll(nameColumn, exist);
+        tableTV.setOnMousePressed(OnMousePressedEventHandler);
+        tableTV.setEditable(false);
 
-	public TableView<RoleTypeTable> getTableTV() {
-		return tableTV;
-	}
+        tableTV.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
-	@Override
-	public void addItem() {
-		String nameST = "";// criterionControlPanel.getAlias();
+        tableTV.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
-		int id = formController.createTableItem(SegmentType.Role_Type);
-		String idName = id + "";
+        tableTV.setOnKeyReleased(event -> deleteSelected(event));
 
-		RoleTypeTable table = new RoleTypeTable(idName, "", true, "",  id);
-		tableTV.getItems().add(table);
-		tableTV.sort();
-		formDataController.saveDataFromRoleTypeForm(nameST, table);
-		int lastItem = tableTV.getItems().size();
-		tableTV.getSelectionModel().select(lastItem - 1);
-		showEditPanel();
-	}
+        BorderPane.setMargin(tableTV, new Insets(5));
+
+        return tableTV;
+    }
+
+    @Override
+    public void deleteSelected(KeyEvent event) {
+
+        if (event.getCode() == KeyCode.DELETE) {
+            deleteItem(tableTV);
+        }
+    }
+
+    @Override
+    public GridPane createControlPane() {
+        return null;
+    }
+
+    private void showEditPanel() {
+        RoleTypeTable phaseTable = tableTV.getSelectionModel().getSelectedItems().get(0);
+        if (phaseTable != null) {
+            roleTypeControlPanel.showEditControlPanelRole(phaseTable, tableTV);
+            formController.showEditControlPanel(roleTypeControlPanel);
+        }
+    }
+
+
+    @Override
+    public void setActionSubmitButton() {
+        addButton.setOnAction(event -> addItem());
+        removeButton.setOnAction(event -> deleteItem(tableTV));
+        editButton.setOnAction(event -> showEditPanel());
+    }
+
+    public TableView<RoleTypeTable> getTableTV() {
+        return tableTV;
+    }
+
+    @Override
+    public void addItem() {
+        String nameST = "";// criterionControlPanel.getAlias();
+
+        int id = formController.createTableItem(SegmentType.Role_Type);
+        String idName = id + "";
+
+        RoleTypeTable table = new RoleTypeTable(idName, "", true, "", id);
+        tableTV.getItems().add(table);
+        tableTV.sort();
+        formDataController.saveDataFromRoleTypeForm(nameST, table);
+        int lastItem = tableTV.getItems().size();
+        tableTV.getSelectionModel().select(lastItem - 1);
+        showEditPanel();
+    }
 
 
 }

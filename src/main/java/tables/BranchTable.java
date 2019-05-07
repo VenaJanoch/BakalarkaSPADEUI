@@ -4,52 +4,58 @@ package tables;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
-public class BranchTable extends BasicTable{
+public class BranchTable extends BasicTable {
 
-	/** Globální proměnné třídy **/
-	private StringProperty main;
-	private boolean mainBool;
-	/**
-	 * Konstruktor třídy 
-	 * Zinicializuje globální proměnné
-	 * @param name jméno branch
-	 * @param main hodnota main
-	 */
-	
-	public BranchTable(String name, String main, boolean isMain, boolean exist, int id) {
-		super(name, exist, id);
-		this.main = new SimpleStringProperty(main);
-		this.mainBool = isMain;
-	}
+    /**
+     * Globální proměnné třídy
+     **/
+    private StringProperty main;
+    private boolean mainBool;
 
-	/**
-	 * Vypíše informace o prvku
-	 */
-	@Override
-	public String toString() {
+    /**
+     * Konstruktor třídy
+     * Zinicializuje globální proměnné
+     *
+     * @param name jméno branch
+     * @param main hodnota main
+     */
 
-		return getAlias();
-	}
-	
-	/** Getrs and Setrs **/
+    public BranchTable(String name, String main, boolean isMain, boolean exist, int id) {
+        super(name, exist, id);
+        this.main = new SimpleStringProperty(main);
+        this.mainBool = isMain;
+    }
 
-	public String getMain() {
-		return main.get();
-	}
+    /**
+     * Vypíše informace o prvku
+     */
+    @Override
+    public String toString() {
 
-	public StringProperty mainProperty() {
-		return main;
-	}
+        return getAlias();
+    }
 
-	public void setMain(String main) {
-		this.main.set(main);
-	}
+    /**
+     * Getrs and Setrs
+     **/
 
-	public boolean isMainBool() {
-		return mainBool;
-	}
+    public String getMain() {
+        return main.get();
+    }
 
-	public void setMainBool(boolean mainBool) {
-		this.mainBool = mainBool;
-	}
+    public StringProperty mainProperty() {
+        return main;
+    }
+
+    public void setMain(String main) {
+        this.main.set(main);
+    }
+
+    public boolean isMainBool() {
+        return mainBool;
+    }
+
+    public void setMainBool(boolean mainBool) {
+        this.mainBool = mainBool;
+    }
 }

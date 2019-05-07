@@ -15,18 +15,18 @@ public class TextFieldItem extends ItemBox {
     private TextField itemTF;
 
     public TextFieldItem(ControlPanelLine controlPanelLine, ControlPanel controlPanel, ControlPanelController controlPanelController,
-                         ObservableList<ControlPanelLineObject> lineList, String[] indicators){
+                         ObservableList<ControlPanelLineObject> lineList, String[] indicators) {
         super(FXCollections.observableList(Arrays.asList(indicators)), controlPanelController);
 
         itemTF = new TextField();
         itemTF.setMaxWidth(80);
-        setExitButtonsActions(controlPanelLine, controlPanel,  lineList);
+        setExitButtonsActions(controlPanelLine, controlPanel, lineList);
 
         this.getChildren().addAll(itemButton, indicatorCB, itemTF);
 
     }
 
-    public String getTextFromTextField(){
+    public String getTextFromTextField() {
         return itemTF.getText();
     }
 

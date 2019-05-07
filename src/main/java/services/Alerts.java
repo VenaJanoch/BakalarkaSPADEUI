@@ -105,42 +105,42 @@ public class Alerts {
 
     }
 
-    private static ObservableList<String> createDeleteObservableList(ArrayList<BasicTable> selection, Map<Integer, ArrayList<TableToObjectInstanc>> mapper ) {
+    private static ObservableList<String> createDeleteObservableList(ArrayList<BasicTable> selection, Map<Integer, ArrayList<TableToObjectInstanc>> mapper) {
         ObservableList<String> deleteList = FXCollections.observableArrayList();
         for (BasicTable table : selection) {
             deleteList.add(table.getAlias());
-            if(mapper.containsKey(table.getId())){
+            if (mapper.containsKey(table.getId())) {
                 deleteList.addAll(mapper.get(table.getId()).toString());
             }
         }
         return deleteList;
     }
 
-    private static ObservableList<String> createDeleteObservableList(ObservableList<String> deleteList, ArrayList<Integer> indices, Map<Integer, ArrayList<TableToObjectInstanc>> mapper ) {
+    private static ObservableList<String> createDeleteObservableList(ObservableList<String> deleteList, ArrayList<Integer> indices, Map<Integer, ArrayList<TableToObjectInstanc>> mapper) {
 
         for (int i : indices) {
-            if(mapper.containsKey(i)){
+            if (mapper.containsKey(i)) {
                 deleteList.addAll(mapper.get(i).toString());
             }
         }
         return deleteList;
     }
 
-    public static boolean showDeleteItemCascadeAlert(ObservableList<String> deleteList){
+    public static boolean showDeleteItemCascadeAlert(ObservableList<String> deleteList) {
 
         Alert alert = new Alert(AlertType.CONFIRMATION);
         alert.setGraphic(new ListView<>(deleteList));
         return deleteItemDialog(alert);
     }
 
-    public static boolean showDeleteItemCascadeAlert(ArrayList<BasicTable>  deleteList){
+    public static boolean showDeleteItemCascadeAlert(ArrayList<BasicTable> deleteList) {
         ObservableList list = FXCollections.observableList(deleteList);
         Alert alert = new Alert(AlertType.CONFIRMATION);
         alert.setGraphic(new ListView<BasicTable>(list));
         return deleteItemDialog(alert);
     }
 
-    private static boolean deleteItemDialog(Alert alert){
+    private static boolean deleteItemDialog(Alert alert) {
         alert.setTitle("Deleting selection");
         alert.setHeaderText("Do you want to delete selected elements?");
 
@@ -155,19 +155,19 @@ public class Alerts {
 
     //(ArrayList<BasicTable> selection, Map<Integer, ArrayList<TableToObjectInstanc>> mapper ) {
 
-/**
- * Alert s infomací o výběru prvků z tabulky Criterii pro smazání a možností
- * zrušení akce.
- *
- * @param selection vybrané prvky
- * @return smazané prvky
- */
-    public static boolean showDeleteItemCascadeAlert(ArrayList<BasicTable> selection, ArrayList<Map<Integer, ArrayList<TableToObjectInstanc>>> mappers ) {
+    /**
+     * Alert s infomací o výběru prvků z tabulky Criterii pro smazání a možností
+     * zrušení akce.
+     *
+     * @param selection vybrané prvky
+     * @return smazané prvky
+     */
+    public static boolean showDeleteItemCascadeAlert(ArrayList<BasicTable> selection, ArrayList<Map<Integer, ArrayList<TableToObjectInstanc>>> mappers) {
         ObservableList<String> deleteList = FXCollections.observableArrayList();
         for (BasicTable table : selection) {
             deleteList.add(table.getAlias());
-            for(Map<Integer, ArrayList<TableToObjectInstanc>> map : mappers){
-                if(map.containsKey(table.getId())){
+            for (Map<Integer, ArrayList<TableToObjectInstanc>> map : mappers) {
+                if (map.containsKey(table.getId())) {
                     deleteList.addAll(map.get(table.getId()).toString());
                 }
             }
@@ -212,7 +212,6 @@ public class Alerts {
         alert.setContentText("Please provide a number in " + fieldName);
         alert.showAndWait();
     }
-
 
 
     public static void showNumberOffInterval(int minValue, int maxValue) {
@@ -278,12 +277,12 @@ public class Alerts {
         Optional<ButtonType> result = alert.showAndWait();
 
         if (result.get() == buttonTypeOne) {
-         boolean isSave = fileManipulator.saveFile();
-         if(isSave){
-             return 0;
-         }else {
-             return  -1;
-         }
+            boolean isSave = fileManipulator.saveFile();
+            if (isSave) {
+                return 0;
+            } else {
+                return -1;
+            }
         } else if (result.get() == buttonOK) {
             return 1;
         }
@@ -330,7 +329,7 @@ public class Alerts {
     public static void showBadCommitRelation(SegmentType segmentType) {
         Alert alert = new Alert(AlertType.ERROR);
         alert.setTitle("Link error");
-        alert.setHeaderText("Commit could not be add" + segmentType.name()+ "!");
+        alert.setHeaderText("Commit could not be add" + segmentType.name() + "!");
         alert.setContentText("Please choose another element!");
         alert.showAndWait();
     }
@@ -338,7 +337,7 @@ public class Alerts {
     public static void showBadCommitedConfigurationRelation(SegmentType segmentType) {
         Alert alert = new Alert(AlertType.ERROR);
         alert.setTitle("Link error");
-        alert.setHeaderText("Commited Configuration could not be add" + segmentType.name()+ "!");
+        alert.setHeaderText("Commited Configuration could not be add" + segmentType.name() + "!");
         alert.setContentText("Please choose another element!");
         alert.showAndWait();
     }
@@ -346,7 +345,7 @@ public class Alerts {
     public static void showBadConfigurationRelation(SegmentType segmentType) {
         Alert alert = new Alert(AlertType.ERROR);
         alert.setTitle("Link error");
-        alert.setHeaderText("Configuration could not be add to" + segmentType.name()+ "!");
+        alert.setHeaderText("Configuration could not be add to" + segmentType.name() + "!");
         alert.setContentText("Please choose another element!");
         alert.showAndWait();
     }
@@ -354,7 +353,7 @@ public class Alerts {
     public static void showBadArtifactRelation(SegmentType segmentType) {
         Alert alert = new Alert(AlertType.ERROR);
         alert.setTitle("Link error");
-        alert.setHeaderText("Artifact could not be add to" + segmentType.name()+ "!");
+        alert.setHeaderText("Artifact could not be add to" + segmentType.name() + "!");
         alert.setContentText("Please choose another element!");
         alert.showAndWait();
     }
@@ -362,7 +361,7 @@ public class Alerts {
     public static void showBadRoleRelation(SegmentType segmentType) {
         Alert alert = new Alert(AlertType.ERROR);
         alert.setTitle("Link error");
-        alert.setHeaderText("Person could not be add to" + segmentType.name()+ "!");
+        alert.setHeaderText("Person could not be add to" + segmentType.name() + "!");
         alert.setContentText("Please choose another element!");
         alert.showAndWait();
     }

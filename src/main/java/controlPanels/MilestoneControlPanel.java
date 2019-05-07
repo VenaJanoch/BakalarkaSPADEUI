@@ -17,8 +17,8 @@ public class MilestoneControlPanel extends DescriptionControlPanel {
 
     private MilestoneTable milestoneTable;
 
-    public MilestoneControlPanel(String buttonName, IFormDataController formDataController, IEditFormController editFormController, FormController formController){
-        super(buttonName, formDataController,editFormController, formController);
+    public MilestoneControlPanel(String buttonName, IFormDataController formDataController, IEditFormController editFormController, FormController formController) {
+        super(buttonName, formDataController, editFormController, formController);
         SegmentLists segmentLists = formController.getSegmentLists();
         lineList.add(new ControlPanelLineObject("Criterions: ", ControlPanelLineType.CheckBox, ParamType.Criterion, segmentLists.getCriterionObservable()));
 
@@ -26,12 +26,11 @@ public class MilestoneControlPanel extends DescriptionControlPanel {
     }
 
 
-    protected void addItemsToControlPanel(){
+    protected void addItemsToControlPanel() {
 
         controlPanelController.createNewLineWithExist(this, lineList);
 
     }
-
 
 
     @Override
@@ -44,19 +43,19 @@ public class MilestoneControlPanel extends DescriptionControlPanel {
         controlPanelController.resetPanel(controlPane);
         addItemsToControlPanel();
 
-        ArrayList<ArrayList<Integer>>  criteriaID = formDataController.getCriterionFromMilestone(id);
+        ArrayList<ArrayList<Integer>> criteriaID = formDataController.getCriterionFromMilestone(id);
 
 
-        controlPanelController.setValueTextField(this, lineList ,ParamType.Name, milestoneData, milestoneData[2], 0);
-        controlPanelController.setValueTextField(this, lineList ,ParamType.Description, milestoneData, milestoneData[3], 1);
+        controlPanelController.setValueTextField(this, lineList, ParamType.Name, milestoneData, milestoneData[2], 0);
+        controlPanelController.setValueTextField(this, lineList, ParamType.Description, milestoneData, milestoneData[3], 1);
 
-        controlPanelController.setValueCheckComboBox(this, lineList ,ParamType.Criterion, criteriaID, milestoneData[4]);
+        controlPanelController.setValueCheckComboBox(this, lineList, ParamType.Criterion, criteriaID, milestoneData[4]);
         List boolList = milestoneData[5];
         boolean exist = (boolean) boolList.get(0);
 
         controlPanelController.setValueExistRadioButton(exist);
-        controlPanelController.setAlias((String)boolList.get(2), this);
-        button.setOnAction(event ->{
+        controlPanelController.setAlias((String) boolList.get(2), this);
+        button.setOnAction(event -> {
 
             saveDataFromPanel(milestoneTable, tableView);
 
@@ -65,8 +64,8 @@ public class MilestoneControlPanel extends DescriptionControlPanel {
 
     }
 
-    public void saveDataFromPanel(BasicTable table, TableView tableView){
-        int id =   table.getId();
+    public void saveDataFromPanel(BasicTable table, TableView tableView) {
+        int id = table.getId();
 
         ArrayList<Integer> nameIndicators = new ArrayList<>();
         ArrayList<Integer> descIndicators = new ArrayList<>();
@@ -85,7 +84,6 @@ public class MilestoneControlPanel extends DescriptionControlPanel {
     public Button getButton() {
         return button;
     }
-
 
 
     public void clearPanelCB(TableView tableView) {

@@ -14,12 +14,26 @@ public abstract class DateDescControlPanel extends DescriptionControlPanel {
 
     protected DateItem dateDP;
 
-
+    /**
+     * Konstruktor tridy zavola konstruktor materske tridy a metodu pro vytvoreni grafickych prvku
+     *
+     * @param buttonText         nazev tlacitka
+     * @param formDataController Trida FormDataController
+     * @param editFormController Trida EditFormController
+     * @param formController     Trida FormController
+     */
     public DateDescControlPanel(String buttonText, IFormDataController formDataController, IEditFormController editFormController, FormController formController) {
         super(buttonText, formDataController, editFormController, formController);
         lineList.add(new ControlPanelLineObject("Created: ", ControlPanelLineType.Date, ParamType.Date));
     }
 
+    /**
+     * Konstruktor tridy zavola konstruktor materske tridy a metodu pro vytvoreni grafickych prvku
+     *
+     * @param buttonText         nazev tlacitka
+     * @param formDataController Trida FormDataController
+     * @param editFormController Trida EditFormController
+     */
     public DateDescControlPanel(String buttonText, IFormDataController formDataController, IEditFormController editFormController) {
         super(buttonText, formDataController, editFormController);
         addItemsToControlPanel();
@@ -27,15 +41,14 @@ public abstract class DateDescControlPanel extends DescriptionControlPanel {
 
     protected void addItemsToControlPanel() {
 
-
-
-//        controlPanelController.setDateItemToControlPanel(controlPane, dateDP, 0, 2);
     }
 
-
+    /**
+     * Metoda pro zobrazeni postraniho editacniho panelu
+     *
+     * @param basicTable Instance BasicTable
+     * @param tableView  Instace TableView
+     */
     protected abstract void showEditControlPanel(BasicTable basicTable, TableView tableView);
 
-    public DateItem getDateDP() {
-        return dateDP;
-    }
 }

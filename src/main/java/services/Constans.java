@@ -72,7 +72,6 @@ public class Constans {
             "Add Configuration"};
 
 
-
     /**
      * Konstanta pro určení symbolu tlačítka
      */
@@ -197,11 +196,11 @@ public class Constans {
     public static final String[] addItemNames = {"Phase", "Iteration", "Activity", "Work Unit", "Milestone", "Criterion", "Config-Person",
             "Role Type", "Priority", "Severity", "Relation", "Resolution", "Status", "Type", "Branch", "Change", "VCSTag"};
 
-    public static final String[] textIndicatorList = {"IS", "IS NOT","CONTAINS", "NOT CONTAINS"};
-    public static final String[] numberIndicatorList = {"EQUEL", "BIGGER", "SMALLER" };
+    public static final String[] textIndicatorList = {"IS", "IS NOT", "CONTAINS", "NOT CONTAINS"};
+    public static final String[] numberIndicatorList = {"EQUEL", "BIGGER", "SMALLER"};
 
     public static final String[] NUMBER_INDICATORS = {"=", ">", "<"};
-    public static final String[] INDICATORS = {"=", "!=", "<"};
+    public static final String[] INDICATORS = {"=", "!=", "LIKE", "NOT LIKE"};
 
     public static final int projectFormIndex = 0;
     public static final int phaseFormIndex = 0;
@@ -226,15 +225,14 @@ public class Constans {
     public static final int roleFormIndex = 19;
 
 
-
     public static final double rightDrawerWidth = 550;
     public static final double tableControlButtonWidth = 70;
     public static final double tableControlButtonHeight = 70;
     public static final int indicatorIndex = 2;
 
-    public static final LocalDate nullDate = LocalDate.of(1900,1,1);
+    public static final LocalDate nullDate = LocalDate.of(1900, 1, 1);
 
-  //  public static final String DATABASE_PATH = "jdbc:mysql://students.kiv.zcu.cz:3306/ppicha?allowMultiQueries=true"; //cesta k databázi
+    //  public static final String DATABASE_PATH = "jdbc:mysql://students.kiv.zcu.cz:3306/ppicha?allowMultiQueries=true"; //cesta k databázi
     public static final String DATABASE_PATH = "jdbc:mysql://localhost:3306/opswi?allowMultiQueries=true&characterEncoding=UTF-8";
     public static final double PROJECT_CHOOSE_WINDOW_WIDTH = 400;
     public static final double PROJECT_CHOOSE_WINDOW_HEIGHT = 400;
@@ -255,9 +253,9 @@ public class Constans {
     public static final String PROJECT = "Images/Project.png";
     public static final String SIPKA = "Images/sipka.png";
 
-    public static Connection CONNECTION = null;																			 //připojení k databázi
+    public static Connection CONNECTION = null;                                                                             //připojení k databázi
 
-    private static Stop[] stops = new Stop[] { new Stop(0, Color.WHITE), new Stop(1, Color.rgb(187, 225, 243))};
+    private static Stop[] stops = new Stop[]{new Stop(0, Color.WHITE), new Stop(1, Color.rgb(187, 225, 243))};
     public static final LinearGradient lg1 = new LinearGradient(0, 0, 1, 1, true, CycleMethod.NO_CYCLE, stops);
 
 

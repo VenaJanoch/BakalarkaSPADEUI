@@ -11,14 +11,28 @@ import tables.BasicTable;
 public abstract class WorkUnitControlPanel extends DescriptionControlPanel {
 
     private SegmentLists segmentLists;
-    protected CheckComboBoxItem workUnitCB;
 
+    /**
+     * Konstruktor tridy zavola konstruktor materske tridy a metodu pro vytvoreni grafickych prvku
+     *
+     * @param buttonText         nazev tlacitka
+     * @param formDataController Trida FormDataController
+     * @param editFormController Trida EditFormController
+     * @param formController     Trida FormController
+     */
     public WorkUnitControlPanel(String buttonText, IFormDataController formDataController, IEditFormController editFormController, FormController formController) {
         super(buttonText, formDataController, editFormController, formController);
         segmentLists = formController.getSegmentLists();
         addItemsToControlPanel2();
     }
 
+    /**
+     * Konstruktor tridy zavola konstruktor materske tridy a metodu pro vytvoreni grafickych prvku
+     *
+     * @param buttonText         nazev tlacitka
+     * @param formDataController Trida FormDataController
+     * @param editFormController Trida EditFormController
+     */
     public WorkUnitControlPanel(String buttonText, IFormDataController formDataController, IEditFormController editFormController) {
         super(buttonText, formDataController, editFormController);
         addItemsToControlPanel2();
@@ -30,7 +44,12 @@ public abstract class WorkUnitControlPanel extends DescriptionControlPanel {
 
     }
 
-
+    /**
+     * Metoda pro zobrazeni postraniho editacniho panelu
+     *
+     * @param basicTable Instance BasicTable
+     * @param tableView  Instace TableView
+     */
     protected abstract void showEditControlPanel(BasicTable basicTable, TableView tableView);
 
 }

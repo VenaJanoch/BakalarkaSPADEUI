@@ -24,6 +24,7 @@ public class CanvasItemController {
         this.manipulation = manipulationController;
         this.linkControl = linkControl;
         this.formController = formController;
+        formController.setCanvasItemController(this);
     }
 
     public CanvasItem createCanvasItem(SegmentType type, String segmentIdentificator, int formIndex, String name, int instanceCount, double x, double y,
@@ -34,6 +35,7 @@ public class CanvasItemController {
         CanvasItem item = new CanvasItem(type, segmentIdentificator, formIndex, name, instanceCount, 0, x, y,
                 canvasController, this);
         formController.addCanvasItemToList(formIndex, item);
+        setInstanceCount(item, instanceCount);
         return item;
     }
 
@@ -155,5 +157,14 @@ public class CanvasItemController {
 
         return chooseCanvasItem.getSegmentType();
 
+    }
+
+    public void setInstanceCount(CanvasItem canvasItem, int instanceCount) {
+        canvasItem.getSegmentInfo().setInstanceCount(Integer.toString(instanceCount));
+        if (instanceCount > 1) {
+            canvasItem.getSegmentInfo().getInstanceCount().setVisible(true);
+        } else {
+            canvasItem.getSegmentInfo().getInstanceCount().setVisible(false);
+        }
     }
 }

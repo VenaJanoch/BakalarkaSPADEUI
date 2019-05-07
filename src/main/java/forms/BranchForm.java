@@ -46,7 +46,7 @@ public class BranchForm extends TableBasicForm implements ISegmentTableForm {
     public BranchForm(FormController formController, IFormDataController formDataController, IEditFormController editFormController, IDeleteFormController deleteFormController, SegmentType type) {
         super(formController, formDataController, editFormController, deleteFormController, type);
 
-       editBranchControlPanel = new BranchControlPanel("Edit", formDataController, editFormController, formController);
+        editBranchControlPanel = new BranchControlPanel("Edit", formDataController, editFormController, formController);
 
 
         setEventHandler();
@@ -61,14 +61,14 @@ public class BranchForm extends TableBasicForm implements ISegmentTableForm {
 
             @Override
             public void handle(MouseEvent t) {
-                if(t.getClickCount() == 2) {
+                if (t.getClickCount() == 2) {
                     showEditPanel();
                 }
             }
         };
     }
 
-    private void showEditPanel(){
+    private void showEditPanel() {
         BranchTable branchTable = tableTV.getSelectionModel().getSelectedItems().get(0);
         if (branchTable != null) {
             editBranchControlPanel.showEditControlPanel(branchTable, tableTV);
@@ -134,7 +134,6 @@ public class BranchForm extends TableBasicForm implements ISegmentTableForm {
     public GridPane createControlPane() {
 
 
-
         return null;
     }
 
@@ -144,7 +143,7 @@ public class BranchForm extends TableBasicForm implements ISegmentTableForm {
         String nameST = ""; //branchoneControlPanel.getAlias();
         int id = formController.createTableItem(SegmentType.Branch);
 
-        BranchTable branch = new BranchTable(id + "", "YES",true, true, id);
+        BranchTable branch = new BranchTable(id + "", "YES", true, true, id);
         tableTV.getItems().add(branch);
         tableTV.sort();
 

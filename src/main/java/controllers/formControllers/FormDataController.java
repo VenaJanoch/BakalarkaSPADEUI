@@ -30,7 +30,7 @@ public class FormDataController implements IFormDataController {
 
 
     public FormDataController(FormController formController, SegmentLists lists, MapperTableToObject mapperTableToObject, DataModel dataModel,
-                              IdentificatorCreater identificatorCreater, DataPreparer dataPreparer){
+                              IdentificatorCreater identificatorCreater, DataPreparer dataPreparer) {
         this.formController = formController;
         this.lists = lists;
         this.saveDataModel = dataModel.getSaveDataModel();
@@ -40,7 +40,6 @@ public class FormDataController implements IFormDataController {
         this.dataPreparer = dataPreparer;
     }
 
-    
 
     public boolean saveDataFromPhaseForm(String actName, LocalDate endDateL, String desc, int confIndex, int milestoneIndex, Map<Integer, CanvasItem> itemIndexList,
                                          int indexForm) {
@@ -52,19 +51,18 @@ public class FormDataController implements IFormDataController {
         int milestoneIndexForManipulator = dataPreparer.prepareIndexForManipulator(milestoneIndex);
         int configurationIndexFromManipulator = dataPreparer.prepareIndexForManipulator(confIndex);
 
-     //   editDataModel.editDataInPhase(nameForManipulator, endDateL, descriptionForManipulator, configurationIndexFromManipulator,
-      //         milestoneIndexForManipulator, dataPreparer.prepareCanvasItemIndexForManipulator(itemIndexList.keySet()), phaseId);
+        //   editDataModel.editDataInPhase(nameForManipulator, endDateL, descriptionForManipulator, configurationIndexFromManipulator,
+        //         milestoneIndexForManipulator, dataPreparer.prepareCanvasItemIndexForManipulator(itemIndexList.keySet()), phaseId);
         formController.setNameToItem(indexForm, nameForManipulator);
 
         String segmentId = formController.getSegmentIdentificator(indexForm);
-    //    mapperTableToObject.mapTableToPhase(milestoneIndexForManipulator, configurationIndexFromManipulator, segmentId , phaseId);
+        //    mapperTableToObject.mapTableToPhase(milestoneIndexForManipulator, configurationIndexFromManipulator, segmentId , phaseId);
 
         return true;
     }
 
 
-
-    public boolean saveDataFromIterationForm(String actName, LocalDate startDate, LocalDate endDate, String desc, int chooseConfigID, Map<Integer,CanvasItem> itemIndexList, int indexForm) {
+    public boolean saveDataFromIterationForm(String actName, LocalDate startDate, LocalDate endDate, String desc, int chooseConfigID, Map<Integer, CanvasItem> itemIndexList, int indexForm) {
         String nameForManipulator = InputController.fillTextMapper(actName);
         String descriptionForManipulator = InputController.fillTextMapper(desc);
 
@@ -72,13 +70,13 @@ public class FormDataController implements IFormDataController {
         int configurationIdForManipulator = dataPreparer.prepareIndexForManipulator(chooseConfigID);
         int iterationId = identificatorCreater.getIterationId(indexForm);
 
-     //   editDataModel.editDataInIteration(nameForManipulator,startDate, endDate, descriptionForManipulator, configurationIdForManipulator ,
-     //           dataPreparer.prepareCanvasItemIndexForManipulator(itemIndexList.keySet()), identificatorCreater.getIterationId(indexForm));
+        //   editDataModel.editDataInIteration(nameForManipulator,startDate, endDate, descriptionForManipulator, configurationIdForManipulator ,
+        //           dataPreparer.prepareCanvasItemIndexForManipulator(itemIndexList.keySet()), identificatorCreater.getIterationId(indexForm));
         formController.setNameToItem(indexForm, nameForManipulator);
 
         String segmentId = formController.getSegmentIdentificator(indexForm);
-      //  ArrayList<Integer> configurationID = dataModel.getConfigurationId(configurationIdForManipulator);
-      //  mapperTableToObject.mapTableToObject(SegmentType.Iteration, configurationIdForManipulator, new TableToObjectInstanc(segmentId, iterationId, SegmentType.Iteration));
+        //  ArrayList<Integer> configurationID = dataModel.getConfigurationId(configurationIdForManipulator);
+        //  mapperTableToObject.mapTableToObject(SegmentType.Iteration, configurationIdForManipulator, new TableToObjectInstanc(segmentId, iterationId, SegmentType.Iteration));
         return true;
     }
 
@@ -88,8 +86,8 @@ public class FormDataController implements IFormDataController {
         String descriptionForManipulator = InputController.fillTextMapper(desc);
         int[] coords = formController.getCoordsFromItem(indexForm);
 
-       // editDataModel.editDataInActivity(nameForManipulator, descriptionForManipulator, dataPreparer.prepareCanvasItemIndexForManipulator(mapOfItemOnCanvas.keySet()),
-         //       identificatorCreater.getActivityId(indexForm));
+        // editDataModel.editDataInActivity(nameForManipulator, descriptionForManipulator, dataPreparer.prepareCanvasItemIndexForManipulator(mapOfItemOnCanvas.keySet()),
+        //       identificatorCreater.getActivityId(indexForm));
         String segmentId = formController.getSegmentIdentificator(indexForm);
         formController.setNameToItem(indexForm, segmentId);
         return true;
@@ -99,40 +97,40 @@ public class FormDataController implements IFormDataController {
     public boolean saveDataFromWorkUnit(String actName, BasicTable workUnitTable) {
 
         lists.getWorkUnitsObservable().add(workUnitTable);
-        return  true;
+        return true;
     }
 
     public boolean saveDataFromConfiguration(String actName, LocalDate createDate, boolean isRelease, int authorIndex, ArrayList<Integer> branchIndex,
-                                          ArrayList<Integer> cprIndex, Map<Integer,CanvasItem> itemIndexList, boolean isNew, int indexForm) {
+                                             ArrayList<Integer> cprIndex, Map<Integer, CanvasItem> itemIndexList, boolean isNew, int indexForm) {
 
 
         String nameForManipulator = InputController.fillTextMapper(actName);
         ArrayList artefactList = new ArrayList();
         ArrayList changeList = new ArrayList();
         authorIndex = dataPreparer.prepareIndexForManipulator(authorIndex);
-      //  branchIndex = dataPreparer.prepareIndicesForManipulator(branchIndex);
-      //  cprIndex = dataPreparer.prepareIndicesForManipulator(cprIndex);
+        //  branchIndex = dataPreparer.prepareIndicesForManipulator(branchIndex);
+        //  cprIndex = dataPreparer.prepareIndicesForManipulator(cprIndex);
 
-        for(int index : itemIndexList.keySet()) {
-            if(identificatorCreater.getRoleIndexToIdMaper().get(index) != null){
+        for (int index : itemIndexList.keySet()) {
+            if (identificatorCreater.getRoleIndexToIdMaper().get(index) != null) {
                 changeList.add(identificatorCreater.getRoleIndexToIdMaper().get(index));
-            }else {
+            } else {
                 artefactList.add(identificatorCreater.getArtifactIndexToIdMaper().get(index));
             }
         }
         String release = "NO";
-        if(isRelease){
+        if (isRelease) {
             release = "YES";
         }
         int configIndex = identificatorCreater.getConfigurationId(indexForm);
         //editDataModel.editDataInConfiguration(nameForManipulator, createDate, isRelease, authorIndex , branchIndex,cprIndex,
-          //      changeList, configIndex );
+        //      changeList, configIndex );
         String idName = identificatorCreater.getConfigurationId(indexForm) + "_" + actName;
         ConfigTable configTable = new ConfigTable(idName, release, indexForm, true, configIndex);
-        if (isNew){
+        if (isNew) {
             lists.getConfigObservable().add(configTable);
             formController.setNewItemToConfigurationTable(idName, release, indexForm, configIndex);
-        }else{
+        } else {
             lists.getConfigObservable().remove(configIndex + 1);
             lists.getConfigObservable().add(configIndex + 1, configTable);
             setEditItemInConfigurationTable(configTable);
@@ -148,7 +146,7 @@ public class FormDataController implements IFormDataController {
         TableView<ConfigTable> configTableTableView = configurationTableForm.getTableTV();
         int id = configTableTableView.getSelectionModel().getSelectedIndex();
         configTableTableView.getItems().remove(id);
-        configurationTableForm.getTableTV().getItems().add(id,configTable);
+        configurationTableForm.getTableTV().getItems().add(id, configTable);
         configurationTableForm.getTableTV().sort();
 
     }
@@ -169,76 +167,75 @@ public class FormDataController implements IFormDataController {
         int[] coords = formController.getCoordsFromItem(indexForm);
         formController.setItemColor(indexForm, selected);
 
-      //  editDataModel.editDataInArtifact(nameForManipulator, descForManipulator, createdDate, selected,
-       //         dataPreparer.prepareIndexForManipulator(authorIndex), typeIndex, identificatorCreater.getArtifactIndex(indexForm));
-     //   lists.getArtifactObservable().add(actName);
+        //  editDataModel.editDataInArtifact(nameForManipulator, descForManipulator, createdDate, selected,
+        //         dataPreparer.prepareIndexForManipulator(authorIndex), typeIndex, identificatorCreater.getArtifactIndex(indexForm));
+        //   lists.getArtifactObservable().add(actName);
         formController.setNameToItem(indexForm, nameForManipulator);
-        return  true;
+        return true;
     }
 
 
-   public void saveDataFromVCSTag(String nameST, VCSTagTable table){
+    public void saveDataFromVCSTag(String nameST, VCSTagTable table) {
 
-       lists.getVCSTag().add(table);
+        lists.getVCSTag().add(table);
     }
 
-    public void createArtifactToConfigurationRelation(int linkId, Integer startId, Integer endId, boolean isXML){
-        if (!isXML){
+    public void createArtifactToConfigurationRelation(int linkId, Integer startId, Integer endId, boolean isXML) {
+        if (!isXML) {
             saveDataModel.createNewArtifacToConfigurationRelation(linkId, startId, endId);
         }
-        mapperTableToObject.mapTableToObjects(SegmentType.Configuration, SegmentType.Artifact, startId, new TableToObjectInstanc( String.valueOf(endId), endId, SegmentType.Configuration));
+        mapperTableToObject.mapTableToObjects(SegmentType.Configuration, SegmentType.Artifact, startId, new TableToObjectInstanc(String.valueOf(endId), endId, SegmentType.Configuration));
     }
 
 
-    public void createCommitToCommitedConfigurationRelation(int linkId, Integer startId, Integer endId, boolean isXML){
+    public void createCommitToCommitedConfigurationRelation(int linkId, Integer startId, Integer endId, boolean isXML) {
         if (!isXML) {
             saveDataModel.createCommitToCommitedConfigurationRelation(linkId, startId, endId);
         }
         mapperTableToObject.mapTableToObjects(SegmentType.Committed_Configuration, SegmentType.Commit, startId,
-                new TableToObjectInstanc( String.valueOf(endId), endId, SegmentType.Committed_Configuration));
+                new TableToObjectInstanc(String.valueOf(endId), endId, SegmentType.Committed_Configuration));
     }
 
-    public void createCommitedConfigurationToConfigurationRelation(int linkId, Integer startId, Integer endId, boolean isXML){
+    public void createCommitedConfigurationToConfigurationRelation(int linkId, Integer startId, Integer endId, boolean isXML) {
         if (!isXML) {
             saveDataModel.createCommitedConfigurationToConfigurationRelation(linkId, startId, endId);
         }
         mapperTableToObject.mapTableToObjects(SegmentType.Configuration, SegmentType.Committed_Configuration, startId,
-                new TableToObjectInstanc( String.valueOf(endId), endId, SegmentType.Configuration));
+                new TableToObjectInstanc(String.valueOf(endId), endId, SegmentType.Configuration));
     }
 
 
-
-    public void createNewPersonToConfigurationRelation(int linkId, Integer startId, Integer endId, boolean isXML){
+    public void createNewPersonToConfigurationRelation(int linkId, Integer startId, Integer endId, boolean isXML) {
         if (!isXML) {
             saveDataModel.createNewPersonToConfigurationRelation(linkId, startId, endId);
         }
         mapperTableToObject.mapTableToObjects(SegmentType.Configuration, SegmentType.Person, startId,
-                new TableToObjectInstanc( String.valueOf(endId), endId, SegmentType.Configuration));
+                new TableToObjectInstanc(String.valueOf(endId), endId, SegmentType.Configuration));
     }
 
 
-    public void createNewPersonToArtifactRelation(int linkId, Integer startId, Integer endId, boolean isXML){
+    public void createNewPersonToArtifactRelation(int linkId, Integer startId, Integer endId, boolean isXML) {
         if (!isXML) {
             saveDataModel.createNewPersonToArtifactRelation(linkId, startId, endId);
         }
         mapperTableToObject.mapTableToObjects(SegmentType.Artifact, SegmentType.Person, startId,
-                new TableToObjectInstanc( String.valueOf(endId), endId, SegmentType.Artifact));
+                new TableToObjectInstanc(String.valueOf(endId), endId, SegmentType.Artifact));
     }
 
-    public void createNewPersonToCommitRelation(int linkId, Integer startId, Integer endId, boolean isXML){
+    public void createNewPersonToCommitRelation(int linkId, Integer startId, Integer endId, boolean isXML) {
         if (!isXML) {
             saveDataModel.createNewPersonToCommitRelation(linkId, startId, endId);
         }
         mapperTableToObject.mapTableToObjects(SegmentType.Commit, SegmentType.Person, startId,
-                new TableToObjectInstanc( String.valueOf(endId), endId, SegmentType.Commit));
+                new TableToObjectInstanc(String.valueOf(endId), endId, SegmentType.Commit));
     }
 
-    public void createNewPersonToCommittedConfigurationRelation(int linkId, Integer startId, Integer endId, boolean isXML){
+    public void createNewPersonToCommittedConfigurationRelation(int linkId, Integer startId, Integer endId, boolean isXML) {
         if (!isXML) {
             saveDataModel.createNewPersonToCommittedConfigurationRelation(linkId, startId, endId);
         }
         mapperTableToObject.mapTableToObjects(SegmentType.Committed_Configuration, SegmentType.Person, startId,
-                new TableToObjectInstanc( String.valueOf(endId), endId, SegmentType.Committed_Configuration));
+                new TableToObjectInstanc(String.valueOf(endId), endId, SegmentType.Committed_Configuration));
     }
 
 
@@ -249,7 +246,7 @@ public class FormDataController implements IFormDataController {
         saveDataModel.createNewBranch(nameForManipulator, branchTable.getId(), branchTable.isMainBool());
         lists.getBranchObservable().add(branchTable);
     }
-    
+
     public void saveDataFromCPR(String nameST, int roleListIndex, CPRTable cprTable) {
 
         lists.getCPRObservable().add(cprTable);
@@ -266,13 +263,13 @@ public class FormDataController implements IFormDataController {
 
         String nameForManipulator = InputController.fillTextMapper(nameST);
         String descForManipulator = InputController.fillTextMapper(description);
-    //    criterionIndex = dataPreparer.prepareIndicesForManipulator(criterionIndex);
-        saveDataModel.createNewMilestone(nameForManipulator,descForManipulator, criterionIndex, milestoneTable.getId());
+        //    criterionIndex = dataPreparer.prepareIndicesForManipulator(criterionIndex);
+        saveDataModel.createNewMilestone(nameForManipulator, descForManipulator, criterionIndex, milestoneTable.getId());
         lists.getMilestoneObservable().add(milestoneTable);
-       // ArrayList<Integer> criterionIndicies = dataModel.getCriterionIds(criterionIndex);
-      //  mapperTableToObject.mapTableToObject(SegmentType.Milestone, criterionIndicies, new TableToObjectInstanc(milestoneTable.getAlias(), milestoneTable.getId(),
-      //          SegmentType.Milestone));
-}
+        // ArrayList<Integer> criterionIndicies = dataModel.getCriterionIds(criterionIndex);
+        //  mapperTableToObject.mapTableToObject(SegmentType.Milestone, criterionIndicies, new TableToObjectInstanc(milestoneTable.getAlias(), milestoneTable.getId(),
+        //          SegmentType.Milestone));
+    }
 
     public void saveDataFromPriority(String nameST, ClassTable tableItem) {
         String nameForManipulator = InputController.fillTextMapper(nameST);
@@ -308,17 +305,16 @@ public class FormDataController implements IFormDataController {
         saveDataModel.createNewPerson(personTable.getId());
         lists.getRoleObservable().add(personTable);
 
-       // int roleTypeIndex = dataModel.getRoleTypeIndex(typeFormManipulator);
-       // mapperTableToObject.mapTableToObject(SegmentType.Person, roleTypeIndex, new TableToObjectInstanc(personTable.getAlias(), personTable.getId(), SegmentType.Person));
-}
+        // int roleTypeIndex = dataModel.getRoleTypeIndex(typeFormManipulator);
+        // mapperTableToObject.mapTableToObject(SegmentType.Person, roleTypeIndex, new TableToObjectInstanc(personTable.getAlias(), personTable.getId(), SegmentType.Person));
+    }
 
     public void saveDataFromRoleTypeForm(String nameST, ClassTable classTable) {
 
         String nameForManipulator = InputController.fillTextMapper(nameST);
-        saveDataModel.createNewRoleType(nameForManipulator, classTable.getClassType(), classTable.getSuperType(),classTable.getId());
+        saveDataModel.createNewRoleType(nameForManipulator, classTable.getClassType(), classTable.getSuperType(), classTable.getId());
         lists.getRoleTypeObservable().add(classTable);
     }
-
 
 
     public void saveDataFromStatusForm(String nameST, ClassTable classTable) {
@@ -338,16 +334,16 @@ public class FormDataController implements IFormDataController {
     public void saveDataFromProjectFrom(String nameST, LocalDate endDate, LocalDate startDate, String desc) {
         String nameForManipulator = InputController.fillTextMapper(nameST);
         String descForManipulator = InputController.fillTextMapper(desc);
- //       dataModel.addDataToProject(nameForManipulator, descForManipulator, startDate, endDate);
+        //       dataModel.addDataToProject(nameForManipulator, descForManipulator, startDate, endDate);
 
     }
 
     public MilestoneTable prepareMilestoneToTable(String nameST, String description, int id, ArrayList criterionArray) {
-     return   dataPreparer.prepareMilestoneTable(nameST, id);
+        return dataPreparer.prepareMilestoneTable(nameST, id);
     }
 
     public PersonTable prepareRoleToTable(String nameST, String description, int id, int roleTypeIndex) {
-        return   dataPreparer.prepareRoleTable(nameST, description, id, dataPreparer.prepareIndexForManipulator(roleTypeIndex),
+        return dataPreparer.prepareRoleTable(nameST, description, id, dataPreparer.prepareIndexForManipulator(roleTypeIndex),
                 lists.getRoleTypeObservable());
     }
 
@@ -367,7 +363,7 @@ public class FormDataController implements IFormDataController {
         return dataManipulator.getMilestoneData(id);
     }
 
-    public ArrayList<ArrayList<Integer>>  getCriterionFromMilestone(int id) {
+    public ArrayList<ArrayList<Integer>> getCriterionFromMilestone(int id) {
         ArrayList<ArrayList<Integer>> criterion = dataManipulator.getCriterionFromMilestone(id);
 
         return dataPreparer.prepareIndicesForManipulator(criterion);
@@ -377,13 +373,13 @@ public class FormDataController implements IFormDataController {
         List[] data = dataManipulator.getRoleData(id);
         ArrayList<Integer> typeIndices = dataPreparer.prepareIndiciesForForm(data[1]);
         data[1] = typeIndices;
-        return data ;
+        return data;
     }
 
     public List[] getClassStringData(SegmentType segmentType, int id) {
-        switch (segmentType){
+        switch (segmentType) {
             case Role_Type:
-                    return dataManipulator.getRoleTypeData(id);
+                return dataManipulator.getRoleTypeData(id);
             case Severity:
                 return dataManipulator.getSeverityData(id);
             case Priority:
@@ -414,12 +410,12 @@ public class FormDataController implements IFormDataController {
     }
 
 
-    public  List[] getBranchStringData(int id) {
+    public List[] getBranchStringData(int id) {
         return dataManipulator.getBranchStringData(id);
     }
 
 
-    public  List[] getPhaseStringData(int id){
+    public List[] getPhaseStringData(int id) {
         List[] data = dataManipulator.getPhaseStringData(id);
         ArrayList indices1 = dataPreparer.prepareIndiciesForForm(data[2]);
         ArrayList indices2 = dataPreparer.prepareIndiciesForForm(data[3]);
@@ -431,10 +427,10 @@ public class FormDataController implements IFormDataController {
     }
 
     @Override
-    public  ArrayList<ArrayList<Integer>> getWorkUnitFromSegment(int id, SegmentType segmentType) {
+    public ArrayList<ArrayList<Integer>> getWorkUnitFromSegment(int id, SegmentType segmentType) {
         ArrayList<ArrayList<Integer>> indexList;
 
-        switch (segmentType){
+        switch (segmentType) {
             case Phase:
                 indexList = dataManipulator.getWorkUnitFromPhase(id);
                 break;
@@ -442,7 +438,7 @@ public class FormDataController implements IFormDataController {
                 indexList = dataManipulator.getWorkUniFromWorkUnit(id);
                 break;
             case Iteration:
-               indexList = dataManipulator.getWorkUnitFromIteration(id);
+                indexList = dataManipulator.getWorkUnitFromIteration(id);
                 break;
             case Activity:
                 indexList = dataManipulator.getWorkUnitFromActivity(id);
@@ -509,6 +505,7 @@ public class FormDataController implements IFormDataController {
 
         ArrayList priorityIndicies = dataPreparer.prepareIndiciesForForm(data[4]);
         ArrayList estimate = dataPreparer.convertDoubleToString(data[2]);
+        ArrayList progress = dataPreparer.convertIntToString(data[27]);
         ArrayList<Integer> indicies1 = dataPreparer.prepareIndiciesForForm(data[5]);
         ArrayList indicies2 = dataPreparer.prepareIndiciesForForm(data[6]);
         ArrayList indicies3 = dataPreparer.prepareIndiciesForForm(data[7]);
@@ -527,13 +524,14 @@ public class FormDataController implements IFormDataController {
         data[10] = indicies6;
         data[23] = indicies23;
         data[25] = dates;
+        data[27] = progress;
         return data;
     }
 
     @Override
     public List[] getConfigurationStringData(int id) {
 
-        List[] data =  dataManipulator.getConfigurationStringData(id);
+        List[] data = dataManipulator.getConfigurationStringData(id);
 
         ArrayList<Integer> inidices = dataPreparer.prepareIndiciesForForm(data[2]);
         ArrayList<LocalDate> dates = dataPreparer.prepareDateForForm(data[1]);
@@ -547,7 +545,7 @@ public class FormDataController implements IFormDataController {
     @Override
     public ArrayList<ArrayList<Integer>> getCPRFromConfiguration(int configId) {
         ArrayList<ArrayList<Integer>> list = dataPreparer.prepareIndicesForForm(dataManipulator.getCPRFromConfiguration(configId));
-        return list ;
+        return list;
     }
 
     @Override
@@ -555,6 +553,7 @@ public class FormDataController implements IFormDataController {
         ArrayList<ArrayList<Integer>> list = dataPreparer.prepareIndicesForForm(dataManipulator.getBranchfromConfiguration(configId));
         return list;
     }
+
     @Override
     public ArrayList<ArrayList<Integer>> getChangesFromConfiguration(int configId) {
         ArrayList<ArrayList<Integer>> list = dataPreparer.prepareIndicesForForm(dataManipulator.getChangeFromConfiguration(configId));
@@ -562,12 +561,12 @@ public class FormDataController implements IFormDataController {
     }
 
     @Override
-    public List[] getVCSTagStringData(int tagId){
+    public List[] getVCSTagStringData(int tagId) {
         return dataManipulator.getVCSTagStringData(tagId);
     }
 
     @Override
-    public List[] getCommitStringData(int commidId){
+    public List[] getCommitStringData(int commidId) {
         List[] data = dataManipulator.getCommitStringData(commidId);
         ArrayList<LocalDate> created = dataPreparer.prepareDateForForm(data[5]);
         data[5] = created;
@@ -575,7 +574,7 @@ public class FormDataController implements IFormDataController {
     }
 
     @Override
-    public List[] getCommitedConfigurationStringData(int commitedId){
+    public List[] getCommitedConfigurationStringData(int commitedId) {
         List[] data = dataManipulator.getCommitedConfigurationStringData(commitedId);
         ArrayList<LocalDate> dates = dataPreparer.prepareDateForForm(data[2]);
         ArrayList<LocalDate> created = dataPreparer.prepareDateForForm(data[5]);
@@ -585,7 +584,7 @@ public class FormDataController implements IFormDataController {
     }
 
     @Override
-    public List[] getProjectStringData(){
+    public List[] getProjectStringData() {
         List[] data = dataManipulator.getProjectStringData();
         ArrayList<LocalDate> dates1 = dataPreparer.prepareDateForForm(data[2]);
         ArrayList<LocalDate> dates2 = dataPreparer.prepareDateForForm(data[3]);
@@ -597,7 +596,7 @@ public class FormDataController implements IFormDataController {
     }
 
     @Override
-    public List[] getRoleTypeStringData(int id){
+    public List[] getRoleTypeStringData(int id) {
         List[] data = dataManipulator.getRoleTypeData(id);
         return data;
     }

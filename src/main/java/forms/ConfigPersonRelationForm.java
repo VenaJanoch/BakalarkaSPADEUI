@@ -26,135 +26,136 @@ import tables.CPRTable;
 /**
  * Třída představující tabulkový formulář pro element Configuration-Person-Relatio, odděděná od třídy
  * TableBasicForm a implementující ISegmentTableForm
- * 
- * @author Václav Janoch
  *
+ * @author Václav Janoch
  */
 public class ConfigPersonRelationForm extends TableBasicForm implements ISegmentTableForm {
 
-	/**
-	 * Globální proměnné třídy
-	 */
+    /**
+     * Globální proměnné třídy
+     */
 
-	private TableView<CPRTable> tableTV;
-	private ConfigPersonRelationControlPanel editCPRControlPanel;
-	/**
-	 * Konstruktor třídy
-	 * Zinicializuje globální proměnné tříd
-	 * Nastaví vlastnost pro tlačítko OK
-	 *
-	 */
-	
-	public ConfigPersonRelationForm(FormController formController, IFormDataController formDataController, IEditFormController editFormController, IDeleteFormController deleteFormController, SegmentType type) {
-		super(formController, formDataController, editFormController, deleteFormController, type);
+    private TableView<CPRTable> tableTV;
+    private ConfigPersonRelationControlPanel editCPRControlPanel;
 
-		editCPRControlPanel = new ConfigPersonRelationControlPanel("Edit", formDataController, editFormController, formController);
+    /**
+     * Konstruktor třídy
+     * Zinicializuje globální proměnné tříd
+     * Nastaví vlastnost pro tlačítko OK
+     */
 
-		setEventHandler();
-		createForm();
-		setActionSubmitButton();
+    public ConfigPersonRelationForm(FormController formController, IFormDataController formDataController, IEditFormController editFormController, IDeleteFormController deleteFormController, SegmentType type) {
+        super(formController, formDataController, editFormController, deleteFormController, type);
 
-	}
+        editCPRControlPanel = new ConfigPersonRelationControlPanel("Edit", formDataController, editFormController, formController);
 
-	@Override
-		protected void setEventHandler(){
-			OnMousePressedEventHandler = new EventHandler<MouseEvent>() {
+        setEventHandler();
+        createForm();
+        setActionSubmitButton();
 
-				@Override
-				public void handle(MouseEvent t) {
-					if(t.getClickCount() == 2) {
-						showEditPanel();
-					}
-				}
-			};
-		}
+    }
 
-	@Override
-	public void createForm() {
+    @Override
+    protected void setEventHandler() {
+        OnMousePressedEventHandler = new EventHandler<MouseEvent>() {
 
-		this.setCenter(getTable());
-	}
+            @Override
+            public void handle(MouseEvent t) {
+                if (t.getClickCount() == 2) {
+                    showEditPanel();
+                }
+            }
+        };
+    }
 
-	@Override
-	public void deleteSelected(KeyEvent event) {
+    @Override
+    public void createForm() {
 
-		if (event.getCode() == KeyCode.DELETE) {
-			deleteItem(tableTV);
-		}
-	}
+        this.setCenter(getTable());
+    }
 
-	@Override
-	public GridPane createControlPane() {
-		return null;
-	}
+    @Override
+    public void deleteSelected(KeyEvent event) {
 
-	private void showEditPanel(){
-		CPRTable cprTable = tableTV.getSelectionModel().getSelectedItems().get(0);
-		if (cprTable != null) {
-			editCPRControlPanel.showEditControlPanel(cprTable, tableTV);
-			formController.showEditControlPanel(editCPRControlPanel);
-		}
-	}
+        if (event.getCode() == KeyCode.DELETE) {
+            deleteItem(tableTV);
+        }
+    }
 
+    @Override
+    public GridPane createControlPane() {
+        return null;
+    }
 
-	@Override
-	public void setActionSubmitButton() {
-		addButton.setOnAction(event -> addItem());
-		removeButton.setOnAction(event -> deleteItem(tableTV));
-		editButton.setOnAction(event -> showEditPanel());
-	}
-
-	@Override
-	public Node getTable() {
-		tableTV = new TableView<CPRTable>();
-		tableTV.setId("cprTable");
-		TableColumn<CPRTable, String> nameColumn = new TableColumn<CPRTable, String>("Alias");
-		TableColumn<CPRTable, String> exist = new TableColumn<CPRTable, String>("Exist");
-
-		nameColumn.setCellValueFactory(new PropertyValueFactory("alias"));
-		nameColumn.setMinWidth(150);
-		nameColumn.setCellFactory(TextFieldTableCell.forTableColumn());
-
-		exist.setCellValueFactory(new PropertyValueFactory("existString"));
-		exist.setMinWidth(150);
-		exist.setCellFactory(TextFieldTableCell.forTableColumn());
+    private void showEditPanel() {
+        CPRTable cprTable = tableTV.getSelectionModel().getSelectedItems().get(0);
+        if (cprTable != null) {
+            editCPRControlPanel.showEditControlPanel(cprTable, tableTV);
+            formController.showEditControlPanel(editCPRControlPanel);
+        }
+    }
 
 
-		tableTV.getColumns().addAll(nameColumn, exist);
-		tableTV.setOnMousePressed(OnMousePressedEventHandler);
-		tableTV.setEditable(false);
+    @Override
+    public void setActionSubmitButton() {
+        addButton.setOnAction(event -> addItem());
+        removeButton.setOnAction(event -> deleteItem(tableTV));
+        editButton.setOnAction(event -> showEditPanel());
+    }
 
-		tableTV.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+    @Override
+    public Node getTable() {
+        tableTV = new TableView<CPRTable>();
+        tableTV.setId("cprTable");
+        TableColumn<CPRTable, String> nameColumn = new TableColumn<CPRTable, String>("Alias");
+        TableColumn<CPRTable, String> exist = new TableColumn<CPRTable, String>("Exist");
 
-		tableTV.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        nameColumn.setCellValueFactory(new PropertyValueFactory("alias"));
+        nameColumn.setMinWidth(150);
+        nameColumn.setCellFactory(TextFieldTableCell.forTableColumn());
 
-		tableTV.setOnKeyReleased(event -> deleteSelected(event));
-
-		BorderPane.setMargin(tableTV, new Insets(5));
-
-		return tableTV;
-	}
+        exist.setCellValueFactory(new PropertyValueFactory("existString"));
+        exist.setMinWidth(150);
+        exist.setCellFactory(TextFieldTableCell.forTableColumn());
 
 
-	@Override
-	public void addItem() {
+        tableTV.getColumns().addAll(nameColumn, exist);
+        tableTV.setOnMousePressed(OnMousePressedEventHandler);
+        tableTV.setEditable(false);
 
-		String nameST = ""; // cprControlPanel.getAlias();
-		int id = formController.createTableItem(SegmentType.Config_Person_Relation);
-		int roleIndex = 0;
-		CPRTable cpr = new CPRTable(id + "", "",true, id);
-		formDataController.saveDataFromCPR(nameST, roleIndex, cpr);
-		tableTV.getItems().add(cpr);
-		tableTV.sort();
+        tableTV.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
-		int lastItem = tableTV.getItems().size();
-		tableTV.getSelectionModel().select(lastItem - 1);
-		showEditPanel();
-	}
+        tableTV.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
-	/** Getrs and Setrs ***/
-	public TableView<CPRTable> getTableTV() {
-		return tableTV;
-	}
+        tableTV.setOnKeyReleased(event -> deleteSelected(event));
+
+        BorderPane.setMargin(tableTV, new Insets(5));
+
+        return tableTV;
+    }
+
+
+    @Override
+    public void addItem() {
+
+        String nameST = ""; // cprControlPanel.getAlias();
+        int id = formController.createTableItem(SegmentType.Config_Person_Relation);
+        int roleIndex = 0;
+        CPRTable cpr = new CPRTable(id + "", "", true, id);
+        formDataController.saveDataFromCPR(nameST, roleIndex, cpr);
+        tableTV.getItems().add(cpr);
+        tableTV.sort();
+
+        int lastItem = tableTV.getItems().size();
+        tableTV.getSelectionModel().select(lastItem - 1);
+        showEditPanel();
+    }
+
+    /**
+     * Getrs and Setrs
+     ***/
+    public TableView<CPRTable> getTableTV() {
+        return tableTV;
+    }
 
 }

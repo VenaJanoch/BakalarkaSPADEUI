@@ -10,15 +10,31 @@ import services.ControlPanelLineType;
 import services.ParamType;
 import tables.BasicTable;
 
+
 public abstract class DescriptionControlPanel extends NameControlPanel {
 
     protected TextFieldItem descriptionTF;
 
+    /**
+     * Konstruktor tridy zavola konstruktor materske tridy a metodu pro vytvoreni grafickych prvku
+     *
+     * @param buttonText         nazev tlacitka
+     * @param formDataController Trida FormDataController
+     * @param editFormController Trida EditFormController
+     * @param formController     Trida FormController
+     */
     public DescriptionControlPanel(String buttonText, IFormDataController formDataController, IEditFormController editFormController, FormController formController) {
         super(buttonText, formDataController, editFormController, formController);
         createBaseControlPanel();
     }
 
+    /**
+     * Konstruktor tridy zavola konstruktor materske tridy a metodu pro vytvoreni grafickych prvku
+     *
+     * @param buttonText         nazev tlacitka
+     * @param formDataController Trida FormDataController
+     * @param editFormController Trida EditFormController
+     */
     public DescriptionControlPanel(String buttonText, IFormDataController formDataController, IEditFormController editFormController) {
         super(buttonText, formDataController, editFormController);
         createBaseControlPanel();
@@ -26,18 +42,21 @@ public abstract class DescriptionControlPanel extends NameControlPanel {
 
     public void createBaseControlPanel() {
 
-
         lineList.add(new ControlPanelLineObject("Description: ", ControlPanelLineType.Text, ParamType.Description));
-    //    descriptionTF = new TextFieldItem("Description: ");
-   //     controlPanelController.setTextItemToControlPanel(controlPane, descriptionTF, 0, 1);
     }
 
-
+    /**
+     * Metoda pro zobrazeni postraniho editacniho panelu
+     *
+     * @param basicTable Instance BasicTable
+     * @param tableView  Instace TableView
+     */
     protected abstract void showEditControlPanel(BasicTable basicTable, TableView tableView);
+
+    /**
+     * Metoda pro pridani prvku do panelu
+     */
     protected abstract void addItemsToControlPanel();
 
-    public TextFieldItem getDescriptionTF() {
-        return descriptionTF;
-    }
 
 }

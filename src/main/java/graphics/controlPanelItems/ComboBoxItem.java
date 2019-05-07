@@ -16,14 +16,14 @@ import java.util.Arrays;
 
 public class ComboBoxItem extends ItemBox {
 
-     private ComboBox itemCB;
+    private ComboBox itemCB;
 
-     private ComboBoxItem otherComboBoxItem;
+    private ComboBoxItem otherComboBoxItem;
 
-     private ObservableList<String> listForBox;
+    private ObservableList<String> listForBox;
 
     public ComboBoxItem(ControlPanelLine controlPanelLine, ControlPanel controlPanel, ControlPanelController controlPanelController,
-                        ObservableList listForBox, ObservableList<ControlPanelLineObject> lineList){
+                        ObservableList listForBox, ObservableList<ControlPanelLineObject> lineList) {
         super(FXCollections.observableList(Arrays.asList(Constans.textIndicatorList)), controlPanelController);
 
         this.listForBox = listForBox;
@@ -42,7 +42,7 @@ public class ComboBoxItem extends ItemBox {
     }
 
     public ComboBoxItem(ControlPanelLine controlPanelLine, ControlPanel controlPanel, ControlPanelController controlPanelController,
-                        ObservableList listForBox, ChangeListener<Number> listener, ObservableList<ControlPanelLineObject> lineList ) {
+                        ObservableList listForBox, ChangeListener<Number> listener, ObservableList<ControlPanelLineObject> lineList) {
         super(FXCollections.observableList(Arrays.asList(Constans.textIndicatorList)), controlPanelController);
 
         itemCB = new ComboBox<String>();
@@ -58,27 +58,27 @@ public class ComboBoxItem extends ItemBox {
 
     public ComboBoxItem(ControlPanelLine controlPanelLine, ControlPanel controlPanel, ControlPanelController controlPanelController,
                         ObservableList listForBox, ComboBoxItem comboBoxItem, ChangeListener<Number> indexListener, ObservableList<ControlPanelLineObject> lineList) {
-        this(controlPanelLine, controlPanel,controlPanelController, listForBox, lineList);
+        this(controlPanelLine, controlPanel, controlPanelController, listForBox, lineList);
         otherComboBoxItem = comboBoxItem;
         itemButton.setOnAction(event -> addButtonAction(otherComboBoxItem));
     }
 
 
-    public void addButtonAction(ComboBoxItem comboBoxItem){
+    public void addButtonAction(ComboBoxItem comboBoxItem) {
         addButtonAction(itemCB);
-        if (!isShowItem){
+        if (!isShowItem) {
             comboBoxItem.setShowItem(comboBoxItem.itemCB, false);
-        }else{
+        } else {
             comboBoxItem.setShowItem(comboBoxItem.itemCB, true);
         }
 
     }
 
-    public void selectItemInComboBox(int index){
+    public void selectItemInComboBox(int index) {
         itemCB.getSelectionModel().select(index);
     }
 
-    public void selectItemInComboBox(String  value){
+    public void selectItemInComboBox(String value) {
         itemCB.getSelectionModel().select(value);
     }
 
@@ -91,6 +91,6 @@ public class ComboBoxItem extends ItemBox {
     }
 
     public int getItemIndex() {
-        return itemBoxController.getItemIndex() ;
+        return itemBoxController.getItemIndex();
     }
 }

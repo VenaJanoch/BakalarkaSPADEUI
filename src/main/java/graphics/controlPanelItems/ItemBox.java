@@ -24,7 +24,7 @@ public class ItemBox extends HBox {
     private int indicatorIndex;
     protected ControlPanelController controlPanelController;
 
-    public ItemBox(ObservableList<String> indicatorSymbols, ControlPanelController controlPanelController){
+    public ItemBox(ObservableList<String> indicatorSymbols, ControlPanelController controlPanelController) {
 
         this.controlPanelController = controlPanelController;
         this.itemBoxController = new ItemBoxController();
@@ -34,20 +34,20 @@ public class ItemBox extends HBox {
         indicatorCB.getSelectionModel().select(Constans.indicatorIndex);
     }
 
-    protected void setExitButtonsActions(ControlPanelLine line, ControlPanel controlPanel, ObservableList<ControlPanelLineObject> lineList){
+    protected void setExitButtonsActions(ControlPanelLine line, ControlPanel controlPanel, ObservableList<ControlPanelLineObject> lineList) {
         itemButton = new Button("+");
         itemButton.setOnAction(event -> controlPanelController.copyLine(line, controlPanel, lineList, line.getParamBox().getSelectionModel().getSelectedIndex()));
 
     }
 
-    public void addButtonAction(Node node){
+    public void addButtonAction(Node node) {
 
-        if (!isShowItem){
+        if (!isShowItem) {
             node.setVisible(true);
             indicatorCB.setVisible(true);
             isShowItem = true;
             itemButton.setText("-");
-        }else{
+        } else {
             node.setVisible(false);
             indicatorCB.setVisible(false);
             isShowItem = false;

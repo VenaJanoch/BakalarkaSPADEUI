@@ -10,18 +10,15 @@ public class LinkController {
     private int startItemId;
     private int endItemId;
 
-    public LinkController(int linkId)
-    {
+    public LinkController(int linkId) {
         this.linkId = linkId;
     }
 
     /**
      * Vypočte souřadnice pro zvýraznění spojnice při kliku na ni
      *
-     * @param startPoint
-     *            počáteční bod
-     * @param endPoint
-     *            koncový bod
+     * @param startPoint počáteční bod
+     * @param endPoint   koncový bod
      * @return body pro vykreslení zvýraznění
      */
     public Double[] countBackgroundPlygon(Point2D startPoint, Point2D endPoint) {
@@ -45,6 +42,7 @@ public class LinkController {
             link.setStartPoint(new Point2D(newWidth, newHeight));
         }
     }
+
     public void repaintArrowEndPoint(NodeLink link, double newWidth, double newHeight) {
         if (link != null) {
             link.setEndPoint(new Point2D(newWidth, newHeight));
@@ -52,14 +50,11 @@ public class LinkController {
     }
 
 
-
     /**
      * Vypočte střed spojovací čáry pro vložení boxu s výběrem relace
      *
-     * @param startPoint
-     *            startovní bod spojnice
-     * @param endPoint
-     *            koncový bod spojnice
+     * @param startPoint startovní bod spojnice
+     * @param endPoint   koncový bod spojnice
      * @return Point2D bod pro box
      */
     public Point2D calculateCenter(Point2D startPoint, Point2D endPoint) {
@@ -101,11 +96,10 @@ public class LinkController {
         double yUP = endPoint.getY() + Constans.ArrowRadius;
         double yDW = endPoint.getY() - Constans.ArrowRadius;
 
-        Double[] position = new Double[] { endPoint.getX(), endPoint.getY(), x, yUP, x, yDW };
+        Double[] position = new Double[]{endPoint.getX(), endPoint.getY(), x, yUP, x, yDW};
         return position;
 
     }
-
 
 
     public int getLinkId() {

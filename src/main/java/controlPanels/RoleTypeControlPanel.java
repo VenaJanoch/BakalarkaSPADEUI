@@ -29,16 +29,16 @@ public class RoleTypeControlPanel extends ClassControlPanel {
         createControlPanel();
 
         setClassData(classData);
-        controlPanelController.setValueTextField(this, lineList ,ParamType.Description, classData, classData[6], 5);
+        controlPanelController.setValueTextField(this, lineList, ParamType.Description, classData, classData[6], 5);
 
 
-        button.setOnAction(event ->{
+        button.setOnAction(event -> {
 
             saveClassData();
             ArrayList<Integer> descriptionIndicators = new ArrayList<>();
             ArrayList<String> description = controlPanelController.processTextLines(ParamType.Description, descriptionIndicators);
             editFormController.editDataFromRoleType(aliasTF.getText(), name, nameIndicators, description, descriptionIndicators, classListIndex, superClassListIndex,
-                    classList, superClassList,  table, controlPanelController.isExist(), id);
+                    classNameList, superClassNameList, table, controlPanelController.isExist(), id);
             clearPanel(tableView);
         });
 

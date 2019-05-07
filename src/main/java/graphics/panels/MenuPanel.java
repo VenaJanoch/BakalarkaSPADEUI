@@ -15,65 +15,65 @@ import controllers.WindowController;
 
 /**
  * Třídy definující hlavní menu aplikace
- * @author Václav Janoch
  *
+ * @author Václav Janoch
  */
 public class MenuPanel extends VBox {
-	
-	/**
-	 * Globální proměnné třídy
-	 */
-	
-	private WindowController windowController;
 
-	/**
-	 * Konstruktor třídy
-	 * Zinicializuje globální proměnné třídy
-	 */
-	public MenuPanel(WindowController windowController) {
-		super();
+    /**
+     * Globální proměnné třídy
+     */
 
-		this.setBackground(new Background(new BackgroundFill(Color.BLUE, CornerRadii.EMPTY, Insets.EMPTY)));
-		this.setMinWidth(Constans.width);
-		this.windowController = windowController;
-		createMenu();
+    private WindowController windowController;
 
-	}
+    /**
+     * Konstruktor třídy
+     * Zinicializuje globální proměnné třídy
+     */
+    public MenuPanel(WindowController windowController) {
+        super();
 
-	/**
-	 * Vytvoří MenuBar a vloží do něho pložky s natavenými klávesovými zkratkami
-	 */
-	private void createMenu() {
+        this.setBackground(new Background(new BackgroundFill(Color.BLUE, CornerRadii.EMPTY, Insets.EMPTY)));
+        this.setMinWidth(Constans.width);
+        this.windowController = windowController;
+        createMenu();
 
-		MenuBar menuMB = new MenuBar();
+    }
 
-		Menu fileMenu = new Menu("File");
+    /**
+     * Vytvoří MenuBar a vloží do něho pložky s natavenými klávesovými zkratkami
+     */
+    private void createMenu() {
 
-		MenuItem newItem = new MenuItem("New");
-		newItem.setAccelerator(Constans.controlN);
-		MenuItem openItem = new MenuItem("Open...");
-		openItem.setAccelerator(Constans.controlO);
-		MenuItem saveItem = new MenuItem("Save");
-		saveItem.setAccelerator(Constans.controlS);
-		MenuItem saveAsItem = new MenuItem("Save as...");
-		saveAsItem.setAccelerator(Constans.controlSA);
-		MenuItem validationItem = new MenuItem("Validate");
-		validationItem.setAccelerator(Constans.controlF);
-		MenuItem exitItem = new MenuItem("Exit");
-		exitItem.setAccelerator(Constans.altF4);
+        MenuBar menuMB = new MenuBar();
 
-		fileMenu.getItems().addAll(newItem, new SeparatorMenuItem(), openItem, new SeparatorMenuItem(), saveItem,
-				saveAsItem, new SeparatorMenuItem(), validationItem, new SeparatorMenuItem(), exitItem);
+        Menu fileMenu = new Menu("File");
 
-		exitItem.setOnAction(event -> windowController.closeProject());
-		saveItem.setOnAction(event -> windowController.saveItemAction());// control.saveFile());
-		saveAsItem.setOnAction(event -> windowController.saveItemAsAction()); //.saveAsFile());
-		openItem.setOnAction(event -> windowController.openProccesXMLAction()); //.openFile());
-		newItem.setOnAction(event -> windowController.createNewProcessAction()); //.newItem());
-		validationItem.setOnAction(event -> windowController.validationAction()); //.validate());
-		menuMB.getMenus().addAll(fileMenu);
+        MenuItem newItem = new MenuItem("New");
+        newItem.setAccelerator(Constans.controlN);
+        MenuItem openItem = new MenuItem("Open...");
+        openItem.setAccelerator(Constans.controlO);
+        MenuItem saveItem = new MenuItem("Save");
+        saveItem.setAccelerator(Constans.controlS);
+        MenuItem saveAsItem = new MenuItem("Save as...");
+        saveAsItem.setAccelerator(Constans.controlSA);
+        MenuItem validationItem = new MenuItem("Validate");
+        validationItem.setAccelerator(Constans.controlF);
+        MenuItem exitItem = new MenuItem("Exit");
+        exitItem.setAccelerator(Constans.altF4);
 
-		this.getChildren().add(menuMB);
-	}
+        fileMenu.getItems().addAll(newItem, new SeparatorMenuItem(), openItem, new SeparatorMenuItem(), saveItem,
+                saveAsItem, new SeparatorMenuItem(), validationItem, new SeparatorMenuItem(), exitItem);
+
+        exitItem.setOnAction(event -> windowController.closeProject());
+        saveItem.setOnAction(event -> windowController.saveItemAction());// control.saveFile());
+        saveAsItem.setOnAction(event -> windowController.saveItemAsAction()); //.saveAsFile());
+        openItem.setOnAction(event -> windowController.openProccesXMLAction()); //.openFile());
+        newItem.setOnAction(event -> windowController.createNewProcessAction()); //.newItem());
+        validationItem.setOnAction(event -> windowController.validationAction()); //.validate());
+        menuMB.getMenus().addAll(fileMenu);
+
+        this.getChildren().add(menuMB);
+    }
 
 }

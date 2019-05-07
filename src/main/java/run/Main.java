@@ -7,25 +7,22 @@ import controllers.WindowController;
 
 public class Main extends Application {
 
-	/**
-	 * Hlavní metoda aplikace
-	 * 
-	 */
-	public static void main(String[] args) {
-		launch(args);
-	}
+    /**
+     * Hlavní metoda aplikace
+     */
+    public static void main(String[] args) {
+        launch(args);
+    }
 
-	/**
-	 * Hlavní metoda FX
-	 * 
-	 **/
-	@Override
-	public void start(Stage primaryStage) throws Exception {
+    /**
+     * Hlavní metoda FX
+     **/
+    @Override
+    public void start(Stage primaryStage) throws Exception {
 
-		new WindowController(primaryStage);
-		primaryStage.show();
-	}
-
+        new WindowController(primaryStage);
+        primaryStage.show();
+    }
 
 
 }

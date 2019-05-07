@@ -17,8 +17,9 @@ public class PersonControlPanel extends NameControlPanel implements IControlPane
     private int roleId;
     private PersonTable personTable;
     private int roleIndex;
+
     public PersonControlPanel(String buttonName, IFormDataController formDataController, IEditFormController editFormController,
-                              FormController formController, PersonTable personTable, int roleId, int roleIndex){
+                              FormController formController, PersonTable personTable, int roleId, int roleIndex) {
         super(buttonName, formDataController, editFormController, formController);
         this.roleId = roleId;
         this.roleIndex = roleIndex;
@@ -28,12 +29,12 @@ public class PersonControlPanel extends NameControlPanel implements IControlPane
         this.addItemsToControlPanel();
     }
 
-    protected void addItemsToControlPanel(){
+    protected void addItemsToControlPanel() {
 
         controlPanelController.setCountLine(this, 1, new ControlPanelLine(lineList, this, controlPanelController, controlPanelController.getLineCount()));
         controlPanelController.createNewLineWithExist(this, lineList);
 
-        button.setOnAction(event ->{
+        button.setOnAction(event -> {
             ArrayList<Integer> nameIndicators = new ArrayList<>();
             //ArrayList<Integer> descIndicators = new ArrayList<>();
             ArrayList<Integer> roleTypeIndicators = new ArrayList<>();
@@ -57,15 +58,15 @@ public class PersonControlPanel extends NameControlPanel implements IControlPane
         controlPanelController.resetPanel(controlPane);
         addItemsToControlPanel();
 
-        controlPanelController.setValueTextField(this, lineList ,ParamType.Name, roleData, roleData[2], 0);
-       // controlPanelController.setValueTextField(this, lineList ,ParamType.Description, roleData, roleData[4], 1);
-        controlPanelController.setValueComboBox(this, lineList ,ParamType.RoleType, (ArrayList<Integer>) roleData[1], roleData[3]);
+        controlPanelController.setValueTextField(this, lineList, ParamType.Name, roleData, roleData[2], 0);
+        // controlPanelController.setValueTextField(this, lineList ,ParamType.Description, roleData, roleData[4], 1);
+        controlPanelController.setValueComboBox(this, lineList, ParamType.RoleType, (ArrayList<Integer>) roleData[1], roleData[3]);
         List boolList = roleData[4];
         boolean exist = (boolean) boolList.get(0);
 
         controlPanelController.setValueExistRadioButton(exist);
         controlPanelController.setCountToCountLine((int) boolList.get(1));
-        controlPanelController.setAlias((String)boolList.get(2), this);
+        controlPanelController.setAlias((String) boolList.get(2), this);
     }
 
     @Override

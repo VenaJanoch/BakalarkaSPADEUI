@@ -21,7 +21,7 @@ public class ConfigPersonRelationControlPanel extends DescriptionControlPanel {
     private ComboBoxItem roleCB;
 
 
-    public ConfigPersonRelationControlPanel(String buttonName, IFormDataController formDataController, IEditFormController editFormController, FormController formController){
+    public ConfigPersonRelationControlPanel(String buttonName, IFormDataController formDataController, IEditFormController editFormController, FormController formController) {
         super(buttonName, formDataController, editFormController, formController);
         SegmentLists segmentLists = formController.getSegmentLists();
         lineList.add(new ControlPanelLineObject("Person: ", ControlPanelLineType.ComboBox, ParamType.Role, segmentLists.getRoleObservable()));
@@ -30,7 +30,7 @@ public class ConfigPersonRelationControlPanel extends DescriptionControlPanel {
     }
 
 
-    public void createControlPanel(){
+    public void createControlPanel() {
 
         controlPanelController.createNewLineWithExist(this, lineList);
 
@@ -45,15 +45,15 @@ public class ConfigPersonRelationControlPanel extends DescriptionControlPanel {
         controlPanelController.resetPanel(controlPane);
         createControlPanel();
 
-        controlPanelController.setValueTextField(this, lineList ,ParamType.Name, configPersonRelation, configPersonRelation[2], 0);
-        controlPanelController.setValueTextField(this, lineList ,ParamType.Description, configPersonRelation, configPersonRelation[6], 5);
-        controlPanelController.setValueComboBox(this, lineList ,ParamType.Role, (ArrayList<Integer>)configPersonRelation[1], configPersonRelation[3]);
+        controlPanelController.setValueTextField(this, lineList, ParamType.Name, configPersonRelation, configPersonRelation[2], 0);
+        controlPanelController.setValueTextField(this, lineList, ParamType.Description, configPersonRelation, configPersonRelation[6], 5);
+        controlPanelController.setValueComboBox(this, lineList, ParamType.Role, (ArrayList<Integer>) configPersonRelation[1], configPersonRelation[3]);
         List boolList = configPersonRelation[4];
         boolean exist = (boolean) boolList.get(0);
 
         controlPanelController.setValueExistRadioButton(exist);
-        controlPanelController.setAlias((String)boolList.get(2), this);
-        button.setOnAction(event ->{
+        controlPanelController.setAlias((String) boolList.get(2), this);
+        button.setOnAction(event -> {
 
             ArrayList<Integer> nameIndicators = new ArrayList<>();
             ArrayList<Integer> roleIndicators = new ArrayList<>();

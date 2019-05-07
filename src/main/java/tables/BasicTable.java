@@ -10,7 +10,7 @@ public class BasicTable {
     private StringProperty alias;
     private boolean exist;
 
-    public BasicTable(String alias, boolean exist, int id){
+    public BasicTable(String alias, boolean exist, int id) {
         this.id = id;
         this.idString = new SimpleStringProperty(Integer.toString(id));
         this.exist = exist;
@@ -18,10 +18,10 @@ public class BasicTable {
         this.alias = new SimpleStringProperty(alias);
     }
 
-    public void setStringExist(boolean exist){
-        if (exist){
+    public void setStringExist(boolean exist) {
+        if (exist) {
             existString = new SimpleStringProperty("Yes");
-        }else{
+        } else {
             existString = new SimpleStringProperty("No");
         }
     }
@@ -56,7 +56,7 @@ public class BasicTable {
 
     public void setExist(boolean exist) {
         this.exist = exist;
-       setStringExist(exist);
+        setStringExist(exist);
     }
 
     public boolean isExist() {

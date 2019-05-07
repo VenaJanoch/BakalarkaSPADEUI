@@ -24,7 +24,7 @@ public class ClassTable extends BasicTable {
         super(name, exist, id);
         this.classType = new SimpleStringProperty(classType);
         this.superType = new SimpleStringProperty(superType);
-        }
+    }
 
 
     /**

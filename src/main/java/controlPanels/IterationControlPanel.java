@@ -27,7 +27,7 @@ public class IterationControlPanel extends WorkUnitDateControlPanel {
     private IterationTable iterationTable;
 
     public IterationControlPanel(String buttonName, IFormDataController formDataController,
-                                 IEditFormController editFormController, FormController formController){
+                                 IEditFormController editFormController, FormController formController) {
         super(buttonName, formDataController, editFormController, formController);
         segmentLists = formController.getSegmentLists();
         lineList.add(new ControlPanelLineObject("End date: ", ControlPanelLineType.Date, ParamType.EndDate));
@@ -47,17 +47,17 @@ public class IterationControlPanel extends WorkUnitDateControlPanel {
 
         controlPanelController.setValueTextField(this, lineList, ParamType.Name, iterationData, iterationData[5], 0);
         controlPanelController.setValueTextField(this, lineList, ParamType.Description, iterationData, iterationData[6], 1);
-        controlPanelController.setValueComboBox(this, lineList, ParamType.Configuration, (ArrayList<Integer>)iterationData[2], iterationData[7]);
-        controlPanelController.setValueDatePicker(this, lineList ,ParamType.Date, (ArrayList<LocalDate>)iterationData[3],  iterationData[8]);
-        controlPanelController.setValueDatePicker(this, lineList ,ParamType.Date, (ArrayList<LocalDate>)iterationData[4],  iterationData[9]);
+        controlPanelController.setValueComboBox(this, lineList, ParamType.Configuration, (ArrayList<Integer>) iterationData[2], iterationData[7]);
+        controlPanelController.setValueDatePicker(this, lineList, ParamType.Date, (ArrayList<LocalDate>) iterationData[3], iterationData[8]);
+        controlPanelController.setValueDatePicker(this, lineList, ParamType.EndDate, (ArrayList<LocalDate>) iterationData[4], iterationData[9]);
 
         List boolList = iterationData[11];
         boolean exist = (boolean) boolList.get(0);
 
         controlPanelController.setValueExistRadioButton(exist);
-        controlPanelController.setAlias((String)boolList.get(2), this);
+        controlPanelController.setAlias((String) boolList.get(2), this);
         ArrayList<ArrayList<Integer>> workUnits = formDataController.getWorkUnitFromSegment(id, SegmentType.Iteration);
-        controlPanelController.setValueCheckComboBox(this, lineList ,ParamType.WorkUnit, workUnits, iterationData[10]);
+        controlPanelController.setValueCheckComboBox(this, lineList, ParamType.WorkUnit, workUnits, iterationData[10]);
 
 
         button.setOnAction(event -> saveDataFromPanel(iterationTable, tableView));
@@ -69,7 +69,7 @@ public class IterationControlPanel extends WorkUnitDateControlPanel {
         controlPanelController.createNewLineWithExist(this, lineList);
     }
 
-    public void saveDataFromPanel(BasicTable table, TableView tableView){
+    public void saveDataFromPanel(BasicTable table, TableView tableView) {
         int id = table.getId();
         ArrayList<Integer> nameIndicators = new ArrayList<>();
         ArrayList<Integer> descIndicators = new ArrayList<>();
@@ -92,6 +92,7 @@ public class IterationControlPanel extends WorkUnitDateControlPanel {
 
         clearPanelCB(tableView);
     }
+
     public Button getButton() {
         return button;
     }

@@ -19,12 +19,12 @@ public class ElementsLink extends NodeLink {
 
 
     public ElementsLink(int ID, LinkControl linkControl, CanvasController canvasController, ManipulationController manipulationController) {
-        super(ID, linkControl,canvasController, manipulationController);
+        super(ID, linkControl, canvasController, manipulationController);
         backgroundPolygon.setOnMouseClicked(event -> {
             manipulationController.setLink(this);
             backgroundPolygon.setVisible(true);
             backgroundPolygon.setStroke(Color.BLACK);
-            if (event.getClickCount() == 2){
+            if (event.getClickCount() == 2) {
                 pressedDeleteArrow(event);
             }
         });
@@ -44,13 +44,12 @@ public class ElementsLink extends NodeLink {
     /**
      * Kontrolní metoda pro reakci na dvojklik do okolí spojnice
      *
-     * @param t
-     *            MouseEvent
+     * @param t MouseEvent
      */
     protected void pressedDeleteArrow(MouseEvent t) {
 
 //        control.getManipulation().setLink(this);
-  //      control.getManipulation().setClicItem(null);
+        //      control.getManipulation().setClicItem(null);
         if (t.getButton().equals(MouseButton.PRIMARY)) {
             if (t.getClickCount() == 2) {
                 deleteArrow();
@@ -60,7 +59,7 @@ public class ElementsLink extends NodeLink {
 
     }
 
-    public LinkController getLinkController(){
+    public LinkController getLinkController() {
         return linkController;
     }
 

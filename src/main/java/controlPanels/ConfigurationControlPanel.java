@@ -33,9 +33,9 @@ public class ConfigurationControlPanel extends DateDescControlPanel implements I
         this.configId = configId;
         this.configTable = configTable;
         SegmentLists segmentLists = formController.getSegmentLists();
-        lineList.add(new ControlPanelLineObject("CPRs: ", ControlPanelLineType.CheckBox, ParamType.CPR, segmentLists.getCPRObservable() ));
+        lineList.add(new ControlPanelLineObject("CPRs: ", ControlPanelLineType.CheckBox, ParamType.CPR, segmentLists.getCPRObservable()));
         lineList.add(new ControlPanelLineObject("Changes: ", ControlPanelLineType.CheckBox, ParamType.Change, segmentLists.getChangeObservable()));
-        lineList.add(new ControlPanelLineObject("VCS Tag: ", ControlPanelLineType.ComboBox, ParamType.VCSTag, segmentLists.getVCSTag() ));
+        lineList.add(new ControlPanelLineObject("VCS Tag: ", ControlPanelLineType.ComboBox, ParamType.VCSTag, segmentLists.getVCSTag()));
         lineList.add(new ControlPanelLineObject("Branches: ", ControlPanelLineType.CheckBox, ParamType.Branch, segmentLists.getBranchObservable()));
 
         this.addItemsToControlPanel();
@@ -45,10 +45,10 @@ public class ConfigurationControlPanel extends DateDescControlPanel implements I
     protected void addItemsToControlPanel() {
 
 
-    //    controlPanelController.setRadioButton(this,1, "Release: ", true);
+        //    controlPanelController.setRadioButton(this,1, "Release: ", true);
         controlPanelController.setCountLine(this, 2, new ControlPanelLine(lineList, this, controlPanelController, controlPanelController.getLineCount()));
-      //  addTag = new Button("add Tag");
-     //   controlPanelController.setStaticButton(this, 3, addTag);
+        //  addTag = new Button("add Tag");
+        //   controlPanelController.setStaticButton(this, 3, addTag);
         controlPanelController.createNewLineWithExist(this, lineList);
 
         button.setOnAction(event -> {
@@ -74,7 +74,7 @@ public class ConfigurationControlPanel extends DateDescControlPanel implements I
 
 
             editFormController.editDataFromConfiguration(aliasTF.getText(), name, description, dates, false, tag, cprs, branches, branchIndicators, changes, cprsIndicators,
-                    nameIndicators, descriptionIndicators, dateIndicators, tagIndicator, changeIndicators, instanceCount, controlPanelController.isExist(),  configId);
+                    nameIndicators, descriptionIndicators, dateIndicators, tagIndicator, changeIndicators, instanceCount, controlPanelController.isExist(), configId);
         });
 
     }
@@ -87,18 +87,18 @@ public class ConfigurationControlPanel extends DateDescControlPanel implements I
         controlPanelController.resetPanel(controlPane);
         addItemsToControlPanel();
 
-        controlPanelController.setValueTextField(this, lineList ,ParamType.Name, configData, configData[3], 0);
-        controlPanelController.setValueDatePicker(this, lineList ,ParamType.Date, (ArrayList<LocalDate>) configData[1], configData[4]);
-        controlPanelController.setValueComboBox(this, lineList ,ParamType.VCSTag, (ArrayList<Integer>) configData[2], configData[10]);
+        controlPanelController.setValueTextField(this, lineList, ParamType.Name, configData, configData[3], 0);
+        controlPanelController.setValueDatePicker(this, lineList, ParamType.Date, (ArrayList<LocalDate>) configData[1], configData[4]);
+        controlPanelController.setValueComboBox(this, lineList, ParamType.VCSTag, (ArrayList<Integer>) configData[2], configData[10]);
 
         ArrayList<ArrayList<Integer>> cprList = formDataController.getCPRFromConfiguration(configId);
-        controlPanelController.setValueCheckComboBox(this, lineList ,ParamType.CPR, cprList, configData[6]);
+        controlPanelController.setValueCheckComboBox(this, lineList, ParamType.CPR, cprList, configData[6]);
 
         ArrayList<ArrayList<Integer>> changeList = formDataController.getChangesFromConfiguration(configId);
-        controlPanelController.setValueCheckComboBox(this, lineList ,ParamType.Change, changeList, configData[8]);
+        controlPanelController.setValueCheckComboBox(this, lineList, ParamType.Change, changeList, configData[8]);
 
         ArrayList<ArrayList<Integer>> branchList = formDataController.getBranchesFromConfiguration(configId);
-        controlPanelController.setValueCheckComboBox(this, lineList ,ParamType.Branch, branchList, configData[7]);
+        controlPanelController.setValueCheckComboBox(this, lineList, ParamType.Branch, branchList, configData[7]);
 
 
         List boolList = configData[9];
@@ -106,7 +106,7 @@ public class ConfigurationControlPanel extends DateDescControlPanel implements I
 
         controlPanelController.setValueExistRadioButton(exist);
         controlPanelController.setCountToCountLine((int) boolList.get(1));
-        controlPanelController.setAlias((String)boolList.get(2), this);
+        controlPanelController.setAlias((String) boolList.get(2), this);
     }
 
     @Override

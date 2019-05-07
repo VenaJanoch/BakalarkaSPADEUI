@@ -9,6 +9,8 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import tables.*;
 
+import javax.xml.soap.Node;
+
 public class SegmentLists {
     /**
      * Globální proměnné třídy
@@ -70,13 +72,13 @@ public class SegmentLists {
     public void createLists() {
 
         configObservable = FXCollections.observableArrayList();
-        configObservable.add(new ConfigTable("", "", -1, true,-1));
+        configObservable.add(new ConfigTable("", "", -1, true, -1));
 
         commitObservable = FXCollections.observableArrayList();
         commitObservable.add(new CommitTable("", "", true, true, -1));
 
         commitedConfigurationObservable = FXCollections.observableArrayList();
-        commitedConfigurationObservable.add(new CommitedConfigurationTable("", "",true,-1));
+        commitedConfigurationObservable.add(new CommitedConfigurationTable("", "", true, -1));
 
 
         VCSTagObservable = FXCollections.observableArrayList();
@@ -84,52 +86,52 @@ public class SegmentLists {
 
 
         workUnitsObservable = FXCollections.observableArrayList();
-        workUnitsObservable.add(new WorkUnitTable("", true,-1));
+        workUnitsObservable.add(new WorkUnitTable("", true, -1));
 
 
         roleObservable = FXCollections.observableArrayList();
-        roleObservable.add(new PersonTable("",true,-1));
+        roleObservable.add(new PersonTable("", true, -1));
 
         branchObservable = FXCollections.observableArrayList();
-        branchObservable.add(new BranchTable("","", false,true,-1));
+        branchObservable.add(new BranchTable("", "", false, true, -1));
 
 
         artifactObservable = FXCollections.observableArrayList();
-        artifactObservable.add(new ArtifactTable("",true,-1));
+        artifactObservable.add(new ArtifactTable("", true, -1));
 
         changeObservable = FXCollections.observableArrayList();
-        changeObservable.add(new ChangeTable("",true,-1));
+        changeObservable.add(new ChangeTable("", true, -1));
 
 
         criterionObservable = FXCollections.observableArrayList();
-        criterionObservable.add(new CriterionTable("",true,-1));
+        criterionObservable.add(new CriterionTable("", true, -1));
 
         milestoneObservable = FXCollections.observableArrayList();
-        milestoneObservable.add(new MilestoneTable("",true,-1));
+        milestoneObservable.add(new MilestoneTable("", true, -1));
 
         CPRObservable = FXCollections.observableArrayList();
-        CPRObservable.add(new CPRTable("", "", true,-1));
+        CPRObservable.add(new CPRTable("", "", true, -1));
 
         roleTypeObservable = FXCollections.observableArrayList();
-        roleTypeObservable.add(new ClassTable("", "", "",true,-1));
+        roleTypeObservable.add(new ClassTable("", "", "", true, -1));
 
         priorityTypeObservable = FXCollections.observableArrayList();
-        priorityTypeObservable.add(new ClassTable("", "", "",true,-1));
+        priorityTypeObservable.add(new ClassTable("", "", "", true, -1));
 
         severityTypeObservable = FXCollections.observableArrayList();
-        severityTypeObservable.add(new ClassTable("", "", "",true,-1));
+        severityTypeObservable.add(new ClassTable("", "", "", true, -1));
 
         relationTypeObservable = FXCollections.observableArrayList();
-        relationTypeObservable.add(new ClassTable("", "", "",true,-1));
+        relationTypeObservable.add(new ClassTable("", "", "", true, -1));
 
         resolutionTypeObservable = FXCollections.observableArrayList();
-        resolutionTypeObservable.add(new ClassTable("", "", "",true,-1));
+        resolutionTypeObservable.add(new ClassTable("", "", "", true, -1));
 
         statusTypeObservable = FXCollections.observableArrayList();
-        statusTypeObservable.add(new ClassTable("", "", "",true,-1));
+        statusTypeObservable.add(new ClassTable("", "", "", true, -1));
 
         typeObservable = FXCollections.observableArrayList();
-        typeObservable.add(new ClassTable("", "", "",true,-1));
+        typeObservable.add(new ClassTable("", "", "", true, -1));
 
         arrows = new ArrayList<>();
     }
@@ -151,30 +153,22 @@ public class SegmentLists {
 
     public void removeArrow(int linkId) {
 
-        if (getArrows().get(linkId) != null) {
-            getArrows().remove(linkId);
-            getArrows().add(linkId, null);
+        for (int i = 0; i < arrows.size(); i++){
+            NodeLink link = arrows.get(i);
+            if (link != null && link.getLinkId() == linkId) {
+                getArrows().remove(i);
+                getArrows().add(i, null);
+            }
         }
 
-    }
-
-    public void repaintWorkUnitComboBox(int linkId) {
-
-        WorkUnitLink link = (WorkUnitLink) getArrows().get(linkId);
-        link.repaintComboBox();
-    }
-
-    public void repaintWorkUnitRelationEndPoint(int linkId, double x, double y) {
-
-        WorkUnitLink link = (WorkUnitLink) getArrows().get(linkId);
-        link.repaintEndPolygon(x, y);
 
     }
+
 
     public int removeItemFromObservableList(SegmentType segmentType, int indexList) {
         switch (segmentType) {
             case Branch:
-               return removeDataFromListTest(branchObservable, indexList);
+                return removeDataFromListTest(branchObservable, indexList);
             case Artifact:
                 return removeDataFromListTest(artifactObservable, indexList);
             case Change:
@@ -182,16 +176,16 @@ public class SegmentLists {
             case Priority:
                 return removeDataFromListTest(priorityTypeObservable, indexList);
             case Severity:
-                return  removeDataFromListTest(severityTypeObservable, indexList);
+                return removeDataFromListTest(severityTypeObservable, indexList);
             case Milestone:
-                return  removeDataFromListTest(milestoneObservable, indexList);
+                return removeDataFromListTest(milestoneObservable, indexList);
             case Criterion:
                 return removeDataFromListTest(criterionObservable, indexList);
 
             case Person:
                 return removeDataFromListTest(roleObservable, indexList);
             case Role_Type:
-                return  removeDataFromListTest(roleTypeObservable, indexList);
+                return removeDataFromListTest(roleTypeObservable, indexList);
             case Config_Person_Relation:
                 return removeDataFromListTest(CPRObservable, indexList);
             case Relation:
@@ -277,7 +271,7 @@ public class SegmentLists {
     }
 
     public void updateListItem(SegmentType segmentType, int id, BasicTable table) {
-       int listIndex =  removeItemFromObservableList(segmentType, id);
+        int listIndex = removeItemFromObservableList(segmentType, id);
         addItemToObservableList(segmentType, listIndex, table);
     }
 
@@ -345,13 +339,13 @@ public class SegmentLists {
     }
 
     private int removeDataFromListTest(ObservableList<BasicTable> observableList, int id) {
-            for (int j = 0; j < observableList.size(); j++){
-                if(observableList.get(j).getId() == id){
-                    observableList.remove(j);
-                    return j;
-                }
+        for (int j = 0; j < observableList.size(); j++) {
+            if (observableList.get(j).getId() == id) {
+                observableList.remove(j);
+                return j;
             }
-            return -1;
+        }
+        return -1;
     }
 
     /**
@@ -442,8 +436,8 @@ public class SegmentLists {
 
     public BasicTable getArtifactTable(int id) {
 
-        for (BasicTable table : artifactObservable){
-            if (table.getId() == id ){
+        for (BasicTable table : artifactObservable) {
+            if (table.getId() == id) {
                 return table;
             }
         }
@@ -453,8 +447,8 @@ public class SegmentLists {
 
     public BasicTable getConfigurationTable(int id) {
 
-        for (BasicTable table : configObservable){
-            if (table.getId() == id ){
+        for (BasicTable table : configObservable) {
+            if (table.getId() == id) {
                 return table;
             }
         }
@@ -464,8 +458,8 @@ public class SegmentLists {
 
     public BasicTable getCommitedConfigurationTable(int id) {
 
-        for (BasicTable table : commitedConfigurationObservable){
-            if (table.getId() == id ){
+        for (BasicTable table : commitedConfigurationObservable) {
+            if (table.getId() == id) {
                 return table;
             }
         }
@@ -475,8 +469,8 @@ public class SegmentLists {
 
     public BasicTable getCommitTable(int id) {
 
-        for (BasicTable table : commitObservable){
-            if (table.getId() == id ){
+        for (BasicTable table : commitObservable) {
+            if (table.getId() == id) {
                 return table;
             }
         }
@@ -485,20 +479,26 @@ public class SegmentLists {
     }
 
     public BasicTable getPersonTable(int id) {
-        for (BasicTable table : roleObservable){
-            if (table.getId() == id ){
+        for (BasicTable table : roleObservable) {
+            if (table.getId() == id) {
                 return table;
             }
         }
         return null;
     }
-    
+
     public ObservableList<BasicTable> getVCSTag() {
         return VCSTagObservable;
     }
 
     public NodeLink getArrow(int linkId) {
-        return arrows.get(linkId);
+        for (int i =0; i < arrows.size(); i++ ){
+            NodeLink link = arrows.get(i);
+            if (link != null && link.getLinkId() == linkId ){
+                return link;
+            }
+        }
+        return null;
     }
 
 

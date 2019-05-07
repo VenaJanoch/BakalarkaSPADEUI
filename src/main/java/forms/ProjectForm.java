@@ -1,6 +1,7 @@
 package forms;
 
 import java.time.LocalDate;
+
 import controllers.formControllers.FormController;
 import abstractform.Date2DescBasicForm;
 import interfaces.IDeleteFormController;
@@ -30,19 +31,19 @@ public class ProjectForm extends Date2DescBasicForm implements ISegmentForm {
         this.setMinSize(Constans.littleformWidth, Constans.littleformHeight);
         this.setMaxSize(Constans.littleformWidth, Constans.littleformHeight);
 
-      //  this.setOnCloseRequest(e -> {
+        //  this.setOnCloseRequest(e -> {
 
-       //     e.consume();
-            //int result = Alerts.showSaveSegment();
-            //if (result == 1) {
-            //    setActionSubmitButton();
-            //} else if (result == 0) {
-       //        this.close();
+        //     e.consume();
+        //int result = Alerts.showSaveSegment();
+        //if (result == 1) {
+        //    setActionSubmitButton();
+        //} else if (result == 0) {
+        //        this.close();
         //    }
-      //  });
+        //  });
 
         getSubmitButton().setOnAction(event -> setActionSubmitButton());
-       fillForm();
+        fillForm();
         getFormName().setText(type.name());
     }
 
@@ -60,8 +61,8 @@ public class ProjectForm extends Date2DescBasicForm implements ISegmentForm {
     @Override
     public void setActionSubmitButton() {
         closeForm();
-      //  close();
-}
+        //  close();
+    }
 
     @Override
     public void deleteItem() {

@@ -38,16 +38,16 @@ public class WindowController {
     private JFXDrawersStack drawersStack;
     private boolean logToDB = false;
 
-    public WindowController(Stage primaryStage){
+    public WindowController(Stage primaryStage) {
         this.primaryStage = primaryStage;
         initApplication();
         this.mainWindow = new MainWindow(this, drawersStack, drawerPanelController, selectItemController, applicationController);
         setSceneToPrimaryStage(mainWindow.getScene(), mainWindow.getTitle());
         applicationController.getFormFillController().setProjectCanvasController(mainWindow.getCanvasController());
 
-        }
+    }
 
-    private void initApplication(){
+    private void initApplication() {
         SegmentLists segmentLists = new SegmentLists();
         ProcessGenerator processGenerator = new ProcessGenerator();
         IdentificatorCreater identificatorCreater = new IdentificatorCreater();
@@ -61,7 +61,7 @@ public class WindowController {
         rightDrawer.setId("RIGHT");
         this.drawerPanelController = new DrawerPanelController(leftDrawer, rightDrawer, drawersStack);
         this.selectItemController = new SelectItemController(drawerPanelController);
-        this.applicationController = new ApplicationController(dataModel, identificatorCreater, segmentLists, drawerPanelController, selectItemController );
+        this.applicationController = new ApplicationController(dataModel, identificatorCreater, segmentLists, drawerPanelController, selectItemController);
         selectItemController.setFormController(applicationController.getFormController());
         this.formFillController = applicationController.getFormFillController();
         this.logInWindow = new LogInWindow(applicationController.getDatabaseController());
@@ -69,7 +69,7 @@ public class WindowController {
 
     }
 
-    public void setSceneToPrimaryStage(Scene scene, String title){
+    public void setSceneToPrimaryStage(Scene scene, String title) {
         this.primaryStage.setTitle(title);
         this.primaryStage.setScene(scene);
         primaryStage.setMaximized(false);
@@ -77,12 +77,12 @@ public class WindowController {
 
     }
 
-    public void saveItemAction(){
-            fileManipulator.saveFile();
+    public void saveItemAction() {
+        fileManipulator.saveFile();
     }
 
-    public void saveItemAsAction(){
-            fileManipulator.saveAsFile();
+    public void saveItemAsAction() {
+        fileManipulator.saveAsFile();
     }
 
     public void createNewProcessAction() {
@@ -97,7 +97,7 @@ public class WindowController {
     public void openProccesXMLAction() {
 
         File xmlFile = fileManipulator.loadFile();
-        if(xmlFile != null){
+        if (xmlFile != null) {
             createNewProcessAction();
             dataModel.parseProject(xmlFile);
             formFillController.createFormsFromData();
@@ -113,12 +113,12 @@ public class WindowController {
         primaryStage.setOnCloseRequest(event -> {
             event.consume();
             if (!isClose()) {
-               closeProject();
+                closeProject();
             }
         });
     }
 
-    public void closeProject(){
+    public void closeProject() {
         int result = alerts.showCloseApp();
         if (result != -1) {
             Platform.exit();
@@ -126,9 +126,9 @@ public class WindowController {
     }
 
     public void showConfirmWindow() {
-        if (!logToDB){
-           logToDB = logInWindow.showLogDialog();
-        }else {
+        if (!logToDB) {
+            logToDB = logInWindow.showLogDialog();
+        } else {
             logInWindow.show();
         }
     }

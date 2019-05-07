@@ -62,8 +62,11 @@ public class StatusDeleteTest {
         estimate.add(0.0);
         ArrayList<LocalDate> dates = new ArrayList<>();
         dates.add(date);
+        ArrayList<Integer> progress = new ArrayList<>();
+        progress.add(12);
+        progress.add(23);
         dataModel.getSaveDataModel().createNewWorkUnit(2);
-        dataModel.getEditDataModel().editDataInWorkUnit("Test", name,name, name, indicators, indicators, indicators, indicators, indicators, indicators,
+        dataModel.getEditDataModel().editDataInWorkUnit("Test", progress, indicators, name,name, name, indicators, indicators, indicators, indicators, indicators, indicators,
                 indicators,estimate, indicators,  indicators, indicators, indicators, indicators,indicators, indicators,indicators, indicators,indicators, indicators,
                 dates, indicators, false, indicators, unit, 2);
 

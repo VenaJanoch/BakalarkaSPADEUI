@@ -46,7 +46,7 @@ public class WorkUnitLink extends NodeLink {
         polygon.setVisible(false);
 
         canvasController.addRelationCBToCanvas(relationCB, polygon);
-      }
+    }
 
     /**
      * Metoda pro nastavení koncového bodu spojnice, zviditelnění spojnice, šipky a výběrového boxu
@@ -71,8 +71,7 @@ public class WorkUnitLink extends NodeLink {
     }
 
 
-
-    public void setRelationIndexToComboBox(int relationIndex){
+    public void setRelationIndexToComboBox(int relationIndex) {
         relationCB.getSelectionModel().select(relationIndex);
     }
 
@@ -130,7 +129,7 @@ public class WorkUnitLink extends NodeLink {
         public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
 
             relationIndex = newValue.intValue();
-       //     linkControl.setRealtionIndexToLink(id, relationIndex);
+            //     linkControl.setRealtionIndexToLink(id, relationIndex);
 
         }
     };

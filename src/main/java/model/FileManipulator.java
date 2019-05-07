@@ -30,7 +30,7 @@ public class FileManipulator {
     private boolean save = false;
 
 
-    public FileManipulator( DataModel dataModel) {
+    public FileManipulator(DataModel dataModel) {
         this.dataModel = dataModel;
 
         configureFileChooser();
@@ -58,11 +58,11 @@ public class FileManipulator {
 
             boolean isSave = saveAsFile();
 
-            if (isSave){
+            if (isSave) {
                 firstSave = false;
                 save = true;
                 return true;
-            }else {
+            } else {
                 return false;
             }
 
@@ -86,7 +86,7 @@ public class FileManipulator {
             if (XMLProcessFile != null) {
                 dataModel.saveProcess(XMLProcessFile);
                 save = true;
-            }else {
+            } else {
                 return false;
             }
 

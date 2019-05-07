@@ -73,7 +73,7 @@ public class ManipulationController {
         if (chooseCanvasItem != null) {
 
             int index = chooseCanvasItem.getFormIdentificator();
-            boolean isDelete =  deleteForm(index, chooseCanvasItem.getSegmentType());
+            boolean isDelete = deleteForm(index, chooseCanvasItem.getSegmentType());
             if (isDelete) {
                 canvasItemController.deleteItem(chooseCanvasItem);
             }
@@ -91,12 +91,12 @@ public class ManipulationController {
 
         if (chooseCanvasItem != null) {
 
-                if(isCut){
-                    createCopyForm(chooseCanvasItem.getFormIdentificator(), segmentType, canvasController, x, y);
-                    deleteItem(canvasItemController);
-                }else  {
-                    createCopyForm(chooseCanvasItem.getFormIdentificator(), segmentType, canvasController, x, y);
-                }
+            if (isCut) {
+                createCopyForm(chooseCanvasItem.getFormIdentificator(), segmentType, canvasController, x, y);
+                deleteItem(canvasItemController);
+            } else {
+                createCopyForm(chooseCanvasItem.getFormIdentificator(), segmentType, canvasController, x, y);
+            }
         } else {
             Alerts.badCopyItem(segmentType, canvasType);
         }
@@ -106,8 +106,9 @@ public class ManipulationController {
 
     /**
      * Rozhodne, který segment nebo element se vytvoří
+     * <p>
+     * instance seznamu formulářů
      *
-     *            instance seznamu formulářů
      * @return pole identifikátorů prvku
      */
     public void createCopyForm(int oldFormIndex, SegmentType segmentType, CanvasController canvasController, double x, double y) {
@@ -117,10 +118,10 @@ public class ManipulationController {
                 formFillController.fillConfigurationForm(oldFormIndex, x, y);
                 break;
             case Committed_Configuration:
-                formFillController.fillCommitedConfigurationForm(oldFormIndex, x , y);
+                formFillController.fillCommitedConfigurationForm(oldFormIndex, x, y);
                 break;
             case Commit:
-                formFillController.fillCommitForm(oldFormIndex, x , y);
+                formFillController.fillCommitForm(oldFormIndex, x, y);
                 break;
             case Person:
                 formFillController.fillPersonForm(oldFormIndex, x, y);
@@ -130,15 +131,15 @@ public class ManipulationController {
                 break;
             default:
                 break;
-    }
+        }
     }
 
 
-    public boolean deleteForm(int formIndex, SegmentType segmentType){
+    public boolean deleteForm(int formIndex, SegmentType segmentType) {
         boolean isDelete = false;
-        switch (segmentType){
+        switch (segmentType) {
             case Artifact:
-             isDelete = deleteFormController.deleteArtifact (formIndex);
+                isDelete = deleteFormController.deleteArtifact(formIndex);
                 break;
             case Person:
                 isDelete = deleteFormController.deleteRoleWithDialog(formIndex);

@@ -22,10 +22,10 @@ public class ProjectControlPanel extends WorkUnitDateControlPanel implements ICo
 
 
     public ProjectControlPanel(String buttonName, IFormDataController formDataController,
-                               IEditFormController editFormController, FormController formController){
+                               IEditFormController editFormController, FormController formController) {
         super(buttonName, formDataController, editFormController, formController);
         lineList.add(new ControlPanelLineObject("End date: ", ControlPanelLineType.Date, ParamType.EndDate));
-           addItemsToControlPanel();
+        addItemsToControlPanel();
     }
 
     @Override
@@ -41,14 +41,14 @@ public class ProjectControlPanel extends WorkUnitDateControlPanel implements ICo
         controlPanelController.resetPanel(controlPane);
         addItemsToControlPanel();
 
-        controlPanelController.setValueTextField(this, lineList ,ParamType.Name, projectData, projectData[4], 0);
-        controlPanelController.setValueTextField(this, lineList ,ParamType.Description, projectData, projectData[5], 1);
-        controlPanelController.setValueDatePicker(this, lineList ,ParamType.Date, (ArrayList<LocalDate>)projectData[2],  projectData[6]);
-        controlPanelController.setValueDatePicker(this, lineList ,ParamType.EndDate, (ArrayList<LocalDate>)projectData[3],  projectData[7]);
+        controlPanelController.setValueTextField(this, lineList, ParamType.Name, projectData, projectData[4], 0);
+        controlPanelController.setValueTextField(this, lineList, ParamType.Description, projectData, projectData[5], 1);
+        controlPanelController.setValueDatePicker(this, lineList, ParamType.Date, (ArrayList<LocalDate>) projectData[2], projectData[6]);
+        controlPanelController.setValueDatePicker(this, lineList, ParamType.EndDate, (ArrayList<LocalDate>) projectData[3], projectData[7]);
 
 
         ArrayList<ArrayList<Integer>> workUnits = formDataController.getWorkUnitFromSegment(0, SegmentType.Project);
-        controlPanelController.setValueCheckComboBox(this, lineList ,ParamType.WorkUnit, workUnits, projectData[8]);
+        controlPanelController.setValueCheckComboBox(this, lineList, ParamType.WorkUnit, workUnits, projectData[8]);
 
     }
 
@@ -59,7 +59,7 @@ public class ProjectControlPanel extends WorkUnitDateControlPanel implements ICo
         button.setOnAction(event -> saveDataFromPanel());
     }
 
-    public void saveDataFromPanel(){
+    public void saveDataFromPanel() {
 
         ArrayList<Integer> nameIndicators = new ArrayList<>();
         ArrayList<Integer> descIndicators = new ArrayList<>();
@@ -77,6 +77,7 @@ public class ProjectControlPanel extends WorkUnitDateControlPanel implements ICo
         editFormController.editDataFromProject(name, startDate, endDate, desc, workUnit, workUnitIndicators, nameIndicators,
                 startDateIndicators, endDateIndicators, descIndicators);
     }
+
     public Button getButton() {
         return button;
     }

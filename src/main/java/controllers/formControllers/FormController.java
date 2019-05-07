@@ -8,6 +8,7 @@ import controlPanels.*;
 import controllers.ApplicationController;
 import controllers.DataPreparer;
 import controllers.graphicsComponentsControllers.CanvasController;
+import controllers.graphicsComponentsControllers.CanvasItemController;
 import controllers.graphicsComponentsControllers.DrawerPanelController;
 import controllers.graphicsComponentsControllers.SelectItemController;
 import forms.ConfigurationForm;
@@ -77,6 +78,7 @@ public class FormController {
     private DataPreparer dataPreparer;
     private DrawerPanelController drawerPanelController;
     private SelectItemController selectItemController;
+    private CanvasItemController canvasItemController;
 
     public FormController(IdentificatorCreater identificatorCreater, DataModel dataModel,
                           ApplicationController applicationController, SegmentLists segmentLists, DataPreparer dataPreparer,
@@ -472,7 +474,7 @@ public class FormController {
 
     public void setItemInstanceCount(int index, int instanceCount) {
         CanvasItem item = canvasItemList.get(index);
-        item.setInstanceCountToItem(instanceCount);
+        canvasItemController.setInstanceCount(item, instanceCount);
     }
 
     public String getSegmentIdentificator(int indexForm) {
@@ -839,6 +841,14 @@ public class FormController {
         Integer[] result = findResultsFromPersonToCommittedConfigurationRelation(startSegmentId, endSegmentId);
         formDataController.createNewPersonToCommittedConfigurationRelation(linkId, result[0], result[1], isXML);
 
+    }
+
+    public void setCanvasItemController(CanvasItemController canvasItemController) {
+        this.canvasItemController = canvasItemController;
+    }
+
+    public ArrayList<ControlPanel> getControlPanels() {
+        return controlPanels;
     }
 }
 

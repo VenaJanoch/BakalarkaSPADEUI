@@ -46,19 +46,19 @@ public class PhaseControlPanel extends WorkUnitDateControlPanel {
         controlPanelController.resetPanel(controlPane);
         addItemsToControlPanel();
 
-        controlPanelController.setValueTextField(this, lineList ,ParamType.Name, phaseStringData, phaseStringData[5], 0);
-        controlPanelController.setValueTextField(this, lineList ,ParamType.Description, phaseStringData, phaseStringData[6], 1);
-        controlPanelController.setValueComboBox(this, lineList ,ParamType.Configuration, (ArrayList<Integer>) phaseStringData[2], phaseStringData[7]);
-        controlPanelController.setValueDatePicker(this, lineList ,ParamType.Date, (ArrayList<LocalDate>)phaseStringData[4],  phaseStringData[9]);
-        controlPanelController.setValueComboBox(this, lineList ,ParamType.Milestone, (ArrayList<Integer>) phaseStringData[3], phaseStringData[8]);
+        controlPanelController.setValueTextField(this, lineList, ParamType.Name, phaseStringData, phaseStringData[5], 0);
+        controlPanelController.setValueTextField(this, lineList, ParamType.Description, phaseStringData, phaseStringData[6], 1);
+        controlPanelController.setValueComboBox(this, lineList, ParamType.Configuration, (ArrayList<Integer>) phaseStringData[2], phaseStringData[7]);
+        controlPanelController.setValueDatePicker(this, lineList, ParamType.Date, (ArrayList<LocalDate>) phaseStringData[4], phaseStringData[9]);
+        controlPanelController.setValueComboBox(this, lineList, ParamType.Milestone, (ArrayList<Integer>) phaseStringData[3], phaseStringData[8]);
         ArrayList<ArrayList<Integer>> workUnits = formDataController.getWorkUnitFromSegment(id, SegmentType.Phase);
-        controlPanelController.setValueCheckComboBox(this, lineList ,ParamType.WorkUnit, workUnits, phaseStringData[10]);
+        controlPanelController.setValueCheckComboBox(this, lineList, ParamType.WorkUnit, workUnits, phaseStringData[10]);
 
         List boolList = phaseStringData[11];
         boolean exist = (boolean) boolList.get(0);
 
         controlPanelController.setValueExistRadioButton(exist);
-        controlPanelController.setAlias((String)boolList.get(2), this);
+        controlPanelController.setAlias((String) boolList.get(2), this);
 
 
         button.setOnAction(event -> saveDataFromPanel(phaseTable, tableView));

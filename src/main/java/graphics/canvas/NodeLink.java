@@ -116,12 +116,12 @@ public abstract class NodeLink extends Line {
 
     }
 
-    public void setIdsToController(int startId, int endId){
+    public void setIdsToController(int startId, int endId) {
         linkController.setIds(startId, endId);
     }
 
 
-    public  void coverBackgroundPolygon(){
+    public void coverBackgroundPolygon() {
         backgroundPolygon.setStroke(Color.TRANSPARENT);
     }
 
@@ -143,9 +143,20 @@ public abstract class NodeLink extends Line {
 
     }
 
-    public void setLinkType(LinkType linkType){
+    public void setLinkType(LinkType linkType) {
         this.linkType = linkType;
     }
 
 
+    public int getLinkId() {
+        return id;
+    }
+
+    public Point2D getStartPoint() {
+        return startPoint;
+    }
+
+    public Point2D getEndPoint() {
+        return endPoint;
+    }
 }

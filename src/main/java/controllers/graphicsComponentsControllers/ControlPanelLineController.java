@@ -11,7 +11,7 @@ import services.ControlPanelLineObject;
 public class ControlPanelLineController {
 
     private ControlPanelController controlPanelController;
-    private  ControlPanel controlPanel;
+    private ControlPanel controlPanel;
     private ChangeListener<Number> listener;
     private ControlPanelLine line;
     private int lineIndex;
@@ -21,7 +21,7 @@ public class ControlPanelLineController {
     private boolean isSetType = false;
 
     public ControlPanelLineController(ControlPanelLine line, ControlPanel controlPanel, ControlPanelController controlPanelController,
-                                      ObservableList<ControlPanelLineObject> paramList, int lineIndex){
+                                      ObservableList<ControlPanelLineObject> paramList, int lineIndex) {
         this.controlPanelController = controlPanelController;
         this.controlPanel = controlPanel;
         this.line = line;
@@ -35,7 +35,7 @@ public class ControlPanelLineController {
      * ChangeListener pro určení indexu prvku z comboBoxu pro Priority
      */
 
-    public ChangeListener<Number> comboBoxListener () {
+    public ChangeListener<Number> comboBoxListener() {
 
         listener = new ChangeListener<Number>() {
 
@@ -51,13 +51,16 @@ public class ControlPanelLineController {
         return listener;
     }
 
-    public void setBoxToControlPanel(){
+    public void setBoxToControlPanel() {
         ControlPanelLineObject object = paramList.get(itemIndex);
         controlPanelController.removeFromControlPanel(line, controlPanel.getControlPane());
 
-        switch (object.getLineType()){
+        switch (object.getLineType()) {
             case Text:
-                controlPanelController.setTextItemToControlPanel(controlPanel.getControlPane(), line.getTextItem(), 2, lineIndex );
+                controlPanelController.setTextItemToControlPanel(controlPanel.getControlPane(), line.getTextItem(), 2, lineIndex);
+                break;
+            case Number:
+                controlPanelController.setNumberItemToControlPanel(controlPanel.getControlPane(), line.getNumberItem(), 2, lineIndex);
                 break;
             case Date:
                 controlPanelController.setDateItemToControlPanel(controlPanel.getControlPane(), line.getDateItem(), 2, lineIndex);
@@ -78,9 +81,9 @@ public class ControlPanelLineController {
         }
     }
 
-    public void setBoxToControlPanel(int index){
+    public void setBoxToControlPanel(int index) {
         itemIndex = index;
-        if(paramList.size() != 0){
+        if (paramList.size() != 0) {
             setBoxToControlPanel();
         }
     }
@@ -94,7 +97,7 @@ public class ControlPanelLineController {
 
     private void setDataFromLine(ControlPanelLine oldLine) {
         ControlPanelLineObject object = paramList.get(itemIndex);
-        switch (object.getLineType()){
+        switch (object.getLineType()) {
             case Text:
                 setDataToTextFieldLine(oldLine);
                 break;

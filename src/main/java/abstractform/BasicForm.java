@@ -84,7 +84,6 @@ public abstract class BasicForm extends BorderPane {
     public BasicForm(FormController formController, IFormDataController formDataController, IEditFormController editFormController,
                      IDeleteFormController deleteFormController, SegmentType type) {
         super();
-       // this.setTitle("Edit " + type.name());
 
         this.formController = formController;
         this.formDataController = formDataController;
@@ -97,7 +96,9 @@ public abstract class BasicForm extends BorderPane {
 
     }
 
-
+    /**
+     * Metoda pro pridani prvku do formulare
+     */
     abstract void createForm();
 
 

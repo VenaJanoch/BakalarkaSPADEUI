@@ -68,6 +68,7 @@ public class ConfigurationForm extends DateBasicForm implements ISegmentForm {
     private ObservableList<BasicTable> cprList;
     private ObservableList<BasicTable> branchList;
     private ObservableList<BasicTable> roleList;
+
     /**
      * Konstruktor třídy Zinicializuje globální proměnné tříd Nastaví reakci na
      * uzavření okna
@@ -88,7 +89,7 @@ public class ConfigurationForm extends DateBasicForm implements ISegmentForm {
         branchIndex = new ArrayList<>();
         cprIndex = FXCollections.observableArrayList();
 
-       // this.setOnCloseRequest(event -> Alerts.showSaveSegment());
+        // this.setOnCloseRequest(event -> Alerts.showSaveSegment());
 
         getSubmitButton().setText("Add");
         getSubmitButton().setOnAction(event -> setActionSubmitButton());
@@ -104,7 +105,7 @@ public class ConfigurationForm extends DateBasicForm implements ISegmentForm {
         branchIndex.addAll(branchCB.getCheckModel().getCheckedIndices());
         cprIndex.addAll(cprCB.getCheckModel().getCheckedIndices());
 
-        isSave =  formDataController.saveDataFromConfiguration(actName, createDate, isRelease, authorIndex, branchIndex, new ArrayList<>(cprIndex),
+        isSave = formDataController.saveDataFromConfiguration(actName, createDate, isRelease, authorIndex, branchIndex, new ArrayList<>(cprIndex),
                 canvasController.getListOfItemOnCanvas(), isNew, indexForm);
     }
 
@@ -112,17 +113,18 @@ public class ConfigurationForm extends DateBasicForm implements ISegmentForm {
     public void setActionSubmitButton() {
 
         closeForm();
-        if(isSave){
+        if (isSave) {
             isNew = false;
             getSubmitButton().setText("Ok");
-           // close();
+            // close();
 
         }
 
     }
 
     @Override
-    public void deleteItem() {}
+    public void deleteItem() {
+    }
 
     public void createForm() {
 
@@ -152,9 +154,8 @@ public class ConfigurationForm extends DateBasicForm implements ISegmentForm {
         branchCB.getCheckModel().getCheckedItems().addListener(branchListener);
 
 
-
         addTag = new Button("Add Tag");
-      //  addTag.setOnAction(event -> tagForm.show());
+        //  addTag.setOnAction(event -> tagForm.show());
 
         fillInfoPart();
     }
@@ -238,11 +239,11 @@ public class ConfigurationForm extends DateBasicForm implements ISegmentForm {
         getNameTF().setText(name);
         getDateDP().setValue(createdDate);
         authorRoleCB.getSelectionModel().select(authorIndex);
-        for(int i : cprIndexs){
+        for (int i : cprIndexs) {
             cprCB.getCheckModel().check(i);
         }
 
-        for(int i : branchIndexs){
+        for (int i : branchIndexs) {
             branchCB.getCheckModel().check(i);
         }
 

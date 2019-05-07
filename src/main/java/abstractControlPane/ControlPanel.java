@@ -39,12 +39,28 @@ public abstract class ControlPanel extends ScrollPane {
     protected ControlPanelController controlPanelController;
 
 
-    public ControlPanel(String buttonText, IFormDataController formDataController, IEditFormController editFormController, FormController formController){
+    /**
+     * Přetížený konstruktor třídy umožnující přidání instance třídy formController
+     *
+     * @param buttonText         název tlačítka
+     * @param formDataController Třída FormDataController
+     * @param editFormController Třída EditFormController
+     * @param formController     Třída FormController
+     */
+    public ControlPanel(String buttonText, IFormDataController formDataController, IEditFormController editFormController, FormController formController) {
         this(buttonText, formDataController, editFormController);
         this.formController = formController;
     }
 
-    public ControlPanel(String buttonText, IFormDataController formDataController, IEditFormController editFormController){
+    /**
+     * Konstruktor třídy
+     * Nastaví potřebné třídy a zavolá metodu createMainPanel pro vytvoření tlačítek.
+     *
+     * @param buttonText
+     * @param formDataController
+     * @param editFormController
+     */
+    public ControlPanel(String buttonText, IFormDataController formDataController, IEditFormController editFormController) {
         super();
         this.formDataController = formDataController;
         this.editFormController = editFormController;
@@ -55,7 +71,12 @@ public abstract class ControlPanel extends ScrollPane {
         createMainPanel(buttonText);
     }
 
-    private void createMainPanel(String buttonText){
+    /**
+     * Metoda pro vytvoření základního panelu a inicializaci ostatních grafických prvků
+     *
+     * @param buttonText Název obsažený na tlačítku
+     */
+    private void createMainPanel(String buttonText) {
 
         aliasLB = new Label("Alias: ");
 
@@ -64,7 +85,7 @@ public abstract class ControlPanel extends ScrollPane {
 
         button = new Button(buttonText);
         button.setMinSize(70, 70);
-        button.setBackground(new Background(new BackgroundFill(Color.rgb(0,163, 211), CornerRadii.EMPTY, Insets.EMPTY)));
+        button.setBackground(new Background(new BackgroundFill(Color.rgb(0, 163, 211), CornerRadii.EMPTY, Insets.EMPTY)));
         button.setTextFill(Color.WHITE);
         button.setStyle("-fx-font-size: 20px;");
         controlPane = new GridPane();
@@ -83,7 +104,14 @@ public abstract class ControlPanel extends ScrollPane {
         this.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
     }
 
+    /**
+     * Metoda pro inicializaci grafických prvků ve třídě implementující tuto metodu
+     */
     abstract protected void createBasicPanel();
+
+    /**
+     * Gettry a Settry
+     */
 
     public Button getButton() {
         return button;

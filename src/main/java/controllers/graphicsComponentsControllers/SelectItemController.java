@@ -10,27 +10,27 @@ public class SelectItemController {
 
     private ComboBox box;
     private ChangeListener<Number> roleListener;
-    private int formiIndex = 0;
+    private int formiIndex = -1;
     private FormController formController;
     private DrawerPanelController drawerPanelController;
 
-   public SelectItemController(DrawerPanelController drawerPanelController){
-       this.drawerPanelController = drawerPanelController;
-       roleListener = new ChangeListener<Number>() {
+    public SelectItemController(DrawerPanelController drawerPanelController) {
+        this.drawerPanelController = drawerPanelController;
+        roleListener = new ChangeListener<Number>() {
 
-           @Override
-           public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+            @Override
+            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
 
-               formiIndex = newValue.intValue();
-               drawerPanelController.showLeftPanel(getFormFromSelectItem());
-           }
-       };
+                formiIndex = newValue.intValue();
+                drawerPanelController.showLeftPanel(getFormFromSelectItem());
+            }
+        };
 
-   }
+    }
 
-   public BasicForm getFormFromSelectItem(){
-       return  formController.getForm(formiIndex);
-   }
+    public BasicForm getFormFromSelectItem() {
+        return formController.getForm(formiIndex);
+    }
 
     public int getFormiIndex() {
         return formiIndex;
@@ -39,7 +39,11 @@ public class SelectItemController {
     public void setBox(ComboBox box) {
         this.box = box;
         box.getSelectionModel().selectedIndexProperty().addListener(roleListener);
-
+        box.setOnMouseClicked(event -> {
+            if (formiIndex != -1) {
+                drawerPanelController.showLeftPanel(getFormFromSelectItem());
+            }
+        });
     }
 
     public void setFormController(FormController formController) {

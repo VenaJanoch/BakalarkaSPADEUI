@@ -21,12 +21,12 @@ public class ChangeControlPanel extends DescriptionControlPanel {
     private RadioButton existRB;
 
     private boolean exist;
-    
+
     private ChangeTable changeTable;
 
 
     public ChangeControlPanel(String buttonName, IFormDataController formDataController,
-                              IEditFormController editFormController, FormController formController){
+                              IEditFormController editFormController, FormController formController) {
         super(buttonName, formDataController, editFormController, formController);
         SegmentLists segmentLists = formController.getSegmentLists();
         lineList.add(new ControlPanelLineObject("Artifact: ", ControlPanelLineType.ComboBox, ParamType.Artifact, segmentLists.getArtifactObservable()));
@@ -42,15 +42,15 @@ public class ChangeControlPanel extends DescriptionControlPanel {
         controlPanelController.resetPanel(controlPane);
         addItemsToControlPanel();
 
-        controlPanelController.setValueTextField(this, lineList ,ParamType.Name, changeData, changeData[2], 0);
-        controlPanelController.setValueTextField(this, lineList ,ParamType.Description, changeData, changeData[3], 1);
+        controlPanelController.setValueTextField(this, lineList, ParamType.Name, changeData, changeData[2], 0);
+        controlPanelController.setValueTextField(this, lineList, ParamType.Description, changeData, changeData[3], 1);
         ArrayList<Integer> artifactIndicators = new ArrayList<>();
         artifactIndicators.add(0);
-        controlPanelController.setValueComboBox(this, lineList ,ParamType.Artifact, (ArrayList<Integer>) changeData[5], artifactIndicators);
+        controlPanelController.setValueComboBox(this, lineList, ParamType.Artifact, (ArrayList<Integer>) changeData[5], artifactIndicators);
 
         List boolList = changeData[4];
         controlPanelController.setValueExistRadioButton((boolean) boolList.get(0));
-        controlPanelController.setAlias((String)boolList.get(2), this);
+        controlPanelController.setAlias((String) boolList.get(2), this);
         button.setOnAction(event -> saveDataFromPanel(changeTable, tableView));
     }
 
@@ -59,7 +59,7 @@ public class ChangeControlPanel extends DescriptionControlPanel {
         controlPanelController.createNewLineWithExist(this, lineList);
     }
 
-    public void saveDataFromPanel(BasicTable table, TableView tableView){
+    public void saveDataFromPanel(BasicTable table, TableView tableView) {
         int id = table.getId();
 
         ArrayList<Integer> nameIndicators = new ArrayList<>();
