@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF8" standalone="yes"?>
+<Project xsi:noNamespaceSchemaLocation="SPADE2.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <artifacts alias="Vize" exist="false" id="0">
+        <coordinates XCoordinate="345" YCoordinate="316"/>
+        <name>Vize</name>
+        <nameIndicator>2</nameIndicator>
+        <count>1</count>
+    </artifacts>
+    <artifacts alias="Architektura" exist="false" id="1">
+        <coordinates XCoordinate="591" YCoordinate="430"/>
+        <name>archit</name>
+        <nameIndicator>2</nameIndicator>
+        <count>1</count>
+    </artifacts>
+    <artifacts alias="Specifikace" exist="false" id="2">
+        <coordinates XCoordinate="880" YCoordinate="359"/>
+        <name>Specifi</name>
+        <nameIndicator>2</nameIndicator>
+        <count>1</count>
+    </artifacts>
+    <artifacts alias="Retrospektiva" exist="false" id="3">
+        <coordinates XCoordinate="632" YCoordinate="247"/>
+        <name>Retros</name>
+        <nameIndicator>2</nameIndicator>
+        <count>5</count>
+    </artifacts>
+</Project>

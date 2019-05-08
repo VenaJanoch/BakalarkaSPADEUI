@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF8" standalone="yes"?>
+<Project xsi:noNamespaceSchemaLocation="SPADE2.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <workUnits alias="0" exist="true" id="0">
+        <name></name>
+        <estimatedTime>0.0</estimatedTime>
+        <estimatedTimeIndicator>0</estimatedTimeIndicator>
+        <statusIndex>0</statusIndex>
+        <statusIndicator>0</statusIndicator>
+    </workUnits>
+    <status alias="0" id="0" exist="true">
+        <statusClassIndex>6</statusClassIndex>
+        <statusSuperClassIndex>2</statusSuperClassIndex>
+        <statusClass>DONE</statusClass>
+        <statusSuperClass>CLOSED</statusSuperClass>
+        <name></name>
+    </status>
+</Project>

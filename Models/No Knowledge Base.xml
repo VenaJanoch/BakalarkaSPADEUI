@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF8" standalone="yes"?>
+<Project xsi:noNamespaceSchemaLocation="SPADE2.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <artifacts alias="0" exist="true" id="0">
+        <mimeType>WIKIPAGE</mimeType>
+        <coordinates XCoordinate="585" YCoordinate="361"/>
+        <name></name>
+        <mimeTypeIndicator>1</mimeTypeIndicator>
+        <mimeTypeIndex>2</mimeTypeIndex>
+        <count>3</count>
+    </artifacts>
+</Project>

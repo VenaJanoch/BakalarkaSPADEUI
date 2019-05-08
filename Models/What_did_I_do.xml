@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF8" standalone="yes"?>
+<Project xsi:noNamespaceSchemaLocation="SPADE2.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <workUnits alias="0" exist="true" id="0">
+        <description></description>
+        <name></name>
+        <descriptionIndicator>0</descriptionIndicator>
+    </workUnits>
+    <workUnits alias="1" exist="true" id="1">
+        <description></description>
+        <name></name>
+        <descriptionIndicator>0</descriptionIndicator>
+    </workUnits>
+    <workUnits alias="2" exist="true" id="2">
+        <description></description>
+        <name></name>
+        <descriptionIndicator>0</descriptionIndicator>
+    </workUnits>
+    <workUnits alias="3" exist="true" id="3">
+        <description></description>
+        <name></name>
+        <descriptionIndicator>0</descriptionIndicator>
+    </workUnits>
+    <workUnits alias="4" exist="true" id="4">
+        <description></description>
+        <name></name>
+        <descriptionIndicator>0</descriptionIndicator>
+    </workUnits>
+    <workUnits alias="5" exist="true" id="5">
+        <description></description>
+        <name></name>
+        <descriptionIndicator>0</descriptionIndicator>
+    </workUnits>
+    <workUnits alias="6" exist="true" id="6">
+        <description></description>
+        <name></name>
+        <descriptionIndicator>0</descriptionIndicator>
+    </workUnits>
+    <workUnits alias="7" exist="true" id="7">
+        <description></description>
+        <name></name>
+        <descriptionIndicator>0</descriptionIndicator>
+    </workUnits>
+    <workUnits alias="8" exist="true" id="8">
+        <description></description>
+        <name></name>
+        <descriptionIndicator>0</descriptionIndicator>
+    </workUnits>
+    <workUnits alias="9" exist="true" id="9">
+        <description></description>
+        <name></name>
+        <descriptionIndicator>0</descriptionIndicator>
+    </workUnits>
+    <workUnits alias="10" exist="true" id="10">
+        <description></description>
+        <name></name>
+        <descriptionIndicator>0</descriptionIndicator>
+    </workUnits>
+    <workUnits alias="11" exist="true" id="11">
+        <description></description>
+        <name></name>
+        <descriptionIndicator>0</descriptionIndicator>
+    </workUnits>
+    <workUnits alias="12" exist="true" id="12">
+        <description></description>
+        <name></name>
+        <descriptionIndicator>2</descriptionIndicator>
+    </workUnits>
+    <configuration alias="0" isRelease="false" id="0" exist="true">
+        <name></name>
+        <description></description>
+        <descriptionIndicator>0</descriptionIndicator>
+        <count>10</count>
+        <coordinates XCoordinate="703" YCoordinate="227"/>
+    </configuration>
+    <commit release="true" id="0" exist="true" alias="0">
+        <name></name>
+        <description></description>
+        <descriptionIndicator>0</descriptionIndicator>
+        <coordinates XCoordinate="425" YCoordinate="492"/>
+        <count>11</count>
+    </commit>
+    <commitConfiguration alias="0" id="0" exist="true">
+        <name></name>
+        <description></description>
+        <descriptionIndicator>0</descriptionIndicator>
+        <coordinates XCoordinate="150" YCoordinate="337"/>
+        <count>12</count>
+    </commitConfiguration>
+</Project>

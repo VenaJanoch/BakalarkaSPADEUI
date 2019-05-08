@@ -1,0 +1,375 @@
+<?xml version="1.0" encoding="UTF8" standalone="yes"?>
+<Project xsi:noNamespaceSchemaLocation="SPADE2.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <workUnits alias="Vize" exist="true" id="0">
+        <name>vize</name>
+        <nameIndicator>2</nameIndicator>
+        <progress>100</progress>
+        <progressIndicator>0</progressIndicator>
+    </workUnits>
+    <workUnits alias="Architektura" exist="true" id="1">
+        <name>architek</name>
+        <estimatedTime>0.0</estimatedTime>
+        <nameIndicator>2</nameIndicator>
+        <estimatedTimeIndicator>1</estimatedTimeIndicator>
+    </workUnits>
+    <workUnits alias="Pocatecni Schuze" exist="true" id="2">
+        <name>schuz</name>
+        <nameIndicator>2</nameIndicator>
+    </workUnits>
+    <workUnits alias="schuze zakaznik 1" exist="true" id="3">
+        <name>schůz</name>
+        <nameIndicator>2</nameIndicator>
+        <created>2017-04-13+02:00</created>
+        <createdIndicator>2</createdIndicator>
+    </workUnits>
+    <workUnits alias="Schuze zakaznik 2" exist="true" id="4">
+        <name>schuze</name>
+        <nameIndicator>2</nameIndicator>
+        <created>2017-04-28+02:00</created>
+        <createdIndicator>2</createdIndicator>
+    </workUnits>
+    <workUnits alias="Schuze zakaznik 3" exist="true" id="5">
+        <name>schuze</name>
+        <nameIndicator>2</nameIndicator>
+        <created>2017-05-18+02:00</created>
+        <createdIndicator>2</createdIndicator>
+    </workUnits>
+    <workUnits alias="Predavaci schuzka" exist="true" id="6">
+        <name>předán</name>
+        <nameIndicator>2</nameIndicator>
+        <created>2019-05-31+02:00</created>
+        <createdIndicator>2</createdIndicator>
+    </workUnits>
+    <phases alias="Iterace 1" id="0" exist="true">
+        <endDate>2017-03-31+02:00</endDate>
+        <name>Iterace</name>
+        <endDateIndicator>2</endDateIndicator>
+        <nameIndicator>2</nameIndicator>
+    </phases>
+    <phases alias="Iterace 2" id="1" exist="true">
+        <milestoneIndex>0</milestoneIndex>
+        <endDate>2017-04-14+02:00</endDate>
+        <name>iterace</name>
+        <milestoneIndicator>0</milestoneIndicator>
+        <endDateIndicator>2</endDateIndicator>
+        <nameIndicator>2</nameIndicator>
+    </phases>
+    <phases alias="iterace 3" id="2" exist="true">
+        <milestoneIndex>1</milestoneIndex>
+        <endDate>2017-04-28+02:00</endDate>
+        <name>iterace</name>
+        <milestoneIndicator>0</milestoneIndicator>
+        <endDateIndicator>2</endDateIndicator>
+        <nameIndicator>2</nameIndicator>
+    </phases>
+    <phases alias="iterace 4" id="3" exist="true">
+        <milestoneIndex>2</milestoneIndex>
+        <endDate>2017-05-12+02:00</endDate>
+        <name>iterace</name>
+        <milestoneIndicator>0</milestoneIndicator>
+        <endDateIndicator>2</endDateIndicator>
+        <nameIndicator>2</nameIndicator>
+    </phases>
+    <phases alias="Iterace 5" id="4" exist="true">
+        <milestoneIndex>3</milestoneIndex>
+        <endDate>2017-05-26+02:00</endDate>
+        <name>iterace</name>
+        <milestoneIndicator>0</milestoneIndicator>
+        <endDateIndicator>2</endDateIndicator>
+        <nameIndicator>2</nameIndicator>
+    </phases>
+    <iterations alias="Iterace 1" id="0" exist="true">
+        <workUnits>
+            <WorkUnits>2</WorkUnits>
+        </workUnits>
+        <name>iterace</name>
+        <startDate>2017-03-21+01:00</startDate>
+        <endDate>2017-03-28+02:00</endDate>
+        <workUnitsIndicator>2</workUnitsIndicator>
+        <startDateIndicator>2</startDateIndicator>
+        <endDateIndicator>2</endDateIndicator>
+        <nameIndicator>2</nameIndicator>
+    </iterations>
+    <iterations alias="Iterace 2" id="1" exist="true">
+        <workUnits>
+            <WorkUnits>3</WorkUnits>
+        </workUnits>
+        <name>iteration</name>
+        <startDate>2017-03-29+02:00</startDate>
+        <endDate>2018-04-12+02:00</endDate>
+        <workUnitsIndicator>0</workUnitsIndicator>
+        <startDateIndicator>2</startDateIndicator>
+        <endDateIndicator>2</endDateIndicator>
+        <nameIndicator>2</nameIndicator>
+    </iterations>
+    <iterations alias="Iterace 3" id="2" exist="true">
+        <workUnits>
+            <WorkUnits>0</WorkUnits>
+            <WorkUnits>4</WorkUnits>
+        </workUnits>
+        <name>iterace</name>
+        <startDate>2017-04-13+02:00</startDate>
+        <endDate>2017-04-27+02:00</endDate>
+        <workUnitsIndicator>0</workUnitsIndicator>
+        <startDateIndicator>2</startDateIndicator>
+        <endDateIndicator>2</endDateIndicator>
+        <nameIndicator>2</nameIndicator>
+    </iterations>
+    <iterations alias="Iterace 4" id="3" exist="true">
+        <workUnits>
+            <WorkUnits>5</WorkUnits>
+        </workUnits>
+        <name>iterace</name>
+        <startDate>2017-04-28+02:00</startDate>
+        <endDate>2017-05-12+02:00</endDate>
+        <workUnitsIndicator>2</workUnitsIndicator>
+        <startDateIndicator>2</startDateIndicator>
+        <endDateIndicator>2</endDateIndicator>
+        <nameIndicator>2</nameIndicator>
+    </iterations>
+    <iterations alias="Iterace 5" id="4" exist="true">
+        <workUnits>
+            <WorkUnits>6</WorkUnits>
+        </workUnits>
+        <name>iterace</name>
+        <startDate>2017-05-12+02:00</startDate>
+        <endDate>2017-05-26+02:00</endDate>
+        <workUnitsIndicator>2</workUnitsIndicator>
+        <startDateIndicator>2</startDateIndicator>
+        <endDateIndicator>2</endDateIndicator>
+        <nameIndicator>2</nameIndicator>
+    </iterations>
+    <activities alias="Activita 1" id="0" exist="true">
+        <workUnits>
+            <WorkUnits>2</WorkUnits>
+        </workUnits>
+        <name>iterace</name>
+        <workUnitsIndicator>2</workUnitsIndicator>
+        <nameIndicator>2</nameIndicator>
+        <endDate>2017-03-30+02:00</endDate>
+        <endDateIndicator>2</endDateIndicator>
+    </activities>
+    <activities alias="Activita 2" id="1" exist="true">
+        <workUnits>
+            <WorkUnits>0</WorkUnits>
+            <WorkUnits>3</WorkUnits>
+        </workUnits>
+        <name>iterace</name>
+        <workUnitsIndicator>0</workUnitsIndicator>
+        <nameIndicator>2</nameIndicator>
+        <endDate>2017-04-20+02:00</endDate>
+        <endDateIndicator>2</endDateIndicator>
+    </activities>
+    <activities alias="Activita 3" id="2" exist="true">
+        <workUnits>
+            <WorkUnits>4</WorkUnits>
+        </workUnits>
+        <name>iterace</name>
+        <workUnitsIndicator>2</workUnitsIndicator>
+        <nameIndicator>2</nameIndicator>
+        <endDate>2019-05-06+02:00</endDate>
+        <endDateIndicator>2</endDateIndicator>
+    </activities>
+    <activities alias="Activita 4" id="3" exist="true">
+        <workUnits>
+            <WorkUnits>5</WorkUnits>
+        </workUnits>
+        <name>iterace</name>
+        <workUnitsIndicator>2</workUnitsIndicator>
+        <nameIndicator>2</nameIndicator>
+        <endDate>2017-05-13+02:00</endDate>
+        <endDateIndicator>2</endDateIndicator>
+    </activities>
+    <activities alias="Activita 5" id="4" exist="true">
+        <workUnits>
+            <WorkUnits>6</WorkUnits>
+        </workUnits>
+        <name>iterace</name>
+        <workUnitsIndicator>2</workUnitsIndicator>
+        <nameIndicator>2</nameIndicator>
+        <endDate>2017-05-26+02:00</endDate>
+        <endDateIndicator>2</endDateIndicator>
+    </activities>
+    <roles alias="Admin person" exist="true" id="0">
+        <type>0</type>
+        <typeIndicator>0</typeIndicator>
+        <name></name>
+        <artifacts>0</artifacts>
+        <count>1</count>
+        <coordinates XCoordinate="396" YCoordinate="30"/>
+    </roles>
+    <roles alias="Developer person" exist="true" id="1">
+        <type>1</type>
+        <typeIndicator>0</typeIndicator>
+        <name></name>
+        <count>2</count>
+        <coordinates XCoordinate="368" YCoordinate="84"/>
+    </roles>
+    <roles alias="Developer person2" exist="true" id="2">
+        <type>2</type>
+        <typeIndicator>0</typeIndicator>
+        <name></name>
+        <artifacts>6</artifacts>
+        <count>1</count>
+        <coordinates XCoordinate="343" YCoordinate="139"/>
+    </roles>
+    <roles alias="Mentor person" exist="true" id="3">
+        <type>3</type>
+        <typeIndicator>0</typeIndicator>
+        <name></name>
+        <count>1</count>
+        <coordinates XCoordinate="309" YCoordinate="199"/>
+    </roles>
+    <roles alias="Zakaznik person" exist="true" id="4">
+        <type>4</type>
+        <typeIndicator>0</typeIndicator>
+        <name></name>
+        <count>1</count>
+        <coordinates XCoordinate="280" YCoordinate="260"/>
+    </roles>
+    <artifacts alias="Vize" exist="true" id="0">
+        <mimeType>WIKIPAGE</mimeType>
+        <mimeType>FILE</mimeType>
+        <coordinates XCoordinate="636" YCoordinate="222"/>
+        <name>vize</name>
+        <created>2017-03-29+02:00</created>
+        <nameIndicator>2</nameIndicator>
+        <createdIndicator>2</createdIndicator>
+        <mimeTypeIndicator>0</mimeTypeIndicator>
+        <mimeTypeIndicator>0</mimeTypeIndicator>
+        <mimeTypeIndex>2</mimeTypeIndex>
+        <mimeTypeIndex>0</mimeTypeIndex>
+        <count>1</count>
+    </artifacts>
+    <artifacts alias="Pocatecni schuze" exist="true" id="1">
+        <mimeType>WIKIPAGE</mimeType>
+        <coordinates XCoordinate="1018" YCoordinate="43"/>
+        <name>schůze</name>
+        <name>zákaz</name>
+        <created>2017-03-29+02:00</created>
+        <nameIndicator>2</nameIndicator>
+        <nameIndicator>2</nameIndicator>
+        <createdIndicator>2</createdIndicator>
+        <mimeTypeIndicator>0</mimeTypeIndicator>
+        <mimeTypeIndex>2</mimeTypeIndex>
+        <count>1</count>
+    </artifacts>
+    <artifacts alias="Pocatecni schuze zakaznik 2" exist="true" id="2">
+        <mimeType>WIKIPAGE</mimeType>
+        <coordinates XCoordinate="986" YCoordinate="106"/>
+        <name>schůze</name>
+        <name>zákaz</name>
+        <created>2017-04-12+02:00</created>
+        <nameIndicator>2</nameIndicator>
+        <nameIndicator>2</nameIndicator>
+        <createdIndicator>2</createdIndicator>
+        <mimeTypeIndicator>0</mimeTypeIndicator>
+        <mimeTypeIndex>2</mimeTypeIndex>
+        <count>1</count>
+    </artifacts>
+    <artifacts alias="Pocatecni schuze zakaznik 3" exist="true" id="3">
+        <mimeType>WIKIPAGE</mimeType>
+        <coordinates XCoordinate="953" YCoordinate="178"/>
+        <name>schůze</name>
+        <name>zákaz</name>
+        <created>2017-04-27+02:00</created>
+        <nameIndicator>2</nameIndicator>
+        <nameIndicator>2</nameIndicator>
+        <createdIndicator>2</createdIndicator>
+        <mimeTypeIndicator>0</mimeTypeIndicator>
+        <mimeTypeIndex>2</mimeTypeIndex>
+        <count>1</count>
+    </artifacts>
+    <artifacts alias="Pocatecni schuze zakaznik 4" exist="true" id="4">
+        <mimeType>WIKIPAGE</mimeType>
+        <coordinates XCoordinate="924" YCoordinate="238"/>
+        <name>schůze</name>
+        <name>zákaz</name>
+        <created>2017-05-12+02:00</created>
+        <nameIndicator>2</nameIndicator>
+        <nameIndicator>2</nameIndicator>
+        <createdIndicator>2</createdIndicator>
+        <mimeTypeIndicator>0</mimeTypeIndicator>
+        <mimeTypeIndex>2</mimeTypeIndex>
+        <count>1</count>
+    </artifacts>
+    <artifacts alias="Konecna schuze zakaznik" exist="true" id="5">
+        <mimeType>WIKIPAGE</mimeType>
+        <coordinates XCoordinate="894" YCoordinate="303"/>
+        <name>schůze</name>
+        <name>zákaz</name>
+        <created>2017-05-26+02:00</created>
+        <nameIndicator>2</nameIndicator>
+        <nameIndicator>2</nameIndicator>
+        <createdIndicator>2</createdIndicator>
+        <mimeTypeIndicator>0</mimeTypeIndicator>
+        <mimeTypeIndex>2</mimeTypeIndex>
+        <count>1</count>
+    </artifacts>
+    <artifacts alias="Architektura" exist="true" id="6">
+        <authorIndex>2</authorIndex>
+        <coordinates XCoordinate="599" YCoordinate="311"/>
+        <name>archite</name>
+        <created>2017-04-26+02:00</created>
+        <nameIndicator>2</nameIndicator>
+        <createdIndicator>2</createdIndicator>
+        <count>1</count>
+    </artifacts>
+    <milestones alias="LCO" id="0" exist="true">
+        <name>LCO</name>
+        <nameIndicator>2</nameIndicator>
+    </milestones>
+    <milestones alias="LCA" id="1" exist="true">
+        <name>LCA</name>
+        <nameIndicator>2</nameIndicator>
+    </milestones>
+    <milestones alias="IOC" id="2" exist="true">
+        <name>IOC</name>
+        <nameIndicator>2</nameIndicator>
+    </milestones>
+    <milestones alias="REL" id="3" exist="true">
+        <name>REL</name>
+        <nameIndicator>2</nameIndicator>
+    </milestones>
+    <links StartIndex="0" EndIndex="0" Type="PersonArtifact" id="0"/>
+    <links StartIndex="2" EndIndex="6" Type="PersonArtifact" id="1"/>
+    <roleType alias="Admin" id="0" exist="true">
+        <roleTypeClassIndex>1</roleTypeClassIndex>
+        <roleTypeSuperClassIndex>1</roleTypeSuperClassIndex>
+        <roleTypeClass>UNASSIGNED</roleTypeClass>
+        <roleTypeSuperClass>UNASSIGNED</roleTypeSuperClass>
+        <name>Project admin</name>
+        <nameIndicator>2</nameIndicator>
+    </roleType>
+    <roleType alias="Developer1" id="1" exist="true">
+        <roleTypeClassIndex>1</roleTypeClassIndex>
+        <roleTypeSuperClassIndex>1</roleTypeSuperClassIndex>
+        <roleTypeClass>UNASSIGNED</roleTypeClass>
+        <roleTypeSuperClass>UNASSIGNED</roleTypeSuperClass>
+        <name>Developer</name>
+        <nameIndicator>2</nameIndicator>
+    </roleType>
+    <roleType alias="Developer3" id="2" exist="true">
+        <roleTypeClassIndex>1</roleTypeClassIndex>
+        <roleTypeClass>UNASSIGNED</roleTypeClass>
+        <roleTypeSuperClass>UNASSIGNED</roleTypeSuperClass>
+        <name>Developer</name>
+        <nameIndicator>2</nameIndicator>
+    </roleType>
+    <roleType alias="Mentor" id="3" exist="true">
+        <roleTypeClassIndex>1</roleTypeClassIndex>
+        <roleTypeSuperClassIndex>1</roleTypeSuperClassIndex>
+        <roleTypeClass>UNASSIGNED</roleTypeClass>
+        <roleTypeSuperClass>UNASSIGNED</roleTypeSuperClass>
+        <name>Mentor</name>
+        <nameIndicator>2</nameIndicator>
+    </roleType>
+    <roleType alias="Zakaznik" id="4" exist="true">
+        <roleTypeClassIndex>1</roleTypeClassIndex>
+        <roleTypeSuperClassIndex>1</roleTypeSuperClassIndex>
+        <roleTypeClass>UNASSIGNED</roleTypeClass>
+        <roleTypeSuperClass>UNASSIGNED</roleTypeSuperClass>
+        <name>Customer</name>
+        <nameIndicator>2</nameIndicator>
+    </roleType>
+</Project>
