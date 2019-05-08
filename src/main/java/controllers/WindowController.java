@@ -36,7 +36,7 @@ public class WindowController {
     private JFXDrawer leftDrawer;
     private JFXDrawer rightDrawer;
     private JFXDrawersStack drawersStack;
-    private boolean logToDB = false;
+    private boolean logToDB;
 
     public WindowController(Stage primaryStage) {
         this.primaryStage = primaryStage;
@@ -48,6 +48,7 @@ public class WindowController {
     }
 
     private void initApplication() {
+        logToDB = false;
         SegmentLists segmentLists = new SegmentLists();
         ProcessGenerator processGenerator = new ProcessGenerator();
         IdentificatorCreater identificatorCreater = new IdentificatorCreater();

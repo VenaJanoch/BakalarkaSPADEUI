@@ -29,7 +29,7 @@ public class PersonDAO {
 
         String atributeSection = "";
         atributeSection += SQLAtributeCreator.createStringAttribute("p.name", name, nameIndicator);
-        atributeSection += SQLAtributeCreator.createIntAttribute("pr.roleId", roleTypeIds);
+        atributeSection += SQLAtributeCreator.createIdAttribute("pr.roleId", roleTypeIds);
         String sql = "SELECT p.id FROM person p join person_role pr on pr.personId = p.id AND p.projectId = ? " + atributeSection;
         ArrayList<List<Integer>> ids = new ArrayList<>();
         ids.add(roleTypeIds);

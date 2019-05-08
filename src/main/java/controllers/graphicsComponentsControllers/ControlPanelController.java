@@ -315,7 +315,7 @@ public class ControlPanelController {
             if (line.getExitButton().isSelected()) {
                 if (line.getType() == type) {
                     list.add(checkValueFromTextItem(line.getNumberItem()));
-                    indicators.add(line.getTextItem().getIndicatorIndex());
+                    indicators.add(line.getNumberItem().getIndicatorIndex());
                 }
             }
         }
@@ -367,9 +367,11 @@ public class ControlPanelController {
     public ArrayList<LocalDate> processDateLines(ParamType type, ArrayList<Integer> indicators) {
         ArrayList<LocalDate> list = new ArrayList<>();
         for (ControlPanelLine line : controlPanelLines) {
-            if (line.getType() == type) {
-                list.add(line.getDateItem().getDateFromDatePicker());
-                indicators.add(line.getDateItem().getIndicatorIndex());
+            if (line.getExitButton().isSelected()) {
+                if (line.getType() == type) {
+                    list.add(line.getDateItem().getDateFromDatePicker());
+                    indicators.add(line.getDateItem().getIndicatorIndex());
+                }
             }
         }
 

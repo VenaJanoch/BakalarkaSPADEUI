@@ -19,12 +19,21 @@ public class SQLAtributeCreator {
     public static String createDateAttribute(String atribute, List<XMLGregorianCalendar> date, List<Integer> dateIndicator) {
         int i = 0;
         String atributeSection = "";
+        if (date.size() != 0){
+            atributeSection += " AND (";
+        }
+
         for (XMLGregorianCalendar xmlDate : date) {
-            atributeSection += " AND ";
             atributeSection += atribute + " ";
             atributeSection += String.valueOf(Constans.NUMBER_INDICATORS[dateIndicator.get(i)] + " ");
             atributeSection += "'" + DataPreparer.convertDateFromXML(xmlDate).toString() + "'";
             i++;
+            if (date.size() != i ){
+                atributeSection += " OR ";
+            }else {
+                atributeSection += " )";
+            }
+
         }
 
         return atributeSection;
@@ -63,7 +72,7 @@ public class SQLAtributeCreator {
             }
 
             if (list.size() == 0) {
-                SQLVerifyObject verifyObject = verifyController.createSQLVerifyObject(-1, sql, false);
+                SQLVerifyObject verifyObject = verifyController.createSQLVerifyObject(-1, stmt.toString().substring(48), false);
                 list.add(verifyObject);
             }
 
@@ -90,9 +99,10 @@ public class SQLAtributeCreator {
         String atributeSection = "";
         if (nameIndicator.size() != 0) {
             int i = 0;
+            atributeSection += " AND (";
             for (String namel : name1) {
                 int indicator = nameIndicator.get(i);
-                atributeSection += " AND ";
+
                 atributeSection += atributName + " ";
                 atributeSection += String.valueOf(Constans.INDICATORS[indicator] + " ");
 
@@ -103,6 +113,11 @@ public class SQLAtributeCreator {
                     atributeSection += "'" + namel + "'";
                 }
                 i++;
+                if (name1.size() != i ){
+                    atributeSection += " OR ";
+                }else {
+                    atributeSection += " )";
+                }
             }
         }
 
@@ -139,51 +154,66 @@ public class SQLAtributeCreator {
         return atributeSection;
     }
 
-    public static String createBranchAttribute(String elementName, ArrayList<Integer> branches) {
-        String atributeSection = "";
-        for (int branchtId : branches) {
-            atributeSection += " AND ";
-            atributeSection += elementName + " = " + branchtId;
-        }
-        return atributeSection;
-    }
-
-    public static String createIntAttribute(String elementName, List<Integer> attributsId) {
-        String atributeSection = "";
-        for (int id : attributsId) {
-            atributeSection += " AND ";
-            atributeSection += elementName + " = ?"; // + id;
-        }
-        return atributeSection;
-    }
-
     public static String createIdAttribute(String elementName, List<Integer> roleIds) {
 
         String atributeSection = "";
+
+        if (roleIds.size() != 0){
+            atributeSection += " AND (";
+        }
+        int i = 0;
         for (int roleId : roleIds) {
-            atributeSection += " AND ";
+
             atributeSection += elementName + " = ?"; // +  roleId;
+            i++;
+            if (roleIds.size() != i ){
+                atributeSection += " OR ";
+            }else {
+                atributeSection += " )";
+            }
         }
         return atributeSection + " ";
     }
 
-    public static String[] createArtifactAttribute(String elementName, List<Integer> artifactIds) {
+
+    public static String createIntAttribute(String elementName, List<Integer> progress, List<Integer> indicators) {
         String atributeSection = "";
-        String atributeSectionText = "";
-        for (int artifactId : artifactIds) {
-            atributeSection += " AND ";
-            atributeSection += elementName + " = ?"; //+ artifactId;
-            atributeSectionText += " AND ";
-            atributeSectionText += elementName + " = " + artifactId;
+        if (progress.size() != 0){
+            atributeSection += " AND (";
         }
-        return new String[]{atributeSection, atributeSectionText};
+        int i = 0;
+        for (int value : progress) {
+            atributeSection += elementName + " ";
+            atributeSection += String.valueOf(Constans.NUMBER_INDICATORS[indicators.get(i)] + " ");
+            atributeSection += Integer.toString(value);
+
+            i++;
+            if (progress.size() != i ){
+                atributeSection += " OR ";
+            }else {
+                atributeSection += " )";
+            }
+        }
+        return atributeSection + " ";
     }
 
-    public static String createDoubleAttribute(String elementName, List<Double> estimateTimes) {
+    public static String createDoubleAttribute(String elementName, List<Double> estimateTimes, List<Integer> indicators) {
         String atributeSection = "";
+        if (estimateTimes.size() != 0){
+            atributeSection += " AND (";
+        }
+        int i = 0;
         for (double estimateTime : estimateTimes) {
-            atributeSection += " AND ";
-            atributeSection += elementName + " = " + estimateTime;
+            atributeSection += elementName + " ";
+            atributeSection += String.valueOf(Constans.NUMBER_INDICATORS[indicators.get(i)] + " ");
+            atributeSection += Double.toString(estimateTime);
+
+            i++;
+            if (estimateTimes.size() != i ){
+                atributeSection += " OR ";
+            }else {
+                atributeSection += " )";
+            }
         }
         return atributeSection + " ";
     }
@@ -360,13 +390,13 @@ public class SQLAtributeCreator {
 
     public static ArrayList<Integer> createCategoryAttribute(List<String> category, List<Integer> categoryIndicator, DataModel verifyDataModel, CategoryDAO categoryDAO, int projectVerifyId) {
         ArrayList<Integer> categoryDBId = new ArrayList<>();
-        SQLVerifyObject categoryArtifacts;
-
-        categoryArtifacts = categoryDAO.getCategoryyProjekt(projectVerifyId, category, categoryIndicator).get(0);
-        if (categoryArtifacts != null) {
-            categoryDBId.add(categoryArtifacts.getId());
+        if (category.size() != 0) {
+            SQLVerifyObject categoryArtifacts;
+            categoryArtifacts = categoryDAO.getCategoryyProjekt(projectVerifyId, category, categoryIndicator).get(0);
+            if (categoryArtifacts != null) {
+                categoryDBId.add(categoryArtifacts.getId());
+            }
         }
-
         return categoryDBId;
     }
 
@@ -402,8 +432,8 @@ public class SQLAtributeCreator {
                 ArrayList<Integer> categoryDBId = SQLAtributeCreator.createCategoryAttribute(workUnit.getCategory(), workUnit.getCategoryIndicator(), verifyDataModel, categoryDAO, projectVerifyId);
                 ArrayList<Integer> relationDBId = SQLAtributeCreator.createRelationAttribute(workUnit.getRelationIndex(), verifyDataModel, workUnitElementDAO, projectVerifyId);
 
-                workUnitArtifacts = workUnitDAO.getWorkUnitProjekt(projectVerifyId, workUnit.getName(), workUnit.getNameIndicator(), workUnit.getEstimatedTime(), categoryDBId,
-                        roleDBId, priorityDBId, severityDBId, resolutionDBId, statusDBId, typeDBId, relationDBId, new ArrayList<>(), workUnit.getCreated(), workUnit.getCreatedIndicator()).get(0);
+                workUnitArtifacts = workUnitDAO.getWorkUnitProjekt(projectVerifyId, workUnit.getName(), workUnit.getNameIndicator(), workUnit.getEstimatedTime(), workUnit.getProgress(), categoryDBId,
+                        roleDBId, priorityDBId, severityDBId, resolutionDBId, statusDBId, typeDBId, relationDBId, new ArrayList<>(), workUnit.getCreated(), workUnit.getCreatedIndicator(), workUnit.getEstimatedTimeIndicator(), workUnit.getProgressIndicator()).get(0);
 
                 if (workUnitArtifacts != null) {
                     workUnitDBId.add(workUnitArtifacts.getId());

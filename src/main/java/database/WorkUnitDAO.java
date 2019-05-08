@@ -24,16 +24,17 @@ public class WorkUnitDAO {
     }
 
 
-    public ArrayList<SQLVerifyObject> getWorkUnitProjekt(int projectVerifyId, List<String> name, List<Integer> nameIndicator, List<Double> estimateTime, List<Integer> category,
+    public ArrayList<SQLVerifyObject> getWorkUnitProjekt(int projectVerifyId, List<String> name, List<Integer> nameIndicator, List<Double> estimateTime, List<Integer> progress, List<Integer> category,
                                                          List<Integer> assigneeIds, List<Integer> priorityIds, List<Integer> severityIds, List<Integer> resolutionIds,
                                                          List<Integer> statusIds, List<Integer> typeIds, List<Integer> relationIds, List<Integer> workUnitsInRelationIds,
-                                                         List<XMLGregorianCalendar> createdDate, List<Integer> createdDateIndicator) {
+                                                         List<XMLGregorianCalendar> createdDate, List<Integer> createdDateIndicator, List<Integer> estimateIndicators, List<Integer> progressIndicator) {
 
         String atributeSection = "";
         atributeSection += SQLAtributeCreator.createStringAttribute("wi.name", name, nameIndicator);
         atributeSection += SQLAtributeCreator.createDateAttribute("wi.created", createdDate, createdDateIndicator);
         atributeSection += SQLAtributeCreator.createIdAttribute("wuc.categoryId", category);
-        atributeSection += SQLAtributeCreator.createDoubleAttribute("wu.estimatedTime", estimateTime);
+        atributeSection += SQLAtributeCreator.createDoubleAttribute("wu.estimatedTime", estimateTime, estimateIndicators);
+        atributeSection += SQLAtributeCreator.createIntAttribute("wu.progress", progress, progressIndicator);
         atributeSection += SQLAtributeCreator.createIdAttribute("wu.assigneeId", assigneeIds);
         atributeSection += SQLAtributeCreator.createIdAttribute("wu.priorityId", priorityIds);
         atributeSection += SQLAtributeCreator.createIdAttribute("wu.severityId", severityIds);
@@ -56,6 +57,7 @@ public class WorkUnitDAO {
 
 
         String sql = "SELECT wu.id FROM work_unit wu " +
+                "join work_item wi on wu.id = wi.id " +
                 "join work_unit_category wuc on wu.id = wuc.workUnitId " +
                 "join work_item_relation wir on wir.leftItemId = wu.id " +
                 "AND wu.projectId = ? " + atributeSection;

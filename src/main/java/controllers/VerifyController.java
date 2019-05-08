@@ -839,8 +839,8 @@ public class VerifyController {
                 ArrayList<Integer> relationDBId = SQLAtributeCreator.createRelationAttribute(modelWorkUnit.getRelationIndex(), verifyDataModel, workUnitElementDAO, projectVerifyId);
                 ArrayList<Integer> workUntiInRelationDBId = SQLAtributeCreator.createWorkUnitAttribute(modelWorkUnit.getWorkUnits(), verifyDataModel, databazeProjekt, workUnitElementDAO, personDAO, roleDAO, categoryDAO, projectVerifyId);
 
-                projectWorkUnits = databazeProjekt.getWorkUnitProjekt(projectVerifyId, modelWorkUnit.getName(), modelWorkUnit.getNameIndicator(), modelWorkUnit.getEstimatedTime(), categoryDBId,
-                        roleDBId, priorityDBId, severityDBId, resolutionDBId, statusDBId, typeDBId, relationDBId, workUntiInRelationDBId, modelWorkUnit.getCreated(), modelWorkUnit.getCreatedIndicator());
+                projectWorkUnits = databazeProjekt.getWorkUnitProjekt(projectVerifyId, modelWorkUnit.getName(), modelWorkUnit.getNameIndicator(), modelWorkUnit.getEstimatedTime(), modelWorkUnit.getProgress(), categoryDBId,
+                        roleDBId, priorityDBId, severityDBId, resolutionDBId, statusDBId, typeDBId, relationDBId, workUntiInRelationDBId, modelWorkUnit.getCreated(), modelWorkUnit.getCreatedIndicator(), modelWorkUnit.getEstimatedTimeIndicator(), modelWorkUnit.getProgressIndicator());
 
                 SQLVerifyObject workUnit = projectWorkUnits.get(0);
                 verifyTable = createVerifyTable(SegmentType.Work_Unit, modelWorkUnit.getAlias(), -1, -1, modelWorkUnit.getId(), modelWorkUnit.isExist(), workUnit.isExist(), workUnit.getSqlCommand());

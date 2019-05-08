@@ -15,6 +15,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
+import javafx.scene.layout.Region;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import services.Constans;
@@ -84,25 +85,17 @@ public class VerifyWindow extends Stage {
                 if (t.getClickCount() == 2) {
                     VerifyTable table = tableTV.getSelectionModel().getSelectedItem();
                     Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                    alert.setTitle("SQL QUERY");
-                    alert.setContentText("Query for " + table.getAlias());
+                    alert.setTitle("SQL QUERY for " + table.getAlias());
 
                     TextArea textArea = new TextArea(table.getSql());
                     textArea.setEditable(true);
                     textArea.setWrapText(true);
+                    textArea.setMinWidth(Constans.SQL_COMMAND_WINDOW);
+                    textArea.setMinHeight(Constans.SQL_COMMAND_WINDOW);
 
-                    textArea.setMaxWidth(Double.MAX_VALUE);
-                    textArea.setMaxHeight(Double.MAX_VALUE);
-                    GridPane.setVgrow(textArea, Priority.ALWAYS);
-                    GridPane.setHgrow(textArea, Priority.ALWAYS);
-
-                    GridPane expContent = new GridPane();
-                    expContent.setMaxWidth(Double.MAX_VALUE);
-                    expContent.add(textArea, 0, 1);
-
-// Set expandable Exception into the dialog pane.
-                    alert.getDialogPane().setExpandableContent(expContent);
-                    alert.getDialogPane().getExpandableContent().setVisible(true);
+                    alert.getDialogPane().setMinHeight(Constans.SQL_COMMAND_WINDOW);
+                    alert.getDialogPane().setMinWidth(Constans.SQL_COMMAND_WINDOW);
+                    alert.getDialogPane().setContent(textArea);
                     ButtonType buttonTypeOne = new ButtonType("OK");
                     alert.showAndWait();
                 }

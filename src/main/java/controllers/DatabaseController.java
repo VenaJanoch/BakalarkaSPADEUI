@@ -24,7 +24,7 @@ public class DatabaseController {
             ProjectDAO databazeProjekt = new ProjectDAO();
             projekty = databazeProjekt.getProject();
         } catch (Exception e) {
-            //   JOptionPane.showMessageDialog(null, Konstanty.POPISY.getProperty("chybaNacteniProjektu"));
+            Alerts.SQLConnectionError();
             e.printStackTrace();
         }
         return projekty;

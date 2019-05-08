@@ -35,6 +35,12 @@ public class DragAndDropItemPanel extends HBox {
 
     private DrawerPanelController drawerPanelController;
 
+    private Background background;
+    private Background background2;
+    private Image image;
+    private Image image2;
+
+
     /**
      * Konstruktor třídy Zinicializuje globální proměnné třídy
      *
@@ -104,22 +110,26 @@ public class DragAndDropItemPanel extends HBox {
         HBox box = new HBox(10);
         linkButton = canvasController.getLinkButton();
         FileInputStream input = null;
+        FileInputStream input2 = null;
         try {
             input = new FileInputStream(Constans.SIPKA);
+            input2 = new FileInputStream(Constans.SIPKA2);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-        Image image = new Image(input);
+        image = new Image(input);
+       // image2 = new Image(input2);
         BackgroundImage backgroundImage = new BackgroundImage(image, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT,
                 BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+//        BackgroundImage backgroundImage2 = new BackgroundImage(image2, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT,
+//                BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
 
-        Background background = new Background(backgroundImage);
-        linkButton.setMinWidth(image.getWidth());
-        linkButton.setMinHeight(image.getHeight());
-        linkButton.setBackground(background);
+        background = new Background(backgroundImage);
+//        background2 = new Background(backgroundImage2);
+
         linkButton.setId("linkButton");
         box.setMinWidth(80);
-
+        setLinkButtonBackground(background, image);
         SplitPane splitPane = new SplitPane();
         box.getChildren().addAll(splitPane, linkButton);
         HBox.setMargin(splitPane, new Insets(0, 0, 0, 5));
@@ -130,6 +140,12 @@ public class DragAndDropItemPanel extends HBox {
 
         this.getChildren().addAll(box);
 
+    }
+
+    private void setLinkButtonBackground(Background background, Image image){
+        linkButton.setMinWidth(image.getWidth());
+        linkButton.setMinHeight(image.getHeight());
+        linkButton.setBackground(background);
     }
 
 
@@ -151,10 +167,12 @@ public class DragAndDropItemPanel extends HBox {
 
         if (canvasController.changeArrow()) {
             canvasController.setCursorToCanvas(Cursor.CROSSHAIR);
+  //          setLinkButtonBackground(background2, image2);
             linkButton.setCursor(Cursor.DEFAULT);
 
         } else {
             canvasController.setCursorToCanvas(Cursor.DEFAULT);
+    //        setLinkButtonBackground(background, image);
 
         }
     }

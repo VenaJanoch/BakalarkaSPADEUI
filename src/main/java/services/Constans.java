@@ -252,6 +252,8 @@ public class Constans {
 
     public static final String PROJECT = "Images/Project.png";
     public static final String SIPKA = "Images/sipka.png";
+    public static final String SIPKA2 = "Images/sipka2.png";
+    public static final double SQL_COMMAND_WINDOW = 200;
 
     public static Connection CONNECTION = null;                                                                             //připojení k databázi
 
