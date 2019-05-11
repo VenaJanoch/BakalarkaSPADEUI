@@ -12,7 +12,6 @@ import tables.BasicTable;
 
 public abstract class DateControlPanel extends NameControlPanel {
 
-    protected DateItem dateDP;
 
     /**
      * Konstruktor tridy zavola konstruktor materske tridy a metodu pro vytvoreni grafickych prvku

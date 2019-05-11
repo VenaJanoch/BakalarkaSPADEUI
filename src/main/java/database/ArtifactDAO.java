@@ -29,6 +29,8 @@ public class ArtifactDAO {
                                                          List<Integer> endDateIndicator, List<Integer> roleIds, List<String> type,
                                                          List<Integer> typeIndicator) {
 
+        ArrayList<List<Integer>> paramIds = new ArrayList<>();
+
         String atributeSection = "";
         atributeSection += SQLAtributeCreator.createStringAttribute("wi.name", name, nameIndicator);
         atributeSection += SQLAtributeCreator.createStringAttribute("p.artifactClass", type, typeIndicator);
@@ -36,8 +38,15 @@ public class ArtifactDAO {
         atributeSection += SQLAtributeCreator.createDateAttribute("wi.created", endDate, endDateIndicator);
         atributeSection += SQLAtributeCreator.createIdAttribute("wi.authorId", roleIds);
 
-        String sql = "SELECT wi.id FROM work_item wi join artifact p on p.id = wi.id" + atributeSection;
-        ArrayList<List<Integer>> paramIds = new ArrayList<>();
+        String roleJoin = "";
+        if (roleIds.size() == 0){
+            roleJoin = " join person per on per.id = wi.authorId AND per.projectId = ?";
+            ArrayList<Integer> idList = new ArrayList<>();
+            idList.add(projectVerifyId);
+            paramIds.add(idList);
+        }
+
+        String sql = "SELECT wi.id FROM work_item wi join artifact p on p.id = wi.id"+ roleJoin + atributeSection;
         paramIds.add(roleIds);
         return SQLAtributeCreator.findInstanceInDB(connection, verifyController, sql, -1, paramIds);
 

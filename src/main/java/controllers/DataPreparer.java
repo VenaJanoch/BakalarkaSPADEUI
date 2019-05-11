@@ -1,7 +1,9 @@
 package controllers;
 
+import interfaces.IFormDataController;
 import javafx.collections.ObservableList;
 import model.IdentificatorCreater;
+import services.Constans;
 import tables.*;
 
 import javax.xml.datatype.XMLGregorianCalendar;
@@ -200,6 +202,11 @@ public class DataPreparer {
         Instant instant = date.toInstant();
         ZonedDateTime zdt = instant.atZone(ZoneId.systemDefault());
         LocalDate localDate = zdt.toLocalDate();
+
+        if (localDate.equals(Constans.nullDate)){
+            return null;
+        }
+
         return localDate;
     }
 

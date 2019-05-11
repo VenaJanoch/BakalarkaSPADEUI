@@ -140,13 +140,13 @@ public class InputController {
         for (LocalDate date1 : date) {
             list.add(checkDate(date1));
         }
-        return date;
+        return list;
     }
 
 
     public static LocalDate checkDate(LocalDate date) {
-        if (date.equals(Constans.nullDate)) {
-            return null;
+        if (date == null) {
+            return Constans.nullDate;
         }
         return date;
     }

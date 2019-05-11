@@ -118,14 +118,14 @@ public class DragAndDropItemPanel extends HBox {
             e.printStackTrace();
         }
         image = new Image(input);
-       // image2 = new Image(input2);
+        image2 = new Image(input2);
         BackgroundImage backgroundImage = new BackgroundImage(image, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT,
                 BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
-//        BackgroundImage backgroundImage2 = new BackgroundImage(image2, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT,
-//                BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+        BackgroundImage backgroundImage2 = new BackgroundImage(image2, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT,
+                BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
 
         background = new Background(backgroundImage);
-//        background2 = new Background(backgroundImage2);
+        background2 = new Background(backgroundImage2);
 
         linkButton.setId("linkButton");
         box.setMinWidth(80);
@@ -167,12 +167,12 @@ public class DragAndDropItemPanel extends HBox {
 
         if (canvasController.changeArrow()) {
             canvasController.setCursorToCanvas(Cursor.CROSSHAIR);
-  //          setLinkButtonBackground(background2, image2);
+            setLinkButtonBackground(background2, image2);
             linkButton.setCursor(Cursor.DEFAULT);
 
         } else {
             canvasController.setCursorToCanvas(Cursor.DEFAULT);
-    //        setLinkButtonBackground(background, image);
+            setLinkButtonBackground(background, image);
 
         }
     }

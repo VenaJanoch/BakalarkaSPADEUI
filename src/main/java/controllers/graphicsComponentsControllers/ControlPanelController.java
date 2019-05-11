@@ -272,6 +272,7 @@ public class ControlPanelController {
     }
 
     public ControlPanelLineController createNewLineWithExist(ControlPanel controlPane, ObservableList<ControlPanelLineObject> lineList) {
+        controlPane.getControlPane().getChildren().clear();
         setExistRadioButton(controlPane, 1);
         controlPane.setAliasToPanel();
         return createNewLine(controlPane, lineList);
@@ -388,6 +389,7 @@ public class ControlPanelController {
         CheckComboBoxItem check = line.getCheckComboBoxItem();
         ComboBoxItem combo = line.getComboBoxItem();
         DateItem dateItem = line.getDateItem();
+
 
         controlPanel.getChildren().remove(text.getItemTF());
         controlPanel.getChildren().remove(text.getIndicatorCB());

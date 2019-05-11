@@ -17,11 +17,6 @@ import java.util.List;
 
 public class ConfigurationControlPanel extends DateDescControlPanel implements IControlPanel {
 
-    private Label isReleaseLB;
-
-
-    private Button addTag;
-
 
     private int configId;
     private ConfigTable configTable;

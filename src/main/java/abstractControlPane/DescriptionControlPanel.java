@@ -13,7 +13,6 @@ import tables.BasicTable;
 
 public abstract class DescriptionControlPanel extends NameControlPanel {
 
-    protected TextFieldItem descriptionTF;
 
     /**
      * Konstruktor tridy zavola konstruktor materske tridy a metodu pro vytvoreni grafickych prvku

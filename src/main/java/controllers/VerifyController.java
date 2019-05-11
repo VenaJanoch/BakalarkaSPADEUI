@@ -158,20 +158,34 @@ public class VerifyController {
 
         String result = Constans.OK_VERIFY_RESULT;
         String projectExist = "YES";
-        if (isExist && !isExistInProject) {
+
+        if (!isExistInProject) {
             projectExist = "NO";
             projectCount = 0;
-            result = Constans.BAD_VERIFY_RESULT;
-        } else if ((!isExist && isExistInProject)) {
-            result = Constans.BAD_VERIFY_RESULT;
         }
 
-        if (modelCount > projectCount) {
-            projectExist = "NO";
-            if (!isExistInProject) {
-                projectCount = 0;
+
+        if (isExist){
+            if (!isExistInProject){
+                result = Constans.BAD_VERIFY_RESULT;
             }
-            result = Constans.BAD_VERIFY_RESULT;
+
+            if (modelCount > projectCount){
+                result = Constans.BAD_VERIFY_RESULT;
+            }
+
+        }else {
+            if (isExistInProject){
+                if (modelCount <= projectCount){
+
+                    result = Constans.BAD_VERIFY_RESULT;
+                }else {
+
+                    result = Constans.OK_VERIFY_RESULT;
+                }
+
+            }
+
         }
 
         return new VerifyTable(type + ": " + alias, id, isExist, modelCount, projectCount, projectExist, result, sql);

@@ -29,7 +29,8 @@ public class DateItem extends ItemBox {
     }
 
     public LocalDate getDateFromDatePicker() {
-        return itemDate.getValue();
+            return itemDate.getValue();
+
     }
 
     public Button getItemButton() {
