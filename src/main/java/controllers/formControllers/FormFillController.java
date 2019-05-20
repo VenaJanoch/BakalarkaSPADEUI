@@ -97,7 +97,7 @@ public class FormFillController {
         Configuration configuration = dataModel.getConfiguration(segmentId);
         String name = configuration.getAlias();
         canvasController.addCanvasItemFromExistData(SegmentType.Configuration, formId, name, configuration.getCoordinates().getXCoordinate(),
-                configuration.getCoordinates().getYCoordinate(), configuration.getCount(), configuration.isExist());
+                configuration.getCoordinates().getYCoordinate(), configuration.getCount(), configuration.getCountIndicator(), configuration.isExist());
 
     }
 
@@ -142,7 +142,7 @@ public class FormFillController {
 
         String name = commit.getAlias();
         canvasController.addCanvasItemFromExistData(SegmentType.Commit, formId, name, commit.getCoordinates().getXCoordinate(),
-                commit.getCoordinates().getYCoordinate(), commit.getCount(), commit.isExist());
+                commit.getCoordinates().getYCoordinate(), commit.getCount(), commit.getCountIndicator(), commit.isExist());
 
     }
 
@@ -172,7 +172,7 @@ public class FormFillController {
 
         String name = commitedConfiguration.getAlias();
         canvasController.addCanvasItemFromExistData(SegmentType.Committed_Configuration, formId, name, commitedConfiguration.getCoordinates().getXCoordinate(),
-                commitedConfiguration.getCoordinates().getYCoordinate(), commitedConfiguration.getCount(), commitedConfiguration.isExist());
+                commitedConfiguration.getCoordinates().getYCoordinate(), commitedConfiguration.getCount(), commitedConfiguration.getCountIndicator(), commitedConfiguration.isExist());
 
     }
 
@@ -203,7 +203,7 @@ public class FormFillController {
 
         String name = artifact.getAlias();
         canvasController.addCanvasItemFromExistData(SegmentType.Artifact, formId, name, artifact.getCoordinates().getXCoordinate(),
-                artifact.getCoordinates().getYCoordinate(), artifact.getCount(), artifact.isExist());
+                artifact.getCoordinates().getYCoordinate(), artifact.getCount(), artifact.getCountIndicator(), artifact.isExist());
 
     }
 
@@ -355,7 +355,7 @@ public class FormFillController {
         Person person = dataModel.getPerson(segmentId);
         String name = person.getAlias();
         canvasController.addCanvasItemFromExistData(SegmentType.Person, formId, name, person.getCoordinates().getXCoordinate(),
-                person.getCoordinates().getYCoordinate(), person.getCount(), person.isExist());
+                person.getCoordinates().getYCoordinate(), person.getCount(), person.getCountIndicator(), person.isExist());
 
     }
 

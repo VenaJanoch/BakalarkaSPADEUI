@@ -194,7 +194,7 @@ public class DataManipulator {
     }
 
 
-    public List[] getRoleData(int id) {
+    public List[] getPersonData(int id) {
         List[] data = new List[5];
         Person role = dataModel.getPerson(id);
 
@@ -218,6 +218,7 @@ public class DataManipulator {
         ArrayList list = new ArrayList();
         list.add(role.isExist());
         list.add(role.getCount());
+        list.add(role.getCountIndicator());
         list.add(role.getAlias());
         data[4] = list;
 
@@ -834,6 +835,7 @@ public class DataManipulator {
         List list = new ArrayList();
         list.add(artifact.isExist());
         list.add(artifact.getCount());
+        list.add(artifact.getCountIndicator());
         list.add(artifact.getAlias());
         data[10] = list;
 
@@ -1015,6 +1017,7 @@ public class DataManipulator {
         List list = new ArrayList();
         list.add(configuration.isExist());
         list.add(configuration.getCount());
+        list.add(configuration.getCountIndicator());
         list.add(configuration.getAlias());
         data[9] = list;
 
@@ -1115,6 +1118,7 @@ public class DataManipulator {
         ArrayList list = new ArrayList();
         list.add(commit.isExist());
         list.add(commit.getCount());
+        list.add(commit.getCountIndicator());
         list.add(commit.getAlias());
         data[2] = list;
         if (commit.isRelease() != null) {
@@ -1163,6 +1167,7 @@ public class DataManipulator {
         ArrayList list = new ArrayList();
         list.add(commitedConfiguration.isExist());
         list.add(commitedConfiguration.getCount());
+        list.add(commitedConfiguration.getCountIndicator());
         list.add(commitedConfiguration.getAlias());
         data[4] = list;
 

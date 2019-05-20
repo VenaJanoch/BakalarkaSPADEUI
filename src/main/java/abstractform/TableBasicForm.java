@@ -30,8 +30,7 @@ public abstract class TableBasicForm extends BasicForm {
     /**
      * Globální proměnné třídy
      **/
-    // private BorderPane mainPanel;
-    // private Scene scena;
+
     protected Button addButton;
     protected Button removeButton;
     protected Button editButton;
@@ -39,7 +38,13 @@ public abstract class TableBasicForm extends BasicForm {
     protected EventHandler<MouseEvent> OnMousePressedEventHandler;
 
     /**
-     * Konstruktor třídy Zinicializuje globální proměnné třídy
+     * Konstruktor tridy zavola nadrazenou tridu BasicForm a zinicializuje ostatni globalni promenne
+     * Zavola metodu pro pridani potrebny prvku do panelu
+     * @param formController
+     * @param formDataController
+     * @param editFormController
+     * @param deleteFormController
+     * @param type
      */
     public TableBasicForm(FormController formController, IFormDataController formDataController, IEditFormController editFormController, IDeleteFormController deleteFormController, SegmentType type) {
         super(formController, formDataController, editFormController, deleteFormController, type);
@@ -48,15 +53,21 @@ public abstract class TableBasicForm extends BasicForm {
         createPanel();
     }
 
-
+    /**
+     * Metoda nastavi event handler pro tabulku
+     * Pokud je na radek dvakrat kliknuto mysi
+     * zavola se metoda pro zobrazeni panelu a nastaveni
+     * prislusneho formulare do panelu
+     */
     abstract protected void setEventHandler();
 
 
-    @Override
-    void createForm() {
-
-    }
-
+    /**
+     * Metoda pro smazani prvku z tabulky potazmo z datovych struktur
+     * Metoda vyvola informaci okno pro radky, ktere se maji smazat
+     * Pri potvrzeni akce je zavolana metoda deleteItemWithDialog ze tridy deleteFormController
+     * @param tableTV instance tridy TableView, ze ktere se budou polozky mazat
+     */
     public void deleteItem(TableView tableTV) {
         ObservableList selection = FXCollections
                 .observableArrayList(tableTV.getSelectionModel().getSelectedItems());
@@ -72,8 +83,6 @@ public abstract class TableBasicForm extends BasicForm {
 
     /**
      * Vytvoří a rozloží základní prvky ve formuláři
-     *
-     * @return BorderPane
      */
     private Parent createPanel() {
 
@@ -101,23 +110,10 @@ public abstract class TableBasicForm extends BasicForm {
         buttonPanel.add(addButton, 0, 0);
         buttonPanel.add(removeButton, 1, 0);
         buttonPanel.add(editButton, 15, 0);
-        //buttonPanel.setAlignment(Pos.);
         buttonPanel.setHgap(15);
         GridPane.setMargin(addButton, new Insets(0, 0, 0, 15));
         this.setBottom(buttonPanel);
         return this;
-    }
-
-    /*** Getrs and Setrs ***/
-
-
-    public Button getSubmitButton() {
-        return submitButton;
-    }
-
-
-    public Label getFormName() {
-        return formName;
     }
 
 }

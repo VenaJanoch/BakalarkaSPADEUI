@@ -132,6 +132,7 @@ public class SaveDataModel implements ISaveDataModel {
         Configuration configuration = objF.createConfiguration();
         configuration.setId(id);
         configuration.setCount(1);
+        configuration.setCountIndicator(0);
         configuration.setExist(true);
         configuration.setAlias(String.valueOf(id));
         Coordinates cor = objF.createCoordinates();
@@ -153,6 +154,7 @@ public class SaveDataModel implements ISaveDataModel {
         Artifact artifact = objF.createArtifact();
         artifact.setId(id);
         artifact.setCount(1);
+        artifact.setCountIndicator(0);
         artifact.setExist(true);
         artifact.setAlias(String.valueOf(id));
         Coordinates cor = objF.createCoordinates();
@@ -228,16 +230,17 @@ public class SaveDataModel implements ISaveDataModel {
 
     public void createNewPerson(int id) {
 
-        Person role = objF.createPerson();
-        role.setId(id);
-        role.setCount(1);
-        role.setExist(true);
-        role.setAlias(String.valueOf(id));
+        Person person = objF.createPerson();
+        person.setId(id);
+        person.setCount(1);
+        person.setCountIndicator(0);
+        person.setExist(true);
+        person.setAlias(String.valueOf(id));
         Coordinates cor = objF.createCoordinates();
         cor.setXCoordinate(0);
         cor.setYCoordinate(0);
-        role.setCoordinates(cor);
-        dataModel.getPersons().add(role);
+        person.setCoordinates(cor);
+        dataModel.getPersons().add(person);
     }
 
     public void createNewMilestone(String nameForManipulator, String description, ArrayList<Integer> criterionIndex, int id) {
@@ -290,7 +293,7 @@ public class SaveDataModel implements ISaveDataModel {
         Commit commit = objF.createCommit();
         commit.setId(id);
         commit.setCount(1);
-        commit.getNameIndicator().add(0);
+        commit.setCountIndicator(0);
         commit.setExist(true);
         commit.setRelease(false);
         commit.setAlias(String.valueOf(id));
@@ -306,8 +309,8 @@ public class SaveDataModel implements ISaveDataModel {
         CommitedConfiguration commitedConfiguration = objF.createCommitedConfiguration();
         commitedConfiguration.setId(id);
         commitedConfiguration.setCount(1);
+        commitedConfiguration.setCountIndicator(0);
         commitedConfiguration.setExist(true);
-        commitedConfiguration.getNameIndicator().add(0);
         commitedConfiguration.setAlias(String.valueOf(id));
         Coordinates cor = objF.createCoordinates();
         cor.setXCoordinate(0);

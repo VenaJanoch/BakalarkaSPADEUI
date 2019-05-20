@@ -9,6 +9,7 @@ import interfaces.IEditFormController;
 import interfaces.IFormDataController;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableView;
+import services.Constans;
 import services.ControlPanelLineObject;
 import services.ControlPanelLineType;
 import services.ParamType;
@@ -58,16 +59,16 @@ public class CommitedConfigurationControlPanel extends DateDescControlPanel impl
         controlPanelController.setValueDatePicker(this, lineList, ParamType.Date, (ArrayList<LocalDate>) commitedData[5], commitedData[6]);
 
         List boolList = commitedData[4];
-        controlPanelController.setCountToCountLine((int) boolList.get(1));
+        controlPanelController.setCountToCountLine((int) boolList.get(1), (int) boolList.get(2));
         boolean exist = (boolean) boolList.get(0);
         controlPanelController.setValueExistRadioButton(exist);
-        controlPanelController.setAlias((String) boolList.get(2), this);
+        controlPanelController.setAlias((String) boolList.get(3), this);
     }
 
 
     protected void addItemsToControlPanel() {
 
-        controlPanelController.setCountLine(this, 2, new ControlPanelLine(lineList, this, controlPanelController, controlPanelController.getLineCount()));
+        controlPanelController.setCountLine(this, 2, new ControlPanelLine(lineList, this, controlPanelController, Constans.numberIndicatorList, controlPanelController.getLineCount()));
         controlPanelController.createNewLineWithExist(this, lineList);
 
         button.setOnAction(event -> saveDataFromPanel());
@@ -87,8 +88,9 @@ public class CommitedConfigurationControlPanel extends DateDescControlPanel impl
 
 
         String count = controlPanelController.getInstanceCount();
-
-        editFormController.editDataFromCommitedConfiguration(aliasTF.getText(), name, nameIndicators, description, descriptionIndicators, created, createdIndicators, date, dateIndicators, count, controlPanelController.isExist(), commitedConfigurationId);
+        int countIndicator = controlPanelController.getInstanceCountIndicator();
+        editFormController.editDataFromCommitedConfiguration(aliasTF.getText(), name, nameIndicators, description, descriptionIndicators, created,
+                createdIndicators, date, dateIndicators, count, countIndicator, controlPanelController.isExist(), commitedConfigurationId);
 
     }
 

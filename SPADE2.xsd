@@ -241,6 +241,8 @@
             <xs:element name="coordinates" type="Coordinates"/>
             <xs:element name="count" type="xs:int" minOccurs="0"
                         maxOccurs="1" />
+            <xs:element name="countIndicator" type="xs:int" minOccurs="0"
+                        maxOccurs="1" />
         </xs:sequence>
         <xs:attribute name="alias" type="xs:string"/>
         <xs:attribute name="id" type="xs:int"/>
@@ -286,6 +288,8 @@
                         maxOccurs="unbounded" />
             <xs:element name="coordinates" type="Coordinates"/>
             <xs:element name="count" type="xs:int" minOccurs="0"
+                        maxOccurs="1" />
+            <xs:element name="countIndicator" type="xs:int" minOccurs="0"
                         maxOccurs="1" />
         </xs:sequence>
         <xs:attribute name="release" type="xs:boolean"/>
@@ -601,6 +605,8 @@
                         maxOccurs="unbounded"/>
             <xs:element name="count" type="xs:int" minOccurs="0"
                         maxOccurs="1" />
+            <xs:element name="countIndicator" type="xs:int" minOccurs="0"
+                        maxOccurs="1" />
             <xs:element name="coordinates" type="Coordinates"/>
         </xs:sequence>
         <xs:attribute name="alias" type="xs:string"/>
@@ -701,6 +707,8 @@
                         maxOccurs="unbounded"/>
             <xs:element name="count" type="xs:int" minOccurs="0"
                         maxOccurs="1" />
+            <xs:element name="countIndicator" type="xs:int" minOccurs="0"
+                        maxOccurs="1" />
 
         </xs:sequence>
         <xs:attribute name="alias" type="xs:string"/>
@@ -727,6 +735,8 @@
             <xs:element name="committedConfiguration" type="xs:int" minOccurs="0"
                         maxOccurs="unbounded" />
             <xs:element name="count" type="xs:int" minOccurs="0"
+                        maxOccurs="1" />
+            <xs:element name="countIndicator" type="xs:int" minOccurs="0"
                         maxOccurs="1" />
             <xs:element name="coordinates" type="Coordinates"/>
         </xs:sequence>

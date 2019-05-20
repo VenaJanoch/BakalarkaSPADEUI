@@ -153,7 +153,7 @@ public class VerifyController {
         return verifyTables;
     }
 
-    private VerifyTable createVerifyTable(SegmentType type, String alias, int modelCount, int projectCount, int id, boolean isExist,
+    private VerifyTable createVerifyTable(SegmentType type, String alias, int modelCount, int countIndicator, int projectCount, int id, boolean isExist,
                                           boolean isExistInProject, String sql) {
 
         String result = Constans.OK_VERIFY_RESULT;
@@ -170,19 +170,40 @@ public class VerifyController {
                 result = Constans.BAD_VERIFY_RESULT;
             }
 
-            if (modelCount > projectCount){
-                result = Constans.BAD_VERIFY_RESULT;
+            if (countIndicator == 0){
+                if (modelCount < projectCount || modelCount > projectCount){
+                    result = Constans.BAD_VERIFY_RESULT;
+                }
+            }else if(countIndicator == 1){
+                if (modelCount == projectCount || modelCount < projectCount){
+                    result = Constans.BAD_VERIFY_RESULT;
+                }
+            }else if (countIndicator == 2){
+                if (modelCount == projectCount || modelCount > projectCount){
+                    result = Constans.BAD_VERIFY_RESULT;
+                }
             }
+
+
 
         }else {
             if (isExistInProject){
-                if (modelCount <= projectCount){
-
-                    result = Constans.BAD_VERIFY_RESULT;
-                }else {
-
-                    result = Constans.OK_VERIFY_RESULT;
+                result = Constans.BAD_VERIFY_RESULT;
+                if (countIndicator == 0){
+                    if (modelCount < projectCount || modelCount > projectCount){
+                        result = Constans.OK_VERIFY_RESULT;
+                    }
+                }else if(countIndicator == 1){
+                    if (modelCount == projectCount || modelCount < projectCount){
+                        result = Constans.OK_VERIFY_RESULT;
+                    }
+                }else if(countIndicator == 2){
+                    if (modelCount == projectCount || modelCount > projectCount){
+                        result = Constans.OK_VERIFY_RESULT;
+                    }
                 }
+
+
 
             }
 
@@ -212,8 +233,8 @@ public class VerifyController {
                         modelCommitedConfiguration.getCreatedIndicator(), commitDBId, roleDBId);
 
                 SQLVerifyObject commitedConfiguration = projectCommitedConfigurations.get(0);
-                verifyTable = createVerifyTable(SegmentType.Committed_Configuration, modelCommitedConfiguration.getAlias(), modelCommitedConfiguration.getCount(), projectCommitedConfigurations.size(),
-                        modelCommitedConfiguration.getId(), modelCommitedConfiguration.isExist(), commitedConfiguration.isExist(),
+                verifyTable = createVerifyTable(SegmentType.Committed_Configuration, modelCommitedConfiguration.getAlias(), modelCommitedConfiguration.getCount(), modelCommitedConfiguration.getCountIndicator(),
+                        projectCommitedConfigurations.size(), modelCommitedConfiguration.getId(), modelCommitedConfiguration.isExist(), commitedConfiguration.isExist(),
                         commitedConfiguration.getSqlCommand());
                 verifyTables.add(verifyTable);
             }
@@ -261,7 +282,7 @@ public class VerifyController {
                         modelPhase.getEndDate(), modelPhase.getEndDateIndicator(), milestoneDBId, configDBId);
 
                 SQLVerifyObject phase = projectPhases.get(0);
-                verifyTable = createVerifyTable(SegmentType.Phase, modelPhase.getAlias(), -1, -1, modelPhase.getId(), modelPhase.isExist(), phase.isExist(), phase.getSqlCommand());
+                verifyTable = createVerifyTable(SegmentType.Phase, modelPhase.getAlias(), -1, -1, -1, modelPhase.getId(), modelPhase.isExist(), phase.isExist(), phase.getSqlCommand());
                 verifyTables.add(verifyTable);
             }
 
@@ -288,7 +309,7 @@ public class VerifyController {
                 projectCommits = databazeProjekt.getCommitProjekt(projectVerifyId, modelCommit.getName(), modelCommit.getNameIndicator(),
                         modelCommit.isRelease(), modelCommit.getDescription(), modelCommit.getDescriptionIndicator(), modelCommit.getCreated(), modelCommit.getCreatedIndicator(), roleDBId);
                 SQLVerifyObject commit = projectCommits.get(0);
-                verifyTable = createVerifyTable(SegmentType.Commit, modelCommit.getAlias(), modelCommit.getCount(), projectCommits.size(), modelCommit.getId(), modelCommit.isExist(), commit.isExist(), commit.getSqlCommand());
+                verifyTable = createVerifyTable(SegmentType.Commit, modelCommit.getAlias(), modelCommit.getCount(), modelCommit.getCountIndicator(), projectCommits.size(), modelCommit.getId(), modelCommit.isExist(), commit.isExist(), commit.getSqlCommand());
                 verifyTables.add(verifyTable);
             }
 
@@ -314,7 +335,7 @@ public class VerifyController {
                         modelCriterion.getDescription(), modelCriterion.getDescriptionIndicator());
 
                 SQLVerifyObject criterion = projectCriterions.get(0);
-                verifyTable = createVerifyTable(SegmentType.Criterion, modelCriterion.getAlias(), -1, -1, modelCriterion.getId(), modelCriterion.isExist(), criterion.isExist(), criterion.getSqlCommand());
+                verifyTable = createVerifyTable(SegmentType.Criterion, modelCriterion.getAlias(), -1, -1, -1, modelCriterion.getId(), modelCriterion.isExist(), criterion.isExist(), criterion.getSqlCommand());
                 verifyTables.add(verifyTable);
             }
 
@@ -346,7 +367,7 @@ public class VerifyController {
 
 
                 SQLVerifyObject activity = projectActivitys.get(0);
-                verifyTable = createVerifyTable(SegmentType.Activity, modelActivity.getAlias(), -1, -1, modelActivity.getId(), modelActivity.isExist(), activity.isExist(), activity.getSqlCommand());
+                verifyTable = createVerifyTable(SegmentType.Activity, modelActivity.getAlias(), -1, -1, -1, modelActivity.getId(), modelActivity.isExist(), activity.isExist(), activity.getSqlCommand());
                 verifyTables.add(verifyTable);
             }
 
@@ -371,7 +392,7 @@ public class VerifyController {
                 projectBranchs = databazeProjekt.getBranchyProjekt(projectVerifyId, modelBranch.getName(), modelBranch.getNameIndicator(), modelBranch.isIsMain());
 
                 SQLVerifyObject branch = projectBranchs.get(0);
-                verifyTable = createVerifyTable(SegmentType.Branch, modelBranch.getAlias(), -1, -1, modelBranch.getId(), modelBranch.isExist(), branch.isExist(), branch.getSqlCommand());
+                verifyTable = createVerifyTable(SegmentType.Branch, modelBranch.getAlias(), -1, -1, -1, modelBranch.getId(), modelBranch.isExist(), branch.isExist(), branch.getSqlCommand());
                 verifyTables.add(verifyTable);
             }
 
@@ -396,7 +417,7 @@ public class VerifyController {
                         modelSeverity.getSeverityClassIndex(), modelSeverity.getSeveritySuperClassIndex());
 
                 SQLVerifyObject severity = projectSeveritys.get(0);
-                verifyTable = createVerifyTable(SegmentType.Severity, modelSeverity.getAlias(), -1, -1, modelSeverity.getId(), modelSeverity.isExist(), severity.isExist(), severity.getSqlCommand());
+                verifyTable = createVerifyTable(SegmentType.Severity, modelSeverity.getAlias(), -1, -1, -1, modelSeverity.getId(), modelSeverity.isExist(), severity.isExist(), severity.getSqlCommand());
                 verifyTables.add(verifyTable);
             }
 
@@ -422,7 +443,7 @@ public class VerifyController {
                         modelRoleType.getRoleTypeClassIndex(), modelRoleType.getRoleTypeSuperClassIndex());
 
                 SQLVerifyObject severity = projectRoleTypes.get(0);
-                verifyTable = createVerifyTable(SegmentType.Role_Type, modelRoleType.getAlias(), -1, -1, modelRoleType.getId(), modelRoleType.isExist(), severity.isExist(), severity.getSqlCommand());
+                verifyTable = createVerifyTable(SegmentType.Role_Type, modelRoleType.getAlias(), -1, -1, -1, modelRoleType.getId(), modelRoleType.isExist(), severity.isExist(), severity.getSqlCommand());
                 verifyTables.add(verifyTable);
             }
 
@@ -448,7 +469,7 @@ public class VerifyController {
                         modelPriority.getPriorityClassIndex(), modelPriority.getPrioritySuperClassIndex());
 
                 SQLVerifyObject priority = projectPrioritys.get(0);
-                verifyTable = createVerifyTable(SegmentType.Priority, modelPriority.getAlias(), -1, -1, modelPriority.getId(), modelPriority.isExist(), priority.isExist(), priority.getSqlCommand());
+                verifyTable = createVerifyTable(SegmentType.Priority, modelPriority.getAlias(), -1, -1, -1, modelPriority.getId(), modelPriority.isExist(), priority.isExist(), priority.getSqlCommand());
                 verifyTables.add(verifyTable);
             }
 
@@ -475,7 +496,7 @@ public class VerifyController {
                 projectPersons = databazeProjekt.getPersonProjekt(projectVerifyId, modelPerson.getName(), modelPerson.getNameIndicator(), roleDBId);
 
                 SQLVerifyObject person = projectPersons.get(0);
-                verifyTable = createVerifyTable(SegmentType.Person, modelPerson.getAlias(), modelPerson.getCount(), projectPersons.size(), modelPerson.getId(), modelPerson.isExist(), person.isExist(), person.getSqlCommand());
+                verifyTable = createVerifyTable(SegmentType.Person, modelPerson.getAlias(), modelPerson.getCount(), modelPerson.getCountIndicator(), projectPersons.size(), modelPerson.getId(), modelPerson.isExist(), person.isExist(), person.getSqlCommand());
                 verifyTables.add(verifyTable);
             }
 
@@ -508,7 +529,7 @@ public class VerifyController {
                         modelArtifact.getCreated(), modelArtifact.getCreatedIndicator(), roleDBId, modelArtifact.getMimeType(), modelArtifact.getMimeTypeIndicator());
 
                 SQLVerifyObject artifact = projectArtifacts.get(0);
-                verifyTable = createVerifyTable(SegmentType.Artifact, modelArtifact.getAlias(), modelArtifact.getCount(), projectArtifacts.size(), modelArtifact.getId(), modelArtifact.isExist(), artifact.isExist(), artifact.getSqlCommand());
+                verifyTable = createVerifyTable(SegmentType.Artifact, modelArtifact.getAlias(), modelArtifact.getCount(), modelArtifact.getCountIndicator(), projectArtifacts.size(), modelArtifact.getId(), modelArtifact.isExist(), artifact.isExist(), artifact.getSqlCommand());
                 verifyTables.add(verifyTable);
             }
 
@@ -540,7 +561,7 @@ public class VerifyController {
                         roleDBId);
 
                 SQLVerifyObject cprObject = projectcprs.get(0);
-                verifyTable = createVerifyTable(SegmentType.Config_Person_Relation, modelCPR.getAlias(), -1, -1, modelCPR.getId(),
+                verifyTable = createVerifyTable(SegmentType.Config_Person_Relation, modelCPR.getAlias(), -1, -1, -1, modelCPR.getId(),
                         modelCPR.isExist(), cprObject.isExist(), cprObject.getSqlCommand());
                 verifyTables.add(verifyTable);
             }
@@ -583,7 +604,7 @@ public class VerifyController {
                         changeDBId, branchDBId, cprDBId, tagDBId, committedConfigurationDBId, roleDBId, artifactDBId);
 
                 SQLVerifyObject configuration = projectConfigurations.get(0);
-                verifyTable = createVerifyTable(SegmentType.Configuration, modelConfiguration.getAlias(), modelConfiguration.getCount(), projectConfigurations.size(), modelConfiguration.getId(), modelConfiguration.isExist(), configuration.isExist(), configuration.getSqlCommand());
+                verifyTable = createVerifyTable(SegmentType.Configuration, modelConfiguration.getAlias(), modelConfiguration.getCount(), modelConfiguration.getCountIndicator(), projectConfigurations.size(), modelConfiguration.getId(), modelConfiguration.isExist(), configuration.isExist(), configuration.getSqlCommand());
                 verifyTables.add(verifyTable);
             }
 
@@ -614,7 +635,7 @@ public class VerifyController {
                         , artifactDBId);
 
                 SQLVerifyObject change = projectChanges.get(0);
-                verifyTable = createVerifyTable(SegmentType.Change, modelChange.getAlias(), -1, -1, modelChange.getId(), modelChange.isExist(), change.isExist(), change.getSqlCommand());
+                verifyTable = createVerifyTable(SegmentType.Change, modelChange.getAlias(), -1, -1, -1, modelChange.getId(), modelChange.isExist(), change.isExist(), change.getSqlCommand());
                 verifyTables.add(verifyTable);
             }
 
@@ -656,7 +677,7 @@ public class VerifyController {
                         modelIteration.getEndDateIndicator(), modelIteration.getStartDateIndicator(), configDBId);
 
                 SQLVerifyObject iteration = projectIterations.get(0);
-                verifyTable = createVerifyTable(SegmentType.Iteration, modelIteration.getAlias(), -1, -1, modelIteration.getId(), modelIteration.isExist(), iteration.isExist(), iteration.getSqlCommand());
+                verifyTable = createVerifyTable(SegmentType.Iteration, modelIteration.getAlias(), -1, -1, -1, modelIteration.getId(), modelIteration.isExist(), iteration.isExist(), iteration.getSqlCommand());
                 verifyTables.add(verifyTable);
             }
 
@@ -684,7 +705,7 @@ public class VerifyController {
                     modelProject.getEndDateIndicator(), modelProject.getStartDateIndicator());
 
             SQLVerifyObject project = projectProjects.get(0);
-            verifyTable = createVerifyTable(SegmentType.Project, "Project", -1, -1, projectVerifyId, true, project.isExist(), project.getSqlCommand());
+            verifyTable = createVerifyTable(SegmentType.Project, "Project", -1, -1, -1, projectVerifyId, true, project.isExist(), project.getSqlCommand());
             verifyTables.add(verifyTable);
         } catch (Exception e) {
             //   JOptionPane.showMessageDialog(null, Konstanty.POPISY.getProperty("chybaNacteniProjektu"));
@@ -709,7 +730,7 @@ public class VerifyController {
                         modelStatus.getStatusClassIndex(), modelStatus.getStatusSuperClassIndex());
 
                 SQLVerifyObject status = projectStatuss.get(0);
-                verifyTable = createVerifyTable(SegmentType.Status, modelStatus.getAlias(), -1, -1, modelStatus.getId(), modelStatus.isExist(), status.isExist(), status.getSqlCommand());
+                verifyTable = createVerifyTable(SegmentType.Status, modelStatus.getAlias(), -1, -1, -1, modelStatus.getId(), modelStatus.isExist(), status.isExist(), status.getSqlCommand());
                 verifyTables.add(verifyTable);
             }
 
@@ -736,7 +757,7 @@ public class VerifyController {
                         modelRelation.getRelationClassIndex(), modelRelation.getRelationSuperClassIndex());
 
                 SQLVerifyObject relation = projectRelations.get(0);
-                verifyTable = createVerifyTable(SegmentType.Relation, modelRelation.getAlias(), -1, -1, modelRelation.getId(), modelRelation.isExist(), relation.isExist(), relation.getSqlCommand());
+                verifyTable = createVerifyTable(SegmentType.Relation, modelRelation.getAlias(), -1, -1, -1, modelRelation.getId(), modelRelation.isExist(), relation.isExist(), relation.getSqlCommand());
                 verifyTables.add(verifyTable);
             }
 
@@ -763,7 +784,7 @@ public class VerifyController {
                         modelResolution.getResolutionClassIndex(), modelResolution.getResolutionSuperClassIndex());
 
                 SQLVerifyObject resolution = projectResolutions.get(0);
-                verifyTable = createVerifyTable(SegmentType.Resolution, modelResolution.getAlias(), -1, -1, modelResolution.getId(), modelResolution.isExist(), resolution.isExist(), resolution.getSqlCommand());
+                verifyTable = createVerifyTable(SegmentType.Resolution, modelResolution.getAlias(), -1, -1, -1, modelResolution.getId(), modelResolution.isExist(), resolution.isExist(), resolution.getSqlCommand());
                 verifyTables.add(verifyTable);
             }
         } catch (Exception e) {
@@ -788,7 +809,7 @@ public class VerifyController {
                         modelType.getTypeClassIndex(), modelType.getTypeSuperClassIndex());
 
                 SQLVerifyObject type = projectTypes.get(0);
-                verifyTable = createVerifyTable(SegmentType.Type, modelType.getAlias(), -1, -1, modelType.getId(), modelType.isExist(), type.isExist(), type.getSqlCommand());
+                verifyTable = createVerifyTable(SegmentType.Type, modelType.getAlias(), -1, -1, -1, modelType.getId(), modelType.isExist(), type.isExist(), type.getSqlCommand());
                 verifyTables.add(verifyTable);
             }
 
@@ -816,7 +837,7 @@ public class VerifyController {
                         modelTag.getDescription(), modelTag.getDescriptionIndicator());
 
                 SQLVerifyObject type = projectTypes.get(0);
-                verifyTable = createVerifyTable(SegmentType.VCSTag, modelTag.getAlias(), -1, -1, modelTag.getId(), modelTag.isExist(), type.isExist(), type.getSqlCommand());
+                verifyTable = createVerifyTable(SegmentType.VCSTag, modelTag.getAlias(), -1, -1, -1, modelTag.getId(), modelTag.isExist(), type.isExist(), type.getSqlCommand());
                 verifyTables.add(verifyTable);
             }
 
@@ -857,7 +878,7 @@ public class VerifyController {
                         roleDBId, priorityDBId, severityDBId, resolutionDBId, statusDBId, typeDBId, relationDBId, workUntiInRelationDBId, modelWorkUnit.getCreated(), modelWorkUnit.getCreatedIndicator(), modelWorkUnit.getEstimatedTimeIndicator(), modelWorkUnit.getProgressIndicator());
 
                 SQLVerifyObject workUnit = projectWorkUnits.get(0);
-                verifyTable = createVerifyTable(SegmentType.Work_Unit, modelWorkUnit.getAlias(), -1, -1, modelWorkUnit.getId(), modelWorkUnit.isExist(), workUnit.isExist(), workUnit.getSqlCommand());
+                verifyTable = createVerifyTable(SegmentType.Work_Unit, modelWorkUnit.getAlias(), -1, -1, -1, modelWorkUnit.getId(), modelWorkUnit.isExist(), workUnit.isExist(), workUnit.getSqlCommand());
                 verifyTables.add(verifyTable);
             }
 
@@ -888,7 +909,7 @@ public class VerifyController {
                         criterionDBId);
 
                 SQLVerifyObject milestone = projectMilestones.get(0);
-                verifyTable = createVerifyTable(SegmentType.Milestone, modelMilestone.getAlias(), -1, -1, modelMilestone.getId(), modelMilestone.isExist(), milestone.isExist(), milestone.getSqlCommand());
+                verifyTable = createVerifyTable(SegmentType.Milestone, modelMilestone.getAlias(), -1, -1, -1, modelMilestone.getId(), modelMilestone.isExist(), milestone.isExist(), milestone.getSqlCommand());
                 verifyTables.add(verifyTable);
             }
 

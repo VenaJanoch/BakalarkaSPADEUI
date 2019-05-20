@@ -11,7 +11,6 @@ import controllers.graphicsComponentsControllers.CanvasController;
 import controllers.graphicsComponentsControllers.CanvasItemController;
 import controllers.graphicsComponentsControllers.DrawerPanelController;
 import controllers.graphicsComponentsControllers.SelectItemController;
-import forms.ConfigurationForm;
 import forms.*;
 import graphics.canvas.CanvasItem;
 import graphics.panels.DragAndDropItemPanel;
@@ -58,8 +57,6 @@ public class FormController {
     private ResolutionForm resolutionForm;
     private StatusForm statusForm;
     private BranchForm branchFrom;
-    private ConfigurationTableForm confTableForm;
-    private ProjectForm projectForm;
     private TypeForm typeForm;
     private CriterionForm criterionForm;
     private RoleTypeForm roleTypeForm;
@@ -472,9 +469,9 @@ public class FormController {
         item.setNameText(name);
     }
 
-    public void setItemInstanceCount(int index, int instanceCount) {
+    public void setItemInstanceCount(int index, int instanceCount, int countIndicator) {
         CanvasItem item = canvasItemList.get(index);
-        canvasItemController.setInstanceCount(item, instanceCount);
+        canvasItemController.setInstanceCount(item, instanceCount, countIndicator);
     }
 
     public String getSegmentIdentificator(int indexForm) {
@@ -612,19 +609,6 @@ public class FormController {
         return forms;
     }
 
-    public void setNewItemToConfigurationTable(String actName, String isRelease, int formIndex, int id) {
-        ConfigTable configTable = new ConfigTable(actName, isRelease, formIndex, true, id);
-        ConfigurationTableForm configurationTableForm = (ConfigurationTableForm) forms.get(Constans.configurationFormIndex);
-        configurationTableForm.getTableTV().getItems().add(configTable);
-        configurationTableForm.getTableTV().sort();
-        configurationTableForm.createConfigItem();
-    }
-
-
-    public void setConfigurationFormToTableForm() {
-        ConfigurationTableForm configurationTableForm = (ConfigurationTableForm) forms.get(Constans.configurationFormIndex);
-        configurationTableForm.getMainPanel().setLeft(getMainPanelFromForm(lastConfigurationFormIndex));
-    }
 
     public void setFormFillController(FormFillController formFillController) {
         this.formFillController = formFillController;

@@ -30,13 +30,11 @@ public class BranchDAO {
         atributeSection += SQLAtributeCreator.createStringAttribute("name", name, nameIndicator);
         atributeSection += SQLAtributeCreator.createBooleanAttribute("isMain", isMain);
 
-        if (name.size() == 0) {
-            atributeSection = atributeSection.substring(5);
-        }
 
-        String sql = "SELECT b.id FROM branch b  WHERE " + atributeSection;
+        String sql = "SELECT b.id FROM branch b join configuration_branch cb on b.id = cb.branchId" +
+                " join configuration c on c.id = cb.configurationId " + atributeSection + " AND c.projectId = ?";
 
-        return SQLAtributeCreator.findInstanceInDB(pripojeni, verifyController, sql, -1, new ArrayList<>());
+        return SQLAtributeCreator.findInstanceInDB(pripojeni, verifyController, sql, projectVerifyId, new ArrayList<>());
 
     }
 }

@@ -40,8 +40,8 @@ public class CommittedConfigurationValueTest{
         ArrayList<LocalDate> dates = new ArrayList<>();
         dates.add(date);
         dataModel.getSaveDataModel().createNewCommitedConfiguration(2);
-        dataModel.getEditDataModel().editDataInCommitedConfiguration("Test", name,indicators, name, indicators, dates, indicators, dates, indicators,3, false,2);
-        dataModel.getEditDataModel().editDataInCommitedConfiguration("Test", name,indicators, name, indicators, dates, indicators, dates, indicators,3, false,2);
+        dataModel.getEditDataModel().editDataInCommitedConfiguration("Test", name,indicators, name, indicators, dates, indicators, dates, indicators,3, 1,false,2);
+        dataModel.getEditDataModel().editDataInCommitedConfiguration("Test", name,indicators, name, indicators, dates, indicators, dates, indicators,3, 1,false,2);
 
         committedConfiguration = dataModel.getCommitedConfiguration(2);
 

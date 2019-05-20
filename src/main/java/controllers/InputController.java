@@ -121,9 +121,9 @@ public class InputController {
             checkNames.add(fillNameTextMapper(name));
         }
 
-        if (checkNames.size() == 0) {
-            checkNames.add("");
-        }
+//        if (checkNames.size() == 0) {
+//            checkNames.add("");
+//        }
 
         return checkNames;
     }

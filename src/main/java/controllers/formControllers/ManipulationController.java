@@ -4,9 +4,9 @@ import controllers.graphicsComponentsControllers.CanvasController;
 import controllers.graphicsComponentsControllers.CanvasItemController;
 import graphics.canvas.CanvasItem;
 import graphics.canvas.DragAndDropCanvas;
-import graphics.canvas.ElementsLink;
 import graphics.canvas.NodeLink;
 import interfaces.IDeleteFormController;
+import javafx.scene.paint.Color;
 import services.*;
 
 public class ManipulationController {
@@ -142,7 +142,7 @@ public class ManipulationController {
                 isDelete = deleteFormController.deleteArtifact(formIndex);
                 break;
             case Person:
-                isDelete = deleteFormController.deleteRoleWithDialog(formIndex);
+                isDelete = deleteFormController.deletePersonWithDialog(formIndex);
                 break;
             case Configuration:
                 isDelete = deleteFormController.deleteConfigurationWithDialog(formIndex);
@@ -168,6 +168,12 @@ public class ManipulationController {
     }
 
     public void setChooseCanvasItem(CanvasItem chooseCanvasItem) {
+
+        if (this.chooseCanvasItem != null){
+            this.chooseCanvasItem.setContourViseble(Color.TRANSPARENT);
+        }
+
+        chooseCanvasItem.setContourViseble(Color.BLACK);
         this.chooseCanvasItem = chooseCanvasItem;
     }
 
@@ -196,5 +202,11 @@ public class ManipulationController {
 
     public void setFormFillController(FormFillController formFillController) {
         this.formFillController = formFillController;
+    }
+
+    public void setChooseCanvasItemContour(Color transparent) {
+    if (getChooseCanvasItem() != null){
+        chooseCanvasItem.setContourViseble(transparent);
+    }
     }
 }

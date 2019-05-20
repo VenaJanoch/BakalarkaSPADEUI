@@ -58,7 +58,7 @@ public class VCSTagDeleteTest {
         dates.add(date);
         dataModel.getSaveDataModel().createNewConfiguration(2);
         dataModel.getEditDataModel().editDataInConfiguration("Test", name, name, dates, true, unit, unit, unit, indicators, indicators, indicators,
-                indicators, indicators, indicators, indicators, indicators, 3, false, 2);
+                indicators, indicators, indicators, indicators, indicators, 3, 1,false, 2);
         configuration = dataModel.getConfiguration(2);
         ObservableList list = FXCollections.observableArrayList();
         list.add(0);

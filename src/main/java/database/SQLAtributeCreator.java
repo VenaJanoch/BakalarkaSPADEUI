@@ -134,7 +134,7 @@ public class SQLAtributeCreator {
             main = 0;
         }
 
-        atributeSection += "=" + String.valueOf(main) + " ";
+        atributeSection += " = " + String.valueOf(main) + " ";
 
         return atributeSection;
 

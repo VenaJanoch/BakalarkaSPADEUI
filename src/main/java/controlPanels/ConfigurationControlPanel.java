@@ -41,7 +41,7 @@ public class ConfigurationControlPanel extends DateDescControlPanel implements I
 
 
         //    controlPanelController.setRadioButton(this,1, "Release: ", true);
-        controlPanelController.setCountLine(this, 2, new ControlPanelLine(lineList, this, controlPanelController, controlPanelController.getLineCount()));
+        controlPanelController.setCountLine(this, 2, new ControlPanelLine(lineList, this, controlPanelController, Constans.numberIndicatorList, controlPanelController.getLineCount()));
         //  addTag = new Button("add Tag");
         //   controlPanelController.setStaticButton(this, 3, addTag);
         controlPanelController.createNewLineWithExist(this, lineList);
@@ -66,10 +66,10 @@ public class ConfigurationControlPanel extends DateDescControlPanel implements I
             ArrayList<ArrayList<Integer>> changes = controlPanelController.processCheckComboBoxLines(ParamType.Change, changeIndicators);
             ArrayList<ArrayList<Integer>> branches = controlPanelController.processCheckComboBoxLines(ParamType.Branch, branchIndicators);
             String instanceCount = controlPanelController.getInstanceCount();
-
+            int countIndicator = controlPanelController.getInstanceCountIndicator();
 
             editFormController.editDataFromConfiguration(aliasTF.getText(), name, description, dates, false, tag, cprs, branches, branchIndicators, changes, cprsIndicators,
-                    nameIndicators, descriptionIndicators, dateIndicators, tagIndicator, changeIndicators, instanceCount, controlPanelController.isExist(), configId);
+                    nameIndicators, descriptionIndicators, dateIndicators, tagIndicator, changeIndicators, instanceCount, countIndicator, controlPanelController.isExist(), configId);
         });
 
     }
@@ -100,8 +100,8 @@ public class ConfigurationControlPanel extends DateDescControlPanel implements I
         boolean exist = (boolean) boolList.get(0);
 
         controlPanelController.setValueExistRadioButton(exist);
-        controlPanelController.setCountToCountLine((int) boolList.get(1));
-        controlPanelController.setAlias((String) boolList.get(2), this);
+        controlPanelController.setCountToCountLine((int) boolList.get(1), (int) boolList.get(2));
+        controlPanelController.setAlias((String) boolList.get(3), this);
     }
 
     @Override

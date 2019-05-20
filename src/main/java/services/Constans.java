@@ -241,7 +241,9 @@ public class Constans {
     public static final String OK_VERIFY_RESULT = "\u2713";
     public static final String BAD_VERIFY_RESULT = "\u274C";
     public static final double SQL_TEXT_WRAPPING = 400;
-    public static final double INSTACE_COUNT_RADIUS = 20;
+    public static final double INSTACE_COUNT_RADIUSX = 35;
+    public static final double INSTACE_COUNT_RADIUSY = 20;
+
     public static final String[] PANEL_BUTTONS = {
             "Images/Person1.png",
             "Images/Commited.png",
@@ -254,6 +256,10 @@ public class Constans {
     public static final String SIPKA = "Images/sipka.png";
     public static final String SIPKA2 = "Images/sipka2.png";
     public static final double SQL_COMMAND_WINDOW = 200;
+    public static final double NEW_INSTACE_OFFSET = 30;
+    public static final double CONTOURE_HEIGHT = infoBoxHeight + 20;
+    public static final double CONTOURE_WIDTH = maxCanvasItemWidth + 20;
+    public static final double CONTOURE_OFFSET = 13;
 
     public static Connection CONNECTION = null;                                                                             //připojení k databázi
 

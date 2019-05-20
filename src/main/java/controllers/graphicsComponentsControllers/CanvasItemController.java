@@ -27,7 +27,7 @@ public class CanvasItemController {
         formController.setCanvasItemController(this);
     }
 
-    public CanvasItem createCanvasItem(SegmentType type, String segmentIdentificator, int formIndex, String name, int instanceCount, double x, double y,
+    public CanvasItem createCanvasItem(SegmentType type, String segmentIdentificator, int formIndex, String name, int instanceCount, int countIndicator, double x, double y,
                                        CanvasController canvasController) {
 
         linkControl.createLinkInstanceInMap(formIndex);
@@ -35,7 +35,7 @@ public class CanvasItemController {
         CanvasItem item = new CanvasItem(type, segmentIdentificator, formIndex, name, instanceCount, 0, x, y,
                 canvasController, this);
         formController.addCanvasItemToList(formIndex, item);
-        setInstanceCount(item, instanceCount);
+        setInstanceCount(item, instanceCount, countIndicator);
         return item;
     }
 
@@ -159,8 +159,14 @@ public class CanvasItemController {
 
     }
 
-    public void setInstanceCount(CanvasItem canvasItem, int instanceCount) {
-        canvasItem.getSegmentInfo().setInstanceCount(Integer.toString(instanceCount));
+    public void setInstanceCount(CanvasItem canvasItem, int instanceCount, int indicator) {
+       String indicatorMark = "";
+        if (indicator != 0){
+           indicatorMark = Constans.NUMBER_INDICATORS[indicator];
+       }
+        canvasItem.getSegmentInfo().setInstanceCount(indicatorMark + Integer.toString(instanceCount));
+
+
         if (instanceCount > 1) {
             canvasItem.getSegmentInfo().getInstanceCount().setVisible(true);
         } else {

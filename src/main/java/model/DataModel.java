@@ -425,7 +425,7 @@ public class DataModel {
                                   ArrayList<String> descForManipulator, ArrayList<Integer> descriptionIndicators,
                                   ArrayList<LocalDate> createdDate, ArrayList<Integer> dateIndicator, boolean isCreate,
                                   ArrayList<Integer> authorIndex, ArrayList<Integer> typeIndex, ArrayList<Integer> authorIndicator,
-                                  ArrayList<Integer> typeIndicator, int instanceCount) {
+                                  ArrayList<Integer> typeIndicator, int instanceCount, int countIndicator) {
         clearDataInArtifact(artifact);
 
         artifact.setAlias(alias);
@@ -435,6 +435,7 @@ public class DataModel {
         artifact.getDescription().addAll(descForManipulator);
         artifact.setExist(isCreate);
         artifact.setCount(instanceCount);
+        artifact.setCountIndicator(countIndicator);
 
         artifact.getMimeType().addAll(getItemFormEnumList(ArtifactClass.values(), typeIndex));
         artifact.getMimeTypeIndex().addAll(typeIndex);
@@ -570,7 +571,7 @@ public class DataModel {
 
     public void addDataToCommitedConfiguration(CommitedConfiguration commitedConfiguration, String alias, ArrayList<String> nameForManipulator, ArrayList<Integer> nameIndicator,
                                                ArrayList<String> descriptions, ArrayList<Integer> descriptionsIndicator, ArrayList<LocalDate> createDate, ArrayList<Integer> createIndicator,
-                                               ArrayList<LocalDate> startDate, ArrayList<Integer> dateIndicator, int instanceCount, boolean exist) {
+                                               ArrayList<LocalDate> startDate, ArrayList<Integer> dateIndicator, int instanceCount, int countIndicator, boolean exist) {
 
         clearDataInCommitedConfiguration(commitedConfiguration);
         commitedConfiguration.setAlias(alias);
@@ -583,6 +584,7 @@ public class DataModel {
         commitedConfiguration.getDescription().addAll(descriptions);
         commitedConfiguration.getDescriptionIndicator().addAll(descriptionsIndicator);
         commitedConfiguration.setCount(instanceCount);
+        commitedConfiguration.setCountIndicator(countIndicator);
 
         commitedConfiguration.setExist(exist);
     }
@@ -719,7 +721,7 @@ public class DataModel {
                                        boolean isRelease, ArrayList<ArrayList<Integer>> cprs,
                                        ArrayList<ArrayList<Integer>> changeIndexs, ArrayList<ArrayList<Integer>> branchIndexs,
                                        ArrayList<Integer> cprIndicators, ArrayList<Integer> nameIndicator, ArrayList<Integer> descriptionIndicator, ArrayList<Integer> tag, ArrayList<Integer> tagIndicator, ArrayList<Integer> createdIndicator,
-                                       ArrayList<Integer> changeIndicator, ArrayList<Integer> branchIndicator, int instanceCount, boolean exist) {
+                                       ArrayList<Integer> changeIndicator, ArrayList<Integer> branchIndicator, int instanceCount, int countIndicator, boolean exist) {
         clearDataInConfiguration(configuration);
         configuration.setAlias(alias);
         configuration.getName().addAll(actName);
@@ -733,6 +735,7 @@ public class DataModel {
         configuration.getBranchIndicator().addAll(branchIndicator);
         configuration.setIsRelease(isRelease);
         configuration.setCount(instanceCount);
+        configuration.setCountIndicator(countIndicator);
         configuration.getTagIndex().addAll(tag);
         configuration.getTagsIndicator().addAll(tagIndicator);
         configuration.setExist(exist);
@@ -968,7 +971,7 @@ public class DataModel {
 
 
     public void addDatToRole(Person role, String alias, ArrayList<String> nameForManipulator, ArrayList<Integer> type,
-                             ArrayList<Integer> nameIndicator, ArrayList<Integer> typeIndicator, int instanceCount, boolean exist) {
+                             ArrayList<Integer> nameIndicator, ArrayList<Integer> typeIndicator, int instanceCount, int countIndicator, boolean exist) {
         clearDataInRole(role);
         role.getName().addAll(nameForManipulator);
         role.getNameIndicator().addAll(nameIndicator);
@@ -976,6 +979,7 @@ public class DataModel {
         role.setExist(exist);
         role.setAlias(alias);
         role.setCount(instanceCount);
+        role.setCountIndicator(countIndicator);
         role.getType().addAll(type);
     }
 
@@ -1073,7 +1077,7 @@ public class DataModel {
     }
 
     public void addDataToCommit(Commit commit, String alias, ArrayList<String> nameForManipulator, ArrayList<Integer> nameIndicator, ArrayList<String> descriptions, ArrayList<Integer> descriptionsIndicator,
-                                ArrayList<LocalDate> createDate, ArrayList<Integer> createIndicator, boolean release, int instanceCount, boolean exist) {
+                                ArrayList<LocalDate> createDate, ArrayList<Integer> createIndicator, boolean release, int instanceCount, int countIndicator, boolean exist) {
         clearDataInCommit(commit);
         commit.setRelease(release);
         commit.setAlias(alias);
@@ -1084,6 +1088,7 @@ public class DataModel {
         commit.getDescription().addAll(descriptions);
         commit.getDescriptionIndicator().addAll(descriptionsIndicator);
         commit.setCount(instanceCount);
+        commit.setCountIndicator(countIndicator);
         commit.setExist(exist);
     }
 

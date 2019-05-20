@@ -27,6 +27,7 @@ public class InfoBoxSegment extends Group {
     private double length;
     private CanvasItem canItem;
     private double height;
+    private double totalHeight;
 
     /**
      * Konstruktor třídy Zinicializuje globální proměnné třídy a přidá prvku do
@@ -91,8 +92,8 @@ public class InfoBoxSegment extends Group {
         name.setTranslateX(Constans.offset);
         name.setTranslateY(33);
 
-        instanceCount.setPosition(botomRectangle.getWidth(),
-                topRectangle.getHeight() + botomRectangle.getHeight());
+        totalHeight = topRectangle.getHeight() + botomRectangle.getHeight();
+        instanceCount.setPosition(botomRectangle.getWidth(), totalHeight);
 
         height = botomRectangle.getHeight();
 
@@ -151,8 +152,8 @@ public class InfoBoxSegment extends Group {
 
         canItem.setMaxHeight(height);
         canItem.setMaxWidth(length);
-
-        instanceCount.setPosition(length, topRectangle.getHeight() + botomRectangle.getHeight());
+        totalHeight = topRectangle.getHeight() + botomRectangle.getHeight();
+        instanceCount.setPosition(length, totalHeight);
     }
 
     /**
@@ -198,5 +199,9 @@ public class InfoBoxSegment extends Group {
     public void setInstanceCount(String instanceCount) {
         this.instanceCount.setInstaceCount(instanceCount);
         this.instanceCount.setVisible(true);
+    }
+
+    public double getTotalHeight() {
+        return totalHeight;
     }
 }

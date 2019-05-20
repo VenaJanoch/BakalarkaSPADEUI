@@ -66,7 +66,7 @@ public class ChangeDeleteTest {
         dates.add(date);
         dataModel.getSaveDataModel().createNewConfiguration(2);
         dataModel.getEditDataModel().editDataInConfiguration("Test", name, name, dates, true, unit, unit, unit, indicators, indicators, indicators,
-                indicators, indicators, indicators, indicators, indicators, 3, false, 2);
+                indicators, indicators, indicators, indicators, indicators, 3, 1, false, 2);
         configuration = dataModel.getConfiguration(2);
         mapperTableToObject = warmUp.getMapperTableToObject();
         mapperTableToObject.mapTableToConfiguration(new ArrayList<>(), new ArrayList<>(), unit, new ArrayList<>(), "Test", 2);

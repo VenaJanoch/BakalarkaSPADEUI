@@ -39,7 +39,12 @@ public abstract class TableClassBasicForm extends TableBasicForm implements ISeg
 
 
     /**
-     * Konstruktor třídy Zinicializuje globální proměnné třídy
+     * Konstruktor tridy zavola konstruktor nadrazene tridy
+     * @param formController
+     * @param formDataController
+     * @param editFormController
+     * @param deleteFormController
+     * @param type
      */
     public TableClassBasicForm(FormController formController, IFormDataController formDataController, IEditFormController editFormController,
                                IDeleteFormController deleteFormController, SegmentType type) {
@@ -48,6 +53,7 @@ public abstract class TableClassBasicForm extends TableBasicForm implements ISeg
 
 
     }
+
 
     protected void setEventHandler() {
         OnMousePressedEventHandler = new EventHandler<MouseEvent>() {

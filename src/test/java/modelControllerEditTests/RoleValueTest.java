@@ -34,8 +34,8 @@ public class RoleValueTest {
             unit.add(indicators);
 
             dataModel.getSaveDataModel().createNewPerson(2);
-            dataModel.getEditDataModel().editDataInPerson("Test", name, indicators, indicators, indicators, 3, false, 2);
-            dataModel.getEditDataModel().editDataInPerson("Test", name, indicators, indicators, indicators, 3, false, 2);
+            dataModel.getEditDataModel().editDataInPerson("Test", name, indicators, indicators, indicators, 3, 1, false, 2);
+            dataModel.getEditDataModel().editDataInPerson("Test", name, indicators, indicators, indicators, 3, 1,false, 2);
             person = dataModel.getPerson(2);
         }
 

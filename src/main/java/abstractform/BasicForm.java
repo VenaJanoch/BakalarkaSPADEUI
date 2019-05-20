@@ -22,7 +22,7 @@ import services.Constans;
 import services.SegmentType;
 
 /**
- * Absraktní třídy pro formuláře volané z kreslícího plátna
+ * Absraktní třída pro formuláře v kladane do DrawerPanelu
  *
  * @author Václav Janoch
  */
@@ -57,28 +57,15 @@ public abstract class BasicForm extends BorderPane {
     protected CanvasController canvasController;
     protected ControlPanel controlPanel;
 
-    /**
-     * Konstruktor třídy pro formuláře s vlastním plátnem Zinicializuje globální
-     * proměnné třídy
-     */
-    public BasicForm(FormController formController, IFormDataController formDataController, IEditFormController editFormController, IDeleteFormController deleteFormController,
-                     CanvasController canvasController, DragAndDropItemPanel dgItem, SegmentType type) {
-        this(formController, formDataController, editFormController, deleteFormController, canvasController, type);
-        this.formName.setText(type.name() + " Form");
-        this.dgItem = dgItem;
-        this.dragBox = new BorderPane();
-        createPanelCanvas();
-
-    }
-
-    public BasicForm(FormController formController, IFormDataController formDataController, IEditFormController editFormController, IDeleteFormController deleteFormController, CanvasController canvasController, SegmentType type) {
-        this(formController, formDataController, editFormController, deleteFormController, type);
-        this.canvasController = canvasController;
-        this.canvas = canvasController.getCanvas();
-    }
 
     /**
-     * Konstruktor třídy pro prvky bez plátna
+     * Konstruktor tridy pro inicializaci globalnich promennych a zavolani metody
+     * pro nastaveni prvku do panelu
+     * @param formController instance tridy FormController
+     * @param formDataController instace tridy FromDataController
+     * @param editFormController instace tridy EditFormController
+     * @param deleteFormController instance tridy DeleteFromController
+     * @param type Typ segmentu/elementu pro ktery je panel urceny
      */
 
     public BasicForm(FormController formController, IFormDataController formDataController, IEditFormController editFormController,
@@ -96,26 +83,7 @@ public abstract class BasicForm extends BorderPane {
 
     }
 
-    /**
-     * Metoda pro pridani prvku do formulare
-     */
-    abstract void createForm();
 
-
-    /**
-     * Vytvoří rozložení prvků pro plátno ve formuláři
-     *
-     * @return BorderPane
-     */
-    private void createPanelCanvas() {
-        creatPanelProject();
-        dragBox.setTop(dgItem);
-        dragBox.setCenter(canvas);
-
-        this.setCenter(dragBox);
-        this.setLeft(infoPart);
-
-    }
 
     /**
      * Vytvoří a rozloží základní prvky ve formuláři
@@ -162,32 +130,9 @@ public abstract class BasicForm extends BorderPane {
     }
 
     /**
-     * Getrs and Setrs
+     * Getters and Setters
      **/
 
-    public boolean isSave() {
-        return isSave;
-    }
-
-    public Label getFormName() {
-        return formName;
-    }
-
-    public TextField getNameTF() {
-        return nameTF;
-    }
-
-    public Button getSubmitButton() {
-        return submitButton;
-    }
-
-    public GridPane getInfoPart() {
-        return infoPart;
-    }
-
-    public Label getNameLB() {
-        return nameLB;
-    }
 
     public CanvasController getCanvasController() {
         return canvasController;

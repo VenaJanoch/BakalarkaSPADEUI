@@ -8,6 +8,7 @@ import interfaces.IControlPanel;
 import interfaces.IEditFormController;
 import interfaces.IFormDataController;
 import javafx.scene.control.TableView;
+import services.Constans;
 import services.ParamType;
 import tables.BasicTable;
 import tables.CommitTable;
@@ -36,7 +37,7 @@ public class CommitControlPanel extends DateDescControlPanel implements IControl
     public void createControlPanel() {
 
         controlPanelController.setRadioButton(this, 1, "Release: ", true);
-        controlPanelController.setCountLine(this, 2, new ControlPanelLine(lineList, this, controlPanelController, controlPanelController.getLineCount()));
+        controlPanelController.setCountLine(this, 2, new ControlPanelLine(lineList, this, controlPanelController, Constans.numberIndicatorList, controlPanelController.getLineCount()));
         controlPanelController.createNewLineWithExist(this, lineList);
 
         button.setOnAction(event -> {
@@ -50,10 +51,11 @@ public class CommitControlPanel extends DateDescControlPanel implements IControl
 
 
             String count = controlPanelController.getInstanceCount();
+            int countIndicator = controlPanelController.getInstanceCountIndicator();
             boolean exist = controlPanelController.isMain();
 
-            editFormController.editDataFromCommit(aliasTF.getText(), name, nameIndicators, description, descriptionIndicators, created, createdIndicators, exist, count,
-                    controlPanelController.isExist(), commitId);
+            editFormController.editDataFromCommit(aliasTF.getText(), name, nameIndicators, description, descriptionIndicators, created, createdIndicators, exist,
+                    count, countIndicator, controlPanelController.isExist(), commitId);
 
         });
 
@@ -82,8 +84,8 @@ public class CommitControlPanel extends DateDescControlPanel implements IControl
 
         controlPanelController.setValueExistRadioButton(exist);
         controlPanelController.setValueRadioButton(release);
-        controlPanelController.setCountToCountLine((int) boolList.get(1));
-        controlPanelController.setAlias((String) boolList.get(2), this);
+        controlPanelController.setCountToCountLine((int) boolList.get(1), (int) boolList.get(2));
+        controlPanelController.setAlias((String) boolList.get(3), this);
     }
 
     @Override

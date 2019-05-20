@@ -40,8 +40,8 @@ public class CommitValueTest {
         ArrayList<LocalDate> dates = new ArrayList<>();
         dates.add(date);
         dataModel.getSaveDataModel().createNewCommit(2);
-        dataModel.getEditDataModel().editDataInCommit("Test", name,indicators, name, indicators, dates, indicators,true, 3, false,2);
-        dataModel.getEditDataModel().editDataInCommit("Test", name,indicators, name, indicators, dates, indicators,true, 3, false,2);
+        dataModel.getEditDataModel().editDataInCommit("Test", name,indicators, name, indicators, dates, indicators,true, 3, 1,false,2);
+        dataModel.getEditDataModel().editDataInCommit("Test", name,indicators, name, indicators, dates, indicators,true, 3, 1,false,2);
 
         commit = dataModel.getCommit(2);
 

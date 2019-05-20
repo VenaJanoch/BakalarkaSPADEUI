@@ -13,6 +13,7 @@ import javafx.event.EventHandler;
 import javafx.scene.Cursor;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.input.*;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
 import services.*;
 
@@ -73,6 +74,7 @@ public class CanvasController {
         } else if (event.getCode() == KeyCode.ESCAPE) {
             if (manipulationController.getLink() != null) {
                 manipulationController.getLink().coverBackgroundPolygon();
+                manipulationController.getChooseCanvasItem().setContourViseble(Color.TRANSPARENT);
             }
         }
 
@@ -90,7 +92,7 @@ public class CanvasController {
 
         SegmentType type = findSegmentType(segment);
 
-        CanvasItem canvasItem = addCanvasItemFromPanel(type, x, y);
+        CanvasItem canvasItem = addCanvasItemFromPanel(type, x + Constans.NEW_INSTACE_OFFSET, y + Constans.NEW_INSTACE_OFFSET);
         return canvasItem;
     }
 
@@ -106,27 +108,27 @@ public class CanvasController {
 
         newFormIndex = getFormIndexFromNewForm(type, canvasType);
         String segmentId = createSegmentId(type, newFormIndex);
-        CanvasItem item = canvasItemController.createCanvasItem(type, segmentId, newFormIndex, "New", 1, x, y, this);
+        CanvasItem item = canvasItemController.createCanvasItem(type, segmentId, newFormIndex, "New", 1, 0, x, y, this);
         canvas.getCanvas().getChildren().add(item);
         listOfItemOnCanvas.put(newFormIndex, item);
         return item;
 
     }
 
-    public void setInstanceCountToItem(int itemIndex, int instanceCount) {
-        canvasItemController.setInstanceCount(listOfItemOnCanvas.get(itemIndex), instanceCount);
+    public void setInstanceCountToItem(int itemIndex, int instanceCount, int countIndicator) {
+        canvasItemController.setInstanceCount(listOfItemOnCanvas.get(itemIndex), instanceCount, countIndicator);
     }
 
-    public CanvasItem addCanvasItemFromExistData(SegmentType type, int formIndex, String name, double x, double y, int instanceCount) {
+    public CanvasItem addCanvasItemFromExistData(SegmentType type, int formIndex, String name, double x, double y, int instanceCount, int countIndicator) {
         String segmentId = createSegmentId(type, formIndex);
-        CanvasItem item = canvasItemController.createCanvasItem(type, segmentId, formIndex, name, instanceCount, x, y, this);
+        CanvasItem item = canvasItemController.createCanvasItem(type, segmentId, formIndex, name, instanceCount, countIndicator, x, y, this);
         canvas.getCanvas().getChildren().add(item);
         listOfItemOnCanvas.put(formIndex, item);
         return item;
     }
 
-    public CanvasItem addCanvasItemFromExistData(SegmentType type, int formIndex, String name, double x, double y, int instanceCount, boolean isExist) {
-        CanvasItem item = addCanvasItemFromExistData(type, formIndex, name, x, y, instanceCount);
+    public CanvasItem addCanvasItemFromExistData(SegmentType type, int formIndex, String name, double x, double y, int instanceCount, int countIndicator, boolean isExist) {
+        CanvasItem item = addCanvasItemFromExistData(type, formIndex, name, x, y, instanceCount, countIndicator);
         formController.setItemColor(formIndex, isExist);
         return item;
     }
@@ -148,7 +150,7 @@ public class CanvasController {
     public void addCopyCanvasItemToCanvas(SegmentType segmentType, double x, double y) {
 
         int formIndex = getFormIndexFromNewForm(segmentType, canvasType);
-        CanvasItem item = canvasItemController.createCanvasItem(segmentType, "d", formIndex, "New", 5, x, y, this);
+        CanvasItem item = canvasItemController.createCanvasItem(segmentType, "d", formIndex, "New", 5, 0, x, y, this);
         canvas.getCanvas().getChildren().add(item);
     }
 
@@ -178,7 +180,10 @@ public class CanvasController {
      */
 
     private void pasteItem() {
-        manipulationController.pasteItem(this, canvasItemController, 0, 0);
+        CanvasItem canvasItem = manipulationController.getChooseCanvasItem();
+        double newX = canvasItem.getTranslateX() + canvasItem.getWidth() + Constans.NEW_INSTACE_OFFSET;
+        double newY = canvasItem.getTranslateY() + canvasItem.getHeight() + Constans.NEW_INSTACE_OFFSET;
+        manipulationController.pasteItem(this, canvasItemController, newX, newY);
     }
 
     /**
@@ -226,12 +231,7 @@ public class CanvasController {
             manipulationController.setChooseCanvas(canvas);
 
             itemContexMenu.show(canvas.getCanvas(), t.getScreenX(), t.getScreenY());
-
-        } else {
-
-            manipulationController.controlCopyItem();
         }
-
     }
 
     /**
@@ -255,6 +255,7 @@ public class CanvasController {
         startArrow = false;
         canvas.setCursor(Cursor.DEFAULT);
         linkButton.setSelected(false);
+        manipulationController.setChooseCanvasItemContour(Color.TRANSPARENT);
     }
 
     public void setCursorToCanvas(Cursor cursor) {

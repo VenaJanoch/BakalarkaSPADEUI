@@ -347,7 +347,12 @@ public class DeleteFormController implements IDeleteFormController {
             }
         return false;
     }
-
+    /**
+     * Metoda pro odstraneni prvku z datovych struktur
+     * Nejprve jsou zjisteny id prvku pro odstraneni
+     * nasledne jsou aktualizovany reference na prvek, mapovaci mapy a odstraneny informace z datovych struktur
+     * @param id
+     */
     public void deleteCommitedConfiguration(int id) {
 
         editDataModel.updateItemList(SegmentType.Configuration, SegmentType.Committed_Configuration, id);
@@ -424,7 +429,7 @@ public class DeleteFormController implements IDeleteFormController {
     public void deleteStatus(ObservableList statusListObservable, ArrayList<BasicTable> selection) {
         ArrayList indexList = deleteControl.findIndicesForDelete(selection);
 
-        editDataModel.updateItemList(SegmentType.Work_Unit, SegmentType.Status, new ArrayList<>(statusListObservable));
+        editDataModel.updateItemList(SegmentType.Work_Unit, SegmentType.Status, new ArrayList<Integer>(statusListObservable));
         mapperTableToObject.deleteFromMap(mapperTableToObject.getWUStatusMapper(), indexList);
 
         deleteDataModel.removeStatus(statusListObservable);
@@ -467,8 +472,11 @@ public class DeleteFormController implements IDeleteFormController {
         segmentLists.removeItemFromObservableList(SegmentType.Role_Type, idList);
     }
 
-
-    public boolean deleteRoleWithDialog(int indexForm) {
+    /**
+     * Metoda pro odstraneni elementu Person
+     * Metoda slouzi pro vyvolani potvrzovaciho dialogu a zavolani metody pro odstraneni prvku z datovych struktur
+     */
+    public boolean deletePersonWithDialog(int indexForm) {
 
         ArrayList list = new ArrayList();
         int id = identificatorCreater.getRoleId(indexForm);
@@ -479,7 +487,7 @@ public class DeleteFormController implements IDeleteFormController {
             panels.remove(indexForm);
             panels.add(indexForm, null);
 
-            deleteRole(id);
+            deletePerson(id);
             return true;
         }
         return false;
@@ -491,7 +499,7 @@ public class DeleteFormController implements IDeleteFormController {
      * nasledne jsou aktualizovany reference na prvek, mapovaci mapy a odstraneny informace z datovych struktur
      * @param id
      */
-    public void deleteRole(int id) {
+    public void deletePerson(int id) {
 
         editDataModel.updateItemList(SegmentType.Work_Unit, SegmentType.Person, id);
         editDataModel.updateItemList(SegmentType.Configuration, SegmentType.Person, id);
@@ -554,7 +562,13 @@ public class DeleteFormController implements IDeleteFormController {
             view.getSelectionModel().clearSelection();
         }
     }
-
+    /**
+     * Metoda pro odstraneni prvku z datovych struktur
+     * Nejprve jsou zjisteny id prvku pro odstraneni
+     * nasledne jsou aktualizovany reference na prvek, mapovaci mapy a odstraneny informace z datovych struktur
+     * @param resolutionListObservable
+     * @param selection
+     */
     public void deleteResolution(ObservableList resolutionListObservable, ArrayList<BasicTable> selection) {
         ArrayList idList = deleteControl.findIndicesForDelete(selection);
         editDataModel.updateItemList(SegmentType.Work_Unit, SegmentType.Resolution, idList);

@@ -23,8 +23,6 @@ public interface IFormDataController {
     boolean saveDataFromConfiguration(String actName, LocalDate createDate, boolean isRelease, int authorIndex, ArrayList<Integer> branchIndex,
                                       ArrayList<Integer> cprIndex, Map<Integer, CanvasItem> itemIndexList, boolean isNew, int indexForm);
 
-    void setEditItemInConfigurationTable(ConfigTable configTable);
-
     boolean saveDataFromChange(ChangeTable changeTable);
 
     boolean saveDataFromArtifact(String actName, LocalDate createdDate, String type, String desc, int authorIndex,

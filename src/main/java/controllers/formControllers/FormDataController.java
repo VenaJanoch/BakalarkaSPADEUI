@@ -1,14 +1,11 @@
 package controllers.formControllers;
 
-import SPADEPAC.Commit;
 import controllers.DataPreparer;
 import controllers.InputController;
-import forms.ConfigurationTableForm;
 import graphics.canvas.CanvasItem;
 import interfaces.IFormDataController;
 import interfaces.ISaveDataModel;
 import javafx.collections.ObservableList;
-import javafx.scene.control.TableView;
 import model.DataManipulator;
 import model.DataModel;
 import model.IdentificatorCreater;
@@ -129,27 +126,17 @@ public class FormDataController implements IFormDataController {
         ConfigTable configTable = new ConfigTable(idName, release, indexForm, true, configIndex);
         if (isNew) {
             lists.getConfigObservable().add(configTable);
-            formController.setNewItemToConfigurationTable(idName, release, indexForm, configIndex);
+      //      formController.setNewItemToConfigurationTable(idName, release, indexForm, configIndex);
         } else {
             lists.getConfigObservable().remove(configIndex + 1);
             lists.getConfigObservable().add(configIndex + 1, configTable);
-            setEditItemInConfigurationTable(configTable);
+         //   setEditItemInConfigurationTable(configTable);
         }
 
-        formController.setConfigurationFormToTableForm();
+     //   formController.setConfigurationFormToTableForm();
         return true;
     }
 
-    public void setEditItemInConfigurationTable(ConfigTable configTable) {
-
-        ConfigurationTableForm configurationTableForm = (ConfigurationTableForm) formController.getForms().get(Constans.configurationFormIndex);
-        TableView<ConfigTable> configTableTableView = configurationTableForm.getTableTV();
-        int id = configTableTableView.getSelectionModel().getSelectedIndex();
-        configTableTableView.getItems().remove(id);
-        configurationTableForm.getTableTV().getItems().add(id, configTable);
-        configurationTableForm.getTableTV().sort();
-
-    }
 
 
     public boolean saveDataFromChange(ChangeTable table) {
@@ -370,7 +357,7 @@ public class FormDataController implements IFormDataController {
     }
 
     public List[] getPersonStringData(int id) {
-        List[] data = dataManipulator.getRoleData(id);
+        List[] data = dataManipulator.getPersonData(id);
         ArrayList<Integer> typeIndices = dataPreparer.prepareIndiciesForForm(data[1]);
         data[1] = typeIndices;
         return data;

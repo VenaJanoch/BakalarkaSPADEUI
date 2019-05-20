@@ -46,18 +46,18 @@ public class EditFormController implements IEditFormController {
     }
 
     /**
-     * Metoda pro zavolani konkretnich metod pro editaci prvku
-     * @param segmentType
-     * @param alias
-     * @param name
-     * @param nameIndicator
-     * @param classIndices
-     * @param superClassIndices
-     * @param classString
-     * @param superSting
-     * @param classTable
-     * @param exist
-     * @param id
+     * Metoda pro zavolani konkretnich metod pro editaci vyctoveho typu Work Unit
+     * @param segmentType Typ elementu
+     * @param alias alias objektu
+     * @param name seznam Stringu s obsazenymi jmeny
+     * @param nameIndicator seznam Integeru uchovávající indexi vybraných znaků rovnosti
+     * @param classIndices seznam zvolených tříd
+     * @param superClassIndices seznam zvolených super tříd
+     * @param classString seznam s jmeny tříd
+     * @param superSting seznam s jmeny super tříd
+     * @param classTable instance třídy prvku tabulky
+     * @param exist bool promenna s inforací o existenci prvku v modelu
+     * @param id identifikator konkrétní instance
      */
     public void editDataFromClass(SegmentType segmentType, String alias, ArrayList<String> name, ArrayList<Integer> nameIndicator,
                                   ArrayList<Integer> classIndices, ArrayList<Integer> superClassIndices, ArrayList<String> classString, ArrayList<String> superSting
@@ -95,16 +95,16 @@ public class EditFormController implements IEditFormController {
     /**
      * Metoda pro editaci dat v datovych strukturach elementu Resolution
      * Upravena data jsou predany konkretnim strukturam
-     * @param alias
-     * @param name
-     * @param nameIndicator
-     * @param classIndices
-     * @param superClassIndices
-     * @param classString
-     * @param superSting
-     * @param classTable
-     * @param exist
-     * @param id
+     @param alias alias objektu
+      * @param name seznam Stringu s obsazenymi jmeny
+     * @param nameIndicator seznam Integeru uchovávající indexi vybraných znaků rovnosti
+     * @param classIndices seznam zvolených tříd
+     * @param superClassIndices seznam zvolených super tříd
+     * @param classString seznam s jmeny tříd
+     * @param superSting seznam s jmeny super tříd
+     * @param classTable instance třídy prvku tabulky
+     * @param exist bool promenna s inforací o existenci prvku v modelu
+     * @param id identifikator konkrétní instance
      */
 
     private void editDataFromResolution(String alias, ArrayList<String> name, ArrayList<Integer> nameIndicator,
@@ -117,17 +117,17 @@ public class EditFormController implements IEditFormController {
 
     /**
      * Metoda pro editaci dat v datovych strukturach elementu Relation
-     * Upravena data jsou predany konkretnim strukturam
-     * @param alias
-     * @param name
-     * @param nameIndicator
-     * @param classIndices
-     * @param superClassIndices
-     * @param classString
-     * @param superSting
-     * @param classTable
-     * @param exist
-     * @param id
+     * Upravena data jsou predany do konkretnich struktur
+     @param alias alias objektu
+      * @param name seznam Stringu s obsazenymi jmeny
+     * @param nameIndicator seznam Integeru uchovávající indexi vybraných znaků rovnosti
+     * @param classIndices seznam zvolených tříd
+     * @param superClassIndices seznam zvolených super tříd
+     * @param classString seznam s jmeny tříd
+     * @param superSting seznam s jmeny super tříd
+     * @param classTable instance třídy prvku tabulky
+     * @param exist bool promenna s inforací o existenci prvku v modelu
+     * @param id identifikator konkrétní instance
      */
     private void editDataFromRelation(String alias, ArrayList<String> name, ArrayList<Integer> nameIndicator,
                                       ArrayList<Integer> classIndices, ArrayList<Integer> superClassIndices, ArrayList<String> classString, ArrayList<String> superSting
@@ -140,16 +140,16 @@ public class EditFormController implements IEditFormController {
     /**
      * Metoda pro editaci dat v datovych strukturach elementu Type
      * Upravena data jsou predany konkretnim strukturam
-     * @param alias
-     * @param name
-     * @param nameIndicator
-     * @param classIndices
-     * @param superClassIndices
-     * @param classString
-     * @param superSting
-     * @param classTable
-     * @param exist
-     * @param id
+     * @param alias alias objektu
+     * @param name seznam Stringu s obsazenymi jmeny
+     * @param nameIndicator seznam Integeru uchovávající indexi vybraných znaků rovnosti
+     * @param classIndices seznam zvolených tříd
+     * @param superClassIndices seznam zvolených super tříd
+     * @param classString seznam s jmeny tříd
+     * @param superSting seznam s jmeny super tříd
+     * @param classTable instance třídy prvku tabulky
+     * @param exist bool promenna s inforací o existenci prvku v modelu
+     * @param id identifikator konkrétní instance
      */
     private void editDataFromType(String alias, ArrayList<String> name, ArrayList<Integer> nameIndicator,
                                   ArrayList<Integer> classIndices, ArrayList<Integer> superClassIndices, ArrayList<String> classString, ArrayList<String> superSting
@@ -163,16 +163,16 @@ public class EditFormController implements IEditFormController {
     /**
      * Metoda pro editaci dat v datovych strukturach elementu Status
      * Upravena data jsou predany konkretnim strukturam
-     * @param alias
-     * @param name
-     * @param nameIndicator
-     * @param classIndices
-     * @param superClassIndices
-     * @param classString
-     * @param superSting
-     * @param classTable
-     * @param exist
-     * @param id
+     * @param alias alias objektu
+     * @param name seznam Stringu s obsazenymi jmeny
+     * @param nameIndicator seznam Integeru uchovávající indexi vybraných znaků rovnosti
+     * @param classIndices seznam zvolených tříd
+     * @param superClassIndices seznam zvolených super tříd
+     * @param classString seznam s jmeny tříd
+     * @param superSting seznam s jmeny super tříd
+     * @param classTable instance třídy prvku tabulky
+     * @param exist bool promenna s inforací o existenci prvku v modelu
+     * @param id identifikator konkrétní instance
      */
     private void editDataFromStatus(String alias, ArrayList<String> name, ArrayList<Integer> nameIndicator,
                                     ArrayList<Integer> classIndices, ArrayList<Integer> superClassIndices, ArrayList<String> classString, ArrayList<String> superSting
@@ -185,16 +185,16 @@ public class EditFormController implements IEditFormController {
     /**
      * Metoda pro editaci dat v datovych strukturach elementu Priority
      * Upravena data jsou predany konkretnim strukturam
-     * @param alias
-     * @param name
-     * @param nameIndicator
-     * @param classIndices
-     * @param superClassIndices
-     * @param classString
-     * @param superSting
-     * @param classTable
-     * @param exist
-     * @param id
+     * @param alias alias objektu
+     * @param name seznam Stringu s obsazenymi jmeny
+     * @param nameIndicator seznam Integeru uchovávající indexi vybraných znaků rovnosti
+     * @param classIndices seznam zvolených tříd
+     * @param superClassIndices seznam zvolených super tříd
+     * @param classString seznam s jmeny tříd
+     * @param superSting seznam s jmeny super tříd
+     * @param classTable instance třídy prvku tabulky
+     * @param exist bool promenna s inforací o existenci prvku v modelu
+     * @param id identifikator konkrétní instance
      */
     private void editDataFromPriority(String alias, ArrayList<String> name, ArrayList<Integer> nameIndicator,
 
@@ -207,18 +207,18 @@ public class EditFormController implements IEditFormController {
     /**
      * Metoda pro editaci dat v datovych strukturach elementu Role Type
      * Upravena data jsou predany konkretnim strukturam
-     * @param alias
-     * @param name
-     * @param nameIndicators
-     * @param description
-     * @param descriptionIndicators
-     * @param classListIndex
-     * @param superClassListIndex
-     * @param classList
-     * @param superClassList
-     * @param table
-     * @param exist
-     * @param id
+     * @param description list s descriptions
+     * @param descriptionIndicators seznam Integeru uchovávající indexi vybraných znaků rovnosti
+     * @param alias alias objektu
+     * @param name seznam Stringu s obsazenymi jmeny
+     * @param nameIndicators seznam Integeru uchovávající indexi vybraných znaků rovnosti
+     * @param classListIndex seznam zvolených tříd
+     * @param superClassListIndex seznam zvolených super tříd
+     * @param classList seznam s jmeny tříd
+     * @param superClassList seznam s jmeny super tříd
+     * @param table instance třídy prvku tabulky
+     * @param exist bool promenna s inforací o existenci prvku v modelu
+     * @param id identifikator konkrétní instance
      */
     public void editDataFromRoleType(String alias, ArrayList<String> name, ArrayList<Integer> nameIndicators,
                                      ArrayList<String> description, ArrayList<Integer> descriptionIndicators, ArrayList<Integer> classListIndex,
@@ -237,27 +237,28 @@ public class EditFormController implements IEditFormController {
 
     /**
      * Metoda pro editaci dat v datovych strukturach elementu Person
+     * Nejprve je provedena kontorla vstup nasledne
      * Upravena data jsou predany konkretnim strukturam
-     * @param alias
-     * @param name
-     * @param nameIndicator
-     * @param count
-     * @param roleTypeIndex
-     * @param roleTypeIndicators
-     * @param personTable
-     * @param exist
-     * @param id
+     * @param alias alias objektu
+     * @param name seznam Stringu s obsazenymi jmeny
+     * @param nameIndicator seznam Integeru uchovávající indexi vybraných znaků rovnosti
+     * @param roleTypeIndex seznam zvolených tříd
+     * @param roleTypeIndicators seznam zvolených super tříd
+     * @param count pocet instaci objektu v modelu
+     * @param personTable instance třídy prvku tabulky
+     * @param exist bool promenna s inforací o existenci prvku v modelu
+     * @param id identifikator konkrétní instance
      */
-    public void editDataFromPerson(String alias, ArrayList<String> name, ArrayList<Integer> nameIndicator, String count, ArrayList<Integer> roleTypeIndex,
+    public void editDataFromPerson(String alias, ArrayList<String> name, ArrayList<Integer> nameIndicator, String count, int countIndicator, ArrayList<Integer> roleTypeIndex,
                                    ArrayList<Integer> roleTypeIndicators, PersonTable personTable, boolean exist, int id) {
 
         int instanceCount;
         try {
-            instanceCount = Integer.parseInt(count);
+            instanceCount = InputController.isNumber(count, 1, 99, "Count");
             ArrayList<String> nameForManipulator = InputController.fillNameTextMapper(name);
             ArrayList<Integer> typeFormManipulator = dataPreparer.prepareIndexForManipulator(roleTypeIndex);
 
-            dataManipulator.editDataInPerson(alias, nameForManipulator, typeFormManipulator, nameIndicator, roleTypeIndicators, instanceCount, exist, id);
+            dataManipulator.editDataInPerson(alias, nameForManipulator, typeFormManipulator, nameIndicator, roleTypeIndicators, instanceCount, countIndicator, exist, id);
 
             personTable.setAlias(alias);
             segmentLists.updateListItem(SegmentType.Person, id, personTable);
@@ -271,10 +272,10 @@ public class EditFormController implements IEditFormController {
             int formIndex = identificatorCreater.getRoleSegmentIndexToFormMaper().get(id);
 
             formController.setNameToItem(formIndex, alias);
-            formController.setItemInstanceCount(formIndex, instanceCount);
+            formController.setItemInstanceCount(formIndex, instanceCount, countIndicator);
             formController.setItemColor(formIndex, exist);
         } catch (NumberFormatException e) {
-            Alerts.showWrongNumberFormat("Instance count");
+          //  Alerts.showWrongNumberFormat("Instance count");
             e.printStackTrace();
         }
 
@@ -284,16 +285,16 @@ public class EditFormController implements IEditFormController {
     /**
      * Metoda pro editaci dat v datovych strukturach elementu Severity
      * Upravena data jsou predany konkretnim strukturam
-     * @param alias
-     * @param name
-     * @param nameIndicator
-     * @param classIndices
-     * @param superClassIndices
-     * @param classString
-     * @param superSting
-     * @param classTable
-     * @param exist
-     * @param id
+     * @param alias alias objektu
+     * @param name seznam Stringu s obsazenymi jmeny
+     * @param nameIndicator seznam Integeru uchovávající indexi vybraných znaků rovnosti
+     * @param classIndices seznam zvolených tříd
+     * @param superClassIndices seznam zvolených super tříd
+     * @param classString seznam s jmeny tříd
+     * @param superSting seznam s jmeny super tříd
+     * @param classTable instance třídy prvku tabulky
+     * @param exist bool promenna s inforací o existenci prvku v modelu
+     * @param id identifikator konkrétní instance
      */
     private void editDataFromSeverity(String alias, ArrayList<String> name, ArrayList<Integer> nameIndicator,
                                       ArrayList<Integer> classIndices, ArrayList<Integer> superClassIndices, ArrayList<String> classString, ArrayList<String> superSting
@@ -305,16 +306,14 @@ public class EditFormController implements IEditFormController {
     /**
      * Metoda pro editaci dat v datovych strukturach elementu Milestone
      * Upravena data jsou predany konkretnim strukturam
-     * @param alias
-     * @param nameST
-     * @param nameIndicators
-     * @param description
-     * @param descriptionIndicators
-     * @param milestoneTable
-     * @param criterionIndex
-     * @param criterionIndicators
-     * @param exist
-     * @param id
+     * @param alias alias objektu
+     * @param nameST seznam Stringu s obsazenymi jmeny
+     * @param nameIndicators seznam Integeru uchovávající indexi vybraných znaků rovnosti
+     * @param criterionIndex seznam zvolených criterii
+     * @param criterionIndicators seznam zvolených super tříd
+     * @param milestoneTable instance třídy prvku tabulky
+     * @param exist bool promenna s inforací o existenci prvku v modelu
+     * @param id identifikator konkrétní instance
      */
     public void editDataFromMilestone(String alias, ArrayList<String> nameST, ArrayList<Integer> nameIndicators, ArrayList<String> description, ArrayList<Integer> descriptionIndicators,
                                       MilestoneTable milestoneTable, ArrayList<ArrayList<Integer>> criterionIndex,
@@ -342,17 +341,16 @@ public class EditFormController implements IEditFormController {
     }
 
     /**
-     *     /**
-     *      * Metoda pro editaci dat v datovych strukturach elementu Criterion
-     *      * Upravena data jsou predany konkretnim strukturam
-     * @param alias
-     * @param nameST
-     * @param nameIndicators
-     * @param description
-     * @param descriptionIndicators
-     * @param criterionTable
-     * @param exist
-     * @param id
+     * Metoda pro editaci dat v datovych strukturach elementu Criterion
+     * Upravena data jsou predany konkretnim strukturam
+     * @param description list s descriptions
+     * @param descriptionIndicators seznam Integeru uchovávající indexi vybraných znaků rovnosti
+     * @param alias alias objektu
+     * @param nameST seznam Stringu s obsazenymi jmeny
+     * @param nameIndicators seznam Integeru uchovávající indexi vybraných znaků rovnosti
+     * @param criterionTable instance třídy prvku tabulky
+     * @param exist bool promenna s inforací o existenci prvku v modelu
+     * @param id identifikator konkrétní instance
      */
     public void editDataFromCriterion(String alias, ArrayList<String> nameST, ArrayList<Integer> nameIndicators, ArrayList<String> description, ArrayList<Integer> descriptionIndicators,
                                       CriterionTable criterionTable, boolean exist, int id) {
@@ -369,15 +367,15 @@ public class EditFormController implements IEditFormController {
     /**
      * Metoda pro editaci dat v datovych strukturach elementu Resolution
      * Upravena data jsou predany konkretnim strukturam
-     * @param alias
-     * @param nameST
-     * @param nameIndicators
-     * @param description
-     * @param descriptionIndicators
-     * @param roleIndex
-     * @param roleIndicators
-     * @param exist
-     * @param cprTable
+     * @param alias alias objektu
+     * @param nameST seznam Stringu s obsazenymi jmeny
+     * @param nameIndicators seznam Integeru uchovávající indexi vybraných znaků rovnosti
+     * @param description list s descriptions
+     * @param descriptionIndicators seznam Integeru uchovávající indexi vybraných znaků rovnosti
+     * @param roleIndex seznam zvolených tříd
+     * @param roleIndicators seznam zvolených super tříd
+     * @param cprTable instance třídy prvku tabulky
+     * @param exist bool promenna s inforací o existenci prvku v modelu
      */
     public void editDataFromCPR(String alias, ArrayList<String> nameST, ArrayList<Integer> nameIndicators, ArrayList<String> description, ArrayList<Integer> descriptionIndicators, ArrayList<Integer> roleIndex,
                                 ArrayList<Integer> roleIndicators, boolean exist, CPRTable cprTable) {
@@ -404,12 +402,12 @@ public class EditFormController implements IEditFormController {
     /**
      * Metoda pro editaci dat v datovych strukturach elementu Resolution
      * Upravena data jsou predany konkretnim strukturam
-     * @param alias
-     * @param nameST
-     * @param nameIndicators
-     * @param isMainBranch
-     * @param exist
-     * @param branchTable
+     * @param alias alias objektu
+     * @param nameST seznam Stringu s obsazenymi jmeny
+     * @param nameIndicators seznam Integeru uchovávající indexi vybraných znaků rovnosti
+     * @param isMainBranch bool promenna s hodnoutou yda se jedna o hlavni vetev
+     * @param exist bool promenna s inforací o existenci prvku v modelu
+     * @param branchTable instance třídy prvku tabulky
      */
     public void editDataFromBranch(String alias, ArrayList<String> nameST, ArrayList<Integer> nameIndicators, boolean isMainBranch, boolean exist, BranchTable branchTable) {
 
@@ -427,6 +425,27 @@ public class EditFormController implements IEditFormController {
         segmentLists.updateListItem(SegmentType.Branch, branchId, branchTable);
     }
 
+    /**
+     * Metoda pro editaci dat v datovych strukturach elementu Phase
+     * Nejprve je provedena kontorla vstup nasledne
+     * Upravena data jsou predany konkretnim strukturam
+     * @param alias alias objektu
+     * @param actName seznam Stringu s obsazenymi jmeny
+     * @param nameIndicator seznam Integeru uchovávající indexi vybraných znaků rovnosti
+     * @param endDateL seznam LocalDate s daty ukonceni
+     * @param desc seznam Stringu s descrtiption
+     * @param confIndex seznam Integeru jako indexu do seznamu configuration
+     * @param milestoneIndex seznam Integeru jako indexu do seznamu milestone
+     * @param workUnitIndexList seznam Integeru jako indexu do seznamu Work Unit
+     * @param workUnitIndicators seznam Integeru uchovávající indexi vybraných znaků rovnosti
+     * @param endDateIndicator seznam Integeru uchovávající indexi vybraných znaků rovnosti
+     * @param descIndicator seznam Integeru uchovávající indexi vybraných znaků rovnosti
+     * @param confIndicator seznam Integeru uchovávající indexi vybraných znaků rovnosti
+     * @param milestoneIndicator seznam Integeru uchovávající indexi vybraných znaků rovnosti
+     * @param phaseTable instance třídy prvku tabulky
+     * @param exist bool promenna s inforací o existenci prvku v modelu
+     * @param id identifikator konkrétní instance
+     */
     @Override
     public void editDataFromPhase(String alias, ArrayList<String> actName, ArrayList<LocalDate> endDateL, ArrayList<String> desc,
                                   ArrayList<Integer> confIndex, ArrayList<Integer> milestoneIndex, ArrayList<ArrayList<Integer>> workUnitIndexList,
@@ -450,6 +469,27 @@ public class EditFormController implements IEditFormController {
 
     }
 
+    /**
+     * Metoda pro editaci dat v datovych strukturach elementu Iteration
+     * Nejprve je provedena kontorla vstup nasledne
+     * Upravena data jsou predany konkretnim strukturam
+     * @param alias alias objektu
+     * @param actName seznam Stringu s obsazenymi jmeny
+     * @param nameIndicator seznam Integeru uchovávající indexi vybraných znaků rovnosti
+     * @param endDateL seznam LocalDate s daty ukonceni
+     * @param startDateL seznam LocalDate s daty zalozeni
+     * @param desc seznam Stringu s descrtiption
+     * @param confIndex seznam Integeru jako indexu do seznamu configuration
+     * @param workUnitIndexList seznam Integeru jako indexu do seznamu Work Unit
+     * @param workUnitIndicators seznam Integeru uchovávající indexi vybraných znaků rovnosti
+     * @param endDateIndicator seznam Integeru uchovávající indexi vybraných znaků rovnosti
+     * @param startDateIndicator seznam Integeru uchovávající indexi vybraných znaků rovnosti
+     * @param descIndicator seznam Integeru uchovávající indexi vybraných znaků rovnosti
+     * @param confIndicator seznam Integeru uchovávající indexi vybraných znaků rovnosti
+     * @param iterationTable instance třídy prvku tabulky
+     * @param exist bool promenna s inforací o existenci prvku v modelu
+     * @param id identifikator konkrétní instance
+     */
     @Override
     public void editDataFromIteration(String alias, ArrayList<String> actName, ArrayList<LocalDate> endDateL, ArrayList<LocalDate> startDateL, ArrayList<String> desc,
                                       ArrayList<Integer> confIndex, ArrayList<ArrayList<Integer>> workUnitIndexList,
@@ -475,6 +515,22 @@ public class EditFormController implements IEditFormController {
 
     }
 
+    /**
+     * Metoda pro editaci dat v datovych strukturach Projectu
+     * Nejprve je provedena kontorla vstup nasledne
+     * Upravena data jsou predany konkretnim strukturam
+     * @param name seznam Stringu s obsazenymi jmeny
+     * @param nameIndicators seznam Integeru uchovávající indexi vybraných znaků rovnosti
+     * @param endDate seznam LocalDate s daty ukonceni
+     * @param startDate seznam LocalDate s daty zalozeni
+     * @param desc seznam Stringu s descrtiption
+     * @param workUnit seznam Integeru jako indexu do seznamu Work Unit
+     * @param workUnitIndicators seznam Integeru uchovávající indexi vybraných znaků rovnosti
+     * @param date1Indicators seznam Integeru uchovávající indexi vybraných znaků rovnosti
+     * @param date2Indicators seznam Integeru uchovávající indexi vybraných znaků rovnosti
+     * @param descIndicators seznam Integeru uchovávající indexi vybraných znaků rovnosti
+
+     */
     @Override
     public void editDataFromProject(ArrayList<String> name, ArrayList<LocalDate> startDate, ArrayList<LocalDate> endDate, ArrayList<String> desc,
                                     ArrayList<ArrayList<Integer>> workUnit, ArrayList<Integer> workUnitIndicators, ArrayList<Integer> nameIndicators,
@@ -494,6 +550,23 @@ public class EditFormController implements IEditFormController {
     }
 
 
+    /**
+     * Metoda pro editaci dat v datovych strukturach elementu Activity
+     * Nejprve je provedena kontorla vstup nasledne
+     * Upravena data jsou predany konkretnim strukturam
+     * @param alias alias objektu
+     * @param name seznam Stringu s obsazenymi jmeny
+     * @param nameIndicators seznam Integeru uchovávající indexi vybraných znaků rovnosti
+     * @param endDate seznam LocalDate s daty ukonceni
+     * @param description seznam Stringu s descrtiption
+     * @param workUnits seznam Integeru jako indexu do seznamu Work Unit
+     * @param workUnitIndicators seznam Integeru uchovávající indexi vybraných znaků rovnosti
+     * @param endDateIndicators seznam Integeru uchovávající indexi vybraných znaků rovnosti
+     * @param descIndicators seznam Integeru uchovávající indexi vybraných znaků rovnosti
+     * @param activityTable instance třídy prvku tabulky
+     * @param exist bool promenna s inforací o existenci prvku v modelu
+     * @param id identifikator konkrétní instance
+     */
     @Override
     public void editDataFromActivity(String alias, ArrayList<String> name, ArrayList<String> description, ArrayList<ArrayList<Integer>> workUnits,
                                      ArrayList<Integer> nameIndicators, ArrayList<Integer> descIndicators, ArrayList<Integer> workUnitIndicators,
@@ -514,6 +587,20 @@ public class EditFormController implements IEditFormController {
 
     }
 
+    /**
+     * Metoda pro editaci dat v datovych strukturach elementu Activity
+     * Nejprve je provedena kontorla vstup nasledne
+     * Upravena data jsou predany konkretnim strukturam
+     * @param alias alias objektu
+     * @param name seznam Stringu s obsazenymi jmeny
+     * @param nameIndicator seznam Integeru uchovávající indexi vybraných znaků rovnosti
+     * @param description seznam Stringu s descrtiption
+     * @param artifact seznam Itegeru s indexi na Artifact
+     * @param descriptionIndicator seznam Integeru uchovávající indexi vybraných znaků rovnosti
+     * @param changeTable instance třídy prvku tabulky
+     * @param exist bool promenna s inforací o existenci prvku v modelu
+     * @param id identifikator konkrétní instance
+     */
     @Override
     public void editDataFromChange(String alias, ArrayList<String> name, ArrayList<Integer> nameIndicator, ArrayList<String> description, ArrayList<Integer> artifact,
                                    ArrayList<Integer> descriptionIndicator, boolean exist, ChangeTable changeTable,
@@ -530,36 +617,93 @@ public class EditFormController implements IEditFormController {
 
     }
 
+    /**
+     * Metoda pro editaci dat v datovych strukturach elementu Activity
+     * Nejprve je provedena kontorla vstup nasledne
+     * Upravena data jsou predany konkretnim strukturam
+     * @param alias objektu
+     * @param name seznam Stringu s obsazenymi jmeny
+     * @param nameIndicator seznam Integeru uchovávající indexi vybraných znaků rovnosti
+     * @param description seznam Stringu s descrtiption
+     * @param exist bool promenna s inforací o existenci prvku v modelu
+     * @param personIndex seznam Itegeru s indexi naPerson
+     * @param typeIndex seznam Itegeru s indexi na
+     * @param created seznam LocalDate s daty ukonceni
+     * @param descriptionIndicator seznam Integeru uchovávající indexi vybraných znaků rovnosti
+     * @param roleIndicator seznam Integeru uchovávající indexi vybraných znaků rovnosti
+     * @param typeIndicator seznam Integeru uchovávající indexi vybraných znaků rovnosti
+     * @param dateIndicator seznam Integeru uchovávající indexi vybraných znaků rovnosti
+     * @param artifactTable instance třídy prvku tabulky
+     * @param exist bool promenna s inforací o existenci prvku v modelu
+     * @param id identifikator konkrétní instance
+     */
     @Override
     public void editDataFromArtifact(String alias, ArrayList<String> name, ArrayList<String> description, boolean exist,
-                                     ArrayList<Integer> roleIndex, ArrayList<Integer> typeIndex, ArrayList<LocalDate> localDate,
+                                     ArrayList<Integer> personIndex, ArrayList<Integer> typeIndex, ArrayList<LocalDate> created,
                                      ArrayList<Integer> nameIndicator, ArrayList<Integer> descriptionIndicator,
                                      ArrayList<Integer> roleIndicator, ArrayList<Integer> typeIndicator, ArrayList<Integer> dateIndicator,
-                                     ArtifactTable artifactTable, String count, int id) {
+                                     ArtifactTable artifactTable, String count, int countIndicator, int id) {
         int instanceCount = 1;
         try {
-            instanceCount = Integer.parseInt(count);
+            instanceCount = InputController.isNumber(count, 1, 99, "Count");
 
             ArrayList<String> nameForManipulator = InputController.fillNameTextMapper(name);
-            ArrayList<LocalDate> date = InputController.checkDate(localDate);
+            ArrayList<LocalDate> date = InputController.checkDate(created);
             ArrayList<String> descriptionForManipulator = InputController.fillTextMapper(description);
 
             dataManipulator.editDataInArtifact(alias, nameForManipulator, nameIndicator, descriptionForManipulator, descriptionIndicator,
-                    date, dateIndicator, exist, roleIndex, typeIndex, roleIndicator, typeIndicator, instanceCount, id);
+                    date, dateIndicator, exist, personIndex, typeIndex, roleIndicator, typeIndicator, instanceCount, countIndicator, id);
 
             artifactTable.setAlias(alias);
             artifactTable.setExist(exist);
             int formIndex = identificatorCreater.getArtifactSegmentIdToFormIndexMaper().get(id);
             formController.setNameToItem(formIndex, alias);
-            formController.setItemInstanceCount(formIndex, instanceCount);
+            formController.setItemInstanceCount(formIndex, instanceCount, countIndicator);
             formController.setItemColor(formIndex, exist);
 
         } catch (NumberFormatException e) {
-            Alerts.showWrongNumberFormat("Instance count");
+        //    Alerts.showWrongNumberFormat("Instance count");
             e.printStackTrace();
         }
     }
 
+    /**
+     * Metoda pro editaci dat v datovych strukturach elementu Activity
+     * Nejprve je provedena kontorla vstup nasledne
+     * Upravena data jsou predany konkretnim strukturam
+     * @param alias alias objektu
+     * @param progress seznam double hodnot pro progress
+     * @param progressIndicator seznam Integeru uchovávající indexi vybraných znaků rovnosti
+     * @param name seznam Stringu se jmeny
+     * @param description seznam Stringu s descrtiption
+     * @param category seznam Stringu s category
+     * @param assigneIndex seznam Itegeru s indexi na Person
+     * @param authorIndex seznam Itegeru s indexi na Person
+     * @param priorityIndex seznam Itegeru s indexi na Priority
+     * @param severityIndex seznam Itegeru s indexi na Severity
+     * @param typeIndex seznam Itegeru s indexi na Type
+     * @param resolutionIndex seznam Itegeru s indexi na Resolution
+     * @param statusIndex seznam Itegeru s indexi na Status
+     * @param estimatedTime seznam Double s estimate time
+     * @param nameIndicator seznam Integeru uchovávající indexi vybraných znaků rovnosti
+     * @param descriptionIndicator seznam Integeru uchovávající indexi vybraných znaků rovnosti
+     * @param categoryIndicator seznam Integeru uchovávající indexi vybraných znaků rovnosti
+     * @param assigneIndicator seznam Integeru uchovávající indexi vybraných znaků rovnosti
+     * @param authorIndicator seznam Integeru uchovávající indexi vybraných znaků rovnosti
+     * @param priorityIndicator seznam Integeru uchovávající indexi vybraných znaků rovnosti
+     * @param severityIndicator seznam Integeru uchovávající indexi vybraných znaků rovnosti
+     * @param typeIndicator seznam Integeru uchovávající indexi vybraných znaků rovnosti
+     * @param resolutionIndicator seznam Integeru uchovávající indexi vybraných znaků rovnosti
+     * @param statusIndicator seznam Integeru uchovávající indexi vybraných znaků rovnosti
+     * @param estimateIndicator seznam Integeru uchovávající indexi vybraných znaků rovnosti
+     * @param isExist bool promenna s inforací o existenci prvku v modelu
+     * @param relations seznam Itegeru s indexi na Relation
+     * @param workUnits seznam Itegeru s indexi na Work Unit
+     * @param createDate seznam LocalDate s daty ukonceni
+     * @param createdIndicator seznam Integeru uchovávající indexi vybraných znaků rovnosti
+     * @param workUnitTable instance třídy prvku tabulky
+     * @param id identificator konkretni instance
+     */
     @Override
     public void editDataFromWorkUnit(String alias, ArrayList<String> progress, ArrayList<Integer> progressIndicator, ArrayList<String> name, ArrayList<String> description, ArrayList<String> category,
                                      ArrayList<Integer> assigneIndex, ArrayList<Integer> authorIndex, ArrayList<Integer> priorityIndex, ArrayList<Integer> severityIndex,
@@ -613,16 +757,41 @@ public class EditFormController implements IEditFormController {
         }
     }
 
+    /**
+     * Metoda pro editaci dat v datovych strukturach elementu Activity
+     * Nejprve je provedena kontorla vstup nasledne
+     * Upravena data jsou predany konkretnim strukturam
+     * @param alias alias objektu
+     * @param actName seznam Stringu s obsazenymi jmeny
+     * @param nameIndicator seznam Integeru uchovávající indexi vybraných znaků rovnosti
+     * @param description seznam Stringu s descrtiption
+     * @param createDate seznam LocalDate s daty ukonceni
+     * @param isRelease  bool promenna s informací o tom zda je release
+     * @param tag seznam Itegeru s indexi na Work Unit
+     * @param cprs seznam Itegeru s indexi na Work Unit
+     * @param branchIndexs seznam Integeru uchovávající indexi vybraných znaků rovnosti
+     * @param branchIndicators seznam Integeru uchovávající indexi vybraných znaků rovnosti
+     * @param changeIndexs seznam Itegeru s indexi na Work Unit
+     * @param cprIndicators seznam Integeru uchovávající indexi vybraných znaků rovnosti
+     * @param descriptionIndicator seznam Integeru uchovávající indexi vybraných znaků rovnosti
+     * @param createdIndicator seznam Integeru uchovávající indexi vybraných znaků rovnosti
+     * @param tagIndicator seznam Integeru uchovávající indexi vybraných znaků rovnosti
+     * @param changeIndicator seznam Integeru uchovávající indexi vybraných znaků rovnosti
+     * @param count pocet instanci prvku v objektu
+     * @param exist bool promenna s inforací o existenci prvku v modelu
+     * @param configId identifikator konkrétní instance
+     */
     @Override
     public void editDataFromConfiguration(String alias, ArrayList<String> actName, ArrayList<String> description, ArrayList<LocalDate> createDate,
                                           boolean isRelease, ArrayList<Integer> tag, ArrayList<ArrayList<Integer>> cprs, ArrayList<ArrayList<Integer>> branchIndexs, ArrayList<Integer> branchIndicators,
                                           ArrayList<ArrayList<Integer>> changeIndexs, ArrayList<Integer> cprIndicators, ArrayList<Integer> nameIndicator, ArrayList<Integer> descriptionIndicator,
                                           ArrayList<Integer> createdIndicator, ArrayList<Integer> tagIndicator, ArrayList<Integer> changeIndicator,
-                                          String count, boolean exist, int configId) {
+                                          String count, int countIndicator, boolean exist, int configId) {
 
         int instanceCount;
         try {
-            instanceCount = Integer.parseInt(count);
+            instanceCount = InputController.isNumber(count, 1, 99, "Count");
+
             ArrayList<String> nameForManipulator = InputController.fillNameTextMapper(actName);
             ArrayList<LocalDate> date = InputController.checkDate(createDate);
             ArrayList<Integer> tagForManipulator = dataPreparer.prepareIndexForManipulator(tag);
@@ -632,7 +801,8 @@ public class EditFormController implements IEditFormController {
             ArrayList<ArrayList<Integer>> changesForManipulator = dataPreparer.prepareIndicesForManipulator(changeIndexs);
 
             dataManipulator.editDataInConfiguration(alias, nameForManipulator, description, date, isRelease,
-                    cprsForManipulator, changesForManipulator, branchesForManipulator, branchIndicators, cprIndicators, nameIndicator, descriptionIndicator, tagForManipulator, tagIndicator, createdIndicator, changeIndicator, instanceCount, exist, configId);
+                    cprsForManipulator, changesForManipulator, branchesForManipulator, branchIndicators, cprIndicators, nameIndicator, descriptionIndicator,
+                    tagForManipulator, tagIndicator, createdIndicator, changeIndicator, instanceCount,  countIndicator, exist, configId);
 
             int formIndex = identificatorCreater.getConfigurationFormIndex(configId);
             ConfigTable configTable = new ConfigTable(alias, "", formIndex, exist, configId);
@@ -640,25 +810,35 @@ public class EditFormController implements IEditFormController {
             segmentLists.updateListItem(SegmentType.Configuration, configId, configTable);
 
             formController.setNameToItem(formIndex, alias);
-            formController.setItemInstanceCount(formIndex, instanceCount);
+            formController.setItemInstanceCount(formIndex, instanceCount, countIndicator);
             formController.setItemColor(formIndex, exist);
             mapperTableToObject.mapTableToConfiguration(branchesForManipulator, cprsForManipulator, changesForManipulator, tagForManipulator, alias, configId);
 
 
         } catch (NumberFormatException e) {
-            Alerts.showWrongNumberFormat("Instance count");
+         //   Alerts.showWrongNumberFormat("Instance count");
             e.printStackTrace();
         }
     }
 
+    /**
+     * Metoda pro editaci dat v datovych strukturach elementu Activity
+     * Nejprve je provedena kontorla vstup nasledne
+     * Upravena data jsou predany konkretnim strukturam
+     * @param alias alias objektu
+     * @param name seznam Stringu s obsazenymi jmeny
+     * @param nameIndicator seznam Integeru uchovávající indexi vybraných znaků rovnosti
+     * @param description list s descriptions
+     * @param descriptionIndicator seznam Integeru uchovávající indexi vybraných znaků rovnosti
+     * @param tagTable instance třídy prvku tabulky
+     * @param exist bool promenna s inforací o existenci prvku v modelu
+     * @param id identifikator konkrétní instance
+     */
     @Override
     public void editDataFromVCSTag(String alias, ArrayList<String> name, ArrayList<String> description,
                                    ArrayList<Integer> nameIndicator, ArrayList<Integer> descriptionIndicator, VCSTagTable tagTable, boolean exist, int id) {
         ArrayList<String> nameForManipulator = InputController.fillNameTextMapper(name);
         ArrayList<String> descriptionForManipulator = InputController.fillTextMapper(description);
-//        if(descriptionForManipulator != null){
-//            tagTable.setDescription(descriptionForManipulator.get(0));
-//        }
 
         dataManipulator.editDataInVCSTag(alias, nameForManipulator, descriptionForManipulator, nameIndicator, descriptionIndicator, exist, id);
         tagTable.setExist(exist);
@@ -666,76 +846,146 @@ public class EditFormController implements IEditFormController {
         segmentLists.getVCSTag().add(tagTable);
     }
 
+    /**
+     * Metoda pro editaci dat v datovych strukturach elementu Activity
+     * Nejprve je provedena kontorla vstup nasledne
+     * Upravena data jsou predany konkretnim strukturam
+     * @param alias alias objektu
+     * @param name seznam Stringu s obsazenymi jmeny
+     * @param nameIndicator seznam Integeru uchovávající indexi vybraných znaků rovnosti
+     * @param descriptions seznam Stringu s descrtiption
+     * @param createDate seznam LocalDate s daty ukonceni
+     * @param release  bool promenna s informací o tom zda je release
+     * @param descriptionsIndicator seznam Integeru uchovávající indexi vybraných znaků rovnosti
+     * @param createIndicator seznam Integeru uchovávající indexi vybraných znaků rovnosti
+     * @param count pocet instanci prvku v objektu
+     * @param exist bool promenna s inforací o existenci prvku v modelu
+     * @param id identifikator konkrétní instance
+     */
     @Override
     public void editDataFromCommit(String alias, ArrayList<String> name, ArrayList<Integer> nameIndicator, ArrayList<String> descriptions, ArrayList<Integer> descriptionsIndicator,
-                                   ArrayList<LocalDate> createDate, ArrayList<Integer> createIndicator, boolean release, String count, boolean exist, int id) {
+                                   ArrayList<LocalDate> createDate, ArrayList<Integer> createIndicator, boolean release, String count, int countIndicator, boolean exist, int id) {
 
         int instanceCount = 0;
         try {
-            instanceCount = Integer.parseInt(count);
+            instanceCount = InputController.isNumber(count, 1, 99, "Count");
+
             ArrayList<String> nameForManipulator = InputController.fillNameTextMapper(name);
             ArrayList<LocalDate> date = InputController.checkDate(createDate);
             ArrayList<String> descriptionForManipulator = InputController.fillTextMapper(descriptions);
-            dataManipulator.editDataInCommit(alias, nameForManipulator, nameIndicator, descriptionForManipulator, descriptionsIndicator, date, createIndicator, release, instanceCount, exist, id);
+            dataManipulator.editDataInCommit(alias, nameForManipulator, nameIndicator, descriptionForManipulator, descriptionsIndicator, date,
+                    createIndicator, release, instanceCount, countIndicator, exist, id);
 
             int formIndex = identificatorCreater.getCommitFormIndex(id);
 
             formController.setNameToItem(formIndex, alias);
-            formController.setItemInstanceCount(formIndex, instanceCount);
+            formController.setItemInstanceCount(formIndex, instanceCount, countIndicator);
             formController.setItemColor(formIndex, exist);
 
         } catch (NumberFormatException e) {
-            Alerts.showWrongNumberFormat("Instance count");
+        //    Alerts.showWrongNumberFormat("Instance count");
             e.printStackTrace();
         }
 
     }
 
+    /**
+     * Metoda pro zmenu souradnic elementu na platne
+     *
+     * @param x double Xova souradnice
+     * @param y double Yova souradnice
+     * @param id identifikator instance
+     */
     @Override
     public void editCoordsInCommit(double x, double y, int id) {
         dataManipulator.editCoordinatesInCommit((int) x, (int) y, id);
     }
 
+    /**
+     * Metoda pro zmenu souradnic elementu na platne
+     *
+     * @param x double Xova souradnice
+     * @param y double Yova souradnice
+     * @param id identifikator instance
+     */
     @Override
     public void editCoordsInCommitedConfiguration(double x, double y, int id) {
         dataManipulator.editCoordinatesInCommitedConfiguration((int) x, (int) y, id);
     }
 
+    /**
+     * Metoda pro zmenu souradnic elementu na platne
+     *
+     * @param x double Xova souradnice
+     * @param y double Yova souradnice
+     * @param id identifikator instance
+     */
     @Override
     public void editCoordsInConfiguration(double x, double y, int id) {
         dataManipulator.editCoordinatesInConfiguration((int) x, (int) y, id);
     }
 
+    /**
+     * Metoda pro zmenu souradnic elementu na platne
+     *
+     * @param x double Xova souradnice
+     * @param y double Yova souradnice
+     * @param id identifikator instance
+     */
     @Override
     public void editCoordsInArtifact(double x, double y, int id) {
         dataManipulator.editCoordinatesInArtifact((int) x, (int) y, id);
     }
 
+    /**
+     * Metoda pro zmenu souradnic elementu na platne
+     *
+     * @param x double Xova souradnice
+     * @param y double Yova souradnice
+     * @param id identifikator instance
+     */
     @Override
     public void editCoordsInRole(double x, double y, int id) {
         dataManipulator.editCoordinatesInRole((int) x, (int) y, id);
     }
 
 
+    /**
+     * Metoda pro editaci dat v datovych strukturach elementu Activity
+     * Nejprve je provedena kontorla vstup nasledne
+     * Upravena data jsou predany konkretnim strukturam
+     * @param alias alias objektu
+     * @param name seznam Stringu s obsazenymi jmeny
+     * @param nameIndicator seznam Integeru uchovávající indexi vybraných znaků rovnosti
+     * @param description seznam Stringu s descrtiption
+     * @param created seznam LocalDate s daty ukonceni
+     * @param descriptionIndicator seznam Integeru uchovávající indexi vybraných znaků rovnosti
+     * @param createdIndicator seznam Integeru uchovávající indexi vybraných znaků rovnosti
+     * @param count pocet instanci prvku v objektu
+     * @param exist bool promenna s inforací o existenci prvku v modelu
+     * @param commitedConfigurationId identifikator konkrétní instance
+     */
     @Override
     public void editDataFromCommitedConfiguration(String alias, ArrayList<String> name, ArrayList<Integer> nameIndicator, ArrayList<String> description, ArrayList<Integer> descriptionIndicator, ArrayList<LocalDate> created,
-                                                  ArrayList<Integer> createdIndicator, ArrayList<LocalDate> committed, ArrayList<Integer> committedIndicator, String count, boolean exist, int commitedConfigurationId) {
+                                                  ArrayList<Integer> createdIndicator, ArrayList<LocalDate> committed, ArrayList<Integer> committedIndicator, String count,  int countIndicator, boolean exist, int commitedConfigurationId) {
 
         int instanceCount = 0;
         try {
-            instanceCount = Integer.parseInt(count);
+            instanceCount = InputController.isNumber(count, 1, 99, "Count");
+
             ArrayList<String> nameForManipulator = InputController.fillNameTextMapper(name);
             ArrayList<LocalDate> date = InputController.checkDate(committed);
             ArrayList<LocalDate> createdl = InputController.checkDate(created);
 
-            dataManipulator.editDataInCommitedConfiguration(alias, nameForManipulator, nameIndicator, description, descriptionIndicator, createdl, createdIndicator, date, committedIndicator, instanceCount, exist, commitedConfigurationId);
+            dataManipulator.editDataInCommitedConfiguration(alias, nameForManipulator, nameIndicator, description, descriptionIndicator, createdl,
+                    createdIndicator, date, committedIndicator, instanceCount, countIndicator, exist, commitedConfigurationId);
 
             int formIndex = identificatorCreater.getCommitedConfigurationFormIndex(commitedConfigurationId);
             formController.setNameToItem(formIndex, alias);
-            formController.setItemInstanceCount(formIndex, instanceCount);
+            formController.setItemInstanceCount(formIndex, instanceCount, countIndicator);
             formController.setItemColor(formIndex, exist);
         } catch (NumberFormatException e) {
-            Alerts.showWrongNumberFormat("Instance count");
+          //  Alerts.showWrongNumberFormat("Instance count");
             e.printStackTrace();
         }
     }

@@ -25,13 +25,13 @@ public class PersonControlPanel extends NameControlPanel implements IControlPane
         this.roleIndex = roleIndex;
         this.personTable = personTable;
         SegmentLists segmentLists = formController.getSegmentLists();
-        lineList.add(new ControlPanelLineObject("Person Type: ", ControlPanelLineType.ComboBox, ParamType.RoleType, segmentLists.getRoleTypeObservable()));
+        lineList.add(new ControlPanelLineObject("Role type: ", ControlPanelLineType.ComboBox, ParamType.RoleType, segmentLists.getRoleTypeObservable()));
         this.addItemsToControlPanel();
     }
 
     protected void addItemsToControlPanel() {
 
-        controlPanelController.setCountLine(this, 1, new ControlPanelLine(lineList, this, controlPanelController, controlPanelController.getLineCount()));
+        controlPanelController.setCountLine(this, 1, new ControlPanelLine(lineList, this, controlPanelController, Constans.numberIndicatorList, controlPanelController.getLineCount()));
         controlPanelController.createNewLineWithExist(this, lineList);
 
         button.setOnAction(event -> {
@@ -43,8 +43,8 @@ public class PersonControlPanel extends NameControlPanel implements IControlPane
             ArrayList<Integer> roleType = controlPanelController.processComboBoxLines(ParamType.RoleType, roleTypeIndicators);
 
             String count = controlPanelController.getInstanceCount();
-
-            editFormController.editDataFromPerson(aliasTF.getText(), name, nameIndicators, count, roleType, roleTypeIndicators, personTable,
+            int countIndicator = controlPanelController.getInstanceCountIndicator();
+            editFormController.editDataFromPerson(aliasTF.getText(), name, nameIndicators, count, countIndicator, roleType, roleTypeIndicators, personTable,
                     controlPanelController.isExist(), roleId);
 
         });
@@ -65,8 +65,8 @@ public class PersonControlPanel extends NameControlPanel implements IControlPane
         boolean exist = (boolean) boolList.get(0);
 
         controlPanelController.setValueExistRadioButton(exist);
-        controlPanelController.setCountToCountLine((int) boolList.get(1));
-        controlPanelController.setAlias((String) boolList.get(2), this);
+        controlPanelController.setCountToCountLine((int) boolList.get(1), (int) boolList.get(2));
+        controlPanelController.setAlias((String) boolList.get(3), this);
     }
 
     @Override

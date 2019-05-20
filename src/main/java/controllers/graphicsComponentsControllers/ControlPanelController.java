@@ -507,8 +507,10 @@ public class ControlPanelController {
 
         controlPane.getChildren().remove(countLB);
         controlPane.getChildren().remove(countLine.getTextItem().getItemTF());
+        controlPane.getChildren().remove(countLine.getTextItem().getIndicatorCB());
         controlPane.add(countLB, 1, lineCount + lineShift);
-        controlPane.add(countLine.getTextItem().getItemTF(), 2, lineCount + lineShift);
+        controlPane.add(countLine.getTextItem().getIndicatorCB(), 2, lineCount + lineShift);
+        controlPane.add(countLine.getTextItem().getItemTF(), 3, lineCount + lineShift);
 
         isCountLine = true;
     }
@@ -589,8 +591,9 @@ public class ControlPanelController {
         return classIndex;
     }
 
-    public void setCountToCountLine(Integer value) {
+    public void setCountToCountLine(Integer value, int indicator) {
         countLine.setCount(value);
+        countLine.getTextItem().setIndicator(indicator);
     }
 
 
@@ -617,6 +620,11 @@ public class ControlPanelController {
 
     public void setAlias(String alias, ControlPanel controlPanel) {
         controlPanel.getAliasTF().setText(alias);
+    }
+
+    public int getInstanceCountIndicator() {
+
+        return countLine.getTextItem().getIndicatorIndex();
     }
 }
 

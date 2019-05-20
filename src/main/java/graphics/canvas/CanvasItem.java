@@ -3,8 +3,13 @@ package graphics.canvas;
 import controllers.graphicsComponentsControllers.CanvasController;
 import controllers.graphicsComponentsControllers.CanvasItemController;
 import javafx.geometry.Point2D;
+import javafx.geometry.Rectangle2D;
+import javafx.scene.Group;
 import javafx.scene.control.Tooltip;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Polygon;
+import javafx.scene.shape.Rectangle;
 import services.Constans;
 import services.SegmentType;
 
@@ -19,6 +24,7 @@ public class CanvasItem extends AnchorPane {
      * Globální proměnné tříd
      **/
     private InfoBoxSegment segmentInfo;
+    private Polygon contour;
     private double orgSceneX, orgSceneY;
     private double orgTranslateX, orgTranslateY;
 
@@ -34,7 +40,6 @@ public class CanvasItem extends AnchorPane {
 
     private String segmentIdentificator;
     private int formIdentificator;
-    private int instanceCount;
 
     /**
      * Konstruktor třídy. Zinicializuje globální proměnné třídy. Získá
@@ -51,7 +56,6 @@ public class CanvasItem extends AnchorPane {
 
         this.canvasController = canvasController;
         this.canvasItemController = canvasItemController;
-        this.instanceCount = instanceCount;
         this.setOnMousePressed(event -> canvasItemController.setClicFromDragPoint(event, this, canvasController, type));
         this.setOnMouseDragged(event -> canvasItemController.setDragFromDragPoint(event, this, canvasController));
         this.setOnMouseReleased(event -> setPosition(canvasItemController.canvasItemPositionControl(getTranslateX(), getTranslateY(), segmentType, formIdentificator)));
@@ -77,6 +81,36 @@ public class CanvasItem extends AnchorPane {
         this.setMaxHeight(segmentInfo.getHeight());
         this.setMaxWidth(segmentInfo.getLength());
         this.getChildren().add(segmentInfo);
+
+
+
+        this.contour = new Polygon();
+        contour.getPoints().addAll(createPolygon(segmentInfo.getTranslateX() - Constans.CONTOURE_OFFSET,segmentInfo.getTranslateY() - Constans.CONTOURE_OFFSET,
+                segmentInfo.getLength() + (2*Constans.CONTOURE_OFFSET) ,segmentInfo.getTotalHeight() + (2*Constans.CONTOURE_OFFSET)));
+        contour.setFill(Color.TRANSPARENT);
+        contour.setStroke(Color.TRANSPARENT);
+        contour.getStrokeDashArray().add(2d);
+        this.getChildren().add(contour);
+
+    }
+
+    public void setContourViseble(Color value){
+        contour.setStroke(value);
+    }
+
+    private Double[] createPolygon(double startX, double startY, double width, double height){
+
+        Double[] points = new Double[8];
+        points[0] = startX;
+        points[1] = startY;
+        points[2] = startX + width;
+        points[3] = startY;
+        points[4] = startX + width;
+        points[5] = startY + height;
+        points[6] = startX;
+        points[7] = startY + height;
+        return points;
+
     }
 
 
@@ -98,6 +132,10 @@ public class CanvasItem extends AnchorPane {
     public void setNameText(String name) {
 
         segmentInfo.setNameText(name);
+        contour.getPoints().clear();
+        contour.getPoints().addAll(createPolygon(segmentInfo.getTranslateX() - Constans.CONTOURE_OFFSET,segmentInfo.getTranslateY() - Constans.CONTOURE_OFFSET,
+                segmentInfo.getLength() + (2*Constans.CONTOURE_OFFSET) ,segmentInfo.getTotalHeight() + (2*Constans.CONTOURE_OFFSET)));
+
     }
 
     public String getNameText() {

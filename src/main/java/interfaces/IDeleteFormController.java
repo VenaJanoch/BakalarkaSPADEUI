@@ -35,7 +35,7 @@ public interface IDeleteFormController {
 
     void deleteRoleTypeWithDialog(ArrayList<BasicTable> selection, TableView tableView);
 
-    boolean deleteRoleWithDialog(int indexForm);
+    boolean deletePersonWithDialog(int indexForm);
 
     void deleteRelationWithDialog(ArrayList<BasicTable> list, TableView<ClassTable> view);
 

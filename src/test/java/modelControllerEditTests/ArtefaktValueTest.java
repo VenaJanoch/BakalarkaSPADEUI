@@ -43,9 +43,9 @@ public class ArtefaktValueTest {
         dates.add(date);
         dataModel.getSaveDataModel().createNewArtifact(2);
         dataModel.getEditDataModel().editDataInArtifact("Test", name, indicators, name, indicators, dates, indicators, false,
-                indicators, indicators, indicators, indicators, 3, 2);
+                indicators, indicators, indicators, indicators, 3, 2, 1);
         dataModel.getEditDataModel().editDataInArtifact("Test", name, indicators, name, indicators, dates, indicators, false,
-                indicators, indicators, indicators, indicators, 3, 2);
+                indicators, indicators, indicators, indicators, 3, 2, 1);
         artifact = dataModel.getArtifact(2);
     }
 
