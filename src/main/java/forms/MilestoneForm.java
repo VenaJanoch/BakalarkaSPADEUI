@@ -90,6 +90,7 @@ public class MilestoneForm extends TableBasicForm implements ISegmentTableForm {
         addButton.setOnAction(event -> addItem());
         removeButton.setOnAction(event -> deleteItem(tableTV));
         editButton.setOnAction(event -> showEditPanel());
+        copyButton.setOnAction(event -> copyItem(tableTV));
 
     }
 
@@ -144,21 +145,7 @@ public class MilestoneForm extends TableBasicForm implements ISegmentTableForm {
     @Override
     public void addItem() {
 
-        String nameST = "";//milestoneControlPanel.getAlias();
-        String descriptionST = ""; // milestoneControlPanel.getDescriptionText();
-
-        int id = formController.createTableItem(SegmentType.Milestone);
-
-        ArrayList criterionList = new ArrayList<>();//new ArrayList<>(milestoneControlPanel.getChoosedIndicies());
-        MilestoneTable milestone = new MilestoneTable(id + "", true, id);
-
-        tableTV.getItems().add(milestone);
-        tableTV.sort();
-
-        formDataController.saveDataFromMilestoneForm(nameST, descriptionST, criterionList, milestone);
-
-        int lastItem = tableTV.getItems().size();
-        tableTV.getSelectionModel().select(lastItem - 1);
+        formDataController.saveDataFromMilestoneForm(tableTV, true);
         showEditPanel();
     }
 

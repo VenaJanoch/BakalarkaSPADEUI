@@ -3,6 +3,7 @@ package modelControllerEditTests;
 import SPADEPAC.Change;
 import controllers.formControllers.EditFormController;
 import controllers.formControllers.FormDataController;
+import javafx.scene.control.TableView;
 import org.junit.Before;
 import org.junit.Test;
 import services.SegmentLists;
@@ -31,7 +32,8 @@ public class ChangeValueTest {
         lists = warmUp.getLists();
         FormDataController formDataController = warmUp.getFormDataController();
         warmUp.getDataModel().getSaveDataModel().createNewChange(0);
-        formDataController.saveDataFromChange(new ChangeTable("Test", true, 0));
+        TableView tableView = new TableView();
+        formDataController.saveDataFromChangeForm(tableView, true);
         EditFormController editFormController = warmUp.getEditFormController();
         ArrayList<String> name = new ArrayList<>();
         name.add("");

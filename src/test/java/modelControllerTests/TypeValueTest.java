@@ -22,7 +22,7 @@ public class TypeValueTest {
             FormController formController = warmUp.getFormController();
 
 
-            warmUp.getDataModel().getSaveDataModel().createNewType("","","",0);
+            warmUp.getDataModel().getSaveDataModel().createNewType(0);
 
             type = warmUp.getDataModel().getType(0);
         }

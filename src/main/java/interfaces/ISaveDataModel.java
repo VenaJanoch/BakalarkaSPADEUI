@@ -20,29 +20,29 @@ public interface ISaveDataModel {
 
     void createNewArtifact(int id);
 
-    void createNewBranch(String nameForManipulator, int id, boolean isMain);
+    void createNewBranch(int id);
 
     void createNewCPR(int id);
 
-    void createNewCriterion(String nameForManipulator, String descForManipulator, int id);
+    void createNewCriterion(int id);
 
-    void createNewPriority(String nameForManipulator, String classST, String superST, int id);
+    void createNewPriority(int id);
 
-    void createNewSeverity(String nameForManipulator, String classST, String superST, int id);
+    void createNewSeverity(int id);
 
-    void createNewRelation(String nameForManipulator, String classST, String superST, int id);
+    void createNewRelation(int id);
 
-    void createNewResolution(String nameForManipulator, String classST, String superST, int id);
+    void createNewResolution(int id);
 
     void createNewPerson(int id);
 
-    void createNewMilestone(String nameForManipulator, String description, ArrayList<Integer> criterionIndex, int id);
+    void createNewMilestone(int id);
 
-    void createNewRoleType(String nameForManipulator, String classST, String superST, int id);
+    void createNewRoleType(int id);
 
-    void createNewStatus(String nameForManipulator, String classST, String superST, int id);
+    void createNewStatus(int id);
 
-    void createNewType(String nameForManipulator, String classST, String superST, int id);
+    void createNewType(int id);
 
     void createNewVCSTag(int id);
 

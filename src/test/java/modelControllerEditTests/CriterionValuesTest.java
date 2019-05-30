@@ -3,6 +3,7 @@ package modelControllerEditTests;
 import SPADEPAC.Criterion;
 import controllers.formControllers.FormController;
 import controllers.formControllers.FormDataController;
+import javafx.scene.control.TableView;
 import org.junit.Before;
 import org.junit.Test;
 import services.SegmentLists;
@@ -29,7 +30,8 @@ public class CriterionValuesTest {
             FormController formController = warmUp.getFormController();
 
             formController.createTableItem(SegmentType.Criterion);
-            formDataController.saveDataFromCriterionForm("", new CriterionTable("Test", true, 0));
+            TableView tableView = new TableView();
+            formDataController.saveDataFromCriterionForm(tableView, true);
             ArrayList<String> name = new ArrayList<>();
             name.add("");
             name.add("Test2");

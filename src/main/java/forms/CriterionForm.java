@@ -126,22 +126,13 @@ public class CriterionForm extends TableBasicForm implements ISegmentTableForm {
         addButton.setOnAction(event -> addItem());
         removeButton.setOnAction(event -> deleteItem(tableTV));
         editButton.setOnAction(event -> showEditPanel());
+        copyButton.setOnAction(event -> copyItem(tableTV));
     }
 
     @Override
     public void addItem() {
-        String nameST = "";// criterionControlPanel.getAlias();
-        String descriptionST = "";// criterionControlPanel.getDescriptionText();
 
-        int id = formController.createTableItem(SegmentType.Criterion);
-        String idName = id + "";
-
-        CriterionTable criterion = new CriterionTable(idName, true, id);
-        tableTV.getItems().add(criterion);
-        tableTV.sort();
-        formDataController.saveDataFromCriterionForm(nameST, criterion);
-        int lastItem = tableTV.getItems().size();
-        tableTV.getSelectionModel().select(lastItem - 1);
+        formDataController.saveDataFromCriterionForm(tableTV, true);
         showEditPanel();
     }
 

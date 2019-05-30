@@ -81,6 +81,7 @@ public class BranchForm extends TableBasicForm implements ISegmentTableForm {
         addButton.setOnAction(event -> addItem());
         removeButton.setOnAction(event -> deleteItem(tableTV));
         editButton.setOnAction(event -> showEditPanel());
+        copyButton.setOnAction(event -> copyItem(tableTV));
     }
 
     @Override
@@ -140,17 +141,7 @@ public class BranchForm extends TableBasicForm implements ISegmentTableForm {
     @Override
     public void addItem() {
 
-        String nameST = ""; //branchoneControlPanel.getAlias();
-        int id = formController.createTableItem(SegmentType.Branch);
-
-        BranchTable branch = new BranchTable(id + "", "YES", true, true, id);
-        tableTV.getItems().add(branch);
-        tableTV.sort();
-
-        formDataController.saveDataFromBranch(id + "", branch);
-
-        int lastItem = tableTV.getItems().size();
-        tableTV.getSelectionModel().select(lastItem - 1);
+        formDataController.saveDataFromBranch(tableTV, true);
         showEditPanel();
 
     }

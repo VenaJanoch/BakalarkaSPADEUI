@@ -6,6 +6,7 @@ import graphics.canvas.CanvasItem;
 import interfaces.IFormDataController;
 import interfaces.ISaveDataModel;
 import javafx.collections.ObservableList;
+import javafx.scene.control.TableView;
 import model.DataManipulator;
 import model.DataModel;
 import model.IdentificatorCreater;
@@ -19,6 +20,7 @@ public class FormDataController implements IFormDataController {
 
     private SegmentLists lists;
     private DataManipulator dataManipulator;
+    private FormFillController formFillController;
     private ISaveDataModel saveDataModel;
     private FormController formController;
     private IdentificatorCreater identificatorCreater;
@@ -38,63 +40,54 @@ public class FormDataController implements IFormDataController {
     }
 
 
-    public boolean saveDataFromPhaseForm(String actName, LocalDate endDateL, String desc, int confIndex, int milestoneIndex, Map<Integer, CanvasItem> itemIndexList,
-                                         int indexForm) {
-        String nameForManipulator = InputController.fillTextMapper(actName);
-        String descriptionForManipulator = InputController.fillTextMapper(desc);
-        int phaseId = identificatorCreater.getRoleId(indexForm);
+    public int saveDataFromPhaseForm(TableView<PhaseTable> tableTV, boolean isExist) {
 
-        int[] coords = formController.getCoordsFromItem(indexForm);
-        int milestoneIndexForManipulator = dataPreparer.prepareIndexForManipulator(milestoneIndex);
-        int configurationIndexFromManipulator = dataPreparer.prepareIndexForManipulator(confIndex);
+        int id = formController.createTableItem(SegmentType.Phase);
+        PhaseTable table = new PhaseTable(String.valueOf(id), isExist, id);
 
-        //   editDataModel.editDataInPhase(nameForManipulator, endDateL, descriptionForManipulator, configurationIndexFromManipulator,
-        //         milestoneIndexForManipulator, dataPreparer.prepareCanvasItemIndexForManipulator(itemIndexList.keySet()), phaseId);
-        formController.setNameToItem(indexForm, nameForManipulator);
-
-        String segmentId = formController.getSegmentIdentificator(indexForm);
-        //    mapperTableToObject.mapTableToPhase(milestoneIndexForManipulator, configurationIndexFromManipulator, segmentId , phaseId);
-
-        return true;
+        tableTV.getItems().add(table);
+        tableTV.sort();
+        int lastItem = tableTV.getItems().size();
+        tableTV.getSelectionModel().select(lastItem - 1);
+        return id;
     }
 
 
-    public boolean saveDataFromIterationForm(String actName, LocalDate startDate, LocalDate endDate, String desc, int chooseConfigID, Map<Integer, CanvasItem> itemIndexList, int indexForm) {
-        String nameForManipulator = InputController.fillTextMapper(actName);
-        String descriptionForManipulator = InputController.fillTextMapper(desc);
+    public int saveDataFromIterationForm(TableView<IterationTable> tableTV, boolean isExist) {
 
-        int[] coords = formController.getCoordsFromItem(indexForm);
-        int configurationIdForManipulator = dataPreparer.prepareIndexForManipulator(chooseConfigID);
-        int iterationId = identificatorCreater.getIterationId(indexForm);
+        int id = formController.createTableItem(SegmentType.Iteration);
+        IterationTable table = new IterationTable(String.valueOf(id), isExist, id);
 
-        //   editDataModel.editDataInIteration(nameForManipulator,startDate, endDate, descriptionForManipulator, configurationIdForManipulator ,
-        //           dataPreparer.prepareCanvasItemIndexForManipulator(itemIndexList.keySet()), identificatorCreater.getIterationId(indexForm));
-        formController.setNameToItem(indexForm, nameForManipulator);
-
-        String segmentId = formController.getSegmentIdentificator(indexForm);
-        //  ArrayList<Integer> configurationID = dataModel.getConfigurationId(configurationIdForManipulator);
-        //  mapperTableToObject.mapTableToObject(SegmentType.Iteration, configurationIdForManipulator, new TableToObjectInstanc(segmentId, iterationId, SegmentType.Iteration));
-        return true;
+        tableTV.getItems().add(table);
+        tableTV.sort();
+        int lastItem = tableTV.getItems().size();
+        tableTV.getSelectionModel().select(lastItem - 1);
+        return id;
     }
 
-    public boolean saveDataFromActivityForm(String actName, String desc, Map<Integer, CanvasItem> mapOfItemOnCanvas, int indexForm) {
+    public int saveDataFromActivityForm(TableView<ActivityTable> tableTV, boolean isExist) {
 
-        String nameForManipulator = InputController.fillTextMapper(actName);
-        String descriptionForManipulator = InputController.fillTextMapper(desc);
-        int[] coords = formController.getCoordsFromItem(indexForm);
+        int id = formController.createTableItem(SegmentType.Activity);
+        ActivityTable table = new ActivityTable(String.valueOf(id), isExist, id);
 
-        // editDataModel.editDataInActivity(nameForManipulator, descriptionForManipulator, dataPreparer.prepareCanvasItemIndexForManipulator(mapOfItemOnCanvas.keySet()),
-        //       identificatorCreater.getActivityId(indexForm));
-        String segmentId = formController.getSegmentIdentificator(indexForm);
-        formController.setNameToItem(indexForm, segmentId);
-        return true;
-
+        tableTV.getItems().add(table);
+        tableTV.sort();
+        int lastItem = tableTV.getItems().size();
+        tableTV.getSelectionModel().select(lastItem - 1);
+        return id;
     }
 
-    public boolean saveDataFromWorkUnit(String actName, BasicTable workUnitTable) {
+    public int saveDataFromWorkUnit(TableView<WorkUnitTable> tableTV, boolean isExist) {
 
-        lists.getWorkUnitsObservable().add(workUnitTable);
-        return true;
+        int id = formController.createTableItem(SegmentType.Work_Unit);
+        WorkUnitTable table = new WorkUnitTable(String.valueOf(id), isExist, id);
+
+        tableTV.getItems().add(table);
+        tableTV.sort();
+        int lastItem = tableTV.getItems().size();
+        tableTV.getSelectionModel().select(lastItem - 1);
+        lists.getWorkUnitsObservable().add(table);
+        return id;
     }
 
     public boolean saveDataFromConfiguration(String actName, LocalDate createDate, boolean isRelease, int authorIndex, ArrayList<Integer> branchIndex,
@@ -139,10 +132,18 @@ public class FormDataController implements IFormDataController {
 
 
 
-    public boolean saveDataFromChange(ChangeTable table) {
+    public int saveDataFromChangeForm(TableView<ChangeTable> tableTV, boolean isExist) {
 
-        lists.getChangeObservable().add(table);
-        return true;
+            int id = formController.createTableItem(SegmentType.Change);
+            ChangeTable table = new ChangeTable(String.valueOf(id), isExist, id);
+
+            tableTV.getItems().add(table);
+            tableTV.sort();
+            int lastItem = tableTV.getItems().size();
+            tableTV.getSelectionModel().select(lastItem - 1);
+            lists.getChangeObservable().add(table);
+            return id;
+
     }
 
     public boolean saveDataFromArtifact(String actName, LocalDate createdDate, String type, String desc, int authorIndex,
@@ -162,9 +163,17 @@ public class FormDataController implements IFormDataController {
     }
 
 
-    public void saveDataFromVCSTag(String nameST, VCSTagTable table) {
+    public int saveDataFromVCSTagForm(TableView<VCSTagTable> tableTV, boolean isExist) {
 
+        int id = formController.createTableItem(SegmentType.VCSTag);
+        VCSTagTable table = new VCSTagTable(String.valueOf(id), isExist, id);
+
+        tableTV.getItems().add(table);
+        tableTV.sort();
+        int lastItem = tableTV.getItems().size();
+        tableTV.getSelectionModel().select(lastItem - 1);
         lists.getVCSTag().add(table);
+        return id;
     }
 
     public void createArtifactToConfigurationRelation(int linkId, Integer startId, Integer endId, boolean isXML) {
@@ -225,63 +234,202 @@ public class FormDataController implements IFormDataController {
                 new TableToObjectInstanc(String.valueOf(endId), endId, SegmentType.Committed_Configuration));
     }
 
-
-    public void saveDataFromBranch(String nameST, BranchTable branchTable) {
-
-        String nameForManipulator = InputController.fillTextMapper(nameST);
-
-        saveDataModel.createNewBranch(nameForManipulator, branchTable.getId(), branchTable.isMainBool());
-        lists.getBranchObservable().add(branchTable);
+    @Override
+    public void createCopyTableItem(ArrayList<BasicTable> list, TableView tableView, SegmentType segmentType) {
+        switch (segmentType){
+            case Activity:
+                for (BasicTable table : list){
+                    formFillController.fillActivityForm(tableView, table.getId() );
+                }
+                break;
+            case Phase:
+                for (BasicTable table : list){
+                    formFillController.fillPhaseForm(tableView, table.getId() );
+                }
+                break;
+            case Iteration:
+                for (BasicTable table : list){
+                    formFillController.fillIterationForm(tableView, table.getId() );
+                }
+                break;
+            case Change:
+                for (BasicTable table : list){
+                    formFillController.fillChangeForm(tableView, table.getId() );
+                }
+                break;
+            case VCSTag:
+                for (BasicTable table : list){
+                    formFillController.fillVCSTagForm(tableView, table.getId() );
+                }
+                break;
+            case Config_Person_Relation:
+                for (BasicTable table : list){
+                    formFillController.fillCPRForm(tableView, table.getId() );
+                }
+                break;
+            case Branch:
+                for (BasicTable table : list){
+                    formFillController.fillBranchForm(tableView, table.getId() );
+                }
+                break;
+            case Criterion:
+                for (BasicTable table : list){
+                    formFillController.fillCriterionForm(tableView, table.getId() );
+                }
+                break;
+            case Milestone:
+                for (BasicTable table : list){
+                    formFillController.fillMilestoneForm(tableView, table.getId() );
+                }
+                break;
+            case Priority:
+                for (BasicTable table : list){
+                    formFillController.fillPriorityForm(tableView, table.getId() );
+                }
+                break;
+            case Severity:
+                for (BasicTable table : list){
+                    formFillController.fillSeverityForm(tableView, table.getId() );
+                }
+                break;
+            case Resolution:
+                for (BasicTable table : list){
+                    formFillController.fillResolutionForm(tableView, table.getId() );
+                }
+                break;
+            case Relation:
+                for (BasicTable table : list){
+                    formFillController.fillRelationForm(tableView, table.getId() );
+                }
+                break;
+            case Status:
+                for (BasicTable table : list){
+                    formFillController.fillStatusForm(tableView, table.getId() );
+                }
+                break;
+            case Type:
+                for (BasicTable table : list){
+                    formFillController.fillTypeForm(tableView, table.getId() );
+                }
+            case Role_Type:
+                for (BasicTable table : list){
+                    formFillController.fillRoleTypeForm(tableView, table.getId() );
+                }
+            case Work_Unit:
+                for (BasicTable table : list){
+                    formFillController.fillWorkUnitForm(tableView, table.getId() );
+                }
+                break;
+                default:
+        }
     }
 
-    public void saveDataFromCPR(String nameST, int roleListIndex, CPRTable cprTable) {
 
-        lists.getCPRObservable().add(cprTable);
+    public int saveDataFromBranch(TableView<BranchTable> tableTV, boolean isExist) {
+
+        int id = formController.createTableItem(SegmentType.Branch);
+        BranchTable table = new BranchTable(String.valueOf(id), "", true, isExist, id);
+
+        tableTV.getItems().add(table);
+        tableTV.sort();
+        int lastItem = tableTV.getItems().size();
+        tableTV.getSelectionModel().select(lastItem - 1);
+        lists.getBranchObservable().add(table);
+        return id;
+
     }
 
-    public void saveDataFromCriterionForm(String nameST, CriterionTable criterionTable) {
-        String nameForManipulator = InputController.fillTextMapper(nameST);
+    public int saveDataFromCPR(TableView<CPRTable> tableTV, boolean isExist) {
 
-        saveDataModel.createNewCriterion(nameForManipulator, "", criterionTable.getId());
-        lists.getCriterionObservable().add(criterionTable);
+        int id = formController.createTableItem(SegmentType.Config_Person_Relation);
+        CPRTable table = new CPRTable(String.valueOf(id), "", isExist, id);
+
+        tableTV.getItems().add(table);
+        tableTV.sort();
+        int lastItem = tableTV.getItems().size();
+        tableTV.getSelectionModel().select(lastItem - 1);
+        lists.getCPRObservable().add(table);
+        return id;
+
     }
 
-    public void saveDataFromMilestoneForm(String nameST, String description, ArrayList<Integer> criterionIndex, MilestoneTable milestoneTable) {
+    public int saveDataFromCriterionForm(TableView<CriterionTable> tableTV, boolean isExist) {
 
-        String nameForManipulator = InputController.fillTextMapper(nameST);
-        String descForManipulator = InputController.fillTextMapper(description);
-        //    criterionIndex = dataPreparer.prepareIndicesForManipulator(criterionIndex);
-        saveDataModel.createNewMilestone(nameForManipulator, descForManipulator, criterionIndex, milestoneTable.getId());
-        lists.getMilestoneObservable().add(milestoneTable);
-        // ArrayList<Integer> criterionIndicies = dataModel.getCriterionIds(criterionIndex);
-        //  mapperTableToObject.mapTableToObject(SegmentType.Milestone, criterionIndicies, new TableToObjectInstanc(milestoneTable.getAlias(), milestoneTable.getId(),
-        //          SegmentType.Milestone));
+        int id = formController.createTableItem(SegmentType.Criterion);
+        CriterionTable table = new CriterionTable(String.valueOf(id), isExist, id);
+
+        tableTV.getItems().add(table);
+        tableTV.sort();
+        int lastItem = tableTV.getItems().size();
+        tableTV.getSelectionModel().select(lastItem - 1);
+        lists.getCriterionObservable().add(table);
+        return id;
     }
 
-    public void saveDataFromPriority(String nameST, ClassTable tableItem) {
-        String nameForManipulator = InputController.fillTextMapper(nameST);
-        saveDataModel.createNewPriority(nameForManipulator, tableItem.getClassType(), tableItem.getSuperType(), tableItem.getId());
-        lists.getPriorityTypeObservable().add(tableItem);
+    public int saveDataFromMilestoneForm(TableView<MilestoneTable> tableTV, boolean isExist) {
+
+        int id = formController.createTableItem(SegmentType.Milestone);
+        MilestoneTable table = new MilestoneTable(String.valueOf(id), isExist, id);
+
+        tableTV.getItems().add(table);
+        tableTV.sort();
+        int lastItem = tableTV.getItems().size();
+        tableTV.getSelectionModel().select(lastItem - 1);
+        lists.getMilestoneObservable().add(table);
+        return id;
+
     }
 
-    public void saveDataFromSeverity(String nameST, ClassTable tableItem) {
-        String nameForManipulator = InputController.fillTextMapper(nameST);
-        saveDataModel.createNewSeverity(nameForManipulator, tableItem.getClassType(), tableItem.getSuperType(), tableItem.getId());
-        lists.getSeverityTypeObservable().add(tableItem);
+    public int saveDataFromPriority(TableView<ClassTable> tableTV, boolean isExist) {
+
+        int id = formController.createTableItem(SegmentType.Priority);
+        ClassTable table = new ClassTable(String.valueOf(id),"","", isExist, id);
+
+        tableTV.getItems().add(table);
+        tableTV.sort();
+        int lastItem = tableTV.getItems().size();
+        tableTV.getSelectionModel().select(lastItem - 1);
+        lists.getPriorityTypeObservable().add(table);
+        return id;
     }
 
-    public void saveDataFromResolutionForm(String nameST, ClassTable classTable) {
+    public int saveDataFromSeverity(TableView<ClassTable> tableTV, boolean isExist) {
 
-        String nameForManipulator = InputController.fillTextMapper(nameST);
-        saveDataModel.createNewResolution(nameForManipulator, classTable.getClassType(), classTable.getSuperType(), classTable.getId());
-        lists.getResolutionTypeObservable().add(classTable);
+        int id = formController.createTableItem(SegmentType.Severity);
+        ClassTable table = new ClassTable(String.valueOf(id),"","", isExist, id);
+
+        tableTV.getItems().add(table);
+        tableTV.sort();
+        int lastItem = tableTV.getItems().size();
+        tableTV.getSelectionModel().select(lastItem - 1);
+        lists.getSeverityTypeObservable().add(table);
+        return id;
     }
 
-    public void saveDataFromRelationForm(String nameST, ClassTable classTable) {
+    public int saveDataFromResolutionForm(TableView<ClassTable> tableTV, boolean isExist) {
 
-        String nameForManipulator = InputController.fillTextMapper(nameST);
-        saveDataModel.createNewRelation(nameForManipulator, classTable.getClassType(), classTable.getSuperType(), classTable.getId());
-        lists.getRelationTypeObservable().add(classTable);
+        int id = formController.createTableItem(SegmentType.Resolution);
+        ClassTable table = new ClassTable(String.valueOf(id),"","", isExist, id);
+
+        tableTV.getItems().add(table);
+        tableTV.sort();
+        int lastItem = tableTV.getItems().size();
+        tableTV.getSelectionModel().select(lastItem - 1);
+        lists.getResolutionTypeObservable().add(table);
+        return id;
+    }
+
+    public int saveDataFromRelationForm(TableView<ClassTable> tableTV, boolean isExist) {
+
+        int id = formController.createTableItem(SegmentType.Relation);
+        ClassTable table = new ClassTable(String.valueOf(id),"","", isExist, id);
+
+        tableTV.getItems().add(table);
+        tableTV.sort();
+        int lastItem = tableTV.getItems().size();
+        tableTV.getSelectionModel().select(lastItem - 1);
+        lists.getRelationTypeObservable().add(table);
+        return id;
     }
 
     public void saveDataFromRoleForm(String nameST, int typeIndex, PersonTable personTable) {
@@ -296,26 +444,45 @@ public class FormDataController implements IFormDataController {
         // mapperTableToObject.mapTableToObject(SegmentType.Person, roleTypeIndex, new TableToObjectInstanc(personTable.getAlias(), personTable.getId(), SegmentType.Person));
     }
 
-    public void saveDataFromRoleTypeForm(String nameST, ClassTable classTable) {
+    public int saveDataFromRoleTypeForm(TableView<RoleTypeTable> tableTV, boolean isExist) {
 
-        String nameForManipulator = InputController.fillTextMapper(nameST);
-        saveDataModel.createNewRoleType(nameForManipulator, classTable.getClassType(), classTable.getSuperType(), classTable.getId());
-        lists.getRoleTypeObservable().add(classTable);
+        int id = formController.createTableItem(SegmentType.Role_Type);
+        RoleTypeTable table = new RoleTypeTable(String.valueOf(id), "", isExist, "", id);
+
+        tableTV.getItems().add(table);
+        tableTV.sort();
+        int lastItem = tableTV.getItems().size();
+        tableTV.getSelectionModel().select(lastItem - 1);
+        lists.getRoleTypeObservable().add(table);
+        return id;
+
     }
 
 
-    public void saveDataFromStatusForm(String nameST, ClassTable classTable) {
+    public int saveDataFromStatusForm(TableView<ClassTable> tableTV, boolean isExist) {
 
-        String nameForManipulator = InputController.fillTextMapper(nameST);
-        saveDataModel.createNewStatus(nameForManipulator, classTable.getClassType(), classTable.getSuperType(), classTable.getId());
-        lists.getStatusTypeObservable().add(classTable);
+        int id = formController.createTableItem(SegmentType.Status);
+        ClassTable table = new ClassTable(String.valueOf(id),"","", isExist, id);
+
+        tableTV.getItems().add(table);
+        tableTV.sort();
+        int lastItem = tableTV.getItems().size();
+        tableTV.getSelectionModel().select(lastItem - 1);
+        lists.getStatusTypeObservable().add(table);
+        return id;
     }
 
-    public void saveDataFromTypeForm(String nameST, ClassTable classTable) {
+    public int saveDataFromTypeForm(TableView<ClassTable> tableTV, boolean isExist) {
 
-        String nameForManipulator = InputController.fillTextMapper(nameST);
-        saveDataModel.createNewType(nameForManipulator, classTable.getClassType(), classTable.getSuperType(), classTable.getId());
-        lists.getTypeObservable().add(classTable);
+        int id = formController.createTableItem(SegmentType.Type);
+        ClassTable table = new ClassTable(String.valueOf(id),"","", isExist, id);
+
+        tableTV.getItems().add(table);
+        tableTV.sort();
+        int lastItem = tableTV.getItems().size();
+        tableTV.getSelectionModel().select(lastItem - 1);
+        lists.getTypeObservable().add(table);
+        return id;
     }
 
     public void saveDataFromProjectFrom(String nameST, LocalDate endDate, LocalDate startDate, String desc) {
@@ -588,4 +755,7 @@ public class FormDataController implements IFormDataController {
         return data;
     }
 
+    public void setFormFillController(FormFillController formFillController) {
+        this.formFillController = formFillController;
+    }
 }

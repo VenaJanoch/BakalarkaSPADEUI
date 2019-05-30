@@ -22,7 +22,7 @@ public class ResolutionValueTest {
         FormController formController = warmUp.getFormController();
 
 
-        warmUp.getDataModel().getSaveDataModel().createNewResolution("","","",0);
+        warmUp.getDataModel().getSaveDataModel().createNewResolution(0);
 
         resolution = warmUp.getDataModel().getResolution(0);
     }

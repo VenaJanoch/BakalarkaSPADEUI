@@ -8,6 +8,7 @@ import controllers.formControllers.FormDataController;
 import database.CPRDAO;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.TableView;
 import model.DataModel;
 import org.junit.Before;
 import org.junit.Test;
@@ -45,9 +46,10 @@ public class CPRDeleteTest {
             FormDataController formDataController = warmUp.getFormDataController();
             CPRTable table1 = new CPRTable("", "",true, 0);
             formController.createTableItem(SegmentType.Config_Person_Relation);
-            formDataController.saveDataFromCPR("", 9, table1);
+            TableView tableView = new TableView();
+            formDataController.saveDataFromCPR(tableView, true);
             formController.createTableItem(SegmentType.Config_Person_Relation);
-            formDataController.saveDataFromCPR("",0, new CPRTable("", "",true, 1));
+            formDataController.saveDataFromCPR(tableView, true);
 
             date = LocalDate.of(2018, 10, 10);
             lists = warmUp.getLists();

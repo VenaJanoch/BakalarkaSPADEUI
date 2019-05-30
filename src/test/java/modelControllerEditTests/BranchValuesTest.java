@@ -3,6 +3,7 @@ package modelControllerEditTests;
 import SPADEPAC.Branch;
 import controllers.formControllers.EditFormController;
 import controllers.formControllers.FormDataController;
+import javafx.scene.control.TableView;
 import org.junit.Before;
 import org.junit.Test;
 import services.SegmentLists;
@@ -24,8 +25,8 @@ public class BranchValuesTest {
             WarmUp warmUp = new WarmUp();
             lists = warmUp.getLists();
             FormDataController formDataController = warmUp.getFormDataController();
-            warmUp.getDataModel().getSaveDataModel().createNewBranch("",0, true);
-            formDataController.saveDataFromBranch(0 + "", new BranchTable("", "YES", true, true, 0));
+            TableView tableView = new TableView();
+            formDataController.saveDataFromBranch(tableView, true);
             EditFormController editFormController = warmUp.getEditFormController();
             ArrayList<String> name = new ArrayList<>();
             name.add("");

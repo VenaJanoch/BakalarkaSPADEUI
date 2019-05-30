@@ -156,9 +156,11 @@ public class DragAndDropItemPanel extends HBox {
      */
     public void presESC(KeyEvent event) {
         if (event.getCode() == KeyCode.ESCAPE) {
+            createArrowButtonEvent();
             canvasController.pressESCAction();
         }
     }
+
 
     /**
      * Pomocná metoda pro nastavaní reakce na stisk tlačítka pro přepnutí modu

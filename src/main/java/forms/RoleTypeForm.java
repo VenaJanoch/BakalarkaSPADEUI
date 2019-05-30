@@ -145,6 +145,7 @@ public class RoleTypeForm extends TableBasicForm implements ISegmentTableForm {
         addButton.setOnAction(event -> addItem());
         removeButton.setOnAction(event -> deleteItem(tableTV));
         editButton.setOnAction(event -> showEditPanel());
+        copyButton.setOnAction(event -> copyItem(tableTV));
     }
 
     public TableView<RoleTypeTable> getTableTV() {
@@ -153,17 +154,7 @@ public class RoleTypeForm extends TableBasicForm implements ISegmentTableForm {
 
     @Override
     public void addItem() {
-        String nameST = "";// criterionControlPanel.getAlias();
-
-        int id = formController.createTableItem(SegmentType.Role_Type);
-        String idName = id + "";
-
-        RoleTypeTable table = new RoleTypeTable(idName, "", true, "", id);
-        tableTV.getItems().add(table);
-        tableTV.sort();
-        formDataController.saveDataFromRoleTypeForm(nameST, table);
-        int lastItem = tableTV.getItems().size();
-        tableTV.getSelectionModel().select(lastItem - 1);
+        formDataController.saveDataFromRoleTypeForm(tableTV, true);
         showEditPanel();
     }
 

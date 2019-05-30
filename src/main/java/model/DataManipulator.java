@@ -13,6 +13,13 @@ public class DataManipulator {
         this.dataModel = dataModel;
     }
 
+    /**
+     * Metoda pro kopirovani zakladnich informaci o elementu Artifact
+     * @param artifactId identificator prvku pro kopirovani
+     * @param newArtifactId identificator prvku pro nakopirovani dat
+     * @param x nova x pozice na platne
+     * @param y nova y pozice na platne
+     */
     public void copyDataFromArtifact(int artifactId, int newArtifactId, double x, double y) {
         Artifact oldArtifact = dataModel.getArtifact(artifactId);
         Artifact newArtifact = dataModel.getArtifact(newArtifactId);
@@ -34,7 +41,13 @@ public class DataManipulator {
         newArtifact.getAuthorIndicator().addAll(oldArtifact.getAuthorIndicator());
     }
 
-
+    /**
+     * Metoda pro kopirovani zakladnich informaci o elementu CommitedConfigruration
+     * @param commitedConfigurationId identificator prvku pro kopirovani
+     * @param newCommitedConfigurationId identificator prvku pro nakopirovani dat
+     * @param x nova x pozice na platne
+     * @param y nova y pozice na platne
+     */
     public void copyDataFromCommitedConfiguration(int commitedConfigurationId, int newCommitedConfigurationId, double x, double y) {
         CommitedConfiguration oldCommitedConfiguration = dataModel.getCommitedConfiguration(commitedConfigurationId);
         CommitedConfiguration newCommitedConfiguration = dataModel.getCommitedConfiguration(newCommitedConfigurationId);
@@ -53,7 +66,13 @@ public class DataManipulator {
         newCommitedConfiguration.getCreatedIndicator().addAll(oldCommitedConfiguration.getCreatedIndicator());
     }
 
-
+    /**
+     * Metoda pro kopirovani zakladnich informaci o elementu Commit
+     * @param commitId identificator prvku pro kopirovani
+     * @param newCommitId identificator prvku pro nakopirovani dat
+     * @param x nova x pozice na platne
+     * @param y nova y pozice na platne
+     */
     public void copyDataFromCommit(int commitId, int newCommitId, double x, double y) {
         Commit oldCommit = dataModel.getCommit(commitId);
         Commit newCommit = dataModel.getCommit(newCommitId);
@@ -67,7 +86,13 @@ public class DataManipulator {
 
     }
 
-
+    /**
+     * Metoda pro kopirovani zakladnich informaci o elementu Configuration
+     * @param configurationId identificator prvku pro kopirovani
+     * @param newConfigurationId identificator prvku pro nakopirovani dat
+     * @param x nova x pozice na platne
+     * @param y nova y pozice na platne
+     */
     public void copyDataFromConfiguration(int configurationId, int newConfigurationId, double x, double y) {
         Configuration oldConfiguration = dataModel.getConfiguration(configurationId);
         Configuration newConfiguration = dataModel.getConfiguration(newConfigurationId);
@@ -92,9 +117,15 @@ public class DataManipulator {
         newConfiguration.getTagsIndicator().addAll(oldConfiguration.getTagsIndicator());
     }
 
-
-    public void copyDataFromPerson(int artifactId, int newPersonId, double x, double y) {
-        Person oldPerson = dataModel.getPerson(artifactId);
+    /**
+     * Metoda pro kopirovani zakladnich informaci o elementu Person
+     * @param personId identificator prvku pro kopirovani
+     * @param newPersonId identificator prvku pro nakopirovani dat
+     * @param x nova x pozice na platne
+     * @param y nova y pozice na platne
+     */
+    public void copyDataFromPerson(int personId, int newPersonId, double x, double y) {
+        Person oldPerson = dataModel.getPerson(personId);
         Person newPerson = dataModel.getPerson(newPersonId);
 
         Coordinates coordinates = dataModel.createCoords((int) x, (int) y);
@@ -108,9 +139,342 @@ public class DataManipulator {
         newPerson.setAlias(oldPerson.getAlias());
     }
 
+    /**
+     * Metoda pro kopirovani zakladnich informaci o segmentu Phase
+     * @param phaseId identificator prvku pro kopirovani
+     * @param newPhaseId identificator prvku pro nakopirovani dat
+     */
+    public void copyDataFromPhase(int phaseId, int newPhaseId) {
+        Phase oldPhase = dataModel.getPhase(phaseId);
+        Phase newPhase = dataModel.getPhase(newPhaseId);
+
+        newPhase.setAlias(oldPhase.getAlias());
+        newPhase.getName().addAll(oldPhase.getName());
+        newPhase.getNameIndicator().addAll(oldPhase.getNameIndicator());
+        newPhase.getDescription().addAll(oldPhase.getDescription());
+        newPhase.getDescriptionIndicator().addAll(oldPhase.getDescriptionIndicator());
+        newPhase.getEndDate().addAll(oldPhase.getEndDate());
+        newPhase.getEndDateIndicator().addAll(oldPhase.getEndDateIndicator());
+        newPhase.setExist(oldPhase.isExist());
+    }
+
+    /**
+     * Metoda pro kopirovani zakladnich informaci o elementu Work Unit
+     * @param workUnitId identificator prvku pro kopirovani
+     * @param newWorkUnitId identificator prvku pro nakopirovani dat
+     */
+    public void copyDataFromWorkUnit(int workUnitId, int newWorkUnitId) {
+        WorkUnit oldWorkUnit = dataModel.getWorkUnit(workUnitId);
+        WorkUnit newWorkUnit = dataModel.getWorkUnit(newWorkUnitId);
+
+        newWorkUnit.setAlias(oldWorkUnit.getAlias());
+        newWorkUnit.getName().addAll(oldWorkUnit.getName());
+        newWorkUnit.getNameIndicator().addAll(oldWorkUnit.getNameIndicator());
+        newWorkUnit.getDescription().addAll(oldWorkUnit.getDescription());
+        newWorkUnit.getDescriptionIndicator().addAll(oldWorkUnit.getDescriptionIndicator());
+        newWorkUnit.getCreated().addAll(oldWorkUnit.getCreated());
+        newWorkUnit.getCreatedIndicator().addAll(oldWorkUnit.getCreatedIndicator());
+        newWorkUnit.getEstimatedTimeIndicator().addAll(oldWorkUnit.getEstimatedTimeIndicator());
+        newWorkUnit.getEstimatedTime().addAll(oldWorkUnit.getEstimatedTime());
+        newWorkUnit.getProgressIndicator().addAll(oldWorkUnit.getProgressIndicator());
+        newWorkUnit.getProgress().addAll(oldWorkUnit.getProgress());
+        newWorkUnit.getCategoryIndicator().addAll(oldWorkUnit.getCategoryIndicator());
+        newWorkUnit.getCategory().addAll(oldWorkUnit.getCategory());
+        newWorkUnit.setExist(oldWorkUnit.isExist());
+    }
+
+    /**
+     * Metoda pro kopirovani zakladnich informaci o segmentu Iteration
+     * @param iterationId identificator prvku pro kopirovani
+     * @param newIterationId identificator prvku pro nakopirovani dat
+     */
+    public void copyDataFromIteration(int iterationId, int newIterationId) {
+        Iteration oldIteration = dataModel.getIteration(iterationId);
+        Iteration newIteration = dataModel.getIteration(newIterationId);
+
+        newIteration.setAlias(oldIteration.getAlias());
+        newIteration.getName().addAll(oldIteration.getName());
+        newIteration.getNameIndicator().addAll(oldIteration.getNameIndicator());
+        newIteration.getDescription().addAll(oldIteration.getDescription());
+        newIteration.getDescriptionIndicator().addAll(oldIteration.getDescriptionIndicator());
+        newIteration.getEndDate().addAll(oldIteration.getEndDate());
+        newIteration.getEndDateIndicator().addAll(oldIteration.getEndDateIndicator());
+        newIteration.getStartDate().addAll(oldIteration.getStartDate());
+        newIteration.getStartDateIndicator().addAll(oldIteration.getStartDateIndicator());
+        newIteration.setExist(oldIteration.isExist());
+    }
+
+    /**
+     * Metoda pro kopirovani zakladnich informaci o segmentu Activity
+     * @param activityId identificator prvku pro kopirovani
+     * @param newActivityId identificator prvku pro nakopirovani dat
+     */
+    public void copyDataFromActivity(int activityId, int newActivityId) {
+        Activity oldActivity = dataModel.getActivity(activityId);
+        Activity newActivity = dataModel.getActivity(newActivityId);
+
+        newActivity.setAlias(oldActivity.getAlias());
+        newActivity.getName().addAll(oldActivity.getName());
+        newActivity.getNameIndicator().addAll(oldActivity.getNameIndicator());
+        newActivity.getDescription().addAll(oldActivity.getDescription());
+        newActivity.getDescriptionIndicator().addAll(oldActivity.getDescriptionIndicator());
+        newActivity.getEndDate().addAll(oldActivity.getEndDate());
+        newActivity.getEndDateIndicator().addAll(oldActivity.getEndDateIndicator());
+        newActivity.setExist(oldActivity.isExist());
+    }
+
+    /**
+     * Metoda pro kopirovani zakladnich informaci o elementu Milestone
+     * @param milestoneId identificator prvku pro kopirovani
+     * @param newMilestoneId identificator prvku pro nakopirovani dat
+     */
+    public void copyDataFromMilestone(int milestoneId, int newMilestoneId) {
+        Milestone oldMilestone = dataModel.getMilestone(milestoneId);
+        Milestone newMilestone = dataModel.getMilestone(newMilestoneId);
+
+        newMilestone.setAlias(oldMilestone.getAlias());
+        newMilestone.getName().addAll(oldMilestone.getName());
+        newMilestone.getNameIndicator().addAll(oldMilestone.getNameIndicator());
+        newMilestone.getDescription().addAll(oldMilestone.getDescription());
+        newMilestone.getDescriptionIndicator().addAll(oldMilestone.getDescriptionIndicator());
+        newMilestone.setExist(oldMilestone.isExist());
+    }
+
+    /**
+     * Metoda pro kopirovani zakladnich informaci o elementu Criterion
+     * @param criterionId identificator prvku pro kopirovani
+     * @param newCriterionId identificator prvku pro nakopirovani dat
+     */
+    public void copyDataFromCriterion(int criterionId, int newCriterionId) {
+        Criterion oldCriterion = dataModel.getCriterion(criterionId);
+        Criterion newCriterion = dataModel.getCriterion(newCriterionId);
+
+        newCriterion.setAlias(oldCriterion.getAlias());
+        newCriterion.getName().addAll(oldCriterion.getName());
+        newCriterion.getNameIndicator().addAll(oldCriterion.getNameIndicator());
+        newCriterion.getDescription().addAll(oldCriterion.getDescription());
+        newCriterion.getDescriptionIndicator().addAll(oldCriterion.getDescriptionIndicator());
+        newCriterion.setExist(oldCriterion.isExist());
+    }
+
+    /**
+     * Metoda pro kopirovani zakladnich informaci o elementu Configuration Person Relation
+     * @param cprId identificator prvku pro kopirovani
+     * @param newCPRId identificator prvku pro nakopirovani dat
+     */
+    public void copyDataFromCPR(int cprId, int newCPRId) {
+        ConfigPersonRelation oldCPR = dataModel.getConfigPersonRelation(cprId);
+        ConfigPersonRelation newCPR = dataModel.getConfigPersonRelation(newCPRId);
+
+        newCPR.setAlias(oldCPR.getAlias());
+        newCPR.getName().addAll(oldCPR.getName());
+        newCPR.getNameIndicator().addAll(oldCPR.getNameIndicator());
+        newCPR.getDescription().addAll(oldCPR.getDescription());
+        newCPR.getDescriptionIndicator().addAll(oldCPR.getDescriptionIndicator());
+        newCPR.setExist(oldCPR.isExist());
+    }
+
+    /**
+     * Metoda pro kopirovani zakladnich informaci o elementu Branch
+     * @param branchId identificator prvku pro kopirovani
+     * @param newBranchId identificator prvku pro nakopirovani dat
+     */
+    public void copyDataFromBranch(int branchId, int newBranchId) {
+        Branch oldBranch = dataModel.getBranch(branchId);
+        Branch newBranch = dataModel.getBranch(newBranchId);
+
+        newBranch.setAlias(oldBranch.getAlias());
+        newBranch.getName().addAll(oldBranch.getName());
+        newBranch.getNameIndicator().addAll(oldBranch.getNameIndicator());
+     //   newBranch.get().addAll(oldBranch.getDescription());
+     //   newBranch.getDescriptionIndicator().addAll(oldBranch.getDescriptionIndicator());
+        newBranch.setExist(oldBranch.isExist());
+    }
+
+    /**
+     * Metoda pro kopirovani zakladnich informaci o elementu Change
+     * @param changeId identificator prvku pro kopirovani
+     * @param newChangeId identificator prvku pro nakopirovani dat
+     */
+    public void copyDataFromChange(int changeId, int newChangeId) {
+        Change oldChange = dataModel.getChange(changeId);
+        Change newChange = dataModel.getChange(newChangeId);
+
+        newChange.setAlias(oldChange.getAlias());
+        newChange.getName().addAll(oldChange.getName());
+        newChange.getNameIndicator().addAll(oldChange.getNameIndicator());
+        newChange.getDescription().addAll(oldChange.getDescription());
+        newChange.getDescriptionIndicator().addAll(oldChange.getDescriptionIndicator());
+        newChange.setExist(oldChange.isExist());
+    }
+
+    /**
+     * Metoda pro kopirovani zakladnich informaci o elementu VCSTag
+     * @param vcsTagId identificator prvku pro kopirovani
+     * @param newVCSTagId identificator prvku pro nakopirovani dat
+     */
+    public void copyDataFromVCSTag(int vcsTagId, int newVCSTagId) {
+        VCSTag oldVCSTag = dataModel.getVCSTag(vcsTagId);
+        VCSTag newVCSTag = dataModel.getVCSTag(newVCSTagId);
+
+        newVCSTag.setAlias(oldVCSTag.getAlias());
+        newVCSTag.getName().addAll(oldVCSTag.getName());
+        newVCSTag.getNameIndicator().addAll(oldVCSTag.getNameIndicator());
+        newVCSTag.getDescription().addAll(oldVCSTag.getDescription());
+        newVCSTag.getDescriptionIndicator().addAll(oldVCSTag.getDescriptionIndicator());
+        newVCSTag.setExist(oldVCSTag.isExist());
+    }
+
+    /**
+     * Metoda pro kopirovani zakladnich informaci o elementu Role Type
+     * @param roleTypeId identificator prvku pro kopirovani
+     * @param newRoleTypeId identificator prvku pro nakopirovani dat
+     */
+    public void copyDataFromRoleType(int roleTypeId, int newRoleTypeId) {
+        RoleType oldRoleType = dataModel.getRoleType(roleTypeId);
+        RoleType newRoleType = dataModel.getRoleType(newRoleTypeId);
+
+        newRoleType.setAlias(oldRoleType.getAlias());
+        newRoleType.getName().addAll(oldRoleType.getName());
+        newRoleType.getNameIndicator().addAll(oldRoleType.getNameIndicator());
+        newRoleType.getDescription().addAll(oldRoleType.getDescription());
+        newRoleType.getDescriptionIndicator().addAll(oldRoleType.getDescriptionIndicator());
+        newRoleType.getRoleTypeSuperClassIndex().addAll(oldRoleType.getRoleTypeSuperClassIndex());
+        newRoleType.getRoleTypeSuperClass().addAll(oldRoleType.getRoleTypeSuperClass());
+        newRoleType.getRoleTypeClassIndex().addAll(oldRoleType.getRoleTypeClassIndex());
+        newRoleType.getRoleTypeClass().addAll(oldRoleType.getRoleTypeClass());
+        
+        newRoleType.setExist(oldRoleType.isExist());
+    }
+
+    /**
+     * Metoda pro kopirovani zakladnich informaci o elementu Priority
+     * @param priorityId identificator prvku pro kopirovani
+     * @param newPriorityId identificator prvku pro nakopirovani dat
+     */
+    public void copyDataFromPriority(int priorityId, int newPriorityId) {
+        Priority oldPriority = dataModel.getPriority(priorityId);
+        Priority newPriority = dataModel.getPriority(newPriorityId);
+
+        newPriority.setAlias(oldPriority.getAlias());
+        newPriority.getName().addAll(oldPriority.getName());
+        newPriority.getNameIndicator().addAll(oldPriority.getNameIndicator());
+        newPriority.getPrioritySuperClassIndex().addAll(oldPriority.getPrioritySuperClassIndex());
+        newPriority.getPrioritySuperClass().addAll(oldPriority.getPrioritySuperClass());
+        newPriority.getPriorityClassIndex().addAll(oldPriority.getPriorityClassIndex());
+        newPriority.getPriorityClass().addAll(oldPriority.getPriorityClass());
+
+        newPriority.setExist(oldPriority.isExist());
+    }
+
+    /**
+     * Metoda pro kopirovani zakladnich informaci o elementu Severity
+     * @param severityId identificator prvku pro kopirovani
+     * @param newSeverityId identificator prvku pro nakopirovani dat
+     */
+    public void copyDataFromSeverity(int severityId, int newSeverityId) {
+        Severity oldSeverity = dataModel.getSeverity(severityId);
+        Severity newSeverity = dataModel.getSeverity(newSeverityId);
+
+        newSeverity.setAlias(oldSeverity.getAlias());
+        newSeverity.getName().addAll(oldSeverity.getName());
+        newSeverity.getNameIndicator().addAll(oldSeverity.getNameIndicator());
+        newSeverity.getSeveritySuperClassIndex().addAll(oldSeverity.getSeveritySuperClassIndex());
+        newSeverity.getSeveritySuperClass().addAll(oldSeverity.getSeveritySuperClass());
+        newSeverity.getSeverityClassIndex().addAll(oldSeverity.getSeverityClassIndex());
+        newSeverity.getSeverityClass().addAll(oldSeverity.getSeverityClass());
+
+        newSeverity.setExist(oldSeverity.isExist());
+    }
+
+    /**
+     * Metoda pro kopirovani zakladnich informaci o elementu Status
+     * @param statusId identificator prvku pro kopirovani
+     * @param newStatusId identificator prvku pro nakopirovani dat
+     */
+    public void copyDataFromStatus(int statusId, int newStatusId) {
+        Status oldStatus = dataModel.getStatus(statusId);
+        Status newStatus = dataModel.getStatus(newStatusId);
+
+        newStatus.setAlias(oldStatus.getAlias());
+        newStatus.getName().addAll(oldStatus.getName());
+        newStatus.getNameIndicator().addAll(oldStatus.getNameIndicator());
+        newStatus.getStatusSuperClassIndex().addAll(oldStatus.getStatusSuperClassIndex());
+        newStatus.getStatusSuperClass().addAll(oldStatus.getStatusSuperClass());
+        newStatus.getStatusClassIndex().addAll(oldStatus.getStatusClassIndex());
+        newStatus.getStatusClass().addAll(oldStatus.getStatusClass());
+
+        newStatus.setExist(oldStatus.isExist());
+    }
+
+    /**
+     * Metoda pro kopirovani zakladnich informaci o elementu Type
+     * @param typeId identificator prvku pro kopirovani
+     * @param newTypeId identificator prvku pro nakopirovani dat
+     */
+    public void copyDataFromType(int typeId, int newTypeId) {
+        Type oldType = dataModel.getType(typeId);
+        Type newType = dataModel.getType(newTypeId);
+
+        newType.setAlias(oldType.getAlias());
+        newType.getName().addAll(oldType.getName());
+        newType.getNameIndicator().addAll(oldType.getNameIndicator());
+        newType.getTypeSuperClassIndex().addAll(oldType.getTypeSuperClassIndex());
+        newType.getTypeSuperClass().addAll(oldType.getTypeSuperClass());
+        newType.getTypeClassIndex().addAll(oldType.getTypeClassIndex());
+        newType.getTypeClass().addAll(oldType.getTypeClass());
+
+        newType.setExist(oldType.isExist());
+    }
+
+    /**
+     * Metoda pro kopirovani zakladnich informaci o elementu Relation
+     * @param relationId identificator prvku pro kopirovani
+     * @param newRelationId identificator prvku pro nakopirovani dat
+     */
+    public void copyDataFromRelation(int relationId, int newRelationId) {
+        Relation oldRelation = dataModel.getRelation(relationId);
+        Relation newRelation = dataModel.getRelation(newRelationId);
+
+        newRelation.setAlias(oldRelation.getAlias());
+        newRelation.getName().addAll(oldRelation.getName());
+        newRelation.getNameIndicator().addAll(oldRelation.getNameIndicator());
+        newRelation.getRelationSuperClassIndex().addAll(oldRelation.getRelationSuperClassIndex());
+        newRelation.getRelationSuperClass().addAll(oldRelation.getRelationSuperClass());
+        newRelation.getRelationClassIndex().addAll(oldRelation.getRelationClassIndex());
+        newRelation.getRelationClass().addAll(oldRelation.getRelationClass());
+
+        newRelation.setExist(oldRelation.isExist());
+    }
+
+    /**
+     * Metoda pro kopirovani zakladnich informaci o elementu Resolution
+     * @param resolutionId identificator prvku pro kopirovani
+     * @param newResolutionId identificator prvku pro nakopirovani dat
+     */
+    public void copyDataFromResolution(int resolutionId, int newResolutionId) {
+        Resolution oldResolution = dataModel.getResolution(resolutionId);
+        Resolution newResolution = dataModel.getResolution(newResolutionId);
+
+        newResolution.setAlias(oldResolution.getAlias());
+        newResolution.getName().addAll(oldResolution.getName());
+        newResolution.getNameIndicator().addAll(oldResolution.getNameIndicator());
+        newResolution.getResolutionSuperClassIndex().addAll(oldResolution.getResolutionSuperClassIndex());
+        newResolution.getResolutionSuperClass().addAll(oldResolution.getResolutionSuperClass());
+        newResolution.getResolutionClassIndex().addAll(oldResolution.getResolutionClassIndex());
+        newResolution.getResolutionClass().addAll(oldResolution.getResolutionClass());
+
+        newResolution.setExist(oldResolution.isExist());
+    }
+
+    /**
+     * Metoda pro prevod dat o Criterion z datoveho modelu do seznamu s jednotlivymi parametry elementu
+     * @param id identificator instance pro prevod
+     * @return List s jednotlivymi parametry
+     */
     public List[] getCriterionData(int id) {
         List[] data = new List[5];
-        Criterion criterion = dataModel.getCriterions().get(getCriterionIndexInProject(id));
+        Criterion criterion = dataModel.getCriterion(id);
 
         if (criterion.getName() != null) {
             data[0] = criterion.getName();
@@ -137,17 +501,11 @@ public class DataManipulator {
         return data;
     }
 
-    private int getCriterionIndexInProject(int id) {
-        List<Criterion> items = dataModel.getCriterions();
-        for (int i = 0; i < items.size(); i++) {
-
-            if (items.get(i).getId() == id) {
-                return i;
-            }
-        }
-        return -1;
-    }
-
+    /**
+     * Metoda pro prevod dat o Milestone z datoveho modelu do seznamu s jednotlivymi parametry elementu
+     * @param id identificator instance pro prevod
+     * @return List s jednotlivymi parametry
+     */
     public List[] getMilestoneData(int id) {
         List[] data = new List[6];
         Milestone milestone = dataModel.getMilestones().get(id);
@@ -181,6 +539,11 @@ public class DataManipulator {
         return data;
     }
 
+    /**
+     * Metoda pro ziskani identifikatoru Criterion z elemtnu Milestone
+     * @param id identifikator Milestone
+     * @return ArrayList<ArrayList<Integer>>
+     */
     public ArrayList<ArrayList<Integer>> getCriterionFromMilestone(int id) {
         Milestone milestone = dataModel.getMilestone(id);
         ArrayList<ArrayList<Integer>> list = new ArrayList<>();
@@ -193,7 +556,11 @@ public class DataManipulator {
         return list;
     }
 
-
+    /**
+     * Metoda pro prevod dat o Person z datoveho modelu do seznamu s jednotlivymi parametry elementu
+     * @param id identificator instance pro prevod
+     * @return List s jednotlivymi parametry
+     */
     public List[] getPersonData(int id) {
         List[] data = new List[5];
         Person role = dataModel.getPerson(id);
@@ -226,7 +593,11 @@ public class DataManipulator {
         return data;
 
     }
-
+    /**
+     * Metoda pro prevod dat o Role Type z datoveho modelu do seznamu s jednotlivymi parametry elementu
+     * @param id identificator instance pro prevod
+     * @return List s jednotlivymi parametry
+     */
     public List[] getRoleTypeData(int id) {
         List[] data = new List[7];
         RoleType roleType = dataModel.getRoleType(id);
@@ -265,7 +636,11 @@ public class DataManipulator {
         return data;
     }
 
-
+    /**
+     * Metoda pro prevod dat o Severity z datoveho modelu do seznamu s jednotlivymi parametry elementu
+     * @param id identificator instance pro prevod
+     * @return List s jednotlivymi parametry
+     */
     public List[] getSeverityData(int id) {
         List[] data = new List[5];
         Severity severity = dataModel.getSeverity(id);
@@ -293,7 +668,11 @@ public class DataManipulator {
         data[4] = list;
         return data;
     }
-
+    /**
+     * Metoda pro prevod dat o Priority z datoveho modelu do seznamu s jednotlivymi parametry elementu
+     * @param id identificator instance pro prevod
+     * @return List s jednotlivymi parametry
+     */
     public List[] getPriorityData(int id) {
         List[] data = new List[5];
         Priority priority = dataModel.getPriority(id);
@@ -321,7 +700,11 @@ public class DataManipulator {
         data[4] = list;
         return data;
     }
-
+    /**
+     * Metoda pro prevod dat o Status z datoveho modelu do seznamu s jednotlivymi parametry elementu
+     * @param id identificator instance pro prevod
+     * @return List s jednotlivymi parametry
+     */
     public List[] getStatusData(int id) {
         List[] data = new List[5];
         Status status = dataModel.getStatus(id);
@@ -349,7 +732,11 @@ public class DataManipulator {
         data[4] = list;
         return data;
     }
-
+    /**
+     * Metoda pro prevod dat o Type z datoveho modelu do seznamu s jednotlivymi parametry elementu
+     * @param id identificator instance pro prevod
+     * @return List s jednotlivymi parametry
+     */
     public List[] getTypeData(int id) {
         List[] data = new List[5];
         Type type = dataModel.getType(id);
@@ -378,7 +765,11 @@ public class DataManipulator {
         return data;
     }
 
-
+    /**
+     * Metoda pro prevod dat o Relation z datoveho modelu do seznamu s jednotlivymi parametry elementu
+     * @param id identificator instance pro prevod
+     * @return List s jednotlivymi parametry
+     */
     public List[] getRelationData(int id) {
         List[] data = new List[5];
         Relation relation = dataModel.getRelation(id);
@@ -405,7 +796,11 @@ public class DataManipulator {
 
         return data;
     }
-
+    /**
+     * Metoda pro prevod dat o Resolution z datoveho modelu do seznamu s jednotlivymi parametry elementu
+     * @param id identificator instance pro prevod
+     * @return List s jednotlivymi parametry
+     */
     public List[] getResolutionData(int id) {
         List[] data = new List[5];
         Resolution resolution = dataModel.getResolution(id);
@@ -443,7 +838,11 @@ public class DataManipulator {
 
         return data;
     }
-
+    /**
+     * Metoda pro prevod dat o Confing Person Relation z datoveho modelu do seznamu s jednotlivymi parametry elementu
+     * @param id identificator instance pro prevod
+     * @return List s jednotlivymi parametry
+     */
     public List[] getCPRData(int id) {
         List[] data = new List[7];
         ConfigPersonRelation cpr = dataModel.getConfigPersonRelation(id);
@@ -479,7 +878,11 @@ public class DataManipulator {
 
         return data;
     }
-
+    /**
+     * Metoda pro prevod dat o Branch z datoveho modelu do seznamu s jednotlivymi parametry elementu
+     * @param id identificator instance pro prevod
+     * @return List s jednotlivymi parametry
+     */
     public List[] getBranchStringData(int id) {
         List[] data = new List[3];
         Branch branch = dataModel.getBranch(id);
@@ -502,7 +905,11 @@ public class DataManipulator {
 
         return data;
     }
-
+    /**
+     * Metoda pro prevod dat o Phase z datoveho modelu do seznamu s jednotlivymi parametry segmentu
+     * @param id identificator instance pro prevod
+     * @return List s jednotlivymi parametry
+     */
     public List[] getPhaseStringData(int id) {
         List[] data = new List[12];
         Phase phase = dataModel.getPhase(id);
@@ -561,34 +968,64 @@ public class DataManipulator {
         return data;
     }
 
+    /**
+     * Metoda pro ziskani identifikatoru WorkUnit z segmentu Phase
+     * @param phaseId identifikator Phase
+     * @return ArrayList<ArrayList<Integer>>
+     */
     public ArrayList<ArrayList<Integer>> getWorkUnitFromPhase(int phaseId) {
 
         Phase phase = dataModel.getPhase(phaseId);
         return getWorkUnitFrom(phase.getWorkUnits());
     }
 
+    /**
+     * Metoda pro ziskani identifikatoru Work Unit z elemetnu Work Unit
+     * @param id identifikator Work Unit
+     * @return ArrayList<ArrayList<Integer>>
+     */
     public ArrayList<ArrayList<Integer>> getWorkUniFromWorkUnit(int id) {
         WorkUnit workUnit = dataModel.getWorkUnit(id);
         return getWorkUnitFrom(workUnit.getWorkUnits());
     }
 
+    /**
+     * Metoda pro ziskani identifikatoru WorkUnit z projektu
+     * @return ArrayList<ArrayList<Integer>>
+     */
     public ArrayList<ArrayList<Integer>> getWorkUnitFromProject() {
         Project project = dataModel.getProject();
         return getWorkUnitFrom(project.getWorkUnitIndexs());
     }
 
-
+    /**
+     * Metoda pro ziskani identifikatoru WorkUnit z segmentu Iteration
+     * @param iterationId identifikator Iteration
+     * @return ArrayList<ArrayList<Integer>>
+     */
     public ArrayList<ArrayList<Integer>> getWorkUnitFromIteration(int iterationId) {
 
         Iteration iteration = dataModel.getIteration(iterationId);
         return getWorkUnitFrom(iteration.getWorkUnits());
     }
 
+    /**
+     * Metoda pro ziskani identifikatoru WorkUnit z segmentu Activity
+     * @param activityId identifikator Activity
+     * @return ArrayList<ArrayList<Integer>>
+     */
     public ArrayList<ArrayList<Integer>> getWorkUnitFromActivity(int activityId) {
 
         Activity activity = dataModel.getActivity(activityId);
         return getWorkUnitFrom(activity.getWorkUnits());
     }
+
+    /**
+     * Metoda pro prevod identifikatoru ulozenych v datove strukture WorkUnitList
+     * do seznamu
+     * @param inputList Seznam instaci WorkUnitList
+     * @return  ArrayList<ArrayList<Integer>>
+     */
 
     private ArrayList<ArrayList<Integer>> getWorkUnitFrom(List<WorkUnitList> inputList) {
         ArrayList<ArrayList<Integer>> list = new ArrayList<>();
@@ -600,6 +1037,10 @@ public class DataManipulator {
         return list;
     }
 
+    /**
+     * Metoda pro prevod dat o Projectu z datoveho modelu do seznamu s jednotlivymi parametry
+     * @return List s jednotlivymi parametry
+     */
     public List[] getProjectStringData() {
 
         List[] data = new List[11];
@@ -647,6 +1088,11 @@ public class DataManipulator {
 
     }
 
+    /**
+     * Metoda pro prevod dat o Iteration z datoveho modelu do seznamu s jednotlivymi parametry segmentu
+     * @param id identificator instance pro prevod
+     * @return List s jednotlivymi parametry
+     */
     public List[] getIterationStringData(int id) {
         List[] data = new List[12];
         Iteration iteration = dataModel.getIteration(id);
@@ -706,7 +1152,11 @@ public class DataManipulator {
 
         return data;
     }
-
+    /**
+     * Metoda pro prevod dat o Activity z datoveho modelu do seznamu s jednotlivymi parametry segmentu
+     * @param id identificator instance pro prevod
+     * @return List s jednotlivymi parametry
+     */
     public List[] getActivityStringData(int id) {
         List[] data = new List[8];
         Activity activity = dataModel.getActivity(id);
@@ -747,7 +1197,11 @@ public class DataManipulator {
         }
         return data;
     }
-
+    /**
+     * Metoda pro prevod dat o Change z datoveho modelu do seznamu s jednotlivymi parametry elementu
+     * @param id identificator instance pro prevod
+     * @return List s jednotlivymi parametry
+     */
     public List[] getChangeStringData(int id) {
 
         List[] data = new List[6];
@@ -785,7 +1239,11 @@ public class DataManipulator {
 
         return data;
     }
-
+    /**
+     * Metoda pro prevod dat o Artifact z datoveho modelu do seznamu s jednotlivymi parametry elementu
+     * @param id identificator instance pro prevod
+     * @return List s jednotlivymi parametry
+     */
     public List[] getArtifactStringData(int id) {
         List[] data = new List[11];
         Artifact artifact = dataModel.getArtifact(id);
@@ -842,7 +1300,11 @@ public class DataManipulator {
 
         return data;
     }
-
+    /**
+     * Metoda pro prevod dat o Work Unit z datoveho modelu do seznamu s jednotlivymi parametry elementu
+     * @param id identificator instance pro prevod
+     * @return List s jednotlivymi parametry
+     */
     public List[] getWorkUnitStringData(int id) {
 
         List[] data = new List[29];
@@ -972,6 +1434,11 @@ public class DataManipulator {
 
     }
 
+    /**
+     * Metoda pro prevod dat o Configuration z datoveho modelu do seznamu s jednotlivymi parametry elementu
+     * @param id identificator instance pro prevod
+     * @return List s jednotlivymi parametry
+     */
     public List[] getConfigurationStringData(int id) {
 
         List[] data = new List[11];
@@ -1028,11 +1495,22 @@ public class DataManipulator {
 
     }
 
+    /**
+     * Metoda pro ziskani identifikatoru Config Person Relation z elementu Configuration
+     * @param configId identifikator Configuration
+     * @return ArrayList<ArrayList<Integer>>
+     */
     public ArrayList<ArrayList<Integer>> getCPRFromConfiguration(int configId) {
         Configuration configuration = dataModel.getConfiguration(configId);
         return getCPRFrom(configuration.getCPRsIndexs());
     }
 
+    /**
+     * Metoda pro prevod identifikatoru ulozenych v datove strukture CPRList
+     * do seznamu
+     * @param inputList Seznam instaci CPRList
+     * @return  ArrayList<ArrayList<Integer>>
+     */
     private ArrayList<ArrayList<Integer>> getCPRFrom(List<CPRSList> inputList) {
         ArrayList<ArrayList<Integer>> list = new ArrayList<>();
 
@@ -1042,7 +1520,12 @@ public class DataManipulator {
 
         return list;
     }
-
+    /**
+     * Metoda pro prevod identifikatoru ulozenych v datove strukture BranchList
+     * do seznamu
+     * @param inputList Seznam instaci BranchList
+     * @return  ArrayList<ArrayList<Integer>>
+     */
     private ArrayList<ArrayList<Integer>> getBranchFrom(List<BranchList> inputList) {
         ArrayList<ArrayList<Integer>> list = new ArrayList<>();
 
@@ -1052,7 +1535,12 @@ public class DataManipulator {
 
         return list;
     }
-
+    /**
+     * Metoda pro prevod identifikatoru ulozenych v datove strukture ChangeList
+     * do seznamu
+     * @param inputList Seznam instaci ChangeList
+     * @return  ArrayList<ArrayList<Integer>>
+     */
     private ArrayList<ArrayList<Integer>> getChangeFrom(List<ChangeList> inputList) {
         ArrayList<ArrayList<Integer>> list = new ArrayList<>();
 
@@ -1063,17 +1551,30 @@ public class DataManipulator {
         return list;
     }
 
-
+    /**
+     * Metoda pro ziskani identifikatoru Branch z elementu Configuration
+     * @param configId identifikator Configuration
+     * @return ArrayList<ArrayList<Integer>>
+     */
     public ArrayList<ArrayList<Integer>> getBranchfromConfiguration(int configId) {
         Configuration configuration = dataModel.getConfiguration(configId);
         return getBranchFrom(configuration.getBranchIndexs());
     }
 
+    /**
+     * Metoda pro ziskani identifikatoru Change z elementu Configuration
+     * @param configId identifikator Configuration
+     * @return ArrayList<ArrayList<Integer>>
+     */
     public ArrayList<ArrayList<Integer>> getChangeFromConfiguration(int configId) {
         Configuration configuration = dataModel.getConfiguration(configId);
         return getChangeFrom(configuration.getChangesIndexs());
     }
-
+    /**
+     * Metoda pro prevod dat o VCSTAg z datoveho modelu do seznamu s jednotlivymi parametry elementu
+     * @param tagId identificator instance pro prevod
+     * @return List s jednotlivymi parametry
+     */
     public List[] getVCSTagStringData(int tagId) {
         List[] data = new List[5];
         VCSTag vcsTag = dataModel.getVCSTag(tagId);
@@ -1102,7 +1603,11 @@ public class DataManipulator {
         data[4] = list;
         return data;
     }
-
+    /**
+     * Metoda pro prevod dat o Commit z datoveho modelu do seznamu s jednotlivymi parametry elementu
+     * @param commitId identificator instance pro prevod
+     * @return List s jednotlivymi parametry
+     */
     public List[] getCommitStringData(int commitId) {
         List[] data = new List[7];
         Commit commit = dataModel.getCommit(commitId);
@@ -1143,7 +1648,11 @@ public class DataManipulator {
 
         return data;
     }
-
+    /**
+     * Metoda pro prevod dat o Commited Configuration z datoveho modelu do seznamu s jednotlivymi parametry elementu
+     * @param commitedId identificator instance pro prevod
+     * @return List s jednotlivymi parametry
+     */
     public List[] getCommitedConfigurationStringData(int commitedId) {
         List[] data = new List[9];
         CommitedConfiguration commitedConfiguration = dataModel.getCommitedConfiguration(commitedId);

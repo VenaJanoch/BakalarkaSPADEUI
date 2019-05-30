@@ -62,7 +62,7 @@ public class DragSegmentButton extends Button {
      */
     private void setDragDone() {
 
-        this.setOnDragDone(event -> { //TODO Umistit prvek na pozici mysi
+        this.setOnDragDone(event -> {
             if (event.getTransferMode() == TransferMode.MOVE) {
                 x = getTranslateX();
                 y = getTranslateY();

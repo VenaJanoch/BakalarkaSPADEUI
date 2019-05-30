@@ -23,7 +23,7 @@ public class MilestoneValuesTest {
             FormDataController formDataController = warmUp.getFormDataController();
             FormController formController = warmUp.getFormController();
 
-            warmUp.getDataModel().getSaveDataModel().createNewMilestone("","",new ArrayList<>(),0);
+            warmUp.getDataModel().getSaveDataModel().createNewMilestone(0);
 
             milestone = warmUp.getDataModel().getMilestone(0);
         }

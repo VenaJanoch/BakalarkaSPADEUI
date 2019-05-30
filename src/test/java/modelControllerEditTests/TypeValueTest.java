@@ -3,6 +3,7 @@ package modelControllerEditTests;
 import SPADEPAC.Type;
 import controllers.formControllers.FormController;
 import controllers.formControllers.FormDataController;
+import javafx.scene.control.TableView;
 import org.junit.Before;
 import org.junit.Test;
 import services.SegmentLists;
@@ -28,7 +29,8 @@ public class TypeValueTest {
             FormDataController formDataController = warmUp.getFormDataController();
             FormController formController = warmUp.getFormController();
             formController.createTableItem(SegmentType.Type);
-            formDataController.saveDataFromTypeForm("Test", new ClassTable("Test", "nevim", "nevim", true, 0));
+            TableView tableView = new TableView();
+            formDataController.saveDataFromTypeForm(tableView, true);
             ArrayList<String> name = new ArrayList<>();
             name.add("");
             name.add("Test2");

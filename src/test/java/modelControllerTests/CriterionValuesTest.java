@@ -21,7 +21,7 @@ public class CriterionValuesTest {
             FormDataController formDataController = warmUp.getFormDataController();
             FormController formController = warmUp.getFormController();
 
-            warmUp.getDataModel().getSaveDataModel().createNewCriterion("","",0);
+            warmUp.getDataModel().getSaveDataModel().createNewCriterion(0);
 
             criterion = warmUp.getDataModel().getCriterion(0);
         }

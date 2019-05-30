@@ -3,6 +3,7 @@ package modelControllerEditTests;
 import SPADEPAC.VCSTag;
 import controllers.formControllers.FormController;
 import controllers.formControllers.FormDataController;
+import javafx.scene.control.TableView;
 import org.junit.Before;
 import org.junit.Test;
 import services.SegmentLists;
@@ -28,7 +29,8 @@ public class VCSTagValuesTest {
             FormController formController = warmUp.getFormController();
 
             formController.createTableItem(SegmentType.VCSTag);
-            formDataController.saveDataFromVCSTag("", new VCSTagTable("Test", true, 0));
+            TableView tableView = new TableView();
+            formDataController.saveDataFromVCSTagForm(tableView, true);
             ArrayList<String> name = new ArrayList<>();
             name.add("");
             name.add("Test2");

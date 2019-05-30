@@ -12,6 +12,9 @@ import services.SegmentLists;
 
 public class ApplicationController {
 
+    /**
+     * Globalni promenne tridy
+     */
     private CanvasItemController canvasItemController;
     private FormController formController;
     private FormDataController formDataController;
@@ -27,6 +30,15 @@ public class ApplicationController {
     private VerifyController verifyController;
 
 
+    /**
+     * Konstruktor tridy
+     * Zinicializuje globalni promenne a vytvori potrebne Controllery aplikace
+     * @param dataModel instace tridy DataModel
+     * @param identificatorCreater instace tridy IdentificatorCreater
+     * @param segmentLists instace tridy SegmentLists
+     * @param drawerPanelController instace tridy drawerPanelController
+     * @param selectItemController instace tridy SelectItemController
+     */
     public ApplicationController(DataModel dataModel, IdentificatorCreater identificatorCreater, SegmentLists segmentLists,
                                  DrawerPanelController drawerPanelController, SelectItemController selectItemController) {
         this.mapperTableToObject = new MapperTableToObject(segmentLists);
@@ -40,7 +52,7 @@ public class ApplicationController {
         this.manipulationController = new ManipulationController(deleteFormController);
         this.linkControl = new LinkControl(formController, identificatorCreater, segmentLists, deleteFormController, manipulationController);
         this.canvasItemController = new CanvasItemController(linkControl, formController, manipulationController);
-        this.formFillController = new FormFillController(formController, dataModel, canvasItemController, identificatorCreater, dataPreparer, segmentLists,
+        this.formFillController = new FormFillController(formController, formDataController, dataModel, canvasItemController, identificatorCreater, dataPreparer, segmentLists,
                 linkControl, formController.getCanvasItemList());
         formController.initBasicForms(formDataController, editFormController, deleteFormController);
         formController.setFormFillController(formFillController);

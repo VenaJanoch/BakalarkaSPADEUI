@@ -21,7 +21,7 @@ public class PriorityValueTest {
             FormDataController formDataController = warmUp.getFormDataController();
             FormController formController = warmUp.getFormController();
 
-            warmUp.getDataModel().getSaveDataModel().createNewPriority("","","",0);
+            warmUp.getDataModel().getSaveDataModel().createNewPriority(0);
 
             priority = warmUp.getDataModel().getPriority(0);
 

@@ -8,6 +8,7 @@ import controllers.formControllers.FormDataController;
 import database.MilestoneDAO;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.TableView;
 import model.DataModel;
 import org.junit.Before;
 import org.junit.Test;
@@ -47,9 +48,10 @@ public class CriterionDeleteTest {
             DeleteFormController deleteFormController = warmUp.getDeleteFormController();
             CriterionTable table1 = new CriterionTable("",true, 0);
             formController.createTableItem(SegmentType.Criterion);
-            formDataController.saveDataFromCriterionForm(0 + "", table1);
+        TableView tableView = new TableView();
+            formDataController.saveDataFromCriterionForm(tableView, true);
             formController.createTableItem(SegmentType.Criterion);
-            formDataController.saveDataFromCriterionForm(0 + "", new CriterionTable("",true, 1));
+            formDataController.saveDataFromCriterionForm(tableView, true);
 
 
             date = LocalDate.of(2018, 10, 10);
@@ -66,7 +68,8 @@ public class CriterionDeleteTest {
             ArrayList<LocalDate> dates = new ArrayList<>();
             dates.add(date);
             formController.createTableItem(SegmentType.Milestone);
-            formDataController.saveDataFromMilestoneForm("", "", new ArrayList<>(), new MilestoneTable("Test", true, 0));
+
+            formDataController.saveDataFromMilestoneForm(tableView, true);
 
             warmUp.getDataModel().getEditDataModel().editDataInMilestone("Test", name,name, indicators,  indicators, indicators, unit, false, 0);
             mapperTableToObject = warmUp.getMapperTableToObject();

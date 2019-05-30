@@ -10,11 +10,23 @@ public class SaveDataModel implements ISaveDataModel {
     private DataModel dataModel;
     private ObjectFactory objF;
 
+    /**
+     * Konstruktor tridy 
+     * Zinicializuje globalni promenne
+     * @param dataModel instace tridy DataModel
+     * @param objF instance factory ObjectFactory
+     */
     public SaveDataModel(DataModel dataModel, ObjectFactory objF) {
         this.dataModel = dataModel;
         this.objF = objF;
     }
 
+    /**
+     * Metoda pro vytvoreni relace mezi Commited Connfiguratio a Configuration v datovem Modelu
+     * @param linkId identifikator relace
+     * @param startId Pocatecni identifikator
+     * @param endId Koncovy identifikator
+     */
     public void createCommitedConfigurationToConfigurationRelation(int linkId, Integer startId, Integer endId) {
         createLink(linkId, startId, endId, LinkType.COMMITED_CONFIGURATION_CONFIGURATION);
 
@@ -24,6 +36,13 @@ public class SaveDataModel implements ISaveDataModel {
         configuration.getCommitedConfiguration().add(startId);
     }
 
+    /**
+     * Pomocna metoda pro vytvoreni instace spojnice 
+     * @param linkId identifikator relace
+     * @param startId Pocatecni identifikator
+     * @param endId Koncovy identifikator
+     * @param linkType Type o jaky druh spojnice se jedna
+     */
     private void createLink(int linkId, int startId, int endId, LinkType linkType) {
         Link linkP = objF.createLink();
 
@@ -34,7 +53,12 @@ public class SaveDataModel implements ISaveDataModel {
 
         dataModel.getLinks().add(linkP);
     }
-
+    /**
+     * Metoda pro vytvoreni relace mezi Person a Artifact v datovem Modelu
+     * @param linkId identifikator relace
+     * @param startId Pocatecni identifikator
+     * @param endId Koncovy identifikator
+     */
     public void createNewPersonToArtifactRelation(int linkId, int startId, int endId) {
 
         createLink(linkId, startId, endId, LinkType.PERSON_ARTIFACT);
@@ -44,7 +68,12 @@ public class SaveDataModel implements ISaveDataModel {
         Artifact artifact = dataModel.getArtifact(endId);
         artifact.getAuthorIndex().add(startId);
     }
-
+    /**
+     * Metoda pro vytvoreni relace mezi Person a Commit v datovem Modelu
+     * @param linkId identifikator relace
+     * @param startId Pocatecni identifikator
+     * @param endId Koncovy identifikator
+     */
     public void createNewPersonToCommitRelation(int linkId, int startId, int endId) {
 
         createLink(linkId, startId, endId, LinkType.PERSON_COMMIT);
@@ -55,6 +84,12 @@ public class SaveDataModel implements ISaveDataModel {
         commit.getAuthor().add(startId);
     }
 
+    /**
+     * Metoda pro vytvoreni relace mezi Committed Configuration a Configuration v datovem Modelu
+     * @param linkId identifikator relace
+     * @param startId Pocatecni identifikator
+     * @param endId Koncovy identifikator
+     */
     public void createNewPersonToCommittedConfigurationRelation(int linkId, int startId, int endId) {
 
         createLink(linkId, startId, endId, LinkType.PERSON_COMMITTED_CONFIGURATION);
@@ -65,6 +100,12 @@ public class SaveDataModel implements ISaveDataModel {
         commitedConfiguration.getRole().add(startId);
     }
 
+    /**
+     * Metoda pro vytvoreni relace mezi Person a Configuration v datovem Modelu
+     * @param linkId identifikator relace
+     * @param startId Pocatecni identifikator
+     * @param endId Koncovy identifikator
+     */
     public void createNewPersonToConfigurationRelation(int linkId, int startId, int endId) {
         createLink(linkId, startId, endId, LinkType.PERSON_CONFIGURATION);
 
@@ -74,6 +115,12 @@ public class SaveDataModel implements ISaveDataModel {
         configuration.getAuthorIndex().add(startId);
     }
 
+    /**
+     * Metoda pro vytvoreni relace mezi Artifact a Configuration v datovem Modelu
+     * @param linkId identifikator relace
+     * @param startId Pocatecni identifikator
+     * @param endId Koncovy identifikator
+     */
     public void createNewArtifacToConfigurationRelation(int linkId, int startId, int endId) {
         createLink(linkId, startId, endId, LinkType.ARTIFACT_CONFIGURATION);
 
@@ -84,7 +131,12 @@ public class SaveDataModel implements ISaveDataModel {
         configuration.getArtifactsIndexs().add(startId);
     }
 
-
+    /**
+     * Metoda pro vytvoreni relace mezi Commited Connfiguration a Commit v datovem Modelu
+     * @param linkId identifikator relace
+     * @param startId Pocatecni identifikator
+     * @param endId Koncovy identifikator
+     */
     public void createCommitToCommitedConfigurationRelation(int linkId, int startId, int endId) {
 
         createLink(linkId, startId, endId, LinkType.COMMIT_COMMITED_CONFIGURATION);
@@ -95,6 +147,11 @@ public class SaveDataModel implements ISaveDataModel {
         commitedConfiguration.getCommit().add(startId);
     }
 
+    /**
+     * Metoda pro vytvoreni nove instace segmentu Phase
+     * Jsou nastaveny pocatecny hodnoty a instace je pridana do datoveho modelu 
+     * @param id identifikator nove vytvarene instacne
+     */
     public void createNewPhase(int id) {
         Phase phase = objF.createPhase();
         phase.setId(id);
@@ -102,7 +159,12 @@ public class SaveDataModel implements ISaveDataModel {
         phase.setAlias(String.valueOf(id));
         dataModel.getPhases().add(phase);
     }
-
+   
+    /**
+     * Metoda pro vytvoreni nove instace segmentu Iteration
+     * Jsou nastaveny pocatecny hodnoty a instace je pridana do datoveho modelu 
+     * @param id identifikator nove vytvarene instacne
+     */
     public void createNewIteration(int id) {
         Iteration iteration = objF.createIteration();
         iteration.setId(id);
@@ -110,7 +172,12 @@ public class SaveDataModel implements ISaveDataModel {
         iteration.setAlias(String.valueOf(id));
         dataModel.getIterations().add(iteration);
     }
-
+   
+    /**
+     * Metoda pro vytvoreni nove instace segmentu Activity
+     * Jsou nastaveny pocatecny hodnoty a instace je pridana do datoveho modelu 
+     * @param id identifikator nove vytvarene instacne
+     */
     public void createNewActivity(int id) {
         Activity activity = objF.createActivity();
         activity.setId(id);
@@ -119,7 +186,12 @@ public class SaveDataModel implements ISaveDataModel {
         dataModel.getActivities().add(activity);
 
     }
-
+   
+    /**
+     * Metoda pro vytvoreni nove instace elementu Work Unit
+     * Jsou nastaveny pocatecny hodnoty a instace je pridana do datoveho modelu 
+     * @param id identifikator nove vytvarene instacne
+     */
     public void createNewWorkUnit(int id) {
         WorkUnit workUnit = objF.createWorkUnit();
         workUnit.setId(id);
@@ -128,6 +200,11 @@ public class SaveDataModel implements ISaveDataModel {
         dataModel.getWorkUnits().add(workUnit);
     }
 
+    /**
+     * Metoda pro vytvoreni nove instace elementu Configuration
+     * Jsou nastaveny pocatecny hodnoty a instace je pridana do datoveho modelu 
+     * @param id identifikator nove vytvarene instacne
+     */
     public void createNewConfiguration(int id) {
         Configuration configuration = objF.createConfiguration();
         configuration.setId(id);
@@ -142,6 +219,11 @@ public class SaveDataModel implements ISaveDataModel {
         dataModel.getConfigurations().add(configuration);
     }
 
+    /**
+     * Metoda pro vytvoreni nove instace elementu Change
+     * Jsou nastaveny pocatecny hodnoty a instace je pridana do datoveho modelu 
+     * @param id identifikator nove vytvarene instacne
+     */
     public void createNewChange(int id) {
         Change change = objF.createChange();
         change.setId(id);
@@ -150,6 +232,11 @@ public class SaveDataModel implements ISaveDataModel {
         dataModel.getChanges().add(change);
     }
 
+    /**
+     * Metoda pro vytvoreni nove instace elementu Artifact
+     * Jsou nastaveny pocatecny hodnoty a instace je pridana do datoveho modelu 
+     * @param id identifikator nove vytvarene instacne
+     */
     public void createNewArtifact(int id) {
         Artifact artifact = objF.createArtifact();
         artifact.setId(id);
@@ -164,7 +251,12 @@ public class SaveDataModel implements ISaveDataModel {
         dataModel.getArtifacts().add(artifact);
     }
 
-    public void createNewBranch(String nameForManipulator, int id, boolean isMain) {
+    /**
+     * Metoda pro vytvoreni nove instace elementu Branch
+     * Jsou nastaveny pocatecny hodnoty a instace je pridana do datoveho modelu 
+     * @param id identifikator nove vytvarene instacne
+     */
+    public void createNewBranch(int id) {
         Branch branch = objF.createBranch();
         branch.setId(id);
         branch.setExist(true);
@@ -173,6 +265,11 @@ public class SaveDataModel implements ISaveDataModel {
         dataModel.getBranches().add(branch);
     }
 
+    /**
+     * Metoda pro vytvoreni nove instace elementu Configuration Person Relation
+     * Jsou nastaveny pocatecny hodnoty a instace je pridana do datoveho modelu 
+     * @param id identifikator nove vytvarene instacne
+     */
     public void createNewCPR(int id) {
 
         ConfigPersonRelation cpr = objF.createConfigPersonRelation();
@@ -182,7 +279,12 @@ public class SaveDataModel implements ISaveDataModel {
         dataModel.getConfigPersonRelations().add(cpr);
     }
 
-    public void createNewCriterion(String nameForManipulator, String descForManipulator, int id) {
+    /**
+     * Metoda pro vytvoreni nove instace elementu Criterion
+     * Jsou nastaveny pocatecny hodnoty a instace je pridana do datoveho modelu 
+     * @param id identifikator nove vytvarene instacne
+     */
+    public void createNewCriterion(int id) {
 
         Criterion criterion = objF.createCriterion();
         criterion.setExist(true);
@@ -191,7 +293,12 @@ public class SaveDataModel implements ISaveDataModel {
         dataModel.getCriterions().add(criterion);
     }
 
-    public void createNewPriority(String nameForManipulator, String classST, String superST, int id) {
+    /**
+     * Metoda pro vytvoreni nove instace elementu Priority
+     * Jsou nastaveny pocatecny hodnoty a instace je pridana do datoveho modelu 
+     * @param id identifikator nove vytvarene instacne
+     */
+    public void createNewPriority(int id) {
 
         Priority priority = objF.createPriority();
         priority.setExist(true);
@@ -200,7 +307,12 @@ public class SaveDataModel implements ISaveDataModel {
         dataModel.getPriorities().add(priority);
     }
 
-    public void createNewSeverity(String nameForManipulator, String classST, String superST, int id) {
+    /**
+     * Metoda pro vytvoreni nove instace elementu Severity
+     * Jsou nastaveny pocatecny hodnoty a instace je pridana do datoveho modelu 
+     * @param id identifikator nove vytvarene instacne
+     */
+    public void createNewSeverity(int id) {
 
         Severity severity = objF.createSeverity();
         severity.setId(id);
@@ -209,7 +321,12 @@ public class SaveDataModel implements ISaveDataModel {
         dataModel.getSeverities().add(severity);
     }
 
-    public void createNewRelation(String nameForManipulator, String classST, String superST, int id) {
+    /**
+     * Metoda pro vytvoreni nove instace elementu Relation
+     * Jsou nastaveny pocatecny hodnoty a instace je pridana do datoveho modelu 
+     * @param id identifikator nove vytvarene instacne
+     */
+    public void createNewRelation(int id) {
 
         Relation relation = objF.createRelation();
         relation.setId(id);
@@ -218,7 +335,12 @@ public class SaveDataModel implements ISaveDataModel {
         dataModel.getRelations().add(relation);
     }
 
-    public void createNewResolution(String nameForManipulator, String classST, String superST, int id) {
+    /**
+     * Metoda pro vytvoreni nove instace elementu Resolution
+     * Jsou nastaveny pocatecny hodnoty a instace je pridana do datoveho modelu 
+     * @param id identifikator nove vytvarene instacne
+     */
+    public void createNewResolution(int id) {
 
         Resolution resolution = objF.createResolution();
         resolution.setId(id);
@@ -228,6 +350,11 @@ public class SaveDataModel implements ISaveDataModel {
 
     }
 
+    /**
+     * Metoda pro vytvoreni nove instace elementu Person
+     * Jsou nastaveny pocatecny hodnoty a instace je pridana do datoveho modelu 
+     * @param id identifikator nove vytvarene instacne
+     */
     public void createNewPerson(int id) {
 
         Person person = objF.createPerson();
@@ -243,7 +370,12 @@ public class SaveDataModel implements ISaveDataModel {
         dataModel.getPersons().add(person);
     }
 
-    public void createNewMilestone(String nameForManipulator, String description, ArrayList<Integer> criterionIndex, int id) {
+    /**
+     * Metoda pro vytvoreni nove instace elementu Milestone
+     * Jsou nastaveny pocatecny hodnoty a instace je pridana do datoveho modelu 
+     * @param id identifikator nove vytvarene instacne
+     */
+    public void createNewMilestone(int id) {
 
         Milestone milestone = objF.createMilestone();
         milestone.setId(id);
@@ -252,7 +384,12 @@ public class SaveDataModel implements ISaveDataModel {
         dataModel.getMilestones().add(milestone);
     }
 
-    public void createNewRoleType(String nameForManipulator, String classST, String superST, int id) {
+    /**
+     * Metoda pro vytvoreni nove instace elementu Role Type
+     * Jsou nastaveny pocatecny hodnoty a instace je pridana do datoveho modelu 
+     * @param id identifikator nove vytvarene instacne
+     */
+    public void createNewRoleType(int id) {
 
         RoleType roleType = objF.createRoleType();
         roleType.setId(id);
@@ -261,7 +398,12 @@ public class SaveDataModel implements ISaveDataModel {
         dataModel.getRoleTypes().add(roleType);
     }
 
-    public void createNewStatus(String nameForManipulator, String classST, String superST, int id) {
+    /**
+     * Metoda pro vytvoreni nove instace elementu Status
+     * Jsou nastaveny pocatecny hodnoty a instace je pridana do datoveho modelu 
+     * @param id identifikator nove vytvarene instacne
+     */
+    public void createNewStatus(int id) {
 
         Status status = objF.createStatus();
         status.setId(id);
@@ -270,7 +412,12 @@ public class SaveDataModel implements ISaveDataModel {
         dataModel.getStatuses().add(status);
     }
 
-    public void createNewType(String nameForManipulator, String classST, String superST, int id) {
+    /**
+     * Metoda pro vytvoreni nove instace elementu Type
+     * Jsou nastaveny pocatecny hodnoty a instace je pridana do datoveho modelu 
+     * @param id identifikator nove vytvarene instacne
+     */
+    public void createNewType(int id) {
 
         Type type = objF.createType();
         type.setId(id);
@@ -279,6 +426,11 @@ public class SaveDataModel implements ISaveDataModel {
         dataModel.getTypes().add(type);
     }
 
+    /**
+     * Metoda pro vytvoreni nove instace elementu VCSTag
+     * Jsou nastaveny pocatecny hodnoty a instace je pridana do datoveho modelu 
+     * @param id identifikator nove vytvarene instacne
+     */
     @Override
     public void createNewVCSTag(int id) {
         VCSTag vcsTag = objF.createVCSTag();
@@ -288,6 +440,11 @@ public class SaveDataModel implements ISaveDataModel {
         dataModel.getVCSTags().add(vcsTag);
     }
 
+    /**
+     * Metoda pro vytvoreni nove instace elementu Commit
+     * Jsou nastaveny pocatecny hodnoty a instace je pridana do datoveho modelu 
+     * @param id identifikator nove vytvarene instacne
+     */
     @Override
     public void createNewCommit(int id) {
         Commit commit = objF.createCommit();
@@ -304,6 +461,11 @@ public class SaveDataModel implements ISaveDataModel {
         dataModel.getCommits().add(commit);
     }
 
+    /**
+     * Metoda pro vytvoreni nove instace elementu Committed Configuration
+     * Jsou nastaveny pocatecny hodnoty a instace je pridana do datoveho modelu 
+     * @param id identifikator nove vytvarene instacne
+     */
     @Override
     public void createNewCommitedConfiguration(int id) {
         CommitedConfiguration commitedConfiguration = objF.createCommitedConfiguration();

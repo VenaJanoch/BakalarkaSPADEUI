@@ -6,6 +6,7 @@ import controllers.formControllers.FormController;
 import controllers.formControllers.FormDataController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.TableView;
 import model.DataModel;
 import org.junit.Before;
 import org.junit.Test;
@@ -39,9 +40,10 @@ public class VCSTagDeleteTest {
 
         VCSTagTable table = new VCSTagTable("", true, 0);
         formController.createTableItem(SegmentType.VCSTag);
-        formDataController.saveDataFromVCSTag("", table);
+        TableView tableView = new TableView();
+        formDataController.saveDataFromVCSTagForm(tableView, true);
         formController.createTableItem(SegmentType.VCSTag);
-        formDataController.saveDataFromVCSTag("", new VCSTagTable("", true, 1));
+        formDataController.saveDataFromVCSTagForm(tableView, true);
         date = LocalDate.of(2018, 10, 10);
         lists = warmUp.getLists();
         ArrayList<String> name = new ArrayList<>();

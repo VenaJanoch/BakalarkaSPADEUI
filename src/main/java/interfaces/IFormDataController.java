@@ -1,7 +1,9 @@
 package interfaces;
 
+import controllers.formControllers.FormFillController;
 import graphics.canvas.CanvasItem;
 import javafx.collections.ObservableList;
+import javafx.scene.control.TableView;
 import services.SegmentType;
 import tables.*;
 
@@ -11,46 +13,49 @@ import java.util.List;
 import java.util.Map;
 
 public interface IFormDataController {
-    boolean saveDataFromPhaseForm(String actName, LocalDate endDateL, String desc, int confIndex, int milestoneIndex, Map<Integer, CanvasItem> itemIndexList,
-                                  int indexForm);
 
-    boolean saveDataFromIterationForm(String actName, LocalDate startDate, LocalDate endDate, String desc, int chooseConfigID, Map<Integer, CanvasItem> itemIndexList, int indexForm);
+    int saveDataFromPhaseForm(TableView<PhaseTable> tableView, boolean isExist);
 
-    boolean saveDataFromActivityForm(String actName, String desc, Map<Integer, CanvasItem> mapOfItemOnCanvas, int indexForm);
+    int saveDataFromIterationForm(TableView<IterationTable> tableView, boolean isExist);
 
-    boolean saveDataFromWorkUnit(String nameST, BasicTable tableItem);
+    int saveDataFromActivityForm(TableView<ActivityTable> tableView, boolean isExist);
+
+    int saveDataFromVCSTagForm(TableView<VCSTagTable> tableView, boolean isExist);
+
+
+    int saveDataFromWorkUnit(TableView<WorkUnitTable> tableView, boolean isExist);
 
     boolean saveDataFromConfiguration(String actName, LocalDate createDate, boolean isRelease, int authorIndex, ArrayList<Integer> branchIndex,
                                       ArrayList<Integer> cprIndex, Map<Integer, CanvasItem> itemIndexList, boolean isNew, int indexForm);
 
-    boolean saveDataFromChange(ChangeTable changeTable);
+    int saveDataFromChangeForm(TableView<ChangeTable> tableView, boolean isExist);
 
     boolean saveDataFromArtifact(String actName, LocalDate createdDate, String type, String desc, int authorIndex,
                                  int typeIndex, boolean selected, int indexForm);
 
-    void saveDataFromBranch(String nameST, BranchTable branchTable);
+    int saveDataFromBranch(TableView<BranchTable> tableView, boolean isExist);
 
-    void saveDataFromCPR(String nameST, int roleIndex, CPRTable cprTable);
+    int saveDataFromCPR(TableView<CPRTable> tableView, boolean isExist);
 
-    void saveDataFromCriterionForm(String nameST, CriterionTable criterionTable);
+    int saveDataFromCriterionForm(TableView<CriterionTable> tableView, boolean isExist);
 
-    void saveDataFromMilestoneForm(String nameST, String description, ArrayList<Integer> criterionIndex, MilestoneTable milestoneTable);
+    int saveDataFromMilestoneForm(TableView<MilestoneTable> tableView, boolean isExist);
 
-    void saveDataFromPriority(String nameST, ClassTable tableItem);
+    int saveDataFromPriority(TableView<ClassTable> tableView, boolean isExist);
 
-    void saveDataFromSeverity(String nameST, ClassTable tableItem);
+    int saveDataFromSeverity(TableView<ClassTable> tableView, boolean isExist);
 
-    void saveDataFromResolutionForm(String nameST, ClassTable classTable);
+    int saveDataFromResolutionForm(TableView<ClassTable> tableView, boolean isExist);
 
-    void saveDataFromRelationForm(String nameST, ClassTable classTable);
+    int saveDataFromRelationForm(TableView<ClassTable> tableView, boolean isExist);
 
     void saveDataFromRoleForm(String nameST, int typeIndex, PersonTable personTable);
 
-    void saveDataFromRoleTypeForm(String nameST, ClassTable classTable);
+    int saveDataFromRoleTypeForm(TableView<RoleTypeTable> tableView, boolean isExist);
 
-    void saveDataFromStatusForm(String nameST, ClassTable classTable);
+    int saveDataFromStatusForm(TableView<ClassTable> tableView, boolean isExist);
 
-    void saveDataFromTypeForm(String nameST, ClassTable classTable);
+    int saveDataFromTypeForm(TableView<ClassTable> tableView, boolean isExist);
 
     void saveDataFromProjectFrom(String nameST, LocalDate endDate, LocalDate startDate, String desc);
 
@@ -110,8 +115,6 @@ public interface IFormDataController {
 
     List[] getRoleTypeStringData(int id);
 
-    void saveDataFromVCSTag(String nameST, VCSTagTable table);
-
     void createArtifactToConfigurationRelation(int linkId, Integer startId, Integer endId, boolean isXML);
 
     void createCommitToCommitedConfigurationRelation(int linkId, Integer startId, Integer endId, boolean isXML);
@@ -126,4 +129,7 @@ public interface IFormDataController {
 
     void createNewPersonToCommittedConfigurationRelation(int linkId, Integer startId, Integer endId, boolean isXML);
 
+    void createCopyTableItem(ArrayList<BasicTable> list, TableView tableView, SegmentType segmentType);
+
+    void setFormFillController(FormFillController formFillController);
 }

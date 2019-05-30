@@ -8,6 +8,7 @@ import controllers.formControllers.FormController;
 import controllers.formControllers.FormDataController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.TableView;
 import model.DataModel;
 import org.junit.Before;
 import org.junit.Test;
@@ -44,9 +45,10 @@ public class MilestoneDeleteTest {
             DeleteFormController deleteFormController = warmUp.getDeleteFormController();
             MilestoneTable table1 = new MilestoneTable("",true, 0);
             formController.createTableItem(SegmentType.Milestone);
-            formDataController.saveDataFromMilestoneForm("","", new ArrayList<>(),table1);
+            TableView tableView = new TableView();
+            formDataController.saveDataFromMilestoneForm(tableView, true);
             formController.createTableItem(SegmentType.Milestone);
-            formDataController.saveDataFromMilestoneForm("","", new ArrayList<>(), new MilestoneTable("",true, 1));
+            formDataController.saveDataFromMilestoneForm(tableView, true);
 
 
             date = LocalDate.of(2018, 10, 10);

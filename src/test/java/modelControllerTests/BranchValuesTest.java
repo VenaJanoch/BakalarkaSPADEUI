@@ -3,6 +3,7 @@ package modelControllerTests;
 import controllers.formControllers.FormController;
 import controllers.formControllers.FormDataController;
 import SPADEPAC.Branch;
+import javafx.scene.control.TableView;
 import org.junit.Before;
 import org.junit.Test;
 import services.SegmentLists;
@@ -20,7 +21,8 @@ public class BranchValuesTest {
             lists = warmUp.getLists();
             FormDataController formDataController = warmUp.getFormDataController();
             FormController formController = warmUp.getFormController();
-            warmUp.getDataModel().getSaveDataModel().createNewBranch("",0, true);
+            TableView tableView = new TableView();
+            warmUp.getDataModel().getSaveDataModel().createNewBranch(0);
 
             branch = warmUp.getDataModel().getBranch(0);
         }

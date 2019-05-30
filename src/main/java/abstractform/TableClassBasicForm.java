@@ -139,44 +139,30 @@ public abstract class TableClassBasicForm extends TableBasicForm implements ISeg
 
     @Override
     public void addItem() {
-        String nameST = ""; // classControlPanel.getAlias();
-
-        int id = formController.createTableItem(getSegmentType());
-        String idName = id + "";
-
-        String classST = ""; // classControlPanel.getClassName();
-        String superST = ""; //classControlPanel.getSuperClassName();
-
-        ClassTable table = new ClassTable(idName, classST, superST, true, id);
-        saveData(getSegmentType(), nameST, table);
-        tableTV.getItems().add(table);
-        tableTV.sort();
-
-        int lastItem = tableTV.getItems().size();
-        tableTV.getSelectionModel().select(lastItem - 1);
+        saveData(getSegmentType());
         showEditPanel();
 
     }
 
-    public void saveData(SegmentType segmentType, String nameST, ClassTable table) {
+    public void saveData(SegmentType segmentType) {
         switch (segmentType) {
             case Severity:
-                formDataController.saveDataFromSeverity(nameST, table);
+                formDataController.saveDataFromSeverity(tableTV, true);
                 break;
             case Priority:
-                formDataController.saveDataFromPriority(nameST, table);
+                formDataController.saveDataFromPriority(tableTV, true);
                 break;
             case Status:
-                formDataController.saveDataFromStatusForm(nameST, table);
+                formDataController.saveDataFromStatusForm(tableTV, true);
                 break;
             case Type:
-                formDataController.saveDataFromTypeForm(nameST, table);
+                formDataController.saveDataFromTypeForm(tableTV, true);
                 break;
             case Relation:
-                formDataController.saveDataFromRelationForm(nameST, table);
+                formDataController.saveDataFromRelationForm(tableTV, true);
                 break;
             case Resolution:
-                formDataController.saveDataFromResolutionForm(nameST, table);
+                formDataController.saveDataFromResolutionForm(tableTV, true);
                 break;
             default:
 
@@ -189,6 +175,7 @@ public abstract class TableClassBasicForm extends TableBasicForm implements ISeg
         addButton.setOnAction(event -> addItem());
         removeButton.setOnAction(event -> deleteItem(tableTV));
         editButton.setOnAction(event -> showEditPanel());
+        copyButton.setOnAction(event -> copyItem(tableTV));
     }
 
     private void showEditPanel() {

@@ -6,6 +6,7 @@ import graphics.canvas.CanvasItem;
 import graphics.canvas.DragAndDropCanvas;
 import graphics.canvas.NodeLink;
 import interfaces.IDeleteFormController;
+import javafx.scene.control.TableView;
 import javafx.scene.paint.Color;
 import services.*;
 
@@ -103,7 +104,6 @@ public class ManipulationController {
 
     }
 
-
     /**
      * Rozhodne, který segment nebo element se vytvoří
      * <p>
@@ -128,6 +128,24 @@ public class ManipulationController {
                 break;
             case Artifact:
                 formFillController.fillArtifactForm(oldFormIndex, x, y);
+                break;
+            default:
+                break;
+        }
+    }
+
+    /**
+     * Rozhodne, který segment nebo element se vytvoří
+     * <p>
+     * instance seznamu formulářů
+     *
+     * @return pole identifikátorů prvku
+     */
+    public void createCopyTableForm(TableView tableView, int oldFormIndex, SegmentType segmentType) {
+
+        switch (segmentType) {
+            case Activity:
+                formFillController.fillActivityForm(tableView, oldFormIndex);
                 break;
             default:
                 break;

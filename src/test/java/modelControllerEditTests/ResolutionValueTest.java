@@ -3,6 +3,7 @@ package modelControllerEditTests;
 import SPADEPAC.Resolution;
 import controllers.formControllers.FormController;
 import controllers.formControllers.FormDataController;
+import javafx.scene.control.TableView;
 import org.junit.Before;
 import org.junit.Test;
 import services.SegmentLists;
@@ -28,7 +29,8 @@ public class ResolutionValueTest {
         FormDataController formDataController = warmUp.getFormDataController();
         FormController formController = warmUp.getFormController();
         formController.createTableItem(SegmentType.Resolution);
-        formDataController.saveDataFromResolutionForm("Test", new ClassTable("Test", "nevim", "nevim", true, 0));
+        TableView tableView = new TableView();
+        formDataController.saveDataFromResolutionForm(tableView, true);
         ArrayList<String> name = new ArrayList<>();
         name.add("");
         name.add("Test2");

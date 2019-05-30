@@ -21,7 +21,7 @@ public class RelationValueTest {
         FormDataController formDataController = warmUp.getFormDataController();
         FormController formController = warmUp.getFormController();
 
-        warmUp.getDataModel().getSaveDataModel().createNewRelation("","","",0);
+        warmUp.getDataModel().getSaveDataModel().createNewRelation(0);
 
         relation = warmUp.getDataModel().getRelation(0);
     }

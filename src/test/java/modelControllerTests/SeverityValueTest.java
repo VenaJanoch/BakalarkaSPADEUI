@@ -25,7 +25,7 @@ public class SeverityValueTest {
             FormController formController = warmUp.getFormController();
 
 
-            warmUp.getDataModel().getSaveDataModel().createNewSeverity("","","",0);
+            warmUp.getDataModel().getSaveDataModel().createNewSeverity(0);
 
             severity = warmUp.getDataModel().getSeverity(0);
             

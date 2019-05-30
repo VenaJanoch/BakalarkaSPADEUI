@@ -9,6 +9,7 @@ import controllers.formControllers.FormController;
 import controllers.formControllers.FormDataController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.TableView;
 import model.DataModel;
 import org.junit.Before;
 import org.junit.Test;
@@ -48,9 +49,10 @@ public class WorkUnitValueTest {
 
         WorkUnitTable table1 = new WorkUnitTable("",true, 0);
         FormController formController = warmUp.getFormController();
-        formDataController.saveDataFromWorkUnit("", table1);
+        TableView tableView = new TableView<WorkUnitTable>();
+        formDataController.saveDataFromWorkUnit(tableView, true);
         formController.createTableItem(SegmentType.Work_Unit);
-        formDataController.saveDataFromWorkUnit("", new WorkUnitTable("",true, 1));
+        formDataController.saveDataFromWorkUnit(tableView,true);
         formController.createTableItem(SegmentType.Work_Unit);
         date = LocalDate.of(2018, 10, 10);
         ArrayList<String> name = new ArrayList<>();

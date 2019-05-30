@@ -101,6 +101,7 @@ public class ConfigPersonRelationForm extends TableBasicForm implements ISegment
         addButton.setOnAction(event -> addItem());
         removeButton.setOnAction(event -> deleteItem(tableTV));
         editButton.setOnAction(event -> showEditPanel());
+        copyButton.setOnAction(event -> copyItem(tableTV));
     }
 
     @Override
@@ -138,16 +139,7 @@ public class ConfigPersonRelationForm extends TableBasicForm implements ISegment
     @Override
     public void addItem() {
 
-        String nameST = ""; // cprControlPanel.getAlias();
-        int id = formController.createTableItem(SegmentType.Config_Person_Relation);
-        int roleIndex = 0;
-        CPRTable cpr = new CPRTable(id + "", "", true, id);
-        formDataController.saveDataFromCPR(nameST, roleIndex, cpr);
-        tableTV.getItems().add(cpr);
-        tableTV.sort();
-
-        int lastItem = tableTV.getItems().size();
-        tableTV.getSelectionModel().select(lastItem - 1);
+        formDataController.saveDataFromCPR(tableTV, true);
         showEditPanel();
     }
 

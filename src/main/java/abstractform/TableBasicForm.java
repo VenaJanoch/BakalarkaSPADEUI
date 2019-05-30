@@ -34,6 +34,7 @@ public abstract class TableBasicForm extends BasicForm {
     protected Button addButton;
     protected Button removeButton;
     protected Button editButton;
+    protected Button copyButton;
 
     protected EventHandler<MouseEvent> OnMousePressedEventHandler;
 
@@ -80,6 +81,17 @@ public abstract class TableBasicForm extends BasicForm {
         }
     }
 
+    /**
+     * Metoda pro duplikaci prvku z tabulce
+     * @param tableTV instance tridy TableView, ze ktere se budou polozky mazat
+     */
+    public void copyItem(TableView tableTV) {
+        ObservableList selection = FXCollections
+                .observableArrayList(tableTV.getSelectionModel().getSelectedItems());
+
+            ArrayList<BasicTable> list = new ArrayList<>(selection);
+            formDataController.createCopyTableItem(list, tableTV, getSegmentType());
+    }
 
     /**
      * Vytvoří a rozloží základní prvky ve formuláři
@@ -106,9 +118,15 @@ public abstract class TableBasicForm extends BasicForm {
         editButton.setBackground(new Background(new BackgroundFill(Color.rgb(0, 163, 211), CornerRadii.EMPTY, Insets.EMPTY)));
         editButton.setTextFill(Color.WHITE);
         editButton.setStyle("-fx-font-size: 20px;");
+        copyButton = new Button("D");
+        copyButton.setMinSize(Constans.tableControlButtonWidth, Constans.tableControlButtonHeight);
+        copyButton.setBackground(new Background(new BackgroundFill(Color.rgb(129, 129, 129), CornerRadii.EMPTY, Insets.EMPTY)));
+        copyButton.setTextFill(Color.WHITE);
+        copyButton.setStyle("-fx-font-size: 20px;");
 
         buttonPanel.add(addButton, 0, 0);
         buttonPanel.add(removeButton, 1, 0);
+        buttonPanel.add(copyButton, 2, 0);
         buttonPanel.add(editButton, 15, 0);
         buttonPanel.setHgap(15);
         GridPane.setMargin(addButton, new Insets(0, 0, 0, 15));

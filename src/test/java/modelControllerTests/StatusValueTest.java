@@ -22,7 +22,7 @@ public class StatusValueTest {
             FormController formController = warmUp.getFormController();
 
 
-            warmUp.getDataModel().getSaveDataModel().createNewStatus("","","",0);
+            warmUp.getDataModel().getSaveDataModel().createNewStatus(0);
 
             status = warmUp.getDataModel().getStatus(0);
         }

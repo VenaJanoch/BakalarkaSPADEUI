@@ -6,6 +6,7 @@ import controllers.formControllers.FormController;
 import controllers.formControllers.FormDataController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.TableView;
 import model.DataModel;
 import org.junit.Before;
 import org.junit.Test;
@@ -43,9 +44,10 @@ public class BranchDeleteTest {
             DeleteFormController deleteFormController = warmUp.getDeleteFormController();
             BranchTable table1 = new BranchTable("", "YES", true, true, 0);
             formController.createTableItem(SegmentType.Branch);
-            formDataController.saveDataFromBranch(0 + "", table1);
+            TableView tableView = new TableView();
+            formDataController.saveDataFromBranch(tableView, true);
             formController.createTableItem(SegmentType.Branch);
-            formDataController.saveDataFromBranch(0 + "", new BranchTable("", "YES", true, true, 1));
+            formDataController.saveDataFromBranch(tableView, true);
 
 
             date = LocalDate.of(2018, 10, 10);

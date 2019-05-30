@@ -130,21 +130,12 @@ public class VCSTagForm extends TableBasicForm implements ISegmentTableForm {
         addButton.setOnAction(event -> addItem());
         removeButton.setOnAction(event -> deleteItem(tableTV));
         editButton.setOnAction(event -> showEditPanel());
+        copyButton.setOnAction(event -> copyItem(tableTV));
     }
 
     @Override
     public void addItem() {
-        String nameST = "";// criterionControlPanel.getAlias();
-
-        int id = formController.createTableItem(SegmentType.VCSTag);
-        String idName = id + "";
-
-        VCSTagTable table = new VCSTagTable(idName, true, id);
-        formDataController.saveDataFromVCSTag(nameST, table);
-        tableTV.getItems().add(table);
-        tableTV.sort();
-        int lastItem = tableTV.getItems().size();
-        tableTV.getSelectionModel().select(lastItem - 1);
+        formDataController.saveDataFromVCSTagForm(tableTV, true);
         showEditPanel();
     }
 

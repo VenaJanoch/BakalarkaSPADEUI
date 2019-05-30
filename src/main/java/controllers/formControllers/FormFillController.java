@@ -8,6 +8,7 @@ import controllers.graphicsComponentsControllers.CanvasController;
 import controllers.graphicsComponentsControllers.CanvasItemController;
 import forms.*;
 import graphics.canvas.CanvasItem;
+import interfaces.IFormDataController;
 import javafx.geometry.Point2D;
 import model.DataManipulator;
 import model.DataModel;
@@ -28,6 +29,7 @@ public class FormFillController {
     private DataManipulator dataManipulator;
     private DataModel dataModel;
     private FormController formController;
+    private IFormDataController formDataController;
     private CanvasItemController canvasItemController;
     private ArrayList<BasicForm> forms;
     private CanvasController dataModelCanvasController;
@@ -37,7 +39,7 @@ public class FormFillController {
     private Map<Integer, CanvasItem> canvasItemList;
     private DataPreparer dataPreparer;
 
-    public FormFillController(FormController formController, DataModel dataModel, CanvasItemController canvasItemController,
+    public FormFillController(FormController formController, IFormDataController formDataController, DataModel dataModel, CanvasItemController canvasItemController,
                               IdentificatorCreater identificatorCreater, DataPreparer dataPreparer, SegmentLists lists, LinkControl linkControl,
                               Map<Integer, CanvasItem> canvasItemList) {
         this.formController = formController;
@@ -50,7 +52,8 @@ public class FormFillController {
         this.linkControl = linkControl;
         this.canvasItemList = canvasItemList;
         this.dataPreparer = dataPreparer;
-
+        this.formDataController = formDataController;
+        this.formDataController.setFormFillController(this);
     }
 
 
@@ -342,6 +345,7 @@ public class FormFillController {
         }
     }
 
+
     public void fillPersonForm(int oldFormId, double x, double y) {
         int newFormId = formController.createNewForm(SegmentType.Person, dataModelCanvasController.getCanvasType());
         int personId = identificatorCreater.getRoleIndexToIdMaper().get(oldFormId);
@@ -423,6 +427,109 @@ public class FormFillController {
         }
 
     }
+
+    public void fillActivityForm(TableView<ActivityTable> tableView, int oldActivityId){
+        Activity activity = dataModel.getActivity(oldActivityId);
+        int newActivityId = formDataController.saveDataFromActivityForm(tableView, activity.isExist());
+        dataManipulator.copyDataFromActivity(oldActivityId, newActivityId);
+    }
+
+    public void fillIterationForm(TableView<IterationTable> tableView, int oldIterationId){
+        Iteration iteration = dataModel.getIteration(oldIterationId);
+        int newIterationId = formDataController.saveDataFromIterationForm(tableView, iteration.isExist());
+        dataManipulator.copyDataFromIteration(oldIterationId, newIterationId);
+    }
+
+    public void fillPhaseForm(TableView<PhaseTable> tableView, int oldPhaseId){
+        Phase phase = dataModel.getPhase(oldPhaseId);
+        int newPhaseId = formDataController.saveDataFromPhaseForm(tableView, phase.isExist());
+        dataManipulator.copyDataFromPhase(oldPhaseId, newPhaseId);
+    }
+
+    public void fillChangeForm(TableView<ChangeTable> tableView, int oldChangeId){
+        Change phase = dataModel.getChange(oldChangeId);
+        int newChangeId = formDataController.saveDataFromChangeForm(tableView, phase.isExist());
+        dataManipulator.copyDataFromChange(oldChangeId, newChangeId);
+    }
+
+    public void fillVCSTagForm(TableView<VCSTagTable> tableView, int oldVCSTagId){
+        VCSTag phase = dataModel.getVCSTag(oldVCSTagId);
+        int newVCSTagId = formDataController.saveDataFromVCSTagForm(tableView, phase.isExist());
+        dataManipulator.copyDataFromVCSTag(oldVCSTagId, newVCSTagId);
+    }
+
+    public void fillCPRForm(TableView<CPRTable> tableView, int oldCPRId){
+        ConfigPersonRelation phase = dataModel.getConfigPersonRelation(oldCPRId);
+        int newCPRId = formDataController.saveDataFromCPR(tableView, phase.isExist());
+        dataManipulator.copyDataFromCPR(oldCPRId, newCPRId);
+    }
+
+    public void fillBranchForm(TableView<BranchTable> tableView, int oldBranchId){
+        Branch phase = dataModel.getBranch(oldBranchId);
+        int newBranchId = formDataController.saveDataFromBranch(tableView, phase.isExist());
+        dataManipulator.copyDataFromBranch(oldBranchId, newBranchId);
+    }
+
+    public void fillCriterionForm(TableView<CriterionTable> tableView, int oldCriterionId){
+        Criterion phase = dataModel.getCriterion(oldCriterionId);
+        int newCriterionId = formDataController.saveDataFromCriterionForm(tableView, phase.isExist());
+        dataManipulator.copyDataFromCriterion(oldCriterionId, newCriterionId);
+    }
+
+    public void fillMilestoneForm(TableView<MilestoneTable> tableView, int oldMilestoneId){
+        Milestone phase = dataModel.getMilestone(oldMilestoneId);
+        int newMilestoneId = formDataController.saveDataFromMilestoneForm(tableView, phase.isExist());
+        dataManipulator.copyDataFromMilestone(oldMilestoneId, newMilestoneId);
+    }
+
+    public void fillRoleTypeForm(TableView<RoleTypeTable> tableView, int oldRoleTypeId){
+        RoleType phase = dataModel.getRoleType(oldRoleTypeId);
+        int newRoleTypeId = formDataController.saveDataFromRoleTypeForm(tableView, phase.isExist());
+        dataManipulator.copyDataFromRoleType(oldRoleTypeId, newRoleTypeId);
+    }
+
+    public void fillPriorityForm(TableView<ClassTable> tableView, int oldPriorityId){
+        Priority phase = dataModel.getPriority(oldPriorityId);
+        int newPriorityId = formDataController.saveDataFromPriority(tableView, phase.isExist());
+        dataManipulator.copyDataFromPriority(oldPriorityId, newPriorityId);
+    }
+
+    public void fillSeverityForm(TableView<ClassTable> tableView, int oldSeverityId){
+        Severity phase = dataModel.getSeverity(oldSeverityId);
+        int newSeverityId = formDataController.saveDataFromSeverity(tableView, phase.isExist());
+        dataManipulator.copyDataFromSeverity(oldSeverityId, newSeverityId);
+    }
+
+    public void fillStatusForm(TableView<ClassTable> tableView, int oldStatusId){
+        Status phase = dataModel.getStatus(oldStatusId);
+        int newStatusId = formDataController.saveDataFromStatusForm(tableView, phase.isExist());
+        dataManipulator.copyDataFromStatus(oldStatusId, newStatusId);
+    }
+
+    public void fillTypeForm(TableView<ClassTable> tableView, int oldTypeId){
+        Type phase = dataModel.getType(oldTypeId);
+        int newTypeId = formDataController.saveDataFromTypeForm(tableView, phase.isExist());
+        dataManipulator.copyDataFromType(oldTypeId, newTypeId);
+    }
+
+    public void fillRelationForm(TableView<ClassTable> tableView, int oldRelationId){
+        Relation phase = dataModel.getRelation(oldRelationId);
+        int newRelationId = formDataController.saveDataFromRelationForm(tableView, phase.isExist());
+        dataManipulator.copyDataFromRelation(oldRelationId, newRelationId);
+    }
+
+    public void fillResolutionForm(TableView<ClassTable> tableView, int oldResolutionId){
+        Resolution phase = dataModel.getResolution(oldResolutionId);
+        int newResolutionId = formDataController.saveDataFromResolutionForm(tableView, phase.isExist());
+        dataManipulator.copyDataFromResolution(oldResolutionId, newResolutionId);
+    }
+    
+    public void fillWorkUnitForm(TableView<WorkUnitTable> tableView, int oldWorkUnitId){
+        WorkUnit phase = dataModel.getWorkUnit(oldWorkUnitId);
+        int newWorkUnitId = formDataController.saveDataFromWorkUnit(tableView, phase.isExist());
+        dataManipulator.copyDataFromWorkUnit(oldWorkUnitId, newWorkUnitId);
+    }
+    
 
     public void fillActivityForm() {
         ActivityForm activityForm = (ActivityForm) forms.get(Constans.activityFormIndex);

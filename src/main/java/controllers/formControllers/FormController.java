@@ -69,8 +69,6 @@ public class FormController {
     private DataModel dataModel;
     private ISaveDataModel saveDataModel;
 
-    private int lastConfigurationFormIndex = -1;
-
     private FormFillController formFillController;
     private DataPreparer dataPreparer;
     private DrawerPanelController drawerPanelController;
@@ -383,6 +381,56 @@ public class FormController {
         return id;
     }
 
+    public int createNewBranchForm(int id) {
+        saveDataModel.createNewBranch(id);
+        return id;
+    }
+
+    public int createNewMilestoneForm(int id) {
+        saveDataModel.createNewMilestone(id);
+        return id;
+    }
+
+    public int createNewCriterionForm(int id) {
+        saveDataModel.createNewCriterion(id);
+        return id;
+    }
+
+    public int createNewPriorityForm(int id) {
+        saveDataModel.createNewPriority(id);
+        return id;
+    }
+
+    public int createNewSeverityForm(int id) {
+        saveDataModel.createNewSeverity(id);
+        return id;
+    }
+
+    public int createNewRelationForm(int id) {
+        saveDataModel.createNewRelation(id);
+        return id;
+    }
+
+    public int createNewResolutionForm(int id) {
+        saveDataModel.createNewResolution(id);
+        return id;
+    }
+
+    public int createNewStatusForm(int id) {
+        saveDataModel.createNewStatus(id);
+        return id;
+    }
+
+    public int createNewTypeForm(int id) {
+        saveDataModel.createNewType(id);
+        return id;
+    }
+    
+    public int createNewRoleTypeForm(int id) {
+        saveDataModel.createNewRoleType(id);
+        return id;
+    }
+
     public int createNewPhaseFormWithoutManipulator() {
 
         int index = identificatorCreater.createPhaseID();
@@ -562,31 +610,51 @@ public class FormController {
                 createNewPhaseForm(id);
                 return id;
             case Branch:
-                return identificatorCreater.createBranchID();
+                id = identificatorCreater.createBranchID();
+                createNewBranchForm(id);
+                return id;
             case Priority:
-                return identificatorCreater.createPriorityID();
+                id = identificatorCreater.createPriorityID();
+                createNewPriorityForm(id);
+                return id;
             case Severity:
-                return identificatorCreater.createSeverityID();
+                id =  identificatorCreater.createSeverityID();
+                createNewSeverityForm(id);
+                return id;
             case Milestone:
-                return identificatorCreater.createMilestoneID();
+                id = identificatorCreater.createMilestoneID();
+                createNewMilestoneForm(id);
+                return id;
             case Criterion:
-                return identificatorCreater.createCriterionID();
+                id = identificatorCreater.createCriterionID();
+                createNewCriterionForm(id);
+                return id;
             case Person:
                 return identificatorCreater.createRoleID();
             case Role_Type:
-                return identificatorCreater.createRoleTypeID();
+                id = identificatorCreater.createRoleTypeID();
+                createNewRoleTypeForm(id);
+                return id;
             case Config_Person_Relation:
                 id = identificatorCreater.createCPRID();
                 createNewCPRForm(id);
                 return id;
             case Relation:
-                return identificatorCreater.createRelationID();
+                id = identificatorCreater.createRelationID();
+                createNewRelationForm(id);
+                return id;
             case Resolution:
-                return identificatorCreater.createResolutionID();
+                id = identificatorCreater.createResolutionID();
+                createNewResolutionForm(id);
+                return id;
             case Status:
-                return identificatorCreater.createStatusID();
+                id = identificatorCreater.createStatusID();
+                createNewStatusForm(id);
+                return id;
             case Type:
-                return identificatorCreater.createTypeID();
+                id = identificatorCreater.createTypeID();
+                createNewTypeForm(id);
+                return id;
             case Tag:
                 return identificatorCreater.createTagID();
             default:

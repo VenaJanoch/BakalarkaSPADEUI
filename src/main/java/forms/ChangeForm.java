@@ -123,22 +123,13 @@ public class ChangeForm extends TableBasicForm implements ISegmentTableForm {
         addButton.setOnAction(event -> addItem());
         removeButton.setOnAction(event -> deleteItem(tableTV));
         editButton.setOnAction(event -> showEditPanel());
+        copyButton.setOnAction(event -> copyItem(tableTV));
     }
 
     @Override
     public void addItem() {
-        String nameST = "";// criterionControlPanel.getAlias();
 
-        int id = formController.createTableItem(SegmentType.Change);
-        String idName = id + "";
-
-        ChangeTable table = new ChangeTable(idName, true, id);
-        formDataController.saveDataFromChange(table);
-
-        tableTV.getItems().add(table);
-        tableTV.sort();
-        int lastItem = tableTV.getItems().size();
-        tableTV.getSelectionModel().select(lastItem - 1);
+        formDataController.saveDataFromChangeForm(tableTV, true);
         showEditPanel();
     }
 

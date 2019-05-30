@@ -20,7 +20,7 @@ public class RoleTypeValueTest {
             FormDataController formDataController = warmUp.getFormDataController();
             FormController formController = warmUp.getFormController();
 
-            warmUp.getDataModel().getSaveDataModel().createNewRoleType("","","",0);
+            warmUp.getDataModel().getSaveDataModel().createNewRoleType(0);
             roleType =warmUp.getDataModel().getRoleType(0);
         }
 

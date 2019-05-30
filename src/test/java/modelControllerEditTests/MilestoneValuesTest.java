@@ -3,6 +3,7 @@ package modelControllerEditTests;
 import SPADEPAC.Milestone;
 import controllers.formControllers.FormController;
 import controllers.formControllers.FormDataController;
+import javafx.scene.control.TableView;
 import org.junit.Before;
 import org.junit.Test;
 import services.SegmentLists;
@@ -38,7 +39,8 @@ public class MilestoneValuesTest {
             unit.add(indicators);
 
             formController.createTableItem(SegmentType.Milestone);
-            formDataController.saveDataFromMilestoneForm("", "", new ArrayList<>(), new MilestoneTable("Test", true, 0));
+            TableView tableView = new TableView();
+            formDataController.saveDataFromMilestoneForm(tableView, true);
 
             warmUp.getDataModel().getEditDataModel().editDataInMilestone("Test", name,name, indicators,  indicators, indicators, unit, false, 0);
             warmUp.getDataModel().getEditDataModel().editDataInMilestone("Test", name,name, indicators,  indicators, indicators, unit, false, 0);

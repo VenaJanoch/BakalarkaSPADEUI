@@ -8,6 +8,7 @@ import controllers.formControllers.FormController;
 import controllers.formControllers.FormDataController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.TableView;
 import model.DataModel;
 import org.junit.Before;
 import org.junit.Test;
@@ -43,9 +44,10 @@ public class RoleTypeDeleteTest {
         DeleteFormController deleteFormController = warmUp.getDeleteFormController();
         ClassTable table1 = new ClassTable("","","",true, 0);
         formController.createTableItem(SegmentType.Role_Type);
-        formDataController.saveDataFromRoleTypeForm(0 + "", table1);
+        TableView tableView = new TableView();
+        formDataController.saveDataFromRoleTypeForm(tableView, true);
         formController.createTableItem(SegmentType.Role_Type);
-        formDataController.saveDataFromRoleTypeForm(0 + "", new ClassTable("","","",true, 1));
+        formDataController.saveDataFromRoleTypeForm(tableView, true);
 
 
         date = LocalDate.of(2018, 10, 10);
