@@ -29,14 +29,14 @@ public class VerifyTable extends BasicTable {
 
     }
 
-    public VerifyTable(String name, int id, boolean exist, int instanceCont, int projectInstanceCount, String isExistInProject, String result, String sql) {
+    public VerifyTable(String name, int id, boolean exist, int instanceCont, String countIndicator, int projectInstanceCount, String isExistInProject, String result, String sql) {
         this(name, id, exist, isExistInProject, result, sql);
         if (instanceCont == -1) {
             this.projectInstanceCount = new SimpleStringProperty("----");
             this.instanceCount = new SimpleStringProperty("----");
         } else {
             this.projectInstanceCount = new SimpleStringProperty(String.valueOf(projectInstanceCount));
-            this.instanceCount = new SimpleStringProperty(String.valueOf(instanceCont));
+            this.instanceCount = new SimpleStringProperty(countIndicator + " " + String.valueOf(instanceCont));
         }
     }
 

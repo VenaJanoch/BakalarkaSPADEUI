@@ -4,6 +4,7 @@ import controllers.formControllers.*;
 import controllers.graphicsComponentsControllers.CanvasItemController;
 import controllers.graphicsComponentsControllers.DrawerPanelController;
 import controllers.graphicsComponentsControllers.SelectItemController;
+import controllers.graphicsComponentsControllers.SelectionController;
 import model.DataModel;
 import model.IdentificatorCreater;
 import services.DeleteControl;
@@ -28,6 +29,7 @@ public class ApplicationController {
     private EditFormController editFormController;
     private DatabaseController databaseController;
     private VerifyController verifyController;
+    private SelectionController selectionController;
 
 
     /**
@@ -49,9 +51,10 @@ public class ApplicationController {
         this.formDataController = new FormDataController(formController, segmentLists, mapperTableToObject, dataModel, identificatorCreater, dataPreparer);
         this.deleteFormController = new DeleteFormController(formController, dataModel, identificatorCreater, mapperTableToObject, deleteControl, segmentLists);
         this.editFormController = new EditFormController(dataModel, identificatorCreater, mapperTableToObject, segmentLists, dataPreparer, formController);
-        this.manipulationController = new ManipulationController(deleteFormController);
+        this.selectionController = new SelectionController();
+        this.manipulationController = new ManipulationController(deleteFormController, selectionController);
         this.linkControl = new LinkControl(formController, identificatorCreater, segmentLists, deleteFormController, manipulationController);
-        this.canvasItemController = new CanvasItemController(linkControl, formController, manipulationController);
+        this.canvasItemController = new CanvasItemController(linkControl, formController, manipulationController, selectionController);
         this.formFillController = new FormFillController(formController, formDataController, dataModel, canvasItemController, identificatorCreater, dataPreparer, segmentLists,
                 linkControl, formController.getCanvasItemList());
         formController.initBasicForms(formDataController, editFormController, deleteFormController);
@@ -86,5 +89,9 @@ public class ApplicationController {
 
     public DatabaseController getDatabaseController() {
         return databaseController;
+    }
+
+    public SelectionController getSelectionController() {
+        return selectionController;
     }
 }

@@ -2,6 +2,7 @@ package controllers.formControllers;
 
 import controllers.graphicsComponentsControllers.CanvasController;
 import controllers.graphicsComponentsControllers.CanvasItemController;
+import controllers.graphicsComponentsControllers.SelectionController;
 import graphics.canvas.CanvasItem;
 import graphics.canvas.DragAndDropCanvas;
 import graphics.canvas.NodeLink;
@@ -9,6 +10,8 @@ import interfaces.IDeleteFormController;
 import javafx.scene.control.TableView;
 import javafx.scene.paint.Color;
 import services.*;
+
+import java.util.Set;
 
 public class ManipulationController {
 
@@ -18,25 +21,28 @@ public class ManipulationController {
 
     private DeleteControl deleteControl;
 
-    private CanvasItem chooseCanvasItem;
     private DragAndDropCanvas chooseCanvas;
 
     private boolean isCut;
     private boolean isCopy;
+
+    private boolean isChoosedItem = false;
 
     private NodeLink link;
 
     private FormController formController;
     private FormFillController formFillController;
     private IDeleteFormController deleteFormController;
+    private SelectionController selectionController;
 
     /**
      * Konstruktor třídy Zinicializuje globální proměnné třídy
      * instance třídy control
      */
-    public ManipulationController(IDeleteFormController deleteFormController) {
+    public ManipulationController(IDeleteFormController deleteFormController, SelectionController selectionController) {
 
         this.deleteFormController = deleteFormController;
+        this.selectionController = selectionController;
         isCut = false;
     }
 
@@ -49,19 +55,13 @@ public class ManipulationController {
 
     }
 
-    public void controlCopyItem() {
-
-        if (!isCopy) {
-            chooseCanvasItem = null;
-        }
-    }
 
     /**
      * Uloží data o vyjmutém prvku a smaže ho z plátna
      */
     public void cutItem(CanvasController canvasController, CanvasItemController canvasItemController) {
 
-        if (chooseCanvasItem != null) {
+        if (selectionController.getSelection().size() != 0) {
             copyItem(canvasController);
             isCut = true;
         }
@@ -71,22 +71,24 @@ public class ManipulationController {
      * Smaže prvek ze seznamů a zneviditelní na plátně
      */
     public void deleteItem(CanvasItemController canvasItemController) {
-        if (chooseCanvasItem != null) {
-
-            int index = chooseCanvasItem.getFormIdentificator();
-            boolean isDelete = deleteForm(index, chooseCanvasItem.getSegmentType());
-            if (isDelete) {
-                canvasItemController.deleteItem(chooseCanvasItem);
+            for(CanvasItem chooseCanvasItem : selectionController.getSelection()){
+               deleteItem(canvasItemController, chooseCanvasItem);
             }
-        }
-        chooseCanvasItem = null;
+    }
 
+    public void deleteItem(CanvasItemController canvasItemController, CanvasItem chooseCanvasItem) {
+        int index = chooseCanvasItem.getFormIdentificator();
+        boolean isDelete = deleteForm(index, chooseCanvasItem.getSegmentType());
+        if (isDelete) {
+            canvasItemController.deleteItem(chooseCanvasItem);
+        }
     }
 
     /**
      * Vloží nový pvek na plátno
      */
-    public void pasteItem(CanvasController canvasController, CanvasItemController canvasItemController, double x, double y) {
+    public void pasteItem(CanvasController canvasController, CanvasItemController canvasItemController, double x, double y, CanvasItem chooseCanvasItem) {
+
         SegmentType segmentType = canvasItemController.getSegmentType(chooseCanvasItem);
         CanvasType canvasType = canvasController.getCanvasType();
 
@@ -94,12 +96,23 @@ public class ManipulationController {
 
             if (isCut) {
                 createCopyForm(chooseCanvasItem.getFormIdentificator(), segmentType, canvasController, x, y);
-                deleteItem(canvasItemController);
+                deleteItem(canvasItemController, chooseCanvasItem);
             } else {
                 createCopyForm(chooseCanvasItem.getFormIdentificator(), segmentType, canvasController, x, y);
             }
         } else {
             Alerts.badCopyItem(segmentType, canvasType);
+        }
+
+    }
+
+    /**
+     * Vloží nový pvek na plátno
+     */
+    public void pasteItem(CanvasController canvasController, CanvasItemController canvasItemController, double x, double y) {
+
+        for(CanvasItem canvasItem : selectionController.getSelection()){
+            pasteItem(canvasController, canvasItemController, x, y, canvasItem);
         }
 
     }
@@ -152,7 +165,12 @@ public class ManipulationController {
         }
     }
 
-
+    /**
+     * Metoda pro rozhodnuti, ktery z datoveho modelu bude smazany
+     * @param formIndex formIndex
+     * @param segmentType SegmentType
+     * @return rozhodnuti zda se ma prvek smazat
+     */
     public boolean deleteForm(int formIndex, SegmentType segmentType) {
         boolean isDelete = false;
         switch (segmentType) {
@@ -181,19 +199,6 @@ public class ManipulationController {
      * Getrs and Setrs
      */
 
-    public CanvasItem getChooseCanvasItem() {
-        return chooseCanvasItem;
-    }
-
-    public void setChooseCanvasItem(CanvasItem chooseCanvasItem) {
-
-        if (this.chooseCanvasItem != null){
-            this.chooseCanvasItem.setContourViseble(Color.TRANSPARENT);
-        }
-
-        chooseCanvasItem.setContourViseble(Color.BLACK);
-        this.chooseCanvasItem = chooseCanvasItem;
-    }
 
     public NodeLink getLink() {
         return link;
@@ -222,9 +227,11 @@ public class ManipulationController {
         this.formFillController = formFillController;
     }
 
-    public void setChooseCanvasItemContour(Color transparent) {
-    if (getChooseCanvasItem() != null){
-        chooseCanvasItem.setContourViseble(transparent);
+    public boolean isChoosedItem() {
+        return isChoosedItem;
     }
+
+    public void setChoosedItem(boolean choosedItem) {
+        isChoosedItem = choosedItem;
     }
 }

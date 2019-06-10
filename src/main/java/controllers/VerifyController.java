@@ -158,7 +158,7 @@ public class VerifyController {
 
         String result = Constans.OK_VERIFY_RESULT;
         String projectExist = "YES";
-
+        String countIndicatorChar = "=";
         if (!isExistInProject) {
             projectExist = "NO";
             projectCount = 0;
@@ -175,13 +175,15 @@ public class VerifyController {
                     result = Constans.BAD_VERIFY_RESULT;
                 }
             }else if(countIndicator == 1){
+                if (modelCount == projectCount || modelCount > projectCount){
+                    result = Constans.BAD_VERIFY_RESULT;
+                    }
+                countIndicatorChar = ">";
+            }else if (countIndicator == 2){
                 if (modelCount == projectCount || modelCount < projectCount){
                     result = Constans.BAD_VERIFY_RESULT;
                 }
-            }else if (countIndicator == 2){
-                if (modelCount == projectCount || modelCount > projectCount){
-                    result = Constans.BAD_VERIFY_RESULT;
-                }
+                countIndicatorChar = "<";
             }
 
 
@@ -197,10 +199,12 @@ public class VerifyController {
                     if (modelCount == projectCount || modelCount < projectCount){
                         result = Constans.OK_VERIFY_RESULT;
                     }
+                    countIndicatorChar = ">";
                 }else if(countIndicator == 2){
                     if (modelCount == projectCount || modelCount > projectCount){
                         result = Constans.OK_VERIFY_RESULT;
-                    }
+                        }
+                    countIndicatorChar = "<";
                 }
 
 
@@ -209,7 +213,7 @@ public class VerifyController {
 
         }
 
-        return new VerifyTable(type + ": " + alias, id, isExist, modelCount, projectCount, projectExist, result, sql);
+        return new VerifyTable(type + ": " + alias, id, isExist, modelCount, countIndicatorChar, projectCount, projectExist, result, sql);
     }
 
     private ArrayList<VerifyTable> addCommitedConfigurationTOVerifyTable(List<CommitedConfiguration> commitedConfigurations) {

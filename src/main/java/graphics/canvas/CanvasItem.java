@@ -58,7 +58,7 @@ public class CanvasItem extends AnchorPane {
         this.canvasItemController = canvasItemController;
         this.setOnMousePressed(event -> canvasItemController.setClicFromDragPoint(event, this, canvasController, type));
         this.setOnMouseDragged(event -> canvasItemController.setDragFromDragPoint(event, this, canvasController));
-        this.setOnMouseReleased(event -> setPosition(canvasItemController.canvasItemPositionControl(getTranslateX(), getTranslateY(), segmentType, formIdentificator)));
+        this.setOnMouseReleased(event -> canvasItemController.releasedItem());
 
         //this.setForm(rootForm);
         this.segmentType = type;
@@ -83,10 +83,9 @@ public class CanvasItem extends AnchorPane {
         this.getChildren().add(segmentInfo);
 
 
-
         this.contour = new Polygon();
-        contour.getPoints().addAll(createPolygon(segmentInfo.getTranslateX() - Constans.CONTOURE_OFFSET,segmentInfo.getTranslateY() - Constans.CONTOURE_OFFSET,
-                segmentInfo.getLength() + (2*Constans.CONTOURE_OFFSET) ,segmentInfo.getTotalHeight() + (2*Constans.CONTOURE_OFFSET)));
+        contour.getPoints().addAll(createPolygon(segmentInfo.getTranslateX() - Constans.CONTOURE_OFFSET, segmentInfo.getTranslateY() - Constans.CONTOURE_OFFSET,
+                segmentInfo.getLength() + (2 * Constans.CONTOURE_OFFSET), segmentInfo.getTotalHeight() + (2 * Constans.CONTOURE_OFFSET)));
         contour.setFill(Color.TRANSPARENT);
         contour.setStroke(Color.TRANSPARENT);
         contour.getStrokeDashArray().add(2d);
@@ -94,11 +93,25 @@ public class CanvasItem extends AnchorPane {
 
     }
 
-    public void setContourViseble(Color value){
+    /**
+     * Metoda pro zobrazeni obrysu prvku
+     *
+     * @param value Color obrysu
+     */
+    public void setContourViseble(Color value) {
         contour.setStroke(value);
     }
 
-    private Double[] createPolygon(double startX, double startY, double width, double height){
+    /**
+     * Metoda pro vytvoreni polygonu kolem spojnice prvku
+     *
+     * @param startX souradnice x
+     * @param startY souradnice y
+     * @param width  sirka  prvku platna
+     * @param height vyska prvku platna
+     * @return Body polygonu
+     */
+    private Double[] createPolygon(double startX, double startY, double width, double height) {
 
         Double[] points = new Double[8];
         points[0] = startX;
@@ -133,18 +146,18 @@ public class CanvasItem extends AnchorPane {
 
         segmentInfo.setNameText(name);
         contour.getPoints().clear();
-        contour.getPoints().addAll(createPolygon(segmentInfo.getTranslateX() - Constans.CONTOURE_OFFSET,segmentInfo.getTranslateY() - Constans.CONTOURE_OFFSET,
-                segmentInfo.getLength() + (2*Constans.CONTOURE_OFFSET) ,segmentInfo.getTotalHeight() + (2*Constans.CONTOURE_OFFSET)));
+        contour.getPoints().addAll(createPolygon(segmentInfo.getTranslateX() - Constans.CONTOURE_OFFSET, segmentInfo.getTranslateY() - Constans.CONTOURE_OFFSET,
+                segmentInfo.getLength() + (2 * Constans.CONTOURE_OFFSET), segmentInfo.getTotalHeight() + (2 * Constans.CONTOURE_OFFSET)));
 
     }
+
+
+    /*** Getrs and Setrs ***/
 
     public String getNameText() {
 
         return segmentInfo.getName().getText();
     }
-
-    /*** Getrs and Setrs ***/
-
 
     public String getID() {
         return segmentIdentificator;
@@ -220,5 +233,10 @@ public class CanvasItem extends AnchorPane {
 
     public CanvasController getCanvasController() {
         return canvasController;
+    }
+
+    @Override
+    public String toString() {
+        return segmentInfo.toString();
     }
 }

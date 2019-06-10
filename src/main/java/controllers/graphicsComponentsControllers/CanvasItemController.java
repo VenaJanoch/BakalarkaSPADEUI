@@ -17,16 +17,39 @@ public class CanvasItemController {
     private SegmentType type;
     private LinkControl linkControl;
     private FormController formController;
+    private SelectionController selectionController;
 
-
-    public CanvasItemController(LinkControl linkControl, FormController formController, ManipulationController manipulationController) {
+    /**
+     * Konstruktor tridy
+     * Zinicializuje globalni promenne tridy
+     * @param linkControl instace tridy LinkContro l
+     * @param formController instace tridy FormController
+     * @param manipulationController instace tridy ManipulationController
+     * @param selectionController instace tridy SelectionController
+     */
+    public CanvasItemController(LinkControl linkControl, FormController formController, ManipulationController manipulationController, SelectionController selectionController) {
 
         this.manipulation = manipulationController;
         this.linkControl = linkControl;
         this.formController = formController;
+        this.selectionController = selectionController;
         formController.setCanvasItemController(this);
+
     }
 
+    /**
+     * Metoda pro vytvoreni nove instace tridy CanvasItem
+     * @param type instace tridy SegmentType
+     * @param segmentIdentificator identificator prvku
+     * @param formIndex  identificator elemetnu
+     * @param name
+     * @param instanceCount
+     * @param countIndicator
+     * @param x
+     * @param y
+     * @param canvasController
+     * @return CanvasItem
+     */
     public CanvasItem createCanvasItem(SegmentType type, String segmentIdentificator, int formIndex, String name, int instanceCount, int countIndicator, double x, double y,
                                        CanvasController canvasController) {
 
@@ -44,18 +67,28 @@ public class CanvasItemController {
      *
      * @param t
      */
-    public void setDragFromDragPoint(MouseEvent t, CanvasItem canvasItem, CanvasController canvasController) {
-        if (!canvasController.isArrow()) {
+    public void setDragFromDragPoint(MouseEvent t, CanvasItem canvasItemORG, CanvasController canvasController) {
 
-            double offsetX = t.getSceneX() - canvasItem.getOrgSceneX();
-            double offsetY = t.getSceneY() - canvasItem.getOrgSceneY();
-            double newTranslateX = canvasItem.getOrgTranslateX() + offsetX;
-            double newTranslateY = canvasItem.getOrgTranslateY() + offsetY;
+               for (CanvasItem canvasItem : selectionController.getSelection()){
+            if (!canvasController.isArrow()) {
 
-            ((AnchorPane) (t.getSource())).setTranslateX(newTranslateX);
-            ((AnchorPane) (t.getSource())).setTranslateY(newTranslateY);
+        //        System.out.print(canvasItem + " orgX: " + canvasItem.getOrgTranslateX());
+        //        System.out.print(" " + "orgY: " + canvasItem.getOrgTranslateY());
+                double offsetX = t.getSceneX() - canvasItemORG.getOrgSceneX();
+                double offsetY = t.getSceneY() - canvasItemORG.getOrgSceneY();
+
+                double newTranslateX = canvasItem.getOrgTranslateX() + offsetX;
+                double newTranslateY = canvasItem.getOrgTranslateY() + offsetY;
+
+                //System.out.print(" " + "offsetX: " + offsetX);
+               // System.out.print(" " + "offsetY: " + offsetY);
+              //  System.out.print(" " + "newX: " + newTranslateX);
+             //   System.out.println(" " + "newY: " + newTranslateY);
+
+                canvasItem.setTranslateX(newTranslateX);
+                canvasItem.setTranslateY(newTranslateY);
+            }
         }
-
     }
 
     /**
@@ -67,7 +100,7 @@ public class CanvasItemController {
      */
     public void setClicFromDragPoint(MouseEvent t, CanvasItem item, CanvasController canvasController, SegmentType segmentType) {
 
-        manipulation.setChooseCanvasItem(item);
+        manipulation.setChoosedItem(true);
 
         if (t.getButton().equals(MouseButton.PRIMARY)) {
 
@@ -100,12 +133,15 @@ public class CanvasItemController {
      * Slouží ke kontorle pozice prvku na plátně, při přejetí hranic plátna je
      * prvek vrácen na okraj plátna
      *
-     * @param x souřadnice prvku
-     * @param y souřadnice prvku
+     * @param canvasItem prvek platna urceny pro kontrolu pozice
      * @return Point2D zkontrolovaná poloha
      */
-    public Point2D canvasItemPositionControl(double x, double y, SegmentType segmentType, int formIndex) {
+    public Point2D canvasItemPositionControl(CanvasItem canvasItem) {
 
+        double x = canvasItem.getTranslateX();
+        double y = canvasItem.getTranslateY();
+        SegmentType segmentType = canvasItem.getSegmentType();
+        int formIndex = canvasItem.getFormIdentificator();
         Point2D point = new Point2D(x, y);
 
         if (y <= 0) {
@@ -125,6 +161,7 @@ public class CanvasItemController {
             point = new Point2D(x, Constans.canvasMaxHeight - Constans.offset);
         }
         formController.setCoordinatesToCanvasItem(segmentType, point.getX(), point.getY(), formIndex);
+        manipulation.setChoosedItem(false);
         return point;
 
     }
@@ -159,6 +196,12 @@ public class CanvasItemController {
 
     }
 
+    /**
+     * Metoda pro nastaveni poctu instaci do prvku platna
+     * @param canvasItem konkretni CanvasItem
+     * @param instanceCount pocet instaci
+     * @param indicator ukazatel nerovnosti
+     */
     public void setInstanceCount(CanvasItem canvasItem, int instanceCount, int indicator) {
        String indicatorMark = "";
         if (indicator != 0){
@@ -171,6 +214,15 @@ public class CanvasItemController {
             canvasItem.getSegmentInfo().getInstanceCount().setVisible(true);
         } else {
             canvasItem.getSegmentInfo().getInstanceCount().setVisible(false);
+        }
+    }
+
+    /**
+     * Metoda pro realci na ukonceni Drag and Drop
+     */
+    public void releasedItem() {
+        for (CanvasItem canvasItem : selectionController.getSelection()){
+            canvasItem.setPosition(canvasItemPositionControl(canvasItem));
         }
     }
 }

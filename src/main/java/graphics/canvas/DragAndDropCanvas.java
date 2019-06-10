@@ -1,16 +1,25 @@
 package graphics.canvas;
 
 import controllers.graphicsComponentsControllers.CanvasController;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import services.Constans;
+import services.DragContext;
+
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 
 /**
@@ -26,6 +35,8 @@ public class DragAndDropCanvas extends ScrollPane {
     private Scene mScene;
     private AnchorPane canvas;
     private ItemContexMenu contexMenu;
+    private DragContext dragContext = new DragContext();
+    private Rectangle rect;
 
     private CanvasController canvasController;
 
@@ -56,7 +67,17 @@ public class DragAndDropCanvas extends ScrollPane {
 
         canvas.setOnMouseClicked(canvasController.getOnMousePressedHandler());
 
-        this.addEventHandler(KeyEvent.KEY_RELEASED, event -> {
+        rect = new Rectangle( 0,0,0,0);
+        rect.setStroke(Color.BLUE);
+        rect.setStrokeWidth(1);
+       // rect.setStrokeLineCap(StrokeLineCap.ROUND);
+        rect.setFill(Color.LIGHTBLUE.deriveColor(0, 1.2, 1, 0.6));
+
+        canvas.addEventHandler(MouseEvent.MOUSE_PRESSED, canvasController.getOnMousePressedEventHandler(dragContext, rect, canvas));
+        canvas.addEventHandler(MouseEvent.MOUSE_DRAGGED, canvasController.getOnMouseDraggedEventHandler(dragContext, rect));
+        canvas.addEventHandler(MouseEvent.MOUSE_RELEASED, canvasController.getOnMouseReleasedEventHandler(rect, canvas));
+
+        this.addEventHandler(KeyEvent.KEY_PRESSED, event -> {
             canvasController.keyPressAction(event);
         });
 
@@ -80,6 +101,7 @@ public class DragAndDropCanvas extends ScrollPane {
         });
 
     }
+
 
     /**
      * Konstruktor třídy Zinicializuje Globální proměnné třídy a nastaví reakce
@@ -114,5 +136,6 @@ public class DragAndDropCanvas extends ScrollPane {
     public void setCanvas(AnchorPane canvas) {
         this.canvas = canvas;
     }
-
 }
+
+

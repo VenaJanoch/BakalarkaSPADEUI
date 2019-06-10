@@ -204,4 +204,9 @@ public class InfoBoxSegment extends Group {
     public double getTotalHeight() {
         return totalHeight;
     }
+
+    @Override
+    public String toString() {
+        return name.getText();
+    }
 }
