@@ -135,6 +135,8 @@ public class CanvasItem extends AnchorPane {
     public void setPosition(Point2D point) {
         this.setTranslateX(point.getX());
         this.setTranslateY(point.getY());
+        this.setOrgTranslateX(point.getX());
+        this.setOrgTranslateX(point.getY());
         canvasItemController.repaintArrows(segmentType, formIdentificator, getTranslateX(), getTranslateY(), segmentInfo.getLength(), getHeight());
     }
 

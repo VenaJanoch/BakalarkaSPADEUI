@@ -95,41 +95,47 @@ public class DeleteDataModel implements IDeleteDataModel {
         }
     }
 
-    public void removePersonArtifactLink(int arrowId, int personId, int artifactID) {
+    public void removePersonArtifactLink(int arrowId, int personId, int artifactID, boolean isModeleDelete) {
 
         int linkIndexInProject = dataModel.getLinkIndexInProject(arrowId);
         dataModel.getLinks().remove(linkIndexInProject);
-        Artifact artifact = dataModel.getArtifact(artifactID);
-        List<Integer> list = artifact.getAuthorIndex();
-        ArrayList<Integer> personIds = removeItemFromList(list, personId);
-        for (int i : personIds){
-            removeItemFromList(dataModel.getPerson(i).getArtifacts(), artifactID);
+       if (!isModeleDelete){
+           Artifact artifact = dataModel.getArtifact(artifactID);
+           List<Integer> list = artifact.getAuthorIndex();
+           ArrayList<Integer> personIds = removeItemFromList(list, personId);
+           for (int i : personIds){
+               removeItemFromList(dataModel.getPerson(i).getArtifacts(), artifactID);
+           }
+       }
+
+    }
+
+    public void removePersonCommittedConfigurationLink(int arrowId, int personId, int committedID, boolean isModelDelete) {
+
+        int linkIndexInProject = dataModel.getLinkIndexInProject(arrowId);
+        dataModel.getLinks().remove(linkIndexInProject);
+        if (!isModelDelete) {
+            CommitedConfiguration committedConfiguration = dataModel.getCommitedConfiguration(committedID);
+            List<Integer> list = committedConfiguration.getRole();
+            ArrayList<Integer> personIds = removeItemFromList(list, personId);
+            for (int i : personIds) {
+                removeItemFromList(dataModel.getPerson(i).getCommittedConfiguration(), committedID);
+            }
         }
     }
 
-    public void removePersonCommittedConfigurationLink(int arrowId, int personId, int committedID) {
+    public void removePersonCommitLink(int arrowId, int personId, int commitID, boolean isModelDelete) {
 
         int linkIndexInProject = dataModel.getLinkIndexInProject(arrowId);
         dataModel.getLinks().remove(linkIndexInProject);
-        CommitedConfiguration committedConfiguration = dataModel.getCommitedConfiguration(committedID);
-        List<Integer> list = committedConfiguration.getRole();
-        ArrayList<Integer> personIds = removeItemFromList(list, personId);
-        for (int i : personIds){
-            removeItemFromList(dataModel.getPerson(i).getCommittedConfiguration(), committedID);
+        if (!isModelDelete) {
+            Commit commit = dataModel.getCommit(commitID);
+            List<Integer> list = commit.getAuthor();
+            ArrayList<Integer> personIds = removeItemFromList(list, personId);
+            for (int i : personIds) {
+                removeItemFromList(dataModel.getPerson(i).getCommit(), commitID);
+            }
         }
-    }
-
-    public void removePersonCommitLink(int arrowId, int personId, int commitID) {
-
-        int linkIndexInProject = dataModel.getLinkIndexInProject(arrowId);
-        dataModel.getLinks().remove(linkIndexInProject);
-        Commit commit = dataModel.getCommit(commitID);
-        List<Integer> list = commit.getAuthor();
-        ArrayList<Integer> personIds = removeItemFromList(list, personId);
-        for (int i : personIds){
-            removeItemFromList(dataModel.getPerson(i).getCommit(), commitID);
-        }
-
     }
 
     public ArrayList<Integer> removeItemFromList(List<Integer> list, int commitId) {
@@ -145,57 +151,65 @@ public class DeleteDataModel implements IDeleteDataModel {
         return deleteIds;
     }
 
-    public void removeArtifactConfigurationLink(int arrowId, int artifactId, int configurationID) {
+    public void removeArtifactConfigurationLink(int arrowId, int artifactId, int configurationID, boolean isModelDelete) {
 
         int linkIndexInProject = dataModel.getLinkIndexInProject(arrowId);
         dataModel.getLinks().remove(linkIndexInProject);
-        Configuration configuration = dataModel.getConfiguration(configurationID);
-        List<Integer> list = configuration.getArtifactsIndexs();
-        ArrayList<Integer> Ids = removeItemFromList(list, artifactId);
-        for (int i : Ids){
-            removeItemFromList(dataModel.getArtifact(i).getConfigurations(), configurationID);
+        if (!isModelDelete){
+            Configuration configuration = dataModel.getConfiguration(configurationID);
+            List<Integer> list = configuration.getArtifactsIndexs();
+            ArrayList<Integer> Ids = removeItemFromList(list, artifactId);
+            for (int i : Ids){
+                removeItemFromList(dataModel.getArtifact(i).getConfigurations(), configurationID);
+            }
         }
+
 
     }
 
-    public void removePersonConfigurationLink(int arrowId, int personId, int configurationID) {
+    public void removePersonConfigurationLink(int arrowId, int personId, int configurationID, boolean isModelDelete) {
 
         int linkIndexInProject = dataModel.getLinkIndexInProject(arrowId);
         List link = dataModel.getProject().getLinks();
         link.remove(linkIndexInProject);
-        Configuration configuration = dataModel.getConfiguration(configurationID);
-        List<Integer> list = configuration.getAuthorIndex();
-        ArrayList<Integer> personIds = removeItemFromList(list, personId);
-        for (int i : personIds){
-            removeItemFromList(dataModel.getPerson(i).getConfigurations(), configurationID);
+        if(!isModelDelete) {
+            Configuration configuration = dataModel.getConfiguration(configurationID);
+            List<Integer> list = configuration.getAuthorIndex();
+            ArrayList<Integer> personIds = removeItemFromList(list, personId);
+            for (int i : personIds) {
+                removeItemFromList(dataModel.getPerson(i).getConfigurations(), configurationID);
+            }
         }
 
     }
 
 
-    public void removeCommitedConfigurationConfigurationLink(int arrowId, int commitedConfigurationId, int configurationID) {
+    public void removeCommitedConfigurationConfigurationLink(int arrowId, int commitedConfigurationId, int configurationID, boolean isModelDelete) {
 
         int linkIndexInProject = dataModel.getLinkIndexInProject(arrowId);
         dataModel.getLinks().remove(linkIndexInProject);
-        Configuration configuration = dataModel.getConfiguration(configurationID);
-        List<Integer> list = configuration.getCommitedConfiguration();
-        ArrayList<Integer> personIds = removeItemFromList(list, commitedConfigurationId);
-        for (int i : personIds){
-            removeItemFromList(dataModel.getConfiguration(i).getCommitedConfiguration(), commitedConfigurationId);
+        if (!isModelDelete) {
+            Configuration configuration = dataModel.getConfiguration(configurationID);
+            List<Integer> list = configuration.getCommitedConfiguration();
+            ArrayList<Integer> personIds = removeItemFromList(list, commitedConfigurationId);
+            for (int i : personIds) {
+                removeItemFromList(dataModel.getConfiguration(i).getCommitedConfiguration(), commitedConfigurationId);
+            }
         }
     }
 
-    public void removeCommitCommitedConfigurationLink(int arrowId, int commitedConfigurationId, int commitID) {
+    public void removeCommitCommitedConfigurationLink(int arrowId, int commitedConfigurationId, int commitID, boolean isModelDelete) {
 
         int linkIndexInProject = dataModel.getLinkIndexInProject(arrowId);
         dataModel.getLinks().remove(linkIndexInProject);
-        CommitedConfiguration configuration = dataModel.getCommitedConfiguration(commitedConfigurationId);
-        List<Integer> list = configuration.getCommit();
-        ArrayList<Integer> personIds = removeItemFromList(list, commitID);
-        for (int i : personIds){
-            removeItemFromList(dataModel.getCommit(i).getCommitedConfiguration(), commitedConfigurationId);
+        if (isModelDelete) {
+            CommitedConfiguration configuration = dataModel.getCommitedConfiguration(commitedConfigurationId);
+            List<Integer> list = configuration.getCommit();
+            ArrayList<Integer> personIds = removeItemFromList(list, commitID);
+            for (int i : personIds) {
+                removeItemFromList(dataModel.getCommit(i).getCommitedConfiguration(), commitedConfigurationId);
+            }
         }
-
     }
 
     public void removeArtifact(int id) {

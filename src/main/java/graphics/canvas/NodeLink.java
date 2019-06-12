@@ -59,7 +59,7 @@ public abstract class NodeLink extends Line {
 
     abstract void pressedDeleteArrow(MouseEvent t);
 
-    abstract void deleteArrow();
+    abstract void deleteArrow(boolean isModelDelete);
 
 
     /**

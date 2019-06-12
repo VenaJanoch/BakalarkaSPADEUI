@@ -35,19 +35,19 @@ public interface IDeleteDataModel {
 
     void removeVCSTag(ObservableList<Integer> indexList);
 
-    void removePersonArtifactLink(int arrowId, int personId, int artifactId);
+    void removePersonArtifactLink(int arrowId, int personId, int artifactId, boolean isModelDelete);
 
-    void removePersonCommitLink(int arrowId, int personId, int commitId);
+    void removePersonCommitLink(int arrowId, int personId, int commitId, boolean isModelDelete);
 
-    void removePersonCommittedConfigurationLink(int arrowId, int personId, int commitId);
+    void removePersonCommittedConfigurationLink(int arrowId, int personId, int commitId, boolean isModelDelete);
 
-    void removePersonConfigurationLink(int arrowId, int personId, int artifactId);
+    void removePersonConfigurationLink(int arrowId, int personId, int artifactId, boolean isModelDelete);
 
-    void removeArtifactConfigurationLink(int arrowId, int personId, int artifactId);
+    void removeArtifactConfigurationLink(int arrowId, int personId, int artifactId, boolean isModelDelete);
 
-    void removeCommitCommitedConfigurationLink(int arrowId, int personId, int artifactId);
+    void removeCommitCommitedConfigurationLink(int arrowId, int personId, int artifactId, boolean isModelDelete);
 
-    void removeCommitedConfigurationConfigurationLink(int arrowId, int personId, int artifactId);
+    void removeCommitedConfigurationConfigurationLink(int arrowId, int personId, int artifactId, boolean isModelDelete);
 
     void removeArtifact(int id);
 

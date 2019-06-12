@@ -55,17 +55,17 @@ public interface IDeleteFormController {
 
     void deleteItemWithDialog(ArrayList<BasicTable> list, TableView tableTV, SegmentType segmentType);
 
-    void removePersonArtifactLink(int arrowId, int startId, int endId);
+    void removePersonArtifactLink(int arrowId, int startId, int endId, boolean isModelDelete);
 
-    void removePersonConfigurationLink(int arrowId, int startId, int endId);
+    void removePersonConfigurationLink(int arrowId, int startId, int endId, boolean isModelDelete);
 
-    void removeArtifactConfiguraionLink(int arrowId, int startId, int endId);
+    void removeArtifactConfiguraionLink(int arrowId, int startId, int endId, boolean isModelDelete);
 
-    void removeCommitedConfigurationConfigurationLink(int arrowId, int startId, int endId);
+    void removeCommitedConfigurationConfigurationLink(int arrowId, int startId, int endId, boolean isModelDelete);
 
-    void removeCommitComiitedConfigurationLink(int arrowId, int startId, int endId);
+    void removeCommitComiitedConfigurationLink(int arrowId, int startId, int endId, boolean isModelDelete);
 
-    void removePersonCommitLink(int arrowId, int startId, int endId);
+    void removePersonCommitLink(int arrowId, int startId, int endId, boolean isModelDelete);
 
-    void removePersonCommittedConfigurationLink(int arrowId, int startId, int endId);
+    void removePersonCommittedConfigurationLink(int arrowId, int startId, int endId, boolean isModelDelete);
 }

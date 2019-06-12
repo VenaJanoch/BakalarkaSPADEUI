@@ -65,7 +65,7 @@ public class ItemContexMenu extends ContextMenu {
     public void setActions() {
 
         copyItem.setOnAction(event -> manipulation.copyItem(canvasController));
-        deleteItem.setOnAction(event -> manipulation.deleteItem(canvasItemController));
+        deleteItem.setOnAction(event -> manipulation.deleteItem(canvasItemController, canvasController));
         cutItem.setOnAction(event -> manipulation.cutItem(canvasController, canvasItemController));
         pasteItem.setOnAction(event -> canvasController.pasteItem());
     }

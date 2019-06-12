@@ -249,7 +249,7 @@ public class LinkControl {
 
     }
 
-    public void deleteArrow(int arrowId, int startId, int endId, LinkType linkType) {
+    public void deleteArrow(int arrowId, int startId, int endId, LinkType linkType, boolean isModelDelete) {
 
         ElementsLink link = (ElementsLink) segmentLists.getArrow(arrowId);
         List<Integer> mStartLinkIds = startLinkIdMap.get(startId);
@@ -258,26 +258,25 @@ public class LinkControl {
         removeLinkFromIds(arrowId, mEndLinkIds);
         switch (linkType) {
             case Person_Artifact:
-                deleteFormController.removePersonArtifactLink(arrowId, startId, endId);
-
+                deleteFormController.removePersonArtifactLink(arrowId, startId, endId, isModelDelete);
                 break;
             case Person_Configuration:
-                deleteFormController.removePersonConfigurationLink(arrowId, startId, endId);
+                deleteFormController.removePersonConfigurationLink(arrowId, startId, endId, isModelDelete);
                 break;
             case Commit_Commited_Configuration:
-                deleteFormController.removeCommitComiitedConfigurationLink(arrowId, startId, endId);
+                deleteFormController.removeCommitComiitedConfigurationLink(arrowId, startId, endId, isModelDelete);
                 break;
             case Commited_Configuration_Configuration:
-                deleteFormController.removeCommitedConfigurationConfigurationLink(arrowId, startId, endId);
+                deleteFormController.removeCommitedConfigurationConfigurationLink(arrowId, startId, endId, isModelDelete);
                 break;
             case Artifact_Configuration:
-                deleteFormController.removeArtifactConfiguraionLink(arrowId, startId, endId);
+                deleteFormController.removeArtifactConfiguraionLink(arrowId, startId, endId, isModelDelete);
                 break;
             case Person_Commit:
-                deleteFormController.removePersonCommitLink(arrowId, startId, endId);
+                deleteFormController.removePersonCommitLink(arrowId, startId, endId, isModelDelete);
                 break;
             case Person_Commtted_Configuration:
-                deleteFormController.removePersonCommittedConfigurationLink(arrowId, startId, endId);
+                deleteFormController.removePersonCommittedConfigurationLink(arrowId, startId, endId, isModelDelete);
                 break;
             default:
         }
@@ -301,7 +300,7 @@ public class LinkControl {
     }
 
 
-    public void deleteLinks(int itemIdentificator) {
+    public void deleteLinks(int itemIdentificator, boolean isModelDelete) {
 
         List<Integer> mStartLinkIds = startLinkIdMap.get(itemIdentificator);
         List<Integer> mEndLinkIds = endLinkIdMap.get(itemIdentificator);
@@ -315,7 +314,7 @@ public class LinkControl {
             removeLinkFromIds(arrowId, mEndLinkIdsLoc);
             mStartLinkIds.remove(i);
 
-            link.deleteArrow();
+            link.deleteArrow(isModelDelete);
         }
 
         for (int i = mEndLinkIds.size() - 1; i >= 0; i--) {
@@ -325,7 +324,7 @@ public class LinkControl {
             List<Integer> mStartLinkIdsLoc = startLinkIdMap.get(startId);
             removeLinkFromIds(arrowId, mStartLinkIdsLoc);
             mEndLinkIds.remove(i);
-            link.deleteArrow();
+            link.deleteArrow(isModelDelete);
         }
     }
 

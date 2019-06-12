@@ -226,14 +226,14 @@ public class FormFillController {
         BranchForm form = (BranchForm) forms.get(Constans.branchIndex);
         for (int i = 0; i < dataModel.getBranches().size(); i++) {
             Branch segment = dataModel.getBranches().get(i);
-            int id = formController.createTableItem(SegmentType.Branch);
+           identificatorCreater.createBranchID();
             String idName = segment.getAlias();
             String isMain = "NO";
             if (segment.isIsMain()) {
                 isMain = "YES";
             }
 
-            BranchTable table = new BranchTable(idName, isMain, segment.isIsMain(), segment.isExist(), id);
+            BranchTable table = new BranchTable(idName, isMain, segment.isIsMain(), segment.isExist(), segment.getId());
 
             form.getTableTV().getItems().add(table);
             segmentLists.getBranchObservable().add(table);
@@ -252,7 +252,7 @@ public class FormFillController {
         TypeForm form = (TypeForm) forms.get(Constans.wuTypeFormIndex);
         for (int i = 0; i < dataModel.getTypes().size(); i++) {
             Type segment = dataModel.getTypes().get(i);
-            formController.createTableItem(SegmentType.Type);
+           identificatorCreater.createTypeID();
             ClassTable table = createClassTable(segment.getId(), segment.getAlias(), segment.getTypeClass(),
                     segment.getTypeSuperClass(), segment.isExist());
 
@@ -265,7 +265,7 @@ public class FormFillController {
         StatusForm form = (StatusForm) forms.get(Constans.statusFormIndex);
         for (int i = 0; i < dataModel.getStatuses().size(); i++) {
             Status segment = dataModel.getStatuses().get(i);
-            formController.createTableItem(SegmentType.Status);
+            identificatorCreater.createStatusID();
             ClassTable table = createClassTable(segment.getId(), segment.getAlias(), segment.getStatusClass(),
                     segment.getStatusSuperClass(), segment.isExist());
 
@@ -278,7 +278,7 @@ public class FormFillController {
         ResolutionForm form = (ResolutionForm) forms.get(Constans.resolutionormIndex);
         for (int i = 0; i < dataModel.getResolutions().size(); i++) {
             Resolution segment = dataModel.getResolutions().get(i);
-            formController.createTableItem(SegmentType.Resolution);
+            identificatorCreater.createResolutionID();
 
             ClassTable table = createClassTable(segment.getId(), segment.getAlias(), segment.getResolutionClass(),
                     segment.getResolutionSuperClass(), segment.isExist());
@@ -292,8 +292,7 @@ public class FormFillController {
         RelationForm form = (RelationForm) forms.get(Constans.relationFormIndex);
         for (int i = 0; i < dataModel.getRelations().size(); i++) {
             Relation segment = dataModel.getRelations().get(i);
-            formController.createTableItem(SegmentType.Relation);
-
+            identificatorCreater.createRelationID();
             ClassTable table = createClassTable(segment.getId(), segment.getAlias(), segment.getRelationClass(),
                     segment.getRelationSuperClass(), segment.isExist());
 
@@ -306,8 +305,7 @@ public class FormFillController {
         SeverityForm form = (SeverityForm) forms.get(Constans.severityFormIndex);
         for (int i = 0; i < dataModel.getSeverities().size(); i++) {
             Severity segment = dataModel.getSeverities().get(i);
-            formController.createTableItem(SegmentType.Severity);
-
+           identificatorCreater.createSeverityID();
             ClassTable table = createClassTable(segment.getId(), segment.getAlias(), segment.getSeverityClass(),
                     segment.getSeveritySuperClass(), segment.isExist());
 
@@ -320,8 +318,7 @@ public class FormFillController {
         PriorityForm form = (PriorityForm) forms.get(Constans.priorityFormIndex);
         for (int i = 0; i < dataModel.getPriorities().size(); i++) {
             Priority segment = dataModel.getPriorities().get(i);
-            formController.createTableItem(SegmentType.Priority);
-
+            identificatorCreater.createPriorityID();
             ClassTable table = createClassTable(segment.getId(), segment.getAlias(), segment.getPriorityClass(),
                     segment.getPrioritySuperClass(), segment.isExist());
 
@@ -379,8 +376,7 @@ public class FormFillController {
         RoleTypeForm roleTypeForm = (RoleTypeForm) forms.get(Constans.roleTypeIndex);
         for (int i = 0; i < dataModel.getRoleTypes().size(); i++) {
             RoleType segment = dataModel.getRoleTypes().get(i);
-            formController.createTableItem(SegmentType.Role_Type);
-
+            identificatorCreater.createRoleTypeID();
             String name = segment.getAlias();
 
             RoleTypeTable table = new RoleTypeTable(name, "", segment.isExist(), "", segment.getId());
@@ -395,7 +391,7 @@ public class FormFillController {
         for (int i = 0; i < dataModel.getMilestones().size(); i++) {
             Milestone milestone = dataModel.getMilestones().get(i);
             int id = milestone.getId();
-            formController.createTableItem(SegmentType.Milestone);
+            identificatorCreater.createMilestoneID();
             String idName = milestone.getAlias();
             MilestoneTable milestoneTable = new MilestoneTable(idName, milestone.isExist(), id);
             milestoneForm.getTableTV().getItems().add(milestoneTable);
@@ -407,7 +403,7 @@ public class FormFillController {
     private void fillCriterionForm() {
         CriterionForm criterionForm = (CriterionForm) forms.get(Constans.criterionFormIndex);
         for (Criterion criterion : dataModel.getCriterions()) {
-            formController.createTableItem(SegmentType.Criterion);
+            identificatorCreater.createCriterionID();
             TableView<CriterionTable> criterionView = criterionForm.getTableTV();
             CriterionTable criterionTable = new CriterionTable(criterion.getAlias(), criterion.isExist(), criterion.getId());
             criterionView.getItems().add(criterionTable);

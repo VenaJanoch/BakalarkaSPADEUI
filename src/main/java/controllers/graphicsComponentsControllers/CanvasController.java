@@ -93,7 +93,7 @@ public class CanvasController {
         } else if (event.getCode() == KeyCode.DELETE) {
 
             if (selectionController.getSelection() != null) {
-                manipulationController.deleteItem(canvasItemController);
+                manipulationController.deleteItem(canvasItemController, this);
             }
 
         } else if (event.getCode() == KeyCode.ESCAPE) {
@@ -438,14 +438,7 @@ public class CanvasController {
 
              //   selectionController.log();
 
-                rectFishWidth = rect.getWidth();
-
-                rect.setX(0);
-                rect.setY(0);
-                rect.setWidth(0);
-                rect.setHeight(0);
-
-                canvas.getChildren().remove(rect);
+               removeRectangle();
 
                 event.consume();
             }
@@ -455,6 +448,18 @@ public class CanvasController {
         return onMouseReleasedEventHandler;
     }
 
+   public void removeRectangle(){
+        Rectangle rect = canvas.getRect();
+        rectFishWidth = rect.getWidth();
+
+        rect.setX(0);
+        rect.setY(0);
+        rect.setWidth(0);
+        rect.setHeight(0);
+
+        canvas.getCanvas().getChildren().remove(rect);
+
+    }
     /**
      * Metoda pro ziskani Eventhandleru pro reakci na dragAndDrop
      * @param dragContext pocatecni bod ze ktereho se bude vykreslovat ctverec
@@ -553,6 +558,12 @@ public class CanvasController {
     }
 
 
+    public void removeCanvasItem(CanvasItem chooseCanvasItem) {
+        AnchorPane canvas = getCanvas().getCanvas();
+        canvas.getChildren().remove(chooseCanvasItem);
+        removeRectangle();
+        selectionController.clear();
+    }
 }
 
 

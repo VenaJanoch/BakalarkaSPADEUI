@@ -185,9 +185,6 @@ public class VerifyController {
                 }
                 countIndicatorChar = "<";
             }
-
-
-
         }else {
             if (isExistInProject){
                 result = Constans.BAD_VERIFY_RESULT;
@@ -199,16 +196,17 @@ public class VerifyController {
                     if (modelCount == projectCount || modelCount < projectCount){
                         result = Constans.OK_VERIFY_RESULT;
                     }
-                    countIndicatorChar = ">";
+
                 }else if(countIndicator == 2){
                     if (modelCount == projectCount || modelCount > projectCount){
                         result = Constans.OK_VERIFY_RESULT;
                         }
-                    countIndicatorChar = "<";
                 }
-
-
-
+            }
+            if (countIndicator == 1){
+                countIndicatorChar = ">";
+            }else if (countIndicator == 2){
+                countIndicatorChar = "<";
             }
 
         }

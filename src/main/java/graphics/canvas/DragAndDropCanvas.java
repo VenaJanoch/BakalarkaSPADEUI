@@ -136,6 +136,10 @@ public class DragAndDropCanvas extends ScrollPane {
     public void setCanvas(AnchorPane canvas) {
         this.canvas = canvas;
     }
+
+    public Rectangle getRect() {
+        return rect;
+    }
 }
 
 

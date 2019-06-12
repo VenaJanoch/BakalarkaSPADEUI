@@ -69,21 +69,24 @@ public class CanvasItemController {
      */
     public void setDragFromDragPoint(MouseEvent t, CanvasItem canvasItemORG, CanvasController canvasController) {
 
-               for (CanvasItem canvasItem : selectionController.getSelection()){
+        double offsetX = t.getSceneX() - canvasItemORG.getOrgSceneX();
+        double offsetY = t.getSceneY() - canvasItemORG.getOrgSceneY();
+
+        for (CanvasItem canvasItem : selectionController.getSelection()){
             if (!canvasController.isArrow()) {
 
-        //        System.out.print(canvasItem + " orgX: " + canvasItem.getOrgTranslateX());
-        //        System.out.print(" " + "orgY: " + canvasItem.getOrgTranslateY());
-                double offsetX = t.getSceneX() - canvasItemORG.getOrgSceneX();
-                double offsetY = t.getSceneY() - canvasItemORG.getOrgSceneY();
+                System.out.print(canvasItem + " orgX: " + canvasItem.getOrgTranslateX());
+                System.out.print(" " + "orgY: " + canvasItem.getOrgTranslateY());
+                System.out.print(" " + "TX: " + canvasItem.getTranslateX());
+                System.out.print(" " + "TY: " + canvasItem.getTranslateY());
 
                 double newTranslateX = canvasItem.getOrgTranslateX() + offsetX;
                 double newTranslateY = canvasItem.getOrgTranslateY() + offsetY;
 
-                //System.out.print(" " + "offsetX: " + offsetX);
-               // System.out.print(" " + "offsetY: " + offsetY);
-              //  System.out.print(" " + "newX: " + newTranslateX);
-             //   System.out.println(" " + "newY: " + newTranslateY);
+                System.out.print(" " + "offsetX: " + offsetX);
+                System.out.print(" " + "offsetY: " + offsetY);
+                System.out.print(" " + "newX: " + newTranslateX);
+                System.out.println(" " + "newY: " + newTranslateY);
 
                 canvasItem.setTranslateX(newTranslateX);
                 canvasItem.setTranslateY(newTranslateY);
@@ -171,7 +174,7 @@ public class CanvasItemController {
      * Metoda pro smazání spojnic mezi prvky a smazání z datových struktur
      */
     public void deleteLinks(int itemIdentificator) {
-        linkControl.deleteLinks(itemIdentificator);
+        linkControl.deleteLinks(itemIdentificator, false);
     }
 
     /**
@@ -181,12 +184,15 @@ public class CanvasItemController {
         linkControl.repaintArrow(segmentType, itemIdentificator, translateX, translateY, width, height);
     }
 
-    public void deleteItem(CanvasItem chooseCanvasItem) {
+    public void deleteItem(CanvasItem chooseCanvasItem, boolean isModelDelete, CanvasController canvasController) {
 
         chooseCanvasItem.setVisible(false);
         int id = chooseCanvasItem.getFormIdentificator();
-        linkControl.deleteLinks(id);
+        linkControl.deleteLinks(id, isModelDelete);
         formController.removeCanvasItemFromList(id);
+        canvasController.removeCanvasItem(chooseCanvasItem);
+        selectionController.clear();
+
 
     }
 

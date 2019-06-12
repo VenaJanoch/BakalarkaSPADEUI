@@ -70,17 +70,17 @@ public class ManipulationController {
     /**
      * Smaže prvek ze seznamů a zneviditelní na plátně
      */
-    public void deleteItem(CanvasItemController canvasItemController) {
+    public void deleteItem(CanvasItemController canvasItemController, CanvasController canvasController) {
             for(CanvasItem chooseCanvasItem : selectionController.getSelection()){
-               deleteItem(canvasItemController, chooseCanvasItem);
+               deleteItem(canvasItemController, chooseCanvasItem, canvasController);
             }
     }
 
-    public void deleteItem(CanvasItemController canvasItemController, CanvasItem chooseCanvasItem) {
+    public void deleteItem(CanvasItemController canvasItemController, CanvasItem chooseCanvasItem, CanvasController canvasController) {
         int index = chooseCanvasItem.getFormIdentificator();
         boolean isDelete = deleteForm(index, chooseCanvasItem.getSegmentType());
         if (isDelete) {
-            canvasItemController.deleteItem(chooseCanvasItem);
+            canvasItemController.deleteItem(chooseCanvasItem, isDelete, canvasController);
         }
     }
 
@@ -96,7 +96,7 @@ public class ManipulationController {
 
             if (isCut) {
                 createCopyForm(chooseCanvasItem.getFormIdentificator(), segmentType, canvasController, x, y);
-                deleteItem(canvasItemController, chooseCanvasItem);
+                deleteItem(canvasItemController, chooseCanvasItem, canvasController);
             } else {
                 createCopyForm(chooseCanvasItem.getFormIdentificator(), segmentType, canvasController, x, y);
             }

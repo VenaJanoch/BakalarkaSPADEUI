@@ -34,10 +34,10 @@ public class ElementsLink extends NodeLink {
      * Metoda pro smazání spojice mezi prvky a zavolání metody pro smazání
      * spojení z datových struktur
      */
-    public void deleteArrow() {
+    public void deleteArrow(boolean isModelDelete) {
         this.setVisible(false);
         backgroundPolygon.setVisible(false);
-        linkControl.deleteArrow(linkController.getLinkId(), linkController.getStartItemId(), linkController.getEndItemId(), linkType);
+        linkControl.deleteArrow(linkController.getLinkId(), linkController.getStartItemId(), linkController.getEndItemId(), linkType, isModelDelete);
 
     }
 
@@ -52,7 +52,7 @@ public class ElementsLink extends NodeLink {
         //      control.getManipulation().setClicItem(null);
         if (t.getButton().equals(MouseButton.PRIMARY)) {
             if (t.getClickCount() == 2) {
-                deleteArrow();
+                deleteArrow(false);
             }
 
         }

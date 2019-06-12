@@ -78,7 +78,7 @@ public class WorkUnitLink extends NodeLink {
     /**
      * Metoda pro smazání spojnice mezi Work Units, vymazání spojení z datových struktur
      */
-    public void deleteArrow() {
+    public void deleteArrow(boolean isModelDelete) {
         this.setVisible(false);
         relationCB.setVisible(false);
         relationCB = null;
@@ -101,7 +101,7 @@ public class WorkUnitLink extends NodeLink {
 
         if (t.getButton().equals(MouseButton.PRIMARY)) {
             if (t.getClickCount() == 2) {
-                deleteArrow();
+                deleteArrow(false);
             }
 
         } else {
