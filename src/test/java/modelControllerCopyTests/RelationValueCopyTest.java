@@ -1,8 +1,9 @@
-package modelControllerEditTests;
+package modelControllerCopyTests;
 
 import SPADEPAC.Relation;
 import controllers.formControllers.FormController;
 import controllers.formControllers.FormDataController;
+import controllers.formControllers.FormFillController;
 import javafx.scene.control.TableView;
 import org.junit.Before;
 import org.junit.Test;
@@ -15,9 +16,8 @@ import java.util.ArrayList;
 import static junit.framework.TestCase.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
 
-public class RelationValueTest {
+public class RelationValueCopyTest {
 
     Relation relation;
     SegmentLists lists;
@@ -27,6 +27,7 @@ public class RelationValueTest {
         WarmUp warmUp = new WarmUp();
         lists = warmUp.getLists();
         FormDataController formDataController = warmUp.getFormDataController();
+
         formDataController.saveDataFromRelationForm(null, true);
         ArrayList<String> name = new ArrayList<>();
         name.add("");
@@ -36,12 +37,14 @@ public class RelationValueTest {
         indicators.add(0);
         warmUp.getEditFormController().editDataFromClass(SegmentType.Relation, "Test", name, indicators, indicators, indicators, name,
                 name, new ClassTable("Test", "nevim", "nevim", false, 0), false, 0 );
-        relation = warmUp.getDataModel().getRelation(0);
+        FormFillController formFillController = warmUp.getFormFillController();
+        formFillController.fillRelationForm(null, 0);
+        relation = warmUp.getDataModel().getRelation(1);
 
     }
     @Test
     public void testAlias() {
-        assertEquals("Test", relation.getAlias() );
+        assertEquals("1", relation.getAlias() );
     }
 
     @Test
@@ -66,7 +69,7 @@ public class RelationValueTest {
 
     @Test
     public void testId() {
-        assertSame(0, relation.getId());
+        assertSame(1, relation.getId());
     }
 
     @Test

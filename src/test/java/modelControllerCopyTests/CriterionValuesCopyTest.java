@@ -1,8 +1,9 @@
-package modelControllerEditTests;
+package modelControllerCopyTests;
 
 import SPADEPAC.Criterion;
 import controllers.formControllers.FormController;
 import controllers.formControllers.FormDataController;
+import controllers.formControllers.FormFillController;
 import javafx.scene.control.TableView;
 import org.junit.Before;
 import org.junit.Test;
@@ -15,9 +16,8 @@ import java.util.ArrayList;
 import static junit.framework.TestCase.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
 
-public class CriterionValuesTest {
+public class CriterionValuesCopyTest {
 
         Criterion criterion;
         SegmentLists lists;
@@ -27,6 +27,7 @@ public class CriterionValuesTest {
             WarmUp warmUp = new WarmUp();
             lists = warmUp.getLists();
             FormDataController formDataController = warmUp.getFormDataController();
+
             formDataController.saveDataFromCriterionForm(null, true);
             ArrayList<String> name = new ArrayList<>();
             name.add("");
@@ -37,13 +38,14 @@ public class CriterionValuesTest {
 
             warmUp.getEditFormController().editDataFromCriterion("Test", name, indicators, name, indicators, new CriterionTable("Test", false, 0), false, 0);
             warmUp.getEditFormController().editDataFromCriterion("Test", name, indicators, name, indicators, new CriterionTable("Test", false, 0), false, 0);
-
-            criterion = warmUp.getDataModel().getCriterion(0);
+            FormFillController formFillController = warmUp.getFormFillController();
+            formFillController.fillCriterionForm(null, 0);
+            criterion = warmUp.getDataModel().getCriterion(1);
         }
 
     @Test
     public void testAlias() {
-        assertEquals("Test", criterion.getAlias() );
+        assertEquals("1", criterion.getAlias() );
     }
 
     @Test
@@ -76,7 +78,7 @@ public class CriterionValuesTest {
     
     @Test
     public void testId() {
-        assertSame(0, criterion.getId());
+        assertSame(1, criterion.getId());
     }
 
     @Test

@@ -19,9 +19,6 @@ public class BranchValuesTest {
 
             WarmUp warmUp = new WarmUp();
             lists = warmUp.getLists();
-            FormDataController formDataController = warmUp.getFormDataController();
-            FormController formController = warmUp.getFormController();
-            TableView tableView = new TableView();
             warmUp.getDataModel().getSaveDataModel().createNewBranch(0);
 
             branch = warmUp.getDataModel().getBranch(0);

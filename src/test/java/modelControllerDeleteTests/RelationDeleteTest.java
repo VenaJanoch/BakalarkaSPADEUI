@@ -37,16 +37,12 @@ public class RelationDeleteTest {
 
         WarmUp warmUp = new WarmUp();
         dataModel = warmUp.getDataModel();
-        FormController formController = warmUp.getFormController();
         lists = warmUp.getLists();
         FormDataController formDataController = warmUp.getFormDataController();
         DeleteFormController deleteFormController = warmUp.getDeleteFormController();
         ClassTable table1 = new ClassTable("","","",true, 0);
-        formController.createTableItem(SegmentType.Relation);
-        TableView tableView = new TableView();
-        formDataController.saveDataFromRelationForm(tableView, true);
-        formController.createTableItem(SegmentType.Relation);
-        formDataController.saveDataFromRelationForm(tableView, true);
+        formDataController.saveDataFromRelationForm(null, true);
+        formDataController.saveDataFromRelationForm(null, true);
 
 
         date = LocalDate.of(2018, 10, 10);
@@ -83,13 +79,7 @@ public class RelationDeleteTest {
         deleteFormController.deleteRelation(list, branchTables);
 
     }
-
-    @Test
-    public void testMapper() {
-        Set instacies =  mapperTableToObject.getWUTORelationMapper().keySet();
-        assertSame(1, instacies.size());
-        assertSame(1, instacies.iterator().next());
-    }
+    
     @Test
     public void testListSize() {
         assertSame(1, dataModel.getRelations().size());

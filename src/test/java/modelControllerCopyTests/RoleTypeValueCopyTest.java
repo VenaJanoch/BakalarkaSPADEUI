@@ -1,14 +1,14 @@
-package modelControllerEditTests;
+package modelControllerCopyTests;
 
 import SPADEPAC.RoleType;
 import controllers.formControllers.FormController;
 import controllers.formControllers.FormDataController;
+import controllers.formControllers.FormFillController;
 import javafx.scene.control.TableView;
 import org.junit.Before;
 import org.junit.Test;
 import services.SegmentLists;
 import services.SegmentType;
-import tables.ClassTable;
 import tables.RoleTypeTable;
 
 import java.util.ArrayList;
@@ -16,9 +16,8 @@ import java.util.ArrayList;
 import static junit.framework.TestCase.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
 
-public class RoleTypeValueTest {
+public class RoleTypeValueCopyTest {
 
         RoleType roleType;
         SegmentLists lists;
@@ -37,12 +36,14 @@ public class RoleTypeValueTest {
             indicators.add(0);
             warmUp.getEditFormController().editDataFromRoleType("Test", name, indicators, name, indicators, indicators, indicators, name,
                     name, new RoleTypeTable("Test", "nevim",  false, "nevim", 0), false, 0 );
-            roleType = warmUp.getDataModel().getRoleType(0);
+            FormFillController formFillController = warmUp.getFormFillController();
+            formFillController.fillRoleTypeForm(null, 0);
+            roleType = warmUp.getDataModel().getRoleType(1);
 
         }
     @Test
     public void testAlias() {
-        assertEquals("Test", roleType.getAlias() );
+        assertEquals("1", roleType.getAlias() );
     }
 
     @Test
@@ -67,7 +68,7 @@ public class RoleTypeValueTest {
 
     @Test
     public void testId() {
-        assertSame(0, roleType.getId());
+        assertSame(1, roleType.getId());
     }
 
     @Test

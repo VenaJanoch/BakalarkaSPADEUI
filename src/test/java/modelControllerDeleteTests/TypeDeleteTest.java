@@ -37,16 +37,12 @@ public class TypeDeleteTest {
 
         WarmUp warmUp = new WarmUp();
         dataModel = warmUp.getDataModel();
-        FormController formController = warmUp.getFormController();
         lists = warmUp.getLists();
         FormDataController formDataController = warmUp.getFormDataController();
         DeleteFormController deleteFormController = warmUp.getDeleteFormController();
         ClassTable table1 = new ClassTable("","","",true, 0);
-        formController.createTableItem(SegmentType.Type);
-        TableView tableView = new TableView();
-        formDataController.saveDataFromTypeForm(tableView, true);
-        formController.createTableItem(SegmentType.Type);
-        formDataController.saveDataFromTypeForm(tableView, true);
+        formDataController.saveDataFromTypeForm(null, true);
+        formDataController.saveDataFromTypeForm(null, true);
 
 
         date = LocalDate.of(2018, 10, 10);

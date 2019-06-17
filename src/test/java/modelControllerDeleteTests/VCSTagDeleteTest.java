@@ -34,16 +34,12 @@ public class VCSTagDeleteTest {
 
         WarmUp warmUp = new WarmUp();
         dataModel = warmUp.getDataModel();
-        FormController formController = warmUp.getFormController();
         DeleteFormController deleteFormController = warmUp.getDeleteFormController();
         FormDataController formDataController = warmUp.getFormDataController();
 
         VCSTagTable table = new VCSTagTable("", true, 0);
-        formController.createTableItem(SegmentType.VCSTag);
-        TableView tableView = new TableView();
-        formDataController.saveDataFromVCSTagForm(tableView, true);
-        formController.createTableItem(SegmentType.VCSTag);
-        formDataController.saveDataFromVCSTagForm(tableView, true);
+        formDataController.saveDataFromVCSTagForm(null, true);
+        formDataController.saveDataFromVCSTagForm(null, true);
         date = LocalDate.of(2018, 10, 10);
         lists = warmUp.getLists();
         ArrayList<String> name = new ArrayList<>();

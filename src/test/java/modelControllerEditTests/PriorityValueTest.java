@@ -27,10 +27,7 @@ public class PriorityValueTest {
             WarmUp warmUp = new WarmUp();
             lists = warmUp.getLists();
             FormDataController formDataController = warmUp.getFormDataController();
-            FormController formController = warmUp.getFormController();
-            formController.createTableItem(SegmentType.Priority);
-            TableView tableView = new TableView();
-            formDataController.saveDataFromPriority(tableView, true);
+             formDataController.saveDataFromPriority(null, true);
             ArrayList<String> name = new ArrayList<>();
             name.add("");
             name.add("Test2");

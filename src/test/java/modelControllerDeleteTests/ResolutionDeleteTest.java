@@ -37,16 +37,12 @@ public class ResolutionDeleteTest {
 
         WarmUp warmUp = new WarmUp();
         dataModel = warmUp.getDataModel();
-        FormController formController = warmUp.getFormController();
         lists = warmUp.getLists();
         FormDataController formDataController = warmUp.getFormDataController();
         DeleteFormController deleteFormController = warmUp.getDeleteFormController();
         ClassTable table1 = new ClassTable("","","",true, 0);
-        formController.createTableItem(SegmentType.Resolution);
-        TableView tableView = new TableView();
-        formDataController.saveDataFromResolutionForm(tableView, true);
-        formController.createTableItem(SegmentType.Resolution);
-        formDataController.saveDataFromResolutionForm(tableView, true);
+        formDataController.saveDataFromResolutionForm(null, true);
+        formDataController.saveDataFromResolutionForm(null, true);
 
 
         date = LocalDate.of(2018, 10, 10);

@@ -1,8 +1,9 @@
-package modelControllerEditTests;
+package modelControllerCopyTests;
 
 import SPADEPAC.VCSTag;
 import controllers.formControllers.FormController;
 import controllers.formControllers.FormDataController;
+import controllers.formControllers.FormFillController;
 import javafx.scene.control.TableView;
 import org.junit.Before;
 import org.junit.Test;
@@ -26,6 +27,7 @@ public class VCSTagValuesTest {
             WarmUp warmUp = new WarmUp();
             lists = warmUp.getLists();
             FormDataController formDataController = warmUp.getFormDataController();
+
             formDataController.saveDataFromVCSTagForm(null, true);
             ArrayList<String> name = new ArrayList<>();
             name.add("");
@@ -36,13 +38,14 @@ public class VCSTagValuesTest {
 
             warmUp.getEditFormController().editDataFromVCSTag("Test", name, name, indicators, indicators, new VCSTagTable("Test", false, 0), false, 0);
             warmUp.getEditFormController().editDataFromVCSTag("Test", name, name, indicators, indicators, new VCSTagTable("Test", false, 0), false, 0);
-
-            vcsTag = warmUp.getDataModel().getVCSTag(0);
+            FormFillController formFillController = warmUp.getFormFillController();
+            formFillController.fillVCSTagForm(null, 0);
+            vcsTag = warmUp.getDataModel().getVCSTag(1);
         }
 
     @Test
     public void testAlias() {
-        assertEquals("Test", vcsTag.getAlias() );
+        assertEquals("1", vcsTag.getAlias() );
     }
 
     @Test
@@ -75,7 +78,7 @@ public class VCSTagValuesTest {
     
     @Test
     public void testId() {
-        assertSame(0, vcsTag.getId());
+        assertSame(1, vcsTag.getId());
     }
 
     @Test

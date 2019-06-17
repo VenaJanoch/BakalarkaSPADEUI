@@ -37,16 +37,12 @@ public class SeverityDeleteTest {
 
         WarmUp warmUp = new WarmUp();
         dataModel = warmUp.getDataModel();
-        FormController formController = warmUp.getFormController();
         lists = warmUp.getLists();
         FormDataController formDataController = warmUp.getFormDataController();
         DeleteFormController deleteFormController = warmUp.getDeleteFormController();
         ClassTable table1 = new ClassTable("","","",true, 0);
-        formController.createTableItem(SegmentType.Severity);
-        TableView tableView = new TableView();
-        formDataController.saveDataFromSeverity(tableView, true);
-        formController.createTableItem(SegmentType.Severity);
-        formDataController.saveDataFromSeverity(tableView, true);
+        formDataController.saveDataFromSeverity(null, true);
+        formDataController.saveDataFromSeverity(null, true);
 
 
         date = LocalDate.of(2018, 10, 10);

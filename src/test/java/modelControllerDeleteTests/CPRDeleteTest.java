@@ -40,16 +40,12 @@ public class CPRDeleteTest {
 
             WarmUp warmUp = new WarmUp();
             dataModel = warmUp.getDataModel();
-            FormController formController = warmUp.getFormController();
 
             DeleteFormController deleteFormController = warmUp.getDeleteFormController();
             FormDataController formDataController = warmUp.getFormDataController();
             CPRTable table1 = new CPRTable("", "",true, 0);
-            formController.createTableItem(SegmentType.Config_Person_Relation);
-            TableView tableView = new TableView();
-            formDataController.saveDataFromCPR(tableView, true);
-            formController.createTableItem(SegmentType.Config_Person_Relation);
-            formDataController.saveDataFromCPR(tableView, true);
+            formDataController.saveDataFromCPR(null, true);
+            formDataController.saveDataFromCPR(null, true);
 
             date = LocalDate.of(2018, 10, 10);
             lists = warmUp.getLists();

@@ -38,16 +38,12 @@ public class RoleTypeDeleteTest {
         
         WarmUp warmUp = new WarmUp();
         dataModel = warmUp.getDataModel();
-        FormController formController = warmUp.getFormController();
-        lists = warmUp.getLists();
+         lists = warmUp.getLists();
         FormDataController formDataController = warmUp.getFormDataController();
         DeleteFormController deleteFormController = warmUp.getDeleteFormController();
         ClassTable table1 = new ClassTable("","","",true, 0);
-        formController.createTableItem(SegmentType.Role_Type);
-        TableView tableView = new TableView();
-        formDataController.saveDataFromRoleTypeForm(tableView, true);
-        formController.createTableItem(SegmentType.Role_Type);
-        formDataController.saveDataFromRoleTypeForm(tableView, true);
+         formDataController.saveDataFromRoleTypeForm(null, true);
+        formDataController.saveDataFromRoleTypeForm(null, true);
 
 
         date = LocalDate.of(2018, 10, 10);

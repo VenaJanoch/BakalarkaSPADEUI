@@ -27,10 +27,7 @@ public class ResolutionValueTest {
         WarmUp warmUp = new WarmUp();
         lists = warmUp.getLists();
         FormDataController formDataController = warmUp.getFormDataController();
-        FormController formController = warmUp.getFormController();
-        formController.createTableItem(SegmentType.Resolution);
-        TableView tableView = new TableView();
-        formDataController.saveDataFromResolutionForm(tableView, true);
+         formDataController.saveDataFromResolutionForm(null, true);
         ArrayList<String> name = new ArrayList<>();
         name.add("");
         name.add("Test2");

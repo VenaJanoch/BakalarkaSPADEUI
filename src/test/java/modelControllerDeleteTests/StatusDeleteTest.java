@@ -37,16 +37,12 @@ public class StatusDeleteTest {
 
         WarmUp warmUp = new WarmUp();
         dataModel = warmUp.getDataModel();
-        FormController formController = warmUp.getFormController();
         lists = warmUp.getLists();
         FormDataController formDataController = warmUp.getFormDataController();
         DeleteFormController deleteFormController = warmUp.getDeleteFormController();
         ClassTable table1 = new ClassTable("","","",true, 0);
-        formController.createTableItem(SegmentType.Status);
-        TableView tableView = new TableView();
-        formDataController.saveDataFromStatusForm(tableView, true);
-        formController.createTableItem(SegmentType.Status);
-        formDataController.saveDataFromStatusForm(tableView, true);
+        formDataController.saveDataFromStatusForm(null, true);
+         formDataController.saveDataFromStatusForm(null, true);
 
 
         date = LocalDate.of(2018, 10, 10);

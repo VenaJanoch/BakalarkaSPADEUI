@@ -48,12 +48,8 @@ public class WorkUnitValueTest {
         FormDataController formDataController = warmUp.getFormDataController();
 
         WorkUnitTable table1 = new WorkUnitTable("",true, 0);
-        FormController formController = warmUp.getFormController();
-        TableView tableView = new TableView<WorkUnitTable>();
-        formDataController.saveDataFromWorkUnit(tableView, true);
-        formController.createTableItem(SegmentType.Work_Unit);
-        formDataController.saveDataFromWorkUnit(tableView,true);
-        formController.createTableItem(SegmentType.Work_Unit);
+         formDataController.saveDataFromWorkUnit(null, true);
+        formDataController.saveDataFromWorkUnit(null,true);
         date = LocalDate.of(2018, 10, 10);
         ArrayList<String> name = new ArrayList<>();
         name.add("");

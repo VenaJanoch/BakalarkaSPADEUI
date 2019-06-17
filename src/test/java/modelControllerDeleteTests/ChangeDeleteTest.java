@@ -41,16 +41,12 @@ public class ChangeDeleteTest {
 
         WarmUp warmUp = new WarmUp();
         dataModel = warmUp.getDataModel();
-        FormController formController = warmUp.getFormController();
 
         DeleteFormController deleteFormController = warmUp.getDeleteFormController();
         FormDataController formDataController = warmUp.getFormDataController();
         ChangeTable table1 =new ChangeTable("", true, 0);
-        formController.createTableItem(SegmentType.Change);
-        TableView tableView = new TableView();
-        formDataController.saveDataFromChangeForm(tableView, true);
-        formController.createTableItem(SegmentType.Change);
-        formDataController.saveDataFromChangeForm(tableView, true);
+        formDataController.saveDataFromChangeForm(null, true);
+        formDataController.saveDataFromChangeForm(null, true);
 
         date = LocalDate.of(2018, 10, 10);
         lists = warmUp.getLists();

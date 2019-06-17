@@ -38,16 +38,15 @@ public class BranchDeleteTest {
             WarmUp warmUp = new WarmUp();
             dataModel = warmUp.getDataModel();
             mapperTableToObject = warmUp.getMapperTableToObject();
-            FormController formController = warmUp.getFormController();
+
             lists = warmUp.getLists();
             FormDataController formDataController = warmUp.getFormDataController();
             DeleteFormController deleteFormController = warmUp.getDeleteFormController();
             BranchTable table1 = new BranchTable("", "YES", true, true, 0);
-            formController.createTableItem(SegmentType.Branch);
-            TableView tableView = new TableView();
-            formDataController.saveDataFromBranch(tableView, true);
-            formController.createTableItem(SegmentType.Branch);
-            formDataController.saveDataFromBranch(tableView, true);
+
+            formDataController.saveDataFromBranch(null, true);
+
+            formDataController.saveDataFromBranch(null, true);
 
 
             date = LocalDate.of(2018, 10, 10);

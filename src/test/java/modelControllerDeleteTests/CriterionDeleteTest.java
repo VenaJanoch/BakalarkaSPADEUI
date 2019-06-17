@@ -42,16 +42,12 @@ public class CriterionDeleteTest {
 
             WarmUp warmUp = new WarmUp();
             dataModel = warmUp.getDataModel();
-            FormController formController = warmUp.getFormController();
             lists = warmUp.getLists();
             FormDataController formDataController = warmUp.getFormDataController();
             DeleteFormController deleteFormController = warmUp.getDeleteFormController();
             CriterionTable table1 = new CriterionTable("",true, 0);
-            formController.createTableItem(SegmentType.Criterion);
-        TableView tableView = new TableView();
-            formDataController.saveDataFromCriterionForm(tableView, true);
-            formController.createTableItem(SegmentType.Criterion);
-            formDataController.saveDataFromCriterionForm(tableView, true);
+            formDataController.saveDataFromCriterionForm(null, true);
+            formDataController.saveDataFromCriterionForm(null, true);
 
 
             date = LocalDate.of(2018, 10, 10);
@@ -67,9 +63,8 @@ public class CriterionDeleteTest {
 
             ArrayList<LocalDate> dates = new ArrayList<>();
             dates.add(date);
-            formController.createTableItem(SegmentType.Milestone);
 
-            formDataController.saveDataFromMilestoneForm(tableView, true);
+            formDataController.saveDataFromMilestoneForm(null, true);
 
             warmUp.getDataModel().getEditDataModel().editDataInMilestone("Test", name,name, indicators,  indicators, indicators, unit, false, 0);
             mapperTableToObject = warmUp.getMapperTableToObject();

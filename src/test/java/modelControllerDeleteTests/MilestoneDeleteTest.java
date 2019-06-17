@@ -39,16 +39,12 @@ public class MilestoneDeleteTest {
 
             WarmUp warmUp = new WarmUp();
             dataModel = warmUp.getDataModel();
-            FormController formController = warmUp.getFormController();
-            lists = warmUp.getLists();
+             lists = warmUp.getLists();
             FormDataController formDataController = warmUp.getFormDataController();
             DeleteFormController deleteFormController = warmUp.getDeleteFormController();
             MilestoneTable table1 = new MilestoneTable("",true, 0);
-            formController.createTableItem(SegmentType.Milestone);
-            TableView tableView = new TableView();
-            formDataController.saveDataFromMilestoneForm(tableView, true);
-            formController.createTableItem(SegmentType.Milestone);
-            formDataController.saveDataFromMilestoneForm(tableView, true);
+            formDataController.saveDataFromMilestoneForm(null, true);
+            formDataController.saveDataFromMilestoneForm(null, true);
 
 
             date = LocalDate.of(2018, 10, 10);

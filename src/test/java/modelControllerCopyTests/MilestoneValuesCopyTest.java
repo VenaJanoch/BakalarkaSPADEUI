@@ -1,23 +1,22 @@
-package modelControllerEditTests;
+package modelControllerCopyTests;
 
 import SPADEPAC.Milestone;
 import controllers.formControllers.FormController;
 import controllers.formControllers.FormDataController;
+import controllers.formControllers.FormFillController;
 import javafx.scene.control.TableView;
 import org.junit.Before;
 import org.junit.Test;
 import services.SegmentLists;
 import services.SegmentType;
-import tables.MilestoneTable;
 
 import java.util.ArrayList;
 
 import static junit.framework.TestCase.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
 
-public class MilestoneValuesTest {
+public class MilestoneValuesCopyTest {
 
         Milestone milestone;
         SegmentLists lists;
@@ -27,8 +26,8 @@ public class MilestoneValuesTest {
             WarmUp warmUp = new WarmUp();
             lists = warmUp.getLists();
             FormDataController formDataController = warmUp.getFormDataController();
-            FormController formController = warmUp.getFormController();
-                        ArrayList<String> name = new ArrayList<>();
+
+            ArrayList<String> name = new ArrayList<>();
             name.add("");
             name.add("Test2");
             ArrayList<Integer> indicators = new ArrayList<>();
@@ -38,17 +37,17 @@ public class MilestoneValuesTest {
             unit.add(indicators);
             unit.add(indicators);
 
-            formController.createTableItem(SegmentType.Milestone);
             formDataController.saveDataFromMilestoneForm(null, true);
 
             warmUp.getDataModel().getEditDataModel().editDataInMilestone("Test", name,name, indicators,  indicators, indicators, unit, false, 0);
             warmUp.getDataModel().getEditDataModel().editDataInMilestone("Test", name,name, indicators,  indicators, indicators, unit, false, 0);
-
-            milestone = warmUp.getDataModel().getMilestone(0);
+            FormFillController formFillController = warmUp.getFormFillController();
+            formFillController.fillMilestoneForm(null, 0);
+            milestone = warmUp.getDataModel().getMilestone(1);
         }
     @Test
     public void testAlias() {
-        assertEquals("Test", milestone.getAlias() );
+        assertEquals("1", milestone.getAlias() );
     }
 
     @Test
@@ -78,15 +77,9 @@ public class MilestoneValuesTest {
         assertSame(0, milestone.getDescriptionIndicator().get(1) );
         assertSame(2, milestone.getDescriptionIndicator().size());
     }
-
-    @Test
-    public void testIndicatorCriterion() {
-        assertSame(2, milestone.getCriteriaIndexs().size());
-    }
-
     @Test
     public void testId() {
-        assertSame(0, milestone.getId());
+        assertSame(1, milestone.getId());
     }
 
     @Test

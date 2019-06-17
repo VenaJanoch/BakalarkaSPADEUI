@@ -41,16 +41,12 @@ public class PriorityDeleteTest {
         
             WarmUp warmUp = new WarmUp();
             dataModel = warmUp.getDataModel();
-            FormController formController = warmUp.getFormController();
-            lists = warmUp.getLists();
+             lists = warmUp.getLists();
             FormDataController formDataController = warmUp.getFormDataController();
             DeleteFormController deleteFormController = warmUp.getDeleteFormController();
             ClassTable table1 = new ClassTable("","","",true, 0);
-            formController.createTableItem(SegmentType.Priority);
-            TableView tableView = new TableView();
-            formDataController.saveDataFromPriority(tableView, true);
-            formController.createTableItem(SegmentType.Priority);
-            formDataController.saveDataFromPriority(tableView, true);
+            formDataController.saveDataFromPriority(null, true);
+            formDataController.saveDataFromPriority(null, true);
 
 
             date = LocalDate.of(2018, 10, 10);

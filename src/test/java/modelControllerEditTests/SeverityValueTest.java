@@ -27,10 +27,7 @@ public class SeverityValueTest {
             WarmUp warmUp = new WarmUp();
             lists = warmUp.getLists();
             FormDataController formDataController = warmUp.getFormDataController();
-            FormController formController = warmUp.getFormController();
-            formController.createTableItem(SegmentType.Severity);
-            TableView tableView = new TableView();
-            formDataController.saveDataFromSeverity(tableView, true);
+            formDataController.saveDataFromSeverity(null, true);
             ArrayList<String> name = new ArrayList<>();
             name.add("");
             name.add("Test2");

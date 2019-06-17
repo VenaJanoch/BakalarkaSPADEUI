@@ -1,4 +1,4 @@
-package modelControllerEditTests;
+package modelControllerCopyTests;
 
 import SPADEPAC.Artifact;
 import model.DataModel;
@@ -12,9 +12,8 @@ import java.util.ArrayList;
 import static junit.framework.TestCase.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
 
-public class ArtefaktValueTest {
+public class ArtefaktValueCopyTest {
 
     Artifact artifact;
     SegmentLists lists;
@@ -41,17 +40,19 @@ public class ArtefaktValueTest {
 
         ArrayList<LocalDate> dates = new ArrayList<>();
         dates.add(date);
-        dataModel.getSaveDataModel().createNewArtifact(2);
+        dataModel.getSaveDataModel().createNewArtifact(1);
         dataModel.getEditDataModel().editDataInArtifact("Test", name, indicators, name, indicators, dates, indicators, false,
-                indicators, indicators, indicators, indicators, 3, 2, 2);
+                indicators, indicators, indicators, indicators, 3, 2, 1);
         dataModel.getEditDataModel().editDataInArtifact("Test", name, indicators, name, indicators, dates, indicators, false,
-                indicators, indicators, indicators, indicators, 3, 2, 2);
-        artifact = dataModel.getArtifact(2);
+                indicators, indicators, indicators, indicators, 3, 2, 1);
+        dataModel.getSaveDataModel().createNewArtifact(3);
+        dataModel.getDataManipulator().copyDataFromArtifact(1,3, 43, 45);
+        artifact = dataModel.getArtifact(3);
     }
 
     @Test
     public void testAlias() {
-        assertEquals("Test", artifact.getAlias());
+        assertEquals("3", artifact.getAlias());
     }
 
     @Test
@@ -91,6 +92,12 @@ public class ArtefaktValueTest {
     }
 
     @Test
+    public void testCoords() {
+        assertSame(43, artifact.getCoordinates().getXCoordinate());
+        assertSame(45, artifact.getCoordinates().getYCoordinate());
+    }
+
+    @Test
     public void testType() {
         assertSame(1, artifact.getMimeTypeIndex().get(0));
         assertSame(0, artifact.getMimeTypeIndex().get(1));
@@ -100,7 +107,7 @@ public class ArtefaktValueTest {
 
     @Test
     public void testId() {
-        assertSame(2, artifact.getId());
+        assertSame(3, artifact.getId());
     }
 
     @Test

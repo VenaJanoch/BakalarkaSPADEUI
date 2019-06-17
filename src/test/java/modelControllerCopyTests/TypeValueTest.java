@@ -1,8 +1,9 @@
-package modelControllerEditTests;
+package modelControllerCopyTests;
 
 import SPADEPAC.Type;
 import controllers.formControllers.FormController;
 import controllers.formControllers.FormDataController;
+import controllers.formControllers.FormFillController;
 import javafx.scene.control.TableView;
 import org.junit.Before;
 import org.junit.Test;
@@ -15,7 +16,6 @@ import java.util.ArrayList;
 import static junit.framework.TestCase.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
 
 public class TypeValueTest {
 
@@ -27,6 +27,7 @@ public class TypeValueTest {
             WarmUp warmUp = new WarmUp();
             lists = warmUp.getLists();
             FormDataController formDataController = warmUp.getFormDataController();
+
             formDataController.saveDataFromTypeForm(null, true);
             ArrayList<String> name = new ArrayList<>();
             name.add("");
@@ -36,12 +37,14 @@ public class TypeValueTest {
             indicators.add(0);
             warmUp.getEditFormController().editDataFromClass(SegmentType.Type, "Test", name, indicators, indicators, indicators, name,
                     name, new ClassTable("Test", "nevim", "nevim", false, 0), false, 0 );
-            type = warmUp.getDataModel().getType(0);
+            FormFillController formFillController = warmUp.getFormFillController();
+            formFillController.fillTypeForm(null, 0);
+            type = warmUp.getDataModel().getType(1);
 
         }
     @Test
     public void testAlias() {
-        assertEquals("Test", type.getAlias() );
+        assertEquals("1", type.getAlias() );
     }
 
     @Test
@@ -66,7 +69,7 @@ public class TypeValueTest {
 
     @Test
     public void testId() {
-        assertSame(0, type.getId());
+        assertSame(1, type.getId());
     }
 
     @Test
