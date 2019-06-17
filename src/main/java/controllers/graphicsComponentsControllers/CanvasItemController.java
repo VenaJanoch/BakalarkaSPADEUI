@@ -75,18 +75,8 @@ public class CanvasItemController {
         for (CanvasItem canvasItem : selectionController.getSelection()){
             if (!canvasController.isArrow()) {
 
-                System.out.print(canvasItem + " orgX: " + canvasItem.getOrgTranslateX());
-                System.out.print(" " + "orgY: " + canvasItem.getOrgTranslateY());
-                System.out.print(" " + "TX: " + canvasItem.getTranslateX());
-                System.out.print(" " + "TY: " + canvasItem.getTranslateY());
-
                 double newTranslateX = canvasItem.getOrgTranslateX() + offsetX;
                 double newTranslateY = canvasItem.getOrgTranslateY() + offsetY;
-
-                System.out.print(" " + "offsetX: " + offsetX);
-                System.out.print(" " + "offsetY: " + offsetY);
-                System.out.print(" " + "newX: " + newTranslateX);
-                System.out.println(" " + "newY: " + newTranslateY);
 
                 canvasItem.setTranslateX(newTranslateX);
                 canvasItem.setTranslateY(newTranslateY);

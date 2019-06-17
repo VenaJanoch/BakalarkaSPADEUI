@@ -79,7 +79,7 @@ public class RelationDeleteTest {
         deleteFormController.deleteRelation(list, branchTables);
 
     }
-    
+
     @Test
     public void testListSize() {
         assertSame(1, dataModel.getRelations().size());

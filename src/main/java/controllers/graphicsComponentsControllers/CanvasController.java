@@ -68,7 +68,6 @@ public class CanvasController {
 
         this.canvas = new DragAndDropCanvas(this);
         this.canvasType = canvasType;
-        this.canvas.setOnKeyPressed(event -> pressESCAction());
         this.canvasItemController = applicationController.getCanvasItemController();
         this.manipulationController = applicationController.getManipulationController();
         this.itemContexMenu = new ItemContexMenu(manipulationController, this, canvasItemController);
@@ -78,6 +77,16 @@ public class CanvasController {
 
     }
 
+    /**
+     * Pomocna metoda pro reakci na stisk klavesy ESC
+     */
+    public void pressESCAction() {
+        arrow = false;
+        startArrow = false;
+        canvas.setCursor(Cursor.DEFAULT);
+        linkButton.setSelected(false);
+        selectionController.clear();
+    }
     /**
      * Metoda pro reakci na klavesove zkratky
      * Umoznuje rekci na crtl+v, ctrl+c, ctrl+x, delete a escape
@@ -101,6 +110,7 @@ public class CanvasController {
                 manipulationController.getLink().coverBackgroundPolygon();
                selectionController.clear();
             }
+            pressESCAction();
         }
 
     }
@@ -336,16 +346,7 @@ public class CanvasController {
         return OnMousePressedEventHandler;
     }
 
-    /**
-     * Pomocna metoda pro reakci na stisk klavesy ESC
-     */
-    public void pressESCAction() {
-        arrow = false;
-        startArrow = false;
-        canvas.setCursor(Cursor.DEFAULT);
-        linkButton.setSelected(false);
-        selectionController.clear();
-    }
+
 
     /**
      * Metoda pro nastaveni nove podoby kurzoru na platne

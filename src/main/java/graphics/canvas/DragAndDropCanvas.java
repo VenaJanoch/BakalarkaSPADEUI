@@ -73,13 +73,10 @@ public class DragAndDropCanvas extends ScrollPane {
        // rect.setStrokeLineCap(StrokeLineCap.ROUND);
         rect.setFill(Color.LIGHTBLUE.deriveColor(0, 1.2, 1, 0.6));
 
+        this.setOnKeyPressed(event -> canvasController.keyPressAction(event));
         canvas.addEventHandler(MouseEvent.MOUSE_PRESSED, canvasController.getOnMousePressedEventHandler(dragContext, rect, canvas));
         canvas.addEventHandler(MouseEvent.MOUSE_DRAGGED, canvasController.getOnMouseDraggedEventHandler(dragContext, rect));
         canvas.addEventHandler(MouseEvent.MOUSE_RELEASED, canvasController.getOnMouseReleasedEventHandler(rect, canvas));
-
-        this.addEventHandler(KeyEvent.KEY_PRESSED, event -> {
-            canvasController.keyPressAction(event);
-        });
 
         canvas.setOnDragOver(event -> {
             canvasController.dragAndOver(event);

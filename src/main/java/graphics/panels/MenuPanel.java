@@ -66,11 +66,11 @@ public class MenuPanel extends VBox {
                 saveAsItem, new SeparatorMenuItem(), validationItem, new SeparatorMenuItem(), exitItem);
 
         exitItem.setOnAction(event -> windowController.closeProject());
-        saveItem.setOnAction(event -> windowController.saveItemAction());// control.saveFile());
-        saveAsItem.setOnAction(event -> windowController.saveItemAsAction()); //.saveAsFile());
-        openItem.setOnAction(event -> windowController.openProccesXMLAction()); //.openFile());
-        newItem.setOnAction(event -> windowController.createNewProcessAction()); //.newItem());
-        validationItem.setOnAction(event -> windowController.validationAction()); //.validate());
+        saveItem.setOnAction(event -> windowController.saveItemAction());
+        saveAsItem.setOnAction(event -> windowController.saveItemAsAction());
+        openItem.setOnAction(event -> windowController.openProccesXMLAction());
+        newItem.setOnAction(event -> windowController.createNewProcessAction());
+        validationItem.setOnAction(event -> windowController.validationAction());
         menuMB.getMenus().addAll(fileMenu);
 
         this.getChildren().add(menuMB);

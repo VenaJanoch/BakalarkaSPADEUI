@@ -45,10 +45,7 @@ public class FormDataController implements IFormDataController {
         int id = formController.createTableItem(SegmentType.Phase);
         PhaseTable table = new PhaseTable(String.valueOf(id), isExist, id);
 
-        tableTV.getItems().add(table);
-        tableTV.sort();
-        int lastItem = tableTV.getItems().size();
-        tableTV.getSelectionModel().select(lastItem - 1);
+       editTableItems(tableTV, table);
         return id;
     }
 
@@ -58,11 +55,17 @@ public class FormDataController implements IFormDataController {
         int id = formController.createTableItem(SegmentType.Iteration);
         IterationTable table = new IterationTable(String.valueOf(id), isExist, id);
 
-        tableTV.getItems().add(table);
-        tableTV.sort();
-        int lastItem = tableTV.getItems().size();
-        tableTV.getSelectionModel().select(lastItem - 1);
+       editTableItems(tableTV, table);
         return id;
+    }
+
+    private void editTableItems(TableView tableTV, BasicTable table){
+        if (tableTV != null){
+            tableTV.getItems().add(table);
+            tableTV.sort();
+            int lastItem = tableTV.getItems().size();
+            tableTV.getSelectionModel().select(lastItem - 1);
+        }
     }
 
     public int saveDataFromActivityForm(TableView<ActivityTable> tableTV, boolean isExist) {
@@ -70,10 +73,8 @@ public class FormDataController implements IFormDataController {
         int id = formController.createTableItem(SegmentType.Activity);
         ActivityTable table = new ActivityTable(String.valueOf(id), isExist, id);
 
-        tableTV.getItems().add(table);
-        tableTV.sort();
-        int lastItem = tableTV.getItems().size();
-        tableTV.getSelectionModel().select(lastItem - 1);
+        editTableItems(tableTV, table);
+
         return id;
     }
 
@@ -82,10 +83,7 @@ public class FormDataController implements IFormDataController {
         int id = formController.createTableItem(SegmentType.Work_Unit);
         WorkUnitTable table = new WorkUnitTable(String.valueOf(id), isExist, id);
 
-        tableTV.getItems().add(table);
-        tableTV.sort();
-        int lastItem = tableTV.getItems().size();
-        tableTV.getSelectionModel().select(lastItem - 1);
+        editTableItems(tableTV, table);
         lists.getWorkUnitsObservable().add(table);
         return id;
     }
@@ -137,10 +135,7 @@ public class FormDataController implements IFormDataController {
             int id = formController.createTableItem(SegmentType.Change);
             ChangeTable table = new ChangeTable(String.valueOf(id), isExist, id);
 
-            tableTV.getItems().add(table);
-            tableTV.sort();
-            int lastItem = tableTV.getItems().size();
-            tableTV.getSelectionModel().select(lastItem - 1);
+            editTableItems(tableTV, table);
             lists.getChangeObservable().add(table);
             return id;
 
@@ -168,10 +163,7 @@ public class FormDataController implements IFormDataController {
         int id = formController.createTableItem(SegmentType.VCSTag);
         VCSTagTable table = new VCSTagTable(String.valueOf(id), isExist, id);
 
-        tableTV.getItems().add(table);
-        tableTV.sort();
-        int lastItem = tableTV.getItems().size();
-        tableTV.getSelectionModel().select(lastItem - 1);
+       editTableItems(tableTV, table);
         lists.getVCSTag().add(table);
         return id;
     }
@@ -330,10 +322,7 @@ public class FormDataController implements IFormDataController {
         int id = formController.createTableItem(SegmentType.Branch);
         BranchTable table = new BranchTable(String.valueOf(id), "", true, isExist, id);
 
-        tableTV.getItems().add(table);
-        tableTV.sort();
-        int lastItem = tableTV.getItems().size();
-        tableTV.getSelectionModel().select(lastItem - 1);
+      editTableItems(tableTV, table);
         lists.getBranchObservable().add(table);
         return id;
 
@@ -344,10 +333,7 @@ public class FormDataController implements IFormDataController {
         int id = formController.createTableItem(SegmentType.Config_Person_Relation);
         CPRTable table = new CPRTable(String.valueOf(id), "", isExist, id);
 
-        tableTV.getItems().add(table);
-        tableTV.sort();
-        int lastItem = tableTV.getItems().size();
-        tableTV.getSelectionModel().select(lastItem - 1);
+        editTableItems(tableTV, table);
         lists.getCPRObservable().add(table);
         return id;
 
@@ -358,10 +344,7 @@ public class FormDataController implements IFormDataController {
         int id = formController.createTableItem(SegmentType.Criterion);
         CriterionTable table = new CriterionTable(String.valueOf(id), isExist, id);
 
-        tableTV.getItems().add(table);
-        tableTV.sort();
-        int lastItem = tableTV.getItems().size();
-        tableTV.getSelectionModel().select(lastItem - 1);
+       editTableItems(tableTV, table);
         lists.getCriterionObservable().add(table);
         return id;
     }
@@ -371,10 +354,7 @@ public class FormDataController implements IFormDataController {
         int id = formController.createTableItem(SegmentType.Milestone);
         MilestoneTable table = new MilestoneTable(String.valueOf(id), isExist, id);
 
-        tableTV.getItems().add(table);
-        tableTV.sort();
-        int lastItem = tableTV.getItems().size();
-        tableTV.getSelectionModel().select(lastItem - 1);
+        editTableItems(tableTV, table);
         lists.getMilestoneObservable().add(table);
         return id;
 
@@ -385,10 +365,7 @@ public class FormDataController implements IFormDataController {
         int id = formController.createTableItem(SegmentType.Priority);
         ClassTable table = new ClassTable(String.valueOf(id),"","", isExist, id);
 
-        tableTV.getItems().add(table);
-        tableTV.sort();
-        int lastItem = tableTV.getItems().size();
-        tableTV.getSelectionModel().select(lastItem - 1);
+       editTableItems(tableTV, table);
         lists.getPriorityTypeObservable().add(table);
         return id;
     }
@@ -398,10 +375,7 @@ public class FormDataController implements IFormDataController {
         int id = formController.createTableItem(SegmentType.Severity);
         ClassTable table = new ClassTable(String.valueOf(id),"","", isExist, id);
 
-        tableTV.getItems().add(table);
-        tableTV.sort();
-        int lastItem = tableTV.getItems().size();
-        tableTV.getSelectionModel().select(lastItem - 1);
+        editTableItems(tableTV, table);
         lists.getSeverityTypeObservable().add(table);
         return id;
     }
@@ -411,10 +385,7 @@ public class FormDataController implements IFormDataController {
         int id = formController.createTableItem(SegmentType.Resolution);
         ClassTable table = new ClassTable(String.valueOf(id),"","", isExist, id);
 
-        tableTV.getItems().add(table);
-        tableTV.sort();
-        int lastItem = tableTV.getItems().size();
-        tableTV.getSelectionModel().select(lastItem - 1);
+        editTableItems(tableTV, table);
         lists.getResolutionTypeObservable().add(table);
         return id;
     }
@@ -424,10 +395,7 @@ public class FormDataController implements IFormDataController {
         int id = formController.createTableItem(SegmentType.Relation);
         ClassTable table = new ClassTable(String.valueOf(id),"","", isExist, id);
 
-        tableTV.getItems().add(table);
-        tableTV.sort();
-        int lastItem = tableTV.getItems().size();
-        tableTV.getSelectionModel().select(lastItem - 1);
+        editTableItems(tableTV, table);
         lists.getRelationTypeObservable().add(table);
         return id;
     }
@@ -449,10 +417,7 @@ public class FormDataController implements IFormDataController {
         int id = formController.createTableItem(SegmentType.Role_Type);
         RoleTypeTable table = new RoleTypeTable(String.valueOf(id), "", isExist, "", id);
 
-        tableTV.getItems().add(table);
-        tableTV.sort();
-        int lastItem = tableTV.getItems().size();
-        tableTV.getSelectionModel().select(lastItem - 1);
+        editTableItems(tableTV,table);
         lists.getRoleTypeObservable().add(table);
         return id;
 
@@ -464,10 +429,7 @@ public class FormDataController implements IFormDataController {
         int id = formController.createTableItem(SegmentType.Status);
         ClassTable table = new ClassTable(String.valueOf(id),"","", isExist, id);
 
-        tableTV.getItems().add(table);
-        tableTV.sort();
-        int lastItem = tableTV.getItems().size();
-        tableTV.getSelectionModel().select(lastItem - 1);
+       editTableItems(tableTV, table);
         lists.getStatusTypeObservable().add(table);
         return id;
     }
@@ -477,19 +439,9 @@ public class FormDataController implements IFormDataController {
         int id = formController.createTableItem(SegmentType.Type);
         ClassTable table = new ClassTable(String.valueOf(id),"","", isExist, id);
 
-        tableTV.getItems().add(table);
-        tableTV.sort();
-        int lastItem = tableTV.getItems().size();
-        tableTV.getSelectionModel().select(lastItem - 1);
+        editTableItems(tableTV,table);
         lists.getTypeObservable().add(table);
         return id;
-    }
-
-    public void saveDataFromProjectFrom(String nameST, LocalDate endDate, LocalDate startDate, String desc) {
-        String nameForManipulator = InputController.fillTextMapper(nameST);
-        String descForManipulator = InputController.fillTextMapper(desc);
-        //       dataModel.addDataToProject(nameForManipulator, descForManipulator, startDate, endDate);
-
     }
 
     public MilestoneTable prepareMilestoneToTable(String nameST, String description, int id, ArrayList criterionArray) {

@@ -44,7 +44,11 @@ public class WindowController {
         this.mainWindow = new MainWindow(this, drawersStack, drawerPanelController, selectItemController, applicationController);
         setSceneToPrimaryStage(mainWindow.getScene(), mainWindow.getTitle());
         applicationController.getFormFillController().setProjectCanvasController(mainWindow.getCanvasController());
+        setKeyActions();
+    }
 
+    private void setKeyActions(){
+        primaryStage.getScene().setOnKeyPressed(event -> mainWindow.getCanvasController().keyPressAction(event));
     }
 
     private void initApplication() {

@@ -148,24 +148,6 @@ public class ManipulationController {
     }
 
     /**
-     * Rozhodne, který segment nebo element se vytvoří
-     * <p>
-     * instance seznamu formulářů
-     *
-     * @return pole identifikátorů prvku
-     */
-    public void createCopyTableForm(TableView tableView, int oldFormIndex, SegmentType segmentType) {
-
-        switch (segmentType) {
-            case Activity:
-                formFillController.fillActivityForm(tableView, oldFormIndex);
-                break;
-            default:
-                break;
-        }
-    }
-
-    /**
      * Metoda pro rozhodnuti, ktery z datoveho modelu bude smazany
      * @param formIndex formIndex
      * @param segmentType SegmentType

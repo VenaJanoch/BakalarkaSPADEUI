@@ -182,8 +182,7 @@ public class Constans {
     public static final KeyCodeCombination controlN = new KeyCodeCombination(KeyCode.N, KeyCombination.CONTROL_ANY);
     public static final KeyCodeCombination controlO = new KeyCodeCombination(KeyCode.O, KeyCombination.CONTROL_ANY);
     public static final KeyCodeCombination controlS = new KeyCodeCombination(KeyCode.S, KeyCombination.CONTROL_ANY);
-    public static final KeyCodeCombination controlSA = new KeyCodeCombination(KeyCode.S, KeyCombination.CONTROL_ANY,
-            KeyCodeCombination.SHIFT_ANY);
+    public static final KeyCodeCombination controlSA = new KeyCodeCombination(KeyCode.S, KeyCombination.CONTROL_ANY);
     public static final KeyCodeCombination controlF = new KeyCodeCombination(KeyCode.F, KeyCombination.CONTROL_ANY);
     public static final KeyCodeCombination altF4 = new KeyCodeCombination(KeyCode.F4, KeyCombination.ALT_ANY);
 

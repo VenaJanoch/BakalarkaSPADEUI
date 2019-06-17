@@ -25,7 +25,7 @@ public class DataManipulator {
         Artifact newArtifact = dataModel.getArtifact(newArtifactId);
         Coordinates coordinates = dataModel.createCoords((int) x, (int) y);
 
-        newArtifact.setAlias(oldArtifact.getAlias());
+        newArtifact.setAlias(String.valueOf(newArtifactId));
         newArtifact.setCoordinates(coordinates);
         newArtifact.getName().addAll(oldArtifact.getName());
         newArtifact.getNameIndicator().addAll(oldArtifact.getNameIndicator());
@@ -53,7 +53,7 @@ public class DataManipulator {
         CommitedConfiguration newCommitedConfiguration = dataModel.getCommitedConfiguration(newCommitedConfigurationId);
         Coordinates coordinates = dataModel.createCoords((int) x, (int) y);
 
-        newCommitedConfiguration.setAlias(oldCommitedConfiguration.getAlias());
+        newCommitedConfiguration.setAlias(String.valueOf(newCommitedConfigurationId));
         newCommitedConfiguration.setCoordinates(coordinates);
         newCommitedConfiguration.getName().addAll(oldCommitedConfiguration.getName());
         newCommitedConfiguration.getNameIndicator().addAll(oldCommitedConfiguration.getNameIndicator());
@@ -78,11 +78,15 @@ public class DataManipulator {
         Commit newCommit = dataModel.getCommit(newCommitId);
         Coordinates coordinates = dataModel.createCoords((int) x, (int) y);
 
-        newCommit.setAlias(oldCommit.getAlias());
+        newCommit.setAlias(String.valueOf(newCommitId));
         newCommit.setCoordinates(coordinates);
         newCommit.getName().addAll(oldCommit.getName());
         newCommit.getNameIndicator().addAll(oldCommit.getNameIndicator());
         newCommit.setExist(oldCommit.isExist());
+        newCommit.getDescription().addAll(oldCommit.getDescription());
+        newCommit.getDescriptionIndicator().addAll(oldCommit.getDescriptionIndicator());
+        newCommit.getCreated().addAll(oldCommit.getCreated());
+        newCommit.getCreatedIndicator().addAll(oldCommit.getCreatedIndicator());
 
     }
 
@@ -98,7 +102,7 @@ public class DataManipulator {
         Configuration newConfiguration = dataModel.getConfiguration(newConfigurationId);
 
         Coordinates coordinates = dataModel.createCoords((int) x, (int) y);
-        newConfiguration.setAlias(oldConfiguration.getAlias());
+        newConfiguration.setAlias(String.valueOf(newConfigurationId));
         newConfiguration.setCoordinates(coordinates);
         newConfiguration.getName().addAll(oldConfiguration.getName());
         newConfiguration.getNameIndicator().addAll(oldConfiguration.getNameIndicator());
@@ -115,6 +119,9 @@ public class DataManipulator {
         newConfiguration.getBranchIndicator().addAll(oldConfiguration.getBranchIndicator());
         newConfiguration.getTagIndex().addAll(oldConfiguration.getTagIndex());
         newConfiguration.getTagsIndicator().addAll(oldConfiguration.getTagsIndicator());
+        newConfiguration.getDescription().addAll(oldConfiguration.getDescription());
+        newConfiguration.getDescriptionIndicator().addAll(oldConfiguration.getDescriptionIndicator());
+
     }
 
     /**
@@ -136,7 +143,7 @@ public class DataManipulator {
         newPerson.setExist(oldPerson.isExist());
         newPerson.getType().addAll(oldPerson.getType());
         newPerson.getTypeIndicator().addAll(oldPerson.getTypeIndicator());
-        newPerson.setAlias(oldPerson.getAlias());
+        newPerson.setAlias(String.valueOf(newPersonId));
     }
 
     /**
@@ -148,7 +155,7 @@ public class DataManipulator {
         Phase oldPhase = dataModel.getPhase(phaseId);
         Phase newPhase = dataModel.getPhase(newPhaseId);
 
-        newPhase.setAlias(oldPhase.getAlias());
+        newPhase.setAlias(String.valueOf(newPhaseId));
         newPhase.getName().addAll(oldPhase.getName());
         newPhase.getNameIndicator().addAll(oldPhase.getNameIndicator());
         newPhase.getDescription().addAll(oldPhase.getDescription());
@@ -167,7 +174,7 @@ public class DataManipulator {
         WorkUnit oldWorkUnit = dataModel.getWorkUnit(workUnitId);
         WorkUnit newWorkUnit = dataModel.getWorkUnit(newWorkUnitId);
 
-        newWorkUnit.setAlias(oldWorkUnit.getAlias());
+        newWorkUnit.setAlias(String.valueOf(newWorkUnitId));
         newWorkUnit.getName().addAll(oldWorkUnit.getName());
         newWorkUnit.getNameIndicator().addAll(oldWorkUnit.getNameIndicator());
         newWorkUnit.getDescription().addAll(oldWorkUnit.getDescription());
@@ -192,7 +199,7 @@ public class DataManipulator {
         Iteration oldIteration = dataModel.getIteration(iterationId);
         Iteration newIteration = dataModel.getIteration(newIterationId);
 
-        newIteration.setAlias(oldIteration.getAlias());
+        newIteration.setAlias(String.valueOf(newIterationId));
         newIteration.getName().addAll(oldIteration.getName());
         newIteration.getNameIndicator().addAll(oldIteration.getNameIndicator());
         newIteration.getDescription().addAll(oldIteration.getDescription());
@@ -213,7 +220,7 @@ public class DataManipulator {
         Activity oldActivity = dataModel.getActivity(activityId);
         Activity newActivity = dataModel.getActivity(newActivityId);
 
-        newActivity.setAlias(oldActivity.getAlias());
+        newActivity.setAlias(String.valueOf(newActivityId));
         newActivity.getName().addAll(oldActivity.getName());
         newActivity.getNameIndicator().addAll(oldActivity.getNameIndicator());
         newActivity.getDescription().addAll(oldActivity.getDescription());
@@ -232,7 +239,7 @@ public class DataManipulator {
         Milestone oldMilestone = dataModel.getMilestone(milestoneId);
         Milestone newMilestone = dataModel.getMilestone(newMilestoneId);
 
-        newMilestone.setAlias(oldMilestone.getAlias());
+        newMilestone.setAlias(String.valueOf(newMilestoneId));
         newMilestone.getName().addAll(oldMilestone.getName());
         newMilestone.getNameIndicator().addAll(oldMilestone.getNameIndicator());
         newMilestone.getDescription().addAll(oldMilestone.getDescription());
@@ -249,7 +256,7 @@ public class DataManipulator {
         Criterion oldCriterion = dataModel.getCriterion(criterionId);
         Criterion newCriterion = dataModel.getCriterion(newCriterionId);
 
-        newCriterion.setAlias(oldCriterion.getAlias());
+        newCriterion.setAlias(String.valueOf(newCriterionId));
         newCriterion.getName().addAll(oldCriterion.getName());
         newCriterion.getNameIndicator().addAll(oldCriterion.getNameIndicator());
         newCriterion.getDescription().addAll(oldCriterion.getDescription());
@@ -266,7 +273,7 @@ public class DataManipulator {
         ConfigPersonRelation oldCPR = dataModel.getConfigPersonRelation(cprId);
         ConfigPersonRelation newCPR = dataModel.getConfigPersonRelation(newCPRId);
 
-        newCPR.setAlias(oldCPR.getAlias());
+        newCPR.setAlias(String.valueOf(newCPRId));
         newCPR.getName().addAll(oldCPR.getName());
         newCPR.getNameIndicator().addAll(oldCPR.getNameIndicator());
         newCPR.getDescription().addAll(oldCPR.getDescription());
@@ -283,7 +290,7 @@ public class DataManipulator {
         Branch oldBranch = dataModel.getBranch(branchId);
         Branch newBranch = dataModel.getBranch(newBranchId);
 
-        newBranch.setAlias(oldBranch.getAlias());
+        newBranch.setAlias(String.valueOf(newBranchId));
         newBranch.getName().addAll(oldBranch.getName());
         newBranch.getNameIndicator().addAll(oldBranch.getNameIndicator());
      //   newBranch.get().addAll(oldBranch.getDescription());
@@ -300,7 +307,7 @@ public class DataManipulator {
         Change oldChange = dataModel.getChange(changeId);
         Change newChange = dataModel.getChange(newChangeId);
 
-        newChange.setAlias(oldChange.getAlias());
+        newChange.setAlias(String.valueOf(newChangeId));
         newChange.getName().addAll(oldChange.getName());
         newChange.getNameIndicator().addAll(oldChange.getNameIndicator());
         newChange.getDescription().addAll(oldChange.getDescription());
@@ -317,7 +324,7 @@ public class DataManipulator {
         VCSTag oldVCSTag = dataModel.getVCSTag(vcsTagId);
         VCSTag newVCSTag = dataModel.getVCSTag(newVCSTagId);
 
-        newVCSTag.setAlias(oldVCSTag.getAlias());
+        newVCSTag.setAlias(String.valueOf(newVCSTagId));
         newVCSTag.getName().addAll(oldVCSTag.getName());
         newVCSTag.getNameIndicator().addAll(oldVCSTag.getNameIndicator());
         newVCSTag.getDescription().addAll(oldVCSTag.getDescription());
@@ -334,7 +341,7 @@ public class DataManipulator {
         RoleType oldRoleType = dataModel.getRoleType(roleTypeId);
         RoleType newRoleType = dataModel.getRoleType(newRoleTypeId);
 
-        newRoleType.setAlias(oldRoleType.getAlias());
+        newRoleType.setAlias(String.valueOf(newRoleTypeId));
         newRoleType.getName().addAll(oldRoleType.getName());
         newRoleType.getNameIndicator().addAll(oldRoleType.getNameIndicator());
         newRoleType.getDescription().addAll(oldRoleType.getDescription());
@@ -356,7 +363,7 @@ public class DataManipulator {
         Priority oldPriority = dataModel.getPriority(priorityId);
         Priority newPriority = dataModel.getPriority(newPriorityId);
 
-        newPriority.setAlias(oldPriority.getAlias());
+        newPriority.setAlias(String.valueOf(newPriorityId));
         newPriority.getName().addAll(oldPriority.getName());
         newPriority.getNameIndicator().addAll(oldPriority.getNameIndicator());
         newPriority.getPrioritySuperClassIndex().addAll(oldPriority.getPrioritySuperClassIndex());
@@ -376,7 +383,7 @@ public class DataManipulator {
         Severity oldSeverity = dataModel.getSeverity(severityId);
         Severity newSeverity = dataModel.getSeverity(newSeverityId);
 
-        newSeverity.setAlias(oldSeverity.getAlias());
+        newSeverity.setAlias(String.valueOf(newSeverityId));
         newSeverity.getName().addAll(oldSeverity.getName());
         newSeverity.getNameIndicator().addAll(oldSeverity.getNameIndicator());
         newSeverity.getSeveritySuperClassIndex().addAll(oldSeverity.getSeveritySuperClassIndex());
@@ -396,7 +403,7 @@ public class DataManipulator {
         Status oldStatus = dataModel.getStatus(statusId);
         Status newStatus = dataModel.getStatus(newStatusId);
 
-        newStatus.setAlias(oldStatus.getAlias());
+        newStatus.setAlias(String.valueOf(newStatusId));
         newStatus.getName().addAll(oldStatus.getName());
         newStatus.getNameIndicator().addAll(oldStatus.getNameIndicator());
         newStatus.getStatusSuperClassIndex().addAll(oldStatus.getStatusSuperClassIndex());
@@ -416,7 +423,7 @@ public class DataManipulator {
         Type oldType = dataModel.getType(typeId);
         Type newType = dataModel.getType(newTypeId);
 
-        newType.setAlias(oldType.getAlias());
+        newType.setAlias(String.valueOf(newTypeId));
         newType.getName().addAll(oldType.getName());
         newType.getNameIndicator().addAll(oldType.getNameIndicator());
         newType.getTypeSuperClassIndex().addAll(oldType.getTypeSuperClassIndex());
@@ -436,7 +443,7 @@ public class DataManipulator {
         Relation oldRelation = dataModel.getRelation(relationId);
         Relation newRelation = dataModel.getRelation(newRelationId);
 
-        newRelation.setAlias(oldRelation.getAlias());
+        newRelation.setAlias(String.valueOf(newRelationId));
         newRelation.getName().addAll(oldRelation.getName());
         newRelation.getNameIndicator().addAll(oldRelation.getNameIndicator());
         newRelation.getRelationSuperClassIndex().addAll(oldRelation.getRelationSuperClassIndex());
@@ -456,7 +463,7 @@ public class DataManipulator {
         Resolution oldResolution = dataModel.getResolution(resolutionId);
         Resolution newResolution = dataModel.getResolution(newResolutionId);
 
-        newResolution.setAlias(oldResolution.getAlias());
+        newResolution.setAlias(String.valueOf(newResolutionId));
         newResolution.getName().addAll(oldResolution.getName());
         newResolution.getNameIndicator().addAll(oldResolution.getNameIndicator());
         newResolution.getResolutionSuperClassIndex().addAll(oldResolution.getResolutionSuperClassIndex());

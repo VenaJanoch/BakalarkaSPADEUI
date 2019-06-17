@@ -57,8 +57,6 @@ public interface IFormDataController {
 
     int saveDataFromTypeForm(TableView<ClassTable> tableView, boolean isExist);
 
-    void saveDataFromProjectFrom(String nameST, LocalDate endDate, LocalDate startDate, String desc);
-
     MilestoneTable prepareMilestoneToTable(String nameST, String description, int id, ArrayList criterionArray);
 
     PersonTable prepareRoleToTable(String nameST, String description, int id, int roleTypeIndex);
