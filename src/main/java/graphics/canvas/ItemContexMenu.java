@@ -28,9 +28,11 @@ public class ItemContexMenu extends ContextMenu {
     private MenuItem cutItem;
 
     /**
-     * Konstruktor třídy Zinicializuje globální proměnné třídy
-     *
-     * @param manipulation ManipulationController
+     * Konstruktor třídy
+     * Zinicializuje globální proměnné třídy
+     * @param manipulation instace tridy ManipulationController
+     * @param canvasController instace tridy CanvasController
+     * @param canvasItemController instace tridy CanvasItemController
      */
     public ItemContexMenu(ManipulationController manipulation, CanvasController canvasController, CanvasItemController canvasItemController) {
         super();

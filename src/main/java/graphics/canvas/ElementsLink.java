@@ -13,11 +13,11 @@ public class ElementsLink extends NodeLink {
     /**
      * Konstruktor třídy Zinicizalizuje globální proměnné třídy
      *
-     * @param ID          Identifikace spojnice
-     * @param linkControl LinkControl
+     * @param ID identifikator spojnice
+     * @param linkControl controller pro rizeni cinosti spojnice
+     * @param canvasController instace CanvasController
+     * @param manipulationController instace ManipulationController
      */
-
-
     public ElementsLink(int ID, LinkControl linkControl, CanvasController canvasController, ManipulationController manipulationController) {
         super(ID, linkControl, canvasController, manipulationController);
         backgroundPolygon.setOnMouseClicked(event -> {
@@ -30,9 +30,10 @@ public class ElementsLink extends NodeLink {
         });
     }
 
-    /**
+    /*
      * Metoda pro smazání spojice mezi prvky a zavolání metody pro smazání
      * spojení z datových struktur
+     * @param isModelDelete informace o tom zda je spojnice smazana v datovem modelu
      */
     public void deleteArrow(boolean isModelDelete) {
         this.setVisible(false);
@@ -48,8 +49,6 @@ public class ElementsLink extends NodeLink {
      */
     protected void pressedDeleteArrow(MouseEvent t) {
 
-//        control.getManipulation().setLink(this);
-        //      control.getManipulation().setClicItem(null);
         if (t.getButton().equals(MouseButton.PRIMARY)) {
             if (t.getClickCount() == 2) {
                 deleteArrow(false);

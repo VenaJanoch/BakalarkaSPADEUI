@@ -20,9 +20,14 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Trida predstavujici controller pro editacni panel
+ *
+ * @author Václav Janoch
+ */
 public class ControlPanelController {
 
-    private int lineCount;
+    /**Graficke prvky vyuzivane v panelu**/
     private ArrayList<ControlPanelLine> controlPanelLines;
     private ControlPanelLine radioButtonLine;
     private ControlPanelLine radioExistButtonLine;
@@ -32,19 +37,30 @@ public class ControlPanelController {
     private ControlPanelLine superClassLine;
     private Button staticButton;
 
+    /**Logicke promenne pro rizeni prvku v panelu**/
     private boolean isRadioButtonLine;
     private boolean isSecondRadioButtonLine;
     private boolean isCountLine;
     private boolean isStaticButton;
     private boolean isClass;
 
+    /**Promenne uchovavajici stav v class a superClass ComboBoxu**/
     private int classIndex;
     private int superIndex;
 
+    /**Promenna pro uchovani poctu radku**/
+    private int lineCount;
+    /**Promenna pro uchovani poctu statickych prvku**/
     private int staticObjectCount;
+    /**Promenna pro mechanismus nastaveni Class a SuperClass**/
     private ClassSwitcher switcher;
 
 
+    /**
+     * Konstruktor tridy
+     * Zinicializuje globalni promenne tridy
+     * @param controlPanelLines seznam radku ktere bude mozne v panelu vybrat
+     */
     public ControlPanelController(ArrayList<ControlPanelLine> controlPanelLines) {
         switcher = new ClassSwitcher();
         this.controlPanelLines = controlPanelLines;
@@ -53,7 +69,11 @@ public class ControlPanelController {
 
     }
 
-
+    /**
+     * Metoda pro kontorlu vyplneneho textoveho pole
+     * @param textFieldItem  prvek TextFiel ze ktereho se ziskava vystup
+     * @return upraveny retezec
+     */
     public String checkValueFromTextItem(TextFieldItem textFieldItem) {
         String desc = "null*";
         if (textFieldItem.getTextFromTextField() != null) {
@@ -62,6 +82,15 @@ public class ControlPanelController {
         return desc;
     }
 
+    /**
+     * Metoda pro vytvoreni novych  radku v panelu a naplneni techto radku textovymi hodnotami z datoveho modelu
+     * @param controlPanel instace ControlPanel
+     * @param lineList seznam moznych typu radku
+     * @param type Typ parametru radku
+     * @param values hodnoty pro vlozeni
+     * @param indicatorList indexi pro nastaveni comboboxu s ukazateli rovnosti
+     * @param index poradi seznamu s daty v poli
+     */
     public void setValueTextField(ControlPanel controlPanel, ObservableList<ControlPanelLineObject> lineList,
                                   ParamType type, List<String>[] values, List<Integer> indicatorList, int index) {
         int i = 0;
@@ -76,6 +105,15 @@ public class ControlPanelController {
         }
     }
 
+    /**
+     * Metoda pro vytvoreni novych  radku v panelu a naplneni techto radku  ciselnymi hodnotami z datoveho modelu
+     * @param controlPanel instace ControlPanel
+     * @param lineList seznam moznych typu radku
+     * @param type Typ parametru radku
+     * @param values hodnoty pro vlozeni
+     * @param indicatorList indexi pro nastaveni comboboxu s ukazateli rovnosti
+     * @param index poradi seznamu s daty v poli
+     */
     public void setValueNumberField(ControlPanel controlPanel, ObservableList<ControlPanelLineObject> lineList,
                                   ParamType type, List<String>[] values, List<Integer> indicatorList, int index) {
         int i = 0;
@@ -90,6 +128,12 @@ public class ControlPanelController {
         }
     }
 
+    /**
+     * Metoda pro vytvoreni novych  radku v panelu Work Unit
+     * @param controlPanel instace ControlPanel
+     * @param lineList seznam moznych typu radku
+     * @param type Typ parametru radku
+     */
     public void setValueRelationBox(ControlPanel controlPanel, ObservableList<ControlPanelLineObject> lineList,
                                     ParamType type, ArrayList<Integer> relation, ArrayList<ArrayList<Integer>> workUnit) {
         int i = 0;
@@ -102,6 +146,14 @@ public class ControlPanelController {
         }
     }
 
+    /**
+     * Metoda pro vytvoreni novych  radku v panelu s komponenoutou ComboBox a naplneni techto radku daty z datoveho modelu
+     * @param controlPanel instace ControlPanel
+     * @param lineList seznam moznych typu radku
+     * @param type Typ parametru radku
+     * @param values hodnoty pro vlozeni
+     * @param indicatorList indexi pro nastaveni comboboxu s ukazateli rovnosti
+     */
     public void setValueComboBox(ControlPanel controlPanel, ObservableList<ControlPanelLineObject> lineList,
                                  ParamType type, ArrayList<Integer> values, List<Integer> indicatorList) {
         int i = 0;
@@ -116,6 +168,14 @@ public class ControlPanelController {
         }
     }
 
+    /**
+     * Metoda pro vytvoreni novych  radku v panelu s komponenoutou DatePicker a naplneni techto radku daty z datoveho modelu
+     * @param controlPanel instace ControlPanel
+     * @param lineList seznam moznych typu radku
+     * @param type Typ parametru radku
+     * @param values hodnoty pro vlozeni
+     * @param indicatorList indexi pro nastaveni comboboxu s ukazateli rovnosti
+     */
     public void setValueDatePicker(ControlPanel controlPanel, ObservableList<ControlPanelLineObject> lineList,
                                    ParamType type, ArrayList<LocalDate> values, List<Integer> indicatorList) {
         int i = 0;
@@ -131,6 +191,14 @@ public class ControlPanelController {
         }
     }
 
+    /**
+     * Metoda pro vytvoreni novych  radku v panelu s komponenoutou CheckComboBox a naplneni techto radku daty z datoveho modelu
+     * @param controlPanel instace ControlPanel
+     * @param lineList seznam moznych typu radku
+     * @param type Typ parametru radku
+     * @param values hodnoty pro vlozeni
+     * @param indicatorList indexi pro nastaveni comboboxu s ukazateli rovnosti
+     */
     public void setValueCheckComboBox(ControlPanel controlPanel, ObservableList<ControlPanelLineObject> lineList,
                                       ParamType type, ArrayList<ArrayList<Integer>> values, List<Integer> indicatorList) {
         int i = 0;
@@ -146,24 +214,51 @@ public class ControlPanelController {
     }
 
 
+    /**
+     * Metoda pro nastaveni boxu s ukazateli nerovnosti
+     * @param controlPane controlni panel pro vlozeni
+     * @param line radek pro vlozeni
+     */
     public void setParamBoxToControlPanel(GridPane controlPane, ControlPanelLine line) {
         controlPane.add(line.getExitButton(), 0, lineCount);
         controlPane.add(line.getParamBox(), 1, lineCount);
     }
 
 
+    /**
+     * Metoda pro pridani ComboBoxuDoControlniho panelu
+     * @param controlPane kontrolni panel do ktereho se ma kompnenta pridat
+     * @param item ComboBoxItem
+     * @param startColomIndex pocatecni sloupec pro vlozeni
+     * @param lineIndex radek pro vlozeni
+     */
     public void setComboBoxItemToControlPanel(GridPane controlPane, ComboBoxItem item, int startColomIndex, int lineIndex) {
         controlPane.add(item.getIndicatorCB(), startColomIndex, lineIndex);
         controlPane.add(item.getItemCB(), startColomIndex + 1, lineIndex);
         controlPane.add(item.getItemButton(), startColomIndex + 2, lineIndex);
     }
 
+    /**
+     * Metoda pro pridani ComboBoxuDoControlniho panelu
+     * @param controlPane kontrolni panel do ktereho se ma kompnenta pridat
+     * @param workUnitItem ComboBoxItem
+     * @param relationItem CheckComboBox pro vyber relace
+     * @param startColomIndex pocatecni sloupec pro vlozeni
+     * @param lineIndex radek pro vlozeni
+     */
     public void setRelationComboBoxItemToControlPanel(GridPane controlPane, ComboBoxItem relationItem, CheckComboBoxItem workUnitItem, int startColomIndex, int lineIndex) {
         controlPane.add(relationItem.getItemCB(), startColomIndex, lineIndex);
         controlPane.add(workUnitItem.getItemCB(), startColomIndex + 1, lineIndex);
         controlPane.add(relationItem.getItemButton(), startColomIndex + 2, lineIndex);
     }
 
+    /**
+     * Metoda pro pridani ComboBoxu do Controlniho panelu
+     * @param controlPane kontrolni panel do ktereho se ma kompnenta pridat
+     * @param item DateItem
+     * @param startColomIndex pocatecni sloupec pro vlozeni
+     * @param lineIndex radek pro vlozeni
+     */
     public void setDateItemToControlPanel(GridPane controlPane, DateItem item, int startColomIndex, int lineIndex) {
 
         controlPane.add(item.getIndicatorCB(), startColomIndex, lineIndex);
@@ -171,13 +266,26 @@ public class ControlPanelController {
         controlPane.add(item.getItemButton(), startColomIndex + 2, lineIndex);
     }
 
+    /**
+     * Metoda pro pridani Textove komponenty do Controlniho panelu s vlastnostmi cisla
+     * @param controlPane kontrolni panel do ktereho se ma kompnenta pridat
+     * @param item TextFieldItem
+     * @param startColomIndex pocatecni sloupec pro vlozeni
+     * @param lineIndex radek pro vlozeni
+     */
     public void setNumberItemToControlPanel(GridPane controlPane, TextFieldItem item, int startColomIndex, int lineIndex) {
 
         controlPane.add(item.getIndicatorCB(), startColomIndex, lineIndex);
         controlPane.add(item.getItemTF(), startColomIndex + 1, lineIndex);
         controlPane.add(item.getItemButton(), startColomIndex + 2, lineIndex);
     }
-
+    /**
+     * Metoda pro pridani Textove komponenty do Controlniho panelu s vlastnostmi textu
+     * @param controlPane kontrolni panel do ktereho se ma kompnenta pridat
+     * @param item TextFieldItem
+     * @param startColomIndex pocatecni sloupec pro vlozeni
+     * @param lineIndex radek pro vlozeni
+     */
     public void setTextItemToControlPanel(GridPane controlPane, TextFieldItem item, int startColomIndex, int lineIndex) {
 
         controlPane.add(item.getIndicatorCB(), startColomIndex, lineIndex);
@@ -185,6 +293,13 @@ public class ControlPanelController {
         controlPane.add(item.getItemButton(), startColomIndex + 2, lineIndex);
     }
 
+    /**
+     * Metoda pro pridani CheckComboBox komponenty do Controlniho panelu s vlastnostmi textu
+     * @param controlPane kontrolni panel do ktereho se ma kompnenta pridat
+     * @param item TextFieldItem
+     * @param startColomIndex pocatecni sloupec pro vlozeni
+     * @param lineIndex radek pro vlozeni
+     */
     public void setCheckComboBoxItemToControlPanel(GridPane controlPane, CheckComboBoxItem item, int startColomIndex, int lineIndex) {
 
         controlPane.add(item.getIndicatorCB(), startColomIndex, lineIndex);
@@ -192,18 +307,16 @@ public class ControlPanelController {
         controlPane.add(item.getItemButton(), startColomIndex + 2, lineIndex);
     }
 
+    /**
+     * Metoda pro nastaveni listeneru skupine RadioBoxu
+     * @return
+     */
     public ChangeListener<Toggle> radioButtonGroupListener() {
         ChangeListener<Toggle> listener = new ChangeListener<Toggle>() {
 
             @Override
             public void changed(ObservableValue<? extends Toggle> observable, Toggle oldValue, Toggle newValue) {
                 RadioButton chk = radioButtonLine.getRadioButtonItem().getYesRb();
-
-                if (chk.isSelected()) {
-                    //  isMain = true;
-                } else {
-                    //  isMain = false;
-                }
 
             }
         };
@@ -256,14 +369,13 @@ public class ControlPanelController {
         return superListener;
     }
 
-    public boolean isMain() {
-        return radioButtonLine.isCheckYesRadioButton();
-    }
-
-    public boolean isExist() {
-        return radioExistButtonLine.isCheckYesRadioButton();
-    }
-
+    /**
+     * Metoda pro vytvoreni noveho radku a prekopirovani dat z predchoziho radku
+     * @param line instance noveho radku
+     * @param controlPanel controlni panel pro vlozeni
+     * @param lineList seznam parametru obsazenych v panelu
+     * @param paramIndex index parametru pro kopirovani
+     */
     public void copyLine(ControlPanelLine line, ControlPanel controlPanel, ObservableList<ControlPanelLineObject> lineList, int paramIndex) {
         incrementLineCounter();
         ControlPanelLineController copyLine = createNewLine(controlPanel, lineList);
@@ -271,6 +383,12 @@ public class ControlPanelController {
         shiftStaticObjects(controlPanel);
     }
 
+    /**
+     * Metoda pro vytvoreni noveho radku bez volby existence
+     * @param controlPane controlni panel pro vlozeni
+     * @param lineList seznam parametru obsazenych v panelu
+     * @return ControlPanelLineController s konkretnim radkem
+     */
     public ControlPanelLineController createNewLineWithExist(ControlPanel controlPane, ObservableList<ControlPanelLineObject> lineList) {
         controlPane.getControlPane().getChildren().clear();
         setExistRadioButton(controlPane, 1);
@@ -278,6 +396,12 @@ public class ControlPanelController {
         return createNewLine(controlPane, lineList);
     }
 
+    /**
+     * Metoda pro vytvoreni noveho radku s volbou existence
+     * @param controlPane controlni panel pro vlozeni
+     * @param lineList seznam parametru obsazenych v panelu
+     * @return ControlPanelLineController s konkretnim radkem
+     */
     public ControlPanelLineController createNewLine(ControlPanel controlPane, ObservableList<ControlPanelLineObject> lineList) {
 
         ControlPanelLine line = new ControlPanelLine(lineList, controlPane, this, lineCount);
@@ -287,16 +411,12 @@ public class ControlPanelController {
         return line.getControlPanelLineController();
     }
 
-    public ControlPanelLineController createNewLine(ControlPanel controlPane, ObservableList<ControlPanelLineObject> lineList, String[] indicators) {
-
-        ControlPanelLine line = new ControlPanelLine(lineList, controlPane, this, indicators, lineCount);
-        setParamBoxToControlPanel(controlPane.getControlPane(), line);
-        controlPanelLines.add(line);
-        setEditButton(controlPane, 1);
-        return line.getControlPanelLineController();
-    }
-
-
+    /**
+     * Metoda pro zpracovani radku s textovim obsahem
+     * @param type Typ parametru
+     * @param indicators Seznam pro ulozeni ukazatelu rovnosti
+     * @return seznam s daty z textovych radku konkretniho typu parametru
+     */
     public ArrayList<String> processTextLines(ParamType type, ArrayList<Integer> indicators) {
         ArrayList<String> list = new ArrayList<>();
         for (ControlPanelLine line : controlPanelLines) {
@@ -310,6 +430,12 @@ public class ControlPanelController {
         return list;
     }
 
+    /**
+     * Metoda pro zpracovani radku s ciselnym obsahem
+     * @param type Typ parametru
+     * @param indicators Seznam pro ulozeni ukazatelu rovnosti
+     * @return seznam s daty z ciselnych radku konkretniho typu parametru
+     */
     public ArrayList<String> processNumberLines(ParamType type, ArrayList<Integer> indicators) {
         ArrayList<String> list = new ArrayList<>();
         for (ControlPanelLine line : controlPanelLines) {
@@ -322,7 +448,12 @@ public class ControlPanelController {
         }
         return list;
     }
-
+    /**
+     * Metoda pro zpracovani radku s vyberovym seznamem
+     * @param type Typ parametru
+     * @param indicators Seznam pro ulozeni ukazatelu rovnosti
+     * @return seznam s daty z radku s Comboboxem konkretniho typu parametru
+     */
     public ArrayList<Integer> processComboBoxLines(ParamType type, ArrayList<Integer> indicators) {
         ArrayList<Integer> list = new ArrayList<>();
         for (ControlPanelLine line : controlPanelLines) {
@@ -335,6 +466,13 @@ public class ControlPanelController {
         }
         return list;
     }
+
+    /**
+     * Metoda pro zpracovani radku relace WorkUnitu
+     * @param type Typ parametru
+     * @param workUnints seznam seznamu WorkUnitu v relaci
+     * @return seznam relaci
+     */
 
     public ArrayList<Integer> processRelationComboBoxLines(ParamType type, ArrayList<ArrayList<Integer>> workUnints) {
         ArrayList<Integer> listRelationList = new ArrayList<>();
@@ -352,6 +490,12 @@ public class ControlPanelController {
         return listRelationList;
     }
 
+    /**
+     * Metoda pro zpracovani radku s multi vyberovym seznamem
+     * @param type Typ parametru
+     * @param indicators Seznam pro ulozeni ukazatelu rovnosti
+     * @return seznam s daty z radku s CheckComboboxem konkretniho typu parametru
+     */
     public ArrayList<ArrayList<Integer>> processCheckComboBoxLines(ParamType type, ArrayList<Integer> indicators) {
         ArrayList<ArrayList<Integer>> list = new ArrayList<>();
         for (ControlPanelLine line : controlPanelLines) {
@@ -365,6 +509,12 @@ public class ControlPanelController {
         return list;
     }
 
+    /**
+     * Metoda pro zpracovani radku s DataPickerem
+     * @param type Typ parametru
+     * @param indicators Seznam pro ulozeni ukazatelu rovnosti
+     * @return seznam s daty z radku s DataPicker konkretniho typu parametru
+     */
     public ArrayList<LocalDate> processDateLines(ParamType type, ArrayList<Integer> indicators) {
         ArrayList<LocalDate> list = new ArrayList<>();
         for (ControlPanelLine line : controlPanelLines) {
@@ -379,10 +529,18 @@ public class ControlPanelController {
         return list;
     }
 
+    /**
+     * Metoda pro zvyseni poctu radku v panelu
+     */
     public void incrementLineCounter() {
         lineCount++;
     }
 
+    /**
+     * Metoda pro odstraneni radku z konkretniho panelu
+     * @param line instace predstavujici radek
+     * @param controlPanel ControlPanel pro odstaraneni
+     */
     public void removeFromControlPanel(ControlPanelLine line, GridPane controlPanel) {
         TextFieldItem text = line.getTextItem();
         TextFieldItem number = line.getNumberItem();
@@ -408,12 +566,24 @@ public class ControlPanelController {
         controlPanel.getChildren().remove(combo.getItemButton());
     }
 
+    /**
+     * Metoda pro vlozeni radku s RadioButtonem do panelu
+     * @param controlPane ControlPanel pro vlozeni
+     * @param rbYes RadionButton
+     * @param i sloupec v radku
+     * @param lineShift posun radku pod dynamicke radky
+     */
     public void setRadioButton(GridPane controlPane, RadioButton rbYes, int i, int lineShift) {
         controlPane.add(rbYes, i, lineCount + lineShift);
         isRadioButtonLine = true;
 
     }
 
+    /**
+     * Pretizena metoda pro vlozeni radku o existenci prvku do controlniho panelu
+     * @param controlPanel control panel
+     * @param lineShift posun radku pod dynamicke radky
+     */
     public void setExistRadioButton(ControlPanel controlPanel, int lineShift) {
         staticObjectCount++;
         radioExistButtonLine = new ControlPanelLine(FXCollections.observableArrayList(), controlPanel, this,
@@ -421,6 +591,11 @@ public class ControlPanelController {
         setExistRadioButton(controlPanel.getControlPane(), lineShift);
     }
 
+    /**
+     * Pretizena metoda pro vlozeni radku o existenci prvku do controlniho panelu
+     * @param gridPane panel pro vlozeni
+     * @param lineShift posun radku pod dynamicke radky
+     */
     public void setExistRadioButton(GridPane gridPane, int lineShift) {
         gridPane.getChildren().remove(radioExistButtonLine.getRadioButtonItem().getNameLb());
         gridPane.getChildren().remove(radioExistButtonLine.getRadioButtonItem().getYesRb());
@@ -428,6 +603,11 @@ public class ControlPanelController {
         gridPane.add(radioExistButtonLine.getRadioButtonItem().getYesRb(), 2, lineCount + lineShift);
     }
 
+    /**
+     * Pretizena metoda pro RadioButtonu do controlniho panelu
+     * @param controlPanel control panel
+     * @param lineShift posun radku pod dynamicke radky
+     */
     public void setRadioButton(ControlPanel controlPanel, int lineShift, String name, boolean secondButton) {
         isSecondRadioButtonLine = secondButton;
         staticObjectCount++;
@@ -438,6 +618,11 @@ public class ControlPanelController {
         setRadioButton(controlPanel, item, lineShift);
     }
 
+    /**
+     * Pretizena metoda pro RadioButtonu do controlniho panelu
+     * @param controlPanel control panel
+     * @param lineShift posun radku pod dynamicke radky
+     */
     public void setRadioButton(ControlPanel controlPanel, RadioButtonItem item, int lineShift) {
 
         GridPane pane = controlPanel.getControlPane();
@@ -452,6 +637,11 @@ public class ControlPanelController {
         }
     }
 
+    /**
+     * Metoda pro vlozeni editacniho tlacitka
+     * @param controlPanel controlni panel pro nastaveni
+     * @param lineShift posun
+     */
     public void setEditButton(ControlPanel controlPanel, int lineShift) {
         GridPane controlPane = controlPanel.getControlPane();
         Button button = controlPanel.getButton();
@@ -459,13 +649,12 @@ public class ControlPanelController {
         controlPane.add(button, 3, lineCount + lineShift);
     }
 
-    public void setStaticButton(ControlPanel controlPanel, int lineShift, Button button) {
-        staticButton = button;
-        isStaticButton = true;
-        setStaticButton(controlPanel, lineShift);
-        staticObjectCount++;
-    }
 
+    /**
+     * Metoda pro vlozeni statickeho tlacitka
+     * @param controlPanel controlni panel pro nastaveni
+     * @param lineShift posun
+     */
     public void setStaticButton(ControlPanel controlPanel, int lineShift) {
         GridPane controlPane = controlPanel.getControlPane();
 
@@ -473,6 +662,13 @@ public class ControlPanelController {
         controlPane.add(staticButton, 2, lineCount + lineShift);
     }
 
+    /**
+     * Metoda pro vlozeni statickeho Class boxu
+     * @param controlPanel controlni panel pro nastaveni
+     * @param lineShift posun
+     * @param classLine radek s Class
+     * @param superLine radek s SuperClass
+     */
     public void setStaticClassBoxes(ControlPanel controlPanel, int lineShift, ControlPanelLine classLine, ControlPanelLine superLine) {
         this.classLine = classLine;
         this.superClassLine = superLine;
@@ -486,6 +682,12 @@ public class ControlPanelController {
         staticObjectCount++;
     }
 
+    /**
+     * Metoda pro vlozeni statickeho comboboxu pro Class a SuperClass
+     * @param controlPanel controlni panel pro nastaveni
+     * @param lineShift posun
+     * @param startColumn
+     */
     public void setStaticComboBox(ControlPanel controlPanel, int lineShift, ComboBoxItem item, int startColumn) {
 
         GridPane controlPane = controlPanel.getControlPane();
@@ -495,6 +697,12 @@ public class ControlPanelController {
         controlPane.add(item.getItemCB(), startColumn + 1, lineCount + lineShift);
     }
 
+    /**
+     * Metoda pro nastaveni radku s count line do panelu
+     * @param controlPanel controlni panel pro nastaveni
+     * @param lineShift posun
+     * @param countLine radek pro vlozeni
+     */
     public void setCountLine(ControlPanel controlPanel, int lineShift, ControlPanelLine countLine) {
         this.countLine = countLine;
         countLine.getTextItem().setTextToTextField("1");
@@ -502,6 +710,11 @@ public class ControlPanelController {
         staticObjectCount++;
     }
 
+    /**
+     * Metoda pro nastaveni CountLine radku v panelu
+     * @param controlPanel controlni panel pro nastaveni radku
+     * @param lineShift posun radku
+     */
     public void setCountLine(ControlPanel controlPanel, int lineShift) {
         GridPane controlPane = controlPanel.getControlPane();
 
@@ -515,6 +728,10 @@ public class ControlPanelController {
         isCountLine = true;
     }
 
+    /**
+     * Metoda pro posun statickych objektu obsazenych v panelu
+     * @param controlPanel conrolni panel pro posunuti prvku
+     */
     public void shiftStaticObjects(ControlPanel controlPanel) {
         int shift = 2;
 
@@ -548,6 +765,10 @@ public class ControlPanelController {
         setEditButton(controlPanel, shift + 1);
     }
 
+    /**
+     * Metoda pro nastaveni hodnty do radku s RadioButton
+     * @param isRelease hodnota pro nastaveni
+     */
     public void setValueRadioButton(boolean isRelease) {
         if (isRelease) {
             radioButtonLine.getRadioButtonItem().getYesRb().setSelected(true);
@@ -557,6 +778,10 @@ public class ControlPanelController {
 
     }
 
+    /**
+     * metoda pro nastaveni hodnoty do radku s existenci radku
+     * @param exist existence radku
+     */
     public void setValueExistRadioButton(boolean exist) {
         if (exist) {
             radioExistButtonLine.getRadioButtonItem().getYesRb().setSelected(true);
@@ -565,10 +790,19 @@ public class ControlPanelController {
         }
     }
 
+    /**
+     * Metoda pro ziskani daty z radku s instace Count
+     * @return pocet instacni
+     */
     public String getInstanceCount() {
         return countLine.getTextItem().getTextFromTextField();
     }
 
+    /**
+     * Metod pro nastaveni hodnot do radku s Class a SuperClass
+     * @param classIndex index pro class
+     * @param superClassIndex index pro superClass
+     */
     public void setValueToClassBox(List classIndex, List superClassIndex) {
         if (classIndex != null) {
             ComboBoxItem item1 = classLine.getComboBoxItem();
@@ -583,20 +817,20 @@ public class ControlPanelController {
 
     }
 
-    public Integer getSuperClassIndex() {
-        return superIndex;
-    }
-
-    public Integer getClassIndex() {
-        return classIndex;
-    }
-
+    /**
+     * Metoda pro nastaveni poctu instaci do radku s instancem i
+     * @param value hodnota
+     * @param indicator ukazatel hodnoty
+     */
     public void setCountToCountLine(Integer value, int indicator) {
         countLine.setCount(value);
         countLine.getTextItem().setIndicator(indicator);
     }
 
-
+    /**
+     * Metoda pro odstraneni prvku z panelu
+     * @param controlPane
+     */
     public void resetPanel(GridPane controlPane) {
         controlPane.getChildren().clear();
         controlPanelLines.clear();
@@ -604,6 +838,9 @@ public class ControlPanelController {
     }
 
 
+    /**
+     * Metoda pro vymazani panelu
+     */
     public void resetPanel() {
         this.lineCount = 1;
         this.isRadioButtonLine = false;
@@ -614,6 +851,7 @@ public class ControlPanelController {
         this.staticObjectCount = 1;
     }
 
+    /** Getters and Settrs **/
     public int getLineCount() {
         return lineCount;
     }
@@ -625,6 +863,23 @@ public class ControlPanelController {
     public int getInstanceCountIndicator() {
 
         return countLine.getTextItem().getIndicatorIndex();
+    }
+
+    public boolean isMain() {
+        return radioButtonLine.isCheckYesRadioButton();
+    }
+
+    public boolean isExist() {
+        return radioExistButtonLine.isCheckYesRadioButton();
+    }
+
+
+    public Integer getSuperClassIndex() {
+        return superIndex;
+    }
+
+    public Integer getClassIndex() {
+        return classIndex;
     }
 }
 

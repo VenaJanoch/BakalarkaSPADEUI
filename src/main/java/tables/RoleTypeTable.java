@@ -2,6 +2,11 @@ package tables;
 
 import javafx.beans.property.StringProperty;
 
+/**
+ * Trida predstavujici kontejner pro tabulku elementu RoleType
+ *
+ * @author Václav Janoch
+ */
 public class RoleTypeTable extends ClassTable {
 
     /**

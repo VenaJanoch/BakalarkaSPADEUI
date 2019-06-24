@@ -44,8 +44,14 @@ public class DragAndDropPanel extends BorderPane {
     private ComboBox<String> formBox;
 
     /**
-     * Konstruktor třídy
+     * Konstruktor třídy,
      * Zinicializuje globální proměnné třídy
+     * Nastavi prvky do panelu
+     * @param formController instace tridy FormController
+     * @param windowController instace tridy WindowController
+     * @param canvasController instace tridy CanvasController
+     * @param drawerPanelController instace tridy DrawePanelController
+     * @param selectItemController intanece tridy selctItemController
      */
 
     public DragAndDropPanel(FormController formController, WindowController windowController, CanvasController canvasController,
@@ -103,16 +109,7 @@ public class DragAndDropPanel extends BorderPane {
         projectConfirmButton.setOnAction(event -> windowController.showConfirmWindow());
 
 
-        //createButtons();
-        //createAction();
-
-//		buttonBox.getChildren().addAll(addButtons);
-
-//		buttonBox.setPadding(new Insets(0,0,0,5));
-//		this.setTop(buttonBox);
-
         HBox projectPanel = new HBox(10);
-        // projectPanel.setBackground(new Background(new BackgroundFill(Color.RED, CornerRadii.EMPTY, Insets.EMPTY )));
         SplitPane splitPane = new SplitPane();
         splitPane.setMaxHeight(projectButton.getMaxHeight());
         projectPanel.getChildren().addAll(projectButton, splitPane);

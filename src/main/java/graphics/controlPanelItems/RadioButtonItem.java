@@ -6,14 +6,29 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.*;
 import services.ControlPanelLineObject;
 
+/**
+ * Třída rozsirujici funkcnost komponenty RadioButton
+ *
+ * @author Václav Janoch
+ */
 public class RadioButtonItem extends ItemBox {
 
+    /**
+     * Globalni promenne tridy
+     */
     private Label nameLb;
     private RadioButton yesRb;
     private RadioButton noRb;
     private ToggleGroup group;
 
 
+    /**
+     * Konstruktor tridy, zinicializuje globalni promenne tridy
+     * @param controlPanelLine instace tridy ControlPanelLine
+     * @param controlPanel instace tridy ControlPanel
+     * @param controlPanelController instace tridy ControlPanelController
+     * @param lineList seznam moznych typu radku
+     */
     public RadioButtonItem(ControlPanelLine controlPanelLine, ControlPanel controlPanel, ControlPanelController controlPanelController,
                            ObservableList<ControlPanelLineObject> lineList) {
         super(null, controlPanelController);
@@ -28,6 +43,9 @@ public class RadioButtonItem extends ItemBox {
         nameLb = new Label("Exist: ");
     }
 
+    /**
+     * Metoda pro nastaveni skupiny radiobuttonu
+     */
     public void setGroup() {
         group.selectedToggleProperty().addListener(controlPanelController.radioButtonGroupListener());
 

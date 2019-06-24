@@ -19,7 +19,7 @@ public class DragSegmentButton extends Button {
     /**
      * Globální proměnné třídy
      **/
-    //private SegmentType type;
+
     private double x = 0;
     private double y = 0;
 

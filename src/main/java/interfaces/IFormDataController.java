@@ -22,7 +22,6 @@ public interface IFormDataController {
 
     int saveDataFromVCSTagForm(TableView<VCSTagTable> tableView, boolean isExist);
 
-
     int saveDataFromWorkUnit(TableView<WorkUnitTable> tableView, boolean isExist);
 
     boolean saveDataFromConfiguration(String actName, LocalDate createDate, boolean isRelease, int authorIndex, ArrayList<Integer> branchIndex,
@@ -57,14 +56,6 @@ public interface IFormDataController {
 
     int saveDataFromTypeForm(TableView<ClassTable> tableView, boolean isExist);
 
-    MilestoneTable prepareMilestoneToTable(String nameST, String description, int id, ArrayList criterionArray);
-
-    PersonTable prepareRoleToTable(String nameST, String description, int id, int roleTypeIndex);
-
-    CPRTable prepareCPRToTable(String nameST, int roleIndex, int id);
-
-    BranchTable prepareBranchToTable(String nameST, boolean main, int id);
-
     List[] getCriterionData(int id);
 
     List[] getMilestoneStringData(int id);
@@ -75,7 +66,7 @@ public interface IFormDataController {
 
     List[] getClassStringData(SegmentType segmentType, int id);
 
-    ObservableList<BasicTable> getRoleList();
+    ObservableList<BasicTable> getPersonList();
 
     List[] getCPRStringData(int id);
 

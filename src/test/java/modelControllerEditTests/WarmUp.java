@@ -42,7 +42,7 @@ public class WarmUp {
         SelectItemController selectItemController = new SelectItemController(drawerPanelController);
         ApplicationController ap = new ApplicationController(dataModel, idCreator, lists, drawerPanelController, selectItemController);
         DeleteControl deleteControl = new DeleteControl(new SegmentLists(), mapperTableToObject, idCreator);
-        DataPreparer dataPreparer = new DataPreparer(idCreator);
+        DataPreparer dataPreparer = new DataPreparer();
         formController = new FormController(idCreator, dataModel, ap, lists, dataPreparer, drawerPanelController, selectItemController);
         editFormController = new EditFormController(dataModel, idCreator, mapperTableToObject, lists, dataPreparer, formController);
         selectItemController.setFormController(formController);

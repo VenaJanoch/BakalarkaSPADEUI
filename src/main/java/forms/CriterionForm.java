@@ -35,9 +35,14 @@ public class CriterionForm extends TableBasicForm implements ISegmentTableForm {
     private CriterionControlPanel editCriterionControlPanel;
 
     /**
-     * Konstruktor třídy Zinicializuje globální proměnné tříd
+     * Konstruktor Třídy Zinicializuje globální proměnné tříd Nastaví reakci
+     * na klik do tabulky, vytvori naplni panel a nastavi akce tlacitkum
+     * @param formController instance tridy FormController
+     * @param formDataController instance tridy FormDataController
+     * @param editFormController instance tridy EditFormController
+     * @param deleteFormController instace tridy DeleteFormController
+     * @param type instace SegmentType pro urceni typu formulare
      */
-
     public CriterionForm(FormController formController, IFormDataController formDataController, IEditFormController editFormController, IDeleteFormController deleteFormController,
                          SegmentType type) {
         super(formController, formDataController, editFormController, deleteFormController, type);
@@ -46,7 +51,12 @@ public class CriterionForm extends TableBasicForm implements ISegmentTableForm {
         createForm();
         setActionSubmitButton();
     }
-
+    /**
+     * Metoda nastavi event handler pro tabulku
+     * Pokud je na radek dvakrat kliknuto mysi
+     * zavola se metoda pro zobrazeni panelu a nastaveni
+     * prislusneho formulare do panelu
+     */
     @Override
     protected void setEventHandler() {
         OnMousePressedEventHandler = new EventHandler<MouseEvent>() {
@@ -60,14 +70,18 @@ public class CriterionForm extends TableBasicForm implements ISegmentTableForm {
         };
     }
 
-
+    /**
+     * Metoda pro přídání prvku do interního gridPanelu
+     */
     @Override
     public void createForm() {
 
         this.setCenter(getTable());
 
     }
-
+    /**
+     * Metoda pro přídání TableView do formuláře
+     */
     @Override
     public Node getTable() {
         tableTV = new TableView<CriterionTable>();
@@ -98,7 +112,9 @@ public class CriterionForm extends TableBasicForm implements ISegmentTableForm {
 
         return tableTV;
     }
-
+    /**
+     * Metoda pro nastavení reakce na klávesu delete
+     */
     @Override
     public void deleteSelected(KeyEvent event) {
 
@@ -106,12 +122,17 @@ public class CriterionForm extends TableBasicForm implements ISegmentTableForm {
             deleteItem(tableTV);
         }
     }
-
+    /**
+     * Metoda pro přídání prvku do gridPanelu
+     */
     @Override
     public GridPane createControlPane() {
         return null;
     }
-
+    /**
+     * Metoda pro vyvolani postraniho panelu
+     * Jsou zavolany potrebne kontrolery
+     */
     private void showEditPanel() {
         CriterionTable criterionTable = tableTV.getSelectionModel().getSelectedItems().get(0);
         if (criterionTable != null) {
@@ -120,7 +141,9 @@ public class CriterionForm extends TableBasicForm implements ISegmentTableForm {
         }
     }
 
-
+    /**
+     * Metoda pro určení reakce stisknutí tlačítka pro potvrzení formuláře
+     */
     @Override
     public void setActionSubmitButton() {
         addButton.setOnAction(event -> addItem());
@@ -128,7 +151,9 @@ public class CriterionForm extends TableBasicForm implements ISegmentTableForm {
         editButton.setOnAction(event -> showEditPanel());
         copyButton.setOnAction(event -> copyItem(tableTV));
     }
-
+    /**
+     * Metoda pro přídání prvku dané tabulky
+     */
     @Override
     public void addItem() {
 

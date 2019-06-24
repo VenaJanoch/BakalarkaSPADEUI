@@ -1,7 +1,11 @@
 package tables;
 
 import javafx.beans.property.StringProperty;
-
+/**
+ * Trida predstavujici kontejner pro tabulku elementu Milestone
+ *
+ * @author Václav Janoch
+ */
 public class MilestoneTable extends BasicTable {
 
     /**
@@ -12,13 +16,12 @@ public class MilestoneTable extends BasicTable {
 
     /**
      * Konstruktor třídy Zinicializuje globální proměnnné třídy
-     *
-     * @param name jméno milestone
+     * @param name alias prvku
+     * @param exist existence prvku
+     * @param id identifikator prvku
      */
     public MilestoneTable(String name, boolean exist, int id) {
         super(name, exist, id);
-//		this.criterion = new SimpleStringProperty(criterium);
-//		this.description = new SimpleStringProperty(description);
     }
 
     /**

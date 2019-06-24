@@ -44,7 +44,7 @@ public class ApplicationController {
     public ApplicationController(DataModel dataModel, IdentificatorCreater identificatorCreater, SegmentLists segmentLists,
                                  DrawerPanelController drawerPanelController, SelectItemController selectItemController) {
         this.mapperTableToObject = new MapperTableToObject(segmentLists);
-        this.dataPreparer = new DataPreparer(identificatorCreater);
+        this.dataPreparer = new DataPreparer();
         this.deleteControl = new DeleteControl(segmentLists, mapperTableToObject, identificatorCreater);
         this.formController = new FormController(identificatorCreater, dataModel, this, segmentLists, dataPreparer, drawerPanelController,
                 selectItemController);
@@ -55,8 +55,8 @@ public class ApplicationController {
         this.manipulationController = new ManipulationController(deleteFormController, selectionController);
         this.linkControl = new LinkControl(formController, identificatorCreater, segmentLists, deleteFormController, manipulationController);
         this.canvasItemController = new CanvasItemController(linkControl, formController, manipulationController, selectionController);
-        this.formFillController = new FormFillController(formController, formDataController, dataModel, canvasItemController, identificatorCreater, dataPreparer, segmentLists,
-                linkControl, formController.getCanvasItemList());
+        this.formFillController = new FormFillController(formController, formDataController, dataModel, canvasItemController, identificatorCreater, segmentLists,
+                linkControl);
         formController.initBasicForms(formDataController, editFormController, deleteFormController);
         formController.setFormFillController(formFillController);
         this.manipulationController.setFormFillController(formFillController);

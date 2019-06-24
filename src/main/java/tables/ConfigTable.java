@@ -6,6 +6,12 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
+
+/**
+ * Trida predstavujici kontejner pro tabulku segmentu Configuration
+ *
+ * @author Václav Janoch
+ */
 public class ConfigTable extends BasicTable {
 
     /**

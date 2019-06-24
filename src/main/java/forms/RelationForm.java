@@ -13,7 +13,7 @@ import java.util.ArrayList;
 
 /**
  * Třída představující tabulkový formulář pro výčtový typ Relation, odděděná od třídy
- * TableClassBasicForm a implementující ISegmentTableForm
+ * TableClassBasicForm
  *
  * @author Václav Janoch
  */
@@ -22,9 +22,13 @@ public class RelationForm extends TableClassBasicForm {
     private ArrayList<String> superClassArray = new ArrayList<>();
 
     /**
-     * Konstruktor třídy
-     * Zinicializuje globální proměnné třídy
-     * Nastaví reakci na potvrzovací tlačítko
+     * Konstruktor Třídy Zinicializuje globální proměnné tříd Nastaví reakci
+     * na klik do tabulky, naplni panel a nastavi akce tlacitkum
+     * @param formController instance tridy FormController
+     * @param formDataController instance tridy FormDataController
+     * @param editFormController instance tridy EditFormController
+     * @param deleteFormController instace tridy DeleteFormController
+     * @param type instace SegmentType pro urceni typu formulare
      */
     public RelationForm(FormController formController, IFormDataController formDataController, IEditFormController editFormController, IDeleteFormController deleteFormController, SegmentType type) {
         super(formController, formDataController, editFormController, deleteFormController, type);

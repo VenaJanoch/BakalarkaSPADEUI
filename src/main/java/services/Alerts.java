@@ -15,6 +15,11 @@ import javafx.scene.control.ButtonBar.ButtonData;
 import model.FileManipulator;
 import tables.*;
 
+/**
+ * Třída obsahujici metody pro zobrazeni informacnich oken
+ *
+ * @author Václav Janoch
+ */
 public class Alerts {
 
     FileManipulator fileManipulator;
@@ -86,7 +91,13 @@ public class Alerts {
         alert.showAndWait();
     }
 
-
+    /**
+     *
+     * Metoda pro zobrazeni okna s inforamci postupnem mazani prvku
+     * @param selection seznam prvku pro smazani
+     * @param mapper mapper pro ziskani navaznosti
+     * @return info o potvrzeni smazani
+     */
     public static boolean showDeleteItemCascadeAlert(ArrayList<BasicTable> selection, Map<Integer, ArrayList<TableToObjectInstanc>> mapper) {
 
         ObservableList<String> deleteList = createDeleteObservableList(selection, mapper);
@@ -105,6 +116,12 @@ public class Alerts {
 
     }
 
+    /**
+     * Metoda pro vytvoreni seznamu cascadoveho smazani
+     * @param selection seznam prvku pro smazani
+     * @param mapper mapper pro ziskani navaznosti
+     * @return kascadovy seznam
+     */
     private static ObservableList<String> createDeleteObservableList(ArrayList<BasicTable> selection, Map<Integer, ArrayList<TableToObjectInstanc>> mapper) {
         ObservableList<String> deleteList = FXCollections.observableArrayList();
         for (BasicTable table : selection) {
@@ -126,6 +143,11 @@ public class Alerts {
         return deleteList;
     }
 
+    /**
+     * Metoda pro zobrazeni okna s inforamci postupnem mazani prvku
+     * @param deleteList seznam pro smazani
+     * @return info o potvrzeni smazani
+     */
     public static boolean showDeleteItemCascadeAlert(ObservableList<String> deleteList) {
 
         Alert alert = new Alert(AlertType.CONFIRMATION);
@@ -133,6 +155,11 @@ public class Alerts {
         return deleteItemDialog(alert);
     }
 
+    /**
+     * Metoda pro zobrazeni okna s inforamci postupnem mazani prvku
+     * @param deleteList seznam pro smazani
+     * @return info o potvrzeni smazani
+     */
     public static boolean showDeleteItemCascadeAlert(ArrayList<BasicTable> deleteList) {
         ObservableList list = FXCollections.observableList(deleteList);
         Alert alert = new Alert(AlertType.CONFIRMATION);
@@ -140,6 +167,11 @@ public class Alerts {
         return deleteItemDialog(alert);
     }
 
+    /**
+     * Metoda pro zobrazeni okna s inforamci o mazanych prvcich
+     * @param alert instance Alert
+     * @return info o potvrzeni smazani
+     */
     private static boolean deleteItemDialog(Alert alert) {
         alert.setTitle("Deleting selection");
         alert.setHeaderText("Do you want to delete selected elements?");
@@ -205,6 +237,11 @@ public class Alerts {
 
     }
 
+    /**
+     * Metoda pro zobrazeni okna s inforamci o double hodnote  mimo interval
+     * @param fieldName jmeno pole
+     */
+
     public static void showWrongNumberFormat(String fieldName) {
         Alert alert = new Alert(AlertType.ERROR);
         alert.setTitle("Insert error");
@@ -213,6 +250,11 @@ public class Alerts {
         alert.showAndWait();
     }
 
+    /**
+     * Metoda pro zobrazeni okna s inforamci o int hodnote  mimo interval
+     * @param minValue minimalni hodnota
+     * @param maxValue maximalni hodnota
+     */
 
     public static void showNumberOffInterval(int minValue, int maxValue) {
         Alert alert = new Alert(AlertType.ERROR);
@@ -222,14 +264,12 @@ public class Alerts {
         alert.showAndWait();
     }
 
-    public static void showWrongDoubleFormat() {
-        Alert alert = new Alert(AlertType.ERROR);
-        alert.setTitle("Insert error");
-        alert.setHeaderText("Wrong real number input!");
-        alert.setContentText("Please provide a number in 'x.xxx' or 'xxx' format");
-        alert.showAndWait();
-    }
 
+    /**
+     * Metoda pro zobrazeni okna s inforamci o double hodnote  mimo interval
+     * @param minValue minimalni hodnota
+     * @param maxValue maximalni hodnota
+     */
     public static void showDoubleOffInterval(double minValue, double maxValue) {
         Alert alert = new Alert(AlertType.ERROR);
         alert.setTitle("Insert error");
@@ -238,6 +278,10 @@ public class Alerts {
         alert.showAndWait();
     }
 
+    /**
+     * Metoda pro zobrazeni okna s inforamci o neuspesnem pripojeni k databazi
+     * V pripade nedostupnosti databaze
+     */
     public static void SQLConnectionError() {
         Alert alert = new Alert(AlertType.ERROR);
         alert.setTitle("Connection Error");
@@ -248,6 +292,10 @@ public class Alerts {
 
     }
 
+    /**
+     * Metoda pro zobrazeni okna s inforamci o neuspesnem pripojeni k databazi
+     * V pripade spatne zadaneho jmena nebo hesla
+     */
     public static void SQLLogError() {
         Alert alert = new Alert(AlertType.ERROR);
         alert.setTitle("Log Error");

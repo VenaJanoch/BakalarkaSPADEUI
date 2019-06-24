@@ -24,6 +24,11 @@ import tables.VerifyTable;
 import java.util.ArrayList;
 import java.util.Optional;
 
+/**
+ * Třída predstavujici okno s vysledky validace
+ *
+ * @author Václav Janoch
+ */
 public class VerifyWindow extends Stage {
     /**
      * Globální proměnné třídy
@@ -36,6 +41,11 @@ public class VerifyWindow extends Stage {
     private TableColumn<VerifyTable, String> sql = new TableColumn<VerifyTable, String>("SQL Command");
     private EventHandler<MouseEvent> OnMousePressedEventHandler;
 
+    /**
+     * Konstruktor tridy,
+     * Zinicializuje globalni promenne tridy
+     * @param verifyController instace tridy VerifyController
+     */
     public VerifyWindow(VerifyController verifyController) {
         this.verifyController = verifyController;
         setEventHandler();
@@ -77,6 +87,10 @@ public class VerifyWindow extends Stage {
         return mainPanel;
     }
 
+    /**
+     * Metoda pro nastaveni handleru jednotlivym radku tabulky.
+     * Po kliknuti je vyvolano informacni okno s SQL dotazem
+     */
     protected void setEventHandler() {
         OnMousePressedEventHandler = new EventHandler<MouseEvent>() {
 
@@ -104,6 +118,10 @@ public class VerifyWindow extends Stage {
     }
 
 
+    /**
+     * Metoda pro vytvoreni tabulky pro vysledky
+     * @return instanci tridy TableView pro vysledky
+     */
     public TableView<VerifyTable> getTable() {
         tableTV = new TableView<VerifyTable>();
 
@@ -185,11 +203,18 @@ public class VerifyWindow extends Stage {
     }
 
 
+    /**
+     * Metoda pro nastaveni dat do tabulky
+     * @param verifyTables instace tridy VerifyTables
+     */
     public void setItemsToTable(ArrayList<VerifyTable> verifyTables) {
         tableTV.getItems().clear();
         tableTV.getItems().addAll(verifyTables);
     }
 
+    /**
+     * Metoda pro prekresleni textu v radku podle velikosti
+     */
     public void repaintText() {
         for (Text text : textList) {
             text.setWrappingWidth(sql.getWidth() - Constans.offset);

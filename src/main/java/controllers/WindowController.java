@@ -19,25 +19,39 @@ import services.SegmentLists;
 
 import java.io.File;
 
+/**
+ * Trida predstavujici controller pro hlavniho okna aplikace
+ *
+ * @author Václav Janoch
+ */
 public class WindowController {
 
 
+    /**Graficke prvky **/
     private Stage primaryStage;
+    private JFXDrawer leftDrawer;
+    private JFXDrawer rightDrawer;
+    private JFXDrawersStack drawersStack;
+    private LogInWindow logInWindow;
+    private Alerts alerts;
+    private MainWindow mainWindow;
+
     private boolean isClose;
+    private boolean logToDB;
+
+    /**Kontrolery**/
     private FileManipulator fileManipulator;
     private DataModel dataModel;
     private FormFillController formFillController;
     private DrawerPanelController drawerPanelController;
     private SelectItemController selectItemController;
     private ApplicationController applicationController;
-    private LogInWindow logInWindow;
-    private Alerts alerts;
-    private MainWindow mainWindow;
-    private JFXDrawer leftDrawer;
-    private JFXDrawer rightDrawer;
-    private JFXDrawersStack drawersStack;
-    private boolean logToDB;
 
+    /**
+     * Kontroler tridy
+     * Zinicializuje globalni promenne tridy
+     * @param primaryStage
+     */
     public WindowController(Stage primaryStage) {
         this.primaryStage = primaryStage;
         initApplication();
@@ -47,10 +61,16 @@ public class WindowController {
         setKeyActions();
     }
 
+    /**
+     * Metoda pro nastaveni klavesovych zkratek do okna
+     */
     private void setKeyActions(){
         primaryStage.getScene().setOnKeyPressed(event -> mainWindow.getCanvasController().keyPressAction(event));
     }
 
+    /**
+     * Metoda pro inicializaci aplikace
+     */
     private void initApplication() {
         logToDB = false;
         SegmentLists segmentLists = new SegmentLists();
@@ -74,6 +94,11 @@ public class WindowController {
 
     }
 
+    /**
+     * Metoda pro nastaveni sceny do PrimaryStage
+     * @param scene scena pro vlozeni
+     * @param title titulek okna
+     */
     public void setSceneToPrimaryStage(Scene scene, String title) {
         this.primaryStage.setTitle(title);
         this.primaryStage.setScene(scene);
@@ -82,14 +107,23 @@ public class WindowController {
 
     }
 
+    /**
+     * Metoda pro zavolani FileManipulator pro ulozeni modelu
+     */
     public void saveItemAction() {
         fileManipulator.saveFile();
     }
 
+    /**
+     * Metoda pro zavolani FileManipulator pro ulozeni jako modelu
+     */
     public void saveItemAsAction() {
         fileManipulator.saveAsFile();
     }
 
+    /**
+     * Metoda pro reset aplikace
+     */
     public void createNewProcessAction() {
 
         initApplication();
@@ -99,6 +133,9 @@ public class WindowController {
         primaryStage.setMaximized(true);
     }
 
+    /**
+     * Metoda pro reakci na volbu nacteni modelu z XML
+     */
     public void openProccesXMLAction() {
 
         File xmlFile = fileManipulator.loadFile();
@@ -109,10 +146,16 @@ public class WindowController {
         }
     }
 
+    /**
+     * Reakce na validaci
+     */
     public void validationAction() {
         dataModel.validate();
     }
 
+    /**
+     * Metoda pro zavreni okna aplikace
+     */
     public void closeProjectWindow() {
 
         primaryStage.setOnCloseRequest(event -> {
@@ -123,6 +166,9 @@ public class WindowController {
         });
     }
 
+    /**
+     * Metoda pro ukonceni celeho projektu
+     */
     public void closeProject() {
         int result = alerts.showCloseApp();
         if (result != -1) {
@@ -130,6 +176,9 @@ public class WindowController {
         }
     }
 
+    /**
+     * Metoda pro zavolani okna pro prihlaseni pripadne okna s projekty
+     */
     public void showConfirmWindow() {
         if (!logToDB) {
             logToDB = logInWindow.showLogDialog();

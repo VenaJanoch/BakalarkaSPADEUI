@@ -22,7 +22,7 @@ import tables.PhaseTable;
 
 /**
  * Třída představující formulář pro segment Phase, odděděná od třídy
- * DeteDescBasicForm a implementující ISegmentForm
+ * TableBasicForm a implementující ISegmentTableForm
  *
  * @author Václav Janoch
  */
@@ -34,10 +34,13 @@ public class PhaseForm extends TableBasicForm implements ISegmentTableForm {
 
 
     /**
-     * Konstruktor třídy Zinicializuje globální proměnné tříd Nastaví reakci na
-     * uzavření okna formuláře
-     *
-     * @param indexForm
+     * Konstruktor Třídy Zinicializuje globální proměnné tříd Nastaví reakci
+     * na klik do tabulky, vytvori naplni panel a nastavi akce tlacitkum
+     * @param formController instance tridy FormController
+     * @param formDataController instance tridy FormDataController
+     * @param editFormController instance tridy EditFormController
+     * @param deleteFormController instace tridy DeleteFormController
+     * @param type instace SegmentType pro urceni typu formulare
      */
     public PhaseForm(FormController formController, IFormDataController formDataController, IEditFormController editFormController, IDeleteFormController deleteFormController, CanvasController canvasController, DragAndDropItemPanel dgItemPanel, SegmentType type, int indexForm) {
 
@@ -48,7 +51,12 @@ public class PhaseForm extends TableBasicForm implements ISegmentTableForm {
         createForm();
         setActionSubmitButton();
     }
-
+    /**
+     * Metoda nastavi event handler pro tabulku
+     * Pokud je na radek dvakrat kliknuto mysi
+     * zavola se metoda pro zobrazeni panelu a nastaveni
+     * prislusneho formulare do panelu
+     */
     @Override
     protected void setEventHandler() {
         OnMousePressedEventHandler = new EventHandler<MouseEvent>() {
@@ -62,14 +70,18 @@ public class PhaseForm extends TableBasicForm implements ISegmentTableForm {
         };
     }
 
-
+    /**
+     * Metoda pro přídání prvku do interního gridPanelu
+     */
     @Override
     public void createForm() {
 
         this.setCenter(getTable());
 
     }
-
+    /**
+     * Metoda pro přídání TableView do formuláře
+     */
     @Override
     public Node getTable() {
         tableTV = new TableView<PhaseTable>();
@@ -99,7 +111,9 @@ public class PhaseForm extends TableBasicForm implements ISegmentTableForm {
 
         return tableTV;
     }
-
+    /**
+     * Metoda pro nastavení reakce na klávesu delete
+     */
     @Override
     public void deleteSelected(KeyEvent event) {
 
@@ -107,12 +121,17 @@ public class PhaseForm extends TableBasicForm implements ISegmentTableForm {
             deleteItem(tableTV);
         }
     }
-
+    /**
+     * Metoda pro přídání prvku do gridPanelu
+     */
     @Override
     public GridPane createControlPane() {
         return null;
     }
-
+    /**
+     * Metoda pro vyvolani postraniho panelu
+     * Jsou zavolany potrebne kontrolery
+     */
     private void showEditPanel() {
         PhaseTable phaseTable = tableTV.getSelectionModel().getSelectedItems().get(0);
         if (phaseTable != null) {
@@ -121,7 +140,9 @@ public class PhaseForm extends TableBasicForm implements ISegmentTableForm {
         }
     }
 
-
+    /**
+     * Metoda pro určení reakce stisknutí tlačítka pro potvrzení formuláře
+     */
     @Override
     public void setActionSubmitButton() {
         addButton.setOnAction(event -> addItem());
@@ -129,7 +150,9 @@ public class PhaseForm extends TableBasicForm implements ISegmentTableForm {
         editButton.setOnAction(event -> showEditPanel());
         copyButton.setOnAction(event -> copyItem(tableTV));
     }
-
+    /**
+     * Metoda pro přídání prvku dané tabulky
+     */
     @Override
     public void addItem() {
         formDataController.saveDataFromPhaseForm(tableTV, true);

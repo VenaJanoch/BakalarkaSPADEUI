@@ -141,7 +141,7 @@ public class MapperTableToObject {
                         addInstanceToMap(indexList, lists.getConfigObservable(), instanc, configurationToCommitedConfigurationMapper);
                         break;
                     case Person:
-                        addInstanceToMap(indexList, lists.getRoleObservable(), instanc, configurationToRoleMapper);
+                        addInstanceToMap(indexList, lists.getPersonObservable(), instanc, configurationToRoleMapper);
                         break;
                     default:
                 }
@@ -153,17 +153,17 @@ public class MapperTableToObject {
                         addInstanceToMap(indexList, lists.getCommitedConfigurationObservable(), instanc, commitedConfigurationToCommitMapper);
                         break;
                     case Person:
-                        addInstanceToMap(indexList, lists.getRoleObservable(), instanc, committedConfigurationToRoleMapper);
+                        addInstanceToMap(indexList, lists.getPersonObservable(), instanc, committedConfigurationToRoleMapper);
                         break;
                     default:
                 }
 
                 break;
             case Artifact:
-                addInstanceToMap(indexList, lists.getRoleObservable(), instanc, artifactToRoleMapper);
+                addInstanceToMap(indexList, lists.getPersonObservable(), instanc, artifactToRoleMapper);
                 break;
             case Commit:
-                addInstanceToMap(indexList, lists.getRoleObservable(), instanc, commitToRoleMapper);
+                addInstanceToMap(indexList, lists.getPersonObservable(), instanc, commitToRoleMapper);
                 break;
             default:
 
@@ -180,13 +180,13 @@ public class MapperTableToObject {
                 addInstanceToMap(index, lists.getRoleTypeObservable(), instanc, personToRoleTypeMapper);
                 break;
             case Artifact:
-                addInstanceToMap(index, lists.getRoleObservable(), instanc, artifactToRoleMapper);
+                addInstanceToMap(index, lists.getPersonObservable(), instanc, artifactToRoleMapper);
                 break;
             case Config_Person_Relation:
-                addInstanceToMap(index, lists.getRoleObservable(), instanc, CPRToRoleMapper);
+                addInstanceToMap(index, lists.getPersonObservable(), instanc, CPRToRoleMapper);
                 break;
             case Configuration:
-                addInstanceToMap(index, lists.getRoleObservable(), instanc, configurationToRoleMapper);
+                addInstanceToMap(index, lists.getPersonObservable(), instanc, configurationToRoleMapper);
                 break;
             case Change:
                 addInstanceToMap(index, lists.getArtifactObservable(), instanc, changeToArtifactMapper);
@@ -205,8 +205,8 @@ public class MapperTableToObject {
         addInstanceToMap(typeIndex, lists.getTypeObservable(), new TableToObjectInstanc(WUName, indexForm, SegmentType.Work_Unit), WUTotypeMapper);
         addInstanceToMap(statusIndex, lists.getStatusTypeObservable(), new TableToObjectInstanc(WUName, indexForm, SegmentType.Work_Unit), WUStatusMapper);
         addInstanceToMap(resolutionIndex, lists.getResolutionTypeObservable(), new TableToObjectInstanc(WUName, indexForm, SegmentType.Work_Unit), WUToResolutionMapper);
-        addInstanceToMap(assigneIndex, lists.getRoleObservable(), new TableToObjectInstanc(WUName, indexForm, SegmentType.Work_Unit), wuToRoleMapper);
-        addInstanceToMap(authorIndex, lists.getRoleObservable(), new TableToObjectInstanc(WUName, indexForm, SegmentType.Work_Unit), wuToRoleMapper);
+        addInstanceToMap(assigneIndex, lists.getPersonObservable(), new TableToObjectInstanc(WUName, indexForm, SegmentType.Work_Unit), wuToRoleMapper);
+        addInstanceToMap(authorIndex, lists.getPersonObservable(), new TableToObjectInstanc(WUName, indexForm, SegmentType.Work_Unit), wuToRoleMapper);
     }
 
     public void mapTableToConfiguration(ArrayList<ArrayList<Integer>> branchesIndicies, ArrayList<ArrayList<Integer>> cprIndicies, ArrayList<ArrayList<Integer>> changes, ArrayList<Integer> tag,

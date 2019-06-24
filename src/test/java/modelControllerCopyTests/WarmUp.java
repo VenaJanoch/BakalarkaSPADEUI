@@ -49,7 +49,7 @@ public class WarmUp {
         SelectItemController selectItemController = new SelectItemController(drawerPanelController);
         ApplicationController ap = new ApplicationController(dataModel, idCreator, lists, drawerPanelController, selectItemController);
         DeleteControl deleteControl = new DeleteControl(new SegmentLists(), mapperTableToObject, idCreator);
-        DataPreparer dataPreparer = new DataPreparer(idCreator);
+        DataPreparer dataPreparer = new DataPreparer();
         formController = new FormController(idCreator, dataModel, ap, lists, dataPreparer, drawerPanelController, selectItemController);
         editFormController = new EditFormController(dataModel, idCreator, mapperTableToObject, lists, dataPreparer, formController);
         selectItemController.setFormController(formController);
@@ -62,7 +62,7 @@ public class WarmUp {
         this.manipulationController = new ManipulationController(deleteFormController, selectionController);
         LinkControl linkControl = new LinkControl(formController, idCreator, lists, deleteFormController, manipulationController);
         CanvasItemController canvasItemController = new CanvasItemController(linkControl, formController, manipulationController, selectionController);
-        this.formFillController = new FormFillController(formController, formDataController, dataModel, canvasItemController,idCreator, dataPreparer, lists, linkControl, new HashMap<>());
+        this.formFillController = new FormFillController(formController, formDataController, dataModel, canvasItemController,idCreator, lists, linkControl);
     }
 
     public SegmentLists getLists() {

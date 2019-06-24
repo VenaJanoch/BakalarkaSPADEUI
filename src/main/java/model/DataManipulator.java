@@ -293,6 +293,7 @@ public class DataManipulator {
         newBranch.setAlias(String.valueOf(newBranchId));
         newBranch.getName().addAll(oldBranch.getName());
         newBranch.getNameIndicator().addAll(oldBranch.getNameIndicator());
+        newBranch.setIsMain(oldBranch.isIsMain());
      //   newBranch.get().addAll(oldBranch.getDescription());
      //   newBranch.getDescriptionIndicator().addAll(oldBranch.getDescriptionIndicator());
         newBranch.setExist(oldBranch.isExist());

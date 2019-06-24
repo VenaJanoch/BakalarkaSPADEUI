@@ -2,6 +2,12 @@ package tables;
 
 import javafx.beans.property.StringProperty;
 
+
+/**
+ * Trida predstavujici kontejner pro tabulku elementu Change
+ *
+ * @author Václav Janoch
+ */
 public class ChangeTable extends BasicTable {
 
     /**
@@ -11,12 +17,12 @@ public class ChangeTable extends BasicTable {
 
     /**
      * Konstruktor třídy Zinicializuje globální proměnnné třídy
-     *
-     * @param name jméno milestone
+     * @param name alias prvku
+     * @param exist existence prvku
+     * @param id identifikator prvku
      */
     public ChangeTable(String name, boolean exist, int id) {
         super(name, exist, id);
-        //	this.description = new SimpleStringProperty(description);
     }
 
     /**

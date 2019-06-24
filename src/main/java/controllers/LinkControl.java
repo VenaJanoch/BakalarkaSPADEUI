@@ -16,36 +16,59 @@ import javafx.geometry.Point2D;
 import model.DataManipulator;
 import model.IdentificatorCreater;
 import services.*;
-
+/**
+ * Trida predstavujici controller pro rizeni vytvoreni, smazani spojnice mezi prvky
+ *
+ * @author Václav Janoch
+ */
 public class LinkControl {
 
     /**
      * Globální proměnné třídy
      */
 
+    /**Identificator nove spojnice**/
     private int id;
 
-    private ElementsLink changeArtifactLink;
 
+    private ElementsLink newLink;
+
+    /**Identificator pocatecniho prvku**/
     private int startSegmentId = -1;
+    /**Identificator koncoveho prvku**/
     private int endSegmentId = -1;
 
-    private IdentificatorCreater identificatorCreater;
-    private FormController formController;
+    /**Promenne z datoveho modelu**/
     private SegmentLists segmentLists;
+    private IdentificatorCreater identificatorCreater;
 
+    /**Kontrolery**/
+    private FormController formController;
     private DataManipulator dataManipulator;
     private IDeleteFormController deleteFormController;
 
+    /**
+     * Mapa mapujici identifikator pocatecniho prvku na linky
+     */
     private Map<Integer, List<Integer>> startLinkIdMap;
+    /**
+     * Mapa mapujici identifikator koncoveho prvku na linky
+     */
     private Map<Integer, List<Integer>> endLinkIdMap;
 
+    /**Typ prvniho zvoleneho prvku**/
     private SegmentType firstSegmentType;
 
     ManipulationController manipulationController;
 
     /**
-     * Konstruktor třídy Zinicializuje globální proměnné třídy
+     * Konstruktor třídy
+     * Zinicializuje globální proměnné třídy
+     * @param formController instace FormController
+     * @param identificatorCreater instace idetificatorCreater
+     * @param segmentLists instace prehledovych seznamu
+     * @param deleteFormController instace kontroleru pro odstraneni
+     * @param manipulationController instace kontroleru pro kopirovani
      */
     public LinkControl(FormController formController, IdentificatorCreater identificatorCreater, SegmentLists segmentLists,
                        DeleteFormController deleteFormController, ManipulationController manipulationController) {
@@ -62,6 +85,16 @@ public class LinkControl {
     /**
      * Rozhodne o propojení Change a Artifact Vytvoří instanci třídy NodeLink a
      * přídá ji do seznamu Rozhodne o počátečním a koncovém prvku
+     * @param startArrow logicka promena s informaci zada bude konec nebo zacatek sipky
+     * @param canvasController instace CanvasController
+     * @param segmentIdAct identifikator zvoleneho prvku
+     * @param segmentType type zvoleneho prvku
+     * @param x x souradnice prvku
+     * @param y y souradnice prvku
+     * @param width sirka prvku
+     * @param height vyska prvku
+     * @param isXML informace zda se spojnice nacita z XML
+     * @param id identifikator spojnice
      */
     public void ArrowManipulation(boolean startArrow, CanvasController canvasController, int segmentIdAct, SegmentType segmentType,
                                   double x, double y, double width, double height, boolean isXML, int id) {
@@ -71,7 +104,7 @@ public class LinkControl {
             if (segmentControl(segmentType) == -1) { // Zvoleny prvek neni konfigurace muze byt zalozena relace
                 Alerts.showConfigurationAsStartElement();
             } else {
-                changeArtifactLink = createLink(canvasController, segmentIdAct, x, y, width, height, isXML);
+                newLink = createLink(canvasController, segmentIdAct, x, y, width, height, isXML);
             }
 
 
@@ -89,6 +122,11 @@ public class LinkControl {
 
     }
 
+    /**
+     * Metoda pro vyvolani informacniho okna s hlaskou o spatnem spojeni
+     * @param operation cislo operace spojeni
+     * @param segmentType typ prvku
+     */
     private void showOperationAlert(int operation, SegmentType segmentType) {
         if (operation == 10) {
             Alerts.showBadCommitRelation(segmentType);
@@ -103,16 +141,16 @@ public class LinkControl {
         }
     }
 
-    private void finishLinkFromOperationWithOutCreateLink(int operation, double x, double y, double height, CanvasController canvasController) {
-        if (operation == 1) {
-        } else if (operation == 2) {
-        } else if (operation == 3) {
-        } else if (operation == 5) {
-        } else if (operation == 4) {
-
-        }
-    }
-
+    /**
+     * Metoda pro dokonceni operace vytvoreni spojnice mezi prvky
+     * @param operation cislo operace spojeni
+     * @param segmentIdAct identifikator konecneho prvku
+     * @param x x souradnice
+     * @param y y souradnice
+     * @param height vyska prvku
+     * @param canvasController instace CanvasController
+     * @param isXML info o tom zda se nacita z XML
+     */
     private void finishLinkFromOperation(int operation, int segmentIdAct, double x, double y, double height, CanvasController canvasController, boolean isXML) {
         if (operation == 1) {
             endSegmentId = segmentIdAct;
@@ -146,18 +184,37 @@ public class LinkControl {
     }
 
 
+    /**
+     * Metoda pro dokonceni graficke podoby spojnice
+     * @param x x souradnice
+     * @param y y souradnice
+     * @param height vyska prvku
+     * @param canvasController instace CanvasCotroller
+     * @param linkType typ spojnice
+     */
     private void finisLink(double x, double y, double height, CanvasController canvasController, LinkType linkType) {
-        changeArtifactLink.setEndPoint(new Point2D(x, y + (height / 2)));
+        newLink.setEndPoint(new Point2D(x, y + (height / 2)));
         canvasController.setStartArrow(false);
-        changeArtifactLink.setLinkType(linkType);
-        changeArtifactLink.setIdsToController(startSegmentId, endSegmentId);
-        changeArtifactLink.setVisible(true);
+        newLink.setLinkType(linkType);
+        newLink.setIdsToController(startSegmentId, endSegmentId);
+        newLink.setVisible(true);
         startLinkIdMap.get(startSegmentId).add(id);
         endLinkIdMap.get(endSegmentId).add(id);
         startSegmentId = -1;
         endSegmentId = -1;
     }
 
+    /**
+     * Metoda pro vytvoreni noveho Linku
+     * @param canvasController instace CanvasController
+     * @param startSegmentIdAct identifikator pocatecniho prvku
+     * @param x x souradnice
+     * @param y y souradnice
+     * @param width sirka prvku
+     * @param height vyska prvku
+     * @param isXML info o tom zda se nacita z XML
+     * @return nova instace ElementLink
+     */
     private ElementsLink createLink(CanvasController canvasController, int startSegmentIdAct, double x, double y, double width, double height, boolean isXML) {
 
         if (!isXML) {
@@ -239,16 +296,25 @@ public class LinkControl {
     }
 
     /**
-     * Smaže spojnici ze seznamu a odmaže spojení z elementu Change a Artifact
+     * Zavola metodu pro smazani prvku z prehledoveho seznamu
+     * @param arrowId identifikator spojnice
      */
 
     public void deleteArrow(int arrowId) {
 
         segmentLists.removeArrow(arrowId);
-        //   deleteDataModel.removeArtifactChangeLink(artifactID, changeID);
 
     }
 
+    /**
+     * Metoda pro odstraneni spojnice
+     * Zavola metody pro odstraneni spojnice pomoci DeleteFormController
+     * @param arrowId identificator spojnice
+     * @param startId identificator pocatecniho prvku
+     * @param endId identifikator koncoveho prvku
+     * @param linkType typ spojnice
+     * @param isModelDelete informace o tam zda byla spojnice smazana z modelu
+     */
     public void deleteArrow(int arrowId, int startId, int endId, LinkType linkType, boolean isModelDelete) {
 
         ElementsLink link = (ElementsLink) segmentLists.getArrow(arrowId);
@@ -284,6 +350,12 @@ public class LinkControl {
         deleteArrow(arrowId);
     }
 
+
+    /**
+     * Odstraneni prvku ze senamu spojnic pripojenych ke konkretnimu prvku
+     * @param arrowId identifikator spojnice
+     * @param mStartLinkIds seznam s identifikatory spojnic
+     */
     private void removeLinkFromIds(int arrowId, List<Integer> mStartLinkIds) {
         if (mStartLinkIds != null) {
             for (int i = 0; i < mStartLinkIds.size(); i++) {
@@ -300,6 +372,11 @@ public class LinkControl {
     }
 
 
+    /**
+     * Metoda pro odstraneni spojnice z map
+     * @param itemIdentificator identifikator prvku platna
+     * @param isModelDelete info o tom zada je spojnice smazana v modelu
+     */
     public void deleteLinks(int itemIdentificator, boolean isModelDelete) {
 
         List<Integer> mStartLinkIds = startLinkIdMap.get(itemIdentificator);
@@ -328,6 +405,15 @@ public class LinkControl {
         }
     }
 
+    /**
+     * Metoda pro prekresleni spojnice v zavislosti na presunu prvku platna
+     * @param segmentType typ prvku
+     * @param itemIdentificator identifikator prvku
+     * @param translateX x souradnice
+     * @param translateY y souradnice
+     * @param width sirka prvku
+     * @param height vyska prvku
+     */
     public void repaintArrow(SegmentType segmentType, int itemIdentificator,
                              double translateX, double translateY, double width, double height) {
 
@@ -373,6 +459,11 @@ public class LinkControl {
         }
     }
 
+    /**
+     * Metoda pro urceni smeru a polohy spojnice
+     * @param link instace spojnice
+     * @return nova poloha spojnice
+     */
     private Point2D coutDirectVector(NodeLink link) {
         Point2D start = link.getStartPoint();
         Point2D end = link.getEndPoint();
@@ -385,6 +476,10 @@ public class LinkControl {
         return directVector;
     }
 
+    /**
+     * Metoda pro nastaveni spojnice do mapy
+     * @param formIndex identifikator formulare
+     */
     public void createLinkInstanceInMap(int formIndex) {
         startLinkIdMap.put(formIndex, new ArrayList<>());
         endLinkIdMap.put(formIndex, new ArrayList<>());

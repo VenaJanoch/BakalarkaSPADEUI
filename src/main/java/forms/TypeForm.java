@@ -16,7 +16,7 @@ import java.util.ArrayList;
 
 /**
  * Třída představující tabulkový formulář pro výčtový typ Work Unit Type,
- * odděděná od třídy TableClassBasicForm a implementující ISegmentTableForm
+ * odděděná od třídy TableClassBasicForm
  *
  * @author Václav Janoch
  */
@@ -29,8 +29,13 @@ public class TypeForm extends TableClassBasicForm implements ISegmentTableForm {
     private ArrayList<String> superClassArray = new ArrayList<>();
 
     /**
-     * Konstruktor třídy Zinicializuje globální proměnné třídy Nastaví reakci na
-     * potvrzovací tlačítko
+     * Konstruktor Třídy Zinicializuje globální proměnné tříd Nastaví reakci
+     * na klik do tabulky, naplni panel a nastavi akce tlacitkum
+     * @param formController instance tridy FormController
+     * @param formDataController instance tridy FormDataController
+     * @param editFormController instance tridy EditFormController
+     * @param deleteFormController instace tridy DeleteFormController
+     * @param type instace SegmentType pro urceni typu formulare
      */
     public TypeForm(FormController formController, IFormDataController formDataController, IEditFormController editFormController, IDeleteFormController deleteFormController, SegmentType type) {
         super(formController, formDataController, editFormController, deleteFormController, type);

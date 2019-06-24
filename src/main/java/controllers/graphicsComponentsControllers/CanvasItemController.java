@@ -10,7 +10,11 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import services.*;
 
-
+/**
+ * Trida predstavujici controller pro graficky prvek CanvasItem, prvek na platne
+ *
+ * @author Václav Janoch
+ */
 public class CanvasItemController {
 
     private ManipulationController manipulation;
@@ -93,7 +97,12 @@ public class CanvasItemController {
      */
     public void setClicFromDragPoint(MouseEvent t, CanvasItem item, CanvasController canvasController, SegmentType segmentType) {
 
-        manipulation.setChoosedItem(true);
+
+        if (selectionController.getSelection().size() <=1){
+            selectionController.clear();
+            selectionController.add(item);
+            manipulation.setChoosedItem(true);
+        }
 
         if (t.getButton().equals(MouseButton.PRIMARY)) {
 
@@ -106,7 +115,6 @@ public class CanvasItemController {
                 if (t.getClickCount() == 2) {
 
                     formController.showEditControlPanel(item.getFormIdentificator());
-
                 } else if (!canvasController.isArrow()) {
 
                     item.setOrgSceneX(t.getSceneX());
@@ -154,7 +162,7 @@ public class CanvasItemController {
             point = new Point2D(x, Constans.canvasMaxHeight - Constans.offset);
         }
         formController.setCoordinatesToCanvasItem(segmentType, point.getX(), point.getY(), formIndex);
-        manipulation.setChoosedItem(false);
+
         return point;
 
     }

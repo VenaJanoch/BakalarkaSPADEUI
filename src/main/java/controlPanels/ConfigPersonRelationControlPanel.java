@@ -2,7 +2,6 @@ package controlPanels;
 
 import abstractControlPane.DescriptionControlPanel;
 import controllers.formControllers.FormController;
-import abstractControlPane.NameControlPanel;
 import graphics.controlPanelItems.ComboBoxItem;
 import interfaces.IEditFormController;
 import interfaces.IFormDataController;
@@ -24,7 +23,7 @@ public class ConfigPersonRelationControlPanel extends DescriptionControlPanel {
     public ConfigPersonRelationControlPanel(String buttonName, IFormDataController formDataController, IEditFormController editFormController, FormController formController) {
         super(buttonName, formDataController, editFormController, formController);
         SegmentLists segmentLists = formController.getSegmentLists();
-        lineList.add(new ControlPanelLineObject("Person: ", ControlPanelLineType.ComboBox, ParamType.Role, segmentLists.getRoleObservable()));
+        lineList.add(new ControlPanelLineObject("Person: ", ControlPanelLineType.ComboBox, ParamType.Role, segmentLists.getPersonObservable()));
 
         createControlPanel();
     }

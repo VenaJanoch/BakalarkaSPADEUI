@@ -41,11 +41,11 @@ public abstract class TableBasicForm extends BasicForm {
     /**
      * Konstruktor tridy zavola nadrazenou tridu BasicForm a zinicializuje ostatni globalni promenne
      * Zavola metodu pro pridani potrebny prvku do panelu
-     * @param formController
-     * @param formDataController
-     * @param editFormController
-     * @param deleteFormController
-     * @param type
+     * @param formController instance tridy FormController
+     * @param formDataController instance tridy FormDataController
+     * @param editFormController instance tridy EditFormController
+     * @param deleteFormController instace tridy DeleteFormController
+     * @param type instace SegmentType pro urceni typu formulare
      */
     public TableBasicForm(FormController formController, IFormDataController formDataController, IEditFormController editFormController, IDeleteFormController deleteFormController, SegmentType type) {
         super(formController, formDataController, editFormController, deleteFormController, type);

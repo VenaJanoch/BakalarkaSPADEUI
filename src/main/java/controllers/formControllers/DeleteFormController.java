@@ -14,6 +14,12 @@ import tables.ClassTable;
 
 import java.util.ArrayList;
 
+/**
+ * Trida predstavujici controller pro odstraneni prvku z datovych struktur
+ * Predstavujici modelovaci platno
+ *
+ * @author Václav Janoch
+ */
 public class DeleteFormController implements IDeleteFormController {
 
     public ArrayList<ControlPanel> panels;
@@ -794,30 +800,65 @@ public class DeleteFormController implements IDeleteFormController {
     }
 
 
+    /**
+     * Metoda pro odstraneni spojnice mezi prvky Person a Artifact
+     * @param arrowId identifikator spojnice
+     * @param startId identifikator pocatecniho prvku
+     * @param endId identifikator koncoveho prvku
+     * @param isModelDelete informaco o tom zda byla spojnice jiz smazana z datovoho modelu
+     */
     public void removePersonArtifactLink(int arrowId, int startId, int endId, boolean isModelDelete) {
         Integer[] result = formController.findResultsFromPersonToArtifactRelation(startId, endId);
         mapperTableToObject.clearValueList(result[0], mapperTableToObject.getArtifactToRoleMapper(), result[1]);
         deleteDataModel.removePersonArtifactLink(arrowId, result[0], result[1], isModelDelete);
     }
 
+    /**
+     * Metoda pro odstraneni spojnice mezi prvky Person a Commit
+     * @param arrowId identifikator spojnice
+     * @param startId identifikator pocatecniho prvku
+     * @param endId identifikator koncoveho prvku
+     * @param isModelDelete informaco o tom zda byla spojnice jiz smazana z datovoho modelu
+     */
     public void removePersonCommitLink(int arrowId, int startId, int endId, boolean isModelDelete) {
         Integer[] result = formController.findResultsFromPersonToCommitRelation(startId, endId);
         mapperTableToObject.clearValueList(result[0], mapperTableToObject.getCommitToRoleMapper(), result[1]);
         deleteDataModel.removePersonCommitLink(arrowId, result[0], result[1], isModelDelete);
     }
 
+    /**
+     * Metoda pro odstraneni spojnice mezi prvky Person a Committed Configuration
+     * @param arrowId identifikator spojnice
+     * @param startId identifikator pocatecniho prvku
+     * @param endId identifikator koncoveho prvku
+     * @param isModelDelete informaco o tom zda byla spojnice jiz smazana z datovoho modelu
+     */
     public void removePersonCommittedConfigurationLink(int arrowId, int startId, int endId, boolean isModelDelete) {
         Integer[] result = formController.findResultsFromPersonToCommittedConfigurationRelation(startId, endId);
         mapperTableToObject.clearValueList(result[0], mapperTableToObject.getCommittedConfigurationToRoleMapper(), result[1]);
         deleteDataModel.removePersonCommittedConfigurationLink(arrowId, result[0], result[1], isModelDelete);
     }
 
+    /**
+     * Metoda pro odstraneni spojnice mezi prvky Person a Configuration
+     * @param arrowId identifikator spojnice
+     * @param startId identifikator pocatecniho prvku
+     * @param endId identifikator koncoveho prvku
+     * @param isModelDelete informaco o tom zda byla spojnice jiz smazana z datovoho modelu
+     */
     public void removePersonConfigurationLink(int arrowId, int startId, int endId, boolean isModelDelete) {
         Integer[] result = formController.findResultsFromPersonToConfigurationRelation(startId, endId);
         mapperTableToObject.clearValueList(result[0], mapperTableToObject.getConfigurationToRoleMapper(), result[1]);
         deleteDataModel.removePersonConfigurationLink(arrowId, result[0], result[1], isModelDelete);
     }
 
+    /**
+     * Metoda pro odstraneni spojnice mezi prvky Artifact a Configuration
+     * @param arrowId identifikator spojnice
+     * @param startId identifikator pocatecniho prvku
+     * @param endId identifikator koncoveho prvku
+     * @param isModelDelete informaco o tom zda byla spojnice jiz smazana z datovoho modelu
+     */
     public void removeArtifactConfiguraionLink(int arrowId, int startId, int endId, boolean isModelDelete) {
 
         Integer[] result = formController.findResultsFromArtifactToConfigurationRelation(startId, endId);
@@ -825,12 +866,26 @@ public class DeleteFormController implements IDeleteFormController {
         deleteDataModel.removeArtifactConfigurationLink(arrowId, result[0], result[1], isModelDelete);
     }
 
+    /**
+     * Metoda pro odstraneni spojnice mezi prvky CommitedConfiguration a Configuration
+     * @param arrowId identifikator spojnice
+     * @param startId identifikator pocatecniho prvku
+     * @param endId identifikator koncoveho prvku
+     * @param isModelDelete informaco o tom zda byla spojnice jiz smazana z datovoho modelu
+     */
     public void removeCommitedConfigurationConfigurationLink(int arrowId, int startId, int endId, boolean isModelDelete) {
         Integer[] result = formController.findResultsFromCommitedConfigurationToConfigurationRelation(startId, endId);
         mapperTableToObject.clearValueList(result[0], mapperTableToObject.getConfigurationToCommitedConfigurationMapper(), result[1]);
         deleteDataModel.removeCommitedConfigurationConfigurationLink(arrowId, result[0], result[1], isModelDelete);
     }
 
+    /**
+     * Metoda pro odstraneni spojnice mezi prvky Commit a Committed Configuration
+     * @param arrowId identifikator spojnice
+     * @param startId identifikator pocatecniho prvku
+     * @param endId identifikator koncoveho prvku
+     * @param isModelDelete informaco o tom zda byla spojnice jiz smazana z datovoho modelu
+     */
     public void removeCommitComiitedConfigurationLink(int arrowId, int startId, int endId, boolean isModelDelete) {
         Integer[] result = formController.findResultsFromCommitToCommitedConfigurationRelation(startId, endId);
         mapperTableToObject.clearValueList(result[0], mapperTableToObject.getCommitedConfigurationToCommitMapper(), result[1]);

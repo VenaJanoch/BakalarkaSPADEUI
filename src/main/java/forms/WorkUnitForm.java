@@ -21,7 +21,7 @@ import tables.WorkUnitTable;
 
 /**
  * Třída představující formulář pro element Work Unit, odděděná od třídy
- * DescriptionBasicForm a implementující ISegmentForm
+ * TableBasicForm a implementující ISegmentTableForm
  *
  * @author Václav Janoch
  */
@@ -32,8 +32,13 @@ public class WorkUnitForm extends TableBasicForm implements ISegmentTableForm {
     private WorkUnitControlPanel editControlPanel;
 
     /**
-     * Konstruktor třídy. Zinicializuje globální proměnné tříd Nastaví velikost
-     * okna a reakci na uzavření formulář
+     * Konstruktor Třídy Zinicializuje globální proměnné tříd Nastaví reakci
+     * na klik do tabulky, vytvori naplni panel a nastavi akce tlacitkum
+     * @param formController instance tridy FormController
+     * @param formDataController instance tridy FormDataController
+     * @param editFormController instance tridy EditFormController
+     * @param deleteFormController instace tridy DeleteFormController
+     * @param type instace SegmentType pro urceni typu formulare
      */
     public WorkUnitForm(FormController formController, IFormDataController formDataController, IEditFormController editFormController, IDeleteFormController deleteFormController, CanvasController canvasController, SegmentType type, int indexForm) {
         super(formController, formDataController, editFormController, deleteFormController, type);
@@ -44,6 +49,12 @@ public class WorkUnitForm extends TableBasicForm implements ISegmentTableForm {
         setActionSubmitButton();
     }
 
+    /**
+     * Metoda nastavi event handler pro tabulku
+     * Pokud je na radek dvakrat kliknuto mysi
+     * zavola se metoda pro zobrazeni panelu a nastaveni
+     * prislusneho formulare do panelu
+     */
     @Override
     protected void setEventHandler() {
         OnMousePressedEventHandler = new EventHandler<MouseEvent>() {
@@ -57,7 +68,9 @@ public class WorkUnitForm extends TableBasicForm implements ISegmentTableForm {
         };
     }
 
-
+    /**
+     * Metoda pro přídání prvku do interního gridPanelu
+     */
     @Override
     public void createForm() {
 
@@ -65,6 +78,9 @@ public class WorkUnitForm extends TableBasicForm implements ISegmentTableForm {
 
     }
 
+    /**
+     * Metoda pro přídání TableView do formuláře
+     */
     @Override
     public Node getTable() {
         tableTV = new TableView<WorkUnitTable>();
@@ -95,7 +111,9 @@ public class WorkUnitForm extends TableBasicForm implements ISegmentTableForm {
 
         return tableTV;
     }
-
+    /**
+     * Metoda pro nastavení reakce na klávesu delete
+     */
     @Override
     public void deleteSelected(KeyEvent event) {
 
@@ -104,11 +122,17 @@ public class WorkUnitForm extends TableBasicForm implements ISegmentTableForm {
         }
     }
 
+    /**
+     * Metoda pro přídání prvku do gridPanelu
+     */
     @Override
     public GridPane createControlPane() {
         return null;
     }
-
+    /**
+     * Metoda pro vyvolani postraniho panelu
+     * Jsou zavolany potrebne kontrolery
+     */
     private void showEditPanel() {
         WorkUnitTable phaseTable = tableTV.getSelectionModel().getSelectedItems().get(0);
         if (phaseTable != null) {
@@ -117,7 +141,9 @@ public class WorkUnitForm extends TableBasicForm implements ISegmentTableForm {
         }
     }
 
-
+    /**
+     * Metoda pro určení reakce stisknutí tlačítka pro potvrzení formuláře
+     */
     @Override
     public void setActionSubmitButton() {
         addButton.setOnAction(event -> addItem());
@@ -126,6 +152,9 @@ public class WorkUnitForm extends TableBasicForm implements ISegmentTableForm {
         copyButton.setOnAction(event -> copyItem(tableTV));
     }
 
+    /**
+     * Metoda pro přídání prvku dané tabulky
+     */
     @Override
     public void addItem() {
         formDataController.saveDataFromWorkUnit(tableTV, true);

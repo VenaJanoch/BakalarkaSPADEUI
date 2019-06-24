@@ -13,11 +13,26 @@ import tables.BasicTable;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * Třída rozsirujici funkcnost komponenty CheckComboBox
+ *
+ * @author Václav Janoch
+ */
 public class CheckComboBoxItem extends ItemBox {
 
+    /**Globalni promenne tridy**/
     private CheckComboBox<BasicTable> itemCB;
 
 
+    /**
+     * Konstruktor tridy,
+     * Zinicializuje globalni promenne tridy
+     * @param controlPanelLine instance tridy ControlPanelLine
+     * @param controlPanel instance tridy ControlPanel
+     * @param controlPanelController instace tridy ControlPanelController
+     * @param listForBox seznam s prvky pro komponentu CheckCombobox
+     * @param lineList seznam parametru na radku
+     */
     public CheckComboBoxItem(ControlPanelLine controlPanelLine, ControlPanel controlPanel, ControlPanelController controlPanelController,
                              ObservableList listForBox, ObservableList<ControlPanelLineObject> lineList) {
         super(FXCollections.observableList(Arrays.asList(Constans.textIndicatorList)), controlPanelController);
@@ -34,6 +49,10 @@ public class CheckComboBoxItem extends ItemBox {
     }
 
 
+    /**
+     * Metoda pro zpetne zvoleni prvku v komponente CheckComboBox
+     * @param list seznam indexu pro zvoleni
+     */
     public void selectItemsInComboBox(List<Integer> list) {
 
         for (int i : list) {
@@ -41,6 +60,7 @@ public class CheckComboBoxItem extends ItemBox {
         }
     }
 
+    /**Getrs and Setters**/
 
     public CheckComboBox<BasicTable> getItemCB() {
         return itemCB;

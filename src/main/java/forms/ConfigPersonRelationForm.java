@@ -39,11 +39,14 @@ public class ConfigPersonRelationForm extends TableBasicForm implements ISegment
     private ConfigPersonRelationControlPanel editCPRControlPanel;
 
     /**
-     * Konstruktor třídy
-     * Zinicializuje globální proměnné tříd
-     * Nastaví vlastnost pro tlačítko OK
+     * Konstruktor Třídy Zinicializuje globální proměnné tříd Nastaví reakci
+     * na klik do tabulky, vytvori naplni panel a nastavi akce tlacitkum
+     * @param formController instance tridy FormController
+     * @param formDataController instance tridy FormDataController
+     * @param editFormController instance tridy EditFormController
+     * @param deleteFormController instace tridy DeleteFormController
+     * @param type instace SegmentType pro urceni typu formulare
      */
-
     public ConfigPersonRelationForm(FormController formController, IFormDataController formDataController, IEditFormController editFormController, IDeleteFormController deleteFormController, SegmentType type) {
         super(formController, formDataController, editFormController, deleteFormController, type);
 
@@ -55,6 +58,12 @@ public class ConfigPersonRelationForm extends TableBasicForm implements ISegment
 
     }
 
+    /**
+     * Metoda nastavi event handler pro tabulku
+     * Pokud je na radek dvakrat kliknuto mysi
+     * zavola se metoda pro zobrazeni panelu a nastaveni
+     * prislusneho formulare do panelu
+     */
     @Override
     protected void setEventHandler() {
         OnMousePressedEventHandler = new EventHandler<MouseEvent>() {
@@ -67,13 +76,18 @@ public class ConfigPersonRelationForm extends TableBasicForm implements ISegment
             }
         };
     }
-
+    /**
+     * Metoda pro přídání prvku do interního gridPanelu
+     */
     @Override
     public void createForm() {
 
         this.setCenter(getTable());
     }
 
+    /**
+     * Metoda pro nastavení reakce na klávesu delete
+     */
     @Override
     public void deleteSelected(KeyEvent event) {
 
@@ -81,12 +95,17 @@ public class ConfigPersonRelationForm extends TableBasicForm implements ISegment
             deleteItem(tableTV);
         }
     }
-
+    /**
+     * Metoda pro přídání prvku do gridPanelu
+     */
     @Override
     public GridPane createControlPane() {
         return null;
     }
-
+    /**
+     * Metoda pro vyvolani postraniho panelu
+     * Jsou zavolany potrebne kontrolery
+     */
     private void showEditPanel() {
         CPRTable cprTable = tableTV.getSelectionModel().getSelectedItems().get(0);
         if (cprTable != null) {
@@ -95,7 +114,9 @@ public class ConfigPersonRelationForm extends TableBasicForm implements ISegment
         }
     }
 
-
+    /**
+     * Metoda pro určení reakce stisknutí tlačítka pro potvrzení formuláře
+     */
     @Override
     public void setActionSubmitButton() {
         addButton.setOnAction(event -> addItem());
@@ -103,7 +124,9 @@ public class ConfigPersonRelationForm extends TableBasicForm implements ISegment
         editButton.setOnAction(event -> showEditPanel());
         copyButton.setOnAction(event -> copyItem(tableTV));
     }
-
+    /**
+     * Metoda pro přídání TableView do formuláře
+     */
     @Override
     public Node getTable() {
         tableTV = new TableView<CPRTable>();

@@ -14,22 +14,26 @@ import tables.ProjectTable;
 import javax.xml.datatype.XMLGregorianCalendar;
 
 /**
- * Třída zajišťující výběr dat projektů z databáze implementující rozhraní IProjektDAO
+ * Třída zajišťující výběr dat projektů z databáze implementující
+ * @author Vaclav Janoch
  */
 public class ProjectDAO {
 
-    private Connection connection;                //připojení k databázi
+    private Connection connection;               
     private VerifyController verifyController;
 
     /**
-     * Konstruktor třídy
+     * Konstruktor tridy
+     * Zinicializuje globalni promenne tridy
      */
     public ProjectDAO() {
-        this.connection = Constans.CONNECTION;    //nastaví připojení uložené ve třídě Konstanty
+        this.connection = Constans.CONNECTION;  
     }
 
     /**
-     * Konstruktor třídy
+     * Konstruktor tridy
+     * Zinicializuje globalni promenne tridy
+     * @param verifyController
      */
     public ProjectDAO(VerifyController verifyController) {
         this();
@@ -38,7 +42,6 @@ public class ProjectDAO {
 
     /**
      * Vrací seznam projektů v databázi
-     *
      * @return seznam projektů
      */
     public ArrayList<ProjectTable> getProject() {
@@ -53,10 +56,8 @@ public class ProjectDAO {
             }
 
         } catch (SQLException e) {
-            //	JOptionPane.showMessageDialog(null , "Chyba při spuštění skriptu projektů!");
             e.printStackTrace();
         } catch (Exception e) {
-            //	JOptionPane.showMessageDialog(null , "Chyba při výběru projektů z databáze!");
             e.printStackTrace();
         } finally {
             try {
@@ -69,6 +70,20 @@ public class ProjectDAO {
         return listProjektu;
     }
 
+/**
+* Metoda pro vytvoreni SQL dotazu pro urcitou instanci Project
+* Metoda slozi jednotlive parametry pro SQL dotaz a zavola metodu ze tridy SQLAtributeCreator pro ziskani dat z databaze
+* @param projectVerifyId identifikator zvoleneho projektu
+* @param name seznam s atributy name
+* @param nameIndicator seznam s indexi ukazatelu rovnosti
+* @param description seznam s atributy description
+* @param descriptionIndicator seznam s indexi ukazatelu rovnosti
+* @param startDate seznam s datumy vytvoreni
+* @param startDateIndicator seznam s indexi ukazatelu rovnosti
+* @param endDate seznam s datumy vytvoreni
+* @param endDateIndicator seznam s indexi ukazatelu rovnosti
+* @return Seznam SQLVerifyObject s daty z databaze
+**/
     public ArrayList<SQLVerifyObject> getProject(int projectVerifyId, List<String> name, List<Integer> nameIndicator,
                                                  List<String> description, List<Integer> descriptionIndicator, List<XMLGregorianCalendar> endDate, List<XMLGregorianCalendar> startDate,
                                                  List<Integer> endDateIndicator, List<Integer> startDateIndicator) {

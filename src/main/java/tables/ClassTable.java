@@ -3,6 +3,12 @@ package tables;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
+
+/**
+ * Trida predstavujici kontejner pro tabulku  ClassTable
+ *
+ * @author Václav Janoch
+ */
 public class ClassTable extends BasicTable {
 
     /**

@@ -21,6 +21,11 @@ import tables.ProjectTable;
 import java.util.ArrayList;
 import java.util.Optional;
 
+/**
+ * Třídy tvorici prihlasovaci okno do Databaze
+ *
+ * @author Václav Janoch
+ */
 public class LogInWindow extends Stage {
     /**
      * Globální proměnné třídy
@@ -38,6 +43,10 @@ public class LogInWindow extends Stage {
     private TableView<ProjectTable> tableTV;
 
 
+    /** Konstruktor tridy,
+     * Zinicializuje globalni promenne tridy
+     * @param databaseController instace tridy DatabaseController
+     */
     public LogInWindow(DatabaseController databaseController) {
         this.databaseController = databaseController;
         tableTV = getTable();
@@ -80,20 +89,18 @@ public class LogInWindow extends Stage {
         return mainPanel;
     }
 
+    /**
+     * Metoda pro zobrazeni dialogoveho okna pro prihlaseni do databaze
+     * @return informace o stavu prihlaseni
+     */
     public boolean showLogDialog() {
-        // Create the custom dialog.
         Dialog<Pair<String, String>> dialog = new Dialog<>();
         dialog.setTitle("Login Dialog");
         dialog.setHeaderText("Look, a Custom Login Dialog");
 
-// Set the icon (must be included in the project).
-        //     dialog.setGraphic(new ImageView(this.getClass().getResource("login.png").toString()));
-
-// Set the button types.
         ButtonType loginButtonType = new ButtonType("Login", ButtonBar.ButtonData.OK_DONE);
         dialog.getDialogPane().getButtonTypes().addAll(loginButtonType, ButtonType.CANCEL);
 
-// Create the username and password labels and fields.
         GridPane grid = new GridPane();
         grid.setHgap(10);
         grid.setVgap(10);
@@ -110,21 +117,17 @@ public class LogInWindow extends Stage {
         grid.add(new Label("Password:"), 0, 1);
         grid.add(password, 1, 1);
 
-// Enable/Disable login button depending on whether a username was entered.
         Node loginButton = dialog.getDialogPane().lookupButton(loginButtonType);
         loginButton.setDisable(true);
 
-// Do some validation (using the Java 8 lambda syntax).
         username.textProperty().addListener((observable, oldValue, newValue) -> {
             loginButton.setDisable(newValue.trim().isEmpty());
         });
 
         dialog.getDialogPane().setContent(grid);
 
-// Request focus on the username field by default.
         Platform.runLater(() -> username.requestFocus());
 
-// Convert the result to a username-password-pair when the login button is clicked.
         dialog.setResultConverter(dialogButton -> {
             if (dialogButton == loginButtonType) {
                 return new Pair<>(username.getText(), password.getText());
@@ -145,6 +148,10 @@ public class LogInWindow extends Stage {
     }
 
 
+    /**
+     * Metoda pro prihlaseni do Databaze
+     * @return informaci o uspesnem ci neuspesnem prihlaseni
+     */
     private boolean logInToDatabase() {
         if (databaseController.logIn(name, password)) {
             fillProjectTable();
@@ -168,9 +175,11 @@ public class LogInWindow extends Stage {
 
     private void chooseProject() {
         ProjectTable projectTable = tableTV.getSelectionModel().getSelectedItem();
-        int projectId = projectTable.getId();
-        this.close();
-        databaseController.confirmProjectWithModel(projectId);
+        if (projectTable != null){
+            int projectId = projectTable.getId();
+            this.close();
+            databaseController.confirmProjectWithModel(projectId);
+        }
 
     }
 

@@ -1,7 +1,6 @@
 package controlPanels;
 
 import abstractControlPane.DateDescControlPanel;
-import abstractControlPane.DescriptionControlPanel;
 import controllers.formControllers.FormController;
 import interfaces.IEditFormController;
 import interfaces.IFormDataController;
@@ -38,8 +37,8 @@ public class WorkUnitControlPanel extends DateDescControlPanel {
         lineList.add(new ControlPanelLineObject("Status: ", ControlPanelLineType.ComboBox, ParamType.Status, segmentLists.getStatusTypeObservable()));
         lineList.add(new ControlPanelLineObject("Resolution: ", ControlPanelLineType.ComboBox, ParamType.Resolution, segmentLists.getResolutionTypeObservable()));
         lineList.add(new ControlPanelLineObject("Type: ", ControlPanelLineType.ComboBox, ParamType.Type, segmentLists.getTypeObservable()));
-        lineList.add(new ControlPanelLineObject("Assigne: ", ControlPanelLineType.ComboBox, ParamType.AssigneeRole, segmentLists.getRoleObservable()));
-        lineList.add(new ControlPanelLineObject("Autor: ", ControlPanelLineType.ComboBox, ParamType.Role, segmentLists.getRoleObservable()));
+        lineList.add(new ControlPanelLineObject("Assigne: ", ControlPanelLineType.ComboBox, ParamType.AssigneeRole, segmentLists.getPersonObservable()));
+        lineList.add(new ControlPanelLineObject("Autor: ", ControlPanelLineType.ComboBox, ParamType.Role, segmentLists.getPersonObservable()));
         lineList.add(new ControlPanelLineObject("Relation: ", ControlPanelLineType.RelationComboBoxes, ParamType.Relation,
                 segmentLists.getRelationTypeObservable(), segmentLists.getWorkUnitsObservable()));
 

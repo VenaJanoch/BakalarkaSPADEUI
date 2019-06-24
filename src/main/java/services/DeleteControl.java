@@ -7,7 +7,11 @@ import java.util.Map;
 import javafx.collections.ObservableList;
 import model.IdentificatorCreater;
 import tables.*;
-
+/**
+ * Třída predstavujici pomocny kotroler pro funkcnost mazani
+ *
+ * @author Václav Janoch
+ */
 public class DeleteControl {
 
     /**
@@ -22,6 +26,9 @@ public class DeleteControl {
     /**
      * Konstruktor třídy
      * Zinicializuje globální proměnné třídy
+     * @param lists instace tridy SegmentList
+     * @param mapperTableToObject instacne tridy MapperTableObject
+     * @param identificatorCreater instnce tridy IdentificatorCreator
      */
     public DeleteControl(SegmentLists lists, MapperTableToObject mapperTableToObject, IdentificatorCreater identificatorCreater) {
 
@@ -30,6 +37,27 @@ public class DeleteControl {
         this.idCreater = identificatorCreater;
     }
 
+    /**
+     * Metoda pro nalezeni identifikatoru vybranych prvku z tabulky
+     * @param tables seznam prvku z tabulky
+     * @return seznam identifikatoru
+     */
+    public ArrayList<Integer> findIndicesForDelete(ArrayList<BasicTable> tables) {
+        ArrayList idForDelete = new ArrayList();
+
+        for (BasicTable table : tables) {
+            idForDelete.add(table.getId());
+        }
+        return idForDelete;
+    }
+
+
+    /**
+     * Metoda pro ziskani identifikatoru v zavislosti na poradi prvku v tablce
+     * @param segmentType typ elementu pro hledani
+     * @param indicesList seznam indexu zvolenych z tabulky
+     * @return seznam identifikatoru
+     */
     public ArrayList<Integer> findIndicesForDelete(SegmentType segmentType, ArrayList<Integer> indicesList) {
 
         switch (segmentType) {
@@ -65,81 +93,12 @@ public class DeleteControl {
         return null;
     }
 
-    public ArrayList<Integer> findIndicesForDeleteData(SegmentType segmentType, SegmentType elementType, ArrayList<Integer> idList) {
-
-        switch (segmentType) {
-            case Phase:
-                return findTableToObjectIndicesForDeleteData(idList, mapperTableToObject.getPhaseToMilestone());
-            case Work_Unit:
-                return findTableToObjectIndicesForDeleteData(idList, mapperTableToObject.getPhaseToMilestone());
-            case Branch:
-                break;
-            case Priority:
-                return findTableToObjectIndicesForDeleteData(idList, mapperTableToObject.getWUToPriorityMapper());
-            case Severity:
-                return findTableToObjectIndicesForDeleteData(idList, mapperTableToObject.getWUToSeverityMapper());
-            case Milestone:
-                return findTableToObjectIndicesForDeleteData(idList, mapperTableToObject.getMilestoneToCriterionMapper());
-            case Criterion:
-                break;
-            case Person:
-                switch (elementType) {
-                    case Work_Unit:
-                        findTableToObjectIndicesForDelete(idList, mapperTableToObject.getRoleMaps().get(0));
-                        break;
-                    case Configuration:
-                        findTableToObjectIndicesForDelete(idList, mapperTableToObject.getRoleMaps().get(1));
-                        break;
-                    case Artifact:
-                        findTableToObjectIndicesForDelete(idList, mapperTableToObject.getRoleMaps().get(2));
-                        break;
-                    case Config_Person_Relation:
-                        findTableToObjectIndicesForDelete(idList, mapperTableToObject.getRoleMaps().get(3));
-                        break;
-                    default:
-                }
-                return findTableToObjectIndicesForDeleteData(idList, mapperTableToObject.getPersonToRoleTypeMapper());
-            case Role_Type:
-                break;
-            case Config_Person_Relation:
-                return findTableToObjectIndicesForDeleteData(idList, mapperTableToObject.getCPRToRoleMapper());
-            case Relation:
-                return findTableToObjectIndicesForDeleteData(idList, mapperTableToObject.getWUTORelationMapper());
-            case Resolution:
-                return findTableToObjectIndicesForDeleteData(idList, mapperTableToObject.getWUToResolutionMapper());
-            case Status:
-                return findTableToObjectIndicesForDeleteData(idList, mapperTableToObject.getWUStatusMapper());
-            case Type:
-                return findTableToObjectIndicesForDeleteData(idList, mapperTableToObject.getWUTotypeMapper());
-            case Configuration:
-                break;
-            default:
-
-        }
-        return null;
-    }
-
-    private ArrayList<Integer> findTableToObjectIndicesForDeleteData(ArrayList<Integer> indicesList, Map<Integer, ArrayList<TableToObjectInstanc>> map) {
-        ArrayList<Integer> list = findTableToObjectIndicesForDelete(indicesList, map);
-        ArrayList<Integer> indexDataList = new ArrayList<>();
-
-        for (int i : list) {
-            indexDataList.add(idCreater.getWorkUnitIndexToIdMaper().get(i));
-        }
-
-        return indexDataList;
-    }
-
-
-    public ArrayList<Integer> findIndicesForDelete(ArrayList<BasicTable> tables) {
-        ArrayList idForDelete = new ArrayList();
-
-        for (BasicTable table : tables) {
-            idForDelete.add(table.getId());
-        }
-        return idForDelete;
-    }
-
+    /**
+     * Metoda projde seznam z tabulky najde prislusne identificatory
+     * @param id seznam identifikatoru
+     * @param map mapa
+     * @return identifikatory
+     */
     private ArrayList<Integer> findTableToObjectIndicesForDelete(ArrayList<Integer> id, Map<Integer, ArrayList<TableToObjectInstanc>> map) {
         ArrayList<Integer> listToDelete = new ArrayList<>();
         for (Integer i : id) {

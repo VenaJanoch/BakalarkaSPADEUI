@@ -25,9 +25,8 @@ import tables.MilestoneTable;
 import java.util.ArrayList;
 
 /**
- * Třída představující dvojitý formulář pro element Milestone, vytvoří tabulku s
- * přehledem Milestonů a tabulkový formulář pro Criterion, odděděná od třídy
- * Table2BasicForm a implementující ISegmentTableForm
+ * Třída představující dvojitý formulář pro element Milestone,děděná od
+ * TableBasicForm a implementující ISegmentTableForm
  *
  * @author Václav Janoch
  */
@@ -46,7 +45,13 @@ public class MilestoneForm extends TableBasicForm implements ISegmentTableForm {
     private MilestoneControlPanel editMilestoneControlPanel;
 
     /**
-     * Konstruktor třídy Zinicializuje globální proměnné třídy
+     * Konstruktor Třídy Zinicializuje globální proměnné tříd Nastaví reakci
+     * na klik do tabulky, vytvori naplni panel a nastavi akce tlacitkum
+     * @param formController instance tridy FormController
+     * @param formDataController instance tridy FormDataController
+     * @param editFormController instance tridy EditFormController
+     * @param deleteFormController instace tridy DeleteFormController
+     * @param type instace SegmentType pro urceni typu formulare
      */
     public MilestoneForm(FormController formController, IFormDataController formDataController, IEditFormController editFormController, IDeleteFormController deleteFormController, SegmentType type) {
 
@@ -58,7 +63,12 @@ public class MilestoneForm extends TableBasicForm implements ISegmentTableForm {
         setActionSubmitButton();
 
     }
-
+    /**
+     * Metoda nastavi event handler pro tabulku
+     * Pokud je na radek dvakrat kliknuto mysi
+     * zavola se metoda pro zobrazeni panelu a nastaveni
+     * prislusneho formulare do panelu
+     */
     protected void setEventHandler() {
         OnMousePressedEventHandler = new EventHandler<MouseEvent>() {
 
@@ -71,6 +81,10 @@ public class MilestoneForm extends TableBasicForm implements ISegmentTableForm {
         };
     }
 
+    /**
+     * Metoda pro vyvolani postraniho panelu
+     * Jsou zavolany potrebne kontrolery
+     */
     public void showEditPanel() {
         MilestoneTable milestoneTable = tableTV.getSelectionModel().getSelectedItems().get(0);
         if (milestoneTable != null) {
@@ -79,12 +93,18 @@ public class MilestoneForm extends TableBasicForm implements ISegmentTableForm {
         }
     }
 
+    /**
+     * Metoda pro přídání prvku do interního gridPanelu
+     */
     @Override
     public void createForm() {
 
         this.setCenter(getTable());
     }
 
+    /**
+     * Metoda pro určení reakce stisknutí tlačítka pro potvrzení formuláře
+     */
     @Override
     public void setActionSubmitButton() {
         addButton.setOnAction(event -> addItem());
@@ -94,6 +114,9 @@ public class MilestoneForm extends TableBasicForm implements ISegmentTableForm {
 
     }
 
+    /**
+     * Metoda pro přídání TableView do formuláře
+     */
     @Override
     public Node getTable() {
         tableTV = new TableView<MilestoneTable>();
@@ -125,6 +148,9 @@ public class MilestoneForm extends TableBasicForm implements ISegmentTableForm {
         return tableTV;
     }
 
+    /**
+     * Metoda pro nastavení reakce na klávesu delete
+     */
     @Override
     public void deleteSelected(KeyEvent event) {
 
@@ -134,6 +160,9 @@ public class MilestoneForm extends TableBasicForm implements ISegmentTableForm {
 
     }
 
+    /**
+     * Metoda pro přídání prvku do gridPanelu
+     */
     @Override
     public GridPane createControlPane() {
 
@@ -142,6 +171,9 @@ public class MilestoneForm extends TableBasicForm implements ISegmentTableForm {
 
     }
 
+    /**
+     * Metoda pro přídání prvku dané tabulky
+     */
     @Override
     public void addItem() {
 

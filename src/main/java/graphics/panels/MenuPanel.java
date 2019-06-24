@@ -29,6 +29,7 @@ public class MenuPanel extends VBox {
     /**
      * Konstruktor třídy
      * Zinicializuje globální proměnné třídy
+     * @param windowController instace WindowController
      */
     public MenuPanel(WindowController windowController) {
         super();

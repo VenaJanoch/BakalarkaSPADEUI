@@ -1,7 +1,11 @@
 package tables;
 
 import javafx.beans.property.StringProperty;
-
+/**
+ * Trida predstavujici kontejner pro tabulku segmentu Activity
+ *
+ * @author Václav Janoch
+ */
 public class ActivityTable extends BasicTable {
 
     /**
@@ -11,12 +15,12 @@ public class ActivityTable extends BasicTable {
 
     /**
      * Konstruktor třídy Zinicializuje globální proměnnné třídy
-     *
-     * @param name jméno milestone
+     * @param name alias prvku
+     * @param exist existence prvku
+     * @param id identifikator prvku
      */
     public ActivityTable(String name, boolean exist, int id) {
         super(name, exist, id);
-        //this.description = new SimpleStringProperty(description);
     }
 
     /**

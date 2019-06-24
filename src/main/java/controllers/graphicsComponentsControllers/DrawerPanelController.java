@@ -14,14 +14,31 @@ import javafx.scene.paint.CycleMethod;
 import javafx.scene.paint.LinearGradient;
 import javafx.scene.paint.Stop;
 
+/**
+ * Trida predstavujici controller pro rizeni postranich Drawer panelu
+ *
+ * @author Václav Janoch
+ */
 public class DrawerPanelController {
 
+    /** Levi postrani panel**/
     private JFXDrawer leftDrawerPanel;
+    /** Pravi postrani panel**/
     private JFXDrawer rightDrawerPanel;
+    /** Pravi StackPane panel**/
     private StackPane righDrawerStackPane;
+    /** Levi postrani panel**/
     private StackPane leftDrawerStackPane;
+    /** Stack pro panely**/
     private JFXDrawersStack jfxDrawersStack;
 
+    /**
+     * Konstruktor tridy
+     * Zinicialuzuje globalni promenne tridy
+     * @param leftDrawerPane Instace leveho postraniho panelu
+     * @param rightDrawerPane Instace praveho postraniho panelu
+     * @param jfxDrawersStack Stack s panely
+     */
     public DrawerPanelController(JFXDrawer leftDrawerPane, JFXDrawer rightDrawerPane, JFXDrawersStack jfxDrawersStack) {
         this.leftDrawerPanel = leftDrawerPane;
         this.rightDrawerPanel = rightDrawerPane;
@@ -40,12 +57,10 @@ public class DrawerPanelController {
 
     }
 
-    public void hideLeftPanel() {
-        if (leftDrawerPanel.isOpened()) {
-            leftDrawerPanel.close();
-        }
-    }
-
+    /**
+     * Metoda pro zobrazeni leveho postraniho panelu
+     * @param form Formular, ktery bude v panelu zobrazen
+     */
     public void showLeftPanel(BasicForm form) {
         jfxDrawersStack.toggle(leftDrawerPanel);
         leftDrawerPanel.setDefaultDrawerSize(form.getMinWidth());
@@ -54,12 +69,10 @@ public class DrawerPanelController {
         showPanel(leftDrawerPanel, leftDrawerStackPane);
     }
 
-    public void hideRightPanel() {
-        if (rightDrawerPanel.isOpened()) {
-            rightDrawerPanel.close();
-        }
-    }
-
+    /**
+     * Metoda pro zobrazeni praveho panelu
+     * @param panel Controlni panel, ktery bude v panelu zobrazen
+     */
     public void showRightPanel(ControlPanel panel) {
         jfxDrawersStack.toggle(rightDrawerPanel);
         rightDrawerPanel.setDefaultDrawerSize(panel.getWidth());
@@ -68,6 +81,11 @@ public class DrawerPanelController {
         showPanel(rightDrawerPanel, righDrawerStackPane);
     }
 
+    /**
+     * Metoda pro vyjeti konkretniho panelu
+     * @param drawer Postrani panel pro zobrazeni
+     * @param stackPane Stack Pane
+     */
     public void showPanel(JFXDrawer drawer, StackPane stackPane) {
 
         drawer.setSidePane(stackPane);

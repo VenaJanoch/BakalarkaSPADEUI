@@ -2,6 +2,11 @@ package tables;
 
 import javafx.beans.property.StringProperty;
 
+/**
+ * Trida predstavujici kontejner pro Projekt
+ *
+ * @author Václav Janoch
+ */
 public class ProjectTable extends BasicTable {
 
     /**

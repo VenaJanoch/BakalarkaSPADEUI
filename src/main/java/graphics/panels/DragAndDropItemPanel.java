@@ -43,8 +43,8 @@ public class DragAndDropItemPanel extends HBox {
 
     /**
      * Konstruktor třídy Zinicializuje globální proměnné třídy
-     *
-     * @param itemArray int[]
+     * @param itemArray pole prvku v panelu
+     * @param drawerPanelController instace tridy DrawerPanelController
      */
     public DragAndDropItemPanel(int[] itemArray, DrawerPanelController drawerPanelController) {
         super();
@@ -109,74 +109,22 @@ public class DragAndDropItemPanel extends HBox {
 
         HBox box = new HBox(10);
         linkButton = canvasController.getLinkButton();
-        FileInputStream input = null;
-        FileInputStream input2 = null;
-        try {
-            input = new FileInputStream(Constans.SIPKA);
-            input2 = new FileInputStream(Constans.SIPKA2);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        image = new Image(input);
-        image2 = new Image(input2);
-        BackgroundImage backgroundImage = new BackgroundImage(image, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT,
-                BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
-        BackgroundImage backgroundImage2 = new BackgroundImage(image2, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT,
-                BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+        background = canvasController.getBackground();
+        background2 = canvasController.getBackground2();
+        image = canvasController.getImage();
+        image2 = canvasController.getImage2();
 
-        background = new Background(backgroundImage);
-        background2 = new Background(backgroundImage2);
 
-        linkButton.setId("linkButton");
         box.setMinWidth(80);
-        setLinkButtonBackground(background, image);
+        canvasController.setLinkButtonBackground(background, image);
         SplitPane splitPane = new SplitPane();
         box.getChildren().addAll(splitPane, linkButton);
         HBox.setMargin(splitPane, new Insets(0, 0, 0, 5));
-
-        linkButton.setFont(Font.font("Verdana", 25));
-        linkButton.setOnAction(event -> createArrowButtonEvent());
-        linkButton.setOnKeyPressed(event -> presESC(event));
 
         this.getChildren().addAll(box);
 
     }
 
-    private void setLinkButtonBackground(Background background, Image image){
-        linkButton.setMinWidth(image.getWidth());
-        linkButton.setMinHeight(image.getHeight());
-        linkButton.setBackground(background);
-    }
 
-
-    /**
-     * Pomocná metoda pro reakci na stisk ESC
-     *
-     * @param event
-     */
-    public void presESC(KeyEvent event) {
-        if (event.getCode() == KeyCode.ESCAPE) {
-            createArrowButtonEvent();
-            canvasController.pressESCAction();
-        }
-    }
-
-
-    /**
-     * Pomocná metoda pro nastavaní reakce na stisk tlačítka pro přepnutí modu
-     */
-    public void createArrowButtonEvent() {
-
-        if (canvasController.changeArrow()) {
-            canvasController.setCursorToCanvas(Cursor.CROSSHAIR);
-            setLinkButtonBackground(background2, image2);
-            linkButton.setCursor(Cursor.DEFAULT);
-
-        } else {
-            canvasController.setCursorToCanvas(Cursor.DEFAULT);
-            setLinkButtonBackground(background, image);
-
-        }
-    }
 
 }

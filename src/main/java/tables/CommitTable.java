@@ -4,6 +4,12 @@ package tables;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
+
+/**
+ * Trida predstavujici kontejner pro tabulku elementu Commit
+ *
+ * @author Václav Janoch
+ */
 public class CommitTable extends BasicTable {
 
     /**

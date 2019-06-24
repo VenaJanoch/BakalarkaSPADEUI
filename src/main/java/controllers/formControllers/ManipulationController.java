@@ -13,24 +13,33 @@ import services.*;
 
 import java.util.Set;
 
+/**
+ * Trida predstavujici controller manipulaci s prvky na platne
+ * Predstavujici modelovaci platno
+ *
+ * @author Václav Janoch
+ */
 public class ManipulationController {
 
     /**
      * Globální proměnné třídy
      */
 
-    private DeleteControl deleteControl;
-
     private DragAndDropCanvas chooseCanvas;
 
+    /**Promenna pro urceni vybrane funkce pro vyjmuti prvku**/
     private boolean isCut;
+    /**Promenna pro urceni vybrane funkce pro kopirovani prvku**/
     private boolean isCopy;
 
     private boolean isChoosedItem = false;
+    private boolean isMultiSelect = false;
 
     private NodeLink link;
 
-    private FormController formController;
+    /**
+     * Promenne pro kontrolery potrebne pro funkcnosti
+     */
     private FormFillController formFillController;
     private IDeleteFormController deleteFormController;
     private SelectionController selectionController;
@@ -38,6 +47,8 @@ public class ManipulationController {
     /**
      * Konstruktor třídy Zinicializuje globální proměnné třídy
      * instance třídy control
+     * @param deleteFormController instace tridy kontroleru pro odstraneni prvku
+     * @param selectionController instace tridy kontroleru pro vyber vice prvku
      */
     public ManipulationController(IDeleteFormController deleteFormController, SelectionController selectionController) {
 
@@ -68,7 +79,9 @@ public class ManipulationController {
     }
 
     /**
-     * Smaže prvek ze seznamů a zneviditelní na plátně
+     * Smaže zvolene prvky ze seznamů  na plátně
+     * @param canvasItemController instace tridy canvasItemController
+     * @param canvasController instace tridy canvasController
      */
     public void deleteItem(CanvasItemController canvasItemController, CanvasController canvasController) {
             for(CanvasItem chooseCanvasItem : selectionController.getSelection()){
@@ -76,6 +89,12 @@ public class ManipulationController {
             }
     }
 
+    /**
+     * Pretizena metoda pro odstraneni prvku na platne
+     * @param canvasItemController instace tridy canvasItemController
+     * @param chooseCanvasItem instace vybraneho prvku pro odstraneni
+     * @param canvasController instace tridy canvasController
+     */
     public void deleteItem(CanvasItemController canvasItemController, CanvasItem chooseCanvasItem, CanvasController canvasController) {
         int index = chooseCanvasItem.getFormIdentificator();
         boolean isDelete = deleteForm(index, chooseCanvasItem.getSegmentType());
@@ -85,7 +104,12 @@ public class ManipulationController {
     }
 
     /**
-     * Vloží nový pvek na plátno
+     * Metoda pro vlozeni noveho prveku na platno
+     * @param canvasController instace tridy canvasController
+     * @param canvasItemController instace tridy canvasItemController
+     * @param x souradnice pro vlozeni
+     * @param y souradnice pro vlozeni
+     * @param chooseCanvasItem instace prvku na platne pro napleni daty
      */
     public void pasteItem(CanvasController canvasController, CanvasItemController canvasItemController, double x, double y, CanvasItem chooseCanvasItem) {
 
@@ -107,7 +131,11 @@ public class ManipulationController {
     }
 
     /**
-     * Vloží nový pvek na plátno
+     * Pretizena metoda pro vlozeni novych prvku na platno
+     * @param canvasController instace tridy canvasController
+     * @param canvasItemController instace tridy canvasItemController
+     * @param x souradnice pro vlozeni
+     * @param y souradnice pro vlozeni
      */
     public void pasteItem(CanvasController canvasController, CanvasItemController canvasItemController, double x, double y) {
 
@@ -193,10 +221,6 @@ public class ManipulationController {
         this.link = link;
     }
 
-    public DragAndDropCanvas getChooseCanvas() {
-        return chooseCanvas;
-    }
-
     public void setChooseCanvas(DragAndDropCanvas chooseCanvas) {
         this.chooseCanvas = chooseCanvas;
     }
@@ -216,4 +240,4 @@ public class ManipulationController {
     public void setChoosedItem(boolean choosedItem) {
         isChoosedItem = choosedItem;
     }
-}
+    }

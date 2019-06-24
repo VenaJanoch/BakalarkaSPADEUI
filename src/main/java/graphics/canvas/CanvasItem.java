@@ -23,21 +23,33 @@ public class CanvasItem extends AnchorPane {
     /**
      * Globální proměnné tříd
      **/
+
+    /**
+     * Graficke prvky pouzivane v objektu CanvasItem
+     */
     private InfoBoxSegment segmentInfo;
     private Polygon contour;
+    private ItemContexMenu contextMenu;
+    private Tooltip tooltip;
+
+    /**
+     * Promenne potrebne pro praci s pozici prvku
+     */
     private double orgSceneX, orgSceneY;
     private double orgTranslateX, orgTranslateY;
 
     private double length;
-
-    private Tooltip tooltip;
-    private ItemContexMenu contextMenu;
-
+    /**
+     * Kontrolery potrebne pro praci s prvkem
+     */
     private CanvasItemController canvasItemController;
     private CanvasController canvasController;
 
     private SegmentType segmentType;
 
+    /**
+     * Promenne pro uchovani identifikatoru
+     */
     private String segmentIdentificator;
     private int formIdentificator;
 
@@ -56,18 +68,19 @@ public class CanvasItem extends AnchorPane {
 
         this.canvasController = canvasController;
         this.canvasItemController = canvasItemController;
-        this.setOnMousePressed(event -> canvasItemController.setClicFromDragPoint(event, this, canvasController, type));
+        this.setOnMousePressed(event ->
+                canvasItemController.setClicFromDragPoint(event, this, canvasController, type));
         this.setOnMouseDragged(event -> canvasItemController.setDragFromDragPoint(event, this, canvasController));
         this.setOnMouseReleased(event -> canvasItemController.releasedItem());
 
-        //this.setForm(rootForm);
         this.segmentType = type;
         this.setTranslateX(x);
         this.setTranslateY(y);
+        this.setOrgTranslateX(x);
+        this.setOrgTranslateY(y);
 
         this.segmentInfo = new InfoBoxSegment(this, type, name, Integer.toString(instanceCount));
 
-        //this.canvasItemController.connectItemWithForm(isCreated);
         this.segmentIdentificator = segmentIdentificator;
         this.formIdentificator = formIdentificator;
 
@@ -142,8 +155,9 @@ public class CanvasItem extends AnchorPane {
 
 
     /**
-     * Gerts and Setrs
-     **/
+     * Metoda pro nastaveni jmena do prvku.
+     * @param name
+     */
     public void setNameText(String name) {
 
         segmentInfo.setNameText(name);

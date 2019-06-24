@@ -8,8 +8,14 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * Trida predstavujici controller pro vyber vice prvku na platne
+ *
+ * @author Václav Janoch
+ */
 public class SelectionController {
 
+    /** Kolekce uchovavajici instace objekty vybranych na platne**/
     private Set<CanvasItem> selection = new HashSet<>();
 
     /**

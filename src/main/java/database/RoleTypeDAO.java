@@ -11,30 +11,30 @@ import java.util.List;
 /**
  * Třída zajišťující výběr dat artefaktů z databáze implementující rozhraní IActivityDAO
  */
-public class RoleDAO {
+public class RoleTypeDAO {
     private Connection pripojeni;                //připojení k databázi
     private VerifyController verifyController;
 
     /**
-     * Konstruktor třídy
+     * Konstruktor tridy
+     * Zinicializuje globalni promenne tridy
+     * @param verifyController
      */
-    public RoleDAO(VerifyController verifyController) {
+    public RoleTypeDAO(VerifyController verifyController) {
         this.pripojeni = Constans.CONNECTION;    //nastaví připojení uložené ve třídě Konstanty
         this.verifyController = verifyController;
     }
 
-
     /**
-     * Vrací seznam artefaktů patřících osobě s id v parametru
-     *
-     * @param idOsoby id osoby pro výběr artefaktů
-     * @return seznam artefaktů
-     */
-    public ArrayList<Activity> getRoleOsoba(int idOsoby) {
-        return getRoleOsoba(idOsoby);
-    }
-
-
+     * Metoda pro vytvoreni SQL dotazu pro urcitou instanci Role
+     * Metoda slozi jednotlive parametry pro SQL dotaz a zavola metodu ze tridy SQLAtributeCreator pro ziskani dat z databaze
+     * @param projectVerifyId identifikator zvoleneho projektu
+     * @param name seznam s atributy name
+     * @param nameIndicators seznam s indexi ukazatelu rovnosti
+     * @param classId seznam identifikatory trid
+     * @param superClassId seznam s identifikatory super trid
+     * @return Seznam SQLVerifyObject s daty z databaze
+     **/
     public ArrayList<SQLVerifyObject> getRoleProjekt(int projectVerifyId, List<String> name, List<Integer> nameIndicators, List<Integer> classId, List superClassId) {
         ArrayList<List<Integer>> paramIds = new ArrayList<>();
         paramIds.add(classId);

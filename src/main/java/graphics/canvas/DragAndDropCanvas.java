@@ -45,7 +45,7 @@ public class DragAndDropCanvas extends ScrollPane {
      * Konstruktor třídy Zinicializuje Globální proměnné třídy a nastaví reakce
      * na detekci drag and drop
      *
-     * @param canvasController ItemContexMenu
+     * @param canvasController instace CanvasController
      */
     public DragAndDropCanvas(CanvasController canvasController) {
 
@@ -70,7 +70,6 @@ public class DragAndDropCanvas extends ScrollPane {
         rect = new Rectangle( 0,0,0,0);
         rect.setStroke(Color.BLUE);
         rect.setStrokeWidth(1);
-       // rect.setStrokeLineCap(StrokeLineCap.ROUND);
         rect.setFill(Color.LIGHTBLUE.deriveColor(0, 1.2, 1, 0.6));
 
         this.setOnKeyPressed(event -> canvasController.keyPressAction(event));
@@ -99,21 +98,6 @@ public class DragAndDropCanvas extends ScrollPane {
 
     }
 
-
-    /**
-     * Konstruktor třídy Zinicializuje Globální proměnné třídy a nastaví reakce
-     * na detekci drag and drop
-     */
-    //public DragAndDropCanvas(CanvasController canvasController, JFXDrawer leftDrawerPanel , JFXDrawer rightDrawerPanel) {
-    //	this(canvasController);
-
-    //	canvas.getChildren().addAll(leftDrawerPanel, rightDrawerPanel);
-
-
-    //}
-    public void clearCanvas() {
-        canvas.getChildren().clear();
-    }
 
     /**
      * Getrs and Setrs

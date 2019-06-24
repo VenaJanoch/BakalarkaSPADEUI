@@ -1,10 +1,24 @@
 package services;
-
+/**
+ * Trida predstavujici kontajner pro uchovani informaci pro mapu o navaznostech prvku
+ *
+ * @author Václav Janoch
+ */
 public class TableToObjectInstanc {
+    /**
+     * Globalni promenne tridy
+     */
     private String name;
     private int id;
     private SegmentType segmentType;
 
+    /**
+     * Konstruktor tridy,
+     * Zinicializuje globalni promenne tridy
+     * @param name jmeno prvku
+     * @param id identifikator
+     * @param segmentType typ prvku
+     */
     public TableToObjectInstanc(String name, int id, SegmentType segmentType) {
         this.name = name;
         this.id = id;

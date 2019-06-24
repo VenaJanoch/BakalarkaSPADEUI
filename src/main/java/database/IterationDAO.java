@@ -9,21 +9,38 @@ import controllers.VerifyController;
 import services.Constans;
 
 /**
- * Třída zajišťující výběr dat artefaktů z databáze implementující rozhraní IIterationDAO
+ * Třída zajišťující výběr dat artefaktů z databáze implementující
+ * @author Vaclav Janoch
  */
 public class IterationDAO {
-    private Connection connection;                //připojení k databázi
+    private Connection connection;              
     private VerifyController verifyController;
 
     /**
-     * Konstruktor třídy
+     * Konstruktor tridy
+     * Zinicializuje globalni promenne tridy
+     * @param verifyController
      */
     public IterationDAO(VerifyController verifyController) {
-        this.connection = Constans.CONNECTION;    //nastaví připojení uložené ve třídě Konstanty
+        this.connection = Constans.CONNECTION;    
         this.verifyController = verifyController;
     }
 
-
+ /**
+* Metoda pro vytvoreni SQL dotazu pro urcitou instanci Iteration
+* Metoda slozi jednotlive parametry pro SQL dotaz a zavola metodu ze tridy SQLAtributeCreator pro ziskani dat z databaze
+* @param projectVerifyId identifikator zvoleneho projektu
+* @param name seznam s atributy name
+* @param nameIndicator seznam s indexi ukazatelu rovnosti
+* @param description seznam s atributy description
+* @param descriptionIndicator seznam s indexi ukazatelu rovnosti
+* @param startDate seznam s datumy vytvoreni
+* @param startDateIndicator seznam s indexi ukazatelu rovnosti
+* @param endDate seznam s datumy ukonceni
+* @param endDate seznam s indexi ukazatelu rovnosti
+* @param configId identifikatory zavislych Configuration
+* @return Seznam SQLVerifyObject s daty z databaze
+**/
     public ArrayList<SQLVerifyObject> getIterationyProjekt(int projectVerifyId, List<String> name, List<Integer> nameIndicator,
                                                            List<String> description, List<Integer> descriptionIndicator, List<XMLGregorianCalendar> endDate, List<XMLGregorianCalendar> startDate,
                                                            List<Integer> endDateIndicator, List<Integer> startDateIndicator, List<Integer> configId) {

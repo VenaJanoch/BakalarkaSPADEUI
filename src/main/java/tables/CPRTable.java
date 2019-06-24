@@ -3,6 +3,11 @@ package tables;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
+/**
+ * Trida predstavujici kontejner pro tabulku elementu Configuration Person
+ *
+ * @author Václav Janoch
+ */
 public class CPRTable extends BasicTable {
 
     /**

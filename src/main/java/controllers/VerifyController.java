@@ -14,15 +14,28 @@ import java.util.List;
 
 public class VerifyController {
 
+    /**Identifikator zvoleneho projektu**/
     private int projectVerifyId;
+    /** Okno vysledky **/
     private VerifyWindow verifyWindow;
+    /**Model pro overeni**/
     private DataModel verifyDataModel;
 
+    /**
+     * Konstruktor tridy
+     * Zinicializuje globalni promenne
+     * @param dataModel
+     */
     public VerifyController(DataModel dataModel) {
         this.verifyWindow = new VerifyWindow(this);
         this.verifyDataModel = dataModel;
     }
 
+    /**
+     * Metoda pro zobrazeni okna 
+     * Zavola metodu pro overeni prvku datoveho modelu
+     * @param projectVerifyId identifikator projektu
+     */
     public void verifyInstanceInProject(int projectVerifyId) {
         this.projectVerifyId = projectVerifyId;
         verifyWindow.show();
@@ -30,6 +43,10 @@ public class VerifyController {
         verifyWindow.setItemsToTable(verifyTables);
     }
 
+    /**
+     * Metoda postupne vola metody pro overeni jednotlivych casti modelu
+     * @return seznam instaci VerifyTable pro vysledkove okno
+     */
     private ArrayList<VerifyTable> fillVerifyTables() {
         ArrayList<VerifyTable> verifyTables = new ArrayList<>();
         ArrayList<VerifyTable> verifyTmp = new ArrayList<>();
@@ -153,6 +170,19 @@ public class VerifyController {
         return verifyTables;
     }
 
+    /**
+     * Metoda pro vyhodnoceni vysledku ziskanych z databaze
+     * @param type type elementu nebo segmentu
+     * @param alias alias prvku 
+     * @param modelCount pocet instaci v modelu
+     * @param countIndicator ukazatel rovnosti poctu instanci
+     * @param projectCount pocet instanci v projektu
+     * @param id identifikator prvku
+     * @param isExist existence prvku
+     * @param isExistInProject existence prvku v projektu
+     * @param sql SQL dotaz
+     * @return
+     */
     private VerifyTable createVerifyTable(SegmentType type, String alias, int modelCount, int countIndicator, int projectCount, int id, boolean isExist,
                                           boolean isExistInProject, String sql) {
 
@@ -214,6 +244,13 @@ public class VerifyController {
         return new VerifyTable(type + ": " + alias, id, isExist, modelCount, countIndicatorChar, projectCount, projectExist, result, sql);
     }
 
+    /**
+     * Metoda pro kontrolu elementu CommittedConfiguration v konkretnim projektu
+     * Metoda nejprve zavola DAO objekty pro ziskani ID konkretnich zavislych elementu
+     * Nasledne zavola DAO elementu pro ziskani dat z Databaze
+     * @param commitedConfigurations seznam instaci CommittedConfiguration
+     * @return seznam instaci VerifyTable s vysledky
+     */
     private ArrayList<VerifyTable> addCommitedConfigurationTOVerifyTable(List<CommitedConfiguration> commitedConfigurations) {
 
         ArrayList<SQLVerifyObject> projectCommitedConfigurations;
@@ -223,11 +260,11 @@ public class VerifyController {
             CommitedConfigurationDAO databazeProjekt = new CommitedConfigurationDAO(this);
             CommitDAO commitDAO = new CommitDAO(this);
             PersonDAO personDAO = new PersonDAO(this);
-            RoleDAO roleDAO = new RoleDAO(this);
+            RoleTypeDAO roleTypeDAO = new RoleTypeDAO(this);
             for (CommitedConfiguration modelCommitedConfiguration : commitedConfigurations) {
 
-                ArrayList<Integer> roleDBId = SQLAtributeCreator.createPersonAttribute(modelCommitedConfiguration.getRole(), verifyDataModel, personDAO, roleDAO, projectVerifyId);
-                ArrayList<Integer> commitDBId = SQLAtributeCreator.createCommitAttribute(modelCommitedConfiguration.getCommit(), verifyDataModel, commitDAO, personDAO, roleDAO, projectVerifyId);
+                ArrayList<Integer> roleDBId = SQLAtributeCreator.createPersonAttribute(modelCommitedConfiguration.getRole(), verifyDataModel, personDAO, roleTypeDAO, projectVerifyId);
+                ArrayList<Integer> commitDBId = SQLAtributeCreator.createCommitAttribute(modelCommitedConfiguration.getCommit(), verifyDataModel, commitDAO, personDAO, roleTypeDAO, projectVerifyId);
 
                 projectCommitedConfigurations = databazeProjekt.getCommitedConfigurationProjekt(projectVerifyId, modelCommitedConfiguration.getName(), modelCommitedConfiguration.getNameIndicator(),
                         modelCommitedConfiguration.getCommitedDay(), modelCommitedConfiguration.getCommitedDayIndicator(),
@@ -243,7 +280,7 @@ public class VerifyController {
 
 
         } catch (Exception e) {
-            //   JOptionPane.showMessageDialog(null, Konstanty.POPISY.getProperty("chybaNacteniProjektu"));
+           
             e.printStackTrace();
         }
 
@@ -251,7 +288,13 @@ public class VerifyController {
         return verifyTables;
     }
 
-
+    /**
+     * Metoda pro kontrolu elementu Phase v konkretnim projektu
+     * Metoda nejprve zavola DAO objekty pro ziskani ID konkretnich zavislych elementu
+     * Nasledne zavola DAO elementu pro ziskani dat z Databaze
+     * @param phases seznam instaci CommittedConfiguration
+     * @return seznam instaci VerifyTable s vysledky
+     */
     private ArrayList<VerifyTable> addPhaseTOVerifyTable(List<Phase> phases) {
 
         ArrayList<SQLVerifyObject> projectPhases;
@@ -262,7 +305,7 @@ public class VerifyController {
             MilestoneDAO milestoneDAO = new MilestoneDAO(this);
             ConfigurationDAO configurationDAO = new ConfigurationDAO(this);
             PersonDAO personDAO = new PersonDAO(this);
-            RoleDAO roleDAO = new RoleDAO(this);
+            RoleTypeDAO roleTypeDAO = new RoleTypeDAO(this);
             ChangeDAO changeDAO = new ChangeDAO(this);
             BranchDAO branchDAO = new BranchDAO(this);
             CommitedConfigurationDAO commitedConfigurationDAO = new CommitedConfigurationDAO(this);
@@ -277,7 +320,7 @@ public class VerifyController {
                 ArrayList<Integer> milestoneDBId = SQLAtributeCreator.createMilestoneAttribute(modelPhase.getMilestoneIndex(), verifyDataModel,
                         milestoneDAO, criterionDAO, projectVerifyId);
                 ArrayList<Integer> configDBId = SQLAtributeCreator.createConfigurationAttribute(modelPhase.getConfiguration(), verifyDataModel,
-                        configurationDAO, personDAO, roleDAO, changeDAO, branchDAO, vcsTagDAO, cprdao, artifactDAO, commitedConfigurationDAO, commitDAO, projectVerifyId);
+                        configurationDAO, personDAO, roleTypeDAO, changeDAO, branchDAO, vcsTagDAO, cprdao, artifactDAO, commitedConfigurationDAO, commitDAO, projectVerifyId);
 
 
                 projectPhases = databazeProjekt.getPhaseyProjekt(projectVerifyId, modelPhase.getName(), modelPhase.getNameIndicator(), modelPhase.getDescription(), modelPhase.getDescriptionIndicator(),
@@ -290,13 +333,19 @@ public class VerifyController {
 
 
         } catch (Exception e) {
-            //   JOptionPane.showMessageDialog(null, Konstanty.POPISY.getProperty("chybaNacteniProjektu"));
+           
             e.printStackTrace();
         }
 
         return verifyTables;
     }
-
+    /**
+     * Metoda pro kontrolu elementu Commit v konkretnim projektu
+     * Metoda nejprve zavola DAO objekty pro ziskani ID konkretnich zavislych elementu
+     * Nasledne zavola DAO elementu pro ziskani dat z Databaze
+     * @param commits seznam instaci CommittedConfiguration
+     * @return seznam instaci VerifyTable s vysledky
+     */
     private ArrayList<VerifyTable> addCommitTOVerifyTable(List<Commit> commits) {
 
         ArrayList<SQLVerifyObject> projectCommits;
@@ -305,9 +354,9 @@ public class VerifyController {
         try {
             CommitDAO databazeProjekt = new CommitDAO(this);
             PersonDAO personDAO = new PersonDAO(this);
-            RoleDAO roleDAO = new RoleDAO(this);
+            RoleTypeDAO roleTypeDAO = new RoleTypeDAO(this);
             for (Commit modelCommit : commits) {
-                ArrayList<Integer> roleDBId = SQLAtributeCreator.createPersonAttribute(modelCommit.getAuthor(), verifyDataModel, personDAO, roleDAO, projectVerifyId);
+                ArrayList<Integer> roleDBId = SQLAtributeCreator.createPersonAttribute(modelCommit.getAuthor(), verifyDataModel, personDAO, roleTypeDAO, projectVerifyId);
                 projectCommits = databazeProjekt.getCommitProjekt(projectVerifyId, modelCommit.getName(), modelCommit.getNameIndicator(),
                         modelCommit.isRelease(), modelCommit.getDescription(), modelCommit.getDescriptionIndicator(), modelCommit.getCreated(), modelCommit.getCreatedIndicator(), roleDBId);
                 SQLVerifyObject commit = projectCommits.get(0);
@@ -317,13 +366,19 @@ public class VerifyController {
 
 
         } catch (Exception e) {
-            //   JOptionPane.showMessageDialog(null, Konstanty.POPISY.getProperty("chybaNacteniProjektu"));
+           
             e.printStackTrace();
         }
         return verifyTables;
     }
 
-
+    /**
+     * Metoda pro kontrolu elementu Criterion v konkretnim projektu
+     * Metoda nejprve zavola DAO objekty pro ziskani ID konkretnich zavislych elementu
+     * Nasledne zavola DAO elementu pro ziskani dat z Databaze
+     * @param criterions seznam instaci CommittedConfiguration
+     * @return seznam instaci VerifyTable s vysledky
+     */
     private ArrayList<VerifyTable> addCriterionTOVerifyTable(List<Criterion> criterions) {
 
         ArrayList<SQLVerifyObject> projectCriterions;
@@ -343,12 +398,19 @@ public class VerifyController {
 
 
         } catch (Exception e) {
-            //   JOptionPane.showMessageDialog(null, Konstanty.POPISY.getProperty("chybaNacteniProjektu"));
+           
             e.printStackTrace();
         }
         return verifyTables;
     }
 
+    /**
+     * Metoda pro kontrolu elementu Activity v konkretnim projektu
+     * Metoda nejprve zavola DAO objekty pro ziskani ID konkretnich zavislych elementu
+     * Nasledne zavola DAO elementu pro ziskani dat z Databaze
+     * @param activitys seznam instaci CommittedConfiguration
+     * @return seznam instaci VerifyTable s vysledky
+     */
     private ArrayList<VerifyTable> addActivityTOVerifyTable(List<Activity> activitys) {
 
         ArrayList<SQLVerifyObject> projectActivitys;
@@ -358,12 +420,12 @@ public class VerifyController {
             ActivityDAO databazeProjekt = new ActivityDAO(this);
             WorkUnitDAO WUDAO = new WorkUnitDAO(this);
             PersonDAO personDAO = new PersonDAO(this);
-            RoleDAO roleDAO = new RoleDAO(this);
+            RoleTypeDAO roleTypeDAO = new RoleTypeDAO(this);
             WorkUnitElementDAO workUnitElementDAO = new WorkUnitElementDAO(this);
             CategoryDAO categoryDAO = new CategoryDAO(this);
 
             for (Activity modelActivity : activitys) {
-                ArrayList<Integer> WUDBId = SQLAtributeCreator.createWorkUnitAttribute(modelActivity.getWorkUnits(), verifyDataModel, WUDAO, workUnitElementDAO, personDAO, roleDAO, categoryDAO, projectVerifyId);
+                ArrayList<Integer> WUDBId = SQLAtributeCreator.createWorkUnitAttribute(modelActivity.getWorkUnits(), verifyDataModel, WUDAO, workUnitElementDAO, personDAO, roleTypeDAO, categoryDAO, projectVerifyId);
                 projectActivitys = databazeProjekt.getActivityFormProjekt(projectVerifyId, modelActivity.getName(), modelActivity.getNameIndicator(),
                         modelActivity.getDescription(), modelActivity.getDescriptionIndicator(), modelActivity.getEndDate(), modelActivity.getEndDateIndicator(), WUDBId);
 
@@ -375,13 +437,20 @@ public class VerifyController {
 
 
         } catch (Exception e) {
-            //   JOptionPane.showMessageDialog(null, Konstanty.POPISY.getProperty("chybaNacteniProjektu"));
+           
             e.printStackTrace();
         }
 
         return verifyTables;
     }
 
+    /**
+     * Metoda pro kontrolu elementu Branch v konkretnim projektu
+     * Metoda nejprve zavola DAO objekty pro ziskani ID konkretnich zavislych elementu
+     * Nasledne zavola DAO elementu pro ziskani dat z Databaze
+     * @param branchs seznam instaci CommittedConfiguration
+     * @return seznam instaci VerifyTable s vysledky
+     */
     private ArrayList<VerifyTable> addBranchTOVerifyTable(List<Branch> branchs) {
 
         ArrayList<SQLVerifyObject> projectBranchs;
@@ -400,12 +469,19 @@ public class VerifyController {
 
 
         } catch (Exception e) {
-            //   JOptionPane.showMessageDialog(null, Konstanty.POPISY.getProperty("chybaNacteniProjektu"));
+           
             e.printStackTrace();
         }
         return verifyTables;
     }
 
+    /**
+     * Metoda pro kontrolu elementu Severity v konkretnim projektu
+     * Metoda nejprve zavola DAO objekty pro ziskani ID konkretnich zavislych elementu
+     * Nasledne zavola DAO elementu pro ziskani dat z Databaze
+     * @param severitys seznam instaci CommittedConfiguration
+     * @return seznam instaci VerifyTable s vysledky
+     */
     private ArrayList<VerifyTable> addSeverityTOVerifyTable(List<Severity> severitys) {
 
         ArrayList<SQLVerifyObject> projectSeveritys;
@@ -425,22 +501,29 @@ public class VerifyController {
 
 
         } catch (Exception e) {
-            //   JOptionPane.showMessageDialog(null, Konstanty.POPISY.getProperty("chybaNacteniProjektu"));
+           
             e.printStackTrace();
         }
 
         return verifyTables;
     }
 
-    private ArrayList<VerifyTable> addRoleTypeTOVerifyTable(List<RoleType> severitys) {
+    /**
+     * Metoda pro kontrolu elementu Role Type v konkretnim projektu
+     * Metoda nejprve zavola DAO objekty pro ziskani ID konkretnich zavislych elementu
+     * Nasledne zavola DAO elementu pro ziskani dat z Databaze
+     * @param roleTypes seznam instaci CommittedConfiguration
+     * @return seznam instaci VerifyTable s vysledky
+     */
+    private ArrayList<VerifyTable> addRoleTypeTOVerifyTable(List<RoleType> roleTypes) {
 
         ArrayList<SQLVerifyObject> projectRoleTypes;
         ArrayList<VerifyTable> verifyTables = new ArrayList<>();
         VerifyTable verifyTable = null;
         try {
-            RoleDAO databazeProjekt = new RoleDAO(this);
+            RoleTypeDAO databazeProjekt = new RoleTypeDAO(this);
 
-            for (RoleType modelRoleType : severitys) {
+            for (RoleType modelRoleType : roleTypes) {
                 projectRoleTypes = databazeProjekt.getRoleProjekt(projectVerifyId, modelRoleType.getName(), modelRoleType.getNameIndicator(),
                         modelRoleType.getRoleTypeClassIndex(), modelRoleType.getRoleTypeSuperClassIndex());
 
@@ -451,13 +534,20 @@ public class VerifyController {
 
 
         } catch (Exception e) {
-            //   JOptionPane.showMessageDialog(null, Konstanty.POPISY.getProperty("chybaNacteniProjektu"));
+           
             e.printStackTrace();
         }
 
         return verifyTables;
     }
 
+    /**
+     * Metoda pro kontrolu elementu Priority v konkretnim projektu
+     * Metoda nejprve zavola DAO objekty pro ziskani ID konkretnich zavislych elementu
+     * Nasledne zavola DAO elementu pro ziskani dat z Databaze
+     * @param prioritys seznam instaci CommittedConfiguration
+     * @return seznam instaci VerifyTable s vysledky
+     */
     private ArrayList<VerifyTable> addPriorityTOVerifyTable(List<Priority> prioritys) {
 
         ArrayList<SQLVerifyObject> projectPrioritys;
@@ -477,12 +567,19 @@ public class VerifyController {
 
 
         } catch (Exception e) {
-            //   JOptionPane.showMessageDialog(null, Konstanty.POPISY.getProperty("chybaNacteniProjektu"));
+           
             e.printStackTrace();
         }
         return verifyTables;
     }
 
+    /**
+     * Metoda pro kontrolu elementu Person v konkretnim projektu
+     * Metoda nejprve zavola DAO objekty pro ziskani ID konkretnich zavislych elementu
+     * Nasledne zavola DAO elementu pro ziskani dat z Databaze
+     * @param persons seznam instaci CommittedConfiguration
+     * @return seznam instaci VerifyTable s vysledky
+     */
     private ArrayList<VerifyTable> addPersonTOVerifyTable(List<Person> persons) {
 
         ArrayList<SQLVerifyObject> projectPersons;
@@ -490,10 +587,10 @@ public class VerifyController {
         VerifyTable verifyTable = null;
         try {
             PersonDAO databazeProjekt = new PersonDAO(this);
-            RoleDAO roleDAO = new RoleDAO(this);
+            RoleTypeDAO roleTypeDAO = new RoleTypeDAO(this);
             for (Person modelPerson : persons) {
 
-                ArrayList<Integer> roleDBId = SQLAtributeCreator.createRoleTypeAttribute(modelPerson.getType(), verifyDataModel, roleDAO, projectVerifyId);
+                ArrayList<Integer> roleDBId = SQLAtributeCreator.createRoleTypeAttribute(modelPerson.getType(), verifyDataModel, roleTypeDAO, projectVerifyId);
 
                 projectPersons = databazeProjekt.getPersonProjekt(projectVerifyId, modelPerson.getName(), modelPerson.getNameIndicator(), roleDBId);
 
@@ -504,7 +601,7 @@ public class VerifyController {
 
 
         } catch (Exception e) {
-            //   JOptionPane.showMessageDialog(null, Konstanty.POPISY.getProperty("chybaNacteniProjektu"));
+           
             e.printStackTrace();
         }
 
@@ -512,6 +609,13 @@ public class VerifyController {
         return verifyTables;
     }
 
+    /**
+     * Metoda pro kontrolu elementu Artifact v konkretnim projektu
+     * Metoda nejprve zavola DAO objekty pro ziskani ID konkretnich zavislych elementu
+     * Nasledne zavola DAO elementu pro ziskani dat z Databaze
+     * @param artifacts seznam instaci CommittedConfiguration
+     * @return seznam instaci VerifyTable s vysledky
+     */
     private ArrayList<VerifyTable> addArtifactTOVerifyTable(List<Artifact> artifacts) {
 
         ArrayList<SQLVerifyObject> projectArtifacts;
@@ -520,12 +624,12 @@ public class VerifyController {
         try {
             ArtifactDAO databazeProjekt = new ArtifactDAO(this);
             PersonDAO personDAO = new PersonDAO(this);
-            RoleDAO roleDAO = new RoleDAO(this);
+            RoleTypeDAO roleTypeDAO = new RoleTypeDAO(this);
 
             for (Artifact modelArtifact : artifacts) {
 
 
-                ArrayList<Integer> roleDBId = SQLAtributeCreator.createPersonAttribute(modelArtifact.getAuthorIndex(), verifyDataModel, personDAO, roleDAO, projectVerifyId);
+                ArrayList<Integer> roleDBId = SQLAtributeCreator.createPersonAttribute(modelArtifact.getAuthorIndex(), verifyDataModel, personDAO, roleTypeDAO, projectVerifyId);
 
                 projectArtifacts = databazeProjekt.getArtifactProjekt(projectVerifyId, modelArtifact.getName(), modelArtifact.getNameIndicator(), modelArtifact.getDescription(), modelArtifact.getDescriptionIndicator(),
                         modelArtifact.getCreated(), modelArtifact.getCreatedIndicator(), roleDBId, modelArtifact.getMimeType(), modelArtifact.getMimeTypeIndicator());
@@ -537,13 +641,19 @@ public class VerifyController {
 
 
         } catch (Exception e) {
-            //   JOptionPane.showMessageDialog(null, Konstanty.POPISY.getProperty("chybaNacteniProjektu"));
             e.printStackTrace();
         }
 
         return verifyTables;
     }
 
+    /**
+     * Metoda pro kontrolu elementu Configuration Person v konkretnim projektu
+     * Metoda nejprve zavola DAO objekty pro ziskani ID konkretnich zavislych elementu
+     * Nasledne zavola DAO elementu pro ziskani dat z Databaze
+     * @param cprs seznam instaci CommittedConfiguration
+     * @return seznam instaci VerifyTable s vysledky
+     */
     private ArrayList<VerifyTable> addCPRTOVerifyTable(List<ConfigPersonRelation> cprs) {
 
         ArrayList<SQLVerifyObject> projectcprs;
@@ -552,12 +662,12 @@ public class VerifyController {
         try {
             CPRDAO databazeProjekt = new CPRDAO(this);
             PersonDAO personDAO = new PersonDAO(this);
-            RoleDAO roleDAO = new RoleDAO(this);
+            RoleTypeDAO roleTypeDAO = new RoleTypeDAO(this);
 
             for (ConfigPersonRelation modelCPR : cprs) {
 
 
-                ArrayList<Integer> roleDBId = SQLAtributeCreator.createPersonAttribute(modelCPR.getPersonIndex(), verifyDataModel, personDAO, roleDAO, projectVerifyId);
+                ArrayList<Integer> roleDBId = SQLAtributeCreator.createPersonAttribute(modelCPR.getPersonIndex(), verifyDataModel, personDAO, roleTypeDAO, projectVerifyId);
 
                 projectcprs = databazeProjekt.getCPRProjekt(projectVerifyId, modelCPR.getName(), modelCPR.getNameIndicator(), modelCPR.getDescription(), modelCPR.getDescriptionIndicator(),
                         roleDBId);
@@ -568,13 +678,19 @@ public class VerifyController {
                 verifyTables.add(verifyTable);
             }
         } catch (Exception e) {
-            //   JOptionPane.showMessageDialog(null, Konstanty.POPISY.getProperty("chybaNacteniProjektu"));
+           
             e.printStackTrace();
         }
         return verifyTables;
     }
 
-
+    /**
+     * Metoda pro kontrolu elementu Configuration v konkretnim projektu
+     * Metoda nejprve zavola DAO objekty pro ziskani ID konkretnich zavislych elementu
+     * Nasledne zavola DAO elementu pro ziskani dat z Databaze
+     * @param configurations seznam instaci CommittedConfiguration
+     * @return seznam instaci VerifyTable s vysledky
+     */
     private ArrayList<VerifyTable> addConfigurationTOVerifyTable(List<Configuration> configurations) {
 
         ArrayList<SQLVerifyObject> projectConfigurations;
@@ -583,7 +699,7 @@ public class VerifyController {
         try {
             ConfigurationDAO databazeProjekt = new ConfigurationDAO(this);
             PersonDAO personDAO = new PersonDAO(this);
-            RoleDAO roleDAO = new RoleDAO(this);
+            RoleTypeDAO roleTypeDAO = new RoleTypeDAO(this);
             ChangeDAO changeDAO = new ChangeDAO(this);
             BranchDAO branchDAO = new BranchDAO(this);
             CommitedConfigurationDAO commitedConfigurationDAO = new CommitedConfigurationDAO(this);
@@ -593,13 +709,13 @@ public class VerifyController {
             VCSTagDAO vcsTagDAO = new VCSTagDAO(this);
             for (Configuration modelConfiguration : configurations) {
 
-                ArrayList<Integer> roleDBId = SQLAtributeCreator.createPersonAttribute(modelConfiguration.getAuthorIndex(), verifyDataModel, personDAO, roleDAO, projectVerifyId);
-                ArrayList<Integer> changeDBId = SQLAtributeCreator.createChangeAttribute(modelConfiguration.getChangesIndexs(), verifyDataModel, changeDAO, artifactDAO, personDAO, roleDAO, projectVerifyId);
-                ArrayList<Integer> artifactDBId = SQLAtributeCreator.createArtifactAttribute(modelConfiguration.getArtifactsIndexs(), verifyDataModel, artifactDAO, projectVerifyId, personDAO, roleDAO);
-                ArrayList<Integer> committedConfigurationDBId = SQLAtributeCreator.createCommittedAttribute(modelConfiguration.getCommitedConfiguration(), verifyDataModel, commitedConfigurationDAO, commitDAO, personDAO, roleDAO, projectVerifyId);
-                ArrayList<Integer> branchDBId = SQLAtributeCreator.createBranchAttribute(modelConfiguration.getBranchIndexs(), verifyDataModel, branchDAO, artifactDAO, personDAO, roleDAO, projectVerifyId);
+                ArrayList<Integer> roleDBId = SQLAtributeCreator.createPersonAttribute(modelConfiguration.getAuthorIndex(), verifyDataModel, personDAO, roleTypeDAO, projectVerifyId);
+                ArrayList<Integer> changeDBId = SQLAtributeCreator.createChangeAttribute(modelConfiguration.getChangesIndexs(), verifyDataModel, changeDAO, artifactDAO, personDAO, roleTypeDAO, projectVerifyId);
+                ArrayList<Integer> artifactDBId = SQLAtributeCreator.createArtifactAttribute(modelConfiguration.getArtifactsIndexs(), verifyDataModel, artifactDAO, projectVerifyId, personDAO, roleTypeDAO);
+                ArrayList<Integer> committedConfigurationDBId = SQLAtributeCreator.createCommittedAttribute(modelConfiguration.getCommitedConfiguration(), verifyDataModel, commitedConfigurationDAO, commitDAO, personDAO, roleTypeDAO, projectVerifyId);
+                ArrayList<Integer> branchDBId = SQLAtributeCreator.createBranchAttribute(modelConfiguration.getBranchIndexs(), verifyDataModel, branchDAO, artifactDAO, personDAO, roleTypeDAO, projectVerifyId);
                 ArrayList<Integer> tagDBId = SQLAtributeCreator.createVCSTagAttribute(modelConfiguration.getTagIndex(), verifyDataModel, vcsTagDAO, projectVerifyId);
-                ArrayList<Integer> cprDBId = SQLAtributeCreator.createCPRAttribute(modelConfiguration.getCPRsIndexs(), verifyDataModel, cprdao, personDAO, roleDAO, projectVerifyId);
+                ArrayList<Integer> cprDBId = SQLAtributeCreator.createCPRAttribute(modelConfiguration.getCPRsIndexs(), verifyDataModel, cprdao, personDAO, roleTypeDAO, projectVerifyId);
 
                 projectConfigurations = databazeProjekt.getConfigurationProjekt(projectVerifyId, modelConfiguration.getName(), modelConfiguration.getNameIndicator(),
                         modelConfiguration.getDescription(), modelConfiguration.getDescriptionIndicator(), modelConfiguration.getCreated(), modelConfiguration.getCreatedIndicator(),
@@ -612,13 +728,19 @@ public class VerifyController {
 
 
         } catch (Exception e) {
-            //   JOptionPane.showMessageDialog(null, Konstanty.POPISY.getProperty("chybaNacteniProjektu"));
+           
             e.printStackTrace();
         }
         return verifyTables;
     }
 
-
+    /**
+     * Metoda pro kontrolu elementu Changes v konkretnim projektu
+     * Metoda nejprve zavola DAO objekty pro ziskani ID konkretnich zavislych elementu
+     * Nasledne zavola DAO elementu pro ziskani dat z Databaze
+     * @param changes seznam instaci CommittedConfiguration
+     * @return seznam instaci VerifyTable s vysledky
+     */
     private ArrayList<VerifyTable> addChangeTOVerifyTable(List<Change> changes) {
 
         ArrayList<SQLVerifyObject> projectChanges;
@@ -628,11 +750,11 @@ public class VerifyController {
             ChangeDAO databazeProjekt = new ChangeDAO(this);
             ArtifactDAO artifactDAO = new ArtifactDAO(this);
             PersonDAO personDAO = new PersonDAO(this);
-            RoleDAO roleDAO = new RoleDAO(this);
+            RoleTypeDAO roleTypeDAO = new RoleTypeDAO(this);
             for (Change modelChange : changes) {
 
 
-                ArrayList<Integer> artifactDBId = SQLAtributeCreator.createArtifactAttribute(modelChange.getArtifactIndex(), verifyDataModel, artifactDAO, projectVerifyId, personDAO, roleDAO);
+                ArrayList<Integer> artifactDBId = SQLAtributeCreator.createArtifactAttribute(modelChange.getArtifactIndex(), verifyDataModel, artifactDAO, projectVerifyId, personDAO, roleTypeDAO);
                 projectChanges = databazeProjekt.getChangeProjekt(projectVerifyId, modelChange.getName(), modelChange.getNameIndicator(), modelChange.getDescription(), modelChange.getDescriptionIndicator()
                         , artifactDBId);
 
@@ -643,7 +765,7 @@ public class VerifyController {
 
 
         } catch (Exception e) {
-            //   JOptionPane.showMessageDialog(null, Konstanty.POPISY.getProperty("chybaNacteniProjektu"));
+           
             e.printStackTrace();
         }
 
@@ -651,7 +773,13 @@ public class VerifyController {
         return verifyTables;
     }
 
-
+    /**
+     * Metoda pro kontrolu elementu Iteration v konkretnim projektu
+     * Metoda nejprve zavola DAO objekty pro ziskani ID konkretnich zavislych elementu
+     * Nasledne zavola DAO elementu pro ziskani dat z Databaze
+     * @param iterations seznam instaci CommittedConfiguration
+     * @return seznam instaci VerifyTable s vysledky
+     */
     private ArrayList<VerifyTable> addIterationTOVerifyTable(List<Iteration> iterations) {
 
         ArrayList<SQLVerifyObject> projectIterations = new ArrayList<>();
@@ -661,7 +789,7 @@ public class VerifyController {
             IterationDAO databazeProjekt = new IterationDAO(this);
             ConfigurationDAO configurationDAO = new ConfigurationDAO(this);
             PersonDAO personDAO = new PersonDAO(this);
-            RoleDAO roleDAO = new RoleDAO(this);
+            RoleTypeDAO roleTypeDAO = new RoleTypeDAO(this);
             ChangeDAO changeDAO = new ChangeDAO(this);
             BranchDAO branchDAO = new BranchDAO(this);
             CommitedConfigurationDAO commitedConfigurationDAO = new CommitedConfigurationDAO(this);
@@ -672,7 +800,7 @@ public class VerifyController {
             for (Iteration modelIteration : iterations) {
 
                 ArrayList<Integer> configDBId = SQLAtributeCreator.createConfigurationAttribute(modelIteration.getConfiguration(), verifyDataModel,
-                        configurationDAO, personDAO, roleDAO, changeDAO, branchDAO, vcsTagDAO, cprdao, artifactDAO, commitedConfigurationDAO, commitDAO, projectVerifyId);
+                        configurationDAO, personDAO, roleTypeDAO, changeDAO, branchDAO, vcsTagDAO, cprdao, artifactDAO, commitedConfigurationDAO, commitDAO, projectVerifyId);
 
 
                 projectIterations = databazeProjekt.getIterationyProjekt(projectVerifyId, modelIteration.getName(), modelIteration.getNameIndicator(), modelIteration.getDescription(), modelIteration.getDescriptionIndicator(), modelIteration.getEndDate(), modelIteration.getStartDate(),
@@ -685,7 +813,7 @@ public class VerifyController {
 
 
         } catch (Exception e) {
-            //   JOptionPane.showMessageDialog(null, Konstanty.POPISY.getProperty("chybaNacteniProjektu"));
+           
             e.printStackTrace();
         }
 
@@ -710,7 +838,7 @@ public class VerifyController {
             verifyTable = createVerifyTable(SegmentType.Project, "Project", -1, -1, -1, projectVerifyId, true, project.isExist(), project.getSqlCommand());
             verifyTables.add(verifyTable);
         } catch (Exception e) {
-            //   JOptionPane.showMessageDialog(null, Konstanty.POPISY.getProperty("chybaNacteniProjektu"));
+           
             e.printStackTrace();
         }
 
@@ -718,7 +846,13 @@ public class VerifyController {
         return verifyTables;
     }
 
-
+    /**
+     * Metoda pro kontrolu elementu Status v konkretnim projektu
+     * Metoda nejprve zavola DAO objekty pro ziskani ID konkretnich zavislych elementu
+     * Nasledne zavola DAO elementu pro ziskani dat z Databaze
+     * @param statuss seznam instaci CommittedConfiguration
+     * @return seznam instaci VerifyTable s vysledky
+     */
     private ArrayList<VerifyTable> addStatusTOVerifyTable(List<Status> statuss) {
 
         ArrayList<SQLVerifyObject> projectStatuss;
@@ -738,7 +872,7 @@ public class VerifyController {
 
 
         } catch (Exception e) {
-            //   JOptionPane.showMessageDialog(null, Konstanty.POPISY.getProperty("chybaNacteniProjektu"));
+           
             e.printStackTrace();
         }
 
@@ -746,6 +880,13 @@ public class VerifyController {
         return verifyTables;
     }
 
+    /**
+     * Metoda pro kontrolu elementu Relation v konkretnim projektu
+     * Metoda nejprve zavola DAO objekty pro ziskani ID konkretnich zavislych elementu
+     * Nasledne zavola DAO elementu pro ziskani dat z Databaze
+     * @param relations seznam instaci CommittedConfiguration
+     * @return seznam instaci VerifyTable s vysledky
+     */
     private ArrayList<VerifyTable> addRelationTOVerifyTable(List<Relation> relations) {
 
         ArrayList<SQLVerifyObject> projectRelations;
@@ -765,14 +906,20 @@ public class VerifyController {
 
 
         } catch (Exception e) {
-            //   JOptionPane.showMessageDialog(null, Konstanty.POPISY.getProperty("chybaNacteniProjektu"));
+           
             e.printStackTrace();
         }
 
 
         return verifyTables;
     }
-
+    /**
+     * Metoda pro kontrolu elementu Resolution v konkretnim projektu
+     * Metoda nejprve zavola DAO objekty pro ziskani ID konkretnich zavislych elementu
+     * Nasledne zavola DAO elementu pro ziskani dat z Databaze
+     * @param resolutions seznam instaci CommittedConfiguration
+     * @return seznam instaci VerifyTable s vysledky
+     */
     private ArrayList<VerifyTable> addResolutionTOVerifyTable(List<Resolution> resolutions) {
 
         ArrayList<SQLVerifyObject> projectResolutions;
@@ -790,7 +937,7 @@ public class VerifyController {
                 verifyTables.add(verifyTable);
             }
         } catch (Exception e) {
-            //   JOptionPane.showMessageDialog(null, Konstanty.POPISY.getProperty("chybaNacteniProjektu"));
+           
             e.printStackTrace();
         }
 
@@ -798,6 +945,13 @@ public class VerifyController {
         return verifyTables;
     }
 
+    /**
+     * Metoda pro kontrolu elementu Type v konkretnim projektu
+     * Metoda nejprve zavola DAO objekty pro ziskani ID konkretnich zavislych elementu
+     * Nasledne zavola DAO elementu pro ziskani dat z Databaze
+     * @param types seznam instaci CommittedConfiguration
+     * @return seznam instaci VerifyTable s vysledky
+     */
     private ArrayList<VerifyTable> addTypeTOVerifyTable(List<Type> types) {
 
         ArrayList<SQLVerifyObject> projectTypes;
@@ -817,14 +971,20 @@ public class VerifyController {
 
 
         } catch (Exception e) {
-            //   JOptionPane.showMessageDialog(null, Konstanty.POPISY.getProperty("chybaNacteniProjektu"));
+           
             e.printStackTrace();
         }
 
 
         return verifyTables;
     }
-
+    /**
+     * Metoda pro kontrolu elementu VCSTag v konkretnim projektu
+     * Metoda nejprve zavola DAO objekty pro ziskani ID konkretnich zavislych elementu
+     * Nasledne zavola DAO elementu pro ziskani dat z Databaze
+     * @param tag seznam instaci CommittedConfiguration
+     * @return seznam instaci VerifyTable s vysledky
+     */
     private ArrayList<VerifyTable> addVCSTagTOVerifyTable(List<VCSTag> tag) {
 
         ArrayList<SQLVerifyObject> projectTypes;
@@ -844,7 +1004,7 @@ public class VerifyController {
             }
 
         } catch (Exception e) {
-            //   JOptionPane.showMessageDialog(null, Konstanty.POPISY.getProperty("chybaNacteniProjektu"));
+           
             e.printStackTrace();
         }
 
@@ -852,7 +1012,13 @@ public class VerifyController {
         return verifyTables;
     }
 
-
+    /**
+     * Metoda pro kontrolu elementu Work Unit v konkretnim projektu
+     * Metoda nejprve zavola DAO objekty pro ziskani ID konkretnich zavislych elementu
+     * Nasledne zavola DAO elementu pro ziskani dat z Databaze
+     * @param workUnits seznam instaci CommittedConfiguration
+     * @return seznam instaci VerifyTable s vysledky
+     */
     private ArrayList<VerifyTable> addWorkUnitTOVerifyTable(List<WorkUnit> workUnits) {
 
         ArrayList<SQLVerifyObject> projectWorkUnits;
@@ -861,12 +1027,12 @@ public class VerifyController {
         try {
             WorkUnitDAO databazeProjekt = new WorkUnitDAO(this);
             PersonDAO personDAO = new PersonDAO(this);
-            RoleDAO roleDAO = new RoleDAO(this);
+            RoleTypeDAO roleTypeDAO = new RoleTypeDAO(this);
             WorkUnitElementDAO workUnitElementDAO = new WorkUnitElementDAO(this);
             CategoryDAO categoryDAO = new CategoryDAO(this);
             for (WorkUnit modelWorkUnit : workUnits) {
 
-                ArrayList<Integer> roleDBId = SQLAtributeCreator.createPersonAttribute(modelWorkUnit.getAuthorIndex(), verifyDataModel, personDAO, roleDAO, projectVerifyId);
+                ArrayList<Integer> roleDBId = SQLAtributeCreator.createPersonAttribute(modelWorkUnit.getAuthorIndex(), verifyDataModel, personDAO, roleTypeDAO, projectVerifyId);
                 ArrayList<Integer> priorityDBId = SQLAtributeCreator.createPriorityAttribute(modelWorkUnit.getPriorityIndex(), verifyDataModel, workUnitElementDAO, projectVerifyId);
                 ArrayList<Integer> severityDBId = SQLAtributeCreator.createSeverityAttribute(modelWorkUnit.getSeverityIndex(), verifyDataModel, workUnitElementDAO, projectVerifyId);
                 ArrayList<Integer> statusDBId = SQLAtributeCreator.createStatusAttribute(modelWorkUnit.getStatusIndex(), verifyDataModel, workUnitElementDAO, projectVerifyId);
@@ -874,7 +1040,7 @@ public class VerifyController {
                 ArrayList<Integer> resolutionDBId = SQLAtributeCreator.createResolutionAttribute(modelWorkUnit.getResolutionIndex(), verifyDataModel, workUnitElementDAO, projectVerifyId);
                 ArrayList<Integer> categoryDBId = SQLAtributeCreator.createCategoryAttribute(modelWorkUnit.getCategory(), modelWorkUnit.getCategoryIndicator(), verifyDataModel, categoryDAO, projectVerifyId);
                 ArrayList<Integer> relationDBId = SQLAtributeCreator.createRelationAttribute(modelWorkUnit.getRelationIndex(), verifyDataModel, workUnitElementDAO, projectVerifyId);
-                ArrayList<Integer> workUntiInRelationDBId = SQLAtributeCreator.createWorkUnitAttribute(modelWorkUnit.getWorkUnits(), verifyDataModel, databazeProjekt, workUnitElementDAO, personDAO, roleDAO, categoryDAO, projectVerifyId);
+                ArrayList<Integer> workUntiInRelationDBId = SQLAtributeCreator.createWorkUnitAttribute(modelWorkUnit.getWorkUnits(), verifyDataModel, databazeProjekt, workUnitElementDAO, personDAO, roleTypeDAO, categoryDAO, projectVerifyId);
 
                 projectWorkUnits = databazeProjekt.getWorkUnitProjekt(projectVerifyId, modelWorkUnit.getName(), modelWorkUnit.getNameIndicator(), modelWorkUnit.getEstimatedTime(), modelWorkUnit.getProgress(), categoryDBId,
                         roleDBId, priorityDBId, severityDBId, resolutionDBId, statusDBId, typeDBId, relationDBId, workUntiInRelationDBId, modelWorkUnit.getCreated(), modelWorkUnit.getCreatedIndicator(), modelWorkUnit.getEstimatedTimeIndicator(), modelWorkUnit.getProgressIndicator());
@@ -886,7 +1052,7 @@ public class VerifyController {
 
 
         } catch (Exception e) {
-            //   JOptionPane.showMessageDialog(null, Konstanty.POPISY.getProperty("chybaNacteniProjektu"));
+           
             e.printStackTrace();
         }
 
@@ -894,6 +1060,13 @@ public class VerifyController {
         return verifyTables;
     }
 
+    /**
+     * Metoda pro kontrolu elementu Milestone v konkretnim projektu
+     * Metoda nejprve zavola DAO objekty pro ziskani ID konkretnich zavislych elementu
+     * Nasledne zavola DAO elementu pro ziskani dat z Databaze
+     * @param milestones seznam instaci CommittedConfiguration
+     * @return seznam instaci VerifyTable s vysledky
+     */
     private ArrayList<VerifyTable> addMilestoneTOVerifyTable(List<Milestone> milestones) {
 
         ArrayList<SQLVerifyObject> projectMilestones;
@@ -917,7 +1090,7 @@ public class VerifyController {
 
 
         } catch (Exception e) {
-            //   JOptionPane.showMessageDialog(null, Konstanty.POPISY.getProperty("chybaNacteniProjektu"));
+           
             e.printStackTrace();
         }
 
@@ -925,7 +1098,13 @@ public class VerifyController {
         return verifyTables;
     }
 
-
+    /**
+     * Metoda pro vytvoreni nove instace SQLVerifyObject
+     * @param id identifikator
+     * @param sql SQL dotaz
+     * @param exist existence prvku
+     * @return nova instace prvku
+     */
     public SQLVerifyObject createSQLVerifyObject(int id, String sql, boolean exist) {
         return new SQLVerifyObject(id, sql, exist);
     }

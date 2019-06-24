@@ -3,6 +3,12 @@ package tables;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
+
+/**
+ * Trida predstavujici kontejner pro tabulku elementu Committed Configuration
+ *
+ * @author Václav Janoch
+ */
 public class CommitedConfigurationTable extends BasicTable {
 
     /**

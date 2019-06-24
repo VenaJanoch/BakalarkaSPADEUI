@@ -4,13 +4,15 @@ import java.util.ArrayList;
 
 import graphics.canvas.ElementsLink;
 import graphics.canvas.NodeLink;
-import graphics.canvas.WorkUnitLink;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import tables.*;
 
-import javax.xml.soap.Node;
-
+/**
+ * Třída uchovavajici prehledove seznamy urcene pro comboboxy
+ *
+ * @author Václav Janoch
+ */
 public class SegmentLists {
     /**
      * Globální proměnné třídy
@@ -141,16 +143,19 @@ public class SegmentLists {
     }
 
 
-    public void addLinkToList(WorkUnitLink wuLink) {
-        getArrows().add(wuLink);
-
-    }
-
+    /**
+     * Metoda pro pridani spojnice do seznamu
+     * @param caLink
+     */
     public void addLinkToList(ElementsLink caLink) {
         getArrows().add(caLink);
 
     }
 
+    /**
+     * Metoda pro odstraneni spojnice ze seznamu
+     * @param linkId
+     */
     public void removeArrow(int linkId) {
 
         for (int i = 0; i < arrows.size(); i++){
@@ -164,7 +169,12 @@ public class SegmentLists {
 
     }
 
-
+    /**
+     * Metoda pro odstraneni prvku ze seznamu podle indexu v seznamu
+     * @param segmentType typ seznamu
+     * @param indexList index v seznamu
+     * @return identifikator mazaneho prvku
+     */
     public int removeItemFromObservableList(SegmentType segmentType, int indexList) {
         switch (segmentType) {
             case Branch:
@@ -216,7 +226,12 @@ public class SegmentLists {
         }
         return -1;
     }
-
+    /**
+     * Pretizena metoda pro odstraneni prvku ze seznamu podle seznamu indexu v seznamu
+     * @param segmentType typ seznamu
+     * @param indexList index v seznamu
+     * @return identifikator mazaneho prvku
+     */
     public ArrayList<Integer> removeItemFromObservableList(SegmentType segmentType, ArrayList indexList) {
 
         switch (segmentType) {
@@ -270,11 +285,23 @@ public class SegmentLists {
         return null;
     }
 
+    /**
+     * Metoda pro upravu prvku v seznamu podle identifikatoru
+     * @param segmentType typ seznamu
+     * @param id identifikator prvku
+     * @param table instace tridy BasicTable pro nahrazeni v seznamu
+     */
     public void updateListItem(SegmentType segmentType, int id, BasicTable table) {
         int listIndex = removeItemFromObservableList(segmentType, id);
         addItemToObservableList(segmentType, listIndex, table);
     }
 
+    /**
+     * Metoda pro pridani prvku do seznamu
+     * @param segmentType typ seznamu
+     * @param index poradi v seznamu
+     * @param basicTable nstace tridy BasicTable pro vlozeni do seznamu
+     */
     public void addItemToObservableList(SegmentType segmentType, int index, BasicTable basicTable) {
 
         switch (segmentType) {
@@ -326,6 +353,12 @@ public class SegmentLists {
 
     }
 
+    /**
+     * Metoda pro smazani prvku ze seznamu v zavislosit na typu seznamu a seznamu indexu
+     * @param observableList seznam BasicTable
+     * @param indexList seznam indexu v seznamu
+     * @return seznam identifikatoru pro smazani
+     */
     private ArrayList<Integer> removeDataFromListTest(ObservableList<BasicTable> observableList, ArrayList<Integer> indexList) {
         ArrayList<Integer> listIndicies = new ArrayList<>();
 
@@ -338,6 +371,12 @@ public class SegmentLists {
         return listIndicies;
     }
 
+    /**
+     * Pretizena metoda pro smazani prvku ze seznamu v zavislosit na typu seznamu a indexu
+     * @param observableList seznam BasicTable
+     * @param id index v seznamu
+     * @return seznam identifikatoru pro smazani
+     */
     private int removeDataFromListTest(ObservableList<BasicTable> observableList, int id) {
         for (int j = 0; j < observableList.size(); j++) {
             if (observableList.get(j).getId() == id) {
@@ -369,7 +408,7 @@ public class SegmentLists {
         return VCSTagObservable;
     }
 
-    public ObservableList<BasicTable> getRoleObservable() {
+    public ObservableList<BasicTable> getPersonObservable() {
         return roleObservable;
     }
 

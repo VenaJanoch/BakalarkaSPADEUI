@@ -14,14 +14,29 @@ import tables.BasicTable;
 
 import java.util.Arrays;
 
+/**
+ * Třída rozsirujici funkcnost komponenty CheckComboBox
+ *
+ * @author Václav Janoch
+ */
 public class ComboBoxItem extends ItemBox {
 
+    /**Globalni promenne tridy**/
     private ComboBox itemCB;
 
     private ComboBoxItem otherComboBoxItem;
 
     private ObservableList<String> listForBox;
 
+    /**
+     * Konstruktor tridy,
+     * Zinicializuje globalni promenne tridy
+     * @param controlPanelLine instance tridy ControlPanelLine
+     * @param controlPanel instance tridy ControlPanel
+     * @param controlPanelController instace tridy ControlPanelController
+     * @param listForBox seznam s prvky pro komponentu CheckCombobox
+     * @param lineList seznam parametru na radku
+     */
     public ComboBoxItem(ControlPanelLine controlPanelLine, ControlPanel controlPanel, ControlPanelController controlPanelController,
                         ObservableList listForBox, ObservableList<ControlPanelLineObject> lineList) {
         super(FXCollections.observableList(Arrays.asList(Constans.textIndicatorList)), controlPanelController);
@@ -41,6 +56,17 @@ public class ComboBoxItem extends ItemBox {
 
     }
 
+    /**
+
+     * Konstruktor tridy,
+     * Zinicializuje globalni promenne tridy
+     * @param controlPanelLine instance tridy ControlPanelLine
+     * @param controlPanel instance tridy ControlPanel
+     * @param controlPanelController instace tridy ControlPanelController
+     * @param listForBox seznam s prvky pro komponentu CheckCombobox
+     * @param lineList seznam parametru na radku
+     * @param listener listener urceny pro ComboBox
+     */
     public ComboBoxItem(ControlPanelLine controlPanelLine, ControlPanel controlPanel, ControlPanelController controlPanelController,
                         ObservableList listForBox, ChangeListener<Number> listener, ObservableList<ControlPanelLineObject> lineList) {
         super(FXCollections.observableList(Arrays.asList(Constans.textIndicatorList)), controlPanelController);
@@ -56,32 +82,16 @@ public class ComboBoxItem extends ItemBox {
 
     }
 
-    public ComboBoxItem(ControlPanelLine controlPanelLine, ControlPanel controlPanel, ControlPanelController controlPanelController,
-                        ObservableList listForBox, ComboBoxItem comboBoxItem, ChangeListener<Number> indexListener, ObservableList<ControlPanelLineObject> lineList) {
-        this(controlPanelLine, controlPanel, controlPanelController, listForBox, lineList);
-        otherComboBoxItem = comboBoxItem;
-        itemButton.setOnAction(event -> addButtonAction(otherComboBoxItem));
-    }
 
-
-    public void addButtonAction(ComboBoxItem comboBoxItem) {
-        addButtonAction(itemCB);
-        if (!isShowItem) {
-            comboBoxItem.setShowItem(comboBoxItem.itemCB, false);
-        } else {
-            comboBoxItem.setShowItem(comboBoxItem.itemCB, true);
-        }
-
-    }
-
+    /**
+     * Metoda pro zpetne zvoleni prvku v komponente ComboBox
+     * @param index index pro zvoleni
+     */
     public void selectItemInComboBox(int index) {
         itemCB.getSelectionModel().select(index);
     }
 
-    public void selectItemInComboBox(String value) {
-        itemCB.getSelectionModel().select(value);
-    }
-
+    /**Getrs and Setters**/
     public ComboBox<BasicTable> getItemCB() {
         return itemCB;
     }

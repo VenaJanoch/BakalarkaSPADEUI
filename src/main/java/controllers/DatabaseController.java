@@ -9,15 +9,31 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+/**
+ * Trida predstavujici controller pro rizeni pripojeni aplikace k databazi
+ *
+ * @author Václav Janoch
+ */
 public class DatabaseController {
 
+    /**Identifikator zvoleneho projektu**/
     private int chooseProjectId;
+    /**Instace tridy **/
     private VerifyController verifyController;
 
+    /**
+     * Konstruktor tridy
+     * Zinicializuje globalni promenne tridy
+     * @param verifyController Instace kontroleru VerifyController
+     */
     public DatabaseController(VerifyController verifyController) {
         this.verifyController = verifyController;
     }
 
+    /**
+     * Metoda pro ziskani projektu v datovem skladu nastroje SPADe
+     * @return seznam instaci ProjectTable
+     */
     public ArrayList<ProjectTable> findProjectInDatabase() {
         ArrayList<ProjectTable> projekty = new ArrayList<>();
         try {
@@ -30,6 +46,11 @@ public class DatabaseController {
         return projekty;
     }
 
+    /**
+     * Metoda pro kontorlu modelu proti datum ve skladu
+     * Nastavi se id zvoleneho projektu a zavola metoda z VerifyControlleru
+     * @param projectId
+     */
     public void confirmProjectWithModel(int projectId) {
         this.chooseProjectId = projectId;
         verifyController.verifyInstanceInProject(projectId);
@@ -37,21 +58,20 @@ public class DatabaseController {
     }
 
     /**
-     * Pokud souhlasí login a heslo, přihlásí se do databáze a spustí hlavní okno programu
+     * Pokud souhlasí login a heslo, přihlásí se do databáze
      *
      * @param login název uživatelského účtu
-     * @param heslo heslo k uživatelskému účtu
+     * @param password heslo k uživatelskému účtu
      */
-    public boolean logIn(String login, String heslo) {
+    public boolean logIn(String login, String password) {
 
-        if (login.equals("") || heslo.length() == 0) {
-            // JOptionPane.showMessageDialog(null , Konstanty.POPISY.getProperty("chybaUdaju"));
+        if (login.equals("") || password.length() == 0) {
             Alerts.SQLLogError();
             return false;
         } else {
             try {
                 Class.forName("com.mysql.jdbc.Driver").newInstance();
-                Constans.CONNECTION = DriverManager.getConnection(Constans.DATABASE_PATH, login, heslo);
+                Constans.CONNECTION = DriverManager.getConnection(Constans.DATABASE_PATH, login, password);
             } catch (SQLException e) {
                 Alerts.SQLConnectionError();
                 return false;

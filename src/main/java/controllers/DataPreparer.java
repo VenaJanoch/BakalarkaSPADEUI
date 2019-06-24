@@ -15,15 +15,14 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
-
+/**
+ * Trida slouzici pro upravu dat z formularu nebo datoveho modelu
+ *
+ * @author Václav Janoch
+ */
 public class DataPreparer {
 
-    private IdentificatorCreater identificatorCreater;
-
-    public DataPreparer(IdentificatorCreater identificatorCreater) {
-        this.identificatorCreater = identificatorCreater;
-    }
-
+    /**Metoda pro spojeni identificatoru a jmena**/
     private String prepareTableName(String name, int id) {
         if (name == null) {
             name = "";
@@ -31,13 +30,19 @@ public class DataPreparer {
         return id + "_" + name;
     }
 
-    public String prepareDependencyArray(List dependencyArray, ObservableList observableList) {
-        String dependency = "";
-        if (dependencyArray != null) {
-            dependency = prepareIndexForTable(dependencyArray, observableList).toString();
-        }
 
-        return dependency;
+    /**
+     * Metoda pro upravu indexu v seznamu seznamu
+     * @param indices seznam seznamu indexu
+     * @return upravene indexi
+     */
+    public ArrayList<ArrayList<Integer>> prepareIndicesForForm(ArrayList<ArrayList<Integer>> indices) {
+        ArrayList<ArrayList<Integer>> list = new ArrayList<>();
+
+        for (List<Integer> i : indices) {
+            list.add(prepareIndiciesForForm(i));
+        }
+        return list;
     }
 
     public String prepareDependency(int dependencyIndex, ObservableList observableList) {
@@ -49,50 +54,23 @@ public class DataPreparer {
         return dependency;
     }
 
+    /**
+     * Metoda pro vytvoreni instace MilestoneTable
+     * @param nameST Jmeno elementu
+     * @param id identifikator elementu
+     * @return nova instace MilestoneTable
+     */
     public MilestoneTable prepareMilestoneTable(String nameST, int id) {
 
         String idName = prepareTableName(nameST, id);
-        //   String criterion = prepareDependencyArray(criterionArray, observableList);
-
         return new MilestoneTable(idName, true, id);
     }
 
-    public PersonTable prepareRoleTable(String name, String description, int id, int type, ObservableList<BasicTable> roleTypeObservable) {
-        String idName = prepareTableName(name, id);
-        String typeName = prepareDependency(type, roleTypeObservable);
-        return new PersonTable(idName, true, id);
-    }
-
-    public CPRTable prepareCPRTable(String name, int id) {
-        String idName = prepareTableName(name, id);
-        //  String roleName = prepareDependency(roleIndex, roleObservable) ;
-        return new CPRTable(idName, "", true, id);
-    }
-
-    public BranchTable prepareBranchTable(String name, boolean main, int id) {
-        String idName = prepareTableName(name, id);
-        String mainST = "NO";
-        if (main) {
-            mainST = "YES";
-        }
-        return new BranchTable(idName, mainST, main, true, id);
-    }
-
-
-    public String createTableItemIdName(int id, String name) {
-        return id + "_" + prepareStringForForm(name);
-    }
-
-    public ArrayList<ArrayList<Integer>> prepareIndicesForForm(ArrayList<ArrayList<Integer>> indices) {
-        ArrayList<ArrayList<Integer>> list = new ArrayList<>();
-
-        for (List<Integer> i : indices) {
-            list.add(prepareIndiciesForForm(i));
-        }
-        return list;
-    }
-
-
+    /**
+     * Metoda upravujici indexi z datoveho modelu pro formulare
+     * @param indicies seznam indexu z datoveho modelu
+     * @return upraveny seznam indexu z datoveho modelu pro formular
+     */
     public ArrayList<Integer> prepareIndiciesForForm(List<Integer> indicies) {
         ArrayList<Integer> formIndicies = new ArrayList<>();
 
@@ -102,6 +80,11 @@ public class DataPreparer {
         return formIndicies;
     }
 
+    /**
+     * Metoda pro upravu indexu z datoveho modelu pro formular
+     * @param index index pro upraveni
+     * @return upraveny index
+     */
     public int prepareIndexForForm(Integer index) {
         if (index == null) {
             return 0;
@@ -109,39 +92,20 @@ public class DataPreparer {
         return index + 1;
     }
 
-    public ArrayList<String> prepareIndexForTable(List<Integer> indexs, ObservableList observableList) {
-        ArrayList values = new ArrayList();
-        for (int i : indexs) {
-            values.add(observableList.get(i + 1));
-        }
-        return values;
-    }
-
-    public String prepareStringForForm(String text) {
-        if (text == null) {
-            return "";
-        }
-        return text;
-    }
-
-
-    public String prepareEstimateForForm(Double estimate) {
-
-        if (estimate == -1.0 || estimate == null) {
-            return "";
-        }
-
-
-        return String.valueOf(estimate);
-    }
-
+    /**
+     * Metoda pro upravu indexu z formulare pro datovy model
+     * @param index index z formulare
+     * @return upraveny index
+     */
     public int prepareIndexForManipulator(int index) {
-        //if(index != 0){
-        //  return  index -1;
-        //}
         return index - 1;
     }
 
+    /**
+     * Metoda pro upravu indexu z formulare pro model
+     * @param indices seznam s indexi pro upravu
+     * @return seznam upravenych indexu
+     */
     public ArrayList<Integer> prepareIndexForManipulator(List<Integer> indices) {
         ArrayList<Integer> tmpIndices = new ArrayList<>();
         for (int index : indices) {
@@ -150,6 +114,11 @@ public class DataPreparer {
         return tmpIndices;
     }
 
+    /**
+     * Metoda pro upravu indexi v seznamu seznamu
+     * @param indices seznam se seznami indexu
+     * @return upravene seznamy
+     */
     public ArrayList<ArrayList<Integer>> prepareIndicesForManipulator(ArrayList<ArrayList<Integer>> indices) {
         ArrayList<ArrayList<Integer>> tmpIndices = new ArrayList<>();
         for (List<Integer> index : indices) {
@@ -158,25 +127,11 @@ public class DataPreparer {
         return tmpIndices;
     }
 
-    public ArrayList<Integer> prepareCanvasItemIndexForManipulator(Set<Integer> keys) {
-
-        ArrayList<Integer> indices = new ArrayList<>();
-        for (Integer i : keys) {
-            indices.add(identificatorCreater.getWorkUnitIndex(i));
-        }
-
-        return indices;
-    }
-
-    public ArrayList<Integer> prepareIndexForMultiComboBox(List<Integer> indexs) {
-
-        ArrayList<Integer> values = new ArrayList();
-        for (int i : indexs) {
-            values.add(prepareIndexForForm(i));
-        }
-        return values;
-    }
-
+    /**
+     * Metoda pro prevod data ve formatu XMLGregorianCalendar do formatu LocalDate
+     * @param dateXML instace XMLGregorianCalendar
+     * @return prevedeny datum do LocalDate
+     */
     public static ArrayList<LocalDate> prepareDateForForm(List<XMLGregorianCalendar> dateXML) {
         ArrayList<LocalDate> values = new ArrayList();
         for (XMLGregorianCalendar date : dateXML) {
@@ -210,6 +165,11 @@ public class DataPreparer {
         return localDate;
     }
 
+    /**
+     * Metoda pro prevod double do textoveho retezce
+     * @param estimates dooble hodnota pro prevedeni
+     * @return prevedena hodnota
+     */
     public ArrayList convertDoubleToString(List estimates) {
         ArrayList list = new ArrayList<Double>();
         for (double estimate : (List<Double>) estimates) {
@@ -219,6 +179,22 @@ public class DataPreparer {
         return list;
     }
 
+    /**
+     * Metoda pro vytoveni noveho instace CPRTable
+     * @param name jmeno pro instaceni
+     * @param id identifikator instace
+     * @return nova instace CPRTable
+     */
+    public CPRTable prepareCPRTable(String name, int id) {
+        String idName = prepareTableName(name, id);
+        return new CPRTable(idName, "", true, id);
+    }
+
+    /**
+     * Metoda pro prevod int do textoveho retezce
+     * @param progresses dooble hodnota pro prevedeni
+     * @return prevedena hodnota
+     */
     public ArrayList convertIntToString(List progresses) {
         ArrayList list = new ArrayList<Integer>();
         for (int progress : (List<Integer>) progresses) {

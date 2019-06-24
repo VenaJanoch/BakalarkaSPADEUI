@@ -10,10 +10,26 @@ import services.ControlPanelLineObject;
 
 import java.util.Arrays;
 
+/**
+ * Třída rozsirujici funkcnost komponenty TextField
+ *
+ * @author Václav Janoch
+ */
 public class TextFieldItem extends ItemBox {
 
+    /**
+     * Globalni promenne tridy
+     */
     private TextField itemTF;
 
+    /**
+     * Konstruktor tridy,
+     * Zinicializuje globalni promenne tridy
+     * @param controlPanelLine instance tridy ControlPanelLine
+     * @param controlPanel instance tridy ControlPanel
+     * @param controlPanelController instace tridy ControlPanelController
+     * @param lineList seznam parametru na radku
+     */
     public TextFieldItem(ControlPanelLine controlPanelLine, ControlPanel controlPanel, ControlPanelController controlPanelController,
                          ObservableList<ControlPanelLineObject> lineList, String[] indicators) {
         super(FXCollections.observableList(Arrays.asList(indicators)), controlPanelController);

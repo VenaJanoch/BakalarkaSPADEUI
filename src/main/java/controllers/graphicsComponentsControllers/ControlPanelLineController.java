@@ -8,18 +8,40 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import services.ControlPanelLineObject;
 
+/**
+ * Trida predstavujici controller pro rizeni funkcnosti radku v editacnim panelu
+ *
+ * @author Václav Janoch
+ */
 public class ControlPanelLineController {
 
+    /**Kontrolery potrebne pro cinnost kontroleru**/
     private ControlPanelController controlPanelController;
     private ControlPanel controlPanel;
-    private ChangeListener<Number> listener;
+
+    /**Instace radku v panelu**/
     private ControlPanelLine line;
+    /**Poradi radku v panelu**/
     private int lineIndex;
 
+    /**Poradi vybraneho prvku v ComboBoxu**/
     private int itemIndex = 0;
+    /**Seznam parametru ktere se mohou v radku vyskytovat**/
     private ObservableList<ControlPanelLineObject> paramList;
     private boolean isSetType = false;
 
+    /**Listener pro jednotlive komponenty**/
+    private ChangeListener<Number> listener;
+
+    /**
+     * Konstruktor tridy
+     * Zinicializuje globalni promenne tridy
+     * @param line instace ControlPanelLine
+     * @param controlPanel ControlPanel ve kterem se radek nachazi
+     * @param controlPanelController ControlPanelController pro rizeni panelu
+     * @param paramList seznam moznzych parametru radku
+     * @param lineIndex poradi radku v panelu
+     */
     public ControlPanelLineController(ControlPanelLine line, ControlPanel controlPanel, ControlPanelController controlPanelController,
                                       ObservableList<ControlPanelLineObject> paramList, int lineIndex) {
         this.controlPanelController = controlPanelController;
@@ -51,6 +73,9 @@ public class ControlPanelLineController {
         return listener;
     }
 
+    /**
+     * Metoda pro rozhodnuti ktery parametr radku bude zobrazen v panelu
+     */
     public void setBoxToControlPanel() {
         ControlPanelLineObject object = paramList.get(itemIndex);
         controlPanelController.removeFromControlPanel(line, controlPanel.getControlPane());
@@ -81,6 +106,10 @@ public class ControlPanelLineController {
         }
     }
 
+    /**
+     * Metoda pro ziskani indexu radku a zavolani metody pro rozhodnuti o zobrazeni radku
+     * @param index index vybraneho parametru v ComboBoxu
+     */
     public void setBoxToControlPanel(int index) {
         itemIndex = index;
         if (paramList.size() != 0) {
@@ -88,13 +117,21 @@ public class ControlPanelLineController {
         }
     }
 
-
+    /**
+     * Metoda pro vykopirovani radku do noveho
+     * @param oldLine instace kopirovaneho radku
+     * @param paramIndex index parametru pro vyber
+     */
     public void copyLine(ControlPanelLine oldLine, int paramIndex) {
         line.getParamBox().getSelectionModel().select(paramIndex);
         setBoxToControlPanel(paramIndex);
         setDataFromLine(oldLine);
     }
 
+    /**
+     * Metoda pro nastaveni dat do radkku v zavislosti na zvolenem typu parametru
+     * @param oldLine instance stareho radku
+     */
     private void setDataFromLine(ControlPanelLine oldLine) {
         ControlPanelLineObject object = paramList.get(itemIndex);
         switch (object.getLineType()) {
@@ -115,6 +152,10 @@ public class ControlPanelLineController {
     }
 
 
+    /**
+     * Metoda pro nastaveni dat do komponenty CheckComboBox
+     * @param oldLine instace stareho radku
+     */
     private void setDataToCheckComboBoxFieldLine(ControlPanelLine oldLine) {
         CheckComboBoxItem oldItem = oldLine.getCheckComboBoxItem();
         CheckComboBoxItem item = line.getCheckComboBoxItem();
@@ -123,7 +164,10 @@ public class ControlPanelLineController {
         item.selectItemsInComboBox(oldItem.getChoosedIndicies());
     }
 
-
+    /**
+     * Metoda pro nastaveni dat do komponenty ComboBox
+     * @param oldLine instace stareho radku
+     */
     private void setDataToComboBoxFieldLine(ControlPanelLine oldLine) {
         ComboBoxItem oldItem = oldLine.getComboBoxItem();
         ComboBoxItem item = line.getComboBoxItem();
@@ -132,7 +176,10 @@ public class ControlPanelLineController {
         item.selectItemInComboBox(oldItem.getItemIndex());
     }
 
-
+    /**
+     * Metoda pro nastaveni dat do komponenty DatePicker
+     * @param oldLine instace stareho radku
+     */
     private void setDataToDateFieldLine(ControlPanelLine oldLine) {
         DateItem oldItem = oldLine.getDateItem();
         DateItem item = line.getDateItem();
@@ -141,6 +188,10 @@ public class ControlPanelLineController {
         item.setDateToPicker(oldItem.getDateFromDatePicker());
     }
 
+    /**
+     * Metoda pro nastaveni dat do komponenty TextField
+     * @param oldLine instace stareho radku
+     */
     private void setDataToTextFieldLine(ControlPanelLine oldLine) {
 
         TextFieldItem oldItem = oldLine.getTextItem();

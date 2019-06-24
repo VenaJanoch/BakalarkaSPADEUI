@@ -9,11 +9,22 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import services.Constans;
 
+/**
+ * Třída predstavujici ikonku poctu instaci u prvku platna
+ *
+ * @author Václav Janoch
+ */
 public class InstanceCount extends AnchorPane {
 
+    /**Globalni promenne tridy**/
     private Text instaceCountText;
     private Ellipse ellipse;
 
+    /**
+     * Konstruktor tridy
+     * Zinicializuje globalni promenne tridy
+     * @param count
+     */
     public InstanceCount(String count) {
         super();
         this.ellipse = new Ellipse(Constans.INSTACE_COUNT_RADIUSX, Constans.INSTACE_COUNT_RADIUSY );
@@ -25,6 +36,11 @@ public class InstanceCount extends AnchorPane {
 
     }
 
+    /**
+     * Metoda pro nastaveni pozice ikonky
+     * @param x x souradnice
+     * @param y y souradnice
+     */
     public void setPosition(double x, double y) {
 
         this.setTranslateX(x);

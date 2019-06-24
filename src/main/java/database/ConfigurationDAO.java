@@ -12,18 +12,39 @@ import java.util.List;
  * Třída zajišťující výběr dat artefaktů z databáze implementující rozhraní IConfigurationDAO
  */
 public class ConfigurationDAO {
-    private Connection pripojeni;                //připojení k databázi
+    private Connection pripojeni;              
     private VerifyController verifyController;
 
     /**
-     * Konstruktor třídy
+     * Konstruktor tridy
+     * Zinicializuje globalni promenne tridy
+     * @param verifyController
      */
     public ConfigurationDAO(VerifyController verifyController) {
-        this.pripojeni = Constans.CONNECTION;    //nastaví připojení uložené ve třídě Konstanty
+        this.pripojeni = Constans.CONNECTION;   
         this.verifyController = verifyController;
     }
 
 
+/**
+* Metoda pro vytvoreni SQL dotazu pro urcitou instanci Configuration
+* Metoda slozi jednotlive parametry pro SQL dotaz a zavola metodu ze tridy SQLAtributeCreator pro ziskani dat z databaze
+* @ projectVerifyId identifikator zvoleneho projektu
+* @ name seznam s atributy name
+* @ nameIndicator seznam s indexi ukazatelu rovnosti
+* @ description seznam s atributy description
+* @ descriptionIndicator seznam s indexi ukazatelu rovnosti
+* @ createdDate seznam s datumy vytvoreni
+* @ createDateAttribute seznam s indexi ukazatelu rovnosti
+* @ personIds identifikatory zavislych Person
+* @ changeId identifikatory zavislych Change
+* @ branchId identifikatory zavislych Branch
+* @ cprId identifikatory zavislych Configuration Person
+* @ tagId identifikatory zavislych VCSTag
+* @ committedId identifikatory zavislych Committed Configuration
+* @ artifactIds identifikatory zavislych Artifact
+* @ return Seznam SQLVerifyObject s daty z databaze
+**/
     public ArrayList<SQLVerifyObject> getConfigurationProjekt(int projectVerifyId, List<String> name, List<Integer> nameIndicator, List<String> description, List<Integer> descriptionIndicator,
                                                               List<XMLGregorianCalendar> createdDate, List<Integer> createdDateIndicator,
                                                               List<Integer> changeId, List<Integer> branchId, List<Integer> cprId, List<Integer> tagId, List<Integer> committedId, List<Integer> personIds, List<Integer> artifactIds) {

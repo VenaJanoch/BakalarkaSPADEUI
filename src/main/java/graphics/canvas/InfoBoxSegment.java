@@ -30,7 +30,7 @@ public class InfoBoxSegment extends Group {
     private double totalHeight;
 
     /**
-     * Konstruktor třídy Zinicializuje globální proměnné třídy a přidá prvku do
+     * Konstruktor třídy Zinicializuje globální proměnné třídy a přidá prvky do
      * panelu
      *
      * @param canItem CanvasItem

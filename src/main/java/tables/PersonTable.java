@@ -2,6 +2,11 @@ package tables;
 
 import javafx.beans.property.StringProperty;
 
+/**
+ * Trida predstavujici kontejner pro tabulku elementu Person
+ *
+ * @author Václav Janoch
+ */
 public class PersonTable extends BasicTable {
 
     /**
@@ -11,15 +16,13 @@ public class PersonTable extends BasicTable {
     private StringProperty description;
 
     /**
-     * Konstruktor třídy
-     * Zinicializuje globální proměnné
-     *
-     * @param name Jméno typu role
+     * Konstruktor třídy Zinicializuje globální proměnnné třídy
+     * @param name alias prvku
+     * @param exist existence prvku
+     * @param id identifikator prvku
      */
     public PersonTable(String name, boolean exist, int id) {
         super(name, exist, id);
-        //   this.type = new SimpleStringProperty(type);
-        //   this.description = new SimpleStringProperty(desc);
     }
 
     /**

@@ -12,7 +12,7 @@ import controllers.LinkControl;
 import services.LinkType;
 
 /**
- * /** Třída vykreslující spojení mezi Change a Artifact
+ * /** Třída vykreslující spojení mezi prvky
  *
  * @author Václav Janoch
  */
@@ -34,11 +34,12 @@ public abstract class NodeLink extends Line {
 
     /**
      * Konstruktor třídy Zinicizalizuje globální proměnné třídy
-     *
-     * @param Id          Identifikace spojnice
-     *                    SegmentType
-     * @param linkControl LinkControl
+     * @param Id identifikator spojnice
+     * @param linkControl instace tridy LinkControl
+     * @param canvasController instace tridy CanvasController
+     * @param manipulationController instace tridy ManipulationController
      */
+
     public NodeLink(int Id, LinkControl linkControl, CanvasController canvasController, ManipulationController manipulationController) {
         super();
 
@@ -116,16 +117,23 @@ public abstract class NodeLink extends Line {
 
     }
 
+    /**
+     * Metoda pro nastaveni id do Controleru
+     * @param startId pocatecni identifikator
+     * @param endId konecny identifikator
+     */
     public void setIdsToController(int startId, int endId) {
         linkController.setIds(startId, endId);
     }
 
 
+
+
+    /*** Getrs and Setrs ***/
+
     public void coverBackgroundPolygon() {
         backgroundPolygon.setStroke(Color.TRANSPARENT);
     }
-
-    /*** Getrs and Setrs ***/
 
     public Polygon getBackgroundPolygon() {
         return backgroundPolygon;

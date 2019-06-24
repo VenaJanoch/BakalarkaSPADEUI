@@ -13,13 +13,23 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Trida predstavujici controller pro editaci prvku z datovych struktur
+ *
+ * @author Václav Janoch
+ */
 public class EditFormController implements IEditFormController {
 
+    /** Globalni promenne tridy **/
+
+    /** Potrebne tridy z datoveho modelu **/
     private IEditDataModel dataManipulator;
     private DataModel dataModel;
     private IdentificatorCreater identificatorCreater;
     private MapperTableToObject mapperTableToObject;
     private SegmentLists segmentLists;
+
+    /** Tridy pro upravu vkladanych dat **/
     private DataPreparer dataPreparer;
     private FormController formController;
 
@@ -985,7 +995,6 @@ public class EditFormController implements IEditFormController {
             formController.setItemInstanceCount(formIndex, instanceCount, countIndicator);
             formController.setItemColor(formIndex, exist);
         } catch (NumberFormatException e) {
-          //  Alerts.showWrongNumberFormat("Instance count");
             e.printStackTrace();
         }
     }

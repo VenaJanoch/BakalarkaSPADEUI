@@ -2,6 +2,11 @@ package tables;
 
 import javafx.beans.property.StringProperty;
 
+/**
+ * Trida predstavujici kontejner pro tabulku elementu VCSTag
+ *
+ * @author Václav Janoch
+ */
 public class VCSTagTable extends BasicTable {
 
     /**
@@ -11,12 +16,12 @@ public class VCSTagTable extends BasicTable {
 
     /**
      * Konstruktor třídy Zinicializuje globální proměnnné třídy
-     *
-     * @param name jméno milestone
+     * @param name alias prvku
+     * @param exist existence prvku
+     * @param id identifikator prvku
      */
     public VCSTagTable(String name, boolean exist, int id) {
         super(name, exist, id);
-        //	this.description = new SimpleStringProperty(description);
     }
 
     /**

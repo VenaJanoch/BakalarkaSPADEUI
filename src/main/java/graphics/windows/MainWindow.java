@@ -38,8 +38,11 @@ public class MainWindow extends Stage {
 
     /**
      * Konstruktor třídy Nastaví reakci na uzavírání aplikace
-     *
-     * @param
+     * @param windowController instace tridy WindowController
+     * @param drawersStack instance tridy DrawerStack
+     * @param drawerPanelController instance tridy DrawerPanelController
+     * @param selectItemController instance tridy SelectItemController
+     * @param applicationController instance tridy ApplicationController
      */
     public MainWindow(WindowController windowController, JFXDrawersStack drawersStack, DrawerPanelController drawerPanelController,
                       SelectItemController selectItemController, ApplicationController applicationController) {

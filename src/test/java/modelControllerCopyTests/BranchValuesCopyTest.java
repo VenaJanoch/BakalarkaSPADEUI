@@ -41,7 +41,7 @@ public class BranchValuesCopyTest {
             indicators.add(1);
             indicators.add(0);
             BranchTable branchTable = new BranchTable("Jmeno1", "YES", true, true, 0);
-            editFormController.editDataFromBranch("Jmeno1", name, indicators, true, true, branchTable );
+            editFormController.editDataFromBranch("Jmeno1", name, indicators, false, true, branchTable );
             FormFillController formFillController = warmUp.getFormFillController();
             formFillController.fillBranchForm(null, 0);
             branch = warmUp.getDataModel().getBranch(1);
