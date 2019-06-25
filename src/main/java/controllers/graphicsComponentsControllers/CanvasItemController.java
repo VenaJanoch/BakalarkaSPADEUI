@@ -89,6 +89,17 @@ public class CanvasItemController {
     }
 
     /**
+     * Metoda pro nastaveni potrebnych promennych pro vybrani pouze jednoho prvku
+     * @param canvasItem instace tridy CanvasItem
+     */
+    private void setOneItemOperations(CanvasItem canvasItem){
+        selectionController.clear();
+        selectionController.add(canvasItem);
+        manipulation.setChoosedItem(true);
+        manipulation.setMultiSelect(false);
+    }
+
+    /**
      * Metoda určující reakce na kliknutí na prvek, Při jednoduchém kliku načte
      * aktuální polohu prvku pro výpočet posunu prvku, nebo pokud se jedná o mod
      * kreslení vybere prvek pro spojení. Dvojklikem vyvolá příslušny formulář
@@ -99,9 +110,12 @@ public class CanvasItemController {
 
 
         if (selectionController.getSelection().size() <=1){
-            selectionController.clear();
-            selectionController.add(item);
-            manipulation.setChoosedItem(true);
+            if (!t.isControlDown() && !t.isShiftDown()){
+               setOneItemOperations(item);
+            }
+
+        }else {
+            manipulation.setChoosedItem(false);
         }
 
         if (t.getButton().equals(MouseButton.PRIMARY)) {

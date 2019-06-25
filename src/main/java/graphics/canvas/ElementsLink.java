@@ -21,13 +21,21 @@ public class ElementsLink extends NodeLink {
     public ElementsLink(int ID, LinkControl linkControl, CanvasController canvasController, ManipulationController manipulationController) {
         super(ID, linkControl, canvasController, manipulationController);
         backgroundPolygon.setOnMouseClicked(event -> {
-            manipulationController.setLink(this);
-            backgroundPolygon.setVisible(true);
-            backgroundPolygon.setStroke(Color.BLACK);
-            if (event.getClickCount() == 2) {
-                pressedDeleteArrow(event);
-            }
+           polygonClickedReaction(event);
         });
+    }
+
+    /**
+     * Pomocna metoda pro nastaveni pozadi spojnice a pripadne jeji smazani v pripade dvojkliku
+     * @param event instace Mouse event
+     */
+    public void polygonClickedReaction(MouseEvent event){
+        manipulationController.setLink(this);
+        backgroundPolygon.setVisible(true);
+        backgroundPolygon.setStroke(Color.BLACK);
+        if (event.getClickCount() == 2) {
+            pressedDeleteArrow(event);
+        }
     }
 
     /*

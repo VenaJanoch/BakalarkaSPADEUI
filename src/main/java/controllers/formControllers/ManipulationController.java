@@ -240,4 +240,12 @@ public class ManipulationController {
     public void setChoosedItem(boolean choosedItem) {
         isChoosedItem = choosedItem;
     }
+
+    public boolean isMultiSelect() {
+        return isMultiSelect;
     }
+
+    public void setMultiSelect(boolean multiSelect) {
+        isMultiSelect = multiSelect;
+    }
+}

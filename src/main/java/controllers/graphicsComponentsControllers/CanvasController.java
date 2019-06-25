@@ -4,10 +4,7 @@ import com.jfoenix.controls.JFXDrawer;
 import controllers.ApplicationController;
 import controllers.formControllers.FormController;
 import controllers.formControllers.ManipulationController;
-import graphics.canvas.CanvasItem;
-import graphics.canvas.DragAndDropCanvas;
-import graphics.canvas.NodeLink;
-import graphics.canvas.ItemContexMenu;
+import graphics.canvas.*;
 import graphics.controlPanelItems.LineComboBox;
 import javafx.event.EventHandler;
 import javafx.scene.Cursor;
@@ -16,6 +13,7 @@ import javafx.scene.control.ToggleButton;
 import javafx.scene.image.Image;
 import javafx.scene.input.*;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
@@ -463,7 +461,7 @@ public class CanvasController {
 
             @Override
             public void handle(MouseEvent event) {
-                if (!manipulationController.isChoosedItem()) {
+                if (!manipulationController.isChoosedItem() && !manipulationController.isMultiSelect()) {
                     if (event.getButton().equals(MouseButton.PRIMARY)) {
                         dragContext.mouseAnchorX = event.getX();// event.getSceneX();
                         dragContext.mouseAnchorY = event.getY();//
@@ -493,50 +491,74 @@ public class CanvasController {
 
             @Override
             public void handle(MouseEvent event) {
+
                     if (event.getButton().equals(MouseButton.PRIMARY)) {
                         if (!event.isShiftDown() && !event.isControlDown()) {
-                            selectionController.clear();
+                            if (!manipulationController.isChoosedItem()) {
+                                selectionController.clear();
+                            }
                         }
 
                         for (Node node : canvas.getChildren()) {
                             if (node instanceof CanvasItem) {
                                 CanvasItem item = (CanvasItem) node;
+                                multiselectAction(item, event, rect, node);
+                            }else if(node instanceof ElementsLink){
+                                ElementsLink link = (ElementsLink) node;
                                 if (node.getBoundsInParent().intersects(rect.getBoundsInParent())) {
-
-                                    if (event.isShiftDown()) {
-
-                                        selectionController.add(item);
-
-                                    } else if (event.isControlDown()) {
-
-                                        if (selectionController.contains(item)) {
-                                            selectionController.remove(item);
-                                        } else {
-                                            selectionController.add(item);
-                                        }
-                                    } else {
-                                        if (!manipulationController.isChoosedItem()) {
-                                            selectionController.add(item);
+                                    if (event.getButton().equals(MouseButton.PRIMARY)) {
+                                        if (event.getClickCount() == 2) {
+                                            link.deleteArrow(false);
                                         }
 
                                     }
+                                }
                             }
-
-                        }
-
                         //   selectionController.log();
 
-                        removeRectangle();
-
                     }
+                        removeRectangle();
                 }
-                manipulationController.setChoosedItem(false);
                 event.consume();
+                manipulationController.setChoosedItem(false);
+                if (selectionController.getSelection().isEmpty()){
+                    manipulationController.setMultiSelect(false);
+                }
             }
         };
 
         return onMouseReleasedEventHandler;
     }
+
+    /**
+     * Metoda zajistujici reakci pri vyberu vice prvku na platne
+     * @param item instace Canvas Item
+     * @param event udalost mysi
+     * @param rect instace Rectangle
+     * @param node instace Node
+     */
+    private void multiselectAction(CanvasItem item, MouseEvent event, Rectangle rect, Node node){
+        if (node.getBoundsInParent().intersects(rect.getBoundsInParent())) {
+
+            if (event.isShiftDown()) {
+
+                selectionController.add(item);
+                manipulationController.setMultiSelect(true);
+            } else if (event.isControlDown()) {
+
+                if (selectionController.contains(item)) {
+                    selectionController.remove(item);
+                } else {
+                    selectionController.add(item);
+                    manipulationController.setMultiSelect(true);
+                }
+            } else {
+                selectionController.add(item);
+                manipulationController.setMultiSelect(true);
+            }
+        }
+    }
+
 
     /**
      * Pomocna metoda pro odstraneni obdelniku pro multiselect z platna
