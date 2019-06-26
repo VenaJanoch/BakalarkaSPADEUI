@@ -146,7 +146,7 @@ public class SegmentLists {
     /**
      * Metoda pro pridani spojnice do seznamu
      *
-     * @param caLink
+     * @param caLink instance linku
      */
     public void addLinkToList(ElementsLink caLink) {
         getArrows().add(caLink);
@@ -156,7 +156,7 @@ public class SegmentLists {
     /**
      * Metoda pro odstraneni spojnice ze seznamu
      *
-     * @param linkId
+     * @param linkId identifikator linku
      */
     public void removeArrow(int linkId) {
 
@@ -395,10 +395,6 @@ public class SegmentLists {
         }
         return -1;
     }
-
-    /**
-     * Getrs and Setrs
-     **/
 
 
     public ObservableList<BasicTable> getConfigObservable() {

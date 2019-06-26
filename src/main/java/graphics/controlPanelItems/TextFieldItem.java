@@ -30,6 +30,7 @@ public class TextFieldItem extends ItemBox {
      * @param controlPanel           instance tridy ControlPanel
      * @param controlPanelController instace tridy ControlPanelController
      * @param lineList               seznam parametru na radku
+     * @param indicators            seznam idikatoru
      */
     public TextFieldItem(ControlPanelLine controlPanelLine, ControlPanel controlPanel, ControlPanelController controlPanelController,
                          ObservableList<ControlPanelLineObject> lineList, String[] indicators) {

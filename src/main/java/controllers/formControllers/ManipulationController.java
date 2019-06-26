@@ -157,7 +157,11 @@ public class ManipulationController {
      * <p>
      * instance seznamu formulářů
      *
-     * @return pole identifikátorů prvku
+     * @param oldFormIndex identifikator vzoru
+     * @param segmentType typ prvku
+     * @param canvasController instance CanvasController
+     * @param x x souradnice
+     * @param y y souranice
      */
     public void createCopyForm(int oldFormIndex, SegmentType segmentType, CanvasController canvasController, double x, double y) {
 

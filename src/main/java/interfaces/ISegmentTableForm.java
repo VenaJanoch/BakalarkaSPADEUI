@@ -17,17 +17,21 @@ public interface ISegmentTableForm {
     void createForm();
 
     /**
+
      * Metoda pro přídání TableView do formuláře
+     * @return instaci TableView
      */
     Node getTable();
 
     /**
      * Metoda pro nastavení reakce na klávesu delete
+     * @param event event
      */
     void deleteSelected(KeyEvent event);
 
     /**
      * Metoda pro přídání prvku do gridPanelu
+     * @return instanci gridPane
      */
     GridPane createControlPane();
 

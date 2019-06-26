@@ -95,9 +95,9 @@ public class ComboBoxItem extends ItemBox {
         itemCB.getSelectionModel().select(index);
     }
 
-    /**
+    /*
      * Getrs and Setters
-     **/
+     */
     public ComboBox<BasicTable> getItemCB() {
         return itemCB;
     }

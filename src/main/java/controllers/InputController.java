@@ -137,7 +137,7 @@ public class InputController {
      * @param field    nazev pole, ze ktereho hodnota pochazi
      * @param minValue minimalni hodnota intervalu
      * @param maxValue maximalni hodnota intervalu
-     * @return Upravena hodnota na int
+     *
      */
     public static void isDoubleNumber(String input, String field, double minValue, double maxValue) {
         Double testValue = isDoubleNumber(input, field);

@@ -278,9 +278,9 @@ public class ControlPanelLine {
         comboBoxItem.getItemCB().setDisable(false);
     }
 
-    /**
+    /*
      * Gettrs and Setters
-     **/
+     */
 
     public void setParamType(int id) {
         type = paramList.get(id).getType();

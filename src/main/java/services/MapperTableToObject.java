@@ -507,9 +507,7 @@ public class MapperTableToObject {
     }
 
 
-    /**
-     * Getters and Setters
-     **/
+
 
     public Map<Integer, ArrayList<TableToObjectInstanc>> getMilestoneToCriterionMapper() {
         return milestoneToCriterionMapper;

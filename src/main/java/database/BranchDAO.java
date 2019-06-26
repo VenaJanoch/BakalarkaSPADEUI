@@ -28,10 +28,10 @@ public class BranchDAO {
      * Metoda pro vytvoreni SQL dotazu pro urcitou instanci Branch
      * Metoda slozi jednotlive parametry pro SQL dotaz a zavola metodu ze tridy SQLAtributeCreator pro ziskani dat z databaze
      *
-     * @ projectVerifyId identifikator zvoleneho projektu
-     * @ name seznam s atributy name
-     * @ nameIndicator seznam s indexi ukazatelu rovnosti
-     * @ isMain informace o main vetve
+     * @param projectVerifyId identifikator zvoleneho projektu
+     * @param name seznam s atributy name
+     * @param nameIndicator seznam s indexi ukazatelu rovnosti
+     * @param isMain informace o main vetve
      **/
     public ArrayList<SQLVerifyObject> getBranchyProjekt(int projectVerifyId, List<String> name, List<Integer> nameIndicator, boolean isMain) {
 

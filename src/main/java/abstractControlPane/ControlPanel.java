@@ -109,7 +109,7 @@ public abstract class ControlPanel extends ScrollPane {
      */
     abstract protected void createBasicPanel();
 
-    /**
+    /*
      * Gettry a Settry
      */
 

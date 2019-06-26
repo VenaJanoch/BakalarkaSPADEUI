@@ -42,7 +42,7 @@ public class LineComboBox extends ComboBox<BasicTable> {
         }
     };
 
-    /**
+    /*
      * Getrs and Setrs
      */
     public int getRelationIndex() {

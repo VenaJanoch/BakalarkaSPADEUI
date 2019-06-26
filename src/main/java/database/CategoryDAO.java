@@ -31,9 +31,9 @@ public class CategoryDAO {
      * Metoda pro vytvoreni SQL dotazu pro urcitou instanci Category
      * Metoda slozi jednotlive parametry pro SQL dotaz a zavola metodu ze tridy SQLAtributeCreator pro ziskani dat z databaze
      *
-     * @ projectVerifyId identifikator zvoleneho projektu
-     * @ name seznam s atributy name
-     * @ nameIndicator seznam s indexi ukazatelu rovnosti
+     * @param projectVerifyId identifikator zvoleneho projektu
+     * @param name seznam s atributy name
+     * @param nameIndicator seznam s indexi ukazatelu rovnosti
      **/
     public ArrayList<SQLVerifyObject> getCategoryyProjekt(int projectVerifyId, List<String> name, List<Integer> nameIndicator) {
 

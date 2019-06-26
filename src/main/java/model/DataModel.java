@@ -974,7 +974,7 @@ public class DataModel {
      * @param branchIndicator      seznam indexu ukazatelu nerovnosti
      * @param instanceCount        pocet instanci prvku
      * @param countIndicator       seznam indexu ukazatelu nerovnosti
-     * @exist informace o existenci prvku v patternu
+     * @param exist informace o existenci prvku v patternu
      */
     public void addDataToConfiguration(Configuration configuration, String alias, ArrayList<String> actName, ArrayList<String> description, ArrayList<LocalDate> createDate,
                                        boolean isRelease, ArrayList<ArrayList<Integer>> cprs,

@@ -58,8 +58,9 @@ public class DragAndDropItemPanel extends HBox {
     /**
      * Přetížený konstruktor třídy Zinicializuje globální proměnné třídy a
      * nastaví Control, určen pro přidání panelu do hlavního okna
-     *
      * @param itemArray int[]
+     * @param canvasController instace canvasController
+     * @param drawerPanelController kontroler pro drawer panely
      */
     public DragAndDropItemPanel(CanvasController canvasController, int[] itemArray, DrawerPanelController drawerPanelController) {
         this(itemArray, drawerPanelController);

@@ -39,13 +39,17 @@ public class ArtifactControlPanel extends DateDescControlPanel implements IContr
     private int artifactFormIndex;
 
     /**
+
      * Konstruktor tridy, zinicializuje globalni promenne tridy
      * Je zde rozsiren seznam poznych typu panelu pro dany element
      *
      * @param buttonName         textovy retezec pro potvrzovaci tlacitko
-     * @param formDataController instace tridy FormDataController pro ziskani dat z datoveho modelu
-     * @param editFormController instace tridy EditDataController pro predani novych dat
-     * @param formController     instace tridy FormController
+     * @param formDataController instance tridy FormDataController pro ziskani dat z datoveho modelu
+     * @param editFormController instance tridy EditDataController pro predani novych dat
+     * @param formController     instance tridy FormController
+     * @param artifactTable      instance ArtifactTable
+     * @param id                identificator prvku
+     * @param formIndex         identificator formulare
      */
     public ArtifactControlPanel(String buttonName, IFormDataController formDataController,
                                 IEditFormController editFormController, FormController formController, ArtifactTable artifactTable, int id, int formIndex) {

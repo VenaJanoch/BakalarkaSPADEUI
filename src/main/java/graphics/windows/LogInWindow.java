@@ -216,7 +216,7 @@ public class LogInWindow extends Stage {
         return tableTV;
     }
 
-    /**** Getrs and Setrs ***/
+    /* Getrs and Setrs */
 
     public Button getSubmitBT() {
         return submitBT;

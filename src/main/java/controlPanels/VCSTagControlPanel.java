@@ -81,7 +81,7 @@ public class VCSTagControlPanel extends DescriptionControlPanel {
     /**
      * Metoda pro ziskani dat z grafickych komponent a predani dat do editacniho kontroleru EditFormController
      *
-     * @param table     instace tridy BasicTable pro ziskani identifikatoru segmentu
+     * @param basicTable     instace tridy BasicTable pro ziskani identifikatoru segmentu
      * @param tableView instace tridy TableView pro moznost zpetne aktualizace
      */
     public void saveDataFromPanel(BasicTable basicTable, TableView tableView) {

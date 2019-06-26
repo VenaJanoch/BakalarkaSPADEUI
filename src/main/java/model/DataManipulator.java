@@ -582,7 +582,7 @@ public class DataManipulator {
      * Metoda pro ziskani identifikatoru Criterion z elemtnu Milestone
      *
      * @param id identifikator Milestone
-     * @return ArrayList<ArrayList   <   Integer>>
+     * @return seznam seznamu identifikatoru
      */
     public ArrayList<ArrayList<Integer>> getCriterionFromMilestone(int id) {
         Milestone milestone = dataModel.getMilestone(id);
@@ -1030,7 +1030,7 @@ public class DataManipulator {
      * Metoda pro ziskani identifikatoru WorkUnit z segmentu Phase
      *
      * @param phaseId identifikator Phase
-     * @return ArrayList<ArrayList   <   Integer>>
+     * @return seznam seznamu identifikatoru
      */
     public ArrayList<ArrayList<Integer>> getWorkUnitFromPhase(int phaseId) {
 
@@ -1042,7 +1042,7 @@ public class DataManipulator {
      * Metoda pro ziskani identifikatoru Work Unit z elemetnu Work Unit
      *
      * @param id identifikator Work Unit
-     * @return ArrayList<ArrayList   <   Integer>>
+     * @return seznam seznamu identifikatoru
      */
     public ArrayList<ArrayList<Integer>> getWorkUniFromWorkUnit(int id) {
         WorkUnit workUnit = dataModel.getWorkUnit(id);
@@ -1052,7 +1052,7 @@ public class DataManipulator {
     /**
      * Metoda pro ziskani identifikatoru WorkUnit z projektu
      *
-     * @return ArrayList<ArrayList   <   Integer>>
+     * @return seznam seznamu identifikatoru
      */
     public ArrayList<ArrayList<Integer>> getWorkUnitFromProject() {
         Project project = dataModel.getProject();
@@ -1063,7 +1063,7 @@ public class DataManipulator {
      * Metoda pro ziskani identifikatoru WorkUnit z segmentu Iteration
      *
      * @param iterationId identifikator Iteration
-     * @return ArrayList<ArrayList   <   Integer>>
+     * @return seznam seznamu identifikatoru
      */
     public ArrayList<ArrayList<Integer>> getWorkUnitFromIteration(int iterationId) {
 
@@ -1075,7 +1075,7 @@ public class DataManipulator {
      * Metoda pro ziskani identifikatoru WorkUnit z segmentu Activity
      *
      * @param activityId identifikator Activity
-     * @return ArrayList<ArrayList   <   Integer>>
+     * @return seznam seznamu identifikatoru
      */
     public ArrayList<ArrayList<Integer>> getWorkUnitFromActivity(int activityId) {
 
@@ -1088,7 +1088,7 @@ public class DataManipulator {
      * do seznamu
      *
      * @param inputList Seznam instaci WorkUnitList
-     * @return ArrayList<ArrayList   <   Integer>>
+     * @return seznam seznamu identifikatoru
      */
 
     private ArrayList<ArrayList<Integer>> getWorkUnitFrom(List<WorkUnitList> inputList) {
@@ -1574,7 +1574,7 @@ public class DataManipulator {
      * Metoda pro ziskani identifikatoru Config Person Relation z elementu Configuration
      *
      * @param configId identifikator Configuration
-     * @return ArrayList<ArrayList   <   Integer>>
+     * @return seznam seznamu identifikatoru
      */
     public ArrayList<ArrayList<Integer>> getCPRFromConfiguration(int configId) {
         Configuration configuration = dataModel.getConfiguration(configId);
@@ -1586,7 +1586,7 @@ public class DataManipulator {
      * do seznamu
      *
      * @param inputList Seznam instaci CPRList
-     * @return ArrayList<ArrayList   <   Integer>>
+     * @return seznam seznamu identifikatoru
      */
     private ArrayList<ArrayList<Integer>> getCPRFrom(List<CPRSList> inputList) {
         ArrayList<ArrayList<Integer>> list = new ArrayList<>();
@@ -1603,7 +1603,7 @@ public class DataManipulator {
      * do seznamu
      *
      * @param inputList Seznam instaci BranchList
-     * @return ArrayList<ArrayList   <   Integer>>
+     * @return seznam seznamu identifikatoru
      */
     private ArrayList<ArrayList<Integer>> getBranchFrom(List<BranchList> inputList) {
         ArrayList<ArrayList<Integer>> list = new ArrayList<>();
@@ -1620,7 +1620,7 @@ public class DataManipulator {
      * do seznamu
      *
      * @param inputList Seznam instaci ChangeList
-     * @return ArrayList<ArrayList   <   Integer>>
+     * @return seznam seznamu identifikatoru
      */
     private ArrayList<ArrayList<Integer>> getChangeFrom(List<ChangeList> inputList) {
         ArrayList<ArrayList<Integer>> list = new ArrayList<>();
@@ -1636,7 +1636,7 @@ public class DataManipulator {
      * Metoda pro ziskani identifikatoru Branch z elementu Configuration
      *
      * @param configId identifikator Configuration
-     * @return ArrayList<ArrayList   <   Integer>>
+     * @return seznam seznamu identifikatoru
      */
     public ArrayList<ArrayList<Integer>> getBranchfromConfiguration(int configId) {
         Configuration configuration = dataModel.getConfiguration(configId);
@@ -1647,7 +1647,7 @@ public class DataManipulator {
      * Metoda pro ziskani identifikatoru Change z elementu Configuration
      *
      * @param configId identifikator Configuration
-     * @return ArrayList<ArrayList   <   Integer>>
+     * @return seznam seznamu identifikatoru
      */
     public ArrayList<ArrayList<Integer>> getChangeFromConfiguration(int configId) {
         Configuration configuration = dataModel.getConfiguration(configId);

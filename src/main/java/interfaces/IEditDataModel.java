@@ -194,7 +194,7 @@ public interface IEditDataModel {
      * @param instanceCount        pocet instanci prvku
      * @param countIndicator       seznam indexu ukazatelu nerovnost
      * @param id                   identificator instance
-     * @exist informace o existenci prvku v patternu
+     * @param exist                 informace o existenci prvku v patternu
      */
     void editDataInConfiguration(String alias, ArrayList<String> actName, ArrayList<String> description, ArrayList<LocalDate> createDate,
                                  boolean isRelease, ArrayList<ArrayList<Integer>> cprs,

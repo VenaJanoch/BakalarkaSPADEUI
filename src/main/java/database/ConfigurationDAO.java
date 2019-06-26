@@ -31,21 +31,21 @@ public class ConfigurationDAO {
      * Metoda pro vytvoreni SQL dotazu pro urcitou instanci Configuration
      * Metoda slozi jednotlive parametry pro SQL dotaz a zavola metodu ze tridy SQLAtributeCreator pro ziskani dat z databaze
      *
-     * @ projectVerifyId identifikator zvoleneho projektu
-     * @ name seznam s atributy name
-     * @ nameIndicator seznam s indexi ukazatelu rovnosti
-     * @ description seznam s atributy description
-     * @ descriptionIndicator seznam s indexi ukazatelu rovnosti
-     * @ createdDate seznam s datumy vytvoreni
-     * @ createDateAttribute seznam s indexi ukazatelu rovnosti
-     * @ personIds identifikatory zavislych Person
-     * @ changeId identifikatory zavislych Change
-     * @ branchId identifikatory zavislych Branch
-     * @ cprId identifikatory zavislych Configuration Person
-     * @ tagId identifikatory zavislych VCSTag
-     * @ committedId identifikatory zavislych Committed Configuration
-     * @ artifactIds identifikatory zavislych Artifact
-     * @ return Seznam SQLVerifyObject s daty z databaze
+     * @param projectVerifyId identifikator zvoleneho projektu
+     * @param name seznam s atributy name
+     * @param nameIndicator seznam s indexi ukazatelu rovnosti
+     * @param description seznam s atributy description
+     * @param descriptionIndicator seznam s indexi ukazatelu rovnosti
+     * @param createdDate seznam s datumy vytvoreni
+     * @param createdDateIndicator seznam s indexi ukazatelu rovnosti
+     * @param personIds identifikatory zavislych Person
+     * @param changeId identifikatory zavislych Change
+     * @param branchId identifikatory zavislych Branch
+     * @param cprId identifikatory zavislych Configuration Person
+     * @param tagId identifikatory zavislych VCSTag
+     * @param committedId identifikatory zavislych Committed Configuration
+     * @param artifactIds identifikatory zavislych Artifact
+     * @return  Seznam SQLVerifyObject s daty z databaze
      **/
     public ArrayList<SQLVerifyObject> getConfigurationProjekt(int projectVerifyId, List<String> name, List<Integer> nameIndicator, List<String> description, List<Integer> descriptionIndicator,
                                                               List<XMLGregorianCalendar> createdDate, List<Integer> createdDateIndicator,

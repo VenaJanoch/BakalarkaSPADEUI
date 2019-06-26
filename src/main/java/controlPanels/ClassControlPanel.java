@@ -65,6 +65,8 @@ public class ClassControlPanel extends NameControlPanel {
     /**
      * Pretizena metoda pro nastaveni seznamu class a superclass
      * Pripadne rozsireni o staticke objekty
+     * @param classList seznam class
+     * @param superClassList seznam superclass
      */
     public void createControlPanel(ArrayList classList, ArrayList superClassList) {
 
@@ -159,6 +161,7 @@ public class ClassControlPanel extends NameControlPanel {
 
     /**
      * Metoda pro smazani vyberu a aktualizaci dat v tabulce
+     * @param tableView tabulka pro aktualizaci dat
      */
     public void clearPanel(TableView<ClassTable> tableView) {
         tableView.refresh();

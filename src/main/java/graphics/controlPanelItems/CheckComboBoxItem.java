@@ -64,9 +64,9 @@ public class CheckComboBoxItem extends ItemBox {
         }
     }
 
-    /**
+    /*
      * Getrs and Setters
-     **/
+     */
 
     public CheckComboBox<BasicTable> getItemCB() {
         return itemCB;

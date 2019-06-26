@@ -19,13 +19,16 @@ public class BranchTable extends BasicTable {
     private boolean mainBool;
 
     /**
+
      * Konstruktor třídy
      * Zinicializuje globální proměnné
      *
      * @param name jméno branch
      * @param main hodnota main
+     * @param isMain main vetev
+     * @param exist existence prvku
+     * @param id identifikator prvku
      */
-
     public BranchTable(String name, String main, boolean isMain, boolean exist, int id) {
         super(name, exist, id);
         this.main = new SimpleStringProperty(main);

@@ -118,6 +118,7 @@ public class ActivityControlPanel extends WorkUnitControlPanel {
 
     /**
      * Metoda pro smazani vyberu a aktualizaci dat v tabulce
+     * @param tableView tabulka pro aktualizaci dat
      */
     public void clearPanelCB(TableView tableView) {
         tableView.refresh();
