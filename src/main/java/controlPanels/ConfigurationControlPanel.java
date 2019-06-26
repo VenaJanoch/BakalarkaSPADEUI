@@ -6,7 +6,7 @@ import graphics.controlPanelItems.ControlPanelLine;
 import interfaces.IControlPanel;
 import interfaces.IEditFormController;
 import interfaces.IFormDataController;
-import javafx.scene.control.*;
+import javafx.scene.control.TableView;
 import services.*;
 import tables.BasicTable;
 import tables.ConfigTable;
@@ -15,12 +15,28 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Trida predstavujici editacni panel pro element Configuration
+ *
+ * @author Vaclav Janoch
+ */
 public class ConfigurationControlPanel extends DateDescControlPanel implements IControlPanel {
 
-
+    /**
+     * Globální proměnné třídy
+     */
     private int configId;
     private ConfigTable configTable;
 
+    /**
+     * Konstruktor tridy, zinicializuje globalni promenne tridy
+     * Je zde rozsiren seznam poznych typu panelu pro dany element
+     *
+     * @param buttonName         textovy retezec pro potvrzovaci tlacitko
+     * @param formDataController instace tridy FormDataController pro ziskani dat z datoveho modelu
+     * @param editFormController instace tridy EditDataController pro predani novych dat
+     * @param formController     instace tridy FormController
+     */
     public ConfigurationControlPanel(String buttonName, IFormDataController formDataController, IEditFormController editFormController,
                                      FormController formController, ConfigTable configTable, int configId, int configIndex) {
         super(buttonName, formDataController, editFormController, formController);
@@ -36,14 +52,14 @@ public class ConfigurationControlPanel extends DateDescControlPanel implements I
         this.addItemsToControlPanel();
     }
 
-
+    /**
+     * Metoda volajici kontroler ControlPanelController pro vygenerovani noveho radku
+     * Pripadne rozsireni o staticke objekty
+     */
     protected void addItemsToControlPanel() {
 
 
-        //    controlPanelController.setRadioButton(this,1, "Release: ", true);
         controlPanelController.setCountLine(this, 2, new ControlPanelLine(lineList, this, controlPanelController, Constans.numberIndicatorList, controlPanelController.getLineCount()));
-        //  addTag = new Button("add Tag");
-        //   controlPanelController.setStaticButton(this, 3, addTag);
         controlPanelController.createNewLineWithExist(this, lineList);
 
         button.setOnAction(event -> {
@@ -74,6 +90,11 @@ public class ConfigurationControlPanel extends DateDescControlPanel implements I
 
     }
 
+    /**
+     * Metoda pro zobrazeni postraniho editacniho panelu
+     * Nejprve jsou ziskana data z datoveho modelu
+     * nasledne pomoci kontroleru ControlPanelController pridana do panelu
+     */
     @Override
     public void showEditControlPanel() {
 

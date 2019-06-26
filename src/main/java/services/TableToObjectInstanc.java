@@ -1,4 +1,5 @@
 package services;
+
 /**
  * Trida predstavujici kontajner pro uchovani informaci pro mapu o navaznostech prvku
  *
@@ -15,8 +16,9 @@ public class TableToObjectInstanc {
     /**
      * Konstruktor tridy,
      * Zinicializuje globalni promenne tridy
-     * @param name jmeno prvku
-     * @param id identifikator
+     *
+     * @param name        jmeno prvku
+     * @param id          identifikator
      * @param segmentType typ prvku
      */
     public TableToObjectInstanc(String name, int id, SegmentType segmentType) {

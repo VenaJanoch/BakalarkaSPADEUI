@@ -1,7 +1,6 @@
 package controllers.graphicsComponentsControllers;
 
 import abstractControlPane.ControlPanel;
-import controllers.graphicsComponentsControllers.ControlPanelController;
 import graphics.controlPanelItems.*;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -15,32 +14,45 @@ import services.ControlPanelLineObject;
  */
 public class ControlPanelLineController {
 
-    /**Kontrolery potrebne pro cinnost kontroleru**/
+    /**
+     * Kontrolery potrebne pro cinnost kontroleru
+     **/
     private ControlPanelController controlPanelController;
     private ControlPanel controlPanel;
 
-    /**Instace radku v panelu**/
+    /**
+     * Instace radku v panelu
+     **/
     private ControlPanelLine line;
-    /**Poradi radku v panelu**/
+    /**
+     * Poradi radku v panelu
+     **/
     private int lineIndex;
 
-    /**Poradi vybraneho prvku v ComboBoxu**/
+    /**
+     * Poradi vybraneho prvku v ComboBoxu
+     **/
     private int itemIndex = 0;
-    /**Seznam parametru ktere se mohou v radku vyskytovat**/
+    /**
+     * Seznam parametru ktere se mohou v radku vyskytovat
+     **/
     private ObservableList<ControlPanelLineObject> paramList;
     private boolean isSetType = false;
 
-    /**Listener pro jednotlive komponenty**/
+    /**
+     * Listener pro jednotlive komponenty
+     **/
     private ChangeListener<Number> listener;
 
     /**
      * Konstruktor tridy
      * Zinicializuje globalni promenne tridy
-     * @param line instace ControlPanelLine
-     * @param controlPanel ControlPanel ve kterem se radek nachazi
+     *
+     * @param line                   instace ControlPanelLine
+     * @param controlPanel           ControlPanel ve kterem se radek nachazi
      * @param controlPanelController ControlPanelController pro rizeni panelu
-     * @param paramList seznam moznzych parametru radku
-     * @param lineIndex poradi radku v panelu
+     * @param paramList              seznam moznzych parametru radku
+     * @param lineIndex              poradi radku v panelu
      */
     public ControlPanelLineController(ControlPanelLine line, ControlPanel controlPanel, ControlPanelController controlPanelController,
                                       ObservableList<ControlPanelLineObject> paramList, int lineIndex) {
@@ -108,6 +120,7 @@ public class ControlPanelLineController {
 
     /**
      * Metoda pro ziskani indexu radku a zavolani metody pro rozhodnuti o zobrazeni radku
+     *
      * @param index index vybraneho parametru v ComboBoxu
      */
     public void setBoxToControlPanel(int index) {
@@ -119,7 +132,8 @@ public class ControlPanelLineController {
 
     /**
      * Metoda pro vykopirovani radku do noveho
-     * @param oldLine instace kopirovaneho radku
+     *
+     * @param oldLine    instace kopirovaneho radku
      * @param paramIndex index parametru pro vyber
      */
     public void copyLine(ControlPanelLine oldLine, int paramIndex) {
@@ -130,6 +144,7 @@ public class ControlPanelLineController {
 
     /**
      * Metoda pro nastaveni dat do radkku v zavislosti na zvolenem typu parametru
+     *
      * @param oldLine instance stareho radku
      */
     private void setDataFromLine(ControlPanelLine oldLine) {
@@ -154,6 +169,7 @@ public class ControlPanelLineController {
 
     /**
      * Metoda pro nastaveni dat do komponenty CheckComboBox
+     *
      * @param oldLine instace stareho radku
      */
     private void setDataToCheckComboBoxFieldLine(ControlPanelLine oldLine) {
@@ -166,6 +182,7 @@ public class ControlPanelLineController {
 
     /**
      * Metoda pro nastaveni dat do komponenty ComboBox
+     *
      * @param oldLine instace stareho radku
      */
     private void setDataToComboBoxFieldLine(ControlPanelLine oldLine) {
@@ -178,6 +195,7 @@ public class ControlPanelLineController {
 
     /**
      * Metoda pro nastaveni dat do komponenty DatePicker
+     *
      * @param oldLine instace stareho radku
      */
     private void setDataToDateFieldLine(ControlPanelLine oldLine) {
@@ -190,6 +208,7 @@ public class ControlPanelLineController {
 
     /**
      * Metoda pro nastaveni dat do komponenty TextField
+     *
      * @param oldLine instace stareho radku
      */
     private void setDataToTextFieldLine(ControlPanelLine oldLine) {

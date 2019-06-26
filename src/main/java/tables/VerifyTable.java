@@ -21,12 +21,13 @@ public class VerifyTable extends BasicTable {
 
     /**
      * Konstruktor třídy Zinicializuje globální proměnnné třídy
-     * @param name jmeno prvku
-     * @param id identifikatoru prvku
-     * @param exist existence prvku v modelu
+     *
+     * @param name             jmeno prvku
+     * @param id               identifikatoru prvku
+     * @param exist            existence prvku v modelu
      * @param isExistInProject existence prvku v projektu
-     * @param result vysledek
-     * @param sql slozeny SQL dotaz
+     * @param result           vysledek
+     * @param sql              slozeny SQL dotaz
      */
     public VerifyTable(String name, int id, boolean exist, String isExistInProject, String result, String sql) {
         super(name, exist, id);
@@ -40,15 +41,16 @@ public class VerifyTable extends BasicTable {
 
     /**
      * Konstruktor třídy Zinicializuje globální proměnnné třídy
-     * @param name jmeno prvku
-     * @param id identifikatoru prvku
-     * @param exist existence prvku v modelu
-     * @param instanceCont pocet instanci v modelu
-     * @param countIndicator ukazatel nerovnosti
+     *
+     * @param name                 jmeno prvku
+     * @param id                   identifikatoru prvku
+     * @param exist                existence prvku v modelu
+     * @param instanceCont         pocet instanci v modelu
+     * @param countIndicator       ukazatel nerovnosti
      * @param projectInstanceCount pocet instaci v projektu
-     * @param isExistInProject existence prvku v projektu
-     * @param result vysledek
-     * @param sql slozeny SQL dotaz
+     * @param isExistInProject     existence prvku v projektu
+     * @param result               vysledek
+     * @param sql                  slozeny SQL dotaz
      */
     public VerifyTable(String name, int id, boolean exist, int instanceCont, String countIndicator, int projectInstanceCount, String isExistInProject, String result, String sql) {
         this(name, id, exist, isExistInProject, result, sql);

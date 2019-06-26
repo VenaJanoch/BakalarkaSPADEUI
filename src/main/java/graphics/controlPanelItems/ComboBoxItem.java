@@ -21,7 +21,9 @@ import java.util.Arrays;
  */
 public class ComboBoxItem extends ItemBox {
 
-    /**Globalni promenne tridy**/
+    /**
+     * Globalni promenne tridy
+     **/
     private ComboBox itemCB;
 
     private ComboBoxItem otherComboBoxItem;
@@ -31,11 +33,12 @@ public class ComboBoxItem extends ItemBox {
     /**
      * Konstruktor tridy,
      * Zinicializuje globalni promenne tridy
-     * @param controlPanelLine instance tridy ControlPanelLine
-     * @param controlPanel instance tridy ControlPanel
+     *
+     * @param controlPanelLine       instance tridy ControlPanelLine
+     * @param controlPanel           instance tridy ControlPanel
      * @param controlPanelController instace tridy ControlPanelController
-     * @param listForBox seznam s prvky pro komponentu CheckCombobox
-     * @param lineList seznam parametru na radku
+     * @param listForBox             seznam s prvky pro komponentu CheckCombobox
+     * @param lineList               seznam parametru na radku
      */
     public ComboBoxItem(ControlPanelLine controlPanelLine, ControlPanel controlPanel, ControlPanelController controlPanelController,
                         ObservableList listForBox, ObservableList<ControlPanelLineObject> lineList) {
@@ -57,15 +60,15 @@ public class ComboBoxItem extends ItemBox {
     }
 
     /**
-
      * Konstruktor tridy,
      * Zinicializuje globalni promenne tridy
-     * @param controlPanelLine instance tridy ControlPanelLine
-     * @param controlPanel instance tridy ControlPanel
+     *
+     * @param controlPanelLine       instance tridy ControlPanelLine
+     * @param controlPanel           instance tridy ControlPanel
      * @param controlPanelController instace tridy ControlPanelController
-     * @param listForBox seznam s prvky pro komponentu CheckCombobox
-     * @param lineList seznam parametru na radku
-     * @param listener listener urceny pro ComboBox
+     * @param listForBox             seznam s prvky pro komponentu CheckCombobox
+     * @param lineList               seznam parametru na radku
+     * @param listener               listener urceny pro ComboBox
      */
     public ComboBoxItem(ControlPanelLine controlPanelLine, ControlPanel controlPanel, ControlPanelController controlPanelController,
                         ObservableList listForBox, ChangeListener<Number> listener, ObservableList<ControlPanelLineObject> lineList) {
@@ -85,13 +88,16 @@ public class ComboBoxItem extends ItemBox {
 
     /**
      * Metoda pro zpetne zvoleni prvku v komponente ComboBox
+     *
      * @param index index pro zvoleni
      */
     public void selectItemInComboBox(int index) {
         itemCB.getSelectionModel().select(index);
     }
 
-    /**Getrs and Setters**/
+    /**
+     * Getrs and Setters
+     **/
     public ComboBox<BasicTable> getItemCB() {
         return itemCB;
     }

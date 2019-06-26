@@ -1,30 +1,32 @@
 package modelControllerTests;
 
+import SPADEPAC.Criterion;
 import controllers.formControllers.FormController;
 import controllers.formControllers.FormDataController;
-import SPADEPAC.Criterion;
 import org.junit.Before;
 import org.junit.Test;
 import services.SegmentLists;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
 
 public class CriterionValuesTest {
 
-        Criterion criterion;
-        SegmentLists lists;
-        @Before
-        public void setUp() throws Exception {
+    Criterion criterion;
+    SegmentLists lists;
 
-            WarmUp warmUp = new WarmUp();
-            lists = warmUp.getLists();
-            FormDataController formDataController = warmUp.getFormDataController();
-            FormController formController = warmUp.getFormController();
+    @Before
+    public void setUp() throws Exception {
 
-            warmUp.getDataModel().getSaveDataModel().createNewCriterion(0);
+        WarmUp warmUp = new WarmUp();
+        lists = warmUp.getLists();
+        FormDataController formDataController = warmUp.getFormDataController();
+        FormController formController = warmUp.getFormController();
 
-            criterion = warmUp.getDataModel().getCriterion(0);
-        }
+        warmUp.getDataModel().getSaveDataModel().createNewCriterion(0);
+
+        criterion = warmUp.getDataModel().getCriterion(0);
+    }
 
     @Test
     public void testId() {
@@ -36,4 +38,4 @@ public class CriterionValuesTest {
         assertTrue(criterion.isExist());
     }
 
-    }
+}

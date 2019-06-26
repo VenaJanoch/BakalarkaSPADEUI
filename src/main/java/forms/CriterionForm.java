@@ -1,8 +1,8 @@
 package forms;
 
-import controllers.formControllers.FormController;
 import abstractform.TableBasicForm;
 import controlPanels.CriterionControlPanel;
+import controllers.formControllers.FormController;
 import interfaces.IDeleteFormController;
 import interfaces.IEditFormController;
 import interfaces.IFormDataController;
@@ -10,7 +10,9 @@ import interfaces.ISegmentTableForm;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
-import javafx.scene.control.*;
+import javafx.scene.control.SelectionMode;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.input.KeyCode;
@@ -19,7 +21,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import services.SegmentType;
-import tables.*;
+import tables.CriterionTable;
 
 /**
  * Třída představující tabulkový formulář pro element Criterion, odděděná od
@@ -37,11 +39,12 @@ public class CriterionForm extends TableBasicForm implements ISegmentTableForm {
     /**
      * Konstruktor Třídy Zinicializuje globální proměnné tříd Nastaví reakci
      * na klik do tabulky, vytvori naplni panel a nastavi akce tlacitkum
-     * @param formController instance tridy FormController
-     * @param formDataController instance tridy FormDataController
-     * @param editFormController instance tridy EditFormController
+     *
+     * @param formController       instance tridy FormController
+     * @param formDataController   instance tridy FormDataController
+     * @param editFormController   instance tridy EditFormController
      * @param deleteFormController instace tridy DeleteFormController
-     * @param type instace SegmentType pro urceni typu formulare
+     * @param type                 instace SegmentType pro urceni typu formulare
      */
     public CriterionForm(FormController formController, IFormDataController formDataController, IEditFormController editFormController, IDeleteFormController deleteFormController,
                          SegmentType type) {
@@ -51,6 +54,7 @@ public class CriterionForm extends TableBasicForm implements ISegmentTableForm {
         createForm();
         setActionSubmitButton();
     }
+
     /**
      * Metoda nastavi event handler pro tabulku
      * Pokud je na radek dvakrat kliknuto mysi
@@ -79,6 +83,7 @@ public class CriterionForm extends TableBasicForm implements ISegmentTableForm {
         this.setCenter(getTable());
 
     }
+
     /**
      * Metoda pro přídání TableView do formuláře
      */
@@ -112,6 +117,7 @@ public class CriterionForm extends TableBasicForm implements ISegmentTableForm {
 
         return tableTV;
     }
+
     /**
      * Metoda pro nastavení reakce na klávesu delete
      */
@@ -122,6 +128,7 @@ public class CriterionForm extends TableBasicForm implements ISegmentTableForm {
             deleteItem(tableTV);
         }
     }
+
     /**
      * Metoda pro přídání prvku do gridPanelu
      */
@@ -129,6 +136,7 @@ public class CriterionForm extends TableBasicForm implements ISegmentTableForm {
     public GridPane createControlPane() {
         return null;
     }
+
     /**
      * Metoda pro vyvolani postraniho panelu
      * Jsou zavolany potrebne kontrolery
@@ -151,6 +159,7 @@ public class CriterionForm extends TableBasicForm implements ISegmentTableForm {
         editButton.setOnAction(event -> showEditPanel());
         copyButton.setOnAction(event -> copyItem(tableTV));
     }
+
     /**
      * Metoda pro přídání prvku dané tabulky
      */

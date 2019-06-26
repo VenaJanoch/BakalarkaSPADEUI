@@ -1,10 +1,8 @@
 package modelControllerCopyTests;
 
 import SPADEPAC.Status;
-import controllers.formControllers.FormController;
 import controllers.formControllers.FormDataController;
 import controllers.formControllers.FormFillController;
-import javafx.scene.control.TableView;
 import org.junit.Before;
 import org.junit.Test;
 import services.SegmentLists;

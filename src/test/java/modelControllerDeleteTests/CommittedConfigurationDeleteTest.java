@@ -15,6 +15,7 @@ public class CommittedConfigurationDeleteTest {
     SegmentLists lists;
     LocalDate date;
     DataModel dataModel;
+
     @Before
     public void setUp() throws Exception {
 

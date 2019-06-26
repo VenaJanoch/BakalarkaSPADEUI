@@ -1,10 +1,8 @@
 package modelControllerCopyTests;
 
 import SPADEPAC.Resolution;
-import controllers.formControllers.FormController;
 import controllers.formControllers.FormDataController;
 import controllers.formControllers.FormFillController;
-import javafx.scene.control.TableView;
 import org.junit.Before;
 import org.junit.Test;
 import services.SegmentLists;
@@ -21,6 +19,7 @@ public class ResolutionValueCopyTest {
 
     Resolution resolution;
     SegmentLists lists;
+
     @Before
     public void setUp() throws Exception {
 
@@ -35,35 +34,36 @@ public class ResolutionValueCopyTest {
         indicators.add(1);
         indicators.add(0);
         warmUp.getEditFormController().editDataFromClass(SegmentType.Resolution, "Test", name, indicators, indicators, indicators, name,
-                name, new ClassTable("Test", "nevim", "nevim", false, 0), false, 0 );
+                name, new ClassTable("Test", "nevim", "nevim", false, 0), false, 0);
         FormFillController formFillController = warmUp.getFormFillController();
         formFillController.fillResolutionForm(null, 0);
         resolution = warmUp.getDataModel().getResolution(1);
 
     }
+
     @Test
     public void testAlias() {
-        assertEquals("1", resolution.getAlias() );
+        assertEquals("1", resolution.getAlias());
     }
 
     @Test
     public void testName() {
-        assertEquals("", resolution.getName().get(0) );
-        assertEquals("Test2", resolution.getName().get(1) );
+        assertEquals("", resolution.getName().get(0));
+        assertEquals("Test2", resolution.getName().get(1));
         assertSame(2, resolution.getName().size());
     }
 
     @Test
     public void testIndicatorName() {
-        assertSame(1, resolution.getNameIndicator().get(0) );
-        assertSame(0, resolution.getNameIndicator().get(1) );
+        assertSame(1, resolution.getNameIndicator().get(0));
+        assertSame(0, resolution.getNameIndicator().get(1));
         assertSame(2, resolution.getNameIndicator().size());
     }
 
     @Test
     public void testIndicatorRole() {
-        assertSame(1, resolution.getResolutionClassIndex().get(0) );
-        assertSame(1, resolution.getResolutionSuperClassIndex().get(0) );
+        assertSame(1, resolution.getResolutionClassIndex().get(0));
+        assertSame(1, resolution.getResolutionSuperClassIndex().get(0));
     }
 
     @Test

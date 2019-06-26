@@ -25,10 +25,11 @@ public class TextFieldItem extends ItemBox {
     /**
      * Konstruktor tridy,
      * Zinicializuje globalni promenne tridy
-     * @param controlPanelLine instance tridy ControlPanelLine
-     * @param controlPanel instance tridy ControlPanel
+     *
+     * @param controlPanelLine       instance tridy ControlPanelLine
+     * @param controlPanel           instance tridy ControlPanel
      * @param controlPanelController instace tridy ControlPanelController
-     * @param lineList seznam parametru na radku
+     * @param lineList               seznam parametru na radku
      */
     public TextFieldItem(ControlPanelLine controlPanelLine, ControlPanel controlPanel, ControlPanelController controlPanelController,
                          ObservableList<ControlPanelLineObject> lineList, String[] indicators) {

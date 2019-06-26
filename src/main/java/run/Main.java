@@ -1,8 +1,8 @@
 package run;
 
+import controllers.WindowController;
 import javafx.application.Application;
 import javafx.stage.Stage;
-import controllers.WindowController;
 
 
 public class Main extends Application {

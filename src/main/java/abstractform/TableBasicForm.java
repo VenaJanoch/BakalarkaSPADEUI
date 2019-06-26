@@ -10,12 +10,16 @@ import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.*;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
+import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
-import services.*;
+import services.Alerts;
+import services.Constans;
+import services.SegmentType;
 import tables.BasicTable;
 
 import java.util.ArrayList;
@@ -41,11 +45,12 @@ public abstract class TableBasicForm extends BasicForm {
     /**
      * Konstruktor tridy zavola nadrazenou tridu BasicForm a zinicializuje ostatni globalni promenne
      * Zavola metodu pro pridani potrebny prvku do panelu
-     * @param formController instance tridy FormController
-     * @param formDataController instance tridy FormDataController
-     * @param editFormController instance tridy EditFormController
+     *
+     * @param formController       instance tridy FormController
+     * @param formDataController   instance tridy FormDataController
+     * @param editFormController   instance tridy EditFormController
      * @param deleteFormController instace tridy DeleteFormController
-     * @param type instace SegmentType pro urceni typu formulare
+     * @param type                 instace SegmentType pro urceni typu formulare
      */
     public TableBasicForm(FormController formController, IFormDataController formDataController, IEditFormController editFormController, IDeleteFormController deleteFormController, SegmentType type) {
         super(formController, formDataController, editFormController, deleteFormController, type);
@@ -67,6 +72,7 @@ public abstract class TableBasicForm extends BasicForm {
      * Metoda pro smazani prvku z tabulky potazmo z datovych struktur
      * Metoda vyvola informaci okno pro radky, ktere se maji smazat
      * Pri potvrzeni akce je zavolana metoda deleteItemWithDialog ze tridy deleteFormController
+     *
      * @param tableTV instance tridy TableView, ze ktere se budou polozky mazat
      */
     public void deleteItem(TableView tableTV) {
@@ -83,14 +89,15 @@ public abstract class TableBasicForm extends BasicForm {
 
     /**
      * Metoda pro duplikaci prvku z tabulce
+     *
      * @param tableTV instance tridy TableView, ze ktere se budou polozky mazat
      */
     public void copyItem(TableView tableTV) {
         ObservableList selection = FXCollections
                 .observableArrayList(tableTV.getSelectionModel().getSelectedItems());
 
-            ArrayList<BasicTable> list = new ArrayList<>(selection);
-            formDataController.createCopyTableItem(list, tableTV, getSegmentType());
+        ArrayList<BasicTable> list = new ArrayList<>(selection);
+        formDataController.createCopyTableItem(list, tableTV, getSegmentType());
     }
 
     /**

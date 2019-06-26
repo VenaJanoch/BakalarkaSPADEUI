@@ -1,7 +1,6 @@
 package modelControllerTests;
 
 import SPADEPAC.Artifact;
-import SPADEPAC.ArtifactClass;
 import model.DataModel;
 import org.junit.Before;
 import org.junit.Test;
@@ -9,7 +8,8 @@ import services.SegmentLists;
 
 import java.time.LocalDate;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
 
 public class ArtefaktValueTest {
 
@@ -32,7 +32,9 @@ public class ArtefaktValueTest {
     }
 
     @Test
-    public void testId(){assertSame(2, artifact.getId());}
+    public void testId() {
+        assertSame(2, artifact.getId());
+    }
 
     @Test
     public void testCount() {
@@ -42,4 +44,5 @@ public class ArtefaktValueTest {
     @Test
     public void testExist() {
         assertTrue(artifact.isExist());
-    }}
+    }
+}

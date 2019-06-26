@@ -1,32 +1,23 @@
 package modelControllerDeleteTests;
 
-import SPADEPAC.Artifact;
-import SPADEPAC.Change;
 import SPADEPAC.Configuration;
 import controllers.formControllers.DeleteFormController;
-import controllers.formControllers.FormController;
 import controllers.formControllers.FormDataController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.control.TableView;
 import model.DataModel;
 import org.junit.Before;
 import org.junit.Test;
 import services.MapperTableToObject;
 import services.SegmentLists;
-import services.SegmentType;
 import tables.BasicTable;
-import tables.BranchTable;
-import tables.ChangeTable;
 import tables.ChangeTable;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.Set;
 
 import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
 
 public class ChangeDeleteTest {
 
@@ -44,7 +35,7 @@ public class ChangeDeleteTest {
 
         DeleteFormController deleteFormController = warmUp.getDeleteFormController();
         FormDataController formDataController = warmUp.getFormDataController();
-        ChangeTable table1 =new ChangeTable("", true, 0);
+        ChangeTable table1 = new ChangeTable("", true, 0);
         formDataController.saveDataFromChangeForm(null, true);
         formDataController.saveDataFromChangeForm(null, true);
 
@@ -80,7 +71,7 @@ public class ChangeDeleteTest {
 
     @Test
     public void testMapper() {
-        Set instacies =  mapperTableToObject.getConfigurationToChangeMapper().keySet();
+        Set instacies = mapperTableToObject.getConfigurationToChangeMapper().keySet();
         assertSame(1, instacies.size());
         assertSame(1, instacies.iterator().next());
     }

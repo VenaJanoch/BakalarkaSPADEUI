@@ -1,8 +1,8 @@
 package forms;
 
-import controllers.formControllers.FormController;
 import abstractform.TableBasicForm;
 import controlPanels.ConfigPersonRelationControlPanel;
+import controllers.formControllers.FormController;
 import interfaces.IDeleteFormController;
 import interfaces.IEditFormController;
 import interfaces.IFormDataController;
@@ -41,11 +41,12 @@ public class ConfigPersonRelationForm extends TableBasicForm implements ISegment
     /**
      * Konstruktor Třídy Zinicializuje globální proměnné tříd Nastaví reakci
      * na klik do tabulky, vytvori naplni panel a nastavi akce tlacitkum
-     * @param formController instance tridy FormController
-     * @param formDataController instance tridy FormDataController
-     * @param editFormController instance tridy EditFormController
+     *
+     * @param formController       instance tridy FormController
+     * @param formDataController   instance tridy FormDataController
+     * @param editFormController   instance tridy EditFormController
      * @param deleteFormController instace tridy DeleteFormController
-     * @param type instace SegmentType pro urceni typu formulare
+     * @param type                 instace SegmentType pro urceni typu formulare
      */
     public ConfigPersonRelationForm(FormController formController, IFormDataController formDataController, IEditFormController editFormController, IDeleteFormController deleteFormController, SegmentType type) {
         super(formController, formDataController, editFormController, deleteFormController, type);
@@ -76,6 +77,7 @@ public class ConfigPersonRelationForm extends TableBasicForm implements ISegment
             }
         };
     }
+
     /**
      * Metoda pro přídání prvku do interního gridPanelu
      */
@@ -95,6 +97,7 @@ public class ConfigPersonRelationForm extends TableBasicForm implements ISegment
             deleteItem(tableTV);
         }
     }
+
     /**
      * Metoda pro přídání prvku do gridPanelu
      */
@@ -102,6 +105,7 @@ public class ConfigPersonRelationForm extends TableBasicForm implements ISegment
     public GridPane createControlPane() {
         return null;
     }
+
     /**
      * Metoda pro vyvolani postraniho panelu
      * Jsou zavolany potrebne kontrolery
@@ -124,6 +128,7 @@ public class ConfigPersonRelationForm extends TableBasicForm implements ISegment
         editButton.setOnAction(event -> showEditPanel());
         copyButton.setOnAction(event -> copyItem(tableTV));
     }
+
     /**
      * Metoda pro přídání TableView do formuláře
      */

@@ -1,14 +1,10 @@
 package modelControllerDeleteTests;
 
-import SPADEPAC.Criterion;
 import SPADEPAC.Milestone;
 import controllers.formControllers.DeleteFormController;
-import controllers.formControllers.FormController;
 import controllers.formControllers.FormDataController;
-import database.MilestoneDAO;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.control.TableView;
 import model.DataModel;
 import org.junit.Before;
 import org.junit.Test;
@@ -17,16 +13,13 @@ import services.SegmentLists;
 import services.SegmentType;
 import services.TableToObjectInstanc;
 import tables.BasicTable;
-import tables.BranchTable;
 import tables.CriterionTable;
-import tables.MilestoneTable;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Set;
 
 import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
 
 public class CriterionDeleteTest {
 
@@ -38,49 +31,49 @@ public class CriterionDeleteTest {
     MapperTableToObject mapperTableToObject;
 
     @Before
-        public void setUp() throws Exception {
+    public void setUp() throws Exception {
 
-            WarmUp warmUp = new WarmUp();
-            dataModel = warmUp.getDataModel();
-            lists = warmUp.getLists();
-            FormDataController formDataController = warmUp.getFormDataController();
-            DeleteFormController deleteFormController = warmUp.getDeleteFormController();
-            CriterionTable table1 = new CriterionTable("",true, 0);
-            formDataController.saveDataFromCriterionForm(null, true);
-            formDataController.saveDataFromCriterionForm(null, true);
+        WarmUp warmUp = new WarmUp();
+        dataModel = warmUp.getDataModel();
+        lists = warmUp.getLists();
+        FormDataController formDataController = warmUp.getFormDataController();
+        DeleteFormController deleteFormController = warmUp.getDeleteFormController();
+        CriterionTable table1 = new CriterionTable("", true, 0);
+        formDataController.saveDataFromCriterionForm(null, true);
+        formDataController.saveDataFromCriterionForm(null, true);
 
 
-            date = LocalDate.of(2018, 10, 10);
-            ArrayList<String> name = new ArrayList<>();
-            name.add("");
-            name.add("Test2");
-            ArrayList<Integer> indicators = new ArrayList<>();
-            indicators.add(0);
-            indicators.add(1);
-            ArrayList<ArrayList<Integer>> unit = new ArrayList<>();
-            unit.add(indicators);
-            unit.add(indicators);
+        date = LocalDate.of(2018, 10, 10);
+        ArrayList<String> name = new ArrayList<>();
+        name.add("");
+        name.add("Test2");
+        ArrayList<Integer> indicators = new ArrayList<>();
+        indicators.add(0);
+        indicators.add(1);
+        ArrayList<ArrayList<Integer>> unit = new ArrayList<>();
+        unit.add(indicators);
+        unit.add(indicators);
 
-            ArrayList<LocalDate> dates = new ArrayList<>();
-            dates.add(date);
+        ArrayList<LocalDate> dates = new ArrayList<>();
+        dates.add(date);
 
-            formDataController.saveDataFromMilestoneForm(null, true);
+        formDataController.saveDataFromMilestoneForm(null, true);
 
-            warmUp.getDataModel().getEditDataModel().editDataInMilestone("Test", name,name, indicators,  indicators, indicators, unit, false, 0);
-            mapperTableToObject = warmUp.getMapperTableToObject();
-            mapperTableToObject.mapTableToObject(SegmentType.Milestone, indicators, new TableToObjectInstanc(table1.getAlias(), 0, SegmentType.Milestone));
-            milestone = dataModel.getMilestone(0);
+        warmUp.getDataModel().getEditDataModel().editDataInMilestone("Test", name, name, indicators, indicators, indicators, unit, false, 0);
+        mapperTableToObject = warmUp.getMapperTableToObject();
+        mapperTableToObject.mapTableToObject(SegmentType.Milestone, indicators, new TableToObjectInstanc(table1.getAlias(), 0, SegmentType.Milestone));
+        milestone = dataModel.getMilestone(0);
 
-            ObservableList list = FXCollections.observableArrayList();
-            list.add(0);
-            ArrayList<BasicTable> branchTables = new ArrayList<>();
-            branchTables.add(table1);
-            deleteFormController.deleteCriterion(list, branchTables);
-        }
+        ObservableList list = FXCollections.observableArrayList();
+        list.add(0);
+        ArrayList<BasicTable> branchTables = new ArrayList<>();
+        branchTables.add(table1);
+        deleteFormController.deleteCriterion(list, branchTables);
+    }
 
     @Test
     public void testMapper() {
-        Set instacies =  mapperTableToObject.getMilestoneToCriterionMapper().keySet();
+        Set instacies = mapperTableToObject.getMilestoneToCriterionMapper().keySet();
         assertSame(1, instacies.size());
         assertSame(1, instacies.iterator().next());
     }
@@ -108,4 +101,4 @@ public class CriterionDeleteTest {
         assertSame(1, dataModel.getCriterionId(index));
     }
 
-    }
+}

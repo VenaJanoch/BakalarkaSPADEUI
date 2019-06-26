@@ -6,7 +6,6 @@ import controllers.graphicsComponentsControllers.ItemBoxController;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -21,7 +20,9 @@ import services.ControlPanelLineObject;
  */
 public class ItemBox extends HBox {
 
-    /**Globalni promenne tridy**/
+    /**
+     * Globalni promenne tridy
+     **/
     protected ComboBox<String> indicatorCB;
     protected boolean isShowItem;
     protected Button itemButton;
@@ -32,7 +33,8 @@ public class ItemBox extends HBox {
 
     /**
      * Konstruktor tridy, Zinicializuje globalni promenne tridy
-     * @param indicatorSymbols simboly indikatoru pro combobox
+     *
+     * @param indicatorSymbols       simboly indikatoru pro combobox
      * @param controlPanelController instace ControlPanelController
      */
     public ItemBox(ObservableList<String> indicatorSymbols, ControlPanelController controlPanelController) {
@@ -47,9 +49,10 @@ public class ItemBox extends HBox {
 
     /**
      * Metoda pro pro nastaveni reakce na stisk tlacitka plus
-     * @param line radek panelu
+     *
+     * @param line         radek panelu
      * @param controlPanel instace kontrolniho panelu
-     * @param lineList seznam typu radku v panelu
+     * @param lineList     seznam typu radku v panelu
      */
     protected void setExitButtonsActions(ControlPanelLine line, ControlPanel controlPanel, ObservableList<ControlPanelLineObject> lineList) {
         itemButton = new Button("+");

@@ -1,7 +1,6 @@
 package controlPanels;
 
 import abstractControlPane.DateDescControlPanel;
-import abstractControlPane.NameControlPanel;
 import controllers.formControllers.FormController;
 import graphics.controlPanelItems.ControlPanelLine;
 import interfaces.IControlPanel;
@@ -17,13 +16,29 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Trida predstavujici editacni panel pro element Commit
+ *
+ * @author Vaclav Janoch
+ */
 public class CommitControlPanel extends DateDescControlPanel implements IControlPanel {
 
-
+    /**
+     * Globální proměnné třídy
+     */
     private int commitId;
     private int commitFormId;
     private CommitTable commitTable;
 
+    /**
+     * Konstruktor tridy, zinicializuje globalni promenne tridy
+     * Je zde rozsiren seznam poznych typu panelu pro dany element
+     *
+     * @param buttonName         textovy retezec pro potvrzovaci tlacitko
+     * @param formDataController instace tridy FormDataController pro ziskani dat z datoveho modelu
+     * @param editFormController instace tridy EditDataController pro predani novych dat
+     * @param formController     instace tridy FormController
+     */
     public CommitControlPanel(String buttonName, IFormDataController formDataController, IEditFormController editFormController,
                               FormController formController, CommitTable branchTable, int id, int formIndex) {
         super(buttonName, formDataController, editFormController, formController);
@@ -33,7 +48,10 @@ public class CommitControlPanel extends DateDescControlPanel implements IControl
         createControlPanel();
     }
 
-
+    /**
+     * Metoda volajici kontroler ControlPanelController pro vygenerovani noveho radku
+     * Pripadne rozsireni o staticke objekty
+     */
     public void createControlPanel() {
 
         controlPanelController.setRadioButton(this, 1, "Release: ", true);
@@ -61,7 +79,11 @@ public class CommitControlPanel extends DateDescControlPanel implements IControl
 
     }
 
-
+    /**
+     * Metoda pro zobrazeni postraniho editacniho panelu
+     * Nejprve jsou ziskana data z datoveho modelu
+     * nasledne pomoci kontroleru ControlPanelController pridana do panelu
+     */
     public void showEditControlPanel() {
 
         List[] commitData = formDataController.getCommitStringData(commitId);

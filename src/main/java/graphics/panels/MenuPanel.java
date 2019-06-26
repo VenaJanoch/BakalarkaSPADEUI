@@ -1,5 +1,6 @@
 package graphics.panels;
 
+import controllers.WindowController;
 import javafx.geometry.Insets;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
@@ -11,7 +12,6 @@ import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import services.Constans;
-import controllers.WindowController;
 
 /**
  * Třídy definující hlavní menu aplikace
@@ -29,6 +29,7 @@ public class MenuPanel extends VBox {
     /**
      * Konstruktor třídy
      * Zinicializuje globální proměnné třídy
+     *
      * @param windowController instace WindowController
      */
     public MenuPanel(WindowController windowController) {

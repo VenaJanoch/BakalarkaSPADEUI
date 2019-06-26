@@ -10,6 +10,7 @@ import java.util.List;
 
 /**
  * Třída zajišťující výběr dat artefaktů z databáze
+ *
  * @author Vaclav Janoch
  */
 public class ActivityDAO {
@@ -19,6 +20,7 @@ public class ActivityDAO {
     /**
      * Konstruktor tridy
      * Zinicializuje globalni promenne tridy
+     *
      * @param verifyController
      */
     public ActivityDAO(VerifyController verifyController) {
@@ -27,19 +29,20 @@ public class ActivityDAO {
     }
 
 
-/**
-* Metoda pro vytvoreni SQL dotazu pro urcitou instanci Activity
-* Metoda slozi jednotlive parametry pro SQL dotaz a zavola metodu ze tridy SQLAtributeCreator pro ziskani dat z databaze
-* @param  projectVerifyId identifikator zvoleneho projektu
-* @param name seznam s atributy name
-* @param nameIndicator seznam s indexi ukazatelu rovnosti
-* @param description seznam s atributy description
-* @param descriptionIndicator seznam s indexi ukazatelu rovnosti
-* @param endDate seznam s datumy ukonceni
-* @param endDateIndicator seznam s indexi ukazatelu rovnosti
-* @param workUnits identifikatory zavislych WorkUnitu
-* @return Seznam SQLVerifyObject s daty z databaze
-**/
+    /**
+     * Metoda pro vytvoreni SQL dotazu pro urcitou instanci Activity
+     * Metoda slozi jednotlive parametry pro SQL dotaz a zavola metodu ze tridy SQLAtributeCreator pro ziskani dat z databaze
+     *
+     * @param projectVerifyId      identifikator zvoleneho projektu
+     * @param name                 seznam s atributy name
+     * @param nameIndicator        seznam s indexi ukazatelu rovnosti
+     * @param description          seznam s atributy description
+     * @param descriptionIndicator seznam s indexi ukazatelu rovnosti
+     * @param endDate              seznam s datumy ukonceni
+     * @param endDateIndicator     seznam s indexi ukazatelu rovnosti
+     * @param workUnits            identifikatory zavislych WorkUnitu
+     * @return Seznam SQLVerifyObject s daty z databaze
+     **/
     public ArrayList<SQLVerifyObject> getActivityFormProjekt(int projectVerifyId, List<String> name, List<Integer> nameIndicator,
                                                              List<String> description, List<Integer> descriptionIndicator,
                                                              List<XMLGregorianCalendar> endDate, List<Integer> endDateIndicator, List<Integer> workUnits) {

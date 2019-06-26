@@ -10,11 +10,16 @@ import javafx.scene.control.TableView;
 import model.DataManipulator;
 import model.DataModel;
 import model.IdentificatorCreater;
-import services.*;
+import services.MapperTableToObject;
+import services.SegmentLists;
+import services.SegmentType;
+import services.TableToObjectInstanc;
 import tables.*;
 
 import java.time.LocalDate;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Trida predstavujici controller pro rizeni datovych operaci
@@ -24,13 +29,17 @@ import java.util.*;
  */
 public class FormDataController implements IFormDataController {
 
-    /** Promenne predstavujici instance objektu z datoveho modelu pro moznost vytvareni konkretnich prvku **/
+    /**
+     * Promenne predstavujici instance objektu z datoveho modelu pro moznost vytvareni konkretnich prvku
+     **/
     private SegmentLists lists;
     private DataManipulator dataManipulator;
     private ISaveDataModel saveDataModel;
     private IdentificatorCreater identificatorCreater;
 
-    /** Promenne predstavujici instace objektu kontroleru potrebnych pro cinnost tritdy **/
+    /**
+     * Promenne predstavujici instace objektu kontroleru potrebnych pro cinnost tritdy
+     **/
     private MapperTableToObject mapperTableToObject;
     private DataPreparer dataPreparer;
     private FormFillController formFillController;
@@ -39,12 +48,13 @@ public class FormDataController implements IFormDataController {
     /**
      * Kontroler tridy
      * Zinicializuje globalni promenne tridy
-     * @param formController instace tridy FormController pro formularu
-     * @param lists prehledove seznamy
-     * @param mapperTableToObject instace tridy MapperTableObject pro mapovani instaci mezi sebou
-     * @param dataModel instance datoveho modelu
+     *
+     * @param formController       instace tridy FormController pro formularu
+     * @param lists                prehledove seznamy
+     * @param mapperTableToObject  instace tridy MapperTableObject pro mapovani instaci mezi sebou
+     * @param dataModel            instance datoveho modelu
      * @param identificatorCreater instance tridy pro vytvreni identifikatoru
-     * @param dataPreparer  instace tridy DataPreparer pro pripravu dat do datoveho modelu
+     * @param dataPreparer         instace tridy DataPreparer pro pripravu dat do datoveho modelu
      */
     public FormDataController(FormController formController, SegmentLists lists, MapperTableToObject mapperTableToObject, DataModel dataModel,
                               IdentificatorCreater identificatorCreater, DataPreparer dataPreparer) {
@@ -62,6 +72,7 @@ public class FormDataController implements IFormDataController {
      * Metoda slouzi k vytvoreni noveho segmentu Phase
      * Za pomoci kontroleru FormController je instance vytvorena v datovem modelu
      * Nasledne je vytvorena instace tridy PhaseTable, ktera je nasledne vlozena do prislusne tabulky
+     *
      * @param tableTV Tabluka do ktere v konecne fazi pridana nova instace
      * @param isExist existence prvku
      * @return identifikator v datovem modelu
@@ -79,6 +90,7 @@ public class FormDataController implements IFormDataController {
      * Metoda slouzi k vytvoreni noveho segmentu Iteration
      * Za pomoci kontroleru FormController je instance vytvorena v datovem modelu
      * Nasledne je vytvorena instace tridy IterationTable, ktera je nasledne vlozena do prislusne tabulky
+     *
      * @param tableTV Tabluka do ktere je v konecne fazi pridana nova instace
      * @param isExist existence prvku
      * @return identifikator v datovem modelu
@@ -88,17 +100,18 @@ public class FormDataController implements IFormDataController {
         int id = formController.createTableItem(SegmentType.Iteration);
         IterationTable table = new IterationTable(String.valueOf(id), isExist, id);
 
-       editTableItems(tableTV, table);
+        editTableItems(tableTV, table);
         return id;
     }
 
     /**
      * Metoda pro pridani novych polozek do konkretni tabulky
+     *
      * @param tableTV Tabulka pro pridani dat
-     * @param table polozka pro pridani
+     * @param table   polozka pro pridani
      */
-    private void editTableItems(TableView tableTV, BasicTable table){
-        if (tableTV != null){
+    private void editTableItems(TableView tableTV, BasicTable table) {
+        if (tableTV != null) {
             tableTV.getItems().add(table);
             tableTV.sort();
             int lastItem = tableTV.getItems().size();
@@ -110,6 +123,7 @@ public class FormDataController implements IFormDataController {
      * Metoda slouzi k vytvoreni noveho segmentu Activity
      * Za pomoci kontroleru FormController je instance vytvorena v datovem modelu
      * Nasledne je vytvorena instace tridy ActivityTable, ktera je vkladana do prislusne tabulky
+     *
      * @param tableTV Tabluka do ktere je v konecne fazi pridana nova instace
      * @param isExist existence prvku
      * @return identifikator v datovem modelu
@@ -128,6 +142,7 @@ public class FormDataController implements IFormDataController {
      * Metoda slouzi k vytvoreni noveho elementu Work Unit
      * Za pomoci kontroleru FormController je instance vytvorena v datovem modelu
      * Nasledne je vytvorena instace tridy WorkUnitTable, ktera je vkladana do prislusne tabulky a prehledoveho seznamu
+     *
      * @param tableTV Tabluka do ktere je v konecne fazi pridana nova instace
      * @param isExist existence prvku
      * @return identifikator v datovem modelu
@@ -150,8 +165,8 @@ public class FormDataController implements IFormDataController {
         ArrayList changeList = new ArrayList();
 
         for (int index : itemIndexList.keySet()) {
-            if (identificatorCreater.getRoleIndexToIdMaper().get(index) != null) {
-                changeList.add(identificatorCreater.getRoleIndexToIdMaper().get(index));
+            if (identificatorCreater.getPersonIndexToIdMaper().get(index) != null) {
+                changeList.add(identificatorCreater.getPersonIndexToIdMaper().get(index));
             } else {
                 artefactList.add(identificatorCreater.getArtifactIndexToIdMaper().get(index));
             }
@@ -167,14 +182,14 @@ public class FormDataController implements IFormDataController {
         ConfigTable configTable = new ConfigTable(idName, release, indexForm, true, configIndex);
         if (isNew) {
             lists.getConfigObservable().add(configTable);
-      //      formController.setNewItemToConfigurationTable(idName, release, indexForm, configIndex);
+            //      formController.setNewItemToConfigurationTable(idName, release, indexForm, configIndex);
         } else {
             lists.getConfigObservable().remove(configIndex + 1);
             lists.getConfigObservable().add(configIndex + 1, configTable);
-         //   setEditItemInConfigurationTable(configTable);
+            //   setEditItemInConfigurationTable(configTable);
         }
 
-     //   formController.setConfigurationFormToTableForm();
+        //   formController.setConfigurationFormToTableForm();
         return true;
     }
 
@@ -183,18 +198,19 @@ public class FormDataController implements IFormDataController {
      * Metoda slouzi k vytvoreni noveho elementu Change
      * Za pomoci kontroleru FormController je instance vytvorena v datovem modelu
      * Nasledne je vytvorena instace tridy ChangeTable, ktera je vkladana do prislusne tabulky a prehledoveho seznamu
+     *
      * @param tableTV Tabluka do ktere je v konecne fazi pridana nova instace
      * @param isExist existence prvku
      * @return identifikator v datovem modelu
      */
     public int saveDataFromChangeForm(TableView<ChangeTable> tableTV, boolean isExist) {
 
-            int id = formController.createTableItem(SegmentType.Change);
-            ChangeTable table = new ChangeTable(String.valueOf(id), isExist, id);
+        int id = formController.createTableItem(SegmentType.Change);
+        ChangeTable table = new ChangeTable(String.valueOf(id), isExist, id);
 
-            editTableItems(tableTV, table);
-            lists.getChangeObservable().add(table);
-            return id;
+        editTableItems(tableTV, table);
+        lists.getChangeObservable().add(table);
+        return id;
 
     }
 
@@ -219,6 +235,7 @@ public class FormDataController implements IFormDataController {
      * Metoda slouzi k vytvoreni noveho elementu VCSTag
      * Za pomoci kontroleru FormController je instance vytvorena v datovem modelu
      * Nasledne je vytvorena instace tridy VCSTagTable, ktera je vkladana do prislusne tabulky a prehledoveho seznamu
+     *
      * @param tableTV Tabluka do ktere je v konecne fazi pridana nova instace
      * @param isExist existence prvku
      * @return identifikator v datovem modelu
@@ -228,17 +245,17 @@ public class FormDataController implements IFormDataController {
         int id = formController.createTableItem(SegmentType.VCSTag);
         VCSTagTable table = new VCSTagTable(String.valueOf(id), isExist, id);
 
-       editTableItems(tableTV, table);
+        editTableItems(tableTV, table);
         lists.getVCSTag().add(table);
         return id;
     }
-
 
 
     /**
      * Metoda slouzi k vytvoreni noveho elementu Branch
      * Za pomoci kontroleru FormController je instance vytvorena v datovem modelu
      * Nasledne je vytvorena instace tridy BranchTable, ktera je vkladana do prislusne tabulky
+     *
      * @param tableTV Tabluka do ktere je v konecne fazi pridana nova instace a prehledoveho seznamu
      * @param isExist existence prvku
      * @return identifikator v datovem modelu
@@ -248,7 +265,7 @@ public class FormDataController implements IFormDataController {
         int id = formController.createTableItem(SegmentType.Branch);
         BranchTable table = new BranchTable(String.valueOf(id), "", true, isExist, id);
 
-      editTableItems(tableTV, table);
+        editTableItems(tableTV, table);
         lists.getBranchObservable().add(table);
         return id;
 
@@ -259,6 +276,7 @@ public class FormDataController implements IFormDataController {
      * Za pomoci kontroleru FormController je instance vytvorena v datovem modelu
      * Nasledne je vytvorena instace tridy CPRTable, ktera je
      * vkladana do prislusne tabulky a prehledoveho seznamu
+     *
      * @param tableTV Tabluka do ktere je v konecne fazi pridana nova instace
      * @param isExist existence prvku
      * @return identifikator v datovem modelu
@@ -273,10 +291,12 @@ public class FormDataController implements IFormDataController {
         return id;
 
     }
+
     /**
      * Metoda slouzi k vytvoreni noveho elementu Criterion
      * Za pomoci kontroleru FormController je instance vytvorena v datovem modelu
      * Nasledne je vytvorena instace tridy CriterionTable, ktera je vkladana do prislusne tabulky
+     *
      * @param tableTV Tabluka do ktere je v konecne fazi pridana nova instace a prehledoveho seznamu
      * @param isExist existence prvku
      * @return identifikator v datovem modelu
@@ -286,7 +306,7 @@ public class FormDataController implements IFormDataController {
         int id = formController.createTableItem(SegmentType.Criterion);
         CriterionTable table = new CriterionTable(String.valueOf(id), isExist, id);
 
-       editTableItems(tableTV, table);
+        editTableItems(tableTV, table);
         lists.getCriterionObservable().add(table);
         return id;
     }
@@ -295,6 +315,7 @@ public class FormDataController implements IFormDataController {
      * Metoda slouzi k vytvoreni noveho elementu Milestone
      * Za pomoci kontroleru FormController je instance vytvorena v datovem modelu
      * Nasledne je vytvorena instace tridy MilestoneTable, ktera je vkladana do prislusne tabulky
+     *
      * @param tableTV Tabluka do ktere je v konecne fazi pridana nova instace a prehledoveho seznamu
      * @param isExist existence prvku
      * @return identifikator v datovem modelu
@@ -314,6 +335,7 @@ public class FormDataController implements IFormDataController {
      * Metoda slouzi k vytvoreni noveho elementu Priority
      * Za pomoci kontroleru FormController je instance vytvorena v datovem modelu
      * Nasledne je vytvorena instace tridy PriorityTable, ktera je vkladana do prislusne tabulky
+     *
      * @param tableTV Tabluka do ktere je v konecne fazi pridana nova instace a prehledoveho seznamu
      * @param isExist existence prvku
      * @return identifikator v datovem modelu
@@ -321,9 +343,9 @@ public class FormDataController implements IFormDataController {
     public int saveDataFromPriority(TableView<ClassTable> tableTV, boolean isExist) {
 
         int id = formController.createTableItem(SegmentType.Priority);
-        ClassTable table = new ClassTable(String.valueOf(id),"","", isExist, id);
+        ClassTable table = new ClassTable(String.valueOf(id), "", "", isExist, id);
 
-       editTableItems(tableTV, table);
+        editTableItems(tableTV, table);
         lists.getPriorityTypeObservable().add(table);
         return id;
     }
@@ -332,6 +354,7 @@ public class FormDataController implements IFormDataController {
      * Metoda slouzi k vytvoreni noveho elementu Severity
      * Za pomoci kontroleru FormController je instance vytvorena v datovem modelu
      * Nasledne je vytvorena instace tridy SeverityTable, ktera je vkladana do prislusne tabulky
+     *
      * @param tableTV Tabluka do ktere je v konecne fazi pridana nova instace a prehledoveho seznamu
      * @param isExist existence prvku
      * @return identifikator v datovem modelu
@@ -339,7 +362,7 @@ public class FormDataController implements IFormDataController {
     public int saveDataFromSeverity(TableView<ClassTable> tableTV, boolean isExist) {
 
         int id = formController.createTableItem(SegmentType.Severity);
-        ClassTable table = new ClassTable(String.valueOf(id),"","", isExist, id);
+        ClassTable table = new ClassTable(String.valueOf(id), "", "", isExist, id);
 
         editTableItems(tableTV, table);
         lists.getSeverityTypeObservable().add(table);
@@ -350,6 +373,7 @@ public class FormDataController implements IFormDataController {
      * Metoda slouzi k vytvoreni noveho elementu Resolution
      * Za pomoci kontroleru FormController je instance vytvorena v datovem modelu
      * Nasledne je vytvorena instace tridy ResolutionTable, ktera je vkladana do prislusne tabulky
+     *
      * @param tableTV Tabluka do ktere je v konecne fazi pridana nova instace a prehledoveho seznamu
      * @param isExist existence prvku
      * @return identifikator v datovem modelu
@@ -357,16 +381,18 @@ public class FormDataController implements IFormDataController {
     public int saveDataFromResolutionForm(TableView<ClassTable> tableTV, boolean isExist) {
 
         int id = formController.createTableItem(SegmentType.Resolution);
-        ClassTable table = new ClassTable(String.valueOf(id),"","", isExist, id);
+        ClassTable table = new ClassTable(String.valueOf(id), "", "", isExist, id);
 
         editTableItems(tableTV, table);
         lists.getResolutionTypeObservable().add(table);
         return id;
     }
+
     /**
      * Metoda slouzi k vytvoreni noveho elementu Relation
      * Za pomoci kontroleru FormController je instance vytvorena v datovem modelu
      * Nasledne je vytvorena instace tridy RelationTable, ktera je vkladana do prislusne tabulky
+     *
      * @param tableTV Tabluka do ktere je v konecne fazi pridana nova instace a prehledoveho seznamu
      * @param isExist existence prvku
      * @return identifikator v datovem modelu
@@ -374,28 +400,18 @@ public class FormDataController implements IFormDataController {
     public int saveDataFromRelationForm(TableView<ClassTable> tableTV, boolean isExist) {
 
         int id = formController.createTableItem(SegmentType.Relation);
-        ClassTable table = new ClassTable(String.valueOf(id),"","", isExist, id);
+        ClassTable table = new ClassTable(String.valueOf(id), "", "", isExist, id);
 
         editTableItems(tableTV, table);
         lists.getRelationTypeObservable().add(table);
         return id;
     }
 
-    public void saveDataFromRoleForm(String nameST, int typeIndex, PersonTable personTable) {
-        String nameForManipulator = InputController.fillTextMapper(nameST);
-        String descForManipulator = InputController.fillTextMapper(personTable.getDescription());
-        int typeFormManipulator = dataPreparer.prepareIndexForManipulator(typeIndex);
-
-        saveDataModel.createNewPerson(personTable.getId());
-        lists.getPersonObservable().add(personTable);
-
-        // int roleTypeIndex = dataModel.getRoleTypeIndex(typeFormManipulator);
-        // mapperTableToObject.mapTableToObject(SegmentType.Person, roleTypeIndex, new TableToObjectInstanc(personTable.getAlias(), personTable.getId(), SegmentType.Person));
-    }
     /**
      * Metoda slouzi k vytvoreni noveho elementu Role Type
      * Za pomoci kontroleru FormController je instance vytvorena v datovem modelu
      * Nasledne je vytvorena instace tridy RoleTypeTable, ktera je vkladana do prislusne tabulky
+     *
      * @param tableTV Tabluka do ktere je v konecne fazi pridana nova instace a prehledoveho seznamu
      * @param isExist existence prvku
      * @return identifikator v datovem modelu
@@ -405,7 +421,7 @@ public class FormDataController implements IFormDataController {
         int id = formController.createTableItem(SegmentType.Role_Type);
         RoleTypeTable table = new RoleTypeTable(String.valueOf(id), "", isExist, "", id);
 
-        editTableItems(tableTV,table);
+        editTableItems(tableTV, table);
         lists.getRoleTypeObservable().add(table);
         return id;
 
@@ -415,6 +431,7 @@ public class FormDataController implements IFormDataController {
      * Metoda slouzi k vytvoreni noveho elementu Status
      * Za pomoci kontroleru FormController je instance vytvorena v datovem modelu
      * Nasledne je vytvorena instace tridy StatusTable, ktera je vkladana do prislusne tabulky
+     *
      * @param tableTV Tabluka do ktere je v konecne fazi pridana nova instace a prehledoveho seznamu
      * @param isExist existence prvku
      * @return identifikator v datovem modelu
@@ -422,16 +439,18 @@ public class FormDataController implements IFormDataController {
     public int saveDataFromStatusForm(TableView<ClassTable> tableTV, boolean isExist) {
 
         int id = formController.createTableItem(SegmentType.Status);
-        ClassTable table = new ClassTable(String.valueOf(id),"","", isExist, id);
+        ClassTable table = new ClassTable(String.valueOf(id), "", "", isExist, id);
 
-       editTableItems(tableTV, table);
+        editTableItems(tableTV, table);
         lists.getStatusTypeObservable().add(table);
         return id;
     }
+
     /**
      * Metoda slouzi k vytvoreni noveho elementu Type
      * Za pomoci kontroleru FormController je instance vytvorena v datovem modelu
      * Nasledne je vytvorena instace tridy TypeTable, ktera je vkladana do prislusne tabulky
+     *
      * @param tableTV Tabluka do ktere je v konecne fazi pridana nova instace a prehledoveho seznamu
      * @param isExist existence prvku
      * @return identifikator v datovem modelu
@@ -439,15 +458,16 @@ public class FormDataController implements IFormDataController {
     public int saveDataFromTypeForm(TableView<ClassTable> tableTV, boolean isExist) {
 
         int id = formController.createTableItem(SegmentType.Type);
-        ClassTable table = new ClassTable(String.valueOf(id),"","", isExist, id);
+        ClassTable table = new ClassTable(String.valueOf(id), "", "", isExist, id);
 
-        editTableItems(tableTV,table);
+        editTableItems(tableTV, table);
         lists.getTypeObservable().add(table);
         return id;
     }
 
     /**
      * Metoda pro ziskani dat o elementu Criterion z datoveho modelu v poli listu
+     *
      * @param id identifikator elementu
      * @return pole listu s daty
      */
@@ -457,6 +477,7 @@ public class FormDataController implements IFormDataController {
 
     /**
      * Metoda pro ziskani dat o elementu Milestone z datoveho modelu v poli listu
+     *
      * @param id identifikator elementu
      * @return pole listu s daty
      */
@@ -466,6 +487,7 @@ public class FormDataController implements IFormDataController {
 
     /**
      * Metoda pro ziskani dat o elementu Person z datoveho modelu v poli listu
+     *
      * @param id identifikator elementu
      * @return pole listu s daty
      */
@@ -479,8 +501,9 @@ public class FormDataController implements IFormDataController {
     /**
      * Metoda rozhodujici o tom ktera metoda pro ziskani dat z datoveho modelu bude zavolana
      * Rozhoduje se na zakladne zadaneho typu vyctovych typu pro WorkUnit
+     *
      * @param segmentType typy segmentu nebo elementu
-     * @param id identifikator konkretniho prvku
+     * @param id          identifikator konkretniho prvku
      * @return pole listu s daty
      */
     public List[] getClassStringData(SegmentType segmentType, int id) {
@@ -505,9 +528,9 @@ public class FormDataController implements IFormDataController {
     }
 
 
-
     /**
      * Metoda pro ziskani dat o elementu Configuration Person z datoveho modelu v poli listu
+     *
      * @param id identifikator elementu
      * @return pole listu s daty
      */
@@ -520,6 +543,7 @@ public class FormDataController implements IFormDataController {
 
     /**
      * Metoda pro ziskani dat o elementu Branch z datoveho modelu v poli listu
+     *
      * @param id identifikator elementu
      * @return pole listu s daty
      */
@@ -529,6 +553,7 @@ public class FormDataController implements IFormDataController {
 
     /**
      * Metoda pro ziskani dat o segmentu Phase z datoveho modelu v poli listu
+     *
      * @param id identifikator elementu
      * @return pole listu s daty
      */
@@ -545,6 +570,7 @@ public class FormDataController implements IFormDataController {
 
     /**
      * Metoda pro ziskani dat o segmentu Iteration z datoveho modelu v poli listu
+     *
      * @param id identifikator elementu
      * @return pole listu s daty
      */
@@ -563,6 +589,7 @@ public class FormDataController implements IFormDataController {
 
     /**
      * Metoda pro ziskani dat o segmentu Activity z datoveho modelu v poli listu
+     *
      * @param id identifikator elementu
      * @return pole listu s daty
      */
@@ -577,6 +604,7 @@ public class FormDataController implements IFormDataController {
 
     /**
      * Metoda pro ziskani dat o elementu Change z datoveho modelu v poli listu
+     *
      * @param id identifikator elementu
      * @return pole listu s daty
      */
@@ -591,6 +619,7 @@ public class FormDataController implements IFormDataController {
 
     /**
      * Metoda pro ziskani dat o elementu Artifact z datoveho modelu v poli listu
+     *
      * @param id identifikator elementu
      * @return pole listu s daty
      */
@@ -609,6 +638,7 @@ public class FormDataController implements IFormDataController {
 
     /**
      * Metoda pro ziskani dat o elementu Work Unit z datoveho modelu v poli listu
+     *
      * @param id identifikator elementu
      * @return pole listu s daty
      */
@@ -644,6 +674,7 @@ public class FormDataController implements IFormDataController {
 
     /**
      * Metoda pro ziskani dat o elementu Configuration z datoveho modelu v poli listu
+     *
      * @param id identifikator elementu
      * @return pole listu s daty
      */
@@ -663,6 +694,7 @@ public class FormDataController implements IFormDataController {
 
     /**
      * Metoda pro ziskani dat o elementu VCSTag z datoveho modelu v poli listu
+     *
      * @param tagId identifikator elementu
      * @return pole listu s daty
      */
@@ -670,8 +702,10 @@ public class FormDataController implements IFormDataController {
     public List[] getVCSTagStringData(int tagId) {
         return dataManipulator.getVCSTagStringData(tagId);
     }
+
     /**
      * Metoda pro ziskani dat o elementu Commit z datoveho modelu v poli listu
+     *
      * @param commidId identifikator elementu
      * @return pole listu s daty
      */
@@ -682,8 +716,10 @@ public class FormDataController implements IFormDataController {
         data[5] = created;
         return data;
     }
+
     /**
      * Metoda pro ziskani dat o elementu Committed Configuration z datoveho modelu v poli listu
+     *
      * @param commitedId identifikator elementu
      * @return pole listu s daty
      */
@@ -699,6 +735,7 @@ public class FormDataController implements IFormDataController {
 
     /**
      * Metoda pro ziskani dat o projektu z datoveho modelu v poli listu
+     *
      * @return pole listu s daty
      */
     @Override
@@ -715,6 +752,7 @@ public class FormDataController implements IFormDataController {
 
     /**
      * Metoda pro ziskani dat o elementu Role Type z datoveho modelu v poli listu
+     *
      * @param id identifikator elementu
      * @return pole listu s daty
      */
@@ -726,6 +764,7 @@ public class FormDataController implements IFormDataController {
 
     /**
      * Metoda pro ziskani identifikatoru criterion ke konkretnimu Milestone
+     *
      * @param id identifikator Milestone
      * @return list s identifikatory criterion patricich pro Milestone
      */
@@ -739,7 +778,8 @@ public class FormDataController implements IFormDataController {
     /**
      * Pomocna metoda o rozhodnuti pro ktery segmentu pripadne work unitu bude vracen seznam
      * identifikatoru jeho work unitu
-     * @param id identifikator prvky
+     *
+     * @param id          identifikator prvky
      * @param segmentType typ segmentu nebo work unitu
      * @return seznam prislusnych identifikatoru
      */
@@ -774,6 +814,7 @@ public class FormDataController implements IFormDataController {
 
     /**
      * Metoda pro ziskani identifikatoru criterion ke konkretnimu Configuration
+     *
      * @param configId identifikator Configuration
      * @return list s identifikatory criterion patricich pro Configuration
      */
@@ -785,6 +826,7 @@ public class FormDataController implements IFormDataController {
 
     /**
      * Metoda pro ziskani identifikatoru Branch ke konkretnimu Configuration
+     *
      * @param configId identifikator Configuration
      * @return list s identifikatory criterion patricich pro Configuration
      */
@@ -796,6 +838,7 @@ public class FormDataController implements IFormDataController {
 
     /**
      * Metoda pro ziskani identifikatoru Change ke konkretnimu Configuration
+     *
      * @param configId identifikator Configuration
      * @return list s identifikatory criterion patricich pro Configuration
      */
@@ -809,10 +852,11 @@ public class FormDataController implements IFormDataController {
     /**
      * Metoda pro vytvoreni relace mezi Artifact a Configuration
      * Nejprve je volana metoda pro vytvoreni z datoveho skladu a nasledne namapovany potrebne reference
-     * @param linkId identifikator nove spojnice
+     *
+     * @param linkId  identifikator nove spojnice
      * @param startId identifikator pocatecniho prvku
-     * @param endId identifikator koncoveho prvku
-     * @param isXML nacteni se neprovede v pripade nacitani z XML
+     * @param endId   identifikator koncoveho prvku
+     * @param isXML   nacteni se neprovede v pripade nacitani z XML
      */
     public void createArtifactToConfigurationRelation(int linkId, Integer startId, Integer endId, boolean isXML) {
         if (!isXML) {
@@ -824,10 +868,11 @@ public class FormDataController implements IFormDataController {
     /**
      * Metoda pro vytvoreni relace mezi Commit a Configuration
      * Nejprve je volana metoda pro vytvoreni z datoveho skladu a nasledne namapovany potrebne reference
-     * @param linkId identifikator nove spojnice
+     *
+     * @param linkId  identifikator nove spojnice
      * @param startId identifikator pocatecniho prvku
-     * @param endId identifikator koncoveho prvku
-     * @param isXML nacteni se neprovede v pripade nacitani z XML
+     * @param endId   identifikator koncoveho prvku
+     * @param isXML   nacteni se neprovede v pripade nacitani z XML
      */
     public void createCommitToCommitedConfigurationRelation(int linkId, Integer startId, Integer endId, boolean isXML) {
         if (!isXML) {
@@ -836,13 +881,15 @@ public class FormDataController implements IFormDataController {
         mapperTableToObject.mapTableToObjects(SegmentType.Committed_Configuration, SegmentType.Commit, startId,
                 new TableToObjectInstanc(String.valueOf(endId), endId, SegmentType.Committed_Configuration));
     }
+
     /**
      * Metoda pro vytvoreni relace mezi Committed Configuration a Configuration
      * Nejprve je volana metoda pro vytvoreni z datoveho skladu a nasledne namapovany potrebne reference
-     * @param linkId identifikator nove spojnice
+     *
+     * @param linkId  identifikator nove spojnice
      * @param startId identifikator pocatecniho prvku
-     * @param endId identifikator koncoveho prvku
-     * @param isXML nacteni se neprovede v pripade nacitani z XML
+     * @param endId   identifikator koncoveho prvku
+     * @param isXML   nacteni se neprovede v pripade nacitani z XML
      */
     public void createCommitedConfigurationToConfigurationRelation(int linkId, Integer startId, Integer endId, boolean isXML) {
         if (!isXML) {
@@ -855,10 +902,11 @@ public class FormDataController implements IFormDataController {
     /**
      * Metoda pro vytvoreni relace mezi Person a Configuration
      * Nejprve je volana metoda pro vytvoreni z datoveho skladu a nasledne namapovany potrebne reference
-     * @param linkId identifikator nove spojnice
+     *
+     * @param linkId  identifikator nove spojnice
      * @param startId identifikator pocatecniho prvku
-     * @param endId identifikator koncoveho prvku
-     * @param isXML nacteni se neprovede v pripade nacitani z XML
+     * @param endId   identifikator koncoveho prvku
+     * @param isXML   nacteni se neprovede v pripade nacitani z XML
      */
     public void createNewPersonToConfigurationRelation(int linkId, Integer startId, Integer endId, boolean isXML) {
         if (!isXML) {
@@ -871,10 +919,11 @@ public class FormDataController implements IFormDataController {
     /**
      * Metoda pro vytvoreni relace mezi Person a Artifact
      * Nejprve je volana metoda pro vytvoreni z datoveho skladu a nasledne namapovany potrebne reference
-     * @param linkId identifikator nove spojnice
+     *
+     * @param linkId  identifikator nove spojnice
      * @param startId identifikator pocatecniho prvku
-     * @param endId identifikator koncoveho prvku
-     * @param isXML nacteni se neprovede v pripade nacitani z XML
+     * @param endId   identifikator koncoveho prvku
+     * @param isXML   nacteni se neprovede v pripade nacitani z XML
      */
     public void createNewPersonToArtifactRelation(int linkId, Integer startId, Integer endId, boolean isXML) {
         if (!isXML) {
@@ -883,13 +932,15 @@ public class FormDataController implements IFormDataController {
         mapperTableToObject.mapTableToObjects(SegmentType.Artifact, SegmentType.Person, startId,
                 new TableToObjectInstanc(String.valueOf(endId), endId, SegmentType.Artifact));
     }
+
     /**
      * Metoda pro vytvoreni relace mezi Person a Commit
      * Nejprve je volana metoda pro vytvoreni z datoveho skladu a nasledne namapovany potrebne reference
-     * @param linkId identifikator nove spojnice
+     *
+     * @param linkId  identifikator nove spojnice
      * @param startId identifikator pocatecniho prvku
-     * @param endId identifikator koncoveho prvku
-     * @param isXML nacteni se neprovede v pripade nacitani z XML
+     * @param endId   identifikator koncoveho prvku
+     * @param isXML   nacteni se neprovede v pripade nacitani z XML
      */
     public void createNewPersonToCommitRelation(int linkId, Integer startId, Integer endId, boolean isXML) {
         if (!isXML) {
@@ -898,13 +949,15 @@ public class FormDataController implements IFormDataController {
         mapperTableToObject.mapTableToObjects(SegmentType.Commit, SegmentType.Person, startId,
                 new TableToObjectInstanc(String.valueOf(endId), endId, SegmentType.Commit));
     }
+
     /**
      * Metoda pro vytvoreni relace mezi Person a Committed Configuration
      * Nejprve je volana metoda pro vytvoreni z datoveho skladu a nasledne namapovany potrebne reference
-     * @param linkId identifikator nove spojnice
+     *
+     * @param linkId  identifikator nove spojnice
      * @param startId identifikator pocatecniho prvku
-     * @param endId identifikator koncoveho prvku
-     * @param isXML nacteni se neprovede v pripade nacitani z XML
+     * @param endId   identifikator koncoveho prvku
+     * @param isXML   nacteni se neprovede v pripade nacitani z XML
      */
     public void createNewPersonToCommittedConfigurationRelation(int linkId, Integer startId, Integer endId, boolean isXML) {
         if (!isXML) {
@@ -916,94 +969,95 @@ public class FormDataController implements IFormDataController {
 
     /**
      * Metoda slouzici k rozhodnuti, ktery typ prvku se bude kopirovat z tabulkoveho formulare
-     * @param list seznam prvku pro kopirovani
-     * @param tableView instance tabulky, kam se budou nove prvky vkladat
+     *
+     * @param list        seznam prvku pro kopirovani
+     * @param tableView   instance tabulky, kam se budou nove prvky vkladat
      * @param segmentType typ elementu nebo segmentu
      */
     @Override
     public void createCopyTableItem(ArrayList<BasicTable> list, TableView tableView, SegmentType segmentType) {
-        switch (segmentType){
+        switch (segmentType) {
             case Activity:
-                for (BasicTable table : list){
-                    formFillController.fillActivityForm(tableView, table.getId() );
+                for (BasicTable table : list) {
+                    formFillController.fillActivityForm(tableView, table.getId());
                 }
                 break;
             case Phase:
-                for (BasicTable table : list){
-                    formFillController.fillPhaseForm(tableView, table.getId() );
+                for (BasicTable table : list) {
+                    formFillController.fillPhaseForm(tableView, table.getId());
                 }
                 break;
             case Iteration:
-                for (BasicTable table : list){
-                    formFillController.fillIterationForm(tableView, table.getId() );
+                for (BasicTable table : list) {
+                    formFillController.fillIterationForm(tableView, table.getId());
                 }
                 break;
             case Change:
-                for (BasicTable table : list){
-                    formFillController.fillChangeForm(tableView, table.getId() );
+                for (BasicTable table : list) {
+                    formFillController.fillChangeForm(tableView, table.getId());
                 }
                 break;
             case VCSTag:
-                for (BasicTable table : list){
-                    formFillController.fillVCSTagForm(tableView, table.getId() );
+                for (BasicTable table : list) {
+                    formFillController.fillVCSTagForm(tableView, table.getId());
                 }
                 break;
             case Config_Person_Relation:
-                for (BasicTable table : list){
-                    formFillController.fillCPRForm(tableView, table.getId() );
+                for (BasicTable table : list) {
+                    formFillController.fillCPRForm(tableView, table.getId());
                 }
                 break;
             case Branch:
-                for (BasicTable table : list){
-                    formFillController.fillBranchForm(tableView, table.getId() );
+                for (BasicTable table : list) {
+                    formFillController.fillBranchForm(tableView, table.getId());
                 }
                 break;
             case Criterion:
-                for (BasicTable table : list){
-                    formFillController.fillCriterionForm(tableView, table.getId() );
+                for (BasicTable table : list) {
+                    formFillController.fillCriterionForm(tableView, table.getId());
                 }
                 break;
             case Milestone:
-                for (BasicTable table : list){
-                    formFillController.fillMilestoneForm(tableView, table.getId() );
+                for (BasicTable table : list) {
+                    formFillController.fillMilestoneForm(tableView, table.getId());
                 }
                 break;
             case Priority:
-                for (BasicTable table : list){
-                    formFillController.fillPriorityForm(tableView, table.getId() );
+                for (BasicTable table : list) {
+                    formFillController.fillPriorityForm(tableView, table.getId());
                 }
                 break;
             case Severity:
-                for (BasicTable table : list){
-                    formFillController.fillSeverityForm(tableView, table.getId() );
+                for (BasicTable table : list) {
+                    formFillController.fillSeverityForm(tableView, table.getId());
                 }
                 break;
             case Resolution:
-                for (BasicTable table : list){
-                    formFillController.fillResolutionForm(tableView, table.getId() );
+                for (BasicTable table : list) {
+                    formFillController.fillResolutionForm(tableView, table.getId());
                 }
                 break;
             case Relation:
-                for (BasicTable table : list){
-                    formFillController.fillRelationForm(tableView, table.getId() );
+                for (BasicTable table : list) {
+                    formFillController.fillRelationForm(tableView, table.getId());
                 }
                 break;
             case Status:
-                for (BasicTable table : list){
-                    formFillController.fillStatusForm(tableView, table.getId() );
+                for (BasicTable table : list) {
+                    formFillController.fillStatusForm(tableView, table.getId());
                 }
                 break;
             case Type:
-                for (BasicTable table : list){
-                    formFillController.fillTypeForm(tableView, table.getId() );
+                for (BasicTable table : list) {
+                    formFillController.fillTypeForm(tableView, table.getId());
                 }
             case Role_Type:
-                for (BasicTable table : list){
-                    formFillController.fillRoleTypeForm(tableView, table.getId() );
+                for (BasicTable table : list) {
+                    formFillController.fillRoleTypeForm(tableView, table.getId());
                 }
             case Work_Unit:
-                for (BasicTable table : list){
-                    formFillController.fillWorkUnitForm(tableView, table.getId() );
+                for (BasicTable table : list) {
+                    formFillController.fillWorkUnitForm(tableView, table.getId());
                 }
                 break;
             default:
@@ -1012,6 +1066,7 @@ public class FormDataController implements IFormDataController {
 
     /**
      * Metoda pro nastaveni instace FormFillController
+     *
      * @param formFillController FormFillController
      */
     public void setFormFillController(FormFillController formFillController) {
@@ -1020,6 +1075,7 @@ public class FormDataController implements IFormDataController {
 
     /**
      * Metoda pro ziskani prehledoveho seznamu o Person
+     *
      * @return observer seznam elementu Person
      */
     public ObservableList<BasicTable> getPersonList() {

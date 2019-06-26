@@ -17,9 +17,10 @@ public class ChangeTable extends BasicTable {
 
     /**
      * Konstruktor třídy Zinicializuje globální proměnnné třídy
-     * @param name alias prvku
+     *
+     * @param name  alias prvku
      * @param exist existence prvku
-     * @param id identifikator prvku
+     * @param id    identifikator prvku
      */
     public ChangeTable(String name, boolean exist, int id) {
         super(name, exist, id);

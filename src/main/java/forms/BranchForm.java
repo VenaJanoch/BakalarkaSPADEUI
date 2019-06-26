@@ -1,8 +1,8 @@
 package forms;
 
-import controllers.formControllers.FormController;
 import abstractform.TableBasicForm;
 import controlPanels.BranchControlPanel;
+import controllers.formControllers.FormController;
 import interfaces.IDeleteFormController;
 import interfaces.IEditFormController;
 import interfaces.IFormDataController;
@@ -20,7 +20,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
-import services.*;
+import services.SegmentType;
 import tables.BranchTable;
 
 /**
@@ -42,11 +42,12 @@ public class BranchForm extends TableBasicForm implements ISegmentTableForm {
     /**
      * Konstruktor Třídy Zinicializuje globální proměnné tříd Nastaví reakci na
      * ukončení formuláře
-     * @param formController instance tridy FormController
-     * @param formDataController instance tridy FormDataController
-     * @param editFormController instance tridy EditFormController
+     *
+     * @param formController       instance tridy FormController
+     * @param formDataController   instance tridy FormDataController
+     * @param editFormController   instance tridy EditFormController
      * @param deleteFormController instace tridy DeleteFormController
-     * @param type instace SegmentType pro urceni typu formulare
+     * @param type                 instace SegmentType pro urceni typu formulare
      */
     public BranchForm(FormController formController, IFormDataController formDataController, IEditFormController editFormController, IDeleteFormController deleteFormController, SegmentType type) {
         super(formController, formDataController, editFormController, deleteFormController, type);
@@ -78,6 +79,7 @@ public class BranchForm extends TableBasicForm implements ISegmentTableForm {
             }
         };
     }
+
     /**
      * Metoda pro vyvolani postraniho panelu
      * Jsou zavolany potrebne kontrolery
@@ -89,6 +91,7 @@ public class BranchForm extends TableBasicForm implements ISegmentTableForm {
             formController.showEditControlPanel(editBranchControlPanel);
         }
     }
+
     /**
      * Metoda pro určení reakce stisknutí tlačítka pro potvrzení formuláře
      */
@@ -99,6 +102,7 @@ public class BranchForm extends TableBasicForm implements ISegmentTableForm {
         editButton.setOnAction(event -> showEditPanel());
         copyButton.setOnAction(event -> copyItem(tableTV));
     }
+
     /**
      * Metoda pro přídání prvku do interního gridPanelu
      */
@@ -107,6 +111,7 @@ public class BranchForm extends TableBasicForm implements ISegmentTableForm {
         this.setCenter(getTable());
 
     }
+
     /**
      * Metoda pro přídání TableView do formuláře
      */
@@ -141,6 +146,7 @@ public class BranchForm extends TableBasicForm implements ISegmentTableForm {
 
         return tableTV;
     }
+
     /**
      * Metoda pro nastavení reakce na klávesu delete
      */
@@ -152,6 +158,7 @@ public class BranchForm extends TableBasicForm implements ISegmentTableForm {
         }
 
     }
+
     /**
      * Metoda pro přídání prvku do gridPanelu
      */
@@ -161,6 +168,7 @@ public class BranchForm extends TableBasicForm implements ISegmentTableForm {
 
         return null;
     }
+
     /**
      * Metoda pro přídání prvku dané tabulky
      */

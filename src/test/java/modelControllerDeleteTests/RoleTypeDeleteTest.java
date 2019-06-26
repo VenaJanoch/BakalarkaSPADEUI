@@ -1,14 +1,10 @@
 package modelControllerDeleteTests;
 
 import SPADEPAC.Person;
-import SPADEPAC.RoleType;
-import SPADEPAC.WorkUnit;
 import controllers.formControllers.DeleteFormController;
-import controllers.formControllers.FormController;
 import controllers.formControllers.FormDataController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.control.TableView;
 import model.DataModel;
 import org.junit.Before;
 import org.junit.Test;
@@ -24,7 +20,6 @@ import java.util.ArrayList;
 import java.util.Set;
 
 import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
 
 public class RoleTypeDeleteTest {
 
@@ -33,16 +28,17 @@ public class RoleTypeDeleteTest {
     LocalDate date;
     Person person;
     MapperTableToObject mapperTableToObject;
+
     @Before
     public void setUp() throws Exception {
-        
+
         WarmUp warmUp = new WarmUp();
         dataModel = warmUp.getDataModel();
-         lists = warmUp.getLists();
+        lists = warmUp.getLists();
         FormDataController formDataController = warmUp.getFormDataController();
         DeleteFormController deleteFormController = warmUp.getDeleteFormController();
-        ClassTable table1 = new ClassTable("","","",true, 0);
-         formDataController.saveDataFromRoleTypeForm(null, true);
+        ClassTable table1 = new ClassTable("", "", "", true, 0);
+        formDataController.saveDataFromRoleTypeForm(null, true);
         formDataController.saveDataFromRoleTypeForm(null, true);
 
 
@@ -62,7 +58,7 @@ public class RoleTypeDeleteTest {
         ArrayList<LocalDate> dates = new ArrayList<>();
         dates.add(date);
         dataModel.getSaveDataModel().createNewPerson(2);
-        dataModel.getEditDataModel().editDataInPerson("Test", name, indicators, indicators, indicators, 3,1, false, 2);
+        dataModel.getEditDataModel().editDataInPerson("Test", name, indicators, indicators, indicators, 3, 1, false, 2);
 
 
         ObservableList list = FXCollections.observableArrayList();
@@ -71,7 +67,7 @@ public class RoleTypeDeleteTest {
         ArrayList<BasicTable> branchTables = new ArrayList<>();
         branchTables.add(table1);
         mapperTableToObject = warmUp.getMapperTableToObject();
-        mapperTableToObject.mapTableToObject(SegmentType.Person, indicators, new TableToObjectInstanc("Name",2,
+        mapperTableToObject.mapTableToObject(SegmentType.Person, indicators, new TableToObjectInstanc("Name", 2,
                 SegmentType.Person));
         deleteFormController.deleteRoleType(list, branchTables);
 
@@ -79,10 +75,11 @@ public class RoleTypeDeleteTest {
 
     @Test
     public void testMapper() {
-        Set instacies =  mapperTableToObject.getPersonToRoleTypeMapper().keySet();
+        Set instacies = mapperTableToObject.getPersonToRoleTypeMapper().keySet();
         assertSame(1, instacies.size());
         assertSame(1, instacies.iterator().next());
     }
+
     @Test
     public void testListSize() {
         assertSame(1, dataModel.getRoleTypes().size());

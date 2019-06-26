@@ -7,6 +7,7 @@ import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import org.controlsfx.control.CheckComboBox;
 import tables.BasicTable;
+
 /**
  * Trida predstavujici controller pro komponenty patrici do jednotlivych radku
  *
@@ -14,11 +15,17 @@ import tables.BasicTable;
  */
 public class ItemBoxController {
 
-    /**Index prvku vybraneho v ComboBoxu**/
+    /**
+     * Index prvku vybraneho v ComboBoxu
+     **/
     private int itemIndex;
-    /**Indexi zvolene v komponente CheckComboBox**/
+    /**
+     * Indexi zvolene v komponente CheckComboBox
+     **/
     private ObservableList<Integer> choosedIndicies;
-    /**Listener pro ComoboBox **/
+    /**
+     * Listener pro ComoboBox
+     **/
     private ChangeListener<Number> listener;
 
 
@@ -65,7 +72,9 @@ public class ItemBoxController {
         return checkListener;
     }
 
-    /**Getrs and Setrs**/
+    /**
+     * Getrs and Setrs
+     **/
     public int getItemIndex() {
         return itemIndex;
     }

@@ -11,20 +11,42 @@ import tables.CriterionTable;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Trida predstavujici editacni panel pro element Criterion
+ *
+ * @author Vaclav Janoch
+ */
 public class CriterionControlPanel extends DescriptionControlPanel {
 
-
+    /**
+     * Konstruktor tridy, zinicializuje globalni promenne tridy
+     * Je zde rozsiren seznam poznych typu panelu pro dany element
+     *
+     * @param buttonName         textovy retezec pro potvrzovaci tlacitko
+     * @param formDataController instace tridy FormDataController pro ziskani dat z datoveho modelu
+     * @param editFormController instace tridy EditDataController pro predani novych dat
+     */
     public CriterionControlPanel(String buttonName, IFormDataController formDataController, IEditFormController editFormController) {
         super(buttonName, formDataController, editFormController);
         addItemsToControlPanel();
     }
 
-
+    /**
+     * Metoda volajici kontroler ControlPanelController pro vygenerovani noveho radku
+     * Pripadne rozsireni o staticke objekty
+     */
     public void addItemsToControlPanel() {
         controlPanelController.createNewLineWithExist(this, lineList);
     }
 
-
+    /**
+     * Metoda pro zobrazeni postraniho editacniho panelu
+     * Nejprve jsou ziskana data z datoveho modelu
+     * nasledne pomoci kontroleru ControlPanelController pridana do panelu
+     *
+     * @param basicTable Instance BasicTable
+     * @param tableView  Instace TableView
+     */
     public void showEditControlPanel(BasicTable basicTable, TableView tableView) {
         CriterionTable criterionTable = (CriterionTable) basicTable;
         int id = criterionTable.getId();
@@ -54,7 +76,11 @@ public class CriterionControlPanel extends DescriptionControlPanel {
         });
     }
 
-
+    /**
+     * Metoda pro smazani vyberu v tabulce
+     *
+     * @param tableView instace tridy TableView
+     */
     public void clearPanel(TableView tableView) {
         tableView.getSelectionModel().clearSelection();
         tableView.refresh();

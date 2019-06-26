@@ -2,14 +2,19 @@ package forms;
 
 import abstractform.TableBasicForm;
 import controlPanels.IterationControlPanel;
-import controllers.graphicsComponentsControllers.CanvasController;
 import controllers.formControllers.FormController;
+import controllers.graphicsComponentsControllers.CanvasController;
 import graphics.panels.DragAndDropItemPanel;
-import interfaces.*;
+import interfaces.IDeleteFormController;
+import interfaces.IEditFormController;
+import interfaces.IFormDataController;
+import interfaces.ISegmentTableForm;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
-import javafx.scene.control.*;
+import javafx.scene.control.SelectionMode;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.input.KeyCode;
@@ -37,11 +42,12 @@ public class IterationForm extends TableBasicForm implements ISegmentTableForm {
     /**
      * Konstruktor Třídy Zinicializuje globální proměnné tříd Nastaví reakci
      * na klik do tabulky, vytvori naplni panel a nastavi akce tlacitkum
-     * @param formController instance tridy FormController
-     * @param formDataController instance tridy FormDataController
-     * @param editFormController instance tridy EditFormController
+     *
+     * @param formController       instance tridy FormController
+     * @param formDataController   instance tridy FormDataController
+     * @param editFormController   instance tridy EditFormController
      * @param deleteFormController instace tridy DeleteFormController
-     * @param type instace SegmentType pro urceni typu formulare
+     * @param type                 instace SegmentType pro urceni typu formulare
      */
     public IterationForm(FormController formController, IFormDataController formDataController, IEditFormController editFormController, IDeleteFormController deleteFormController, CanvasController canvas, DragAndDropItemPanel dgItemPanel,
                          SegmentType type, int indexForm) {
@@ -116,6 +122,7 @@ public class IterationForm extends TableBasicForm implements ISegmentTableForm {
 
         return tableTV;
     }
+
     /**
      * Metoda pro nastavení reakce na klávesu delete
      */
@@ -126,6 +133,7 @@ public class IterationForm extends TableBasicForm implements ISegmentTableForm {
             deleteItem(tableTV);
         }
     }
+
     /**
      * Metoda pro přídání prvku do gridPanelu
      */
@@ -156,6 +164,7 @@ public class IterationForm extends TableBasicForm implements ISegmentTableForm {
         editButton.setOnAction(event -> showEditPanel());
         copyButton.setOnAction(event -> copyItem(tableTV));
     }
+
     /**
      * Metoda pro přídání prvku dané tabulky
      */

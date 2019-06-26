@@ -1,7 +1,7 @@
 package abstractControlPane;
 
-import controllers.graphicsComponentsControllers.ControlPanelController;
 import controllers.formControllers.FormController;
+import controllers.graphicsComponentsControllers.ControlPanelController;
 import graphics.controlPanelItems.ControlPanelLine;
 import interfaces.IEditFormController;
 import interfaces.IFormDataController;
@@ -56,9 +56,9 @@ public abstract class ControlPanel extends ScrollPane {
      * Konstruktor třídy
      * Nastaví potřebné třídy a zavolá metodu createMainPanel pro vytvoření tlačítek.
      *
-     * @param buttonText
-     * @param formDataController
-     * @param editFormController
+     * @param buttonText         název tlačítka
+     * @param formDataController Třída FormDataController
+     * @param editFormController Třída EditFormController
      */
     public ControlPanel(String buttonText, IFormDataController formDataController, IEditFormController editFormController) {
         super();

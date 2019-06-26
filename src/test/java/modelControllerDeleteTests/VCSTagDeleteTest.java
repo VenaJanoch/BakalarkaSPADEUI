@@ -2,18 +2,14 @@ package modelControllerDeleteTests;
 
 import SPADEPAC.Configuration;
 import controllers.formControllers.DeleteFormController;
-import controllers.formControllers.FormController;
 import controllers.formControllers.FormDataController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.control.TableView;
 import model.DataModel;
 import org.junit.Before;
 import org.junit.Test;
 import services.SegmentLists;
-import services.SegmentType;
 import tables.BasicTable;
-import tables.ChangeTable;
 import tables.VCSTagTable;
 
 import java.time.LocalDate;
@@ -56,7 +52,7 @@ public class VCSTagDeleteTest {
         dates.add(date);
         dataModel.getSaveDataModel().createNewConfiguration(2);
         dataModel.getEditDataModel().editDataInConfiguration("Test", name, name, dates, true, unit, unit, unit, indicators, indicators, indicators,
-                indicators, indicators, indicators, indicators, indicators, 3, 1,false, 2);
+                indicators, indicators, indicators, indicators, indicators, 3, 1, false, 2);
         configuration = dataModel.getConfiguration(2);
         ObservableList list = FXCollections.observableArrayList();
         list.add(0);

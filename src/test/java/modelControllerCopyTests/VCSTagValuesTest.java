@@ -1,14 +1,11 @@
 package modelControllerCopyTests;
 
 import SPADEPAC.VCSTag;
-import controllers.formControllers.FormController;
 import controllers.formControllers.FormDataController;
 import controllers.formControllers.FormFillController;
-import javafx.scene.control.TableView;
 import org.junit.Before;
 import org.junit.Test;
 import services.SegmentLists;
-import services.SegmentType;
 import tables.VCSTagTable;
 
 import java.util.ArrayList;
@@ -19,63 +16,64 @@ import static org.junit.Assert.assertSame;
 
 public class VCSTagValuesTest {
 
-        VCSTag vcsTag;
-        SegmentLists lists;
-        @Before
-        public void setUp() throws Exception {
+    VCSTag vcsTag;
+    SegmentLists lists;
 
-            WarmUp warmUp = new WarmUp();
-            lists = warmUp.getLists();
-            FormDataController formDataController = warmUp.getFormDataController();
+    @Before
+    public void setUp() throws Exception {
 
-            formDataController.saveDataFromVCSTagForm(null, true);
-            ArrayList<String> name = new ArrayList<>();
-            name.add("");
-            name.add("Test2");
-            ArrayList<Integer> indicators = new ArrayList<>();
-            indicators.add(1);
-            indicators.add(0);
+        WarmUp warmUp = new WarmUp();
+        lists = warmUp.getLists();
+        FormDataController formDataController = warmUp.getFormDataController();
 
-            warmUp.getEditFormController().editDataFromVCSTag("Test", name, name, indicators, indicators, new VCSTagTable("Test", false, 0), false, 0);
-            warmUp.getEditFormController().editDataFromVCSTag("Test", name, name, indicators, indicators, new VCSTagTable("Test", false, 0), false, 0);
-            FormFillController formFillController = warmUp.getFormFillController();
-            formFillController.fillVCSTagForm(null, 0);
-            vcsTag = warmUp.getDataModel().getVCSTag(1);
-        }
+        formDataController.saveDataFromVCSTagForm(null, true);
+        ArrayList<String> name = new ArrayList<>();
+        name.add("");
+        name.add("Test2");
+        ArrayList<Integer> indicators = new ArrayList<>();
+        indicators.add(1);
+        indicators.add(0);
+
+        warmUp.getEditFormController().editDataFromVCSTag("Test", name, name, indicators, indicators, new VCSTagTable("Test", false, 0), false, 0);
+        warmUp.getEditFormController().editDataFromVCSTag("Test", name, name, indicators, indicators, new VCSTagTable("Test", false, 0), false, 0);
+        FormFillController formFillController = warmUp.getFormFillController();
+        formFillController.fillVCSTagForm(null, 0);
+        vcsTag = warmUp.getDataModel().getVCSTag(1);
+    }
 
     @Test
     public void testAlias() {
-        assertEquals("1", vcsTag.getAlias() );
+        assertEquals("1", vcsTag.getAlias());
     }
 
     @Test
     public void testName() {
-        assertEquals("", vcsTag.getName().get(0) );
-        assertEquals("Test2", vcsTag.getName().get(1) );
+        assertEquals("", vcsTag.getName().get(0));
+        assertEquals("Test2", vcsTag.getName().get(1));
         assertSame(2, vcsTag.getName().size());
     }
 
     @Test
     public void testIndicatorName() {
-        assertSame(1, vcsTag.getNameIndicator().get(0) );
-        assertSame(0, vcsTag.getNameIndicator().get(1) );
+        assertSame(1, vcsTag.getNameIndicator().get(0));
+        assertSame(0, vcsTag.getNameIndicator().get(1));
         assertSame(2, vcsTag.getNameIndicator().size());
     }
 
     @Test
     public void testDescription() {
-        assertEquals("", vcsTag.getDescription().get(0) );
-        assertEquals("Test2", vcsTag.getDescription().get(1) );
+        assertEquals("", vcsTag.getDescription().get(0));
+        assertEquals("Test2", vcsTag.getDescription().get(1));
         assertSame(2, vcsTag.getDescription().size());
     }
 
     @Test
     public void testIndicatorDescription() {
-        assertSame(1, vcsTag.getDescriptionIndicator().get(0) );
-        assertSame(0, vcsTag.getDescriptionIndicator().get(1) );
+        assertSame(1, vcsTag.getDescriptionIndicator().get(0));
+        assertSame(0, vcsTag.getDescriptionIndicator().get(1));
         assertSame(2, vcsTag.getDescriptionIndicator().size());
     }
-    
+
     @Test
     public void testId() {
         assertSame(1, vcsTag.getId());
@@ -85,4 +83,4 @@ public class VCSTagValuesTest {
     public void testExist() {
         assertFalse(vcsTag.isExist());
     }
-    }
+}

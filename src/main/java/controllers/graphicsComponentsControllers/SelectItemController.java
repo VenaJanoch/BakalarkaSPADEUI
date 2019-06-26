@@ -23,6 +23,7 @@ public class SelectItemController {
     /**
      * Konstruktor tridy
      * Zinicializuje globalni promenne tridy a listener
+     *
      * @param drawerPanelController
      */
     public SelectItemController(DrawerPanelController drawerPanelController) {
@@ -41,6 +42,7 @@ public class SelectItemController {
 
     /**
      * Metoda pro ziskani zvoleneho Formulare
+     *
      * @return BasicForm vybrany formular
      */
     public BasicForm getFormFromSelectItem() {
@@ -53,6 +55,7 @@ public class SelectItemController {
 
     /**
      * Metoda pro komponenty
+     *
      * @param box ComboBox
      */
     public void setBox(ComboBox box) {
@@ -67,6 +70,7 @@ public class SelectItemController {
 
     /**
      * Setter pro nastaveni tridy FormController
+     *
      * @param formController instace tridy FormController
      */
     public void setFormController(FormController formController) {

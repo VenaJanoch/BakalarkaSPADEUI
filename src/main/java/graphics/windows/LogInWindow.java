@@ -10,7 +10,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
@@ -43,8 +42,10 @@ public class LogInWindow extends Stage {
     private TableView<ProjectTable> tableTV;
 
 
-    /** Konstruktor tridy,
+    /**
+     * Konstruktor tridy,
      * Zinicializuje globalni promenne tridy
+     *
      * @param databaseController instace tridy DatabaseController
      */
     public LogInWindow(DatabaseController databaseController) {
@@ -91,6 +92,7 @@ public class LogInWindow extends Stage {
 
     /**
      * Metoda pro zobrazeni dialogoveho okna pro prihlaseni do databaze
+     *
      * @return informace o stavu prihlaseni
      */
     public boolean showLogDialog() {
@@ -106,10 +108,9 @@ public class LogInWindow extends Stage {
         grid.setVgap(10);
         grid.setPadding(new Insets(20, 150, 10, 10));
 
-        TextField username = new TextField("vasek");
+        TextField username = new TextField();
         username.setPromptText("Username");
         PasswordField password = new PasswordField();
-        password.setText("janoch");
         password.setPromptText("Password");
 
         grid.add(new Label("Username:"), 0, 0);
@@ -141,7 +142,10 @@ public class LogInWindow extends Stage {
             name = usernamePassword.getKey();
             this.password = usernamePassword.getValue();
             isLog = logInToDatabase();
-            this.show();
+            if (isLog) {
+                this.show();
+            }
+
         });
 
         return isLog;
@@ -150,6 +154,7 @@ public class LogInWindow extends Stage {
 
     /**
      * Metoda pro prihlaseni do Databaze
+     *
      * @return informaci o uspesnem ci neuspesnem prihlaseni
      */
     private boolean logInToDatabase() {
@@ -175,7 +180,7 @@ public class LogInWindow extends Stage {
 
     private void chooseProject() {
         ProjectTable projectTable = tableTV.getSelectionModel().getSelectedItem();
-        if (projectTable != null){
+        if (projectTable != null) {
             int projectId = projectTable.getId();
             this.close();
             databaseController.confirmProjectWithModel(projectId);

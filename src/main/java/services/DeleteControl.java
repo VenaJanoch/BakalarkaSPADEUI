@@ -1,12 +1,12 @@
 package services;
 
+import model.IdentificatorCreater;
+import tables.BasicTable;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import javafx.collections.ObservableList;
-import model.IdentificatorCreater;
-import tables.*;
 /**
  * Třída predstavujici pomocny kotroler pro funkcnost mazani
  *
@@ -26,8 +26,9 @@ public class DeleteControl {
     /**
      * Konstruktor třídy
      * Zinicializuje globální proměnné třídy
-     * @param lists instace tridy SegmentList
-     * @param mapperTableToObject instacne tridy MapperTableObject
+     *
+     * @param lists                instace tridy SegmentList
+     * @param mapperTableToObject  instacne tridy MapperTableObject
      * @param identificatorCreater instnce tridy IdentificatorCreator
      */
     public DeleteControl(SegmentLists lists, MapperTableToObject mapperTableToObject, IdentificatorCreater identificatorCreater) {
@@ -39,6 +40,7 @@ public class DeleteControl {
 
     /**
      * Metoda pro nalezeni identifikatoru vybranych prvku z tabulky
+     *
      * @param tables seznam prvku z tabulky
      * @return seznam identifikatoru
      */
@@ -54,6 +56,7 @@ public class DeleteControl {
 
     /**
      * Metoda pro ziskani identifikatoru v zavislosti na poradi prvku v tablce
+     *
      * @param segmentType typ elementu pro hledani
      * @param indicesList seznam indexu zvolenych z tabulky
      * @return seznam identifikatoru
@@ -95,7 +98,8 @@ public class DeleteControl {
 
     /**
      * Metoda projde seznam z tabulky najde prislusne identificatory
-     * @param id seznam identifikatoru
+     *
+     * @param id  seznam identifikatoru
      * @param map mapa
      * @return identifikatory
      */

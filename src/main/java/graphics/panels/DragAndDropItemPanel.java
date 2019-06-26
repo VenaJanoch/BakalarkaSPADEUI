@@ -4,14 +4,10 @@ import controllers.graphicsComponentsControllers.CanvasController;
 import controllers.graphicsComponentsControllers.DrawerPanelController;
 import graphics.canvas.DragSegmentButton;
 import javafx.geometry.Insets;
-import javafx.scene.Cursor;
 import javafx.scene.control.SplitPane;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.image.Image;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.*;
-import javafx.scene.text.Font;
 import services.Constans;
 import services.SegmentType;
 
@@ -43,7 +39,8 @@ public class DragAndDropItemPanel extends HBox {
 
     /**
      * Konstruktor třídy Zinicializuje globální proměnné třídy
-     * @param itemArray pole prvku v panelu
+     *
+     * @param itemArray             pole prvku v panelu
      * @param drawerPanelController instace tridy DrawerPanelController
      */
     public DragAndDropItemPanel(int[] itemArray, DrawerPanelController drawerPanelController) {
@@ -124,7 +121,6 @@ public class DragAndDropItemPanel extends HBox {
         this.getChildren().addAll(box);
 
     }
-
 
 
 }

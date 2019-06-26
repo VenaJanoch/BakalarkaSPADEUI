@@ -19,7 +19,7 @@ public class SQLAtributeCreator {
     public static String createDateAttribute(String atribute, List<XMLGregorianCalendar> date, List<Integer> dateIndicator) {
         int i = 0;
         String atributeSection = "";
-        if (date.size() != 0){
+        if (date.size() != 0) {
             atributeSection += " AND (";
         }
 
@@ -28,9 +28,9 @@ public class SQLAtributeCreator {
             atributeSection += String.valueOf(Constans.NUMBER_INDICATORS[dateIndicator.get(i)] + " ");
             atributeSection += "'" + DataPreparer.convertDateFromXML(xmlDate).toString() + "'";
             i++;
-            if (date.size() != i ){
+            if (date.size() != i) {
                 atributeSection += " OR ";
-            }else {
+            } else {
                 atributeSection += " )";
             }
 
@@ -113,9 +113,9 @@ public class SQLAtributeCreator {
                     atributeSection += "'" + namel + "'";
                 }
                 i++;
-                if (name1.size() != i ){
+                if (name1.size() != i) {
                     atributeSection += " OR ";
-                }else {
+                } else {
                     atributeSection += " )";
                 }
             }
@@ -146,7 +146,7 @@ public class SQLAtributeCreator {
         if (classId.size() != 0) {
             atributeSection += "join " + element_classification + " c on c.id = ? "; // + classId ;
             atributeSection += "AND p.projectInstanceId = ?";
-        }else {
+        } else {
             atributeSection += "WHERE p.projectInstanceId = ?";
         }
 
@@ -158,7 +158,7 @@ public class SQLAtributeCreator {
 
         String atributeSection = "";
 
-        if (roleIds.size() != 0){
+        if (roleIds.size() != 0) {
             atributeSection += " AND (";
         }
         int i = 0;
@@ -166,9 +166,9 @@ public class SQLAtributeCreator {
 
             atributeSection += elementName + " = ?"; // +  roleId;
             i++;
-            if (roleIds.size() != i ){
+            if (roleIds.size() != i) {
                 atributeSection += " OR ";
-            }else {
+            } else {
                 atributeSection += " )";
             }
         }
@@ -178,7 +178,7 @@ public class SQLAtributeCreator {
 
     public static String createIntAttribute(String elementName, List<Integer> progress, List<Integer> indicators) {
         String atributeSection = "";
-        if (progress.size() != 0){
+        if (progress.size() != 0) {
             atributeSection += " AND (";
         }
         int i = 0;
@@ -188,9 +188,9 @@ public class SQLAtributeCreator {
             atributeSection += Integer.toString(value);
 
             i++;
-            if (progress.size() != i ){
+            if (progress.size() != i) {
                 atributeSection += " OR ";
-            }else {
+            } else {
                 atributeSection += " )";
             }
         }
@@ -199,7 +199,7 @@ public class SQLAtributeCreator {
 
     public static String createDoubleAttribute(String elementName, List<Double> estimateTimes, List<Integer> indicators) {
         String atributeSection = "";
-        if (estimateTimes.size() != 0){
+        if (estimateTimes.size() != 0) {
             atributeSection += " AND (";
         }
         int i = 0;
@@ -209,9 +209,9 @@ public class SQLAtributeCreator {
             atributeSection += Double.toString(estimateTime);
 
             i++;
-            if (estimateTimes.size() != i ){
+            if (estimateTimes.size() != i) {
                 atributeSection += " OR ";
-            }else {
+            } else {
                 atributeSection += " )";
             }
         }

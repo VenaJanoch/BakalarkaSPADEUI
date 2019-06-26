@@ -4,7 +4,6 @@ import controllers.formControllers.FormController;
 import graphics.controlPanelItems.TextFieldItem;
 import interfaces.IEditFormController;
 import interfaces.IFormDataController;
-import javafx.scene.control.TextField;
 import services.ControlPanelLineObject;
 import services.ControlPanelLineType;
 import services.ParamType;

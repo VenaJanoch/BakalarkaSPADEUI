@@ -4,15 +4,7 @@ import abstractControlPane.ControlPanel;
 import abstractform.BasicForm;
 import com.jfoenix.controls.JFXDrawer;
 import com.jfoenix.controls.JFXDrawersStack;
-import javafx.geometry.Insets;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.StackPane;
-import javafx.scene.paint.Color;
-import javafx.scene.paint.CycleMethod;
-import javafx.scene.paint.LinearGradient;
-import javafx.scene.paint.Stop;
 
 /**
  * Trida predstavujici controller pro rizeni postranich Drawer panelu
@@ -21,21 +13,32 @@ import javafx.scene.paint.Stop;
  */
 public class DrawerPanelController {
 
-    /** Levi postrani panel**/
+    /**
+     * Levi postrani panel
+     **/
     private JFXDrawer leftDrawerPanel;
-    /** Pravi postrani panel**/
+    /**
+     * Pravi postrani panel
+     **/
     private JFXDrawer rightDrawerPanel;
-    /** Pravi StackPane panel**/
+    /**
+     * Pravi StackPane panel
+     **/
     private StackPane righDrawerStackPane;
-    /** Levi postrani panel**/
+    /**
+     * Levi postrani panel
+     **/
     private StackPane leftDrawerStackPane;
-    /** Stack pro panely**/
+    /**
+     * Stack pro panely
+     **/
     private JFXDrawersStack jfxDrawersStack;
 
     /**
      * Konstruktor tridy
      * Zinicialuzuje globalni promenne tridy
-     * @param leftDrawerPane Instace leveho postraniho panelu
+     *
+     * @param leftDrawerPane  Instace leveho postraniho panelu
      * @param rightDrawerPane Instace praveho postraniho panelu
      * @param jfxDrawersStack Stack s panely
      */
@@ -59,6 +62,7 @@ public class DrawerPanelController {
 
     /**
      * Metoda pro zobrazeni leveho postraniho panelu
+     *
      * @param form Formular, ktery bude v panelu zobrazen
      */
     public void showLeftPanel(BasicForm form) {
@@ -71,6 +75,7 @@ public class DrawerPanelController {
 
     /**
      * Metoda pro zobrazeni praveho panelu
+     *
      * @param panel Controlni panel, ktery bude v panelu zobrazen
      */
     public void showRightPanel(ControlPanel panel) {
@@ -83,7 +88,8 @@ public class DrawerPanelController {
 
     /**
      * Metoda pro vyjeti konkretniho panelu
-     * @param drawer Postrani panel pro zobrazeni
+     *
+     * @param drawer    Postrani panel pro zobrazeni
      * @param stackPane Stack Pane
      */
     public void showPanel(JFXDrawer drawer, StackPane stackPane) {

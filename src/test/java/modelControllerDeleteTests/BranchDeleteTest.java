@@ -2,79 +2,74 @@ package modelControllerDeleteTests;
 
 import SPADEPAC.Configuration;
 import controllers.formControllers.DeleteFormController;
-import controllers.formControllers.FormController;
 import controllers.formControllers.FormDataController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.control.TableView;
 import model.DataModel;
 import org.junit.Before;
 import org.junit.Test;
 import services.MapperTableToObject;
 import services.SegmentLists;
-import services.SegmentType;
-import services.TableToObjectInstanc;
 import tables.BasicTable;
 import tables.BranchTable;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.Set;
 
 import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
 
 public class BranchDeleteTest {
 
-        DataModel dataModel;
-        SegmentLists lists;
-        LocalDate date;
-        Configuration configuration;
-        MapperTableToObject mapperTableToObject;
-        @Before
-        public void setUp() throws Exception {
+    DataModel dataModel;
+    SegmentLists lists;
+    LocalDate date;
+    Configuration configuration;
+    MapperTableToObject mapperTableToObject;
 
-            WarmUp warmUp = new WarmUp();
-            dataModel = warmUp.getDataModel();
-            mapperTableToObject = warmUp.getMapperTableToObject();
+    @Before
+    public void setUp() throws Exception {
 
-            lists = warmUp.getLists();
-            FormDataController formDataController = warmUp.getFormDataController();
-            DeleteFormController deleteFormController = warmUp.getDeleteFormController();
-            BranchTable table1 = new BranchTable("", "YES", true, true, 0);
+        WarmUp warmUp = new WarmUp();
+        dataModel = warmUp.getDataModel();
+        mapperTableToObject = warmUp.getMapperTableToObject();
 
-            formDataController.saveDataFromBranch(null, true);
+        lists = warmUp.getLists();
+        FormDataController formDataController = warmUp.getFormDataController();
+        DeleteFormController deleteFormController = warmUp.getDeleteFormController();
+        BranchTable table1 = new BranchTable("", "YES", true, true, 0);
 
-            formDataController.saveDataFromBranch(null, true);
+        formDataController.saveDataFromBranch(null, true);
+
+        formDataController.saveDataFromBranch(null, true);
 
 
-            date = LocalDate.of(2018, 10, 10);
-            ArrayList<String> name = new ArrayList<>();
-            name.add("");
-            name.add("Test2");
-            ArrayList<Integer> indicators = new ArrayList<>();
-            indicators.add(0);
-            indicators.add(1);
-            ArrayList<ArrayList<Integer>> unit = new ArrayList<>();
-            unit.add(indicators);
-            unit.add(indicators);
+        date = LocalDate.of(2018, 10, 10);
+        ArrayList<String> name = new ArrayList<>();
+        name.add("");
+        name.add("Test2");
+        ArrayList<Integer> indicators = new ArrayList<>();
+        indicators.add(0);
+        indicators.add(1);
+        ArrayList<ArrayList<Integer>> unit = new ArrayList<>();
+        unit.add(indicators);
+        unit.add(indicators);
 
-            ArrayList<LocalDate> dates = new ArrayList<>();
-            dates.add(date);
-            dataModel.getSaveDataModel().createNewConfiguration(2);
-            dataModel.getEditDataModel().editDataInConfiguration("Test", name, name, dates, true, unit, unit, unit, indicators, indicators, indicators,
-                    indicators, indicators, indicators, indicators, indicators,3, 1,false,2);
-            mapperTableToObject.mapTableToConfiguration(unit, new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), "Test", 2);
+        ArrayList<LocalDate> dates = new ArrayList<>();
+        dates.add(date);
+        dataModel.getSaveDataModel().createNewConfiguration(2);
+        dataModel.getEditDataModel().editDataInConfiguration("Test", name, name, dates, true, unit, unit, unit, indicators, indicators, indicators,
+                indicators, indicators, indicators, indicators, indicators, 3, 1, false, 2);
+        mapperTableToObject.mapTableToConfiguration(unit, new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), "Test", 2);
 
-            configuration = dataModel.getConfiguration(2);
+        configuration = dataModel.getConfiguration(2);
 
-            ObservableList list = FXCollections.observableArrayList();
-            list.add(0);
-            ArrayList<BasicTable> branchTables = new ArrayList<>();
-            branchTables.add(table1);
-            deleteFormController.deleteBranch(list, branchTables);
-        }
+        ObservableList list = FXCollections.observableArrayList();
+        list.add(0);
+        ArrayList<BasicTable> branchTables = new ArrayList<>();
+        branchTables.add(table1);
+        deleteFormController.deleteBranch(list, branchTables);
+    }
 
     @Test
     public void testListSize() {
@@ -83,7 +78,7 @@ public class BranchDeleteTest {
 
     @Test
     public void testMapper() {
-        Set instacies =  mapperTableToObject.getConfigurationToBranchMapper().keySet();
+        Set instacies = mapperTableToObject.getConfigurationToBranchMapper().keySet();
         assertSame(1, instacies.size());
         assertSame(1, instacies.iterator().next());
     }

@@ -1,24 +1,17 @@
 package modelControllerDeleteTests;
 
-import SPADEPAC.Configuration;
 import SPADEPAC.Iteration;
 import SPADEPAC.Phase;
 import controllers.formControllers.DeleteFormController;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import model.DataModel;
 import org.junit.Before;
 import org.junit.Test;
 import services.SegmentLists;
-import tables.BasicTable;
-import tables.ChangeTable;
-import tables.ConfigTable;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 
 import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
 
 public class ConfigurationDeleteTest {
 
@@ -27,7 +20,7 @@ public class ConfigurationDeleteTest {
     LocalDate date;
     Iteration iteration;
     Phase phase;
-    
+
     @Before
     public void setUp() throws Exception {
 
@@ -55,7 +48,7 @@ public class ConfigurationDeleteTest {
 
         dataModel.getSaveDataModel().createNewIteration(2);
         dataModel.getEditDataModel().editDataInIteration("Test", name, dates, dates, name, indicators, unit, indicators, indicators, indicators, indicators, indicators,
-                indicators,false,2);
+                indicators, false, 2);
         dataModel.getSaveDataModel().createNewPhase(2);
         dataModel.getEditDataModel().editDataInPhase("Test", name, dates, name, indicators, indicators, unit, indicators,
                 indicators, indicators, indicators, indicators, indicators, false, 2);
@@ -65,6 +58,7 @@ public class ConfigurationDeleteTest {
         phase = dataModel.getPhase(2);
 
     }
+
     @Test
     public void testListSize() {
         assertSame(1, dataModel.getConfigurations().size());

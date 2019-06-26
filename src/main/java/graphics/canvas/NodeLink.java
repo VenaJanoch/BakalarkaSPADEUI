@@ -1,14 +1,13 @@
 package graphics.canvas;
 
+import controllers.LinkControl;
+import controllers.formControllers.ManipulationController;
 import controllers.graphicsComponentsControllers.CanvasController;
 import controllers.graphicsComponentsControllers.LinkController;
-import controllers.formControllers.ManipulationController;
 import javafx.geometry.Point2D;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Polygon;
-import controllers.LinkControl;
 import services.LinkType;
 
 /**
@@ -34,9 +33,10 @@ public abstract class NodeLink extends Line {
 
     /**
      * Konstruktor třídy Zinicizalizuje globální proměnné třídy
-     * @param Id identifikator spojnice
-     * @param linkControl instace tridy LinkControl
-     * @param canvasController instace tridy CanvasController
+     *
+     * @param Id                     identifikator spojnice
+     * @param linkControl            instace tridy LinkControl
+     * @param canvasController       instace tridy CanvasController
      * @param manipulationController instace tridy ManipulationController
      */
 
@@ -57,12 +57,6 @@ public abstract class NodeLink extends Line {
         canvasController.addPolygonToCanvas(backgroundPolygon);
     }
 
-
-    abstract void pressedDeleteArrow(MouseEvent t);
-
-    abstract void deleteArrow(boolean isModelDelete);
-
-
     /**
      * Metoda pro nastavení počáteční polohy spojnice
      *
@@ -73,7 +67,7 @@ public abstract class NodeLink extends Line {
 
         this.setStartX(startPoint.getX());
         this.setStartY(startPoint.getY());
-        if (endPoint != null) {
+        if (endPoint.getX() != 0 && endPoint.getY() != 0) {
             backgroundPolygon.getPoints().clear();
             backgroundPolygon.getPoints().addAll(linkController.countBackgroundPlygon(startPoint, endPoint));
         }
@@ -119,14 +113,13 @@ public abstract class NodeLink extends Line {
 
     /**
      * Metoda pro nastaveni id do Controleru
+     *
      * @param startId pocatecni identifikator
-     * @param endId konecny identifikator
+     * @param endId   konecny identifikator
      */
     public void setIdsToController(int startId, int endId) {
         linkController.setIds(startId, endId);
     }
-
-
 
 
     /*** Getrs and Setrs ***/
@@ -155,6 +148,9 @@ public abstract class NodeLink extends Line {
         this.linkType = linkType;
     }
 
+    public LinkType getLinkType() {
+        return linkType;
+    }
 
     public int getLinkId() {
         return id;
@@ -166,5 +162,17 @@ public abstract class NodeLink extends Line {
 
     public Point2D getEndPoint() {
         return endPoint;
+    }
+
+    public LinkController getLinkController() {
+        return linkController;
+    }
+
+    public CanvasController getCanvasController() {
+        return canvasController;
+    }
+
+    public LinkControl getLinkControl() {
+        return linkControl;
     }
 }

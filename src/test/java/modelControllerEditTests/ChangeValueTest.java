@@ -3,20 +3,15 @@ package modelControllerEditTests;
 import SPADEPAC.Change;
 import controllers.formControllers.EditFormController;
 import controllers.formControllers.FormDataController;
-import javafx.scene.control.TableView;
 import org.junit.Before;
 import org.junit.Test;
 import services.SegmentLists;
-import tables.ChangeTable;
 
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
 
 import static junit.framework.TestCase.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
 
 public class ChangeValueTest {
 
@@ -40,50 +35,50 @@ public class ChangeValueTest {
         ArrayList<Integer> indicators = new ArrayList<>();
         indicators.add(1);
         indicators.add(0);
-        warmUp.getDataModel().getEditDataModel().editDataInChange("Test", name, name, indicators, indicators, indicators,  false, 0);
+        warmUp.getDataModel().getEditDataModel().editDataInChange("Test", name, name, indicators, indicators, indicators, false, 0);
         change = warmUp.getDataModel().getChange(0);
 
     }
 
     @Test
     public void testAlias() {
-        assertEquals("Test", change.getAlias() );
+        assertEquals("Test", change.getAlias());
     }
 
     @Test
     public void testName() {
-        assertEquals("", change.getName().get(0) );
-        assertEquals("Test2", change.getName().get(1) );
+        assertEquals("", change.getName().get(0));
+        assertEquals("Test2", change.getName().get(1));
     }
 
     @Test
     public void testIndicatorName() {
-        assertSame(1, change.getNameIndicator().get(0) );
-        assertSame(0, change.getNameIndicator().get(1) );
+        assertSame(1, change.getNameIndicator().get(0));
+        assertSame(0, change.getNameIndicator().get(1));
     }
 
     @Test
     public void testDescription() {
-        assertEquals("", change.getDescription().get(0) );
-        assertEquals("Test2", change.getDescription().get(1) );
+        assertEquals("", change.getDescription().get(0));
+        assertEquals("Test2", change.getDescription().get(1));
     }
 
     @Test
     public void testIndicatorDescription() {
-        assertSame(1, change.getDescriptionIndicator().get(0) );
-        assertSame(0, change.getDescriptionIndicator().get(1) );
+        assertSame(1, change.getDescriptionIndicator().get(0));
+        assertSame(0, change.getDescriptionIndicator().get(1));
     }
 
     @Test
     public void testArtifact() {
-        assertSame(1, change.getArtifactIndex().get(0) );
-        assertSame(0, change.getArtifactIndex().get(1) );
+        assertSame(1, change.getArtifactIndex().get(0));
+        assertSame(0, change.getArtifactIndex().get(1));
     }
 
     @Test
     public void testArtifactIndicator() {
-        assertSame(1, change.getArtifactIndex().get(0) ); //TODO NENI Indicator v datove strukture
-        assertSame(0, change.getArtifactIndex().get(1) );
+        assertSame(1, change.getArtifactIndex().get(0));
+        assertSame(0, change.getArtifactIndex().get(1));
     }
 
     @Test

@@ -1,28 +1,28 @@
 package forms;
 
 import abstractform.TableBasicForm;
-import controllers.formControllers.FormController;
 import controlPanels.MilestoneControlPanel;
+import controllers.formControllers.FormController;
 import interfaces.IDeleteFormController;
 import interfaces.IEditFormController;
 import interfaces.IFormDataController;
-import javafx.event.EventHandler;
-import javafx.scene.control.*;
-import javafx.scene.input.MouseEvent;
-
 import interfaces.ISegmentTableForm;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
+import javafx.scene.control.Label;
+import javafx.scene.control.SelectionMode;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
-import services.*;
+import services.SegmentType;
 import tables.MilestoneTable;
-
-import java.util.ArrayList;
 
 /**
  * Třída představující dvojitý formulář pro element Milestone,děděná od
@@ -47,11 +47,12 @@ public class MilestoneForm extends TableBasicForm implements ISegmentTableForm {
     /**
      * Konstruktor Třídy Zinicializuje globální proměnné tříd Nastaví reakci
      * na klik do tabulky, vytvori naplni panel a nastavi akce tlacitkum
-     * @param formController instance tridy FormController
-     * @param formDataController instance tridy FormDataController
-     * @param editFormController instance tridy EditFormController
+     *
+     * @param formController       instance tridy FormController
+     * @param formDataController   instance tridy FormDataController
+     * @param editFormController   instance tridy EditFormController
      * @param deleteFormController instace tridy DeleteFormController
-     * @param type instace SegmentType pro urceni typu formulare
+     * @param type                 instace SegmentType pro urceni typu formulare
      */
     public MilestoneForm(FormController formController, IFormDataController formDataController, IEditFormController editFormController, IDeleteFormController deleteFormController, SegmentType type) {
 
@@ -63,6 +64,7 @@ public class MilestoneForm extends TableBasicForm implements ISegmentTableForm {
         setActionSubmitButton();
 
     }
+
     /**
      * Metoda nastavi event handler pro tabulku
      * Pokud je na radek dvakrat kliknuto mysi

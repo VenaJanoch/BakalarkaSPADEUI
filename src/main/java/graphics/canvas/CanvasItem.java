@@ -3,13 +3,10 @@ package graphics.canvas;
 import controllers.graphicsComponentsControllers.CanvasController;
 import controllers.graphicsComponentsControllers.CanvasItemController;
 import javafx.geometry.Point2D;
-import javafx.geometry.Rectangle2D;
-import javafx.scene.Group;
 import javafx.scene.control.Tooltip;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
-import javafx.scene.shape.Rectangle;
 import services.Constans;
 import services.SegmentType;
 
@@ -156,6 +153,7 @@ public class CanvasItem extends AnchorPane {
 
     /**
      * Metoda pro nastaveni jmena do prvku.
+     *
      * @param name
      */
     public void setNameText(String name) {

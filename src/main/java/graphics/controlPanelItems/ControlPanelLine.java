@@ -22,7 +22,9 @@ import java.util.List;
  */
 public class ControlPanelLine {
 
-    /**Globalni promenne tridy**/
+    /**
+     * Globalni promenne tridy
+     **/
     private ComboBox<ControlPanelLineObject> paramBox;
     private TextFieldItem textItem;
     private TextFieldItem numberItem;
@@ -40,11 +42,12 @@ public class ControlPanelLine {
     /**
      * Konstruktor tridy,
      * Zinicializuje globalni promnenne tridy
-     * @param paramNameList seznam parametru pouzitelnych v radku
-     * @param controlPanel instace tridy ControlPanel
+     *
+     * @param paramNameList          seznam parametru pouzitelnych v radku
+     * @param controlPanel           instace tridy ControlPanel
      * @param controlPanelController instace tridy ControlPanelController
-     * @param indicators seznam indikatoru urcenych pro radek
-     * @param lineIndex pozice radku v panelu
+     * @param indicators             seznam indikatoru urcenych pro radek
+     * @param lineIndex              pozice radku v panelu
      */
     public ControlPanelLine(ObservableList<ControlPanelLineObject> paramNameList, ControlPanel controlPanel,
                             ControlPanelController controlPanelController, String[] indicators, int lineIndex) {
@@ -69,10 +72,11 @@ public class ControlPanelLine {
     /**
      * Konstruktor tridy,
      * Zinicializuje globalni promnenne tridy
-     * @param paramNameList seznam parametru pouzitelnych v radku
-     * @param controlPanel instace tridy ControlPanel
+     *
+     * @param paramNameList          seznam parametru pouzitelnych v radku
+     * @param controlPanel           instace tridy ControlPanel
      * @param controlPanelController instace tridy ControlPanelController
-     * @param lineIndex pozice radku v panelu
+     * @param lineIndex              pozice radku v panelu
      */
     public ControlPanelLine(ObservableList<ControlPanelLineObject> paramNameList, ControlPanel controlPanel,
                             ControlPanelController controlPanelController, int lineIndex) {
@@ -99,10 +103,11 @@ public class ControlPanelLine {
     /**
      * Konstruktor tridy,
      * Zinicializuje globalni promnenne tridy
-     * @param controlPanel instace tridy ControlPanel
+     *
+     * @param controlPanel           instace tridy ControlPanel
      * @param controlPanelController instace tridy ControlPanelController
-     * @param listener listener pro combobox
-     * @param listForBox seznam parametru radku
+     * @param listener               listener pro combobox
+     * @param listForBox             seznam parametru radku
      */
     public ControlPanelLine(ControlPanel controlPanel,
                             ControlPanelController controlPanelController, ChangeListener<Number> listener, ObservableList listForBox) {
@@ -115,6 +120,7 @@ public class ControlPanelLine {
 
     /**
      * Metoda pro vytvoreni ComboBoxItem v radku
+     *
      * @param list seznam hodnot pro ComboBox
      */
     public void createComboBoxItem(ObservableList list) {
@@ -123,6 +129,7 @@ public class ControlPanelLine {
 
     /**
      * Metoda pro vytvoreni relace
+     *
      * @param relationList indexi relaci
      * @param workUnitList seznam indexu WorkUnit
      */
@@ -133,6 +140,7 @@ public class ControlPanelLine {
 
     /**
      * Metoda pro vytvoreni BoxItem v radku
+     *
      * @param list seznam hodnot pro ComboBox
      */
     public void createCheckComboBoxItem(ObservableList list) {
@@ -145,6 +153,7 @@ public class ControlPanelLine {
 
     /**
      * Metoda pro ziskani indexu typu radku
+     *
      * @param type typ parametru
      * @return index parametru v ComboBoxu
      */
@@ -163,9 +172,10 @@ public class ControlPanelLine {
 
     /**
      * Metoda pro nastaveni textove hodnoty do radku
-     * @param value hodnota pro nastaveni
+     *
+     * @param value     hodnota pro nastaveni
      * @param indicator index indikatoru
-     * @param type typ parametru
+     * @param type      typ parametru
      */
     public void fillTextLine(String value, int indicator, ParamType type) {
         paramBox.getSelectionModel().select(findTypeIndex(type));
@@ -176,9 +186,10 @@ public class ControlPanelLine {
 
     /**
      * Metoda pro nastaveni ciselne hodnoty do radku
-     * @param value hodnota pro nastaveni
+     *
+     * @param value     hodnota pro nastaveni
      * @param indicator index indikatoru
-     * @param type typ parametru
+     * @param type      typ parametru
      */
     public void fillNumberLine(String value, int indicator, ParamType type) {
         paramBox.getSelectionModel().select(findTypeIndex(type));
@@ -189,9 +200,10 @@ public class ControlPanelLine {
 
     /**
      * Metoda por nastaveni dat v CheckComboBoxu
-     * @param value indexi pro nastaveni ComboBoxu
+     *
+     * @param value     indexi pro nastaveni ComboBoxu
      * @param indicator index indikatoru
-     * @param type typ parametru
+     * @param type      typ parametru
      */
     public void fillCheckComboBoxLine(List<Integer> value, int indicator, ParamType type) {
         paramBox.getSelectionModel().select(findTypeIndex(type));
@@ -202,9 +214,10 @@ public class ControlPanelLine {
 
     /**
      * Metoda pro nastaveni dat v ComboBoxu
-     * @param value index pro nastaveni
+     *
+     * @param value     index pro nastaveni
      * @param indicator index indikatoru
-     * @param type typ parametru
+     * @param type      typ parametru
      */
     public void fillComboBoxLine(int value, int indicator, ParamType type) {
         paramBox.getSelectionModel().select(findTypeIndex(type));
@@ -215,9 +228,10 @@ public class ControlPanelLine {
 
     /**
      * Metoda pro nastaveni datumu do panelu
-     * @param value hodnota pro nastaveni
+     *
+     * @param value     hodnota pro nastaveni
      * @param indicator index indicatoru
-     * @param type typ parametru
+     * @param type      typ parametru
      */
     public void fillDateLine(LocalDate value, int indicator, ParamType type) {
         paramBox.getSelectionModel().select(findTypeIndex(type));
@@ -229,6 +243,7 @@ public class ControlPanelLine {
 
     /**
      * Metoda pro nastaveni hodnoty count do editacniho panelu
+     *
      * @param value hodnota pro pridani do panelu
      */
     public void setCount(Integer value) {
@@ -237,9 +252,10 @@ public class ControlPanelLine {
 
     /**
      * Metoda pro naplneni radku s relaci
-     * @param value index relace
+     *
+     * @param value    index relace
      * @param workUnit indexi WorkUnitu v relaci
-     * @param type typ parametru
+     * @param type     typ parametru
      */
     public void fillRelationComboBoxLine(int value, ArrayList<Integer> workUnit, ParamType type) {
         paramBox.getSelectionModel().select(findTypeIndex(type));
@@ -262,7 +278,9 @@ public class ControlPanelLine {
         comboBoxItem.getItemCB().setDisable(false);
     }
 
-    /**Gettrs and Setters**/
+    /**
+     * Gettrs and Setters
+     **/
 
     public void setParamType(int id) {
         type = paramList.get(id).getType();
@@ -283,6 +301,7 @@ public class ControlPanelLine {
     public TextFieldItem getTextItem() {
         return textItem;
     }
+
     public TextFieldItem getNumberItem() {
         return numberItem;
     }
@@ -302,7 +321,6 @@ public class ControlPanelLine {
     public ControlPanelLineController getControlPanelLineController() {
         return controlPanelLineController;
     }
-
 
 
     public void setType(ParamType type) {

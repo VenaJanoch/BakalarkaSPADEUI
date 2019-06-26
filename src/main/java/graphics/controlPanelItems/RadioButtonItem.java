@@ -3,7 +3,9 @@ package graphics.controlPanelItems;
 import abstractControlPane.ControlPanel;
 import controllers.graphicsComponentsControllers.ControlPanelController;
 import javafx.collections.ObservableList;
-import javafx.scene.control.*;
+import javafx.scene.control.Label;
+import javafx.scene.control.RadioButton;
+import javafx.scene.control.ToggleGroup;
 import services.ControlPanelLineObject;
 
 /**
@@ -24,10 +26,11 @@ public class RadioButtonItem extends ItemBox {
 
     /**
      * Konstruktor tridy, zinicializuje globalni promenne tridy
-     * @param controlPanelLine instace tridy ControlPanelLine
-     * @param controlPanel instace tridy ControlPanel
+     *
+     * @param controlPanelLine       instace tridy ControlPanelLine
+     * @param controlPanel           instace tridy ControlPanel
      * @param controlPanelController instace tridy ControlPanelController
-     * @param lineList seznam moznych typu radku
+     * @param lineList               seznam moznych typu radku
      */
     public RadioButtonItem(ControlPanelLine controlPanelLine, ControlPanel controlPanel, ControlPanelController controlPanelController,
                            ObservableList<ControlPanelLineObject> lineList) {

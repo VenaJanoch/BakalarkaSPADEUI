@@ -20,7 +20,10 @@ import javafx.scene.control.TableView;
 import model.DataManipulator;
 import model.DataModel;
 import model.IdentificatorCreater;
-import services.*;
+import services.CanvasType;
+import services.Constans;
+import services.SegmentLists;
+import services.SegmentType;
 import tables.*;
 
 import java.util.ArrayList;
@@ -36,19 +39,25 @@ import java.util.Map;
  */
 public class FormController {
 
-    /** Tridy datoveho modelu **/
+    /**
+     * Tridy datoveho modelu
+     **/
     private DataManipulator dataManipulator;
     private IdentificatorCreater identificatorCreater;
     private SegmentLists segmentLists;
     private DataModel dataModel;
     private ISaveDataModel saveDataModel;
 
-    /** Kolekce pro uchovani formularu, controlnich panelu a prvku na platne **/
+    /**
+     * Kolekce pro uchovani formularu, controlnich panelu a prvku na platne
+     **/
     private ArrayList<BasicForm> forms;
     private ArrayList<ControlPanel> controlPanels;
     private Map<Integer, CanvasItem> canvasItemList;
 
-    /** Promenne predstavujic jednotlive tabulkove formulare **/
+    /**
+     * Promenne predstavujic jednotlive tabulkove formulare
+     **/
     private PhaseForm phaseForm;
     private IterationForm iterationForm;
     private ActivityForm activityForm;
@@ -67,7 +76,9 @@ public class FormController {
     private CriterionForm criterionForm;
     private RoleTypeForm roleTypeForm;
 
-    /** Ostatni kontrolery vyuzivane ve tride **/
+    /**
+     * Ostatni kontrolery vyuzivane ve tride
+     **/
     private ApplicationController applicationController;
     private IFormDataController formDataController;
     private IEditFormController editFormController;
@@ -82,13 +93,14 @@ public class FormController {
     /**
      * Konstruktor tridy
      * Zinicializuje potrebne globalni promenne
-     * @param identificatorCreater trida pro vytvareni identifikatoru
-     * @param dataModel trida pro praci s datovym modelem
+     *
+     * @param identificatorCreater  trida pro vytvareni identifikatoru
+     * @param dataModel             trida pro praci s datovym modelem
      * @param applicationController trida obsahujici contrllery aplikace
-     * @param segmentLists instace tridy uchovaajici prehledove seznamy
-     * @param dataPreparer instace tridy pro pripravu dat
+     * @param segmentLists          instace tridy uchovaajici prehledove seznamy
+     * @param dataPreparer          instace tridy pro pripravu dat
      * @param drawerPanelController instance tridy pro praci s drawer panelem
-     * @param selectItemController instance tridy pro praci s vyberem dat
+     * @param selectItemController  instance tridy pro praci s vyberem dat
      */
     public FormController(IdentificatorCreater identificatorCreater, DataModel dataModel,
                           ApplicationController applicationController, SegmentLists segmentLists, DataPreparer dataPreparer,
@@ -112,8 +124,9 @@ public class FormController {
 
     /**
      * Metoda pro vytvoreni instaci jednotlivych tabulkovych formularu
-     * @param formDataController instace tridy pro vytvareni novych prvku v datovych strukturach
-     * @param editFormController instace tridy pro editaci novych prvku v datovych strukturach
+     *
+     * @param formDataController   instace tridy pro vytvareni novych prvku v datovych strukturach
+     * @param editFormController   instace tridy pro editaci novych prvku v datovych strukturach
      * @param deleteFormController instace tridy pro delete novych prvku v datovych strukturach
      */
     public void initBasicForms(IFormDataController formDataController, IEditFormController editFormController, IDeleteFormController deleteFormController) {
@@ -224,8 +237,9 @@ public class FormController {
 
     /**
      * Metoda pro vytvoreni objektu predstavuji Commit bez vytvoreni noveho identifikatoru
-     * @param exist existence prvku
-     * @param id identifikator
+     *
+     * @param exist     existence prvku
+     * @param id        identifikator
      * @param formIndex index formular
      * @return index formular
      */
@@ -243,6 +257,7 @@ public class FormController {
 
     /**
      * Metoda pro vytvoreni objektu predstavuji Commit bez vyuziti datoveho modleu
+     *
      * @param exist existence prvku
      * @return index formular
      */
@@ -255,8 +270,9 @@ public class FormController {
 
     /**
      * Metoda pro vytvoreni objektu predstavuji Committed Configuration bez vytvoreni noveho identifikatoru
-     * @param exist existence prvku
-     * @param id identifikator
+     *
+     * @param exist     existence prvku
+     * @param id        identifikator
      * @param formIndex index formular
      * @return index formular
      */
@@ -272,6 +288,7 @@ public class FormController {
 
     /**
      * Metoda pro vytvoreni objektu predstavuji CommittedConfiguration s vyuziti datoveho modleu
+     *
      * @return index formular
      */
     private int createNewCommitedConfigurationPanel() {
@@ -283,6 +300,7 @@ public class FormController {
 
     /**
      * Metoda pro vytvoreni objektu predstavujici CommittedConfiguration bez vyuziti datoveho modleu
+     *
      * @param exist existence prvku
      * @return index formular
      */
@@ -292,21 +310,24 @@ public class FormController {
         int id = identificatorCreater.getCommitedConfigurationId(index);
         return createNewCommitedConfigurationFormWithoutCreateId(exist, id, index);
     }
+
     /**
      * Metoda pro vytvoreni objektu predstavujici Role s vyuzitim datoveho modelu
+     *
      * @return index formular
      */
     private int createNewRolePanel() {
         int formIndex = createNewRoleFormWithoutManipulator(true);
-        int id = identificatorCreater.getRoleIndexToIdMaper().get(formIndex);
+        int id = identificatorCreater.getPersonIndexToIdMaper().get(formIndex);
         saveDataModel.createNewPerson(id);
         return formIndex;
     }
 
     /**
      * Metoda pro vytvoreni objektu predstavujici Person bez vytvoreni noveho identifikatoru
-     * @param exist existence prvku
-     * @param id identifikator
+     *
+     * @param exist     existence prvku
+     * @param id        identifikator
      * @param formIndex index formular
      * @return index formular
      */
@@ -324,18 +345,20 @@ public class FormController {
 
     /**
      * Metoda pro vytvoreni objektu predstavujici Person bez vyuziti datoveho modleu
+     *
      * @param exist existence prvku
      * @return index formular
      */
     public int createNewRoleFormWithoutManipulator(boolean exist) {
 
-        int index = identificatorCreater.createRoleID();
-        int id = identificatorCreater.getRoleIndexToIdMaper().get(index);
+        int index = identificatorCreater.createPersonID();
+        int id = identificatorCreater.getPersonIndexToIdMaper().get(index);
         return createNewPersonFormWithoutCreateId(exist, id, index);
     }
 
     /**
      * Metoda pro vytvoreni objektu predstavuji Artifact s vyuziti datoveho modleu
+     *
      * @return index formular
      */
     private int createNewArtifactPanel() {
@@ -347,8 +370,9 @@ public class FormController {
 
     /**
      * Metoda pro vytvoreni objektu predstavujici Artifact bez vytvoreni noveho identifikatoru
-     * @param exist existence prvku
-     * @param id identifikator
+     *
+     * @param exist     existence prvku
+     * @param id        identifikator
      * @param formIndex index formular
      * @return index formular
      */
@@ -371,9 +395,11 @@ public class FormController {
         return createNewArtifactFormWithoutCreateId(name, exist, id, index);
 
     }
+
     /**
      * Metoda pro vytvoreni objektu predstavuji Change s vyuziti datoveho modleu
-     * @return  identifikator prvku
+     *
+     * @return identifikator prvku
      */
     private int createNewChangeForm(int id) {
         saveDataModel.createNewChange(id);
@@ -383,7 +409,8 @@ public class FormController {
 
     /**
      * Metoda pro vytvoreni objektu predstavuji Configuration s vyuziti datoveho modleu
-     * @return  identifikator prvku
+     *
+     * @return identifikator prvku
      */
     private int createNewConfigurationPanel() {
         int formIndex = createNewConfiguratioFormWithoutManipulator("", true);
@@ -394,8 +421,9 @@ public class FormController {
 
     /**
      * Metoda pro vytvoreni objektu predstavujici Configuration bez vytvoreni noveho identifikatoru
-     * @param exist existence prvku
-     * @param id identifikator
+     *
+     * @param exist     existence prvku
+     * @param id        identifikator
      * @param formIndex index formular
      * @return index formular
      */
@@ -413,6 +441,7 @@ public class FormController {
 
     /**
      * Metoda pro vytvoreni objektu predstavujici Configuration bez vyuziti datoveho modelu
+     *
      * @param exist existence prvku
      * @return index formular
      */
@@ -425,7 +454,8 @@ public class FormController {
 
     /**
      * Metoda pro vytvoreni objektu predstavuji Work Unit s vyuziti datoveho modleu
-     * @return  identifikator prvku
+     *
+     * @return identifikator prvku
      */
     private int createNewWorkUnitForm(int id) {
         saveDataModel.createNewWorkUnit(id);
@@ -434,7 +464,8 @@ public class FormController {
 
     /**
      * Metoda pro vytvoreni objektu predstavuji Activity s vyuziti datoveho modleu
-     * @return  identifikator prvku
+     *
+     * @return identifikator prvku
      */
     private int createNewActivityForm(int id) {
 
@@ -445,7 +476,8 @@ public class FormController {
 
     /**
      * Metoda pro vytvoreni objektu predstavuji Phase s vyuziti datoveho modleu
-     * @return  identifikator prvku
+     *
+     * @return identifikator prvku
      */
     public int createNewPhaseForm(int id) {
         saveDataModel.createNewPhase(id);
@@ -454,7 +486,8 @@ public class FormController {
 
     /**
      * Metoda pro vytvoreni objektu predstavuji Branch s vyuziti datoveho modleu
-     * @return  identifikator prvku
+     *
+     * @return identifikator prvku
      */
     public int createNewBranchForm(int id) {
         saveDataModel.createNewBranch(id);
@@ -463,7 +496,8 @@ public class FormController {
 
     /**
      * Metoda pro vytvoreni objektu predstavuji Milestone s vyuziti datoveho modleu
-     * @return  identifikator prvku
+     *
+     * @return identifikator prvku
      */
     public int createNewMilestoneForm(int id) {
         saveDataModel.createNewMilestone(id);
@@ -472,7 +506,8 @@ public class FormController {
 
     /**
      * Metoda pro vytvoreni objektu predstavuji CPR s vyuziti datoveho modleu
-     * @return  identifikator prvku
+     *
+     * @return identifikator prvku
      */
     private int createNewCPRForm(int id) {
         saveDataModel.createNewCPR(id);
@@ -481,7 +516,8 @@ public class FormController {
 
     /**
      * Metoda pro vytvoreni objektu predstavuji VCSTag s vyuziti datoveho modleu
-     * @return  identifikator prvku
+     *
+     * @return identifikator prvku
      */
     private int createNewVCSTagForm(int id) {
         saveDataModel.createNewVCSTag(id);
@@ -491,7 +527,8 @@ public class FormController {
 
     /**
      * Metoda pro vytvoreni objektu predstavuji Criterion s vyuziti datoveho modleu
-     * @return  identifikator prvku
+     *
+     * @return identifikator prvku
      */
     public int createNewCriterionForm(int id) {
         saveDataModel.createNewCriterion(id);
@@ -500,23 +537,28 @@ public class FormController {
 
     /**
      * Metoda pro vytvoreni objektu predstavuji Priority s vyuziti datoveho modleu
-     * @return  identifikator prvku
+     *
+     * @return identifikator prvku
      */
     public int createNewPriorityForm(int id) {
         saveDataModel.createNewPriority(id);
         return id;
     }
+
     /**
      * Metoda pro vytvoreni objektu predstavuji Severity s vyuziti datoveho modleu
-     * @return  identifikator prvku
+     *
+     * @return identifikator prvku
      */
     public int createNewSeverityForm(int id) {
         saveDataModel.createNewSeverity(id);
         return id;
     }
+
     /**
      * Metoda pro vytvoreni objektu predstavuji Relation s vyuziti datoveho modleu
-     * @return  identifikator prvku
+     *
+     * @return identifikator prvku
      */
     public int createNewRelationForm(int id) {
         saveDataModel.createNewRelation(id);
@@ -525,7 +567,8 @@ public class FormController {
 
     /**
      * Metoda pro vytvoreni objektu predstavuji Resolution s vyuziti datoveho modleu
-     * @return  identifikator prvku
+     *
+     * @return identifikator prvku
      */
     public int createNewResolutionForm(int id) {
         saveDataModel.createNewResolution(id);
@@ -534,7 +577,8 @@ public class FormController {
 
     /**
      * Metoda pro vytvoreni objektu predstavuji Status s vyuziti datoveho modleu
-     * @return  identifikator prvku
+     *
+     * @return identifikator prvku
      */
     public int createNewStatusForm(int id) {
         saveDataModel.createNewStatus(id);
@@ -543,7 +587,8 @@ public class FormController {
 
     /**
      * Metoda pro vytvoreni objektu predstavuji Type s vyuziti datoveho modleu
-     * @return  identifikator prvku
+     *
+     * @return identifikator prvku
      */
     public int createNewTypeForm(int id) {
         saveDataModel.createNewType(id);
@@ -552,7 +597,8 @@ public class FormController {
 
     /**
      * Metoda pro vytvoreni objektu predstavuji Role Type s vyuziti datoveho modleu
-     * @return  identifikator prvku
+     *
+     * @return identifikator prvku
      */
     public int createNewRoleTypeForm(int id) {
         saveDataModel.createNewRoleType(id);
@@ -561,7 +607,8 @@ public class FormController {
 
     /**
      * Metoda pro vytvoreni objektu predstavuji Iteration s vyuziti datoveho modleu
-     * @return  identifikator prvku
+     *
+     * @return identifikator prvku
      */
     int createNewIterationForm(int id) {
 
@@ -572,6 +619,7 @@ public class FormController {
 
     /**
      * Metoda pro rozhodnuti o tom ktery formular bude zobrazen
+     *
      * @param formIdentificator identifikator formulare
      */
     public void showForm(int formIdentificator) {
@@ -615,6 +663,7 @@ public class FormController {
 
     /**
      * Metoda pro ziskani souradnic prvku umisteneho na modelovacim platne
+     *
      * @param indexForm identifikator formulare
      * @return pole souradnic
      */
@@ -629,8 +678,9 @@ public class FormController {
 
     /**
      * Metoda pro nastaveni jmena do instace prvku na platne
+     *
      * @param index identifikator prvku
-     * @param name jmeno pro nastaveni do prvku
+     * @param name  jmeno pro nastaveni do prvku
      */
     public void setNameToItem(int index, String name) {
 
@@ -640,8 +690,9 @@ public class FormController {
 
     /**
      * Metoda pro nastaveni poctu instaci do ikonky prvku na platne
-     * @param index identifikator formulare
-     * @param instanceCount pocet instanci
+     *
+     * @param index          identifikator formulare
+     * @param instanceCount  pocet instanci
      * @param countIndicator identifikator ukazatele nerovnosti
      */
     public void setItemInstanceCount(int index, int instanceCount, int countIndicator) {
@@ -651,6 +702,7 @@ public class FormController {
 
     /**
      * Metoda pro vyjmuti prvku z platna
+     *
      * @param id identifikator prvku
      */
     public void removeCanvasItemFromList(int id) {
@@ -659,8 +711,9 @@ public class FormController {
 
     /**
      * Metoda pro pridani prvku do platna
+     *
      * @param formIndex identifikator formulare
-     * @param item instace prvku platna
+     * @param item      instace prvku platna
      */
     public void addCanvasItemToList(int formIndex, CanvasItem item) {
         canvasItemList.put(formIndex, item);
@@ -668,8 +721,9 @@ public class FormController {
 
     /**
      * Metoda pro nastaveni barvky prvku v zavislosti na existenci instace
+     *
      * @param indexForm identifikator formulare
-     * @param isExist informace o existenci
+     * @param isExist   informace o existenci
      */
     public void setItemColor(int indexForm, boolean isExist) {
 
@@ -684,7 +738,8 @@ public class FormController {
 
     /**
      * Metoda pro ziskani identifikatoru z identifikatoru formulare
-     * @param type instace SegmentType
+     *
+     * @param type      instace SegmentType
      * @param formIndex identifikator formulare
      * @return identifikator v datovem modelu
      */
@@ -713,6 +768,7 @@ public class FormController {
 
     /**
      * Metoda pro vytvoreni tabulkoveho prvku
+     *
      * @param segmentType instace prvku Segment Type s informaci o typu segmentu
      * @return identifikator instace
      */
@@ -752,7 +808,7 @@ public class FormController {
                 createNewPriorityForm(id);
                 return id;
             case Severity:
-                id =  identificatorCreater.createSeverityID();
+                id = identificatorCreater.createSeverityID();
                 createNewSeverityForm(id);
                 return id;
             case Milestone:
@@ -764,7 +820,7 @@ public class FormController {
                 createNewCriterionForm(id);
                 return id;
             case Person:
-                return identificatorCreater.createRoleID();
+                return identificatorCreater.createPersonID();
             case Role_Type:
                 id = identificatorCreater.createRoleTypeID();
                 createNewRoleTypeForm(id);
@@ -789,8 +845,6 @@ public class FormController {
                 id = identificatorCreater.createTypeID();
                 createNewTypeForm(id);
                 return id;
-            case Tag:
-                return identificatorCreater.createTagID();
             default:
                 return -1;
         }
@@ -803,6 +857,7 @@ public class FormController {
 
     /**
      * Metoda pro zobrazeni editacniho Drawer panelu v zavislosti na panelu
+     *
      * @param editControlPanel instace tridy ControlPanel predstavujici editacni panel
      */
     public void showEditControlPanel(ControlPanel editControlPanel) {
@@ -811,6 +866,7 @@ public class FormController {
 
     /**
      * Metoda pro nastaveni dat do drawer panelu v zavisloti na identifikatoru
+     *
      * @param formIndex identifikator formulare
      */
     public void showEditControlPanel(int formIndex) {
@@ -823,17 +879,18 @@ public class FormController {
 
     /**
      * Metoda pro nastaveni souradnic prvkum na platne
-     * @param segmentType Typ prvku kteremu se budou souradnic nastavovat
+     *
+     * @param segmentType   Typ prvku kteremu se budou souradnic nastavovat
      * @param newTranslateX x souradnice
      * @param newTranslateY y souradnice
-     * @param fromIndex identifikator formulare
+     * @param fromIndex     identifikator formulare
      */
     public void setCoordinatesToCanvasItem(SegmentType segmentType, double newTranslateX, double newTranslateY, int fromIndex) {
         int id = 0;
         switch (segmentType) {
             case Person:
                 id = identificatorCreater.getRoleId(fromIndex);
-                editFormController.editCoordsInRole(newTranslateX, newTranslateY, id);
+                editFormController.editCoordsInPerson(newTranslateX, newTranslateY, id);
                 break;
             case Commit:
                 id = identificatorCreater.getCommitId(fromIndex);
@@ -857,10 +914,11 @@ public class FormController {
 
     /**
      * Metoda pro nalezi spravneho poradi identifikatoru spojnice
-     * @param startIndex identifikator prvniho prvku jako pocatecni
-     * @param endIndex identifikator prvniho prvku jako koncovi
+     *
+     * @param startIndex  identifikator prvniho prvku jako pocatecni
+     * @param endIndex    identifikator prvniho prvku jako koncovi
      * @param startIndex1 identifikator druheho prvku jako pocatecni
-     * @param endIndex1 identifikator druheho prvku jako koncovi
+     * @param endIndex1   identifikator druheho prvku jako koncovi
      * @return pole identifikatoru ve spravne poradi
      */
     private Integer[] findCorectId(Integer startIndex, Integer endIndex, Integer startIndex1, Integer endIndex1) {
@@ -887,10 +945,11 @@ public class FormController {
 
     /**
      * Metoda pro vytvoreni relace mezi Commit a Committed Configuration
-     * @param linkId identifikator spojnice
+     *
+     * @param linkId  identifikator spojnice
      * @param startId identifikator pocatecniho prvku
-     * @param endId identifikator koncoveho prvku
-     * @param isXML informace zde je relace vytvarena z XML
+     * @param endId   identifikator koncoveho prvku
+     * @param isXML   informace zde je relace vytvarena z XML
      */
     public void createCommitToCommitedConfigurationRelation(int linkId, int startId, int endId, boolean isXML) {
         Integer[] result = findResultsFromCommitToCommitedConfigurationRelation(startId, endId);
@@ -900,8 +959,9 @@ public class FormController {
 
     /**
      * Metoda pro ziskani spravneho poradi identifikatoru mezi Commit a Committed Configuration
+     *
      * @param startSegmentId pocatecni identifikator
-     * @param endSegmentId koncovy identifikator
+     * @param endSegmentId   koncovy identifikator
      * @return spravne poradi identifikatoru
      */
     public Integer[] findResultsFromCommitToCommitedConfigurationRelation(int startSegmentId, int endSegmentId) {
@@ -917,10 +977,11 @@ public class FormController {
 
     /**
      * Metoda pro vytvoreni relace mezi Committed Configuration a Configuration
-     * @param linkId identifikator spojnice
+     *
+     * @param linkId         identifikator spojnice
      * @param startSegmentId identifikator pocatecniho prvku
-     * @param endSegmentId identifikator koncoveho prvku
-     * @param isXML informace zde je relace vytvarena z XML
+     * @param endSegmentId   identifikator koncoveho prvku
+     * @param isXML          informace zde je relace vytvarena z XML
      */
     public void createCommitedConfigurationToConfigurationRelation(int linkId, int startSegmentId, int endSegmentId, boolean isXML) {
 
@@ -928,10 +989,12 @@ public class FormController {
         formDataController.createCommitedConfigurationToConfigurationRelation(linkId, result[0], result[1], isXML);
 
     }
+
     /**
      * Metoda pro ziskani spravneho poradi identifikatoru mezi Commited Configuration a Configuration
+     *
      * @param startSegmentId pocatecni identifikator
-     * @param endSegmentId koncovy identifikator
+     * @param endSegmentId   koncovy identifikator
      * @return spravne poradi identifikatoru
      */
     public Integer[] findResultsFromCommitedConfigurationToConfigurationRelation(int startSegmentId, int endSegmentId) {
@@ -947,8 +1010,9 @@ public class FormController {
 
     /**
      * Metoda pro ziskani spravneho poradi identifikatoru mezi Artifact a Configuration
+     *
      * @param startSegmentId pocatecni identifikator
-     * @param endSegmentId koncovy identifikator
+     * @param endSegmentId   koncovy identifikator
      * @return spravne poradi identifikatoru
      */
     public Integer[] findResultsFromArtifactToConfigurationRelation(int startSegmentId, int endSegmentId) {
@@ -963,10 +1027,11 @@ public class FormController {
 
     /**
      * Metoda pro vytvoreni relace mezi Artifact a Configuration Configuration
-     * @param linkId identifikator spojnice
+     *
+     * @param linkId         identifikator spojnice
      * @param startSegmentId identifikator pocatecniho prvku
-     * @param endSegmentId identifikator koncoveho prvku
-     * @param isXML informace zde je relace vytvarena z XML
+     * @param endSegmentId   identifikator koncoveho prvku
+     * @param isXML          informace zde je relace vytvarena z XML
      */
     public void createArtifactToConfigurationRelation(int linkId, int startSegmentId, int endSegmentId, boolean isXML) {
 
@@ -977,8 +1042,9 @@ public class FormController {
 
     /**
      * Metoda pro ziskani spravneho poradi identifikatoru mezi Person a Artifact
+     *
      * @param startSegmentId pocatecni identifikator
-     * @param endSegmentId koncovy identifikator
+     * @param endSegmentId   koncovy identifikator
      * @return spravne poradi identifikatoru
      */
     public Integer[] findResultsFromPersonToArtifactRelation(int startSegmentId, int endSegmentId) {
@@ -994,8 +1060,9 @@ public class FormController {
 
     /**
      * Metoda pro ziskani spravneho poradi identifikatoru mezi Person a Commit
+     *
      * @param startSegmentId pocatecni identifikator
-     * @param endSegmentId koncovy identifikator
+     * @param endSegmentId   koncovy identifikator
      * @return spravne poradi identifikatoru
      */
     public Integer[] findResultsFromPersonToCommitRelation(int startSegmentId, int endSegmentId) {
@@ -1011,8 +1078,9 @@ public class FormController {
 
     /**
      * Metoda pro ziskani spravneho poradi identifikatoru mezi Person a CommittedConfiguration
+     *
      * @param startSegmentId pocatecni identifikator
-     * @param endSegmentId koncovy identifikator
+     * @param endSegmentId   koncovy identifikator
      * @return spravne poradi identifikatoru
      */
     public Integer[] findResultsFromPersonToCommittedConfigurationRelation(int startSegmentId, int endSegmentId) {
@@ -1028,8 +1096,9 @@ public class FormController {
 
     /**
      * Metoda pro ziskani spravneho poradi identifikatoru mezi Person a Configuration
+     *
      * @param startSegmentId pocatecni identifikator
-     * @param endSegmentId koncovy identifikator
+     * @param endSegmentId   koncovy identifikator
      * @return spravne poradi identifikatoru
      */
     public Integer[] findResultsFromPersonToConfigurationRelation(int startSegmentId, int endSegmentId) {
@@ -1045,10 +1114,11 @@ public class FormController {
 
     /**
      * Metoda pro vytvoreni relace mezi Person a Configuration Configuration
-     * @param linkId identifikator spojnice
+     *
+     * @param linkId         identifikator spojnice
      * @param startSegmentId identifikator pocatecniho prvku
-     * @param endSegmentId identifikator koncoveho prvku
-     * @param isXML informace zde je relace vytvarena z XML
+     * @param endSegmentId   identifikator koncoveho prvku
+     * @param isXML          informace zde je relace vytvarena z XML
      */
     public void createRoleToConfigurationRelation(int linkId, int startSegmentId, int endSegmentId, boolean isXML) {
 
@@ -1059,10 +1129,11 @@ public class FormController {
 
     /**
      * Metoda pro vytvoreni relace mezi Person a Artifact
-     * @param linkId identifikator spojnice
+     *
+     * @param linkId         identifikator spojnice
      * @param startSegmentId identifikator pocatecniho prvku
-     * @param endSegmentId identifikator koncoveho prvku
-     * @param isXML informace zde je relace vytvarena z XML
+     * @param endSegmentId   identifikator koncoveho prvku
+     * @param isXML          informace zde je relace vytvarena z XML
      */
     public void createRoleToArtifactRelation(int linkId, int startSegmentId, int endSegmentId, boolean isXML) {
 
@@ -1073,10 +1144,11 @@ public class FormController {
 
     /**
      * Metoda pro vytvoreni relace mezi Person a Commit
-     * @param linkId identifikator spojnice
+     *
+     * @param linkId         identifikator spojnice
      * @param startSegmentId identifikator pocatecniho prvku
-     * @param endSegmentId identifikator koncoveho prvku
-     * @param isXML informace zde je relace vytvarena z XML
+     * @param endSegmentId   identifikator koncoveho prvku
+     * @param isXML          informace zde je relace vytvarena z XML
      */
     public void createRoleToCommitRelation(int linkId, int startSegmentId, int endSegmentId, boolean isXML) {
 
@@ -1087,10 +1159,11 @@ public class FormController {
 
     /**
      * Metoda pro vytvoreni relace mezi Person a Committed Configuration
-     * @param linkId identifikator spojnice
+     *
+     * @param linkId         identifikator spojnice
      * @param startSegmentId identifikator pocatecniho prvku
-     * @param endSegmentId identifikator koncoveho prvku
-     * @param isXML informace zde je relace vytvarena z XML
+     * @param endSegmentId   identifikator koncoveho prvku
+     * @param isXML          informace zde je relace vytvarena z XML
      */
     public void createRoleToCommttedConfigurationRelation(int linkId, int startSegmentId, int endSegmentId, boolean isXML) {
 
@@ -1100,7 +1173,9 @@ public class FormController {
     }
 
 
-/** Getters and Setters **/
+    /**
+     * Getters and Setters
+     **/
 
     public void setFormFillController(FormFillController formFillController) {
         this.formFillController = formFillController;

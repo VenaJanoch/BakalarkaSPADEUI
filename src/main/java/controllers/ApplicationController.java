@@ -35,11 +35,12 @@ public class ApplicationController {
     /**
      * Konstruktor tridy
      * Zinicializuje globalni promenne a vytvori potrebne Controllery aplikace
-     * @param dataModel instace tridy DataModel
-     * @param identificatorCreater instace tridy IdentificatorCreater
-     * @param segmentLists instace tridy SegmentLists
+     *
+     * @param dataModel             instace tridy DataModel
+     * @param identificatorCreater  instace tridy IdentificatorCreater
+     * @param segmentLists          instace tridy SegmentLists
      * @param drawerPanelController instace tridy drawerPanelController
-     * @param selectItemController instace tridy SelectItemController
+     * @param selectItemController  instace tridy SelectItemController
      */
     public ApplicationController(DataModel dataModel, IdentificatorCreater identificatorCreater, SegmentLists segmentLists,
                                  DrawerPanelController drawerPanelController, SelectItemController selectItemController) {
@@ -57,10 +58,10 @@ public class ApplicationController {
         this.canvasItemController = new CanvasItemController(linkControl, formController, manipulationController, selectionController);
         this.formFillController = new FormFillController(formController, formDataController, dataModel, canvasItemController, identificatorCreater, segmentLists,
                 linkControl);
-        formController.initBasicForms(formDataController, editFormController, deleteFormController);
+        formController.initBasicForms(formDataController, editFormController, deleteFormController); //Pri testovani JUnit potreba zakomentovat
         formController.setFormFillController(formFillController);
         this.manipulationController.setFormFillController(formFillController);
-        this.verifyController = new VerifyController(dataModel);
+        this.verifyController = new VerifyController(dataModel); //Pri testovani JUnit potreba zakomentovat
         this.databaseController = new DatabaseController(verifyController);
     }
 

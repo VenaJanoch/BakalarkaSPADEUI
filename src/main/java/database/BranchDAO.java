@@ -1,6 +1,5 @@
 package database;
 
-import SPADEPAC.Branch;
 import controllers.VerifyController;
 import services.Constans;
 
@@ -10,6 +9,7 @@ import java.util.List;
 
 /**
  * Třída zajišťující výběr dat artefaktů z databáze implementující
+ *
  * @author Vaclav Janoch
  */
 public class BranchDAO {
@@ -20,18 +20,19 @@ public class BranchDAO {
      * Konstruktor třídy
      */
     public BranchDAO(VerifyController verifyController) {
-        this.pripojeni = Constans.CONNECTION;   
+        this.pripojeni = Constans.CONNECTION;
         this.verifyController = verifyController;
     }
 
-/**
-* Metoda pro vytvoreni SQL dotazu pro urcitou instanci Branch
-* Metoda slozi jednotlive parametry pro SQL dotaz a zavola metodu ze tridy SQLAtributeCreator pro ziskani dat z databaze
-* @ projectVerifyId identifikator zvoleneho projektu
-* @ name seznam s atributy name
-* @ nameIndicator seznam s indexi ukazatelu rovnosti
-* @ isMain informace o main vetve
-**/
+    /**
+     * Metoda pro vytvoreni SQL dotazu pro urcitou instanci Branch
+     * Metoda slozi jednotlive parametry pro SQL dotaz a zavola metodu ze tridy SQLAtributeCreator pro ziskani dat z databaze
+     *
+     * @ projectVerifyId identifikator zvoleneho projektu
+     * @ name seznam s atributy name
+     * @ nameIndicator seznam s indexi ukazatelu rovnosti
+     * @ isMain informace o main vetve
+     **/
     public ArrayList<SQLVerifyObject> getBranchyProjekt(int projectVerifyId, List<String> name, List<Integer> nameIndicator, boolean isMain) {
 
         String atributeSection = "";

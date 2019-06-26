@@ -3,7 +3,6 @@ package modelControllerEditTests;
 import SPADEPAC.Branch;
 import controllers.formControllers.EditFormController;
 import controllers.formControllers.FormDataController;
-import javafx.scene.control.TableView;
 import org.junit.Before;
 import org.junit.Test;
 import services.SegmentLists;
@@ -17,42 +16,43 @@ import static org.junit.Assert.assertTrue;
 
 public class BranchValuesTest {
 
-        Branch branch;
-        SegmentLists lists;
-        @Before
-        public void setUp() throws Exception {
+    Branch branch;
+    SegmentLists lists;
 
-            WarmUp warmUp = new WarmUp();
-            lists = warmUp.getLists();
-            FormDataController formDataController = warmUp.getFormDataController();
-            formDataController.saveDataFromBranch(null, true);
-            EditFormController editFormController = warmUp.getEditFormController();
-            ArrayList<String> name = new ArrayList<>();
-            name.add("");
-            name.add("Test2");
-            ArrayList<Integer> indicators = new ArrayList<>();
-            indicators.add(1);
-            indicators.add(0);
-            editFormController.editDataFromBranch("Jmeno1", name, indicators, true, true, new BranchTable("Jmeno1", "YES", true, true, 0));
+    @Before
+    public void setUp() throws Exception {
 
-            branch = warmUp.getDataModel().getBranch(0);
-        }
+        WarmUp warmUp = new WarmUp();
+        lists = warmUp.getLists();
+        FormDataController formDataController = warmUp.getFormDataController();
+        formDataController.saveDataFromBranch(null, true);
+        EditFormController editFormController = warmUp.getEditFormController();
+        ArrayList<String> name = new ArrayList<>();
+        name.add("");
+        name.add("Test2");
+        ArrayList<Integer> indicators = new ArrayList<>();
+        indicators.add(1);
+        indicators.add(0);
+        editFormController.editDataFromBranch("Jmeno1", name, indicators, true, true, new BranchTable("Jmeno1", "YES", true, true, 0));
+
+        branch = warmUp.getDataModel().getBranch(0);
+    }
 
     @Test
     public void testAlias() {
-        assertEquals("Jmeno1", branch.getAlias() );
+        assertEquals("Jmeno1", branch.getAlias());
     }
 
     @Test
     public void testName() {
-        assertEquals("", branch.getName().get(0) );
-        assertEquals("Test2", branch.getName().get(1) );
+        assertEquals("", branch.getName().get(0));
+        assertEquals("Test2", branch.getName().get(1));
     }
 
     @Test
     public void testIndicator() {
-        assertSame(1, branch.getNameIndicator().get(0) );
-        assertSame(0, branch.getNameIndicator().get(1) );
+        assertSame(1, branch.getNameIndicator().get(0));
+        assertSame(0, branch.getNameIndicator().get(1));
     }
 
     @Test
@@ -62,7 +62,7 @@ public class BranchValuesTest {
 
     @Test
     public void testMain() {
-        assertTrue(branch.isIsMain() );
+        assertTrue(branch.isIsMain());
     }
 
 

@@ -1,11 +1,13 @@
 package abstractControlPane;
 
 import controllers.formControllers.FormController;
-import graphics.controlPanelItems.CheckComboBoxItem;
 import interfaces.IEditFormController;
 import interfaces.IFormDataController;
 import javafx.scene.control.TableView;
-import services.*;
+import services.ControlPanelLineObject;
+import services.ControlPanelLineType;
+import services.ParamType;
+import services.SegmentLists;
 import tables.BasicTable;
 
 public abstract class WorkUnitControlPanel extends DescriptionControlPanel {

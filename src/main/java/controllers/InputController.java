@@ -5,6 +5,7 @@ import services.Constans;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+
 /**
  * Trida slouzici pro kontrolu vstupu do editacniho formulare
  *
@@ -14,7 +15,8 @@ public class InputController {
 
     /**
      * Metoda pro overeni, ze vstup je cislo
-     * @param input hodnota textove podobe
+     *
+     * @param input     hodnota textove podobe
      * @param fieldName nazev pole, ze ktereho hodnota pochazi
      * @return Upravena hodnota na int
      * @throws NumberFormatException V pripade spatneho formatu je vyhozena tato vyjimka
@@ -34,10 +36,11 @@ public class InputController {
     /**
      * Pretizena metoda pro overeni, ze vstup je cislo a je v zadanem intervalu
      * Pro vice textovych vstupu
-     * @param input list hodnot z textove podobe
+     *
+     * @param input     list hodnot z textove podobe
      * @param filedName nazev pole, ze ktereho hodnota pochazi
-     * @param minValue minimalni hodnota intervalu
-     * @param maxValue maximalni hodnota intervalu
+     * @param minValue  minimalni hodnota intervalu
+     * @param maxValue  maximalni hodnota intervalu
      * @return Upravena hodnota na int
      */
     public static ArrayList<Integer> isNumber(ArrayList<String> input, String filedName, int minValue, int maxValue) {
@@ -51,7 +54,8 @@ public class InputController {
 
     /**
      * Pretizena metoda pro overeni, ze vstup je cislo pro vice stringu
-     * @param input seznam stringu pro overeni
+     *
+     * @param input     seznam stringu pro overeni
      * @param filedName nazev pole ze ktereho texty pochazi
      * @return seznam intu ziskanych z puvodnich textu
      */
@@ -64,13 +68,15 @@ public class InputController {
         }
         return list;
     }
+
     /**
      * Pretizena metoda pro overeni, ze vstup je cislo a je v zadanem intervalu
      * Pro vice textovych vstupu
-     * @param input hodnota z textove podobe
+     *
+     * @param input     hodnota z textove podobe
      * @param fieldName nazev pole, ze ktereho hodnota pochazi
-     * @param minValue minimalni hodnota intervalu
-     * @param maxValue maximalni hodnota intervalu
+     * @param minValue  minimalni hodnota intervalu
+     * @param maxValue  maximalni hodnota intervalu
      * @return Upravena hodnota na int
      */
     public static int isNumber(String input, int minValue, int maxValue, String fieldName) throws NumberFormatException {
@@ -90,6 +96,7 @@ public class InputController {
     /**
      * Pretizena metoda pro overeni, ze vstup je desetine cislo
      * Pro vice textovych vstupu
+     *
      * @param input list hodnot z textove podobe
      * @param field nazev pole, ze ktereho hodnota pochazi
      * @return Upravena hodnota na int
@@ -106,6 +113,7 @@ public class InputController {
 
     /**
      * Metoda pro overeni, ze vstup je desetine cislo
+     *
      * @param input hodnota textove podobe
      * @param field nazev pole, ze ktereho hodnota pochazi
      * @return Upravena hodnota na int
@@ -124,8 +132,9 @@ public class InputController {
     /**
      * Pretizena metoda pro overeni, ze vstup je desetine cislo a je v zadanem intervalu
      * Pro vice textovych vstupu
-     * @param input list hodnot z textove podobe
-     * @param field nazev pole, ze ktereho hodnota pochazi
+     *
+     * @param input    list hodnot z textove podobe
+     * @param field    nazev pole, ze ktereho hodnota pochazi
      * @param minValue minimalni hodnota intervalu
      * @param maxValue maximalni hodnota intervalu
      * @return Upravena hodnota na int
@@ -160,6 +169,7 @@ public class InputController {
 
     /**
      * Metoda pro kontrolu vyplneneho textoveho pole
+     *
      * @param texts seznam textu pro kontrolu
      * @return vraceni zkontolovanych textu
      */
@@ -176,6 +186,7 @@ public class InputController {
 
     /**
      * Metoda pro kontrolu pole s Name
+     *
      * @param names seznam hodnot name
      * @return upravene hodnoty
      */
@@ -189,6 +200,7 @@ public class InputController {
 
     /**
      * Metoda pro upravu pole se jmenem
+     *
      * @param name textovy vstup
      * @return upraveny textovy retezec
      */
@@ -201,6 +213,7 @@ public class InputController {
 
     /**
      * Pretizena metoda pro kontrolu zadanych dat
+     *
      * @param date zadane datum
      * @return upravene datum
      */
@@ -214,6 +227,7 @@ public class InputController {
 
     /**
      * Metoda pro kontrolu zadanych dat
+     *
      * @param date Date
      * @return upravene Date
      */

@@ -1,28 +1,31 @@
 package modelControllerTests;
+
+import SPADEPAC.RoleType;
 import controllers.formControllers.FormController;
 import controllers.formControllers.FormDataController;
-import SPADEPAC.RoleType;
 import org.junit.Before;
 import org.junit.Test;
 import services.SegmentLists;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
 
 public class RoleTypeValueTest {
 
-        RoleType roleType;
-        SegmentLists lists;
-        @Before
-        public void setUp() throws Exception {
+    RoleType roleType;
+    SegmentLists lists;
 
-            WarmUp warmUp = new WarmUp();
-            lists = warmUp.getLists();
-            FormDataController formDataController = warmUp.getFormDataController();
-            FormController formController = warmUp.getFormController();
+    @Before
+    public void setUp() throws Exception {
 
-            warmUp.getDataModel().getSaveDataModel().createNewRoleType(0);
-            roleType =warmUp.getDataModel().getRoleType(0);
-        }
+        WarmUp warmUp = new WarmUp();
+        lists = warmUp.getLists();
+        FormDataController formDataController = warmUp.getFormDataController();
+        FormController formController = warmUp.getFormController();
+
+        warmUp.getDataModel().getSaveDataModel().createNewRoleType(0);
+        roleType = warmUp.getDataModel().getRoleType(0);
+    }
 
     @Test
     public void testId() {

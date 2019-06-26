@@ -1,6 +1,6 @@
 package graphics.panels;
 
-import controllers.*;
+import controllers.WindowController;
 import controllers.formControllers.FormController;
 import controllers.graphicsComponentsControllers.CanvasController;
 import controllers.graphicsComponentsControllers.DrawerPanelController;
@@ -47,11 +47,12 @@ public class DragAndDropPanel extends BorderPane {
      * Konstruktor třídy,
      * Zinicializuje globální proměnné třídy
      * Nastavi prvky do panelu
-     * @param formController instace tridy FormController
-     * @param windowController instace tridy WindowController
-     * @param canvasController instace tridy CanvasController
+     *
+     * @param formController        instace tridy FormController
+     * @param windowController      instace tridy WindowController
+     * @param canvasController      instace tridy CanvasController
      * @param drawerPanelController instace tridy DrawePanelController
-     * @param selectItemController intanece tridy selctItemController
+     * @param selectItemController  intanece tridy selctItemController
      */
 
     public DragAndDropPanel(FormController formController, WindowController windowController, CanvasController canvasController,

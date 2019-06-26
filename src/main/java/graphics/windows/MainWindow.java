@@ -1,7 +1,8 @@
 package graphics.windows;
 
 import com.jfoenix.controls.JFXDrawersStack;
-import controllers.*;
+import controllers.ApplicationController;
+import controllers.WindowController;
 import controllers.formControllers.FormController;
 import controllers.graphicsComponentsControllers.CanvasController;
 import controllers.graphicsComponentsControllers.DrawerPanelController;
@@ -11,9 +12,11 @@ import graphics.panels.MenuPanel;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.layout.*;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import services.*;
+import services.CanvasType;
+import services.Constans;
 
 /**
  * Třída s hlavní layoutem aplikace
@@ -38,10 +41,11 @@ public class MainWindow extends Stage {
 
     /**
      * Konstruktor třídy Nastaví reakci na uzavírání aplikace
-     * @param windowController instace tridy WindowController
-     * @param drawersStack instance tridy DrawerStack
+     *
+     * @param windowController      instace tridy WindowController
+     * @param drawersStack          instance tridy DrawerStack
      * @param drawerPanelController instance tridy DrawerPanelController
-     * @param selectItemController instance tridy SelectItemController
+     * @param selectItemController  instance tridy SelectItemController
      * @param applicationController instance tridy ApplicationController
      */
     public MainWindow(WindowController windowController, JFXDrawersStack drawersStack, DrawerPanelController drawerPanelController,

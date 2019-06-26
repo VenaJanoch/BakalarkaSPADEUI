@@ -19,6 +19,7 @@ public class ConfigurationValueCopyTest {
     SegmentLists lists;
     LocalDate date;
     ArrayList itemSet;
+
     @Before
     public void setUp() throws Exception {
 
@@ -47,17 +48,18 @@ public class ConfigurationValueCopyTest {
         dates.add(date);
         dataModel.getSaveDataModel().createNewConfiguration(2);
         dataModel.getEditDataModel().editDataInConfiguration("Test", name, name, dates, true, unit, unit, unit, indicators, indicators, indicators,
-                indicators, indicators, indicators, indicators, indicators,3, 1,false,2);
+                indicators, indicators, indicators, indicators, indicators, 3, 1, false, 2);
         dataModel.getEditDataModel().editDataInConfiguration("Test", name, name, dates, true, unit, unit, unit, indicators, indicators, indicators,
-                indicators, indicators, indicators, indicators, indicators,3, 1,false,2);
+                indicators, indicators, indicators, indicators, indicators, 3, 1, false, 2);
         dataModel.getSaveDataModel().createNewConfiguration(3);
-        dataModel.getDataManipulator().copyDataFromConfiguration(2,3, 43, 45);
+        dataModel.getDataManipulator().copyDataFromConfiguration(2, 3, 43, 45);
         configuration = dataModel.getConfiguration(3);
 
     }
+
     @Test
     public void testAlias() {
-        assertEquals("3", configuration.getAlias() );
+        assertEquals("3", configuration.getAlias());
     }
 
     @Test
@@ -68,40 +70,40 @@ public class ConfigurationValueCopyTest {
 
     @Test
     public void testName() {
-        assertEquals("", configuration.getName().get(0) );
-        assertEquals("Test2", configuration.getName().get(1) );
+        assertEquals("", configuration.getName().get(0));
+        assertEquals("Test2", configuration.getName().get(1));
         assertSame(2, configuration.getName().size());
     }
 
     @Test
     public void testIndicatorName() {
-        assertSame(1, configuration.getNameIndicator().get(0) );
-        assertSame(0, configuration.getNameIndicator().get(1) );
+        assertSame(1, configuration.getNameIndicator().get(0));
+        assertSame(0, configuration.getNameIndicator().get(1));
         assertSame(2, configuration.getNameIndicator().size());
     }
 
     @Test
     public void testDescription() {
-        assertEquals("", configuration.getDescription().get(0) );
-        assertEquals("Test2", configuration.getDescription().get(1) );
+        assertEquals("", configuration.getDescription().get(0));
+        assertEquals("Test2", configuration.getDescription().get(1));
         assertSame(2, configuration.getDescription().size());
     }
 
     @Test
     public void testIndicatorDescription() {
-        assertSame(1, configuration.getDescriptionIndicator().get(0) );
-        assertSame(0, configuration.getDescriptionIndicator().get(1) );
+        assertSame(1, configuration.getDescriptionIndicator().get(0));
+        assertSame(0, configuration.getDescriptionIndicator().get(1));
         assertSame(2, configuration.getDescriptionIndicator().size());
     }
 
     @Test
     public void testIndicatorTag() {
-        assertSame(1, configuration.getTagIndex().get(0) );
-        assertSame(0, configuration.getTagIndex().get(1) );
+        assertSame(1, configuration.getTagIndex().get(0));
+        assertSame(0, configuration.getTagIndex().get(1));
         assertSame(2, configuration.getTagIndex().size());
 
-        assertSame(1, configuration.getTagsIndicator().get(0) );
-        assertSame(0, configuration.getTagsIndicator().get(1) );
+        assertSame(1, configuration.getTagsIndicator().get(0));
+        assertSame(0, configuration.getTagsIndicator().get(1));
         assertSame(2, configuration.getTagsIndicator().size());
     }
 
@@ -122,7 +124,7 @@ public class ConfigurationValueCopyTest {
 
     @Test
     public void testDate() {
-        assertEquals(date.toString()+ "T00:00:00.000+02:00", configuration.getCreated().get(0).toString());
+        assertEquals(date.toString() + "T00:00:00.000+02:00", configuration.getCreated().get(0).toString());
         assertSame(1, configuration.getCreated().size());
     }
 

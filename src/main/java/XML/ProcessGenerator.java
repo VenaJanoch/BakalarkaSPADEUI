@@ -1,29 +1,12 @@
 package XML;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.io.PrintStream;
-import java.io.PrintWriter;
-import java.io.StringWriter;
-
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBElement;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.MarshalException;
-import javax.xml.bind.Marshaller;
-import javax.xml.bind.UnmarshalException;
-import javax.xml.bind.Unmarshaller;
-import javax.xml.validation.Validator;
-
-import model.DataManipulator;
-import org.xml.sax.SAXException;
-
 import SPADEPAC.ObjectFactory;
 import SPADEPAC.Project;
 import services.Alerts;
 import services.Constans;
+
+import javax.xml.bind.*;
+import java.io.*;
 
 public class ProcessGenerator {
 

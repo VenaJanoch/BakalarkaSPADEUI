@@ -1,28 +1,22 @@
 package modelControllerDeleteTests;
 
-import SPADEPAC.Relation;
 import SPADEPAC.WorkUnit;
 import controllers.formControllers.DeleteFormController;
-import controllers.formControllers.FormController;
 import controllers.formControllers.FormDataController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.control.TableView;
 import model.DataModel;
 import org.junit.Before;
 import org.junit.Test;
 import services.MapperTableToObject;
 import services.SegmentLists;
-import services.SegmentType;
 import tables.BasicTable;
 import tables.ClassTable;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Set;
 
 import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
 
 public class RelationDeleteTest {
 
@@ -31,6 +25,7 @@ public class RelationDeleteTest {
     LocalDate date;
     WorkUnit workUnit;
     MapperTableToObject mapperTableToObject;
+
     @Before
     public void setUp() throws Exception {
 
@@ -40,7 +35,7 @@ public class RelationDeleteTest {
         lists = warmUp.getLists();
         FormDataController formDataController = warmUp.getFormDataController();
         DeleteFormController deleteFormController = warmUp.getDeleteFormController();
-        ClassTable table1 = new ClassTable("","","",true, 0);
+        ClassTable table1 = new ClassTable("", "", "", true, 0);
         formDataController.saveDataFromRelationForm(null, true);
         formDataController.saveDataFromRelationForm(null, true);
 
@@ -64,8 +59,8 @@ public class RelationDeleteTest {
         progress.add(12);
         progress.add(23);
         dataModel.getSaveDataModel().createNewWorkUnit(2);
-        dataModel.getEditDataModel().editDataInWorkUnit("Test", progress, indicators, name,name, name, indicators, indicators, indicators, indicators, indicators, indicators,
-                indicators,estimate, indicators,  indicators, indicators, indicators, indicators,indicators, indicators,indicators, indicators,indicators, indicators,
+        dataModel.getEditDataModel().editDataInWorkUnit("Test", progress, indicators, name, name, name, indicators, indicators, indicators, indicators, indicators, indicators,
+                indicators, estimate, indicators, indicators, indicators, indicators, indicators, indicators, indicators, indicators, indicators, indicators, indicators,
                 dates, indicators, false, indicators, unit, 2);
 
         ObservableList list = FXCollections.observableArrayList();
@@ -75,7 +70,7 @@ public class RelationDeleteTest {
         branchTables.add(table1);
         mapperTableToObject = warmUp.getMapperTableToObject();
         mapperTableToObject.mapTableToWU(indicators, indicators, indicators, indicators, indicators, indicators
-                ,indicators, 0,"Test");
+                , indicators, 0, "Test");
         deleteFormController.deleteRelation(list, branchTables);
 
     }

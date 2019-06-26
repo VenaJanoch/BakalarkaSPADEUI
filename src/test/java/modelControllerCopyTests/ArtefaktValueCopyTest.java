@@ -46,7 +46,7 @@ public class ArtefaktValueCopyTest {
         dataModel.getEditDataModel().editDataInArtifact("Test", name, indicators, name, indicators, dates, indicators, false,
                 indicators, indicators, indicators, indicators, 3, 2, 1);
         dataModel.getSaveDataModel().createNewArtifact(3);
-        dataModel.getDataManipulator().copyDataFromArtifact(1,3, 43, 45);
+        dataModel.getDataManipulator().copyDataFromArtifact(1, 3, 43, 45);
         artifact = dataModel.getArtifact(3);
     }
 
@@ -75,7 +75,7 @@ public class ArtefaktValueCopyTest {
 
     @Test
     public void testDate() {
-        assertEquals(date.toString()+ "T00:00:00.000+02:00", artifact.getCreated().get(0).toString());
+        assertEquals(date.toString() + "T00:00:00.000+02:00", artifact.getCreated().get(0).toString());
         assertSame(1, artifact.getCreated().size());
     }
 

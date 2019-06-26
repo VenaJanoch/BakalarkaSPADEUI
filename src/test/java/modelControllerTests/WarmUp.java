@@ -1,9 +1,10 @@
 package modelControllerTests;
 
+import XML.ProcessGenerator;
 import com.jfoenix.controls.JFXDrawer;
 import com.jfoenix.controls.JFXDrawersStack;
-import controllers.*;
-import XML.ProcessGenerator;
+import controllers.ApplicationController;
+import controllers.DataPreparer;
 import controllers.formControllers.FormController;
 import controllers.formControllers.FormDataController;
 import controllers.graphicsComponentsControllers.DrawerPanelController;
@@ -12,7 +13,10 @@ import model.DataManipulator;
 import model.DataModel;
 import model.FileManipulator;
 import model.IdentificatorCreater;
-import services.*;
+import services.Alerts;
+import services.DeleteControl;
+import services.MapperTableToObject;
+import services.SegmentLists;
 
 public class WarmUp {
 
@@ -22,13 +26,13 @@ public class WarmUp {
     private DataManipulator data;
     private FormController formController;
 
-    public WarmUp(){
-        this.lists =  new SegmentLists();
+    public WarmUp() {
+        this.lists = new SegmentLists();
         MapperTableToObject mapperTableToObject = new MapperTableToObject(lists);
         IdentificatorCreater idCreator = new IdentificatorCreater();
         ProcessGenerator processGenerator = new ProcessGenerator();
         dataModel = new DataModel(processGenerator);
-        data =  new DataManipulator(dataModel);
+        data = new DataManipulator(dataModel);
 
         FileManipulator file = new FileManipulator(dataModel);
         Alerts alerts = new Alerts(file);
@@ -39,7 +43,7 @@ public class WarmUp {
         DataPreparer dataPreparer = new DataPreparer();
         formController = new FormController(idCreator, dataModel, ap, lists, dataPreparer, drawerPanelController, selectItemController);
         selectItemController.setFormController(formController);
-        for(int i = 0; i < 12; i++){
+        for (int i = 0; i < 12; i++) {
             formController.getForms().add(null);
         }
         this.formDataController = new FormDataController(formController, lists, mapperTableToObject, dataModel, idCreator, dataPreparer);

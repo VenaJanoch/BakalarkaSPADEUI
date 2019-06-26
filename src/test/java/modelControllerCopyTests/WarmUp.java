@@ -20,8 +20,6 @@ import services.DeleteControl;
 import services.MapperTableToObject;
 import services.SegmentLists;
 
-import java.util.HashMap;
-
 public class WarmUp {
 
     private SegmentLists lists;
@@ -35,13 +33,13 @@ public class WarmUp {
     private SelectionController selectionController;
     private FormFillController formFillController;
 
-    public WarmUp(){
-        this.lists =  new SegmentLists();
+    public WarmUp() {
+        this.lists = new SegmentLists();
         MapperTableToObject mapperTableToObject = new MapperTableToObject(lists);
         IdentificatorCreater idCreator = new IdentificatorCreater();
         ProcessGenerator processGenerator = new ProcessGenerator();
         dataModel = new DataModel(processGenerator);
-        data =  new DataManipulator(dataModel);
+        data = new DataManipulator(dataModel);
 
         FileManipulator file = new FileManipulator(dataModel);
         Alerts alerts = new Alerts(file);
@@ -53,16 +51,16 @@ public class WarmUp {
         formController = new FormController(idCreator, dataModel, ap, lists, dataPreparer, drawerPanelController, selectItemController);
         editFormController = new EditFormController(dataModel, idCreator, mapperTableToObject, lists, dataPreparer, formController);
         selectItemController.setFormController(formController);
-        for(int i = 0; i < 12; i++){
+        for (int i = 0; i < 12; i++) {
             formController.getForms().add(null);
         }
         this.formDataController = new FormDataController(formController, lists, mapperTableToObject, dataModel, idCreator, dataPreparer);
-        deleteFormController = new DeleteFormController(formController, dataModel, idCreator, mapperTableToObject, deleteControl, lists );
+        deleteFormController = new DeleteFormController(formController, dataModel, idCreator, mapperTableToObject, deleteControl, lists);
         selectionController = new SelectionController();
         this.manipulationController = new ManipulationController(deleteFormController, selectionController);
         LinkControl linkControl = new LinkControl(formController, idCreator, lists, deleteFormController, manipulationController);
         CanvasItemController canvasItemController = new CanvasItemController(linkControl, formController, manipulationController, selectionController);
-        this.formFillController = new FormFillController(formController, formDataController, dataModel, canvasItemController,idCreator, lists, linkControl);
+        this.formFillController = new FormFillController(formController, formDataController, dataModel, canvasItemController, idCreator, lists, linkControl);
     }
 
     public SegmentLists getLists() {

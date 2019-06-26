@@ -2,7 +2,6 @@ package graphics.canvas;
 
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
 import javafx.scene.shape.Ellipse;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
@@ -16,18 +15,21 @@ import services.Constans;
  */
 public class InstanceCount extends AnchorPane {
 
-    /**Globalni promenne tridy**/
+    /**
+     * Globalni promenne tridy
+     **/
     private Text instaceCountText;
     private Ellipse ellipse;
 
     /**
      * Konstruktor tridy
      * Zinicializuje globalni promenne tridy
+     *
      * @param count
      */
     public InstanceCount(String count) {
         super();
-        this.ellipse = new Ellipse(Constans.INSTACE_COUNT_RADIUSX, Constans.INSTACE_COUNT_RADIUSY );
+        this.ellipse = new Ellipse(Constans.INSTACE_COUNT_RADIUSX, Constans.INSTACE_COUNT_RADIUSY);
         this.ellipse.setFill(Color.rgb(0, 146, 202));
         this.instaceCountText = new Text(count);
         this.instaceCountText.setFill(Color.WHITE);
@@ -38,6 +40,7 @@ public class InstanceCount extends AnchorPane {
 
     /**
      * Metoda pro nastaveni pozice ikonky
+     *
      * @param x x souradnice
      * @param y y souradnice
      */

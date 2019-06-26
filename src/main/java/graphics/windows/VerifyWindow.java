@@ -1,7 +1,6 @@
 package graphics.windows;
 
 import controllers.VerifyController;
-import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
@@ -13,16 +12,12 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Priority;
-import javafx.scene.layout.Region;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import services.Constans;
 import tables.VerifyTable;
 
 import java.util.ArrayList;
-import java.util.Optional;
 
 /**
  * Třída predstavujici okno s vysledky validace
@@ -44,6 +39,7 @@ public class VerifyWindow extends Stage {
     /**
      * Konstruktor tridy,
      * Zinicializuje globalni promenne tridy
+     *
      * @param verifyController instace tridy VerifyController
      */
     public VerifyWindow(VerifyController verifyController) {
@@ -120,6 +116,7 @@ public class VerifyWindow extends Stage {
 
     /**
      * Metoda pro vytvoreni tabulky pro vysledky
+     *
      * @return instanci tridy TableView pro vysledky
      */
     public TableView<VerifyTable> getTable() {
@@ -205,6 +202,7 @@ public class VerifyWindow extends Stage {
 
     /**
      * Metoda pro nastaveni dat do tabulky
+     *
      * @param verifyTables instace tridy VerifyTables
      */
     public void setItemsToTable(ArrayList<VerifyTable> verifyTables) {

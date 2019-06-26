@@ -9,7 +9,6 @@ import services.SegmentLists;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
@@ -19,6 +18,7 @@ public class PhaseValueTest {
     SegmentLists lists;
     ArrayList itemSet = new ArrayList();
     LocalDate date;
+
     @Before
     public void setUp() throws Exception {
 

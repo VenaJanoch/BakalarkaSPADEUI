@@ -2,6 +2,7 @@ package controllers.graphicsComponentsControllers;
 
 import com.jfoenix.controls.JFXDrawer;
 import controllers.ApplicationController;
+import controllers.LinkControl;
 import controllers.formControllers.FormController;
 import controllers.formControllers.ManipulationController;
 import graphics.canvas.*;
@@ -13,11 +14,13 @@ import javafx.scene.control.ToggleButton;
 import javafx.scene.image.Image;
 import javafx.scene.input.*;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
-import services.*;
+import services.CanvasType;
+import services.Constans;
+import services.DragContext;
+import services.SegmentType;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -33,7 +36,9 @@ import java.util.Set;
  */
 public class CanvasController {
 
-    /**Graficke prvky obsazene v objektu platna**/
+    /**
+     * Graficke prvky obsazene v objektu platna
+     **/
     private DragAndDropCanvas canvas;
     private ToggleButton linkButton;
     private ItemContexMenu itemContexMenu;
@@ -42,19 +47,29 @@ public class CanvasController {
     private Image image;
     private Image image2;
 
-    /**Promenna pro urceni stavy pro kresleni**/
+    /**
+     * Promenna pro urceni stavy pro kresleni
+     **/
     private boolean arrow;
-    /**Promenna pro urceni pocatecniho stavu kreseleni spojnice**/
+    /**
+     * Promenna pro urceni pocatecniho stavu kreseleni spojnice
+     **/
     private boolean startArrow;
-    /**Promenna pro urceni stisku tlacitka**/
+    /**
+     * Promenna pro urceni stisku tlacitka
+     **/
     private boolean isPressLinkButton = true;
 
-    /**Promenne predstavujic kontrolenery **/
+    /**
+     * Promenne predstavujic kontrolenery
+     **/
     private CanvasItemController canvasItemController;
     private ManipulationController manipulationController;
     private FormController formController;
     private SelectionController selectionController;
-    /**Promenna pro urceni typu platna**/
+    /**
+     * Promenna pro urceni typu platna
+     **/
     private CanvasType canvasType;
 
     private Map<Integer, CanvasItem> listOfItemOnCanvas = new HashMap<>();
@@ -62,11 +77,10 @@ public class CanvasController {
     private double rectFishWidth = 0;
 
 
-
-
     /**
      * Konstrukor tridy
      * Zavola zakladni konstruktor tridy a nastavi potrebne globalni promenne
+     *
      * @param canvasType
      * @param leftDrawerPanel
      * @param rightDrawerPanel
@@ -79,6 +93,7 @@ public class CanvasController {
 
     /**
      * Konstrukor tridy, nastavi potrebne globalni promenne
+     *
      * @param canvasType
      * @param applicationController
      */
@@ -99,7 +114,7 @@ public class CanvasController {
     /**
      * Metoda pro nacteni obrazku predstavujici ikonku spojnice
      */
-    public void loadLinkButtonImage(){
+    public void loadLinkButtonImage() {
         FileInputStream input = null;
         FileInputStream input2 = null;
         try {
@@ -127,10 +142,11 @@ public class CanvasController {
 
     /**
      * Metoda pro nastaveni potrebneho vzhledu tlacitka predstavujici ikonku spojnice
+     *
      * @param background instace tridy Background
-     * @param image instace tridy image
+     * @param image      instace tridy image
      */
-    public void setLinkButtonBackground(Background background, Image image){
+    public void setLinkButtonBackground(Background background, Image image) {
         linkButton.setMinWidth(image.getWidth());
         linkButton.setMinHeight(image.getHeight());
         linkButton.setBackground(background);
@@ -157,16 +173,18 @@ public class CanvasController {
      * Pomocna metoda pro reakci na stisk klavesy ESC
      */
     public void pressESCAction() {
-        if(!isPressLinkButton){
+        if (!isPressLinkButton) {
             createArrowButtonEvent();
             selectionController.clear();
         }
 
 
     }
+
     /**
      * Metoda pro reakci na klavesove zkratky
      * Umoznuje rekci na crtl+v, ctrl+c, ctrl+x, delete a escape
+     *
      * @param event KeyEvent
      */
     public void keyPressAction(KeyEvent event) {
@@ -185,7 +203,7 @@ public class CanvasController {
         } else if (event.getCode() == KeyCode.ESCAPE) {
             if (manipulationController.getLink() != null) {
                 manipulationController.getLink().coverBackgroundPolygon();
-               selectionController.clear();
+                selectionController.clear();
             }
             pressESCAction();
         }
@@ -194,6 +212,7 @@ public class CanvasController {
 
     /**
      * Pomocna metoda pro pridani spojnice do platna
+     *
      * @param link instance tridy NodeLink
      */
     public void addLinkToCanvas(NodeLink link) {
@@ -202,6 +221,7 @@ public class CanvasController {
 
     /**
      * Pomocna metoda pro pridani polygonu okolo spojnice
+     *
      * @param backgroundPlygon instace tridy Polygon
      */
     public void addPolygonToCanvas(Polygon backgroundPlygon) {
@@ -210,9 +230,10 @@ public class CanvasController {
 
     /**
      * Metoda pro pridani prvku platna na platno horniho panelu
+     *
      * @param segment String Jmeno pridavaneho prvku
-     * @param x poloha prvku
-     * @param y poloha prvku
+     * @param x       poloha prvku
+     * @param y       poloha prvku
      * @return CanvasItem nova instace tridz CanvasItem
      */
     public CanvasItem addCanvasItemFromPanel(String segment, double x, double y) {
@@ -225,9 +246,10 @@ public class CanvasController {
 
     /**
      * Metoda pro pridani prvku platna na platno horniho panelu
+     *
      * @param type SegmentType typ pridavaneho prvku
-     * @param x poloha prvku
-     * @param y poloha prvku
+     * @param x    poloha prvku
+     * @param y    poloha prvku
      * @return CanvasItem nova instace tridz CanvasItem
      */
     public CanvasItem addCanvasItemFromPanel(SegmentType type, double x, double y) {
@@ -244,12 +266,13 @@ public class CanvasController {
 
     /**
      * Metoda pro pridani prvku na platno
-     * @param type SegmetType
-     * @param formIndex identificator
-     * @param name jmeno prvku
-     * @param x x souradnice
-     * @param y y souradncie
-     * @param instanceCount pocet instanci
+     *
+     * @param type           SegmetType
+     * @param formIndex      identificator
+     * @param name           jmeno prvku
+     * @param x              x souradnice
+     * @param y              y souradncie
+     * @param instanceCount  pocet instanci
      * @param countIndicator pocet ukazatelu
      * @return CanvaItem
      */
@@ -263,14 +286,15 @@ public class CanvasController {
 
     /**
      * Metoda pro pridani prvku na platno z existujicich dat ulozenych v XML
-     * @param type SegmetType
-     * @param formIndex identificator
-     * @param name jmeno prvku
-     * @param x x souradnice
-     * @param y y souradncie
-     * @param instanceCount pocet instanci
+     *
+     * @param type           SegmetType
+     * @param formIndex      identificator
+     * @param name           jmeno prvku
+     * @param x              x souradnice
+     * @param y              y souradncie
+     * @param instanceCount  pocet instanci
      * @param countIndicator pocet ukazatelu
-     * @param isExist existence prvku
+     * @param isExist        existence prvku
      * @return CanvasItem
      */
     public CanvasItem addCanvasItemFromExistData(SegmentType type, int formIndex, String name, double x, double y, int instanceCount, int countIndicator, boolean isExist) {
@@ -281,7 +305,8 @@ public class CanvasController {
 
     /**
      * Metoda pro vytovreni identificatoru jednotlivych prvku platn
-     * @param type instatace tridy SegmentType
+     *
+     * @param type      instatace tridy SegmentType
      * @param formIndex identificator instace datoveho modelu, ktery bude prvek platna predstavovat
      * @return String identificator
      */
@@ -296,8 +321,9 @@ public class CanvasController {
 
     /**
      * Metoda vytvoreni a ziskani id noveho prvku.
+     *
      * @param segmentType instance tridy uchovavajici informaci o typu segmentu
-     * @param canvasType instace tridy uchovavajici informaci o typy platna
+     * @param canvasType  instace tridy uchovavajici informaci o typy platna
      * @return
      */
     private int getFormIndexFromNewForm(SegmentType segmentType, CanvasType canvasType) {
@@ -307,6 +333,7 @@ public class CanvasController {
 
     /**
      * Metoda pro reakci na drag and drop pridani prvku z platna
+     *
      * @param event DragEvent
      */
     public void dragAndDrop(DragEvent event) {
@@ -325,6 +352,7 @@ public class CanvasController {
 
     /**
      * Pomocna metoda pro ukonceni Drag and Drop
+     *
      * @param event instace tridz DragEvent
      */
     public void dragAndOver(DragEvent event) {
@@ -343,24 +371,23 @@ public class CanvasController {
         double newX;
         double newY;
 
-            if (selectionController.getSelection().size() > 1){
-                for (CanvasItem canvasItem : selectionController.getSelection()){
-                    newX = canvasItem.getTranslateX() + canvasItem.getWidth() + rectFishWidth;
-                    newY = canvasItem.getTranslateY() + canvasItem.getHeight() + Constans.NEW_INSTACE_OFFSET;
-                    manipulationController.pasteItem(this, canvasItemController, newX, newY, canvasItem);
-                }
-
-            }else {
-                Set selection = selectionController.getSelection();
-
-                if (selection.size() != 0){
-                    CanvasItem canvasItem = selectionController.getSelection().iterator().next();
-                    newX = canvasItem.getTranslateX() + canvasItem.getWidth() + Constans.NEW_INSTACE_OFFSET;
-                    newY = canvasItem.getTranslateY() + canvasItem.getHeight() + Constans.NEW_INSTACE_OFFSET;
-                    manipulationController.pasteItem(this, canvasItemController, newX, newY, canvasItem);
-                }
+        if (selectionController.getSelection().size() > 1) {
+            for (CanvasItem canvasItem : selectionController.getSelection()) {
+                newX = canvasItem.getTranslateX() + canvasItem.getWidth() + rectFishWidth;
+                newY = canvasItem.getTranslateY() + canvasItem.getHeight() + Constans.NEW_INSTACE_OFFSET;
+                manipulationController.pasteItem(this, canvasItemController, newX, newY, canvasItem);
             }
 
+        } else {
+            Set selection = selectionController.getSelection();
+
+            if (selection.size() != 0) {
+                CanvasItem canvasItem = selectionController.getSelection().iterator().next();
+                newX = canvasItem.getTranslateX() + canvasItem.getWidth() + Constans.NEW_INSTACE_OFFSET;
+                newY = canvasItem.getTranslateY() + canvasItem.getHeight() + Constans.NEW_INSTACE_OFFSET;
+                manipulationController.pasteItem(this, canvasItemController, newX, newY, canvasItem);
+            }
+        }
 
 
     }
@@ -409,7 +436,7 @@ public class CanvasController {
 
             manipulationController.setChooseCanvas(canvas);
             itemContexMenu.show(canvas.getCanvas(), t.getScreenX(), t.getScreenY());
-        }else{
+        } else {
             itemContexMenu.hide();
         }
     }
@@ -431,9 +458,9 @@ public class CanvasController {
     }
 
 
-
     /**
      * Metoda pro nastaveni nove podoby kurzoru na platne
+     *
      * @param cursor instace tridy Cursor
      */
     public void setCursorToCanvas(Cursor cursor) {
@@ -451,9 +478,10 @@ public class CanvasController {
 
     /**
      * * Metoda pro ziskani Eventhandleru pro reakci na stisk mysi
+     *
      * @param dragContext pocatecni bod
-     * @param rect instace tridy Rectangle
-     * @param canvas instance tridy AnchorPane
+     * @param rect        instace tridy Rectangle
+     * @param canvas      instance tridy AnchorPane
      * @return EventHandler
      */
     public EventHandler<MouseEvent> getOnMousePressedEventHandler(DragContext dragContext, Rectangle rect, AnchorPane canvas) {
@@ -482,7 +510,8 @@ public class CanvasController {
 
     /**
      * Metoda pro ziskani EventDandleru pro reakci na release udalosti
-     * @param rect instace tridy Rectangle
+     *
+     * @param rect   instace tridy Rectangle
      * @param canvas instace tridy AnchorPane
      * @return EventHandler
      */
@@ -491,37 +520,45 @@ public class CanvasController {
 
             @Override
             public void handle(MouseEvent event) {
-
-                    if (event.getButton().equals(MouseButton.PRIMARY)) {
-                        if (!event.isShiftDown() && !event.isControlDown()) {
-                            if (!manipulationController.isChoosedItem()) {
-                                selectionController.clear();
-                            }
+                ElementsLink delLink = null;
+                boolean removeLink = false;
+                if (event.getButton().equals(MouseButton.PRIMARY)) {
+                    if (!event.isShiftDown() && !event.isControlDown()) {
+                        if (!manipulationController.isChoosedItem()) {
+                            selectionController.clear();
                         }
+                    }
 
-                        for (Node node : canvas.getChildren()) {
-                            if (node instanceof CanvasItem) {
-                                CanvasItem item = (CanvasItem) node;
-                                multiselectAction(item, event, rect, node);
-                            }else if(node instanceof ElementsLink){
+                    for (Node node : canvas.getChildren()) {
+                        if (node instanceof CanvasItem) {
+                            CanvasItem item = (CanvasItem) node;
+                            multiselectAction(item, event, rect, node);
+                        } else if (node instanceof ElementsLink) {
+                            if (node.getBoundsInParent().intersects(rect.getBoundsInParent())) {
                                 ElementsLink link = (ElementsLink) node;
-                                if (node.getBoundsInParent().intersects(rect.getBoundsInParent())) {
-                                    if (event.getButton().equals(MouseButton.PRIMARY)) {
-                                        if (event.getClickCount() == 2) {
-                                            link.deleteArrow(false);
-                                        }
-
+                                LinkControl linkControl = ((ElementsLink) node).getLinkControl();
+                                if (event.getButton().equals(MouseButton.PRIMARY)) {
+                                    link.polygonClickedReaction(event);
+                                    linkControl.pressedDeleteArrow(event, link);
+                                    if (event.getClickCount() == 2) {
+                                        delLink = link;
                                     }
                                 }
                             }
+                        }
                         //   selectionController.log();
 
                     }
-                        removeRectangle();
+
+                    removeRectangle();
+                }
+                if (delLink != null) {
+                    canvas.getChildren().remove(delLink.getBackgroundPolygon());
+                    canvas.getChildren().remove(delLink);
                 }
                 event.consume();
                 manipulationController.setChoosedItem(false);
-                if (selectionController.getSelection().isEmpty()){
+                if (selectionController.getSelection().isEmpty()) {
                     manipulationController.setMultiSelect(false);
                 }
             }
@@ -532,12 +569,13 @@ public class CanvasController {
 
     /**
      * Metoda zajistujici reakci pri vyberu vice prvku na platne
-     * @param item instace Canvas Item
+     *
+     * @param item  instace Canvas Item
      * @param event udalost mysi
-     * @param rect instace Rectangle
-     * @param node instace Node
+     * @param rect  instace Rectangle
+     * @param node  instace Node
      */
-    private void multiselectAction(CanvasItem item, MouseEvent event, Rectangle rect, Node node){
+    private void multiselectAction(CanvasItem item, MouseEvent event, Rectangle rect, Node node) {
         if (node.getBoundsInParent().intersects(rect.getBoundsInParent())) {
 
             if (event.isShiftDown()) {
@@ -563,7 +601,7 @@ public class CanvasController {
     /**
      * Pomocna metoda pro odstraneni obdelniku pro multiselect z platna
      */
-   public void removeRectangle(){
+    public void removeRectangle() {
         Rectangle rect = canvas.getRect();
         rectFishWidth = rect.getWidth();
 
@@ -575,10 +613,12 @@ public class CanvasController {
         canvas.getCanvas().getChildren().remove(rect);
 
     }
+
     /**
      * Metoda pro ziskani Eventhandleru pro reakci na dragAndDrop
+     *
      * @param dragContext pocatecni bod ze ktereho se bude vykreslovat ctverec
-     * @param rect insatace tridy Rectangle
+     * @param rect        insatace tridy Rectangle
      * @return EventHadler
      */
     public EventHandler<MouseEvent> getOnMouseDraggedEventHandler(DragContext dragContext, Rectangle rect) {
@@ -604,7 +644,7 @@ public class CanvasController {
                             rect.setY(event.getSceneY());
                             rect.setHeight(dragContext.mouseAnchorY - rect.getY());
                         }
-                       // manipulationController.setMultiSelect(true);
+                        // manipulationController.setMultiSelect(true);
                         event.consume();
 
                     }
@@ -638,6 +678,7 @@ public class CanvasController {
 
     /**
      * Metoda pro odstraneni prvku z platna
+     *
      * @param chooseCanvasItem instace pro odejmuti z platna
      */
     public void removeCanvasItem(CanvasItem chooseCanvasItem) {

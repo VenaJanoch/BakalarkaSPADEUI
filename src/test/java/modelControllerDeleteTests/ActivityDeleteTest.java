@@ -1,6 +1,5 @@
 package modelControllerDeleteTests;
 
-import SPADEPAC.Activity;
 import controllers.formControllers.DeleteFormController;
 import controllers.formControllers.FormController;
 import javafx.collections.FXCollections;
@@ -8,20 +7,18 @@ import javafx.collections.ObservableList;
 import model.DataModel;
 import org.junit.Before;
 import org.junit.Test;
-import services.SegmentLists;
 import services.SegmentType;
 
-import javax.xml.crypto.Data;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
 import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
 
 public class ActivityDeleteTest {
 
     LocalDate date;
     DataModel dataModel;
+
     @Before
     public void setUp() throws Exception {
 
@@ -36,7 +33,7 @@ public class ActivityDeleteTest {
         ObservableList list = FXCollections.observableArrayList();
         list.add(0);
         deleteFormController.deleteActivityForm(list, new ArrayList<>());
-        }
+    }
 
     @Test
     public void testListSize() {

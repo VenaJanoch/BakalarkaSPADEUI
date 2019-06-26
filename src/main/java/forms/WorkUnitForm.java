@@ -2,13 +2,18 @@ package forms;
 
 import abstractform.TableBasicForm;
 import controlPanels.WorkUnitControlPanel;
-import controllers.graphicsComponentsControllers.CanvasController;
 import controllers.formControllers.FormController;
-import interfaces.*;
+import controllers.graphicsComponentsControllers.CanvasController;
+import interfaces.IDeleteFormController;
+import interfaces.IEditFormController;
+import interfaces.IFormDataController;
+import interfaces.ISegmentTableForm;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
-import javafx.scene.control.*;
+import javafx.scene.control.SelectionMode;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.input.KeyCode;
@@ -16,7 +21,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
-import services.*;
+import services.SegmentType;
 import tables.WorkUnitTable;
 
 /**
@@ -34,11 +39,12 @@ public class WorkUnitForm extends TableBasicForm implements ISegmentTableForm {
     /**
      * Konstruktor Třídy Zinicializuje globální proměnné tříd Nastaví reakci
      * na klik do tabulky, vytvori naplni panel a nastavi akce tlacitkum
-     * @param formController instance tridy FormController
-     * @param formDataController instance tridy FormDataController
-     * @param editFormController instance tridy EditFormController
+     *
+     * @param formController       instance tridy FormController
+     * @param formDataController   instance tridy FormDataController
+     * @param editFormController   instance tridy EditFormController
      * @param deleteFormController instace tridy DeleteFormController
-     * @param type instace SegmentType pro urceni typu formulare
+     * @param type                 instace SegmentType pro urceni typu formulare
      */
     public WorkUnitForm(FormController formController, IFormDataController formDataController, IEditFormController editFormController, IDeleteFormController deleteFormController, CanvasController canvasController, SegmentType type, int indexForm) {
         super(formController, formDataController, editFormController, deleteFormController, type);
@@ -111,6 +117,7 @@ public class WorkUnitForm extends TableBasicForm implements ISegmentTableForm {
 
         return tableTV;
     }
+
     /**
      * Metoda pro nastavení reakce na klávesu delete
      */
@@ -129,6 +136,7 @@ public class WorkUnitForm extends TableBasicForm implements ISegmentTableForm {
     public GridPane createControlPane() {
         return null;
     }
+
     /**
      * Metoda pro vyvolani postraniho panelu
      * Jsou zavolany potrebne kontrolery

@@ -1,12 +1,12 @@
 package graphics.canvas;
 
+import controllers.formControllers.ManipulationController;
 import controllers.graphicsComponentsControllers.CanvasController;
 import controllers.graphicsComponentsControllers.CanvasItemController;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SeparatorMenuItem;
 import services.Constans;
-import controllers.formControllers.ManipulationController;
 
 /**
  * Třída definující kontextové menu pro prvku plátna odděděná od třídy
@@ -30,8 +30,9 @@ public class ItemContexMenu extends ContextMenu {
     /**
      * Konstruktor třídy
      * Zinicializuje globální proměnné třídy
-     * @param manipulation instace tridy ManipulationController
-     * @param canvasController instace tridy CanvasController
+     *
+     * @param manipulation         instace tridy ManipulationController
+     * @param canvasController     instace tridy CanvasController
      * @param canvasItemController instace tridy CanvasItemController
      */
     public ItemContexMenu(ManipulationController manipulation, CanvasController canvasController, CanvasItemController canvasItemController) {

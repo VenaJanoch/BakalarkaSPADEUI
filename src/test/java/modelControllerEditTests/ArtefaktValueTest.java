@@ -12,7 +12,6 @@ import java.util.ArrayList;
 import static junit.framework.TestCase.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
 
 public class ArtefaktValueTest {
 
@@ -74,7 +73,7 @@ public class ArtefaktValueTest {
 
     @Test
     public void testDate() {
-        assertEquals(date.toString()+ "T00:00:00.000+02:00", artifact.getCreated().get(0).toString());
+        assertEquals(date.toString() + "T00:00:00.000+02:00", artifact.getCreated().get(0).toString());
         assertSame(1, artifact.getCreated().size());
     }
 

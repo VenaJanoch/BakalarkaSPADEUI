@@ -1,10 +1,10 @@
 package controlPanels;
 
-import controllers.formControllers.FormController;
 import abstractControlPane.NameControlPanel;
+import controllers.formControllers.FormController;
 import interfaces.IEditFormController;
 import interfaces.IFormDataController;
-import javafx.scene.control.*;
+import javafx.scene.control.TableView;
 import services.ParamType;
 import tables.BasicTable;
 import tables.BranchTable;
@@ -56,7 +56,6 @@ public class BranchControlPanel extends NameControlPanel {
         button.setOnAction(event -> {
             ArrayList<Integer> nameIndicators = new ArrayList<>();
             ArrayList<String> name = controlPanelController.processTextLines(ParamType.Name, nameIndicators);
-
             editFormController.editDataFromBranch(aliasTF.getText(), name, nameIndicators, controlPanelController.isMain(), controlPanelController.isExist(), branchTable);
             clearPanel(tableView);
         });

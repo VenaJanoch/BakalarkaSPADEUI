@@ -16,14 +16,19 @@ import java.util.ArrayList;
  */
 public class DatabaseController {
 
-    /**Identifikator zvoleneho projektu**/
+    /**
+     * Identifikator zvoleneho projektu
+     **/
     private int chooseProjectId;
-    /**Instace tridy **/
+    /**
+     * Instace tridy
+     **/
     private VerifyController verifyController;
 
     /**
      * Konstruktor tridy
      * Zinicializuje globalni promenne tridy
+     *
      * @param verifyController Instace kontroleru VerifyController
      */
     public DatabaseController(VerifyController verifyController) {
@@ -32,6 +37,7 @@ public class DatabaseController {
 
     /**
      * Metoda pro ziskani projektu v datovem skladu nastroje SPADe
+     *
      * @return seznam instaci ProjectTable
      */
     public ArrayList<ProjectTable> findProjectInDatabase() {
@@ -49,6 +55,7 @@ public class DatabaseController {
     /**
      * Metoda pro kontorlu modelu proti datum ve skladu
      * Nastavi se id zvoleneho projektu a zavola metoda z VerifyControlleru
+     *
      * @param projectId
      */
     public void confirmProjectWithModel(int projectId) {
@@ -60,7 +67,7 @@ public class DatabaseController {
     /**
      * Pokud souhlasí login a heslo, přihlásí se do databáze
      *
-     * @param login název uživatelského účtu
+     * @param login    název uživatelského účtu
      * @param password heslo k uživatelskému účtu
      */
     public boolean logIn(String login, String password) {
@@ -74,6 +81,7 @@ public class DatabaseController {
                 Constans.CONNECTION = DriverManager.getConnection(Constans.DATABASE_PATH, login, password);
             } catch (SQLException e) {
                 Alerts.SQLConnectionError();
+                e.printStackTrace();
                 return false;
             } catch (Exception e) {
                 Alerts.SQLLogError();

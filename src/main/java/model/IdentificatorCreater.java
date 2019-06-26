@@ -3,9 +3,15 @@ package model;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Trida slouzici pro vytvareni a uchovavani unikatnich identifikatoru prvku datoveho modelu
+ *
+ * @author Václav Janoch
+ */
 public class IdentificatorCreater {
     /**
      * Globální proměnné třídy
+     * promenne uchovavajici aktualni ID
      **/
     private int linesID = -1;
     private int phaseID = -1;
@@ -14,7 +20,7 @@ public class IdentificatorCreater {
     private int workUnitID = -1;
     private int milestoneID = -1;
     private int criteriumID = -1;
-    private int roleID = -1;
+    private int personID = -1;
     private int branchID = -1;
     private int changeID = -1;
     private int artifactID = -1;
@@ -36,8 +42,11 @@ public class IdentificatorCreater {
 
     private int index = 1;
 
-    private Map<Integer, Integer> roleSegmentIndexToFormMaper = new HashMap<>();
-    private Map<Integer, Integer> roleIndexToIdMaper = new HashMap<>();
+    /**
+     * Kolekce pro uchovani referenci identifikatoru prvku a identifikatoru formulare
+     **/
+    private Map<Integer, Integer> personSegmentIndexToFormMaper = new HashMap<>();
+    private Map<Integer, Integer> personIndexToIdMaper = new HashMap<>();
     private Map<Integer, Integer> artifactSegmentIdToFormIndexMaper = new HashMap<>();
     private Map<Integer, Integer> artifactIndexToIdMaper = new HashMap<>();
     private Map<Integer, Integer> workUnitIndexToIdMaper = new HashMap<>();
@@ -59,6 +68,12 @@ public class IdentificatorCreater {
     }
 
 
+    /**
+     * Metoda pro nastaveni datovych struktor, pri nacitani prvku z xml
+     *
+     * @param segmentId identifikator CommitedConfiguration
+     * @return form identifikator
+     */
     public int setDataToCommitedConfigurationMapper(int segmentId) {
         commitedConfigurationIndexToIdMaper.put(index, segmentId);
         commitedConfigurationIdToIndexMaper.put(segmentId, index);
@@ -67,6 +82,12 @@ public class IdentificatorCreater {
         return index - 1;
     }
 
+    /**
+     * Metoda pro nastaveni datovych struktor, pri nacitani prvku z xml
+     *
+     * @param segmentId identifikator commit
+     * @return form identifikator
+     */
     public int setDataToCommitMapper(int segmentId) {
         commitIndexToIdMaper.put(index, segmentId);
         commitIdtoIndexMaper.put(segmentId, index);
@@ -75,6 +96,12 @@ public class IdentificatorCreater {
         return index - 1;
     }
 
+    /**
+     * Metoda pro nastaveni datovych struktor, pri nacitani prvku z xml
+     *
+     * @param segmentId identifikator Artifact
+     * @return form identifikator
+     */
     public int setDataToArtifactMappers(int segmentId) {
 
         artifactIndexToIdMaper.put(index, segmentId);
@@ -84,19 +111,26 @@ public class IdentificatorCreater {
         return index - 1;
     }
 
-    public int setDataToRoleMappers(int segmentId) {
-        roleIndexToIdMaper.put(index, segmentId);
-        roleSegmentIndexToFormMaper.put(segmentId, index);
+    /**
+     * Metoda pro nastaveni datovych struktor, pri nacitani prvku z xml
+     *
+     * @param segmentId identifikator Person
+     * @return form identifikator
+     */
+    public int setDataToPersonMappers(int segmentId) {
+        personIndexToIdMaper.put(index, segmentId);
+        personSegmentIndexToFormMaper.put(segmentId, index);
         index++;
-        roleID = segmentId;
+        personID = segmentId;
         return index - 1;
     }
 
 
     /**
-     * Metody pro inkrementaci počtu daného prvku
+     * Metoda pro inkrementaci indexu Role type
+     *
+     * @return aktualni identifikator prvku
      */
-
     public int createRoleTypeID() {
 
         roleTypeID++;
@@ -105,6 +139,11 @@ public class IdentificatorCreater {
 
     }
 
+    /**
+     * Metoda pro inkrementaci indexu Type
+     *
+     * @return aktualni identifikator prvku
+     */
     public int createTypeID() {
 
         typeID++;
@@ -113,6 +152,11 @@ public class IdentificatorCreater {
 
     }
 
+    /**
+     * Metoda pro inkrementaci indexu Status
+     *
+     * @return aktualni identifikator prvku
+     */
     public int createStatusID() {
 
         statusID++;
@@ -121,6 +165,11 @@ public class IdentificatorCreater {
 
     }
 
+    /**
+     * Metoda pro inkrementaci indexu Relation
+     *
+     * @return aktualni identifikator prvku
+     */
     public int createRelationID() {
 
         relationID++;
@@ -129,6 +178,11 @@ public class IdentificatorCreater {
 
     }
 
+    /**
+     * Metoda pro inkrementaci indexu Resolution
+     *
+     * @return aktualni identifikator prvku
+     */
     public int createResolutionID() {
 
         resolutionID++;
@@ -137,6 +191,11 @@ public class IdentificatorCreater {
 
     }
 
+    /**
+     * Metoda pro inkrementaci indexu Severity
+     *
+     * @return aktualni identifikator prvku
+     */
     public int createSeverityID() {
 
         severityID++;
@@ -145,6 +204,11 @@ public class IdentificatorCreater {
 
     }
 
+    /**
+     * Metoda pro inkrementaci indexu Priority
+     *
+     * @return aktualni identifikator prvku
+     */
     public int createPriorityID() {
 
         priorityID++;
@@ -153,6 +217,11 @@ public class IdentificatorCreater {
 
     }
 
+    /**
+     * Metoda pro inkrementaci indexu Phase
+     *
+     * @return aktualni identifikator prvku
+     */
     public int createPhaseID() {
 
         phaseID++;
@@ -160,52 +229,101 @@ public class IdentificatorCreater {
 
     }
 
+    /**
+     * Metoda pro inkrementaci indexu Iteration
+     *
+     * @return aktualni identifikator prvku
+     */
     public int createIterationID() {
 
         iterationID++;
         return iterationID;
     }
 
+    /**
+     * Metoda pro inkrementaci indexu Activity
+     *
+     * @return aktualni identifikator prvku
+     */
     public int createActivityID() {
 
         activityID++;
         return activityID;
     }
 
+    /**
+     * Metoda pro inkrementaci indexu Work Unit
+     *
+     * @return aktualni identifikator prvku
+     */
     public int createWorkUnitID() {
 
         workUnitID++;
         return workUnitID;
     }
 
+    /**
+     * Metoda pro inkrementaci indexu Milestone
+     *
+     * @return aktualni identifikator prvku
+     */
     public int createMilestoneID() {
         milestoneID++;
         return milestoneID;
     }
 
+    /**
+     * Metoda pro inkrementaci indexu Criterion
+     *
+     * @return aktualni identifikator prvku
+     */
     public int createCriterionID() {
         criteriumID++;
         return criteriumID;
     }
 
-    public int createRoleID() {
-        roleID++;
-        roleIndexToIdMaper.put(index, roleID);
-        roleSegmentIndexToFormMaper.put(roleID, index);
+    /**
+     * Metoda pro inkrementaci indexu Person
+     * Dale je inkrementovan index poctu formularu(prvku na platne vyvolavajici editacni panel)
+     * a reference v mapach
+     *
+     * @return aktualni identifikator formulare
+     */
+    public int createPersonID() {
+        personID++;
+        personIndexToIdMaper.put(index, personID);
+        personSegmentIndexToFormMaper.put(personID, index);
         index++;
         return index - 1;
     }
 
+    /**
+     * Metoda pro inkrementaci indexu Branch
+     *
+     * @return aktualni identifikator prvku
+     */
     public int createBranchID() {
         branchID++;
         return branchID;
     }
 
+    /**
+     * Metoda pro inkrementaci indexu Change
+     *
+     * @return aktualni identifikator prvku
+     */
     public int createChangeID() {
         changeID++;
         return changeID;
     }
 
+    /**
+     * Metoda pro inkrementaci indexu Artifact
+     * Dale je inkrementovan index poctu formularu(prvku na platne vyvolavajici editacni panel)
+     * a reference v mapach
+     *
+     * @return aktualni identifikator formulare
+     */
     public int createArtifactID() {
         artifactID++;
         artifactIndexToIdMaper.put(index, artifactID);
@@ -214,11 +332,23 @@ public class IdentificatorCreater {
         return index - 1;
     }
 
+    /**
+     * Metoda pro inkrementaci indexu Configuration Person
+     *
+     * @return aktualni identifikator prvku
+     */
     public int createCPRID() {
         configPRID++;
         return configPRID;
     }
 
+    /**
+     * Metoda pro inkrementaci indexu Commit
+     * Dale je inkrementovan index poctu formularu(prvku na platne vyvolavajici editacni panel)
+     * a reference v mapach
+     *
+     * @return aktualni identifikator formulare
+     */
     public int createCommitID() {
         commidID++;
         commitIndexToIdMaper.put(index, commidID);
@@ -227,6 +357,13 @@ public class IdentificatorCreater {
         return index - 1;
     }
 
+    /**
+     * Metoda pro inkrementaci indexu Committed Configuration
+     * Dale je inkrementovan index poctu formularu(prvku na platne vyvolavajici editacni panel)
+     * a reference v mapach
+     *
+     * @return aktualni identifikator formulare
+     */
     public int createCommiedConfigurationtID() {
         commtedConfigurationID++;
         commitedConfigurationIndexToIdMaper.put(index, commtedConfigurationID);
@@ -235,6 +372,13 @@ public class IdentificatorCreater {
         return index - 1;
     }
 
+    /**
+     * Metoda pro inkrementaci indexu Configuration
+     * Dale je inkrementovan index poctu formularu(prvku na platne vyvolavajici editacni panel)
+     * a reference v mapach
+     *
+     * @return aktualni identifikator formulare
+     */
     public int createConfigurationID() {
         configID++;
         configurationIndexToIdMapper.put(index, configID);
@@ -243,19 +387,23 @@ public class IdentificatorCreater {
         return index - 1;
     }
 
+    /**
+     * Metoda pro inkrementaci indexu VCSTag
+     *
+     * @return aktualni identifikator prvku
+     */
     public int createVCSTagID() {
         VCSTag++;
         return VCSTag;
     }
 
-    public int createTagID() {
-        tagID++;
-        return tagID;
-    }
 
+    /**
+     * Getters and Setters
+     **/
     public Integer getChangeId(int formIndex) {
 
-        return getRoleIndexToIdMaper().get(formIndex);
+        return getPersonIndexToIdMaper().get(formIndex);
     }
 
     public Integer getCommitFormIndex(int id) {
@@ -287,7 +435,7 @@ public class IdentificatorCreater {
     }
 
     public Integer getRoleId(int formIndex) {
-        return roleIndexToIdMaper.get(formIndex);
+        return personIndexToIdMaper.get(formIndex);
     }
 
     public Integer getIterationId(int formIdentificator) {
@@ -315,8 +463,8 @@ public class IdentificatorCreater {
 
     }
 
-    public Map<Integer, Integer> getRoleIndexToIdMaper() {
-        return roleIndexToIdMaper;
+    public Map<Integer, Integer> getPersonIndexToIdMaper() {
+        return personIndexToIdMaper;
     }
 
     public Map<Integer, Integer> getArtifactIndexToIdMaper() {
@@ -331,8 +479,8 @@ public class IdentificatorCreater {
         return workUnitSegmentIdToFormIndexMaper;
     }
 
-    public Map<Integer, Integer> getRoleSegmentIndexToFormMaper() {
-        return roleSegmentIndexToFormMaper;
+    public Map<Integer, Integer> getPersonSegmentIndexToFormMaper() {
+        return personSegmentIndexToFormMaper;
     }
 
     public Map<Integer, Integer> getArtifactSegmentIdToFormIndexMaper() {

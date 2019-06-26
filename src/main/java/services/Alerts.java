@@ -1,19 +1,18 @@
 package services;
 
-import java.util.ArrayList;
-import java.util.Map;
-import java.util.Optional;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.ListView;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonBar.ButtonData;
-
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.ListView;
 import model.FileManipulator;
-import tables.*;
+import tables.BasicTable;
+
+import java.util.ArrayList;
+import java.util.Map;
+import java.util.Optional;
 
 /**
  * Třída obsahujici metody pro zobrazeni informacnich oken
@@ -92,10 +91,10 @@ public class Alerts {
     }
 
     /**
-     *
      * Metoda pro zobrazeni okna s inforamci postupnem mazani prvku
+     *
      * @param selection seznam prvku pro smazani
-     * @param mapper mapper pro ziskani navaznosti
+     * @param mapper    mapper pro ziskani navaznosti
      * @return info o potvrzeni smazani
      */
     public static boolean showDeleteItemCascadeAlert(ArrayList<BasicTable> selection, Map<Integer, ArrayList<TableToObjectInstanc>> mapper) {
@@ -118,8 +117,9 @@ public class Alerts {
 
     /**
      * Metoda pro vytvoreni seznamu cascadoveho smazani
+     *
      * @param selection seznam prvku pro smazani
-     * @param mapper mapper pro ziskani navaznosti
+     * @param mapper    mapper pro ziskani navaznosti
      * @return kascadovy seznam
      */
     private static ObservableList<String> createDeleteObservableList(ArrayList<BasicTable> selection, Map<Integer, ArrayList<TableToObjectInstanc>> mapper) {
@@ -145,6 +145,7 @@ public class Alerts {
 
     /**
      * Metoda pro zobrazeni okna s inforamci postupnem mazani prvku
+     *
      * @param deleteList seznam pro smazani
      * @return info o potvrzeni smazani
      */
@@ -157,6 +158,7 @@ public class Alerts {
 
     /**
      * Metoda pro zobrazeni okna s inforamci postupnem mazani prvku
+     *
      * @param deleteList seznam pro smazani
      * @return info o potvrzeni smazani
      */
@@ -169,6 +171,7 @@ public class Alerts {
 
     /**
      * Metoda pro zobrazeni okna s inforamci o mazanych prvcich
+     *
      * @param alert instance Alert
      * @return info o potvrzeni smazani
      */
@@ -239,6 +242,7 @@ public class Alerts {
 
     /**
      * Metoda pro zobrazeni okna s inforamci o double hodnote  mimo interval
+     *
      * @param fieldName jmeno pole
      */
 
@@ -252,6 +256,7 @@ public class Alerts {
 
     /**
      * Metoda pro zobrazeni okna s inforamci o int hodnote  mimo interval
+     *
      * @param minValue minimalni hodnota
      * @param maxValue maximalni hodnota
      */
@@ -267,6 +272,7 @@ public class Alerts {
 
     /**
      * Metoda pro zobrazeni okna s inforamci o double hodnote  mimo interval
+     *
      * @param minValue minimalni hodnota
      * @param maxValue maximalni hodnota
      */

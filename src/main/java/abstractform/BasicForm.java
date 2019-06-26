@@ -1,8 +1,8 @@
 package abstractform;
 
 import abstractControlPane.ControlPanel;
-import controllers.graphicsComponentsControllers.CanvasController;
 import controllers.formControllers.FormController;
+import controllers.graphicsComponentsControllers.CanvasController;
 import graphics.canvas.DragAndDropCanvas;
 import graphics.panels.DragAndDropItemPanel;
 import interfaces.IDeleteFormController;
@@ -61,11 +61,12 @@ public abstract class BasicForm extends BorderPane {
     /**
      * Konstruktor tridy pro inicializaci globalnich promennych a zavolani metody
      * pro nastaveni prvku do panelu
-     * @param formController instance tridy FormController
-     * @param formDataController instace tridy FromDataController
-     * @param editFormController instace tridy EditFormController
+     *
+     * @param formController       instance tridy FormController
+     * @param formDataController   instace tridy FromDataController
+     * @param editFormController   instace tridy EditFormController
      * @param deleteFormController instance tridy DeleteFromController
-     * @param type Typ segmentu/elementu pro ktery je panel urceny
+     * @param type                 Typ segmentu/elementu pro ktery je panel urceny
      */
 
     public BasicForm(FormController formController, IFormDataController formDataController, IEditFormController editFormController,
@@ -82,7 +83,6 @@ public abstract class BasicForm extends BorderPane {
         this.setMinWidth(Constans.formWidth);
 
     }
-
 
 
     /**

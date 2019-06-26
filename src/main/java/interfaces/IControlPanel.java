@@ -1,10 +1,15 @@
 package interfaces;
 
-import javafx.scene.control.TableView;
-import tables.BasicTable;
-
+/**
+ * Trida predstavujici rozhrani pro ovladani postranich editacnich panelu
+ *
+ * @author Vaclav Janoch
+ */
 public interface IControlPanel {
 
+    /**
+     * Metoda pro vyjeti postraniho panelu
+     */
     void showEditControlPanel();
 
 }

@@ -12,7 +12,6 @@ import java.util.ArrayList;
 import static junit.framework.TestCase.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
 
 public class IterationValueTest {
 
@@ -20,11 +19,12 @@ public class IterationValueTest {
     SegmentLists lists;
     ArrayList itemSet = new ArrayList();
     LocalDate date;
+
     @Before
     public void setUp() throws Exception {
 
         this.lists = new SegmentLists();
-          itemSet.add(1);
+        itemSet.add(1);
         itemSet.add(2);
         itemSet.add(3);
         date = LocalDate.of(2018, 10, 10);
@@ -45,53 +45,53 @@ public class IterationValueTest {
         dates.add(date);
         dataModel.getSaveDataModel().createNewIteration(2);
         dataModel.getEditDataModel().editDataInIteration("Test", name, dates, dates, name, indicators, unit, indicators, indicators, indicators, indicators, indicators,
-                indicators,false,2);
+                indicators, false, 2);
         dataModel.getEditDataModel().editDataInIteration("Test", name, dates, dates, name, indicators, unit, indicators, indicators, indicators, indicators, indicators,
-                indicators,false,2);
+                indicators, false, 2);
         iteration = dataModel.getIteration(2);
     }
 
     @Test
     public void testAlias() {
-        assertEquals("Test", iteration.getAlias() );
+        assertEquals("Test", iteration.getAlias());
     }
 
     @Test
     public void testName() {
-        assertEquals("", iteration.getName().get(0) );
-        assertEquals("Test2", iteration.getName().get(1) );
+        assertEquals("", iteration.getName().get(0));
+        assertEquals("Test2", iteration.getName().get(1));
         assertSame(2, iteration.getName().size());
     }
 
     @Test
     public void testIndicatorName() {
-        assertSame(1, iteration.getNameIndicator().get(0) );
-        assertSame(0, iteration.getNameIndicator().get(1) );
+        assertSame(1, iteration.getNameIndicator().get(0));
+        assertSame(0, iteration.getNameIndicator().get(1));
         assertSame(2, iteration.getNameIndicator().size());
     }
 
     @Test
     public void testDescription() {
-        assertEquals("", iteration.getDescription().get(0) );
-        assertEquals("Test2", iteration.getDescription().get(1) );
+        assertEquals("", iteration.getDescription().get(0));
+        assertEquals("Test2", iteration.getDescription().get(1));
         assertSame(2, iteration.getDescription().size());
     }
 
     @Test
     public void testIndicatorDescription() {
-        assertSame(1, iteration.getDescriptionIndicator().get(0) );
-        assertSame(0, iteration.getDescriptionIndicator().get(1) );
+        assertSame(1, iteration.getDescriptionIndicator().get(0));
+        assertSame(0, iteration.getDescriptionIndicator().get(1));
         assertSame(2, iteration.getDescriptionIndicator().size());
     }
 
     @Test
     public void testIndicatorTag() {
-        assertSame(1, iteration.getConfiguration().get(0) );
-        assertSame(0, iteration.getConfiguration().get(1) );
+        assertSame(1, iteration.getConfiguration().get(0));
+        assertSame(0, iteration.getConfiguration().get(1));
         assertSame(2, iteration.getConfiguration().size());
 
-        assertSame(1, iteration.getConfigurationIndicator().get(0) );
-        assertSame(0, iteration.getConfigurationIndicator().get(1) );
+        assertSame(1, iteration.getConfigurationIndicator().get(0));
+        assertSame(0, iteration.getConfigurationIndicator().get(1));
         assertSame(2, iteration.getConfigurationIndicator().size());
     }
 

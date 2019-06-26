@@ -12,7 +12,6 @@ import java.util.ArrayList;
 import static junit.framework.TestCase.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
 
 public class PhaseValueTest {
 
@@ -20,6 +19,7 @@ public class PhaseValueTest {
     SegmentLists lists;
     ArrayList itemSet = new ArrayList();
     LocalDate date;
+
     @Before
     public void setUp() throws Exception {
 
@@ -53,45 +53,45 @@ public class PhaseValueTest {
 
     @Test
     public void testAlias() {
-        assertEquals("Test", phase.getAlias() );
+        assertEquals("Test", phase.getAlias());
     }
 
     @Test
     public void testName() {
-        assertEquals("", phase.getName().get(0) );
-        assertEquals("Test2", phase.getName().get(1) );
+        assertEquals("", phase.getName().get(0));
+        assertEquals("Test2", phase.getName().get(1));
         assertSame(2, phase.getName().size());
     }
 
     @Test
     public void testIndicatorName() {
-        assertSame(1, phase.getNameIndicator().get(0) );
-        assertSame(0, phase.getNameIndicator().get(1) );
+        assertSame(1, phase.getNameIndicator().get(0));
+        assertSame(0, phase.getNameIndicator().get(1));
         assertSame(2, phase.getNameIndicator().size());
     }
 
     @Test
     public void testDescription() {
-        assertEquals("", phase.getDescription().get(0) );
-        assertEquals("Test2", phase.getDescription().get(1) );
+        assertEquals("", phase.getDescription().get(0));
+        assertEquals("Test2", phase.getDescription().get(1));
         assertSame(2, phase.getDescription().size());
     }
 
     @Test
     public void testIndicatorDescription() {
-        assertSame(1, phase.getDescriptionIndicator().get(0) );
-        assertSame(0, phase.getDescriptionIndicator().get(1) );
+        assertSame(1, phase.getDescriptionIndicator().get(0));
+        assertSame(0, phase.getDescriptionIndicator().get(1));
         assertSame(2, phase.getDescriptionIndicator().size());
     }
 
     @Test
     public void testIndicatorConfiguration() {
-        assertSame(1, phase.getConfiguration().get(0) );
-        assertSame(0, phase.getConfiguration().get(1) );
+        assertSame(1, phase.getConfiguration().get(0));
+        assertSame(0, phase.getConfiguration().get(1));
         assertSame(2, phase.getConfiguration().size());
 
-        assertSame(1, phase.getConfigurationIndicator().get(0) );
-        assertSame(0, phase.getConfigurationIndicator().get(1) );
+        assertSame(1, phase.getConfigurationIndicator().get(0));
+        assertSame(0, phase.getConfigurationIndicator().get(1));
         assertSame(2, phase.getConfigurationIndicator().size());
     }
 

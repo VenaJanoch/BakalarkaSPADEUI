@@ -3,12 +3,20 @@ package model;
 import XML.ProcessGenerator;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import services.*;
+import services.Constans;
 
 import java.io.File;
 
+/**
+ * Trida slouzici pro praci s XML souborem(nacitani a ukladani modelu)
+ *
+ * @author Václav Janoch
+ */
 public class FileManipulator {
 
+    /**
+     * Globalni promenne tridy
+     **/
     private File XMLProcessFile;
 
     private FileChooser fileChooser;
@@ -18,6 +26,11 @@ public class FileManipulator {
     private boolean save = false;
 
 
+    /**
+     * Konstruktor tridy, zinicializuje globalni promenne tridy
+     *
+     * @param dataModel instace datoveho modelu pro ulozeni ci nahrani dat
+     */
     public FileManipulator(DataModel dataModel) {
         this.dataModel = dataModel;
 

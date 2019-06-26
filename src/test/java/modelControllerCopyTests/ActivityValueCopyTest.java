@@ -42,39 +42,39 @@ public class ActivityValueCopyTest {
         dates.add(date);
 
         dataModel.getSaveDataModel().createNewActivity(2);
-        dataModel.getEditDataModel().editDataInActivity("Test", name, name, unit, indicators, indicators, indicators, dates, indicators, false,2  );
+        dataModel.getEditDataModel().editDataInActivity("Test", name, name, unit, indicators, indicators, indicators, dates, indicators, false, 2);
         dataModel.getSaveDataModel().createNewActivity(3);
         dataModel.getDataManipulator().copyDataFromActivity(2, 3);
         activity = dataModel.getActivity(3);
-        }
+    }
 
     @Test
     public void testAlias() {
-        assertEquals("3", activity.getAlias() );
+        assertEquals("3", activity.getAlias());
     }
 
     @Test
     public void testName() {
-        assertEquals("", activity.getName().get(0) );
-        assertEquals("Test2", activity.getName().get(1) );
+        assertEquals("", activity.getName().get(0));
+        assertEquals("Test2", activity.getName().get(1));
     }
 
     @Test
     public void testIndicatorName() {
-        assertSame(1, activity.getNameIndicator().get(0) );
-        assertSame(0, activity.getNameIndicator().get(1) );
+        assertSame(1, activity.getNameIndicator().get(0));
+        assertSame(0, activity.getNameIndicator().get(1));
     }
 
     @Test
     public void testDescription() {
-        assertEquals("", activity.getDescription().get(0) );
-        assertEquals("Test2", activity.getDescription().get(1) );
+        assertEquals("", activity.getDescription().get(0));
+        assertEquals("Test2", activity.getDescription().get(1));
     }
 
     @Test
     public void testIndicatorDescription() {
-        assertSame(1, activity.getDescriptionIndicator().get(0) );
-        assertSame(0, activity.getDescriptionIndicator().get(1) );
+        assertSame(1, activity.getDescriptionIndicator().get(0));
+        assertSame(0, activity.getDescriptionIndicator().get(1));
     }
 
     @Test

@@ -2,35 +2,46 @@ package model;
 
 import SPADEPAC.*;
 import XML.ProcessGenerator;
-import com.sun.org.apache.bcel.internal.generic.ALOAD;
 import interfaces.IDeleteDataModel;
 import interfaces.IEditDataModel;
 import interfaces.ISaveDataModel;
-import org.omg.CORBA.INTERNAL;
 
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 import java.io.File;
-import java.lang.reflect.Array;
 import java.time.Instant;
 import java.time.LocalDate;
-import java.time.Period;
 import java.time.ZoneId;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.List;
 
+/**
+ * Trida uchovavajici instaci Project se vsemi datovymi seznamy. Dale obsahuje metody pro praci s dannymi seznamy
+ *
+ * @author Václav Janoch
+ */
 public class DataModel {
 
+    /**
+     * Globalni promenne tridy
+     */
     private IEditDataModel editDataModel;
     private ISaveDataModel saveDataModel;
     private IDeleteDataModel deleteDataModel;
     private DataManipulator dataManipulator;
     private ProcessGenerator processGenerator;
 
-
     private Project project;
     private ObjectFactory objF;
 
+    /**
+     * Konstruktor tridy, zinicializuje globalni promenne tridy
+     *
+     * @param processGenerator instace tridy ProcessGenerator pro nacteni modelu z xml souboru
+     */
     public DataModel(ProcessGenerator processGenerator) {
         this.objF = new ObjectFactory();
         this.project = objF.createProject();
@@ -43,6 +54,12 @@ public class DataModel {
 
     }
 
+    /**
+     * Metoda pro ziskani identifikatoru segmentu Phase z indexu v seznamu entit
+     *
+     * @param id identifikator Phase
+     * @return index v seznamu, v pripade nenalezeni prvku -1
+     */
     public int getPhaseIndexInProject(int id) {
         List<Phase> items = project.getPhases();
         for (int i = 0; i < items.size(); i++) {
@@ -53,6 +70,12 @@ public class DataModel {
         return -1;
     }
 
+    /**
+     * Metoda pro ziskani identifikatoru segmentu Iteration z indexu v seznamu entit
+     *
+     * @param id identifikator Iteration
+     * @return index v seznamu, v pripade nenalezeni prvku -1
+     */
     public int getIterationIndexInProject(int id) {
         List<Iteration> items = project.getIterations();
         for (int i = 0; i < items.size(); i++) {
@@ -64,6 +87,12 @@ public class DataModel {
         return -1;
     }
 
+    /**
+     * Metoda pro ziskani identifikatoru segmentu Activity z indexu v seznamu entit
+     *
+     * @param id identifikator Activity
+     * @return index v seznamu, v pripade nenalezeni prvku -1
+     */
     public int getActivityIndexInProject(int id) {
         List<Activity> items = project.getActivities();
         for (int i = 0; i < items.size(); i++) {
@@ -75,6 +104,12 @@ public class DataModel {
         return -1;
     }
 
+    /**
+     * Metoda pro ziskani identifikatoru segmentu Milestone z indexu v seznamu entit
+     *
+     * @param id identifikator Milestone
+     * @return index v seznamu, v pripade nenalezeni prvku -1
+     */
     public int getMilestoneIndexInProject(int id) {
         List<Milestone> items = project.getMilestones();
         for (int i = 0; i < items.size(); i++) {
@@ -86,6 +121,12 @@ public class DataModel {
         return -1;
     }
 
+    /**
+     * Metoda pro ziskani identifikatoru segmentu Role type z indexu v seznamu entit
+     *
+     * @param id identifikator Role type
+     * @return index v seznamu, v pripade nenalezeni prvku -1
+     */
     public int getRoleTypeIndexInProject(int id) {
         List<RoleType> roleTypes = project.getRoleType();
         for (int i = 0; i < roleTypes.size(); i++) {
@@ -97,6 +138,12 @@ public class DataModel {
         return -1;
     }
 
+    /**
+     * Metoda pro ziskani identifikatoru segmentu Severity z indexu v seznamu entit
+     *
+     * @param id identifikator Severity
+     * @return index v seznamu, v pripade nenalezeni prvku -1
+     */
     public int getSeverityIndexInProject(int id) {
         List<Severity> severities = project.getSeverity();
         for (int i = 0; i < severities.size(); i++) {
@@ -108,6 +155,12 @@ public class DataModel {
         return -1;
     }
 
+    /**
+     * Metoda pro ziskani identifikatoru segmentu Priority z indexu v seznamu entit
+     *
+     * @param id identifikator Priority
+     * @return index v seznamu, v pripade nenalezeni prvku -1
+     */
     public int getPriorityIndexInProject(int id) {
         List<Priority> item = project.getPriority();
         for (int i = 0; i < item.size(); i++) {
@@ -119,6 +172,12 @@ public class DataModel {
         return -1;
     }
 
+    /**
+     * Metoda pro ziskani identifikatoru segmentu Status z indexu v seznamu entit
+     *
+     * @param id identifikator Phase
+     * @return index v seznamu, v pripade nenalezeni prvku -1
+     */
     public int getStatusIndexInProject(int id) {
         List<Status> items = project.getStatus();
         for (int i = 0; i < items.size(); i++) {
@@ -130,6 +189,12 @@ public class DataModel {
         return -1;
     }
 
+    /**
+     * Metoda pro ziskani identifikatoru segmentu Type z indexu v seznamu entit
+     *
+     * @param id identifikator Type
+     * @return index v seznamu, v pripade nenalezeni prvku -1
+     */
     public int getTypeIndexInProject(int id) {
         List<Type> items = project.getTypes();
         for (int i = 0; i < items.size(); i++) {
@@ -141,6 +206,12 @@ public class DataModel {
         return -1;
     }
 
+    /**
+     * Metoda pro ziskani identifikatoru segmentu Relation z indexu v seznamu entit
+     *
+     * @param id identifikator Relation
+     * @return index v seznamu, v pripade nenalezeni prvku -1
+     */
     public int getRelationIndexInProject(int id) {
         List<Relation> items = project.getRelation();
         for (int i = 0; i < items.size(); i++) {
@@ -152,6 +223,12 @@ public class DataModel {
         return -1;
     }
 
+    /**
+     * Metoda pro ziskani identifikatoru segmentu Resolution z indexu v seznamu entit
+     *
+     * @param id identifikator Resolution
+     * @return index v seznamu, v pripade nenalezeni prvku -1
+     */
     public int getResolutionIndexInProject(int id) {
         List<Resolution> items = project.getResolution();
         for (int i = 0; i < items.size(); i++) {
@@ -163,7 +240,13 @@ public class DataModel {
         return -1;
     }
 
-    public int getRoleIndexInProject(int id) {
+    /**
+     * Metoda pro ziskani identifikatoru segmentu Person z indexu v seznamu entit
+     *
+     * @param id identifikator Person
+     * @return index v seznamu, v pripade nenalezeni prvku -1
+     */
+    public int getPersonIndexInProject(int id) {
         List<Person> items = project.getRoles();
         for (int i = 0; i < items.size(); i++) {
 
@@ -174,32 +257,12 @@ public class DataModel {
         return -1;
     }
 
-    public ArrayList<Integer> getVCSTagIndices(ArrayList<Integer> tagIndex) {
-        List<VCSTag> vcsTages = project.getVcsTag();
-        ArrayList<Integer> existVCSTagId = new ArrayList();
-
-        for (int i : tagIndex) {
-            if (i != -1) {
-                existVCSTagId.add(vcsTages.get(i).getId());
-            }
-        }
-        return existVCSTagId;
-    }
-
-
-    public ArrayList<Integer> getBranchIndices(ArrayList<ArrayList<Integer>> branchIndex) {
-        List<Branch> branches = project.getBranches();
-        ArrayList<Integer> existBranchId = new ArrayList();
-        for (ArrayList<Integer> list : branchIndex) {
-            for (int i : list) {
-                if (i != -1) {
-                    existBranchId.add(branches.get(i).getId());
-                }
-            }
-        }
-        return existBranchId;
-    }
-
+    /**
+     * Metoda pro ziskani identifikatoru segmentu Configuration Person z indexu v seznamu entit
+     *
+     * @param id identifikator Configuration Person
+     * @return index v seznamu, v pripade nenalezeni prvku -1
+     */
     public int getCPRIndexInProject(int id) {
         List<ConfigPersonRelation> items = project.getCpr();
         for (int i = 0; i < items.size(); i++) {
@@ -211,18 +274,12 @@ public class DataModel {
         return -1;
     }
 
-    public ArrayList<Integer> getCPRIndices(ArrayList<Integer> cprIndex) {
-        List<ConfigPersonRelation> cprs = project.getCpr();
-        ArrayList<Integer> existCprId = new ArrayList();
-        for (int i : cprIndex) {
-            if (i != -1) {
-                existCprId.add(cprs.get(i).getId());
-            }
-
-        }
-        return existCprId;
-    }
-
+    /**
+     * Metoda pro ziskani identifikatoru segmentu VCSTag z indexu v seznamu entit
+     *
+     * @param deleteId identifikator VCSTag
+     * @return index v seznamu, v pripade nenalezeni prvku -1
+     */
     public int getVCSTAgProjectIndex(int deleteId) {
         List<VCSTag> items = project.getVcsTag();
         for (int i = 0; i < items.size(); i++) {
@@ -234,6 +291,12 @@ public class DataModel {
         return -1;
     }
 
+    /**
+     * Metoda pro ziskani identifikatoru segmentu Configuration z indexu v seznamu entit
+     *
+     * @param id identifikator Configuration
+     * @return index v seznamu, v pripade nenalezeni prvku -1
+     */
     public int getConfigurationIndexInProject(int id) {
         List<Configuration> items = project.getConfiguration();
         for (int i = 0; i < items.size(); i++) {
@@ -245,7 +308,12 @@ public class DataModel {
         return -1;
     }
 
-
+    /**
+     * Metoda pro ziskani identifikatoru segmentu Artifact z indexu v seznamu entit
+     *
+     * @param id identifikator Configuration
+     * @return index v seznamu, v pripade nenalezeni prvku -1
+     */
     public int getArtifactIndexInProject(int id) {
         List<Artifact> items = project.getArtifacts();
         for (int i = 0; i < items.size(); i++) {
@@ -257,6 +325,12 @@ public class DataModel {
         return -1;
     }
 
+    /**
+     * Metoda pro ziskani identifikatoru segmentu Change z indexu v seznamu entit
+     *
+     * @param id identifikator Change
+     * @return index v seznamu, v pripade nenalezeni prvku -1
+     */
     public int getChangeIndexInProject(int id) {
         List<Change> items = project.getChanges();
         for (int i = 0; i < items.size(); i++) {
@@ -268,6 +342,12 @@ public class DataModel {
         return -1;
     }
 
+    /**
+     * Metoda pro ziskani identifikatoru segmentu Branch z indexu v seznamu entit
+     *
+     * @param id identifikator Branch
+     * @return index v seznamu, v pripade nenalezeni prvku -1
+     */
     public int getBranchIndexInProject(int id) {
         List<Branch> items = project.getBranches();
         for (int i = 0; i < items.size(); i++) {
@@ -279,6 +359,13 @@ public class DataModel {
         return -1;
     }
 
+
+    /**
+     * Metoda pro ziskani identifikatoru segmentu Criterion z indexu v seznamu entit
+     *
+     * @param id identifikator Criterion
+     * @return index v seznamu, v pripade nenalezeni prvku -1
+     */
     public int getCriterionIndexInProject(int id) {
         List<Criterion> items = project.getCriterions();
         for (int i = 0; i < items.size(); i++) {
@@ -290,6 +377,12 @@ public class DataModel {
         return -1;
     }
 
+    /**
+     * Metoda pro ziskani identifikatoru segmentu Work Unit z indexu v seznamu entit
+     *
+     * @param id identifikator Work Unit
+     * @return index v seznamu, v pripade nenalezeni prvku -1
+     */
     public int getWUIndexInProject(int id) {
         List<WorkUnit> items = project.getWorkUnits();
         for (int i = 0; i < items.size(); i++) {
@@ -301,87 +394,22 @@ public class DataModel {
         return -1;
     }
 
-    public Activity getActivity(int id) {
-        return project.getActivities().get(getActivityIndexInProject(id));
-    }
 
-    public Artifact getArtifact(int id) {
-        return project.getArtifacts().get(getArtifactIndexInProject(id));
-    }
-
-    public Branch getBranch(int id) {
-        return project.getBranches().get(getBranchIndexInProject(id));
-    }
-
-    public Change getChange(int id) {
-        return project.getChanges().get(getChangeIndexInProject(id));
-    }
-
-    public ConfigPersonRelation getConfigPersonRelation(int id) {
-        return project.getCpr().get(getCPRIndexInProject(id));
-    }
-
-    public Configuration getConfiguration(int id) {
-        return project.getConfiguration().get(getConfigurationIndexInProject(id));
-    }
-
-    public Criterion getCriterion(int id) {
-        return project.getCriterions().get(getCriterionIndexInProject(id));
-    }
-
-    public int getCriterionId(int index) {
-        return project.getCriterions().get(index).getId();
-    }
-
-    public Iteration getIteration(int id) {
-        return project.getIterations().get(getIterationIndexInProject(id));
-    }
-
-    public Milestone getMilestone(int id) {
-        return project.getMilestones().get(getMilestoneIndexInProject(id));
-    }
-
-    public Phase getPhase(int id) {
-        return project.getPhases().get(getPhaseIndexInProject(id));
-    }
-
-    public Priority getPriority(int id) {
-        return project.getPriority().get(getPriorityIndexInProject(id));
-    }
-
-    public Relation getRelation(int id) {
-        return project.getRelation().get(getRelationIndexInProject(id));
-    }
-
-    public Resolution getResolution(int id) {
-        return project.getResolution().get(getResolutionIndexInProject(id));
-    }
-
-    public Person getPerson(int id) {
-        return project.getRoles().get(getRoleIndexInProject(id));
-    }
-
-    public RoleType getRoleType(int id) {
-        return project.getRoleType().get(getRoleTypeIndexInProject(id));
-    }
-
-    public Severity getSeverity(int id) {
-        return project.getSeverity().get(getSeverityIndexInProject(id));
-    }
-
-    public Status getStatus(int id) {
-        return project.getStatus().get(getStatusIndexInProject(id));
-    }
-
-    public Type getType(int id) {
-        return project.getTypes().get(getTypeIndexInProject(id));
-    }
-
-    public WorkUnit getWorkUnit(int id) {
-        return project.getWorkUnits().get(getWUIndexInProject(id));
-    }
-
-
+    /**
+     * Metoda pro editaci elementu Configuration Person,
+     * do instace ConfigPersonRelation jsou pridany upravene parametry z editacniho panelu.
+     * Stara data jsou smazana pomoci metody clearDataInCPR
+     *
+     * @param cpr                   Instace ConfigPersonRelation pro editaci
+     * @param alias                 alias prvku
+     * @param nameForManipulator    zpracovany seznam parametu z pole name
+     * @param nameIndicators        seznam indexu ukazatelu nerovnosti
+     * @param description           zpracovany seznam parametu z pole name
+     * @param descriptionIndicators seznam indexu ukazatelu nerovnosti
+     * @param roleIndex             zpracovany seznam parametu z pole name
+     * @param roleIndicators        seznam indexu ukazatelu nerovnosti
+     * @param exist                 informace o existenci prvku v patternu
+     */
     public void addDataToCPR(ConfigPersonRelation cpr, String alias, ArrayList<String> nameForManipulator, ArrayList<Integer> nameIndicators,
                              ArrayList<String> description, ArrayList<Integer> descriptionIndicators, ArrayList<Integer> roleIndex
             , ArrayList<Integer> roleIndicators, boolean exist) {
@@ -397,6 +425,11 @@ public class DataModel {
         cpr.setExist(exist);
     }
 
+    /**
+     * Metoda pro smazani dat v instanci ConfigPersonRelation
+     *
+     * @param cpr instace ConfigPersonRelation pro vymazani dat
+     */
     private void clearDataInCPR(ConfigPersonRelation cpr) {
         cpr.getPersonIndicator().clear();
         cpr.getPersonIndex().clear();
@@ -406,6 +439,18 @@ public class DataModel {
         cpr.getDescription().clear();
     }
 
+    /**
+     * Metoda pro editaci elementu Branch,
+     * do instace Branch jsou pridany upravene parametry z editacniho panelu.
+     * Stara data jsou smazana pomoci metody clearDataInBranch
+     *
+     * @param branch             Instace Branch pro editaci
+     * @param alias              alias prvku
+     * @param nameForManipulator zpracovany seznam parametu z pole name
+     * @param nameIndicators     seznam indexu ukazatelu nerovnosti
+     * @param isMain             informace o main vetvi
+     * @param exist              informace o existenci prvku v patternu
+     */
     public void addDataToBranch(Branch branch, String alias, ArrayList<String> nameForManipulator, ArrayList<Integer> nameIndicators, boolean isMain, boolean exist) {
 
         clearDataInBranch(branch);
@@ -416,11 +461,37 @@ public class DataModel {
         branch.setExist(exist);
     }
 
+    /**
+     * Metoda pro smazani dat v instanci Branch
+     *
+     * @param branch instace Branch pro vymazani dat
+     */
     private void clearDataInBranch(Branch branch) {
         branch.getName().clear();
         branch.getNameIndicator().clear();
     }
 
+    /**
+     * Metoda pro editaci elementu Artifact,
+     * do instace Artifact jsou pridany upravene parametry z editacniho panelu.
+     * Stara data jsou smazana pomoci metody clearDataInArtifact
+     *
+     * @param artifact              Instace Artifact pro editaci
+     * @param alias                 alias prvku
+     * @param nameForManipulator    zpracovany seznam parametu z pole name
+     * @param nameIndicators        seznam indexu ukazatelu nerovnosti
+     * @param descForManipulator    zpracovany seznam parametu z pole description
+     * @param descriptionIndicators seznam indexu ukazatelu nerovnosti
+     * @param createdDate           zpracovany seznam parametu z pole created
+     * @param dateIndicator         seznam indexu ukazatelu nerovnosti
+     * @param isCreate              informace o existenci prvku v patternu
+     * @param authorIndex           zpracovany seznam parametu z pole name
+     * @param typeIndex             seznam indexu s typem artefaktu
+     * @param authorIndicator       seznam indexu ukazatelu nerovnosti
+     * @param typeIndicator         seznam indexu ukazatelu nerovnosti
+     * @param instanceCount         pocet instanci prvku
+     * @param countIndicator        seznam indexu ukazatelu nerovnosti
+     */
     public void addDataToArtifact(Artifact artifact, String alias, ArrayList<String> nameForManipulator, ArrayList<Integer> nameIndicators,
                                   ArrayList<String> descForManipulator, ArrayList<Integer> descriptionIndicators,
                                   ArrayList<LocalDate> createdDate, ArrayList<Integer> dateIndicator, boolean isCreate,
@@ -447,6 +518,11 @@ public class DataModel {
 
     }
 
+    /**
+     * Metoda pro smazani dat v instanci Artifact
+     *
+     * @param artifact instace ConfigPersonRelation pro vymazani dat
+     */
     private void clearDataInArtifact(Artifact artifact) {
         artifact.getNameIndicator().clear();
         artifact.getName().clear();
@@ -469,6 +545,20 @@ public class DataModel {
         return valueList;
     }
 
+    /**
+     * Metoda pro editaci elementu Configuration Person,
+     * do instace Change jsou pridany upravene parametry z editacniho panelu.
+     * Stara data jsou smazana pomoci metody clearDataInChange
+     *
+     * @param change                 Instace Change pro editaci
+     * @param alias                  alias prvku
+     * @param nameForManipulator     zpracovany seznam parametu z pole name
+     * @param nameIndicators         seznam indexu ukazatelu nerovnosti
+     * @param descForManipulator     zpracovany seznam parametu z pole description
+     * @param descIndicator          seznam indexu ukazatelu nerovnosti
+     * @param artifactForManipulator zpracovany seznam parametu z pole artifact
+     * @param selected               informace o existenci prvku v patternu
+     */
     public void addDataToChange(Change change, String alias, ArrayList<String> nameForManipulator, ArrayList<String> descForManipulator, ArrayList<Integer> artifactForManipulator,
                                 ArrayList<Integer> nameIndicators, ArrayList<Integer> descIndicator, boolean selected) {
         clearDataInChange(change);
@@ -482,6 +572,11 @@ public class DataModel {
 
     }
 
+    /**
+     * Metoda pro smazani dat v instanci Change
+     *
+     * @param change instace ConfigPersonRelation pro vymazani dat
+     */
     private void clearDataInChange(Change change) {
         change.getNameIndicator().clear();
         change.getName().clear();
@@ -489,6 +584,27 @@ public class DataModel {
         change.getDescription().clear();
     }
 
+    /**
+     * Metoda pro editaci segmentu Phase,
+     * do instace Phase jsou pridany upravene parametry z editacniho panelu.
+     * Stara data jsou smazana pomoci metody clearDataInPhase
+     *
+     * @param phase              Instace Phase pro editaci
+     * @param alias              alias prvku
+     * @param actName            zpracovany seznam parametu z pole name
+     * @param endDateL           zpracovany seznam parametu z pole end date
+     * @param desc               zpracovany seznam parametu z pole description
+     * @param confIndex          zpracovany seznam parametu z pole configuration
+     * @param milestoneIndex     zpracovany seznam parametu z pole milestone
+     * @param workUnitIndexList  zpracovany seznam parametu z pole worku unit
+     * @param workUnitIndicators seznam indexu ukazatelu nerovnosti
+     * @param nameIndicator      seznam indexu ukazatelu nerovnosti
+     * @param endDateIndicator   seznam indexu ukazatelu nerovnosti
+     * @param descIndicator      seznam indexu ukazatelu nerovnosti
+     * @param confIndicator      seznam indexu ukazatelu nerovnosti
+     * @param milestoneIndicator seznam indexu ukazatelu nerovnosti
+     * @param exist              informace o existenci prvku v patternu
+     */
     public void addDataToPhase(Phase phase, String alias, ArrayList<String> actName, ArrayList<LocalDate> endDateL, ArrayList<String> desc,
                                ArrayList<Integer> confIndex, ArrayList<Integer> milestoneIndex, ArrayList<ArrayList<Integer>> workUnitIndexList,
                                ArrayList<Integer> workUnitIndicators, ArrayList<Integer> nameIndicator, ArrayList<Integer> endDateIndicator,
@@ -512,6 +628,11 @@ public class DataModel {
         phase.setExist(exist);
     }
 
+    /**
+     * Metoda pro smazani dat v instanci Phase
+     *
+     * @param phase instace ConfigPersonRelation pro vymazani dat
+     */
     private void clearDataInPhase(Phase phase) {
 
         phase.getNameIndicator().clear();
@@ -528,6 +649,27 @@ public class DataModel {
         phase.getWorkUnits().clear();
     }
 
+    /**
+     * Metoda pro editaci segmentu Iteration
+     * do instace Iteration jsou pridany upravene parametry z editacniho panelu.
+     * Stara data jsou smazana pomoci metody clearDataInIteration
+     *
+     * @param iteration          Instace Iteration pro editaci
+     * @param alias              alias prvku
+     * @param actName            zpracovany seznam parametu z pole name
+     * @param endDateL           zpracovany seznam parametu z pole end date
+     * @param startDateL         zpracovany seznam parametu z pole end date
+     * @param desc               zpracovany seznam parametu z pole description
+     * @param confIndex          zpracovany seznam parametu z pole configuration
+     * @param workUnitIndexList  zpracovany seznam parametu z pole worku unit
+     * @param workUnitIndicators seznam indexu ukazatelu nerovnosti
+     * @param nameIndicator      seznam indexu ukazatelu nerovnosti
+     * @param endDateIndicator   seznam indexu ukazatelu nerovnosti
+     * @param startDateIndicator seznam indexu ukazatelu nerovnosti
+     * @param descIndicator      seznam indexu ukazatelu nerovnosti
+     * @param confIndicator      seznam indexu ukazatelu nerovnosti
+     * @param exist              informace o existenci prvku v patternu
+     */
     public void addDataToIteration(Iteration iteration, String alias, ArrayList<String> actName, ArrayList<LocalDate> endDateL, ArrayList<LocalDate> startDateL, ArrayList<String> desc,
                                    ArrayList<Integer> confIndex, ArrayList<ArrayList<Integer>> workUnitIndexList,
                                    ArrayList<Integer> workUnitIndicators, ArrayList<Integer> nameIndicator, ArrayList<Integer> endDateIndicator,
@@ -554,6 +696,11 @@ public class DataModel {
 
     }
 
+    /**
+     * Metoda pro smazani dat v instanci Iteration
+     *
+     * @param iteration instace ConfigPersonRelation pro vymazani dat
+     */
     private void clearDataInIteration(Iteration iteration) {
         iteration.getNameIndicator().clear();
         iteration.getName().clear();
@@ -569,6 +716,22 @@ public class DataModel {
         iteration.getWorkUnits().clear();
     }
 
+    /**
+     * Metoda pro editaci segmentu Committed Configuration
+     * do instace Committed Configuration jsou pridany upravene parametry z editacniho panelu.
+     * Stara data jsou smazana pomoci metody clearDataInCommitedConfiguration
+     *
+     * @param alias                 alias prvku
+     * @param nameForManipulator    zpracovany seznam parametu z pole name
+     * @param nameIndicator         seznam indexu ukazatelu nerovnosti
+     * @param descriptions          zpracovany seznam parametu z pole description
+     * @param descriptionsIndicator seznam indexu ukazatelu nerovnosti
+     * @param createDate            zpracovany seznam parametu z pole created
+     * @param dateIndicator         seznam indexu ukazatelu nerovnosti
+     * @param exist                 informace o existenci prvku v patternu
+     * @param instanceCount         pocet instanci prvku
+     * @param countIndicator        seznam indexu ukazatelu nerovnosti
+     */
     public void addDataToCommitedConfiguration(CommitedConfiguration commitedConfiguration, String alias, ArrayList<String> nameForManipulator, ArrayList<Integer> nameIndicator,
                                                ArrayList<String> descriptions, ArrayList<Integer> descriptionsIndicator, ArrayList<LocalDate> createDate, ArrayList<Integer> createIndicator,
                                                ArrayList<LocalDate> startDate, ArrayList<Integer> dateIndicator, int instanceCount, int countIndicator, boolean exist) {
@@ -589,6 +752,11 @@ public class DataModel {
         commitedConfiguration.setExist(exist);
     }
 
+    /**
+     * Metoda pro smazani dat v instanci Committed Configuration
+     *
+     * @param commitedConfiguration instace ConfigPersonRelation pro vymazani dat
+     */
     private void clearDataInCommitedConfiguration(CommitedConfiguration commitedConfiguration) {
         commitedConfiguration.getNameIndicator().clear();
         commitedConfiguration.getName().clear();
@@ -608,6 +776,22 @@ public class DataModel {
     }
 
 
+    /**
+     * Metoda pro editaci segmentu Activity
+     * do instace Activity jsou pridany upravene parametry z editacniho panelu.
+     * Stara data jsou smazana pomoci metody clearDataInActivity
+     *
+     * @param activity                  Instace Activity pro editaci
+     * @param alias                     alias prvku
+     * @param nameForManipulator        zpracovany seznam parametu z pole name
+     * @param endDate                   zpracovany seznam parametu z pole end date
+     * @param descriptionForManipulator zpracovany seznam parametu z pole description
+     * @param workUnitIndicators        seznam indexu ukazatelu nerovnosti
+     * @param nameIndicators            seznam indexu ukazatelu nerovnosti
+     * @param endDateIndicators         seznam indexu ukazatelu nerovnosti
+     * @param descIndicators            seznam indexu ukazatelu nerovnosti
+     * @param exist                     informace o existenci prvku v patternu
+     */
     public void addDataToActivity(Activity activity, String alias, List<String> nameForManipulator, ArrayList<String> descriptionForManipulator,
                                   ArrayList<ArrayList<Integer>> setOfItemOnCanvas, ArrayList<Integer> nameIndicators,
                                   ArrayList<Integer> descIndicators, ArrayList<Integer> workUnitIndicators, ArrayList<LocalDate> endDate, ArrayList<Integer> endDateIndicators, boolean exist) {
@@ -627,6 +811,11 @@ public class DataModel {
         activity.setExist(exist);
     }
 
+    /**
+     * Metoda pro smazani dat v instanci Activity
+     *
+     * @param activity instace ConfigPersonRelation pro vymazani dat
+     */
     private void clearDataInActivity(Activity activity) {
         activity.getNameIndicator().clear();
         activity.getName().clear();
@@ -639,6 +828,45 @@ public class DataModel {
     }
 
 
+    /**
+     * Metoda pro editaci segmentu Work Unit
+     * do instace Work Unit jsou pridany upravene parametry z editacniho panelu.
+     * Stara data jsou smazana pomoci metody clearDataInWork Unit
+     *
+     * @param workUnit                   Instace Work Unit pro editaci
+     * @param alias                      alias prvku
+     * @param nameForManipulator         zpracovany seznam parametu z pole name
+     * @param alias
+     * @param progress                   zpracovany seznam parametu z pole progress
+     * @param progressIndicator          seznam indexu ukazatelu nerovnosti
+     * @param nameForManipulator         zpracovany seznam parametu z pole name
+     * @param description                zpracovany seznam parametu z pole description
+     * @param categoryForManipulator     zpracovany seznam parametu z pole category
+     * @param assigneIndex               zpracovany seznam parametu z pole assigne
+     * @param authorIndex                zpracovany seznam parametu z pole author
+     * @param priorityIndex              zpracovany seznam parametu z pole priority
+     * @param severityIndex              zpracovany seznam parametu z pole severity
+     * @param typeIndex                  zpracovany seznam parametu z pole type
+     * @param resolutionIndex            zpracovany seznam parametu z pole resolution
+     * @param statusIndex                zpracovany seznam parametu z pole status
+     * @param estimateForDataManipulator zpracovany seznam parametu z pole estimate
+     * @param nameIndicator              seznam indexu ukazatelu nerovnosti
+     * @param descriptionIndicator       seznam indexu ukazatelu nerovnosti
+     * @param categoryIndicator          seznam indexu ukazatelu nerovnosti
+     * @param assigneIndicator           seznam indexu ukazatelu nerovnosti
+     * @param authorIndicator            seznam indexu ukazatelu nerovnosti
+     * @param priorityIndicator          seznam indexu ukazatelu nerovnosti
+     * @param severityIndicator          seznam indexu ukazatelu nerovnosti
+     * @param typeIndicator              seznam indexu ukazatelu nerovnosti
+     * @param resolutionIndicator        seznam indexu ukazatelu nerovnosti
+     * @param statusIndicator            seznam indexu ukazatelu nerovnosti
+     * @param estimateIndicator          seznam indexu ukazatelu nerovnosti
+     * @param createDate                 zpracovany seznam parametu z pole created day
+     * @param createIndicator            seznam indexu ukazatelu nerovnosti
+     * @param isExist                    informace o existenci prvku v patternu
+     * @param relations                  zpracovany seznam parametu z pole relation
+     * @param workUnits                  zpracovany seznam parametu z pole workUnit
+     */
     public void addDataToWorkUnit(WorkUnit workUnit, String alias, ArrayList<Integer> progress, ArrayList<Integer> progressIndicator, List<String> nameForManipulator, List<String> description, List<String> categoryForManipulator,
                                   ArrayList<Integer> assigneIndex, ArrayList<Integer> authorIndex, ArrayList<Integer> priorityIndex, ArrayList<Integer> severityIndex,
                                   ArrayList<Integer> typeIndex, ArrayList<Integer> resolutionIndex, ArrayList<Integer> statusIndex,
@@ -682,6 +910,11 @@ public class DataModel {
         workUnit.getResolutionIndicator().addAll(resolutionIndicator);
     }
 
+    /**
+     * Metoda pro smazani dat v instanci Work Unit
+     *
+     * @param workUnit instace ConfigPersonRelation pro vymazani dat
+     */
     private void clearDataInWorkUnit(WorkUnit workUnit) {
         workUnit.getCreatedIndicator().clear();
         workUnit.getCreated().clear();
@@ -717,6 +950,32 @@ public class DataModel {
 
     }
 
+    /**
+     * Metoda pro editaci segmentu Configuration
+     * do instace  Configuration jsou pridany upravene parametry z editacniho panelu.
+     * Stara data jsou smazana pomoci metody clearDataInConfiguration
+     *
+     * @param alias                alias prvku
+     * @param configuration        instance Configuration pro editaci
+     * @param actName              zpracovany seznam parametu z pole name
+     * @param description          zpracovany seznam parametu z pole description
+     * @param createDate           zpracovany seznam parametu z pole created
+     * @param isRelease            zpracovany seznam parametu z pole release
+     * @param cprs                 zpracovany seznam parametu z pole configuration person relation
+     * @param changeIndexs         zpracovany seznam parametu z pole change
+     * @param branchIndexs         zpracovany seznam parametu z pole branch
+     * @param cprIndicators        seznam indexu ukazatelu nerovnosti
+     * @param nameIndicator        seznam indexu ukazatelu nerovnosti
+     * @param descriptionIndicator seznam indexu ukazatelu nerovnosti
+     * @param tag                  zpracovany seznam parametu z pole VCSTag
+     * @param tagIndicator         seznam indexu ukazatelu nerovnosti
+     * @param createdIndicator     seznam indexu ukazatelu nerovnosti
+     * @param changeIndicator      seznam indexu ukazatelu nerovnosti
+     * @param branchIndicator      seznam indexu ukazatelu nerovnosti
+     * @param instanceCount        pocet instanci prvku
+     * @param countIndicator       seznam indexu ukazatelu nerovnosti
+     * @exist informace o existenci prvku v patternu
+     */
     public void addDataToConfiguration(Configuration configuration, String alias, ArrayList<String> actName, ArrayList<String> description, ArrayList<LocalDate> createDate,
                                        boolean isRelease, ArrayList<ArrayList<Integer>> cprs,
                                        ArrayList<ArrayList<Integer>> changeIndexs, ArrayList<ArrayList<Integer>> branchIndexs,
@@ -758,6 +1017,11 @@ public class DataModel {
         }
     }
 
+    /**
+     * Metoda pro smazani dat v instanci Configuration
+     *
+     * @param configuration instace Configuration pro vymazani dat
+     */
     private void clearDataInConfiguration(Configuration configuration) {
         configuration.getCPRsIndexs().clear();
         configuration.getChangesIndexs().clear();
@@ -778,6 +1042,19 @@ public class DataModel {
     }
 
 
+    /**
+     * Metoda pro editaci elementu Criterion,
+     * do instace Criterion jsou pridany upravene parametry z editacniho panelu.
+     * Stara data jsou smazana pomoci metody clearDataInCriterion
+     *
+     * @param criterion          Instace Criterion pro editaci
+     * @param alias              alias prvku
+     * @param nameForManipulator zpracovany seznam parametu z pole name
+     * @param nameIndicator      seznam indexu ukazatelu nerovnosti
+     * @param descForManipulator zpracovany seznam parametu z pole description
+     * @param descIndicator      seznam indexu ukazatelu nerovnosti
+     * @param exist              informace o existenci prvku v patternu
+     */
     public void addDataToCriterion(Criterion criterion, String alias, ArrayList<String> nameForManipulator, ArrayList<String> descForManipulator,
                                    ArrayList<Integer> nameIndicator, ArrayList<Integer> descIndicator, boolean exist) {
         clearDataInCriterion(criterion);
@@ -789,6 +1066,11 @@ public class DataModel {
         criterion.setExist(exist);
     }
 
+    /**
+     * Metoda pro smazani dat v instanci Criterion
+     *
+     * @param criterion instace Criterion pro vymazani dat
+     */
     private void clearDataInCriterion(Criterion criterion) {
         criterion.getDescriptionIndicator().clear();
         criterion.getDescription().clear();
@@ -796,6 +1078,21 @@ public class DataModel {
         criterion.getName().clear();
     }
 
+    /**
+     * Metoda pro editaci elementu Priority,
+     * do instace Priority jsou pridany upravene parametry z editacniho panelu.
+     * Stara data jsou smazana pomoci metody clearDataInPriority
+     *
+     * @param priority           Instace Priority pro editaci
+     * @param alias              alias prvku
+     * @param nameForManipulator zpracovany seznam parametu z pole name
+     * @param nameIndicator      seznam indexu ukazatelu nerovnosti
+     * @param classST            index v seznamu typu trid
+     * @param superST            index v seznamu typu supertrid
+     * @param classString        nazev  vybrane tridy
+     * @param superSting         nazev vybrane supertridy
+     * @param exist              informace o existenci prvku v modelu
+     */
     public void addDataToPriority(Priority priority, String alias, ArrayList<String> nameForManipulator, ArrayList<Integer> nameIndicator,
                                   ArrayList<Integer> classST, ArrayList<Integer> superST, ArrayList<String> classString, ArrayList<String> superSting, boolean exist) {
 
@@ -810,6 +1107,11 @@ public class DataModel {
         priority.setExist(exist);
     }
 
+    /**
+     * Metoda pro smazani dat v instanci Priority
+     *
+     * @param priority instace Priority pro vymazani dat
+     */
     private void clearDataInPriority(Priority priority) {
         priority.getNameIndicator().clear();
         priority.getName().clear();
@@ -821,6 +1123,21 @@ public class DataModel {
         priority.getPriorityClassIndicator().clear();
     }
 
+    /**
+     * Metoda pro editaci elementu Severity,
+     * do instace Severity jsou pridany upravene parametry z editacniho panelu.
+     * Stara data jsou smazana pomoci metody clearDataInSeverity
+     *
+     * @param severity           Instace Severity pro editaci
+     * @param alias              alias prvku
+     * @param nameForManipulator zpracovany seznam parametu z pole name
+     * @param nameIndicator      seznam indexu ukazatelu nerovnosti
+     * @param classST            index v seznamu typu trid
+     * @param superST            index v seznamu typu supertrid
+     * @param classString        nazev  vybrane tridy
+     * @param superSting         nazev vybrane supertridy
+     * @param exist              informace o existenci prvku v modelu
+     */
     public void addDataToSeverity(Severity severity, String alias, ArrayList<String> nameForManipulator, ArrayList<Integer> nameIndicator,
                                   ArrayList<Integer> classST, ArrayList<Integer> superST, ArrayList<String> classString, ArrayList<String> superSting, boolean exist) {
         clearDataInSeverity(severity);
@@ -834,6 +1151,11 @@ public class DataModel {
         severity.setExist(exist);
     }
 
+    /**
+     * Metoda pro smazani dat v instanci Severity
+     *
+     * @param severity instace Severity pro vymazani dat
+     */
     private void clearDataInSeverity(Severity severity) {
         severity.getNameIndicator().clear();
         severity.getName().clear();
@@ -845,6 +1167,21 @@ public class DataModel {
         severity.getSeverityClassIndicator().clear();
     }
 
+    /**
+     * Metoda pro editaci elementu Role Type,
+     * do instace Role Type jsou pridany upravene parametry z editacniho panelu.
+     * Stara data jsou smazana pomoci metody clearDataInPerson Type
+     *
+     * @param roleType           Instace Role Type pro editaci
+     * @param alias              alias prvku
+     * @param nameForManipulator zpracovany seznam parametu z pole name
+     * @param nameIndicator      seznam indexu ukazatelu nerovnosti
+     * @param classST            index v seznamu typu trid
+     * @param superST            index v seznamu typu supertrid
+     * @param classString        nazev  vybrane tridy
+     * @param superSting         nazev vybrane supertridy
+     * @param exist              informace o existenci prvku v modelu
+     */
     public void addDataToRoleType(RoleType roleType, String alias, ArrayList<String> nameForManipulator, ArrayList<Integer> nameIndicator, ArrayList<String> descForManipulator, ArrayList<Integer> descIndicator,
                                   ArrayList<Integer> classST, ArrayList<Integer> superST, ArrayList<String> classString, ArrayList<String> superSting, boolean exist) {
         clearDataInRoleType(roleType);
@@ -860,6 +1197,11 @@ public class DataModel {
         roleType.setExist(exist);
     }
 
+    /**
+     * Metoda pro smazani dat v instanci Role Type
+     *
+     * @param roleType instace Role Type pro vymazani dat
+     */
     private void clearDataInRoleType(RoleType roleType) {
         roleType.getDescription().clear();
         roleType.getDescriptionIndicator().clear();
@@ -873,6 +1215,21 @@ public class DataModel {
         roleType.getRoleTypeClassIndicator().clear();
     }
 
+    /**
+     * Metoda pro editaci elementu Status,
+     * do instace Status jsou pridany upravene parametry z editacniho panelu.
+     * Stara data jsou smazana pomoci metody clearDataInStatus
+     *
+     * @param status             Instace Status pro editaci
+     * @param alias              alias prvku
+     * @param nameForManipulator zpracovany seznam parametu z pole name
+     * @param nameIndicator      seznam indexu ukazatelu nerovnosti
+     * @param classST            index v seznamu typu trid
+     * @param superST            index v seznamu typu supertrid
+     * @param classString        nazev  vybrane tridy
+     * @param superSting         nazev vybrane supertridy
+     * @param exist              informace o existenci prvku v modelu
+     */
     public void addDataToStatus(Status status, String alias, ArrayList<String> nameForManipulator, ArrayList<Integer> nameIndicator,
                                 ArrayList<Integer> classST, ArrayList<Integer> superST, ArrayList<String> classString, ArrayList<String> superSting, boolean exist) {
         clearDataInStatus(status);
@@ -886,6 +1243,11 @@ public class DataModel {
         status.setExist(exist);
     }
 
+    /**
+     * Metoda pro smazani dat v instanci Status
+     *
+     * @param status instace Status pro vymazani dat
+     */
     private void clearDataInStatus(Status status) {
         status.getNameIndicator().clear();
         status.getName().clear();
@@ -897,6 +1259,21 @@ public class DataModel {
         status.getStatusClassIndicator().clear();
     }
 
+    /**
+     * Metoda pro editaci elementu Type,
+     * do instace Type jsou pridany upravene parametry z editacniho panelu.
+     * Stara data jsou smazana pomoci metody clearDataInType
+     *
+     * @param type               Instace Type pro editaci
+     * @param alias              alias prvku
+     * @param nameForManipulator zpracovany seznam parametu z pole name
+     * @param nameIndicator      seznam indexu ukazatelu nerovnosti
+     * @param classST            index v seznamu typu trid
+     * @param superST            index v seznamu typu supertrid
+     * @param classString        nazev  vybrane tridy
+     * @param superSting         nazev vybrane supertridy
+     * @param exist              informace o existenci prvku v modelu
+     */
     public void addDataToType(Type type, String alias, ArrayList<String> nameForManipulator, ArrayList<Integer> nameIndicator,
                               ArrayList<Integer> classST, ArrayList<Integer> superST, ArrayList<String> classString, ArrayList<String> superSting, boolean exist) {
         clearDataInType(type);
@@ -910,6 +1287,11 @@ public class DataModel {
         type.setExist(exist);
     }
 
+    /**
+     * Metoda pro smazani dat v instanci Type
+     *
+     * @param type instace Type pro vymazani dat
+     */
     private void clearDataInType(Type type) {
         type.getNameIndicator().clear();
         type.getName().clear();
@@ -921,6 +1303,21 @@ public class DataModel {
         type.getTypeClassIndicator().clear();
     }
 
+    /**
+     * Metoda pro editaci elementu Relation,
+     * do instace Relation jsou pridany upravene parametry z editacniho panelu.
+     * Stara data jsou smazana pomoci metody clearDataInRelation
+     *
+     * @param relation           Instace Relation pro editaci
+     * @param alias              alias prvku
+     * @param nameForManipulator zpracovany seznam parametu z pole name
+     * @param nameIndicator      seznam indexu ukazatelu nerovnosti
+     * @param classST            index v seznamu typu trid
+     * @param superST            index v seznamu typu supertrid
+     * @param classString        nazev  vybrane tridy
+     * @param superSting         nazev vybrane supertridy
+     * @param exist              informace o existenci prvku v modelu
+     */
     public void addDataToRelation(Relation relation, String alias, ArrayList<String> nameForManipulator, ArrayList<Integer> nameIndicator,
                                   ArrayList<Integer> classST, ArrayList<Integer> superST, ArrayList<String> classString, ArrayList<String> superSting, boolean exist) {
         clearDataInRelation(relation);
@@ -934,6 +1331,11 @@ public class DataModel {
         relation.setExist(exist);
     }
 
+    /**
+     * Metoda pro smazani dat v instanci Relation
+     *
+     * @param relation instace Relation pro vymazani dat
+     */
     private void clearDataInRelation(Relation relation) {
         relation.getNameIndicator().clear();
         relation.getName().clear();
@@ -945,6 +1347,21 @@ public class DataModel {
         relation.getRelationClassIndicator().clear();
     }
 
+    /**
+     * Metoda pro editaci elementu Resolution,
+     * do instace Resolution jsou pridany upravene parametry z editacniho panelu.
+     * Stara data jsou smazana pomoci metody clearDataInResolution
+     *
+     * @param resolution         Instace Resolution pro editaci
+     * @param alias              alias prvku
+     * @param nameForManipulator zpracovany seznam parametu z pole name
+     * @param nameIndicator      seznam indexu ukazatelu nerovnosti
+     * @param classST            index v seznamu typu trid
+     * @param superST            index v seznamu typu supertrid
+     * @param classString        nazev  vybrane tridy
+     * @param superSting         nazev vybrane supertridy
+     * @param exist              informace o existenci prvku v modelu
+     */
     public void addDataToResolution(Resolution resolution, String alias, ArrayList<String> nameForManipulator, ArrayList<Integer> nameIndicator,
                                     ArrayList<Integer> classST, ArrayList<Integer> superST, ArrayList<String> classString, ArrayList<String> superSting, boolean exist) {
         clearDataInResolution(resolution);
@@ -958,6 +1375,11 @@ public class DataModel {
         resolution.setExist(exist);
     }
 
+    /**
+     * Metoda pro smazani dat v instanci Resolution
+     *
+     * @param resolution instace Resolution pro vymazani dat
+     */
     private void clearDataInResolution(Resolution resolution) {
         resolution.getNameIndicator().clear();
         resolution.getName().clear();
@@ -970,9 +1392,24 @@ public class DataModel {
     }
 
 
-    public void addDatToRole(Person role, String alias, ArrayList<String> nameForManipulator, ArrayList<Integer> type,
-                             ArrayList<Integer> nameIndicator, ArrayList<Integer> typeIndicator, int instanceCount, int countIndicator, boolean exist) {
-        clearDataInRole(role);
+    /**
+     * Metoda pro editaci elementu Person,
+     * do instace Person jsou pridany upravene parametry z editacniho panelu.
+     * Stara data jsou smazana pomoci metody clearDataInPerson
+     *
+     * @param role               Instace Person pro editaci
+     * @param alias              alias prvku
+     * @param nameForManipulator zpracovany seznam parametu z pole name
+     * @param type               zpracovany seznam parametu z pole Role Type
+     * @param nameIndicator      seznam indexu ukazatelu nerovnosti
+     * @param typeIndicator      seznam indexu ukazatelu nerovnosti
+     * @param instanceCount      informace o existenci prvku v modelu
+     * @param countIndicator     seznam indexu ukazatelu nerovnosti
+     * @param exist              informace o existenci prvku v modelu
+     */
+    public void addDatToPerson(Person role, String alias, ArrayList<String> nameForManipulator, ArrayList<Integer> type,
+                               ArrayList<Integer> nameIndicator, ArrayList<Integer> typeIndicator, int instanceCount, int countIndicator, boolean exist) {
+        clearDataInPerson(role);
         role.getName().addAll(nameForManipulator);
         role.getNameIndicator().addAll(nameIndicator);
         role.getTypeIndicator().addAll(typeIndicator);
@@ -983,14 +1420,34 @@ public class DataModel {
         role.getType().addAll(type);
     }
 
-    private void clearDataInRole(Person role) {
+    /**
+     * Metoda pro smazani dat v instanci Person
+     *
+     * @param role instace Person pro vymazani dat
+     */
+    private void clearDataInPerson(Person role) {
         role.getName().clear();
         role.getNameIndicator().clear();
         role.getTypeIndicator().clear();
         role.getType().clear();
     }
 
-
+    /**
+     * Metoda pro editaci projektu,
+     * do instace Project jsou pridany upravene parametry z editacniho panelu.
+     * Stara data jsou smazana pomoci metody clearDataInProject
+     *
+     * @param nameForManipulator        zpracovany seznam parametu z pole name
+     * @param startDate1                zpracovany seznam parametu z pole start date
+     * @param endDate1                  zpracovany seznam parametu z pole end date
+     * @param descriptionForManipulator zpracovany seznam parametu z pole description
+     * @param workUnitsForManipulator   zpracovany seznam parametu z pole workUnits
+     * @param workUnitIndicators        seznam indexu ukazatelu nerovnosti
+     * @param nameIndicators            seznam indexu ukazatelu nerovnosti
+     * @param date1Indicators           seznam indexu ukazatelu nerovnosti
+     * @param date2Indicators           seznam indexu ukazatelu nerovnosti
+     * @param descIndicators            seznam indexu ukazatelu nerovnosti
+     */
     public void addDataToProject(ArrayList<String> nameForManipulator, ArrayList<LocalDate> startDate1, ArrayList<LocalDate> endDate1, ArrayList<String> descriptionForManipulator, ArrayList<ArrayList<Integer>> workUnitsForManipulator,
                                  ArrayList<Integer> workUnitIndicators, ArrayList<Integer> nameIndicators, ArrayList<Integer> date1Indicators,
                                  ArrayList<Integer> date2Indicators, ArrayList<Integer> descIndicators) {
@@ -1014,6 +1471,9 @@ public class DataModel {
 
     }
 
+    /**
+     * Metoda pro smazani dat v instanci Projektu
+     */
     private void clearDataInProject() {
         project.getName().clear();
         project.getDescription().clear();
@@ -1028,6 +1488,21 @@ public class DataModel {
         project.getWorkUnitsIndicator().clear();
     }
 
+    /**
+     * Metoda pro editaci elementu Milestone,
+     * do instace Milestone jsou pridany upravene parametry z editacniho panelu.
+     * Stara data jsou smazana pomoci metody clearDataInMilestone
+     *
+     * @param milestone          Instace Milestone pro editaci
+     * @param alias              alias prvku
+     * @param nameForManipulator zpracovany seznam parametu z pole name
+     * @param descForManipulator zpracovany seznam parametu z pole description
+     * @param nameIndicator      seznam indexu ukazatelu nerovnosti
+     * @param descIndicator      seznam indexu ukazatelu nerovnosti
+     * @param criterionIndicator seznam indexu ukazatelu nerovnosti
+     * @param criterionIndex     zpracovany seznam parametu z pole name
+     * @param exist              informace o existenci prvku v modelu
+     */
     public void addDataToMilestone(Milestone milestone, String alias, ArrayList<String> nameForManipulator, ArrayList<String> descForManipulator,
                                    ArrayList<Integer> nameIndicator, ArrayList<Integer> descIndicator, ArrayList<Integer> criterionIndicator,
                                    ArrayList<ArrayList<Integer>> criterionIndex, boolean exist) {
@@ -1048,6 +1523,11 @@ public class DataModel {
         milestone.getDescriptionIndicator().addAll(descIndicator);
     }
 
+    /**
+     * Metoda pro smazani dat v instanci Milestone
+     *
+     * @param milestone instace Milestone pro vymazani dat
+     */
     private void clearDataInMilestone(Milestone milestone) {
         milestone.getCriteriaIndexs().clear();
         milestone.getName().clear();
@@ -1057,6 +1537,19 @@ public class DataModel {
         milestone.getDescriptionIndicator().clear();
     }
 
+    /**
+     * Metoda pro editaci elementu VCSTag,
+     * do instace VCSTag jsou pridany upravene parametry z editacniho panelu.
+     * Stara data jsou smazana pomoci metody clearDataInVCSTag
+     *
+     * @param tag                       Instace VCSTag pro editaci
+     * @param alias                     alias prvku
+     * @param nameForManipulator        zpracovany seznam parametu z pole name
+     * @param descriptionForManipulator zpracovany seznam parametu z pole description
+     * @param nameIndicator             seznam indexu ukazatelu nerovnosti
+     * @param descriptionIndicator      seznam indexu ukazatelu nerovnosti
+     * @param exist                     informace o existenci prvku v modelu
+     */
     public void addDataToVCSTag(VCSTag tag, String alias, ArrayList<String> nameForManipulator, ArrayList<String> descriptionForManipulator,
                                 ArrayList<Integer> nameIndicator, ArrayList<Integer> descriptionIndicator, boolean exist) {
         clearDataInVCSTag(tag);
@@ -1068,6 +1561,11 @@ public class DataModel {
         tag.setExist(exist);
     }
 
+    /**
+     * Metoda pro smazani dat v instanci VCSTag
+     *
+     * @param tag instace VCSTag pro vymazani dat
+     */
     private void clearDataInVCSTag(VCSTag tag) {
         tag.getNameIndicator().clear();
         tag.getName().clear();
@@ -1076,6 +1574,24 @@ public class DataModel {
 
     }
 
+    /**
+     * Metoda pro editaci elementu Commit,
+     * do instace Commit jsou pridany upravene parametry z editacniho panelu.
+     * Stara data jsou smazana pomoci metody clearDataInCommit
+     *
+     * @param commit                Instace Commit pro editaci
+     * @param alias                 alias prvku
+     * @param nameForManipulator    zpracovany seznam parametu z pole name
+     * @param nameIndicator         seznam indexu ukazatelu nerovnosti
+     * @param descriptions          zpracovany seznam parametu z pole description
+     * @param descriptionsIndicator seznam indexu ukazatelu nerovnosti
+     * @param createDate            zpracovany seznam parametu z pole create date
+     * @param createIndicator       seznam indexu ukazatelu nerovnosti
+     * @param release               informace o releasu
+     * @param instanceCount         pocet instaci v modelu
+     * @param countIndicator        seznam indexu ukazatelu nerovnosti
+     * @param exist                 informace o existenci prvku v modelu
+     */
     public void addDataToCommit(Commit commit, String alias, ArrayList<String> nameForManipulator, ArrayList<Integer> nameIndicator, ArrayList<String> descriptions, ArrayList<Integer> descriptionsIndicator,
                                 ArrayList<LocalDate> createDate, ArrayList<Integer> createIndicator, boolean release, int instanceCount, int countIndicator, boolean exist) {
         clearDataInCommit(commit);
@@ -1092,26 +1608,61 @@ public class DataModel {
         commit.setExist(exist);
     }
 
+    /**
+     * Metoda pro nastaveni souradnic do Commitu
+     *
+     * @param coordinates instance souradnic
+     * @param commit      Commit pro prirazeni souradnic
+     */
     public void setCoordinatesToCommit(Coordinates coordinates, Commit commit) {
         commit.setCoordinates(coordinates);
     }
 
+    /**
+     * Metoda pro nastaveni souradnic do Commited Configuration
+     *
+     * @param coordinates           instance souradnic
+     * @param commitedConfiguration Committed Configuration pro prirazeni souradnic
+     */
     public void setCoordinatesToCommitedConfiguration(Coordinates coordinates, CommitedConfiguration commitedConfiguration) {
         commitedConfiguration.setCoordinates(coordinates);
     }
 
+    /**
+     * Metoda pro nastaveni souradnic do Configuration
+     *
+     * @param coordinates   instance souradnic
+     * @param configuration Configuration pro prirazeni souradnic
+     */
     public void setCoordinatesToConfiguration(Coordinates coordinates, Configuration configuration) {
         configuration.setCoordinates(coordinates);
     }
 
+    /**
+     * Metoda pro nastaveni souradnic do Artifact
+     *
+     * @param coordinates instance souradnic
+     * @param artifact    Artifact pro prirazeni souradnic
+     */
     public void setCoordinatesToArtifact(Coordinates coordinates, Artifact artifact) {
         artifact.setCoordinates(coordinates);
     }
 
-    public void setCoordinatesToRole(Coordinates coordinates, Person role) {
+    /**
+     * Metoda pro nastaveni souradnic do Person
+     *
+     * @param coordinates instance souradnic
+     * @param role        Person pro prirazeni souradnic
+     */
+    public void setCoordinatesToPerson(Coordinates coordinates, Person role) {
         role.setCoordinates(coordinates);
     }
 
+    /**
+     * Metoda pro smazani dat v instanci Commit
+     *
+     * @param commit instace Commit pro vymazani dat
+     */
     private void clearDataInCommit(Commit commit) {
         commit.getNameIndicator().clear();
         commit.getName().clear();
@@ -1122,6 +1673,10 @@ public class DataModel {
 
     }
 
+
+    /**
+     * Gettrs and Setters
+     **/
 
     public int getMilestoneId(int milestoneIndexForManipulator) {
 
@@ -1204,7 +1759,13 @@ public class DataModel {
         return existCriterionId;
     }
 
-
+    /**
+     * Pretizena metoda možní převedení data ve formátu LocalDate do formátu
+     * XMLGregorianCalendar pro uložení do XML
+     *
+     * @param date seznam LocalDate
+     * @return XMLGregorianCalendar
+     */
     public static ArrayList<XMLGregorianCalendar> convertDate(ArrayList<LocalDate> date) {
 
         ArrayList<XMLGregorianCalendar> list = new ArrayList<>();
@@ -1268,6 +1829,87 @@ public class DataModel {
     public void validate() {
 
         processGenerator.validate(project);
+    }
+
+
+    public Activity getActivity(int id) {
+        return project.getActivities().get(getActivityIndexInProject(id));
+    }
+
+    public Artifact getArtifact(int id) {
+        return project.getArtifacts().get(getArtifactIndexInProject(id));
+    }
+
+    public Branch getBranch(int id) {
+        return project.getBranches().get(getBranchIndexInProject(id));
+    }
+
+    public Change getChange(int id) {
+        return project.getChanges().get(getChangeIndexInProject(id));
+    }
+
+    public ConfigPersonRelation getConfigPersonRelation(int id) {
+        return project.getCpr().get(getCPRIndexInProject(id));
+    }
+
+    public Configuration getConfiguration(int id) {
+        return project.getConfiguration().get(getConfigurationIndexInProject(id));
+    }
+
+    public Criterion getCriterion(int id) {
+        return project.getCriterions().get(getCriterionIndexInProject(id));
+    }
+
+    public int getCriterionId(int index) {
+        return project.getCriterions().get(index).getId();
+    }
+
+    public Iteration getIteration(int id) {
+        return project.getIterations().get(getIterationIndexInProject(id));
+    }
+
+    public Milestone getMilestone(int id) {
+        return project.getMilestones().get(getMilestoneIndexInProject(id));
+    }
+
+    public Phase getPhase(int id) {
+        return project.getPhases().get(getPhaseIndexInProject(id));
+    }
+
+    public Priority getPriority(int id) {
+        return project.getPriority().get(getPriorityIndexInProject(id));
+    }
+
+    public Relation getRelation(int id) {
+        return project.getRelation().get(getRelationIndexInProject(id));
+    }
+
+    public Resolution getResolution(int id) {
+        return project.getResolution().get(getResolutionIndexInProject(id));
+    }
+
+    public Person getPerson(int id) {
+        return project.getRoles().get(getPersonIndexInProject(id));
+    }
+
+    public RoleType getRoleType(int id) {
+        return project.getRoleType().get(getRoleTypeIndexInProject(id));
+    }
+
+    public Severity getSeverity(int id) {
+        return project.getSeverity().get(getSeverityIndexInProject(id));
+    }
+
+    public Status getStatus(int id) {
+        return project.getStatus().get(getStatusIndexInProject(id));
+    }
+
+    public Type getType(int id) {
+        return project.getTypes().get(getTypeIndexInProject(id));
+    }
+
+    public WorkUnit getWorkUnit(int id) {
+        return project.getWorkUnits().get(getWUIndexInProject(id));
     }
 
 
@@ -1500,6 +2142,10 @@ public class DataModel {
         }
         return -1;
     }
+
+    /**
+     * Getrs and Setrs
+     **/
 
     public int getCommitId(int commitIndex) {
         return project.getCommit().get(commitIndex).getId();

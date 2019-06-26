@@ -1,5 +1,10 @@
 package database;
 
+import controllers.VerifyController;
+import services.Constans;
+import tables.ProjectTable;
+
+import javax.xml.datatype.XMLGregorianCalendar;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -7,19 +12,14 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import controllers.VerifyController;
-import services.Constans;
-import tables.ProjectTable;
-
-import javax.xml.datatype.XMLGregorianCalendar;
-
 /**
  * Třída zajišťující výběr dat projektů z databáze implementující
+ *
  * @author Vaclav Janoch
  */
 public class ProjectDAO {
 
-    private Connection connection;               
+    private Connection connection;
     private VerifyController verifyController;
 
     /**
@@ -27,12 +27,13 @@ public class ProjectDAO {
      * Zinicializuje globalni promenne tridy
      */
     public ProjectDAO() {
-        this.connection = Constans.CONNECTION;  
+        this.connection = Constans.CONNECTION;
     }
 
     /**
      * Konstruktor tridy
      * Zinicializuje globalni promenne tridy
+     *
      * @param verifyController
      */
     public ProjectDAO(VerifyController verifyController) {
@@ -42,6 +43,7 @@ public class ProjectDAO {
 
     /**
      * Vrací seznam projektů v databázi
+     *
      * @return seznam projektů
      */
     public ArrayList<ProjectTable> getProject() {
@@ -70,20 +72,21 @@ public class ProjectDAO {
         return listProjektu;
     }
 
-/**
-* Metoda pro vytvoreni SQL dotazu pro urcitou instanci Project
-* Metoda slozi jednotlive parametry pro SQL dotaz a zavola metodu ze tridy SQLAtributeCreator pro ziskani dat z databaze
-* @param projectVerifyId identifikator zvoleneho projektu
-* @param name seznam s atributy name
-* @param nameIndicator seznam s indexi ukazatelu rovnosti
-* @param description seznam s atributy description
-* @param descriptionIndicator seznam s indexi ukazatelu rovnosti
-* @param startDate seznam s datumy vytvoreni
-* @param startDateIndicator seznam s indexi ukazatelu rovnosti
-* @param endDate seznam s datumy vytvoreni
-* @param endDateIndicator seznam s indexi ukazatelu rovnosti
-* @return Seznam SQLVerifyObject s daty z databaze
-**/
+    /**
+     * Metoda pro vytvoreni SQL dotazu pro urcitou instanci Project
+     * Metoda slozi jednotlive parametry pro SQL dotaz a zavola metodu ze tridy SQLAtributeCreator pro ziskani dat z databaze
+     *
+     * @param projectVerifyId      identifikator zvoleneho projektu
+     * @param name                 seznam s atributy name
+     * @param nameIndicator        seznam s indexi ukazatelu rovnosti
+     * @param description          seznam s atributy description
+     * @param descriptionIndicator seznam s indexi ukazatelu rovnosti
+     * @param startDate            seznam s datumy vytvoreni
+     * @param startDateIndicator   seznam s indexi ukazatelu rovnosti
+     * @param endDate              seznam s datumy vytvoreni
+     * @param endDateIndicator     seznam s indexi ukazatelu rovnosti
+     * @return Seznam SQLVerifyObject s daty z databaze
+     **/
     public ArrayList<SQLVerifyObject> getProject(int projectVerifyId, List<String> name, List<Integer> nameIndicator,
                                                  List<String> description, List<Integer> descriptionIndicator, List<XMLGregorianCalendar> endDate, List<XMLGregorianCalendar> startDate,
                                                  List<Integer> endDateIndicator, List<Integer> startDateIndicator) {
@@ -95,7 +98,7 @@ public class ProjectDAO {
         atributeSection += SQLAtributeCreator.createDateAttribute("endDate", endDate, endDateIndicator);
         atributeSection += SQLAtributeCreator.createDateAttribute("startDate", startDate, startDateIndicator);
 
-        String sql = "SELECT i.id FROM project i WHERE i.superProjectId = ? " + atributeSection;
+        String sql = "SELECT i.id FROM project i WHERE i.Id = ? " + atributeSection;
         ArrayList<List<Integer>> paramIds = new ArrayList<>();
 
         return SQLAtributeCreator.findInstanceInDB(connection, verifyController, sql, projectVerifyId, paramIds);

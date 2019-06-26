@@ -2,7 +2,14 @@ package model;
 
 import SPADEPAC.*;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * Trida slouzici pro upravu dat pro kontroler potazmo view, copirovani jednotlivych prvku datoveho modelu
+ *
+ * @author Václav Janoch
+ */
 
 public class DataManipulator {
 
@@ -15,10 +22,11 @@ public class DataManipulator {
 
     /**
      * Metoda pro kopirovani zakladnich informaci o elementu Artifact
-     * @param artifactId identificator prvku pro kopirovani
+     *
+     * @param artifactId    identificator prvku pro kopirovani
      * @param newArtifactId identificator prvku pro nakopirovani dat
-     * @param x nova x pozice na platne
-     * @param y nova y pozice na platne
+     * @param x             nova x pozice na platne
+     * @param y             nova y pozice na platne
      */
     public void copyDataFromArtifact(int artifactId, int newArtifactId, double x, double y) {
         Artifact oldArtifact = dataModel.getArtifact(artifactId);
@@ -43,10 +51,11 @@ public class DataManipulator {
 
     /**
      * Metoda pro kopirovani zakladnich informaci o elementu CommitedConfigruration
-     * @param commitedConfigurationId identificator prvku pro kopirovani
+     *
+     * @param commitedConfigurationId    identificator prvku pro kopirovani
      * @param newCommitedConfigurationId identificator prvku pro nakopirovani dat
-     * @param x nova x pozice na platne
-     * @param y nova y pozice na platne
+     * @param x                          nova x pozice na platne
+     * @param y                          nova y pozice na platne
      */
     public void copyDataFromCommitedConfiguration(int commitedConfigurationId, int newCommitedConfigurationId, double x, double y) {
         CommitedConfiguration oldCommitedConfiguration = dataModel.getCommitedConfiguration(commitedConfigurationId);
@@ -68,10 +77,11 @@ public class DataManipulator {
 
     /**
      * Metoda pro kopirovani zakladnich informaci o elementu Commit
-     * @param commitId identificator prvku pro kopirovani
+     *
+     * @param commitId    identificator prvku pro kopirovani
      * @param newCommitId identificator prvku pro nakopirovani dat
-     * @param x nova x pozice na platne
-     * @param y nova y pozice na platne
+     * @param x           nova x pozice na platne
+     * @param y           nova y pozice na platne
      */
     public void copyDataFromCommit(int commitId, int newCommitId, double x, double y) {
         Commit oldCommit = dataModel.getCommit(commitId);
@@ -92,10 +102,11 @@ public class DataManipulator {
 
     /**
      * Metoda pro kopirovani zakladnich informaci o elementu Configuration
-     * @param configurationId identificator prvku pro kopirovani
+     *
+     * @param configurationId    identificator prvku pro kopirovani
      * @param newConfigurationId identificator prvku pro nakopirovani dat
-     * @param x nova x pozice na platne
-     * @param y nova y pozice na platne
+     * @param x                  nova x pozice na platne
+     * @param y                  nova y pozice na platne
      */
     public void copyDataFromConfiguration(int configurationId, int newConfigurationId, double x, double y) {
         Configuration oldConfiguration = dataModel.getConfiguration(configurationId);
@@ -126,10 +137,11 @@ public class DataManipulator {
 
     /**
      * Metoda pro kopirovani zakladnich informaci o elementu Person
-     * @param personId identificator prvku pro kopirovani
+     *
+     * @param personId    identificator prvku pro kopirovani
      * @param newPersonId identificator prvku pro nakopirovani dat
-     * @param x nova x pozice na platne
-     * @param y nova y pozice na platne
+     * @param x           nova x pozice na platne
+     * @param y           nova y pozice na platne
      */
     public void copyDataFromPerson(int personId, int newPersonId, double x, double y) {
         Person oldPerson = dataModel.getPerson(personId);
@@ -148,7 +160,8 @@ public class DataManipulator {
 
     /**
      * Metoda pro kopirovani zakladnich informaci o segmentu Phase
-     * @param phaseId identificator prvku pro kopirovani
+     *
+     * @param phaseId    identificator prvku pro kopirovani
      * @param newPhaseId identificator prvku pro nakopirovani dat
      */
     public void copyDataFromPhase(int phaseId, int newPhaseId) {
@@ -167,7 +180,8 @@ public class DataManipulator {
 
     /**
      * Metoda pro kopirovani zakladnich informaci o elementu Work Unit
-     * @param workUnitId identificator prvku pro kopirovani
+     *
+     * @param workUnitId    identificator prvku pro kopirovani
      * @param newWorkUnitId identificator prvku pro nakopirovani dat
      */
     public void copyDataFromWorkUnit(int workUnitId, int newWorkUnitId) {
@@ -192,7 +206,8 @@ public class DataManipulator {
 
     /**
      * Metoda pro kopirovani zakladnich informaci o segmentu Iteration
-     * @param iterationId identificator prvku pro kopirovani
+     *
+     * @param iterationId    identificator prvku pro kopirovani
      * @param newIterationId identificator prvku pro nakopirovani dat
      */
     public void copyDataFromIteration(int iterationId, int newIterationId) {
@@ -213,7 +228,8 @@ public class DataManipulator {
 
     /**
      * Metoda pro kopirovani zakladnich informaci o segmentu Activity
-     * @param activityId identificator prvku pro kopirovani
+     *
+     * @param activityId    identificator prvku pro kopirovani
      * @param newActivityId identificator prvku pro nakopirovani dat
      */
     public void copyDataFromActivity(int activityId, int newActivityId) {
@@ -232,7 +248,8 @@ public class DataManipulator {
 
     /**
      * Metoda pro kopirovani zakladnich informaci o elementu Milestone
-     * @param milestoneId identificator prvku pro kopirovani
+     *
+     * @param milestoneId    identificator prvku pro kopirovani
      * @param newMilestoneId identificator prvku pro nakopirovani dat
      */
     public void copyDataFromMilestone(int milestoneId, int newMilestoneId) {
@@ -249,7 +266,8 @@ public class DataManipulator {
 
     /**
      * Metoda pro kopirovani zakladnich informaci o elementu Criterion
-     * @param criterionId identificator prvku pro kopirovani
+     *
+     * @param criterionId    identificator prvku pro kopirovani
      * @param newCriterionId identificator prvku pro nakopirovani dat
      */
     public void copyDataFromCriterion(int criterionId, int newCriterionId) {
@@ -266,7 +284,8 @@ public class DataManipulator {
 
     /**
      * Metoda pro kopirovani zakladnich informaci o elementu Configuration Person Relation
-     * @param cprId identificator prvku pro kopirovani
+     *
+     * @param cprId    identificator prvku pro kopirovani
      * @param newCPRId identificator prvku pro nakopirovani dat
      */
     public void copyDataFromCPR(int cprId, int newCPRId) {
@@ -283,7 +302,8 @@ public class DataManipulator {
 
     /**
      * Metoda pro kopirovani zakladnich informaci o elementu Branch
-     * @param branchId identificator prvku pro kopirovani
+     *
+     * @param branchId    identificator prvku pro kopirovani
      * @param newBranchId identificator prvku pro nakopirovani dat
      */
     public void copyDataFromBranch(int branchId, int newBranchId) {
@@ -294,14 +314,15 @@ public class DataManipulator {
         newBranch.getName().addAll(oldBranch.getName());
         newBranch.getNameIndicator().addAll(oldBranch.getNameIndicator());
         newBranch.setIsMain(oldBranch.isIsMain());
-     //   newBranch.get().addAll(oldBranch.getDescription());
-     //   newBranch.getDescriptionIndicator().addAll(oldBranch.getDescriptionIndicator());
+        //   newBranch.get().addAll(oldBranch.getDescription());
+        //   newBranch.getDescriptionIndicator().addAll(oldBranch.getDescriptionIndicator());
         newBranch.setExist(oldBranch.isExist());
     }
 
     /**
      * Metoda pro kopirovani zakladnich informaci o elementu Change
-     * @param changeId identificator prvku pro kopirovani
+     *
+     * @param changeId    identificator prvku pro kopirovani
      * @param newChangeId identificator prvku pro nakopirovani dat
      */
     public void copyDataFromChange(int changeId, int newChangeId) {
@@ -318,7 +339,8 @@ public class DataManipulator {
 
     /**
      * Metoda pro kopirovani zakladnich informaci o elementu VCSTag
-     * @param vcsTagId identificator prvku pro kopirovani
+     *
+     * @param vcsTagId    identificator prvku pro kopirovani
      * @param newVCSTagId identificator prvku pro nakopirovani dat
      */
     public void copyDataFromVCSTag(int vcsTagId, int newVCSTagId) {
@@ -335,7 +357,8 @@ public class DataManipulator {
 
     /**
      * Metoda pro kopirovani zakladnich informaci o elementu Role Type
-     * @param roleTypeId identificator prvku pro kopirovani
+     *
+     * @param roleTypeId    identificator prvku pro kopirovani
      * @param newRoleTypeId identificator prvku pro nakopirovani dat
      */
     public void copyDataFromRoleType(int roleTypeId, int newRoleTypeId) {
@@ -351,13 +374,14 @@ public class DataManipulator {
         newRoleType.getRoleTypeSuperClass().addAll(oldRoleType.getRoleTypeSuperClass());
         newRoleType.getRoleTypeClassIndex().addAll(oldRoleType.getRoleTypeClassIndex());
         newRoleType.getRoleTypeClass().addAll(oldRoleType.getRoleTypeClass());
-        
+
         newRoleType.setExist(oldRoleType.isExist());
     }
 
     /**
      * Metoda pro kopirovani zakladnich informaci o elementu Priority
-     * @param priorityId identificator prvku pro kopirovani
+     *
+     * @param priorityId    identificator prvku pro kopirovani
      * @param newPriorityId identificator prvku pro nakopirovani dat
      */
     public void copyDataFromPriority(int priorityId, int newPriorityId) {
@@ -377,7 +401,8 @@ public class DataManipulator {
 
     /**
      * Metoda pro kopirovani zakladnich informaci o elementu Severity
-     * @param severityId identificator prvku pro kopirovani
+     *
+     * @param severityId    identificator prvku pro kopirovani
      * @param newSeverityId identificator prvku pro nakopirovani dat
      */
     public void copyDataFromSeverity(int severityId, int newSeverityId) {
@@ -397,7 +422,8 @@ public class DataManipulator {
 
     /**
      * Metoda pro kopirovani zakladnich informaci o elementu Status
-     * @param statusId identificator prvku pro kopirovani
+     *
+     * @param statusId    identificator prvku pro kopirovani
      * @param newStatusId identificator prvku pro nakopirovani dat
      */
     public void copyDataFromStatus(int statusId, int newStatusId) {
@@ -417,7 +443,8 @@ public class DataManipulator {
 
     /**
      * Metoda pro kopirovani zakladnich informaci o elementu Type
-     * @param typeId identificator prvku pro kopirovani
+     *
+     * @param typeId    identificator prvku pro kopirovani
      * @param newTypeId identificator prvku pro nakopirovani dat
      */
     public void copyDataFromType(int typeId, int newTypeId) {
@@ -437,7 +464,8 @@ public class DataManipulator {
 
     /**
      * Metoda pro kopirovani zakladnich informaci o elementu Relation
-     * @param relationId identificator prvku pro kopirovani
+     *
+     * @param relationId    identificator prvku pro kopirovani
      * @param newRelationId identificator prvku pro nakopirovani dat
      */
     public void copyDataFromRelation(int relationId, int newRelationId) {
@@ -457,7 +485,8 @@ public class DataManipulator {
 
     /**
      * Metoda pro kopirovani zakladnich informaci o elementu Resolution
-     * @param resolutionId identificator prvku pro kopirovani
+     *
+     * @param resolutionId    identificator prvku pro kopirovani
      * @param newResolutionId identificator prvku pro nakopirovani dat
      */
     public void copyDataFromResolution(int resolutionId, int newResolutionId) {
@@ -477,6 +506,7 @@ public class DataManipulator {
 
     /**
      * Metoda pro prevod dat o Criterion z datoveho modelu do seznamu s jednotlivymi parametry elementu
+     *
      * @param id identificator instance pro prevod
      * @return List s jednotlivymi parametry
      */
@@ -511,6 +541,7 @@ public class DataManipulator {
 
     /**
      * Metoda pro prevod dat o Milestone z datoveho modelu do seznamu s jednotlivymi parametry elementu
+     *
      * @param id identificator instance pro prevod
      * @return List s jednotlivymi parametry
      */
@@ -549,8 +580,9 @@ public class DataManipulator {
 
     /**
      * Metoda pro ziskani identifikatoru Criterion z elemtnu Milestone
+     *
      * @param id identifikator Milestone
-     * @return ArrayList<ArrayList<Integer>>
+     * @return ArrayList<ArrayList   <   Integer>>
      */
     public ArrayList<ArrayList<Integer>> getCriterionFromMilestone(int id) {
         Milestone milestone = dataModel.getMilestone(id);
@@ -566,6 +598,7 @@ public class DataManipulator {
 
     /**
      * Metoda pro prevod dat o Person z datoveho modelu do seznamu s jednotlivymi parametry elementu
+     *
      * @param id identificator instance pro prevod
      * @return List s jednotlivymi parametry
      */
@@ -601,8 +634,10 @@ public class DataManipulator {
         return data;
 
     }
+
     /**
      * Metoda pro prevod dat o Role Type z datoveho modelu do seznamu s jednotlivymi parametry elementu
+     *
      * @param id identificator instance pro prevod
      * @return List s jednotlivymi parametry
      */
@@ -646,6 +681,7 @@ public class DataManipulator {
 
     /**
      * Metoda pro prevod dat o Severity z datoveho modelu do seznamu s jednotlivymi parametry elementu
+     *
      * @param id identificator instance pro prevod
      * @return List s jednotlivymi parametry
      */
@@ -676,8 +712,10 @@ public class DataManipulator {
         data[4] = list;
         return data;
     }
+
     /**
      * Metoda pro prevod dat o Priority z datoveho modelu do seznamu s jednotlivymi parametry elementu
+     *
      * @param id identificator instance pro prevod
      * @return List s jednotlivymi parametry
      */
@@ -708,8 +746,10 @@ public class DataManipulator {
         data[4] = list;
         return data;
     }
+
     /**
      * Metoda pro prevod dat o Status z datoveho modelu do seznamu s jednotlivymi parametry elementu
+     *
      * @param id identificator instance pro prevod
      * @return List s jednotlivymi parametry
      */
@@ -740,8 +780,10 @@ public class DataManipulator {
         data[4] = list;
         return data;
     }
+
     /**
      * Metoda pro prevod dat o Type z datoveho modelu do seznamu s jednotlivymi parametry elementu
+     *
      * @param id identificator instance pro prevod
      * @return List s jednotlivymi parametry
      */
@@ -775,6 +817,7 @@ public class DataManipulator {
 
     /**
      * Metoda pro prevod dat o Relation z datoveho modelu do seznamu s jednotlivymi parametry elementu
+     *
      * @param id identificator instance pro prevod
      * @return List s jednotlivymi parametry
      */
@@ -804,8 +847,10 @@ public class DataManipulator {
 
         return data;
     }
+
     /**
      * Metoda pro prevod dat o Resolution z datoveho modelu do seznamu s jednotlivymi parametry elementu
+     *
      * @param id identificator instance pro prevod
      * @return List s jednotlivymi parametry
      */
@@ -846,8 +891,10 @@ public class DataManipulator {
 
         return data;
     }
+
     /**
      * Metoda pro prevod dat o Confing Person Relation z datoveho modelu do seznamu s jednotlivymi parametry elementu
+     *
      * @param id identificator instance pro prevod
      * @return List s jednotlivymi parametry
      */
@@ -886,8 +933,10 @@ public class DataManipulator {
 
         return data;
     }
+
     /**
      * Metoda pro prevod dat o Branch z datoveho modelu do seznamu s jednotlivymi parametry elementu
+     *
      * @param id identificator instance pro prevod
      * @return List s jednotlivymi parametry
      */
@@ -903,18 +952,19 @@ public class DataManipulator {
         }
         List list = new ArrayList();
         list.add(branch.isExist());
-        list.add(null);
-        list.add(branch.getAlias());
         data[2] = list;
         if (branch.isIsMain() != null) {
 
-            list.add(branch.isIsMain());
+            list.add(1, branch.isIsMain());
         }
+        list.add(branch.getAlias());
 
         return data;
     }
+
     /**
      * Metoda pro prevod dat o Phase z datoveho modelu do seznamu s jednotlivymi parametry segmentu
+     *
      * @param id identificator instance pro prevod
      * @return List s jednotlivymi parametry
      */
@@ -978,8 +1028,9 @@ public class DataManipulator {
 
     /**
      * Metoda pro ziskani identifikatoru WorkUnit z segmentu Phase
+     *
      * @param phaseId identifikator Phase
-     * @return ArrayList<ArrayList<Integer>>
+     * @return ArrayList<ArrayList   <   Integer>>
      */
     public ArrayList<ArrayList<Integer>> getWorkUnitFromPhase(int phaseId) {
 
@@ -989,8 +1040,9 @@ public class DataManipulator {
 
     /**
      * Metoda pro ziskani identifikatoru Work Unit z elemetnu Work Unit
+     *
      * @param id identifikator Work Unit
-     * @return ArrayList<ArrayList<Integer>>
+     * @return ArrayList<ArrayList   <   Integer>>
      */
     public ArrayList<ArrayList<Integer>> getWorkUniFromWorkUnit(int id) {
         WorkUnit workUnit = dataModel.getWorkUnit(id);
@@ -999,7 +1051,8 @@ public class DataManipulator {
 
     /**
      * Metoda pro ziskani identifikatoru WorkUnit z projektu
-     * @return ArrayList<ArrayList<Integer>>
+     *
+     * @return ArrayList<ArrayList   <   Integer>>
      */
     public ArrayList<ArrayList<Integer>> getWorkUnitFromProject() {
         Project project = dataModel.getProject();
@@ -1008,8 +1061,9 @@ public class DataManipulator {
 
     /**
      * Metoda pro ziskani identifikatoru WorkUnit z segmentu Iteration
+     *
      * @param iterationId identifikator Iteration
-     * @return ArrayList<ArrayList<Integer>>
+     * @return ArrayList<ArrayList   <   Integer>>
      */
     public ArrayList<ArrayList<Integer>> getWorkUnitFromIteration(int iterationId) {
 
@@ -1019,8 +1073,9 @@ public class DataManipulator {
 
     /**
      * Metoda pro ziskani identifikatoru WorkUnit z segmentu Activity
+     *
      * @param activityId identifikator Activity
-     * @return ArrayList<ArrayList<Integer>>
+     * @return ArrayList<ArrayList   <   Integer>>
      */
     public ArrayList<ArrayList<Integer>> getWorkUnitFromActivity(int activityId) {
 
@@ -1031,8 +1086,9 @@ public class DataManipulator {
     /**
      * Metoda pro prevod identifikatoru ulozenych v datove strukture WorkUnitList
      * do seznamu
+     *
      * @param inputList Seznam instaci WorkUnitList
-     * @return  ArrayList<ArrayList<Integer>>
+     * @return ArrayList<ArrayList   <   Integer>>
      */
 
     private ArrayList<ArrayList<Integer>> getWorkUnitFrom(List<WorkUnitList> inputList) {
@@ -1047,6 +1103,7 @@ public class DataManipulator {
 
     /**
      * Metoda pro prevod dat o Projectu z datoveho modelu do seznamu s jednotlivymi parametry
+     *
      * @return List s jednotlivymi parametry
      */
     public List[] getProjectStringData() {
@@ -1098,6 +1155,7 @@ public class DataManipulator {
 
     /**
      * Metoda pro prevod dat o Iteration z datoveho modelu do seznamu s jednotlivymi parametry segmentu
+     *
      * @param id identificator instance pro prevod
      * @return List s jednotlivymi parametry
      */
@@ -1160,8 +1218,10 @@ public class DataManipulator {
 
         return data;
     }
+
     /**
      * Metoda pro prevod dat o Activity z datoveho modelu do seznamu s jednotlivymi parametry segmentu
+     *
      * @param id identificator instance pro prevod
      * @return List s jednotlivymi parametry
      */
@@ -1205,8 +1265,10 @@ public class DataManipulator {
         }
         return data;
     }
+
     /**
      * Metoda pro prevod dat o Change z datoveho modelu do seznamu s jednotlivymi parametry elementu
+     *
      * @param id identificator instance pro prevod
      * @return List s jednotlivymi parametry
      */
@@ -1247,8 +1309,10 @@ public class DataManipulator {
 
         return data;
     }
+
     /**
      * Metoda pro prevod dat o Artifact z datoveho modelu do seznamu s jednotlivymi parametry elementu
+     *
      * @param id identificator instance pro prevod
      * @return List s jednotlivymi parametry
      */
@@ -1308,8 +1372,10 @@ public class DataManipulator {
 
         return data;
     }
+
     /**
      * Metoda pro prevod dat o Work Unit z datoveho modelu do seznamu s jednotlivymi parametry elementu
+     *
      * @param id identificator instance pro prevod
      * @return List s jednotlivymi parametry
      */
@@ -1444,6 +1510,7 @@ public class DataManipulator {
 
     /**
      * Metoda pro prevod dat o Configuration z datoveho modelu do seznamu s jednotlivymi parametry elementu
+     *
      * @param id identificator instance pro prevod
      * @return List s jednotlivymi parametry
      */
@@ -1505,8 +1572,9 @@ public class DataManipulator {
 
     /**
      * Metoda pro ziskani identifikatoru Config Person Relation z elementu Configuration
+     *
      * @param configId identifikator Configuration
-     * @return ArrayList<ArrayList<Integer>>
+     * @return ArrayList<ArrayList   <   Integer>>
      */
     public ArrayList<ArrayList<Integer>> getCPRFromConfiguration(int configId) {
         Configuration configuration = dataModel.getConfiguration(configId);
@@ -1516,8 +1584,9 @@ public class DataManipulator {
     /**
      * Metoda pro prevod identifikatoru ulozenych v datove strukture CPRList
      * do seznamu
+     *
      * @param inputList Seznam instaci CPRList
-     * @return  ArrayList<ArrayList<Integer>>
+     * @return ArrayList<ArrayList   <   Integer>>
      */
     private ArrayList<ArrayList<Integer>> getCPRFrom(List<CPRSList> inputList) {
         ArrayList<ArrayList<Integer>> list = new ArrayList<>();
@@ -1528,11 +1597,13 @@ public class DataManipulator {
 
         return list;
     }
+
     /**
      * Metoda pro prevod identifikatoru ulozenych v datove strukture BranchList
      * do seznamu
+     *
      * @param inputList Seznam instaci BranchList
-     * @return  ArrayList<ArrayList<Integer>>
+     * @return ArrayList<ArrayList   <   Integer>>
      */
     private ArrayList<ArrayList<Integer>> getBranchFrom(List<BranchList> inputList) {
         ArrayList<ArrayList<Integer>> list = new ArrayList<>();
@@ -1543,11 +1614,13 @@ public class DataManipulator {
 
         return list;
     }
+
     /**
      * Metoda pro prevod identifikatoru ulozenych v datove strukture ChangeList
      * do seznamu
+     *
      * @param inputList Seznam instaci ChangeList
-     * @return  ArrayList<ArrayList<Integer>>
+     * @return ArrayList<ArrayList   <   Integer>>
      */
     private ArrayList<ArrayList<Integer>> getChangeFrom(List<ChangeList> inputList) {
         ArrayList<ArrayList<Integer>> list = new ArrayList<>();
@@ -1561,8 +1634,9 @@ public class DataManipulator {
 
     /**
      * Metoda pro ziskani identifikatoru Branch z elementu Configuration
+     *
      * @param configId identifikator Configuration
-     * @return ArrayList<ArrayList<Integer>>
+     * @return ArrayList<ArrayList   <   Integer>>
      */
     public ArrayList<ArrayList<Integer>> getBranchfromConfiguration(int configId) {
         Configuration configuration = dataModel.getConfiguration(configId);
@@ -1571,15 +1645,18 @@ public class DataManipulator {
 
     /**
      * Metoda pro ziskani identifikatoru Change z elementu Configuration
+     *
      * @param configId identifikator Configuration
-     * @return ArrayList<ArrayList<Integer>>
+     * @return ArrayList<ArrayList   <   Integer>>
      */
     public ArrayList<ArrayList<Integer>> getChangeFromConfiguration(int configId) {
         Configuration configuration = dataModel.getConfiguration(configId);
         return getChangeFrom(configuration.getChangesIndexs());
     }
+
     /**
      * Metoda pro prevod dat o VCSTAg z datoveho modelu do seznamu s jednotlivymi parametry elementu
+     *
      * @param tagId identificator instance pro prevod
      * @return List s jednotlivymi parametry
      */
@@ -1611,8 +1688,10 @@ public class DataManipulator {
         data[4] = list;
         return data;
     }
+
     /**
      * Metoda pro prevod dat o Commit z datoveho modelu do seznamu s jednotlivymi parametry elementu
+     *
      * @param commitId identificator instance pro prevod
      * @return List s jednotlivymi parametry
      */
@@ -1656,8 +1735,10 @@ public class DataManipulator {
 
         return data;
     }
+
     /**
      * Metoda pro prevod dat o Commited Configuration z datoveho modelu do seznamu s jednotlivymi parametry elementu
+     *
      * @param commitedId identificator instance pro prevod
      * @return List s jednotlivymi parametry
      */

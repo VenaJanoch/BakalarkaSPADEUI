@@ -1,30 +1,32 @@
 package modelControllerTests;
 
+import SPADEPAC.ConfigPersonRelation;
 import controllers.formControllers.FormController;
 import controllers.formControllers.FormDataController;
-import SPADEPAC.ConfigPersonRelation;
 import org.junit.Before;
 import org.junit.Test;
 import services.SegmentLists;
 import services.SegmentType;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
 
 public class CPRValueTest {
 
-        ConfigPersonRelation cpr;
-        SegmentLists lists;
-        @Before
-        public void setUp() throws Exception {
+    ConfigPersonRelation cpr;
+    SegmentLists lists;
 
-            WarmUp warmUp = new WarmUp();
-            lists = warmUp.getLists();
-            FormDataController formDataController = warmUp.getFormDataController();
-            FormController formController = warmUp.getFormController();
+    @Before
+    public void setUp() throws Exception {
 
-            formController.createTableItem(SegmentType.Config_Person_Relation);
-            cpr = warmUp.getDataModel().getConfigPersonRelation(0);
-        }
+        WarmUp warmUp = new WarmUp();
+        lists = warmUp.getLists();
+        FormDataController formDataController = warmUp.getFormDataController();
+        FormController formController = warmUp.getFormController();
+
+        formController.createTableItem(SegmentType.Config_Person_Relation);
+        cpr = warmUp.getDataModel().getConfigPersonRelation(0);
+    }
 
     @Test
     public void testId() {

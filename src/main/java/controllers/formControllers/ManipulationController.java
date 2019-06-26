@@ -7,11 +7,9 @@ import graphics.canvas.CanvasItem;
 import graphics.canvas.DragAndDropCanvas;
 import graphics.canvas.NodeLink;
 import interfaces.IDeleteFormController;
-import javafx.scene.control.TableView;
-import javafx.scene.paint.Color;
-import services.*;
-
-import java.util.Set;
+import services.Alerts;
+import services.CanvasType;
+import services.SegmentType;
 
 /**
  * Trida predstavujici controller manipulaci s prvky na platne
@@ -27,9 +25,13 @@ public class ManipulationController {
 
     private DragAndDropCanvas chooseCanvas;
 
-    /**Promenna pro urceni vybrane funkce pro vyjmuti prvku**/
+    /**
+     * Promenna pro urceni vybrane funkce pro vyjmuti prvku
+     **/
     private boolean isCut;
-    /**Promenna pro urceni vybrane funkce pro kopirovani prvku**/
+    /**
+     * Promenna pro urceni vybrane funkce pro kopirovani prvku
+     **/
     private boolean isCopy;
 
     private boolean isChoosedItem = false;
@@ -47,8 +49,9 @@ public class ManipulationController {
     /**
      * Konstruktor třídy Zinicializuje globální proměnné třídy
      * instance třídy control
+     *
      * @param deleteFormController instace tridy kontroleru pro odstraneni prvku
-     * @param selectionController instace tridy kontroleru pro vyber vice prvku
+     * @param selectionController  instace tridy kontroleru pro vyber vice prvku
      */
     public ManipulationController(IDeleteFormController deleteFormController, SelectionController selectionController) {
 
@@ -80,20 +83,22 @@ public class ManipulationController {
 
     /**
      * Smaže zvolene prvky ze seznamů  na plátně
+     *
      * @param canvasItemController instace tridy canvasItemController
-     * @param canvasController instace tridy canvasController
+     * @param canvasController     instace tridy canvasController
      */
     public void deleteItem(CanvasItemController canvasItemController, CanvasController canvasController) {
-            for(CanvasItem chooseCanvasItem : selectionController.getSelection()){
-               deleteItem(canvasItemController, chooseCanvasItem, canvasController);
-            }
+        for (CanvasItem chooseCanvasItem : selectionController.getSelection()) {
+            deleteItem(canvasItemController, chooseCanvasItem, canvasController);
+        }
     }
 
     /**
      * Pretizena metoda pro odstraneni prvku na platne
+     *
      * @param canvasItemController instace tridy canvasItemController
-     * @param chooseCanvasItem instace vybraneho prvku pro odstraneni
-     * @param canvasController instace tridy canvasController
+     * @param chooseCanvasItem     instace vybraneho prvku pro odstraneni
+     * @param canvasController     instace tridy canvasController
      */
     public void deleteItem(CanvasItemController canvasItemController, CanvasItem chooseCanvasItem, CanvasController canvasController) {
         int index = chooseCanvasItem.getFormIdentificator();
@@ -105,11 +110,12 @@ public class ManipulationController {
 
     /**
      * Metoda pro vlozeni noveho prveku na platno
-     * @param canvasController instace tridy canvasController
+     *
+     * @param canvasController     instace tridy canvasController
      * @param canvasItemController instace tridy canvasItemController
-     * @param x souradnice pro vlozeni
-     * @param y souradnice pro vlozeni
-     * @param chooseCanvasItem instace prvku na platne pro napleni daty
+     * @param x                    souradnice pro vlozeni
+     * @param y                    souradnice pro vlozeni
+     * @param chooseCanvasItem     instace prvku na platne pro napleni daty
      */
     public void pasteItem(CanvasController canvasController, CanvasItemController canvasItemController, double x, double y, CanvasItem chooseCanvasItem) {
 
@@ -132,14 +138,15 @@ public class ManipulationController {
 
     /**
      * Pretizena metoda pro vlozeni novych prvku na platno
-     * @param canvasController instace tridy canvasController
+     *
+     * @param canvasController     instace tridy canvasController
      * @param canvasItemController instace tridy canvasItemController
-     * @param x souradnice pro vlozeni
-     * @param y souradnice pro vlozeni
+     * @param x                    souradnice pro vlozeni
+     * @param y                    souradnice pro vlozeni
      */
     public void pasteItem(CanvasController canvasController, CanvasItemController canvasItemController, double x, double y) {
 
-        for(CanvasItem canvasItem : selectionController.getSelection()){
+        for (CanvasItem canvasItem : selectionController.getSelection()) {
             pasteItem(canvasController, canvasItemController, x, y, canvasItem);
         }
 
@@ -177,7 +184,8 @@ public class ManipulationController {
 
     /**
      * Metoda pro rozhodnuti, ktery z datoveho modelu bude smazany
-     * @param formIndex formIndex
+     *
+     * @param formIndex   formIndex
      * @param segmentType SegmentType
      * @return rozhodnuti zda se ma prvek smazat
      */

@@ -1,6 +1,5 @@
 package controlPanels;
 
-import abstractControlPane.DateControlPanel;
 import abstractControlPane.DateDescControlPanel;
 import controllers.formControllers.FormController;
 import graphics.controlPanelItems.ControlPanelLine;
@@ -20,6 +19,11 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Trida predstavujici editacni panel pro element Committed Configuration
+ *
+ * @author Vaclav Janoch
+ */
 public class CommitedConfigurationControlPanel extends DateDescControlPanel implements IControlPanel {
 
     /**
@@ -32,6 +36,15 @@ public class CommitedConfigurationControlPanel extends DateDescControlPanel impl
     private int commitedConfigurationId;
     private int commitedConfigurationFormId;
 
+    /**
+     * Konstruktor tridy, zinicializuje globalni promenne tridy
+     * Je zde rozsiren seznam poznych typu panelu pro dany element
+     *
+     * @param buttonName         textovy retezec pro potvrzovaci tlacitko
+     * @param formDataController instace tridy FormDataController pro ziskani dat z datoveho modelu
+     * @param editFormController instace tridy EditDataController pro predani novych dat
+     * @param formController     instace tridy FormController
+     */
     public CommitedConfigurationControlPanel(String buttonName, IFormDataController formDataController,
                                              IEditFormController editFormController, FormController formController, CommitedConfigurationTable branchTable, int id, int formIndex) {
         super(buttonName, formDataController, editFormController, formController);
@@ -46,6 +59,11 @@ public class CommitedConfigurationControlPanel extends DateDescControlPanel impl
 
     }
 
+    /**
+     * Metoda pro zobrazeni postraniho editacniho panelu
+     * Nejprve jsou ziskana data z datoveho modelu
+     * nasledne pomoci kontroleru ControlPanelController pridana do panelu
+     */
     @Override
     public void showEditControlPanel() {
         List[] commitedData = formDataController.getCommitedConfigurationStringData(commitedConfigurationId);
@@ -65,7 +83,10 @@ public class CommitedConfigurationControlPanel extends DateDescControlPanel impl
         controlPanelController.setAlias((String) boolList.get(3), this);
     }
 
-
+    /**
+     * Metoda volajici kontroler ControlPanelController pro vygenerovani noveho radku
+     * Pripadne rozsireni o staticke objekty
+     */
     protected void addItemsToControlPanel() {
 
         controlPanelController.setCountLine(this, 2, new ControlPanelLine(lineList, this, controlPanelController, Constans.numberIndicatorList, controlPanelController.getLineCount()));
@@ -75,6 +96,9 @@ public class CommitedConfigurationControlPanel extends DateDescControlPanel impl
 
     }
 
+    /**
+     * Metoda pro ziskani dat z grafickych komponent a predani dat do editacniho kontroleru EditFormController
+     */
     public void saveDataFromPanel() {
 
         ArrayList<Integer> nameIndicators = new ArrayList<>();
@@ -97,11 +121,6 @@ public class CommitedConfigurationControlPanel extends DateDescControlPanel impl
 
     public Button getButton() {
         return button;
-    }
-
-    public void clearPanelCB(TableView tableView) {
-        tableView.refresh();
-        tableView.getSelectionModel().clearSelection();
     }
 
     @Override

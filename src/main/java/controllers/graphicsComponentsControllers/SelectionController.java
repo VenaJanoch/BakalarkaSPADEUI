@@ -1,6 +1,7 @@
 package controllers.graphicsComponentsControllers;
 
 import graphics.canvas.CanvasItem;
+import graphics.canvas.NodeLink;
 import javafx.scene.Node;
 import javafx.scene.paint.Color;
 
@@ -15,8 +16,14 @@ import java.util.Set;
  */
 public class SelectionController {
 
-    /** Kolekce uchovavajici instace objekty vybranych na platne**/
+    /**
+     * Kolekce uchovavajici instace objekty vybranych na platne
+     **/
     private Set<CanvasItem> selection = new HashSet<>();
+    /**
+     * Kolekce uchovavajici instace spojnic vybranych na platne
+     **/
+    private Set<NodeLink> linkSelection = new HashSet<>();
 
     /**
      * Metoda pro pridani prvku do vyberu

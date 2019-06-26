@@ -10,31 +10,34 @@ import java.util.List;
 
 /**
  * Třída zajišťující výběr dat artefaktů z databáze implementující
+ *
  * @author Vaclav Janoch
  */
 public class WorkUnitDAO {
-    private Connection pripojeni;               
+    private Connection pripojeni;
     private VerifyController verifyController;
 
     /**
      * Konstruktor tridy
      * Zinicializuje globalni promenne tridy
+     *
      * @param verifyController
      */
     public WorkUnitDAO(VerifyController verifyController) {
-        this.pripojeni = Constans.CONNECTION;  
+        this.pripojeni = Constans.CONNECTION;
         this.verifyController = verifyController;
     }
 
-/**
-* Metoda pro vytvoreni SQL dotazu pro urcitou instanci Work Unit
-* Metoda slozi jednotlive parametry pro SQL dotaz a zavola metodu ze tridy SQLAtributeCreator pro ziskani dat z databaze
-* @param projectVerifyId identifikator zvoleneho projektu
-* @param name seznam s atributy name
-* @param nameIndicator seznam s indexi ukazatelu rovnosti
-* @param createdDate seznam s datumy vytvoreni
-* @return Seznam SQLVerifyObject s daty z databaze
-**/
+    /**
+     * Metoda pro vytvoreni SQL dotazu pro urcitou instanci Work Unit
+     * Metoda slozi jednotlive parametry pro SQL dotaz a zavola metodu ze tridy SQLAtributeCreator pro ziskani dat z databaze
+     *
+     * @param projectVerifyId identifikator zvoleneho projektu
+     * @param name            seznam s atributy name
+     * @param nameIndicator   seznam s indexi ukazatelu rovnosti
+     * @param createdDate     seznam s datumy vytvoreni
+     * @return Seznam SQLVerifyObject s daty z databaze
+     **/
     public ArrayList<SQLVerifyObject> getWorkUnitProjekt(int projectVerifyId, List<String> name, List<Integer> nameIndicator, List<Double> estimateTime, List<Integer> progress, List<Integer> category,
                                                          List<Integer> assigneeIds, List<Integer> priorityIds, List<Integer> severityIds, List<Integer> resolutionIds,
                                                          List<Integer> statusIds, List<Integer> typeIds, List<Integer> relationIds, List<Integer> workUnitsInRelationIds,

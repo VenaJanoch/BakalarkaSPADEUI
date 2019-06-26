@@ -1,18 +1,20 @@
 package modelControllerTests;
 
+import SPADEPAC.Resolution;
 import controllers.formControllers.FormController;
 import controllers.formControllers.FormDataController;
-import SPADEPAC.Resolution;
 import org.junit.Before;
 import org.junit.Test;
 import services.SegmentLists;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
 
 public class ResolutionValueTest {
 
     Resolution resolution;
     SegmentLists lists;
+
     @Before
     public void setUp() throws Exception {
 

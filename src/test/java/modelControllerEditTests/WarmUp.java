@@ -28,13 +28,13 @@ public class WarmUp {
     private DataManipulator data;
     private FormController formController;
 
-    public WarmUp(){
-        this.lists =  new SegmentLists();
+    public WarmUp() {
+        this.lists = new SegmentLists();
         MapperTableToObject mapperTableToObject = new MapperTableToObject(lists);
         IdentificatorCreater idCreator = new IdentificatorCreater();
         ProcessGenerator processGenerator = new ProcessGenerator();
         dataModel = new DataModel(processGenerator);
-        data =  new DataManipulator(dataModel);
+        data = new DataManipulator(dataModel);
 
         FileManipulator file = new FileManipulator(dataModel);
         Alerts alerts = new Alerts(file);
@@ -46,7 +46,7 @@ public class WarmUp {
         formController = new FormController(idCreator, dataModel, ap, lists, dataPreparer, drawerPanelController, selectItemController);
         editFormController = new EditFormController(dataModel, idCreator, mapperTableToObject, lists, dataPreparer, formController);
         selectItemController.setFormController(formController);
-        for(int i = 0; i < 12; i++){
+        for (int i = 0; i < 12; i++) {
             formController.getForms().add(null);
         }
         this.formDataController = new FormDataController(formController, lists, mapperTableToObject, dataModel, idCreator, dataPreparer);

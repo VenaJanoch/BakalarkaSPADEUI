@@ -41,11 +41,12 @@ public class VCSTagForm extends TableBasicForm implements ISegmentTableForm {
     /**
      * Konstruktor Třídy Zinicializuje globální proměnné tříd Nastaví reakci
      * na klik do tabulky, vytvori naplni panel a nastavi akce tlacitkum
-     * @param formController instance tridy FormController
-     * @param formDataController instance tridy FormDataController
-     * @param editFormController instance tridy EditFormController
+     *
+     * @param formController       instance tridy FormController
+     * @param formDataController   instance tridy FormDataController
+     * @param editFormController   instance tridy EditFormController
      * @param deleteFormController instace tridy DeleteFormController
-     * @param type instace SegmentType pro urceni typu formulare
+     * @param type                 instace SegmentType pro urceni typu formulare
      */
     public VCSTagForm(FormController formController, IFormDataController formDataController, IEditFormController editFormController,
                       IDeleteFormController deleteFormController, SegmentType type) {
@@ -75,6 +76,7 @@ public class VCSTagForm extends TableBasicForm implements ISegmentTableForm {
             }
         };
     }
+
     /**
      * Metoda pro přídání prvku do interního gridPanelu
      */
@@ -129,6 +131,7 @@ public class VCSTagForm extends TableBasicForm implements ISegmentTableForm {
             deleteItem(tableTV);
         }
     }
+
     /**
      * Metoda pro přídání prvku do gridPanelu
      */

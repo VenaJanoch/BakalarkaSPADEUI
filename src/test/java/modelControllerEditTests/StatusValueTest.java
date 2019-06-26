@@ -1,9 +1,7 @@
 package modelControllerEditTests;
 
 import SPADEPAC.Status;
-import controllers.formControllers.FormController;
 import controllers.formControllers.FormDataController;
-import javafx.scene.control.TableView;
 import org.junit.Before;
 import org.junit.Test;
 import services.SegmentLists;
@@ -15,7 +13,6 @@ import java.util.ArrayList;
 import static junit.framework.TestCase.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
 
 public class StatusValueTest {
 

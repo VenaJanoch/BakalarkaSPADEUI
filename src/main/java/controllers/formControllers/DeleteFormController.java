@@ -36,6 +36,7 @@ public class DeleteFormController implements IDeleteFormController {
      * Konstruktor tridy
      * Inicializuje potrebne globalni promenne
      * Parametry jsou tridy
+     *
      * @param formController
      * @param dataModel
      * @param identificatorCreater
@@ -61,6 +62,7 @@ public class DeleteFormController implements IDeleteFormController {
      * Metoda pro odstraneni prvku z datovych struktur
      * Nejprve jsou zjisteny id prvku pro odstraneni
      * nasledne jsou aktualizovany reference na prvek, mapovaci mapy a odstraneny informace z datovych struktur
+     *
      * @param activityList
      * @param selection
      */
@@ -74,8 +76,9 @@ public class DeleteFormController implements IDeleteFormController {
     /**
      * Metoda pro odstraneni segmetnu Activity
      * Metoda slouzi pro vyvolani potvrzovaciho dialogu a zavolani metody pro odstraneni prvku z datovych struktur
-     * @param selection
-     * @param view
+     *
+     * @param selection zvolene prvky v tabulce
+     * @param view      instance TableView
      */
     public void deleteActivityWithDialog(ArrayList<BasicTable> selection, TableView view) {
         if (Alerts.showDeleteItemCascadeAlert(selection)) {
@@ -91,6 +94,7 @@ public class DeleteFormController implements IDeleteFormController {
      * Metoda pro odstraneni prvku z datovych struktur
      * Nejprve jsou zjisteny id prvku pro odstraneni
      * nasledne jsou aktualizovany reference na prvek, mapovaci mapy a odstraneny informace z datovych struktur
+     *
      * @param workUnitList
      * @param selection
      */
@@ -112,8 +116,9 @@ public class DeleteFormController implements IDeleteFormController {
     /**
      * Metoda pro odstraneni elementu
      * Metoda slouzi pro vyvolani potvrzovaciho dialogu a zavolani metody pro odstraneni prvku z datovych struktur
-     * @param selection
-     * @param view
+     *
+     * @param selection zvolene prvky v tabulce
+     * @param view      instance TableView
      */
     public void deleteWorkUnitWithDialog(ArrayList<BasicTable> selection, TableView view) {
         if (Alerts.showDeleteItemCascadeAlert(selection, mapperTableToObject.getWorkUnitMaps())) {
@@ -131,6 +136,7 @@ public class DeleteFormController implements IDeleteFormController {
      * Metoda pro odstraneni prvku z datovych struktur
      * Nejprve jsou zjisteny id prvku pro odstraneni
      * nasledne jsou aktualizovany reference na prvek, mapovaci mapy a odstraneny informace z datovych struktur
+     *
      * @param changeList
      * @param selection
      */
@@ -147,8 +153,9 @@ public class DeleteFormController implements IDeleteFormController {
     /**
      * Metoda pro odstraneni elementu Change
      * Metoda slouzi pro vyvolani potvrzovaciho dialogu a zavolani metody pro odstraneni prvku z datovych struktur
+     *
      * @param selection zvolene prvky v prehledove tabulce pro odstraneni
-     * @param view prehledova tabulka
+     * @param view      prehledova tabulka
      */
     public void deleteChangeWithDialog(ArrayList<BasicTable> selection, TableView view) {
         if (Alerts.showDeleteItemCascadeAlert(selection, mapperTableToObject.getConfigurationToChangeMapper())) {
@@ -166,28 +173,29 @@ public class DeleteFormController implements IDeleteFormController {
      * Metoda pro odstraneni prvku z datovych struktur
      * Nejprve jsou zjisteny id prvku pro odstraneni
      * nasledne jsou aktualizovany reference na prvek, mapovaci mapy a odstraneny informace z datovych struktur
+     *
      * @param indexForm
      * @return
      */
     public boolean deleteArtifact(int indexForm) {
         ArrayList list = new ArrayList();
         int id = identificatorCreater.getArtifactIndexToIdMaper().get(indexForm);
-            list.add(segmentLists.getArtifactTable(id));
-            if (Alerts.showDeleteItemCascadeAlert(list, mapperTableToObject.getArtifactMaps())) {
+        list.add(segmentLists.getArtifactTable(id));
+        if (Alerts.showDeleteItemCascadeAlert(list, mapperTableToObject.getArtifactMaps())) {
 
-                panels.remove(indexForm);
-                panels.add(indexForm, null);
-                editDataModel.updateItemList(SegmentType.Change, SegmentType.Artifact, id);
-                editDataModel.updateItemList(SegmentType.Configuration, SegmentType.Artifact, id);
+            panels.remove(indexForm);
+            panels.add(indexForm, null);
+            editDataModel.updateItemList(SegmentType.Change, SegmentType.Artifact, id);
+            editDataModel.updateItemList(SegmentType.Configuration, SegmentType.Artifact, id);
 
-                mapperTableToObject.updateValueList(mapperTableToObject.getChangeToArtifactMapper(), id);
-                mapperTableToObject.updateValueList(mapperTableToObject.getConfigurationToArtifactMapper(), id);
+            mapperTableToObject.updateValueList(mapperTableToObject.getChangeToArtifactMapper(), id);
+            mapperTableToObject.updateValueList(mapperTableToObject.getConfigurationToArtifactMapper(), id);
 
-                mapperTableToObject.deleteFromMap(mapperTableToObject.getArtifactToRoleMapper(), id);
-                segmentLists.removeItemFromObservableList(SegmentType.Artifact, id);
-                deleteDataModel.removeArtifact(id);
-                return true;
-            }
+            mapperTableToObject.deleteFromMap(mapperTableToObject.getArtifactToRoleMapper(), id);
+            segmentLists.removeItemFromObservableList(SegmentType.Artifact, id);
+            deleteDataModel.removeArtifact(id);
+            return true;
+        }
 
         return false;
 
@@ -197,6 +205,7 @@ public class DeleteFormController implements IDeleteFormController {
      * Metoda pro odstraneni prvku z datovych struktur
      * Nejprve jsou zjisteny id prvku pro odstraneni
      * nasledne jsou aktualizovany reference na prvek, mapovaci mapy a odstraneny informace z datovych struktur
+     *
      * @param iterationList
      * @param selection
      */
@@ -210,8 +219,9 @@ public class DeleteFormController implements IDeleteFormController {
     /**
      * Metoda pro odstraneni segmetnu Iteration
      * Metoda slouzi pro vyvolani potvrzovaciho dialogu a zavolani metody pro odstraneni prvku z datovych struktur
+     *
      * @param selection zvolene prvky v prehledove tabulce pro odstraneni
-     * @param view prehledova tabulka
+     * @param view      prehledova tabulka
      */
     public void deleteIterationWithDialog(ArrayList<BasicTable> selection, TableView view) {
         if (Alerts.showDeleteItemCascadeAlert(selection)) {
@@ -224,11 +234,13 @@ public class DeleteFormController implements IDeleteFormController {
             view.getSelectionModel().clearSelection();
         }
     }
+
     /**
      * Metoda pro odstraneni segmentu Phase
      * Metoda slouzi pro vyvolani potvrzovaciho dialogu a zavolani metody pro odstraneni prvku z datovych struktur
+     *
      * @param selection zvolene prvky v prehledove tabulce pro odstraneni
-     * @param view prehledova tabulka
+     * @param view      prehledova tabulka
      */
     public void deletePhaseWithDialog(ArrayList<BasicTable> selection, TableView view) {
         if (Alerts.showDeleteItemCascadeAlert(selection)) {
@@ -246,6 +258,7 @@ public class DeleteFormController implements IDeleteFormController {
      * Metoda pro odstraneni prvku z datovych struktur
      * Nejprve jsou zjisteny id prvku pro odstraneni
      * nasledne jsou aktualizovany reference na prvek, mapovaci mapy a odstraneny informace z datovych struktur
+     *
      * @param phaseList
      * @param selection
      */
@@ -260,6 +273,7 @@ public class DeleteFormController implements IDeleteFormController {
      * Metoda pro odstraneni prvku z datovych struktur
      * Nejprve jsou zjisteny id prvku pro odstraneni
      * nasledne jsou aktualizovany reference na prvek, mapovaci mapy a odstraneny informace z datovych struktur
+     *
      * @param indexForm
      * @return
      */
@@ -267,14 +281,14 @@ public class DeleteFormController implements IDeleteFormController {
 
         ArrayList list = new ArrayList();
         int id = identificatorCreater.getConfigurationId(indexForm);
-            list.add(segmentLists.getConfigurationTable(id));
-            if (Alerts.showDeleteItemCascadeAlert(list, mapperTableToObject.getConfigurationMaps())) {
+        list.add(segmentLists.getConfigurationTable(id));
+        if (Alerts.showDeleteItemCascadeAlert(list, mapperTableToObject.getConfigurationMaps())) {
 
-                panels.remove(indexForm);
-                panels.add(indexForm, null);
-                deleteConfiguration(id);
-                return true;
-            }
+            panels.remove(indexForm);
+            panels.add(indexForm, null);
+            deleteConfiguration(id);
+            return true;
+        }
         return false;
     }
 
@@ -282,6 +296,7 @@ public class DeleteFormController implements IDeleteFormController {
      * Metoda pro odstraneni prvku z datovych struktur
      * Nejprve jsou zjisteny id prvku pro odstraneni
      * nasledne jsou aktualizovany reference na prvek, mapovaci mapy a odstraneny informace z datovych struktur
+     *
      * @param id
      */
     public void deleteConfiguration(int id) {
@@ -296,23 +311,25 @@ public class DeleteFormController implements IDeleteFormController {
         deleteDataModel.removeConfiguration(id);
         segmentLists.removeItemFromObservableList(SegmentType.Configuration, id);
     }
+
     /**
      * Metoda pro odstraneni elementu Commit
      * Metoda slouzi pro vyvolani potvrzovaciho dialogu a zavolani metody pro odstraneni prvku z datovych struktur
+     *
      * @param indexForm index formulare pro ostraneni
      */
     public boolean deleteCommitWithDialog(int indexForm) {
 
         ArrayList list = new ArrayList();
         int id = identificatorCreater.getCommitId(indexForm);
-            list.add(segmentLists.getCommitTable(id));
-            if (Alerts.showDeleteItemCascadeAlert(list, mapperTableToObject.getCommitedConfigurationToCommitMapper())) {
+        list.add(segmentLists.getCommitTable(id));
+        if (Alerts.showDeleteItemCascadeAlert(list, mapperTableToObject.getCommitedConfigurationToCommitMapper())) {
 
-                panels.remove(indexForm);
-                panels.add(indexForm, null);
-                deleteCommit(id);
-                return true;
-            }
+            panels.remove(indexForm);
+            panels.add(indexForm, null);
+            deleteCommit(id);
+            return true;
+        }
         return false;
     }
 
@@ -320,6 +337,7 @@ public class DeleteFormController implements IDeleteFormController {
      * Metoda pro odstraneni prvku z datovych struktur
      * Nejprve jsou zjisteny id prvku pro odstraneni
      * nasledne jsou aktualizovany reference na prvek, mapovaci mapy a odstraneny informace z datovych struktur
+     *
      * @param id
      */
 
@@ -337,26 +355,29 @@ public class DeleteFormController implements IDeleteFormController {
     /**
      * Metoda pro odstraneni elementu Committed configuration
      * Metoda slouzi pro vyvolani potvrzovaciho dialogu a zavolani metody pro odstraneni prvku z datovych struktur
+     *
      * @param indexForm index formulare pro odstraneni
      */
     public boolean deleteCommitedConfigurationWithDialog(int indexForm) {
 
         ArrayList list = new ArrayList();
         int id = identificatorCreater.getCommitedConfigurationId(indexForm);
-            list.add(segmentLists.getCommitedConfigurationTable(id));
-            if (Alerts.showDeleteItemCascadeAlert(list, mapperTableToObject.getConfigurationToCommitedConfigurationMapper())) {
+        list.add(segmentLists.getCommitedConfigurationTable(id));
+        if (Alerts.showDeleteItemCascadeAlert(list, mapperTableToObject.getConfigurationToCommitedConfigurationMapper())) {
 
-                panels.remove(indexForm);
-                panels.add(indexForm, null);
-                deleteCommitedConfiguration(id);
-                return true;
-            }
+            panels.remove(indexForm);
+            panels.add(indexForm, null);
+            deleteCommitedConfiguration(id);
+            return true;
+        }
         return false;
     }
+
     /**
      * Metoda pro odstraneni prvku z datovych struktur
      * Nejprve jsou zjisteny id prvku pro odstraneni
      * nasledne jsou aktualizovany reference na prvek, mapovaci mapy a odstraneny informace z datovych struktur
+     *
      * @param id
      */
     public void deleteCommitedConfiguration(int id) {
@@ -369,11 +390,13 @@ public class DeleteFormController implements IDeleteFormController {
         deleteDataModel.removeCommitedConfiguration(id);
         segmentLists.removeItemFromObservableList(SegmentType.Committed_Configuration, id);
     }
+
     /**
      * Metoda pro odstraneni elementu Type
      * Metoda slouzi pro vyvolani potvrzovaciho dialogu a zavolani metody pro odstraneni prvku z datovych struktur
+     *
      * @param selection zvolene prvky v prehledove tabulce pro odstraneni
-     * @param view prehledova tabulka
+     * @param view      prehledova tabulka
      */
     public void deleteTypeWithDialog(ArrayList<BasicTable> selection, TableView view) {
         if (Alerts.showDeleteItemCascadeAlert(selection, mapperTableToObject.getWUTotypeMapper())) {
@@ -393,6 +416,7 @@ public class DeleteFormController implements IDeleteFormController {
      * Metoda pro odstraneni prvku z datovych struktur
      * Nejprve jsou zjisteny id prvku pro odstraneni
      * nasledne jsou aktualizovany reference na prvek, mapovaci mapy a odstraneny informace z datovych struktur
+     *
      * @param typeListObservable
      * @param selection
      */
@@ -408,11 +432,13 @@ public class DeleteFormController implements IDeleteFormController {
 
 
     }
+
     /**
      * Metoda pro odstraneni elementu Status
      * Metoda slouzi pro vyvolani potvrzovaciho dialogu a zavolani metody pro odstraneni prvku z datovych struktur
+     *
      * @param selection zvolene prvky v prehledove tabulce pro odstraneni
-     * @param view prehledova tabulka
+     * @param view      prehledova tabulka
      */
     public void deleteStatusWithDialog(ArrayList<BasicTable> selection, TableView view) {
         if (Alerts.showDeleteItemCascadeAlert(selection, mapperTableToObject.getWUStatusMapper())) {
@@ -429,6 +455,7 @@ public class DeleteFormController implements IDeleteFormController {
      * Metoda pro odstraneni prvku z datovych struktur
      * Nejprve jsou zjisteny id prvku pro odstraneni
      * nasledne jsou aktualizovany reference na prvek, mapovaci mapy a odstraneny informace z datovych struktur
+     *
      * @param statusListObservable
      * @param selection
      */
@@ -443,9 +470,11 @@ public class DeleteFormController implements IDeleteFormController {
 
 
     }
+
     /**
      * Metoda pro odstraneni elementu Role Type
      * Metoda slouzi pro vyvolani potvrzovaciho dialogu a zavolani metody pro odstraneni prvku z datovych struktur
+     *
      * @param selection zvolene prvky v prehledove tabulce pro odstraneni
      * @param tableView prehledova tabulka
      */
@@ -465,6 +494,7 @@ public class DeleteFormController implements IDeleteFormController {
      * Metoda pro odstraneni prvku z datovych struktur
      * Nejprve jsou zjisteny id prvku pro odstraneni
      * nasledne jsou aktualizovany reference na prvek, mapovaci mapy a odstraneny informace z datovych struktur
+     *
      * @param roleTypeListObservable
      * @param selection
      */
@@ -502,6 +532,7 @@ public class DeleteFormController implements IDeleteFormController {
      * Metoda pro odstraneni prvku z datovych struktur
      * Nejprve jsou zjisteny id prvku pro odstraneni
      * nasledne jsou aktualizovany reference na prvek, mapovaci mapy a odstraneny informace z datovych struktur
+     *
      * @param id
      */
     public void deletePerson(int id) {
@@ -511,15 +542,17 @@ public class DeleteFormController implements IDeleteFormController {
         editDataModel.updateItemList(SegmentType.Artifact, SegmentType.Person, id);
         editDataModel.updateItemList(SegmentType.Config_Person_Relation, SegmentType.Person, id);
 
-        mapperTableToObject.deleteFromRoleMaps(id);
+        mapperTableToObject.deleteFromPersonMaps(id);
         mapperTableToObject.updateValueList(mapperTableToObject.getPersonToRoleTypeMapper(), id);
 
-        deleteDataModel.removeRole(id);
+        deleteDataModel.removePerson(id);
         segmentLists.removeItemFromObservableList(SegmentType.Person, id);
     }
+
     /**
      * Metoda pro odstraneni elementu Relation
      * Metoda slouzi pro vyvolani potvrzovaciho dialogu a zavolani metody pro odstraneni prvku z datovych struktur
+     *
      * @param list zvolene prvky v prehledove tabulce pro odstraneni
      * @param view prehledova tabulka
      */
@@ -536,6 +569,7 @@ public class DeleteFormController implements IDeleteFormController {
      * Metoda pro odstraneni prvku z datovych struktur
      * Nejprve jsou zjisteny id prvku pro odstraneni
      * nasledne jsou aktualizovany reference na prvek, mapovaci mapy a odstraneny informace z datovych struktur
+     *
      * @param observableList
      * @param list
      */
@@ -553,8 +587,9 @@ public class DeleteFormController implements IDeleteFormController {
     /**
      * Metoda pro odstraneni elementu Resolution
      * Metoda slouzi pro vyvolani potvrzovaciho dialogu a zavolani metody pro odstraneni prvku z datovych struktur
+     *
      * @param selection zvolene prvky v prehledove tabulce pro odstraneni
-     * @param view prehledova tabulka
+     * @param view      prehledova tabulka
      */
     public void deleteResolutionWithDialog(ArrayList<BasicTable> selection, TableView view) {
         if (Alerts.showDeleteItemCascadeAlert(selection, mapperTableToObject.getWUToResolutionMapper())) {
@@ -567,10 +602,12 @@ public class DeleteFormController implements IDeleteFormController {
             view.getSelectionModel().clearSelection();
         }
     }
+
     /**
      * Metoda pro odstraneni prvku z datovych struktur
      * Nejprve jsou zjisteny id prvku pro odstraneni
      * nasledne jsou aktualizovany reference na prvek, mapovaci mapy a odstraneny informace z datovych struktur
+     *
      * @param resolutionListObservable
      * @param selection
      */
@@ -582,11 +619,13 @@ public class DeleteFormController implements IDeleteFormController {
         deleteDataModel.removeResolution(resolutionListObservable);
         segmentLists.removeItemFromObservableList(SegmentType.Resolution, idList);
     }
+
     /**
      * Metoda pro odstraneni elementu Severity
      * Metoda slouzi pro vyvolani potvrzovaciho dialogu a zavolani metody pro odstraneni prvku z datovych struktur
+     *
      * @param selection zvolene prvky v prehledove tabulce pro odstraneni
-     * @param view prehledova tabulka
+     * @param view      prehledova tabulka
      */
     public void deleteSeverityWithDialog(ArrayList<BasicTable> selection, TableView<ClassTable> view) {
         if (Alerts.showDeleteItemCascadeAlert(selection, mapperTableToObject.getWUToSeverityMapper())) {
@@ -603,6 +642,7 @@ public class DeleteFormController implements IDeleteFormController {
      * Metoda pro odstraneni prvku z datovych struktur
      * Nejprve jsou zjisteny id prvku pro odstraneni
      * nasledne jsou aktualizovany reference na prvek, mapovaci mapy a odstraneny informace z datovych struktur
+     *
      * @param severityObservableList
      * @param selection
      */
@@ -615,11 +655,13 @@ public class DeleteFormController implements IDeleteFormController {
         deleteDataModel.removeSeverity(severityObservableList);
         segmentLists.removeItemFromObservableList(SegmentType.Severity, idList);
     }
+
     /**
      * Metoda pro odstraneni elementu Priority
      * Metoda slouzi pro vyvolani potvrzovaciho dialogu a zavolani metody pro odstraneni prvku z datovych struktur
+     *
      * @param selection zvolene prvky v prehledove tabulce pro odstraneni
-     * @param view prehledova tabulka
+     * @param view      prehledova tabulka
      */
     public void deletePriorityWithDialog(ArrayList<BasicTable> selection, TableView<ClassTable> view) {
         if (Alerts.showDeleteItemCascadeAlert(selection, mapperTableToObject.getWUToPriorityMapper())) {
@@ -636,6 +678,7 @@ public class DeleteFormController implements IDeleteFormController {
      * Metoda pro odstraneni prvku z datovych struktur
      * Nejprve jsou zjisteny id prvku pro odstraneni
      * nasledne jsou aktualizovany reference na prvek, mapovaci mapy a odstraneny informace z datovych struktur
+     *
      * @param priorityObservableList
      * @param selection
      */
@@ -652,6 +695,7 @@ public class DeleteFormController implements IDeleteFormController {
     /**
      * Metoda pro odstraneni elementu Milestone
      * Metoda slouzi pro vyvolani potvrzovaciho dialogu a zavolani metody pro odstraneni prvku z datovych struktur
+     *
      * @param selection zvolene prvky v prehledove tabulce pro odstraneni
      * @param tableView prehledova tabulka
      */
@@ -669,6 +713,7 @@ public class DeleteFormController implements IDeleteFormController {
      * Metoda pro odstraneni prvku z datovych struktur
      * Nejprve jsou zjisteny id prvku pro odstraneni
      * nasledne jsou aktualizovany reference na prvek, mapovaci mapy a odstraneny informace z datovych struktur
+     *
      * @param observableList
      * @param selection
      */
@@ -683,9 +728,11 @@ public class DeleteFormController implements IDeleteFormController {
         segmentLists.removeItemFromObservableList(SegmentType.Milestone, idList);
 
     }
+
     /**
      * Metoda pro odstraneni elementu Criterion
      * Metoda slouzi pro vyvolani potvrzovaciho dialogu a zavolani metody pro odstraneni prvku z datovych struktur
+     *
      * @param selection zvolene prvky v prehledove tabulce pro odstraneni
      * @param tableView prehledova tabulka
      */
@@ -704,6 +751,7 @@ public class DeleteFormController implements IDeleteFormController {
      * Metoda pro odstraneni prvku z datovych struktur
      * Nejprve jsou zjisteny id prvku pro odstraneni
      * nasledne jsou aktualizovany reference na prvek, mapovaci mapy a odstraneny informace z datovych struktur
+     *
      * @param criterionListObservable
      * @param selection
      */
@@ -717,11 +765,13 @@ public class DeleteFormController implements IDeleteFormController {
         segmentLists.removeItemFromObservableList(SegmentType.Criterion, idList);
 
     }
+
     /**
      * Metoda pro odstraneni elementu CPR
      * Metoda slouzi pro vyvolani potvrzovaciho dialogu a zavolani metody pro odstraneni prvku z datovych struktur
+     *
      * @param selection zvolene prvky v prehledove tabulce pro odstraneni
-     * @param view prehledova tabulka
+     * @param view      prehledova tabulka
      */
     public void deleteCPRWithDialog(ArrayList<BasicTable> selection, TableView view) {
 
@@ -737,6 +787,7 @@ public class DeleteFormController implements IDeleteFormController {
      * Metoda pro odstraneni prvku z datovych struktur
      * Nejprve jsou zjisteny id prvku pro odstraneni
      * nasledne jsou aktualizovany reference na prvek, mapovaci mapy a odstraneny informace z datovych struktur
+     *
      * @param cprListObservable
      * @param selection
      */
@@ -751,11 +802,13 @@ public class DeleteFormController implements IDeleteFormController {
         segmentLists.removeItemFromObservableList(SegmentType.Config_Person_Relation, idList);
 
     }
+
     /**
      * Metoda pro odstraneni elementu VCSTag
      * Metoda slouzi pro vyvolani potvrzovaciho dialogu a zavolani metody pro odstraneni prvku z datovych struktur
+     *
      * @param selection zvolene prvky v prehledove tabulce pro odstraneni
-     * @param tableTV prehledova tabulka
+     * @param tableTV   prehledova tabulka
      */
     public void deleteVCSTagWithDialog(ArrayList<BasicTable> selection, TableView tableTV) {
         if (Alerts.showDeleteItemCascadeAlert(selection, mapperTableToObject.getConfigurationToVCSTagMapper())) {
@@ -784,8 +837,9 @@ public class DeleteFormController implements IDeleteFormController {
     /**
      * Metoda pro odstraneni elementu Branch
      * Metoda slouzi pro vyvolani potvrzovaciho dialogu a zavolani metody pro odstraneni prvku z datovych struktur
+     *
      * @param selection zvolene prvky v prehledove tabulce pro odstraneni
-     * @param view prehledova tabulka
+     * @param view      prehledova tabulka
      */
     public void deleteBranchDialog(ArrayList<BasicTable> selection, TableView view) {
         if (Alerts.showDeleteItemCascadeAlert(selection, mapperTableToObject.getConfigurationToBranchMapper())) {
@@ -802,9 +856,10 @@ public class DeleteFormController implements IDeleteFormController {
 
     /**
      * Metoda pro odstraneni spojnice mezi prvky Person a Artifact
-     * @param arrowId identifikator spojnice
-     * @param startId identifikator pocatecniho prvku
-     * @param endId identifikator koncoveho prvku
+     *
+     * @param arrowId       identifikator spojnice
+     * @param startId       identifikator pocatecniho prvku
+     * @param endId         identifikator koncoveho prvku
      * @param isModelDelete informaco o tom zda byla spojnice jiz smazana z datovoho modelu
      */
     public void removePersonArtifactLink(int arrowId, int startId, int endId, boolean isModelDelete) {
@@ -815,9 +870,10 @@ public class DeleteFormController implements IDeleteFormController {
 
     /**
      * Metoda pro odstraneni spojnice mezi prvky Person a Commit
-     * @param arrowId identifikator spojnice
-     * @param startId identifikator pocatecniho prvku
-     * @param endId identifikator koncoveho prvku
+     *
+     * @param arrowId       identifikator spojnice
+     * @param startId       identifikator pocatecniho prvku
+     * @param endId         identifikator koncoveho prvku
      * @param isModelDelete informaco o tom zda byla spojnice jiz smazana z datovoho modelu
      */
     public void removePersonCommitLink(int arrowId, int startId, int endId, boolean isModelDelete) {
@@ -828,9 +884,10 @@ public class DeleteFormController implements IDeleteFormController {
 
     /**
      * Metoda pro odstraneni spojnice mezi prvky Person a Committed Configuration
-     * @param arrowId identifikator spojnice
-     * @param startId identifikator pocatecniho prvku
-     * @param endId identifikator koncoveho prvku
+     *
+     * @param arrowId       identifikator spojnice
+     * @param startId       identifikator pocatecniho prvku
+     * @param endId         identifikator koncoveho prvku
      * @param isModelDelete informaco o tom zda byla spojnice jiz smazana z datovoho modelu
      */
     public void removePersonCommittedConfigurationLink(int arrowId, int startId, int endId, boolean isModelDelete) {
@@ -841,9 +898,10 @@ public class DeleteFormController implements IDeleteFormController {
 
     /**
      * Metoda pro odstraneni spojnice mezi prvky Person a Configuration
-     * @param arrowId identifikator spojnice
-     * @param startId identifikator pocatecniho prvku
-     * @param endId identifikator koncoveho prvku
+     *
+     * @param arrowId       identifikator spojnice
+     * @param startId       identifikator pocatecniho prvku
+     * @param endId         identifikator koncoveho prvku
      * @param isModelDelete informaco o tom zda byla spojnice jiz smazana z datovoho modelu
      */
     public void removePersonConfigurationLink(int arrowId, int startId, int endId, boolean isModelDelete) {
@@ -854,9 +912,10 @@ public class DeleteFormController implements IDeleteFormController {
 
     /**
      * Metoda pro odstraneni spojnice mezi prvky Artifact a Configuration
-     * @param arrowId identifikator spojnice
-     * @param startId identifikator pocatecniho prvku
-     * @param endId identifikator koncoveho prvku
+     *
+     * @param arrowId       identifikator spojnice
+     * @param startId       identifikator pocatecniho prvku
+     * @param endId         identifikator koncoveho prvku
      * @param isModelDelete informaco o tom zda byla spojnice jiz smazana z datovoho modelu
      */
     public void removeArtifactConfiguraionLink(int arrowId, int startId, int endId, boolean isModelDelete) {
@@ -868,9 +927,10 @@ public class DeleteFormController implements IDeleteFormController {
 
     /**
      * Metoda pro odstraneni spojnice mezi prvky CommitedConfiguration a Configuration
-     * @param arrowId identifikator spojnice
-     * @param startId identifikator pocatecniho prvku
-     * @param endId identifikator koncoveho prvku
+     *
+     * @param arrowId       identifikator spojnice
+     * @param startId       identifikator pocatecniho prvku
+     * @param endId         identifikator koncoveho prvku
      * @param isModelDelete informaco o tom zda byla spojnice jiz smazana z datovoho modelu
      */
     public void removeCommitedConfigurationConfigurationLink(int arrowId, int startId, int endId, boolean isModelDelete) {
@@ -881,9 +941,10 @@ public class DeleteFormController implements IDeleteFormController {
 
     /**
      * Metoda pro odstraneni spojnice mezi prvky Commit a Committed Configuration
-     * @param arrowId identifikator spojnice
-     * @param startId identifikator pocatecniho prvku
-     * @param endId identifikator koncoveho prvku
+     *
+     * @param arrowId       identifikator spojnice
+     * @param startId       identifikator pocatecniho prvku
+     * @param endId         identifikator koncoveho prvku
      * @param isModelDelete informaco o tom zda byla spojnice jiz smazana z datovoho modelu
      */
     public void removeCommitComiitedConfigurationLink(int arrowId, int startId, int endId, boolean isModelDelete) {
@@ -894,6 +955,7 @@ public class DeleteFormController implements IDeleteFormController {
 
     /**
      * Metoda pro zavolani konkretnich metoda pro odstraneni elementu a segmetnu z datovych struktur
+     *
      * @param list
      * @param tableTV
      * @param segmentType
@@ -960,6 +1022,7 @@ public class DeleteFormController implements IDeleteFormController {
      * Metoda pro odstraneni prvku z datovych struktur
      * Nejprve jsou zjisteny id prvku pro odstraneni
      * nasledne jsou aktualizovany reference na prvek, mapovaci mapy a odstraneny informace z datovych struktur
+     *
      * @param branchListObservable
      * @param selection
      */

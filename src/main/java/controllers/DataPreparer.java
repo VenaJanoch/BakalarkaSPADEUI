@@ -1,10 +1,9 @@
 package controllers;
 
-import interfaces.IFormDataController;
 import javafx.collections.ObservableList;
-import model.IdentificatorCreater;
 import services.Constans;
-import tables.*;
+import tables.CPRTable;
+import tables.MilestoneTable;
 
 import javax.xml.datatype.XMLGregorianCalendar;
 import java.time.Instant;
@@ -14,7 +13,7 @@ import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
+
 /**
  * Trida slouzici pro upravu dat z formularu nebo datoveho modelu
  *
@@ -22,7 +21,9 @@ import java.util.Set;
  */
 public class DataPreparer {
 
-    /**Metoda pro spojeni identificatoru a jmena**/
+    /**
+     * Metoda pro spojeni identificatoru a jmena
+     **/
     private String prepareTableName(String name, int id) {
         if (name == null) {
             name = "";
@@ -33,6 +34,7 @@ public class DataPreparer {
 
     /**
      * Metoda pro upravu indexu v seznamu seznamu
+     *
      * @param indices seznam seznamu indexu
      * @return upravene indexi
      */
@@ -56,8 +58,9 @@ public class DataPreparer {
 
     /**
      * Metoda pro vytvoreni instace MilestoneTable
+     *
      * @param nameST Jmeno elementu
-     * @param id identifikator elementu
+     * @param id     identifikator elementu
      * @return nova instace MilestoneTable
      */
     public MilestoneTable prepareMilestoneTable(String nameST, int id) {
@@ -68,6 +71,7 @@ public class DataPreparer {
 
     /**
      * Metoda upravujici indexi z datoveho modelu pro formulare
+     *
      * @param indicies seznam indexu z datoveho modelu
      * @return upraveny seznam indexu z datoveho modelu pro formular
      */
@@ -82,6 +86,7 @@ public class DataPreparer {
 
     /**
      * Metoda pro upravu indexu z datoveho modelu pro formular
+     *
      * @param index index pro upraveni
      * @return upraveny index
      */
@@ -94,6 +99,7 @@ public class DataPreparer {
 
     /**
      * Metoda pro upravu indexu z formulare pro datovy model
+     *
      * @param index index z formulare
      * @return upraveny index
      */
@@ -103,6 +109,7 @@ public class DataPreparer {
 
     /**
      * Metoda pro upravu indexu z formulare pro model
+     *
      * @param indices seznam s indexi pro upravu
      * @return seznam upravenych indexu
      */
@@ -116,6 +123,7 @@ public class DataPreparer {
 
     /**
      * Metoda pro upravu indexi v seznamu seznamu
+     *
      * @param indices seznam se seznami indexu
      * @return upravene seznamy
      */
@@ -129,6 +137,7 @@ public class DataPreparer {
 
     /**
      * Metoda pro prevod data ve formatu XMLGregorianCalendar do formatu LocalDate
+     *
      * @param dateXML instace XMLGregorianCalendar
      * @return prevedeny datum do LocalDate
      */
@@ -158,7 +167,7 @@ public class DataPreparer {
         ZonedDateTime zdt = instant.atZone(ZoneId.systemDefault());
         LocalDate localDate = zdt.toLocalDate();
 
-        if (localDate.equals(Constans.nullDate)){
+        if (localDate.equals(Constans.nullDate)) {
             return null;
         }
 
@@ -167,6 +176,7 @@ public class DataPreparer {
 
     /**
      * Metoda pro prevod double do textoveho retezce
+     *
      * @param estimates dooble hodnota pro prevedeni
      * @return prevedena hodnota
      */
@@ -181,8 +191,9 @@ public class DataPreparer {
 
     /**
      * Metoda pro vytoveni noveho instace CPRTable
+     *
      * @param name jmeno pro instaceni
-     * @param id identifikator instace
+     * @param id   identifikator instace
      * @return nova instace CPRTable
      */
     public CPRTable prepareCPRTable(String name, int id) {
@@ -192,6 +203,7 @@ public class DataPreparer {
 
     /**
      * Metoda pro prevod int do textoveho retezce
+     *
      * @param progresses dooble hodnota pro prevedeni
      * @return prevedena hodnota
      */

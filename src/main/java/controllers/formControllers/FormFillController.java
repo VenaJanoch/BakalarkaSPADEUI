@@ -2,7 +2,6 @@ package controllers.formControllers;
 
 import SPADEPAC.*;
 import abstractform.BasicForm;
-import controllers.DataPreparer;
 import controllers.LinkControl;
 import controllers.graphicsComponentsControllers.CanvasController;
 import controllers.graphicsComponentsControllers.CanvasItemController;
@@ -10,6 +9,7 @@ import forms.*;
 import graphics.canvas.CanvasItem;
 import interfaces.IFormDataController;
 import javafx.geometry.Point2D;
+import javafx.scene.control.TableView;
 import model.DataManipulator;
 import model.DataModel;
 import model.IdentificatorCreater;
@@ -18,11 +18,9 @@ import services.SegmentLists;
 import services.SegmentType;
 import tables.*;
 
-import javafx.scene.control.TableView;
-
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
+
 /**
  * Trida predstavujici controller pro zpetne nahrani dat z XML, pripadne kopirovani prvku
  *
@@ -30,33 +28,40 @@ import java.util.Map;
  */
 public class FormFillController {
 
-    /** Promenne predstavujici instance objektu z datoveho modelu pro moznost vytvareni konkretnich prvku **/
+    /**
+     * Promenne predstavujici instance objektu z datoveho modelu pro moznost vytvareni konkretnich prvku
+     **/
     private DataManipulator dataManipulator;
     private DataModel dataModel;
     private IdentificatorCreater identificatorCreater;
     private SegmentLists segmentLists;
 
-    /** Promenne predstavujici instace objektu kontroleru potrebnych pro cinnost tritdy **/
+    /**
+     * Promenne predstavujici instace objektu kontroleru potrebnych pro cinnost tritdy
+     **/
     private FormController formController;
     private IFormDataController formDataController;
     private CanvasItemController canvasItemController;
     private CanvasController canvasController;
     private LinkControl linkControl;
 
-    /**Seznam formularu**/
+    /**
+     * Seznam formularu
+     **/
     private ArrayList<BasicForm> forms;
 
 
     /**
      * Kontroler tridy
      * Zinicializuje globalni promenne tridy
-     * @param formController instace tridy FormController pro formularu
-     * @param formDataController instance tridy FormDataController pro praci s tabulkovimi formulari
-     * @param dataModel instace datoveho modelu
+     *
+     * @param formController       instace tridy FormController pro formularu
+     * @param formDataController   instance tridy FormDataController pro praci s tabulkovimi formulari
+     * @param dataModel            instace datoveho modelu
      * @param canvasItemController kontroler pro praci s prvky platna
      * @param identificatorCreater instance tridy pro vytvreni identifikatoru
-     * @param lists prehledove seznamy
-     * @param linkControl kontroler potrebny pro vytvareni spojnic
+     * @param lists                prehledove seznamy
+     * @param linkControl          kontroler potrebny pro vytvareni spojnic
      */
     public FormFillController(FormController formController, IFormDataController formDataController, DataModel dataModel, CanvasItemController canvasItemController,
                               IdentificatorCreater identificatorCreater, SegmentLists lists, LinkControl linkControl) {
@@ -107,9 +112,10 @@ public class FormFillController {
     /**
      * Pretizena metoda pro naplneni formulare daty z Configuration
      * Slouzi v pripade potreby prvek kopirovat
+     *
      * @param oldFormId identifikator kopirovane instace
-     * @param x x souradnice
-     * @param y y souradnice
+     * @param x         x souradnice
+     * @param y         y souradnice
      */
     public void fillConfigurationForm(int oldFormId, double x, double y) {
         int newFormId = formController.createNewForm(SegmentType.Configuration, canvasController.getCanvasType());
@@ -121,8 +127,9 @@ public class FormFillController {
 
     /**
      * Pretizena metoda pro naplneni prvku na platne daty o Configuration z datoveho modelu
-     * @param segmentId idententifikator prvku pro ziskani dat
-     * @param formId identifikator formulare pro naplneni
+     *
+     * @param segmentId        idententifikator prvku pro ziskani dat
+     * @param formId           identifikator formulare pro naplneni
      * @param canvasController kontroler pro rizeni udalosti na platne
      */
     private void fillConfigurationForm(int segmentId, int formId, CanvasController canvasController) {
@@ -169,12 +176,14 @@ public class FormFillController {
             segmentLists.getChangeObservable().add(table);
         }
     }
+
     /**
      * Pretizena metoda pro naplneni formulare daty z Commit
      * Slouzi v pripade potreby prvek kopirovat
+     *
      * @param oldFormId identifikator kopirovane instace
-     * @param x x souradnice
-     * @param y y souradnice
+     * @param x         x souradnice
+     * @param y         y souradnice
      */
     public void fillCommitForm(int oldFormId, double x, double y) {
         int newFormId = formController.createNewForm(SegmentType.Commit, canvasController.getCanvasType());
@@ -186,8 +195,9 @@ public class FormFillController {
 
     /**
      * Pretizena metoda pro naplneni prvku na platne daty o Commit z datoveho modelu
-     * @param segmentId idententifikator prvku pro ziskani dat
-     * @param formId identifikator formulare pro naplneni
+     *
+     * @param segmentId        idententifikator prvku pro ziskani dat
+     * @param formId           identifikator formulare pro naplneni
      * @param canvasController kontroler pro rizeni udalosti na platne
      */
     private void fillCommitForm(int segmentId, int formId, CanvasController canvasController) {
@@ -198,6 +208,7 @@ public class FormFillController {
                 commit.getCoordinates().getYCoordinate(), commit.getCount(), commit.getCountIndicator(), commit.isExist());
 
     }
+
     /**
      * Pretizena metoda pro vytvoreni formularu z XML souboru
      * Metoda projede veskere instance Commit v datovem modelu
@@ -218,9 +229,10 @@ public class FormFillController {
     /**
      * Pretizena metoda pro naplneni formulare daty z Committed Configuration
      * Slouzi v pripade potreby prvek kopirovat
+     *
      * @param oldFormId identifikator kopirovane instace
-     * @param x x souradnice
-     * @param y y souradnice
+     * @param x         x souradnice
+     * @param y         y souradnice
      */
     public void fillCommitedConfigurationForm(int oldFormId, double x, double y) {
         int newFormId = formController.createNewForm(SegmentType.Committed_Configuration, canvasController.getCanvasType());
@@ -232,8 +244,9 @@ public class FormFillController {
 
     /**
      * Pretizena metoda pro naplneni prvku na platne daty o Commited Configuration z datoveho modelu
-     * @param segmentId idententifikator prvku pro ziskani dat
-     * @param formId identifikator formulare pro naplneni
+     *
+     * @param segmentId        idententifikator prvku pro ziskani dat
+     * @param formId           identifikator formulare pro naplneni
      * @param canvasController kontroler pro rizeni udalosti na platne
      */
     private void fillCommitedConfigurationForm(int segmentId, int formId, CanvasController canvasController) {
@@ -266,9 +279,10 @@ public class FormFillController {
     /**
      * Pretizena metoda pro naplneni formulare daty z Artifact
      * Slouzi v pripade potreby prvek kopirovat
+     *
      * @param oldFormId identifikator kopirovane instace
-     * @param x x souradnice
-     * @param y y souradnice
+     * @param x         x souradnice
+     * @param y         y souradnice
      */
     public void fillArtifactForm(int oldFormId, double x, double y) {
         int newFormId = formController.createNewForm(SegmentType.Artifact, canvasController.getCanvasType());
@@ -280,8 +294,9 @@ public class FormFillController {
 
     /**
      * Pretizena metoda pro naplneni prvku na platne daty o Artifact z datoveho modelu
-     * @param segmentId idententifikator prvku pro ziskani dat
-     * @param formId identifikator formulare pro naplneni
+     *
+     * @param segmentId        idententifikator prvku pro ziskani dat
+     * @param formId           identifikator formulare pro naplneni
      * @param canvasController kontroler pro rizeni udalosti na platne
      */
     private void fillArtifactForm(int segmentId, int formId, CanvasController canvasController) {
@@ -307,6 +322,7 @@ public class FormFillController {
             fillArtifactForm(artifact.getId(), formId, canvasController);
         }
     }
+
     /**
      * Pretizena metoda pro vytvoreni tabulkovych prvku z XML souboru
      * Metoda projede veskere instance Branch v datovem modelu
@@ -316,7 +332,7 @@ public class FormFillController {
         BranchForm form = (BranchForm) forms.get(Constans.branchIndex);
         for (int i = 0; i < dataModel.getBranches().size(); i++) {
             Branch segment = dataModel.getBranches().get(i);
-           identificatorCreater.createBranchID();
+            identificatorCreater.createBranchID();
             String idName = segment.getAlias();
             String isMain = "NO";
             if (segment.isIsMain()) {
@@ -330,11 +346,14 @@ public class FormFillController {
         }
     }
 
-    /**Pomocna metoda pro vytvoreni vyctovych typu Work Unit**/
+    /**
+     * Pomocna metoda pro vytvoreni vyctovych typu Work Unit
+     **/
     private ClassTable createClassTable(int id, String name, List<String> lclass, List<String> lsuperClass, boolean exist) {
 
         return new ClassTable(name, "", "", exist, id);
     }
+
     /**
      * Pretizena metoda pro vytvoreni tabulkovych prvku z XML souboru
      * Metoda projede veskere instance Type v datovem modelu
@@ -344,7 +363,7 @@ public class FormFillController {
         TypeForm form = (TypeForm) forms.get(Constans.wuTypeFormIndex);
         for (int i = 0; i < dataModel.getTypes().size(); i++) {
             Type segment = dataModel.getTypes().get(i);
-           identificatorCreater.createTypeID();
+            identificatorCreater.createTypeID();
             ClassTable table = createClassTable(segment.getId(), segment.getAlias(), segment.getTypeClass(),
                     segment.getTypeSuperClass(), segment.isExist());
 
@@ -370,6 +389,7 @@ public class FormFillController {
             segmentLists.getStatusTypeObservable().add(table);
         }
     }
+
     /**
      * Pretizena metoda pro vytvoreni tabulkovych prvku z XML souboru
      * Metoda projde veskere instance Resolution v datovem modelu
@@ -406,6 +426,7 @@ public class FormFillController {
             segmentLists.getRelationTypeObservable().add(table);
         }
     }
+
     /**
      * Pretizena metoda pro vytvoreni tabulkovych prvku z XML souboru
      * Metoda projede veskere instance Severity v datovem modelu
@@ -415,7 +436,7 @@ public class FormFillController {
         SeverityForm form = (SeverityForm) forms.get(Constans.severityFormIndex);
         for (int i = 0; i < dataModel.getSeverities().size(); i++) {
             Severity segment = dataModel.getSeverities().get(i);
-           identificatorCreater.createSeverityID();
+            identificatorCreater.createSeverityID();
             ClassTable table = createClassTable(segment.getId(), segment.getAlias(), segment.getSeverityClass(),
                     segment.getSeveritySuperClass(), segment.isExist());
 
@@ -441,6 +462,7 @@ public class FormFillController {
             segmentLists.getPriorityTypeObservable().add(table);
         }
     }
+
     /**
      * Pretizena metoda pro vytvoreni tabulkovych prvku z XML souboru
      * Metoda projede veskere instance Configuration Person v datovem modelu
@@ -464,22 +486,24 @@ public class FormFillController {
     /**
      * Pretizena metoda pro naplneni formulare daty z Person
      * Slouzi v pripade potreby prvek kopirovat
+     *
      * @param oldFormId identifikator kopirovane instace
-     * @param x x souradnice
-     * @param y y souradnice
+     * @param x         x souradnice
+     * @param y         y souradnice
      */
     public void fillPersonForm(int oldFormId, double x, double y) {
         int newFormId = formController.createNewForm(SegmentType.Person, canvasController.getCanvasType());
-        int personId = identificatorCreater.getRoleIndexToIdMaper().get(oldFormId);
-        int newPersonId = identificatorCreater.getRoleIndexToIdMaper().get(newFormId);
+        int personId = identificatorCreater.getPersonIndexToIdMaper().get(oldFormId);
+        int newPersonId = identificatorCreater.getPersonIndexToIdMaper().get(newFormId);
         dataManipulator.copyDataFromPerson(personId, newPersonId, x, y);
         fillPersonForm(newPersonId, newFormId, canvasController);
     }
 
     /**
      * Pretizena metoda pro naplneni prvku na platne daty o Person z datoveho modelu
-     * @param segmentId idententifikator prvku pro ziskani dat
-     * @param formId identifikator formulare pro naplneni
+     *
+     * @param segmentId        idententifikator prvku pro ziskani dat
+     * @param formId           identifikator formulare pro naplneni
      * @param canvasController kontroler pro rizeni udalosti na platne
      */
     private void fillPersonForm(int segmentId, int formId, CanvasController canvasController) {
@@ -490,6 +514,7 @@ public class FormFillController {
                 person.getCoordinates().getYCoordinate(), person.getCount(), person.getCountIndicator(), person.isExist());
 
     }
+
     /**
      * Pretizena metoda pro vytvoreni prvku z XML souboru
      * Metoda projede veskere instance Person v datovem modelu
@@ -500,7 +525,7 @@ public class FormFillController {
 
             String name = person.getAlias();
 
-            int formId = identificatorCreater.setDataToRoleMappers(person.getId());
+            int formId = identificatorCreater.setDataToPersonMappers(person.getId());
             formController.createNewPersonFormWithoutCreateId(person.isExist(), person.getId(), formId);
 
             fillPersonForm(person.getId(), formId, canvasController);
@@ -576,57 +601,67 @@ public class FormFillController {
         }
 
     }
+
     /**
      * Pretizena metoda pro kopirovani instace Activity
      * A zavolani datoveho modelu pro nakopirovani informaci o starem prvku
-     * @param tableView instance tridy TableView pro vlozeni nove instace
+     *
+     * @param tableView     instance tridy TableView pro vlozeni nove instace
      * @param oldActivityId identifikator kopirovaneho prvku
      */
-    public void fillActivityForm(TableView<ActivityTable> tableView, int oldActivityId){
+    public void fillActivityForm(TableView<ActivityTable> tableView, int oldActivityId) {
         Activity activity = dataModel.getActivity(oldActivityId);
         int newActivityId = formDataController.saveDataFromActivityForm(tableView, activity.isExist());
         dataManipulator.copyDataFromActivity(oldActivityId, newActivityId);
     }
+
     /**
      * Pretizena metoda pro kopirovani instace Iteration
      * A zavolani datoveho modelu pro nakopirovani informaci o starem prvku
-     * @param tableView instance tridy TableView pro vlozeni nove instace
+     *
+     * @param tableView      instance tridy TableView pro vlozeni nove instace
      * @param oldIterationId identifikator kopirovaneho prvku
      */
-    public void fillIterationForm(TableView<IterationTable> tableView, int oldIterationId){
+    public void fillIterationForm(TableView<IterationTable> tableView, int oldIterationId) {
         Iteration iteration = dataModel.getIteration(oldIterationId);
         int newIterationId = formDataController.saveDataFromIterationForm(tableView, iteration.isExist());
         dataManipulator.copyDataFromIteration(oldIterationId, newIterationId);
     }
+
     /**
      * Pretizena metoda pro kopirovani instace Phase
      * A zavolani datoveho modelu pro nakopirovani informaci o starem prvku
-     * @param tableView instance tridy TableView pro vlozeni nove instace
+     *
+     * @param tableView  instance tridy TableView pro vlozeni nove instace
      * @param oldPhaseId identifikator kopirovaneho prvku
      */
-    public void fillPhaseForm(TableView<PhaseTable> tableView, int oldPhaseId){
+    public void fillPhaseForm(TableView<PhaseTable> tableView, int oldPhaseId) {
         Phase phase = dataModel.getPhase(oldPhaseId);
         int newPhaseId = formDataController.saveDataFromPhaseForm(tableView, phase.isExist());
         dataManipulator.copyDataFromPhase(oldPhaseId, newPhaseId);
     }
+
     /**
      * Pretizena metoda pro kopirovani instace Change
      * A zavolani datoveho modelu pro nakopirovani informaci o starem prvku
-     * @param tableView instance tridy TableView pro vlozeni nove instace
+     *
+     * @param tableView   instance tridy TableView pro vlozeni nove instace
      * @param oldChangeId identifikator kopirovaneho prvku
      */
-    public void fillChangeForm(TableView<ChangeTable> tableView, int oldChangeId){
+    public void fillChangeForm(TableView<ChangeTable> tableView, int oldChangeId) {
         Change phase = dataModel.getChange(oldChangeId);
         int newChangeId = formDataController.saveDataFromChangeForm(tableView, phase.isExist());
         dataManipulator.copyDataFromChange(oldChangeId, newChangeId);
     }
+
     /**
      * Pretizena metoda pro kopirovani instace VCSTag
      * A zavolani datoveho modelu pro nakopirovani informaci o starem prvku
-     * @param tableView instance tridy TableView pro vlozeni nove instace
+     *
+     * @param tableView   instance tridy TableView pro vlozeni nove instace
      * @param oldVCSTagId identifikator kopirovaneho prvku
      */
-    public void fillVCSTagForm(TableView<VCSTagTable> tableView, int oldVCSTagId){
+    public void fillVCSTagForm(TableView<VCSTagTable> tableView, int oldVCSTagId) {
         VCSTag phase = dataModel.getVCSTag(oldVCSTagId);
         int newVCSTagId = formDataController.saveDataFromVCSTagForm(tableView, phase.isExist());
         dataManipulator.copyDataFromVCSTag(oldVCSTagId, newVCSTagId);
@@ -635,32 +670,37 @@ public class FormFillController {
     /**
      * Pretizena metoda pro kopirovani instace Configuration Person
      * A zavolani datoveho modelu pro nakopirovani informaci o starem prvku
+     *
      * @param tableView instance tridy TableView pro vlozeni nove instace
-     * @param oldCPRId identifikator kopirovaneho prvku
+     * @param oldCPRId  identifikator kopirovaneho prvku
      */
-    public void fillCPRForm(TableView<CPRTable> tableView, int oldCPRId){
+    public void fillCPRForm(TableView<CPRTable> tableView, int oldCPRId) {
         ConfigPersonRelation phase = dataModel.getConfigPersonRelation(oldCPRId);
         int newCPRId = formDataController.saveDataFromCPR(tableView, phase.isExist());
         dataManipulator.copyDataFromCPR(oldCPRId, newCPRId);
     }
+
     /**
      * Pretizena metoda pro kopirovani instace Branch
      * A zavolani datoveho modelu pro nakopirovani informaci o starem prvku
-     * @param tableView instance tridy TableView pro vlozeni nove instace
+     *
+     * @param tableView   instance tridy TableView pro vlozeni nove instace
      * @param oldBranchId identifikator kopirovaneho prvku
      */
-    public void fillBranchForm(TableView<BranchTable> tableView, int oldBranchId){
+    public void fillBranchForm(TableView<BranchTable> tableView, int oldBranchId) {
         Branch phase = dataModel.getBranch(oldBranchId);
         int newBranchId = formDataController.saveDataFromBranch(tableView, phase.isExist());
         dataManipulator.copyDataFromBranch(oldBranchId, newBranchId);
     }
+
     /**
      * Pretizena metoda pro kopirovani instace Criterion
      * A zavolani datoveho modelu pro nakopirovani informaci o starem prvku
-     * @param tableView instance tridy TableView pro vlozeni nove instace
+     *
+     * @param tableView      instance tridy TableView pro vlozeni nove instace
      * @param oldCriterionId identifikator kopirovaneho prvku
      */
-    public void fillCriterionForm(TableView<CriterionTable> tableView, int oldCriterionId){
+    public void fillCriterionForm(TableView<CriterionTable> tableView, int oldCriterionId) {
         Criterion phase = dataModel.getCriterion(oldCriterionId);
         int newCriterionId = formDataController.saveDataFromCriterionForm(tableView, phase.isExist());
         dataManipulator.copyDataFromCriterion(oldCriterionId, newCriterionId);
@@ -669,32 +709,37 @@ public class FormFillController {
     /**
      * Pretizena metoda pro kopirovani instace Milestone
      * A zavolani datoveho modelu pro nakopirovani informaci o starem prvku
-     * @param tableView instance tridy TableView pro vlozeni nove instace
+     *
+     * @param tableView      instance tridy TableView pro vlozeni nove instace
      * @param oldMilestoneId identifikator kopirovaneho prvku
      */
-    public void fillMilestoneForm(TableView<MilestoneTable> tableView, int oldMilestoneId){
+    public void fillMilestoneForm(TableView<MilestoneTable> tableView, int oldMilestoneId) {
         Milestone phase = dataModel.getMilestone(oldMilestoneId);
         int newMilestoneId = formDataController.saveDataFromMilestoneForm(tableView, phase.isExist());
         dataManipulator.copyDataFromMilestone(oldMilestoneId, newMilestoneId);
     }
+
     /**
      * Pretizena metoda pro kopirovani instace Role Type
      * A zavolani datoveho modelu pro nakopirovani informaci o starem prvku
-     * @param tableView instance tridy TableView pro vlozeni nove instace
+     *
+     * @param tableView     instance tridy TableView pro vlozeni nove instace
      * @param oldRoleTypeId identifikator kopirovaneho prvku
      */
-    public void fillRoleTypeForm(TableView<RoleTypeTable> tableView, int oldRoleTypeId){
+    public void fillRoleTypeForm(TableView<RoleTypeTable> tableView, int oldRoleTypeId) {
         RoleType phase = dataModel.getRoleType(oldRoleTypeId);
         int newRoleTypeId = formDataController.saveDataFromRoleTypeForm(tableView, phase.isExist());
         dataManipulator.copyDataFromRoleType(oldRoleTypeId, newRoleTypeId);
     }
+
     /**
      * Pretizena metoda pro kopirovani instace Priority
      * A zavolani datoveho modelu pro nakopirovani informaci o starem prvku
-     * @param tableView instance tridy TableView pro vlozeni nove instace
+     *
+     * @param tableView     instance tridy TableView pro vlozeni nove instace
      * @param oldPriorityId identifikator kopirovaneho prvku
      */
-    public void fillPriorityForm(TableView<ClassTable> tableView, int oldPriorityId){
+    public void fillPriorityForm(TableView<ClassTable> tableView, int oldPriorityId) {
         Priority phase = dataModel.getPriority(oldPriorityId);
         int newPriorityId = formDataController.saveDataFromPriority(tableView, phase.isExist());
         dataManipulator.copyDataFromPriority(oldPriorityId, newPriorityId);
@@ -703,10 +748,11 @@ public class FormFillController {
     /**
      * Pretizena metoda pro kopirovani instace Severity
      * A zavolani datoveho modelu pro nakopirovani informaci o starem prvku
-     * @param tableView instance tridy TableView pro vlozeni nove instace
+     *
+     * @param tableView     instance tridy TableView pro vlozeni nove instace
      * @param oldSeverityId identifikator kopirovaneho prvku
      */
-    public void fillSeverityForm(TableView<ClassTable> tableView, int oldSeverityId){
+    public void fillSeverityForm(TableView<ClassTable> tableView, int oldSeverityId) {
         Severity phase = dataModel.getSeverity(oldSeverityId);
         int newSeverityId = formDataController.saveDataFromSeverity(tableView, phase.isExist());
         dataManipulator.copyDataFromSeverity(oldSeverityId, newSeverityId);
@@ -715,21 +761,24 @@ public class FormFillController {
     /**
      * Pretizena metoda pro kopirovani instace Status
      * A zavolani datoveho modelu pro nakopirovani informaci o starem prvku
-     * @param tableView instance tridy TableView pro vlozeni nove instace
+     *
+     * @param tableView   instance tridy TableView pro vlozeni nove instace
      * @param oldStatusId identifikator kopirovaneho prvku
      */
-    public void fillStatusForm(TableView<ClassTable> tableView, int oldStatusId){
+    public void fillStatusForm(TableView<ClassTable> tableView, int oldStatusId) {
         Status phase = dataModel.getStatus(oldStatusId);
         int newStatusId = formDataController.saveDataFromStatusForm(tableView, phase.isExist());
         dataManipulator.copyDataFromStatus(oldStatusId, newStatusId);
     }
+
     /**
      * Pretizena metoda pro kopirovani instace Type
      * A zavolani datoveho modelu pro nakopirovani informaci o starem prvku
+     *
      * @param tableView instance tridy TableView pro vlozeni nove instace
      * @param oldTypeId identifikator kopirovaneho prvku
      */
-    public void fillTypeForm(TableView<ClassTable> tableView, int oldTypeId){
+    public void fillTypeForm(TableView<ClassTable> tableView, int oldTypeId) {
         Type phase = dataModel.getType(oldTypeId);
         int newTypeId = formDataController.saveDataFromTypeForm(tableView, phase.isExist());
         dataManipulator.copyDataFromType(oldTypeId, newTypeId);
@@ -738,10 +787,11 @@ public class FormFillController {
     /**
      * Pretizena metoda pro kopirovani instace Relation
      * A zavolani datoveho modelu pro nakopirovani informaci o starem prvku
-     * @param tableView instance tridy TableView pro vlozeni nove instace
+     *
+     * @param tableView     instance tridy TableView pro vlozeni nove instace
      * @param oldRelationId identifikator kopirovaneho prvku
      */
-    public void fillRelationForm(TableView<ClassTable> tableView, int oldRelationId){
+    public void fillRelationForm(TableView<ClassTable> tableView, int oldRelationId) {
         Relation phase = dataModel.getRelation(oldRelationId);
         int newRelationId = formDataController.saveDataFromRelationForm(tableView, phase.isExist());
         dataManipulator.copyDataFromRelation(oldRelationId, newRelationId);
@@ -750,10 +800,11 @@ public class FormFillController {
     /**
      * Pretizena metoda pro kopirovani instace Resolution
      * A zavolani datoveho modelu pro nakopirovani informaci o starem prvku
-     * @param tableView instance tridy TableView pro vlozeni nove instace
+     *
+     * @param tableView       instance tridy TableView pro vlozeni nove instace
      * @param oldResolutionId identifikator kopirovaneho prvku
      */
-    public void fillResolutionForm(TableView<ClassTable> tableView, int oldResolutionId){
+    public void fillResolutionForm(TableView<ClassTable> tableView, int oldResolutionId) {
         Resolution phase = dataModel.getResolution(oldResolutionId);
         int newResolutionId = formDataController.saveDataFromResolutionForm(tableView, phase.isExist());
         dataManipulator.copyDataFromResolution(oldResolutionId, newResolutionId);
@@ -762,10 +813,11 @@ public class FormFillController {
     /**
      * Pretizena metoda pro kopirovani instace Work Unit
      * A zavolani datoveho modelu pro nakopirovani informaci o starem prvku
-     * @param tableView instance tridy TableView pro vlozeni nove instace
+     *
+     * @param tableView     instance tridy TableView pro vlozeni nove instace
      * @param oldWorkUnitId identifikator kopirovaneho prvku
      */
-    public void fillWorkUnitForm(TableView<WorkUnitTable> tableView, int oldWorkUnitId){
+    public void fillWorkUnitForm(TableView<WorkUnitTable> tableView, int oldWorkUnitId) {
         WorkUnit phase = dataModel.getWorkUnit(oldWorkUnitId);
         int newWorkUnitId = formDataController.saveDataFromWorkUnit(tableView, phase.isExist());
         dataManipulator.copyDataFromWorkUnit(oldWorkUnitId, newWorkUnitId);
@@ -838,7 +890,8 @@ public class FormFillController {
 
     /**
      * Metoda pro prekresleni sponice pri vytvoreni spojnice
-     * @param item prvke platna
+     *
+     * @param item   prvke platna
      * @param formId identifikator formulare
      */
     private void repaintLink(CanvasItem item, int formId) {
@@ -890,13 +943,14 @@ public class FormFillController {
 
     /**
      * Metoda pro vytvoreni graficke podoby spojnice mezi Commit a CommittedConfiguration
+     *
      * @param linkId idetifikator linku
-     * @param link instace linku v datovem modelu
+     * @param link   instace linku v datovem modelu
      */
-    public void createCommitCommittedConfigurationLink(int linkId, Link link){
-       int startId = link.getStartIndex();
-       int startFormId = identificatorCreater.getCommitFormIndex(startId);
-       CanvasItem item = canvasController.getListOfItemOnCanvas().get(startFormId);
+    public void createCommitCommittedConfigurationLink(int linkId, Link link) {
+        int startId = link.getStartIndex();
+        int startFormId = identificatorCreater.getCommitFormIndex(startId);
+        CanvasItem item = canvasController.getListOfItemOnCanvas().get(startFormId);
         linkControl.ArrowManipulation(false, canvasController, item.getFormIdentificator(), SegmentType.Commit, item.getTranslateX(),
                 item.getTranslateY(), item.getLength(), item.getHeight(), true, linkId);
         repaintLink(item, startFormId);
@@ -913,19 +967,20 @@ public class FormFillController {
 
     /**
      * Metoda pro vytvoreni graficke podoby spojnice mezi CommittedConfiguration Configuration
+     *
      * @param linkId idetifikator linku
-     * @param link instace linku v datovem modelu
+     * @param link   instace linku v datovem modelu
      */
-    public void createCommittedConfigurationConfigurationLink(int linkId, Link link){
-            int startId = link.getStartIndex();
-            int startFormId = identificatorCreater.getCommitedConfigurationFormIndex(startId);
-            CanvasItem item = canvasController.getListOfItemOnCanvas().get(startFormId);
-            linkControl.ArrowManipulation(false, canvasController, item.getFormIdentificator(), SegmentType.Committed_Configuration, item.getTranslateX(),
-                    item.getTranslateY(), item.getLength(), item.getHeight(), true, linkId);
-            repaintLink(item, startFormId);
-            int endId = link.getEndIndex();
-            int endFormId = identificatorCreater.getConfigurationFormIndex(endId);
-            CanvasItem endItem = canvasController.getListOfItemOnCanvas().get(endFormId);
+    public void createCommittedConfigurationConfigurationLink(int linkId, Link link) {
+        int startId = link.getStartIndex();
+        int startFormId = identificatorCreater.getCommitedConfigurationFormIndex(startId);
+        CanvasItem item = canvasController.getListOfItemOnCanvas().get(startFormId);
+        linkControl.ArrowManipulation(false, canvasController, item.getFormIdentificator(), SegmentType.Committed_Configuration, item.getTranslateX(),
+                item.getTranslateY(), item.getLength(), item.getHeight(), true, linkId);
+        repaintLink(item, startFormId);
+        int endId = link.getEndIndex();
+        int endFormId = identificatorCreater.getConfigurationFormIndex(endId);
+        CanvasItem endItem = canvasController.getListOfItemOnCanvas().get(endFormId);
 
         linkControl.ArrowManipulation(true, canvasController, endItem.getFormIdentificator(), SegmentType.Configuration,
                 endItem.getTranslateX(), endItem.getTranslateY(), endItem.getLength(), endItem.getHeight(),
@@ -936,10 +991,11 @@ public class FormFillController {
 
     /**
      * Metoda pro vytvoreni graficke podoby spojnice mezi Artifact a Configuration
+     *
      * @param linkId idetifikator linku
-     * @param link instace linku v datovem modelu
+     * @param link   instace linku v datovem modelu
      */
-    public void createArtifactConfigurationLink(int linkId, Link link){
+    public void createArtifactConfigurationLink(int linkId, Link link) {
         int startId = link.getStartIndex();
         int startFormId = identificatorCreater.getArtifactIndex(startId);
         CanvasItem item = canvasController.getListOfItemOnCanvas().get(startFormId);
@@ -959,12 +1015,13 @@ public class FormFillController {
 
     /**
      * Metoda pro vytvoreni graficke podoby spojnice mezi Person a Configuration
+     *
      * @param linkId idetifikator linku
-     * @param link instace linku v datovem modelu
+     * @param link   instace linku v datovem modelu
      */
-    public void createPersonConfigurationLink(int linkId, Link link){
+    public void createPersonConfigurationLink(int linkId, Link link) {
         int startId = link.getStartIndex();
-        int startFormId = identificatorCreater.getRoleSegmentIndexToFormMaper().get(startId);
+        int startFormId = identificatorCreater.getPersonSegmentIndexToFormMaper().get(startId);
         CanvasItem item = canvasController.getListOfItemOnCanvas().get(startFormId);
         linkControl.ArrowManipulation(false, canvasController, item.getFormIdentificator(), SegmentType.Person, item.getTranslateX(),
                 item.getTranslateY(), item.getLength(), item.getHeight(), true, linkId);
@@ -982,12 +1039,13 @@ public class FormFillController {
 
     /**
      * Metoda pro vytvoreni graficke podoby spojnice mezi Person a Commit
+     *
      * @param linkId idetifikator linku
-     * @param link instace linku v datovem modelu
+     * @param link   instace linku v datovem modelu
      */
-    public void createPersonCommitLink(int linkId, Link link){
+    public void createPersonCommitLink(int linkId, Link link) {
         int startId = link.getStartIndex();
-        int startFormId = identificatorCreater.getRoleSegmentIndexToFormMaper().get(startId);
+        int startFormId = identificatorCreater.getPersonSegmentIndexToFormMaper().get(startId);
         CanvasItem item = canvasController.getListOfItemOnCanvas().get(startFormId);
         linkControl.ArrowManipulation(false, canvasController, item.getFormIdentificator(), SegmentType.Person, item.getTranslateX(),
                 item.getTranslateY(), item.getLength(), item.getHeight(), true, linkId);
@@ -1006,12 +1064,13 @@ public class FormFillController {
 
     /**
      * Metoda pro vytvoreni graficke podoby spojnice mezi Person a CommittedConfiguration
+     *
      * @param linkId idetifikator linku
-     * @param link instace linku v datovem modelu
+     * @param link   instace linku v datovem modelu
      */
-        public void createPersonCommittedConfigurationLink(int linkId, Link link){
+    public void createPersonCommittedConfigurationLink(int linkId, Link link) {
         int startId = link.getStartIndex();
-        int startFormId = identificatorCreater.getRoleSegmentIndexToFormMaper().get(startId);
+        int startFormId = identificatorCreater.getPersonSegmentIndexToFormMaper().get(startId);
         CanvasItem item = canvasController.getListOfItemOnCanvas().get(startFormId);
         linkControl.ArrowManipulation(false, canvasController, item.getFormIdentificator(), SegmentType.Person, item.getTranslateX(),
                 item.getTranslateY(), item.getLength(), item.getHeight(), true, linkId);
@@ -1029,12 +1088,13 @@ public class FormFillController {
 
     /**
      * Metoda pro vytvoreni graficke podoby spojnice mezi Person a Artifact
+     *
      * @param linkId idetifikator linku
-     * @param link instace linku v datovem modelu
+     * @param link   instace linku v datovem modelu
      */
-        public void createPersonArtifactLink(int linkId, Link link){
+    public void createPersonArtifactLink(int linkId, Link link) {
         int startId = link.getStartIndex();
-        int startFormId = identificatorCreater.getRoleSegmentIndexToFormMaper().get(startId);
+        int startFormId = identificatorCreater.getPersonSegmentIndexToFormMaper().get(startId);
         CanvasItem item = canvasController.getListOfItemOnCanvas().get(startFormId);
         linkControl.ArrowManipulation(false, canvasController, item.getFormIdentificator(), SegmentType.Person, item.getTranslateX(),
                 item.getTranslateY(), item.getLength(), item.getHeight(), true, linkId);

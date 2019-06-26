@@ -7,9 +7,9 @@ import org.junit.Test;
 import services.SegmentLists;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
 
 public class ActivityValueTest {
 
@@ -29,7 +29,7 @@ public class ActivityValueTest {
 
         dataModel.getSaveDataModel().createNewActivity(2);
         activity = dataModel.getActivity(2);
-        }
+    }
 
     @Test
     public void testId() {

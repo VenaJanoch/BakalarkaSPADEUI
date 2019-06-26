@@ -1,7 +1,6 @@
 package abstractControlPane;
 
 import controllers.formControllers.FormController;
-import graphics.controlPanelItems.TextFieldItem;
 import interfaces.IEditFormController;
 import interfaces.IFormDataController;
 import javafx.scene.control.TableView;

@@ -3,6 +3,7 @@ package controllers.graphicsComponentsControllers;
 import graphics.canvas.NodeLink;
 import javafx.geometry.Point2D;
 import services.Constans;
+
 /**
  * Trida predstavujici controller pro funkcnosti spojovani prvku na platne
  *
@@ -10,16 +11,23 @@ import services.Constans;
  */
 public class LinkController {
 
-    /**Identifikator spojnice**/
+    /**
+     * Identifikator spojnice
+     **/
     private int linkId;
-    /**Identifikator pocatecniho prvku**/
+    /**
+     * Identifikator pocatecniho prvku
+     **/
     private int startItemId;
-    /**Identifikator koncoveho prvku**/
+    /**
+     * Identifikator koncoveho prvku
+     **/
     private int endItemId;
 
     /**
      * Kontroler tridy
      * Zinicializuje globalni promenne tridy
+     *
      * @param linkId identifikator spojnice
      */
     public LinkController(int linkId) {
@@ -49,8 +57,9 @@ public class LinkController {
 
     /**
      * Metoda pro prekresleni pocatecniho bodu spojnice
-     * @param link instacne graficke podoby spojnice
-     * @param newWidth nova sirka prvku platna
+     *
+     * @param link      instacne graficke podoby spojnice
+     * @param newWidth  nova sirka prvku platna
      * @param newHeight nova vyska prvku platna
      */
     public void repaintArrowStartPoint(NodeLink link, double newWidth, double newHeight) {
@@ -62,8 +71,9 @@ public class LinkController {
 
     /**
      * Metoda pro prekresleni koncoveho bodu spojnice
-     * @param link instacne graficke podoby spojnice
-     * @param newWidth nova sirka prvku platna
+     *
+     * @param link      instacne graficke podoby spojnice
+     * @param newWidth  nova sirka prvku platna
      * @param newHeight nova vyska prvku platna
      */
     public void repaintArrowEndPoint(NodeLink link, double newWidth, double newHeight) {

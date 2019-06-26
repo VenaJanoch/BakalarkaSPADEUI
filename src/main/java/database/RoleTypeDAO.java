@@ -1,6 +1,5 @@
 package database;
 
-import SPADEPAC.Activity;
 import controllers.VerifyController;
 import services.Constans;
 
@@ -18,6 +17,7 @@ public class RoleTypeDAO {
     /**
      * Konstruktor tridy
      * Zinicializuje globalni promenne tridy
+     *
      * @param verifyController
      */
     public RoleTypeDAO(VerifyController verifyController) {
@@ -28,11 +28,12 @@ public class RoleTypeDAO {
     /**
      * Metoda pro vytvoreni SQL dotazu pro urcitou instanci Role
      * Metoda slozi jednotlive parametry pro SQL dotaz a zavola metodu ze tridy SQLAtributeCreator pro ziskani dat z databaze
+     *
      * @param projectVerifyId identifikator zvoleneho projektu
-     * @param name seznam s atributy name
-     * @param nameIndicators seznam s indexi ukazatelu rovnosti
-     * @param classId seznam identifikatory trid
-     * @param superClassId seznam s identifikatory super trid
+     * @param name            seznam s atributy name
+     * @param nameIndicators  seznam s indexi ukazatelu rovnosti
+     * @param classId         seznam identifikatory trid
+     * @param superClassId    seznam s identifikatory super trid
      * @return Seznam SQLVerifyObject s daty z databaze
      **/
     public ArrayList<SQLVerifyObject> getRoleProjekt(int projectVerifyId, List<String> name, List<Integer> nameIndicators, List<Integer> classId, List superClassId) {

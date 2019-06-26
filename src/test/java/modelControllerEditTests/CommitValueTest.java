@@ -18,6 +18,7 @@ public class CommitValueTest {
     Commit commit;
     SegmentLists lists;
     LocalDate date;
+
     @Before
     public void setUp() throws Exception {
 
@@ -40,47 +41,49 @@ public class CommitValueTest {
         ArrayList<LocalDate> dates = new ArrayList<>();
         dates.add(date);
         dataModel.getSaveDataModel().createNewCommit(2);
-        dataModel.getEditDataModel().editDataInCommit("Test", name,indicators, name, indicators, dates, indicators,true, 3, 1,false,2);
-        dataModel.getEditDataModel().editDataInCommit("Test", name,indicators, name, indicators, dates, indicators,true, 3, 1,false,2);
+        dataModel.getEditDataModel().editDataInCommit("Test", name, indicators, name, indicators, dates, indicators, true, 3, 1, false, 2);
+        dataModel.getEditDataModel().editDataInCommit("Test", name, indicators, name, indicators, dates, indicators, true, 3, 1, false, 2);
 
         commit = dataModel.getCommit(2);
 
     }
+
     @Test
     public void testAlias() {
-        assertEquals("Test", commit.getAlias() );
+        assertEquals("Test", commit.getAlias());
     }
 
     @Test
     public void testName() {
-        assertEquals("", commit.getName().get(0) );
-        assertEquals("Test2", commit.getName().get(1) );
+        assertEquals("", commit.getName().get(0));
+        assertEquals("Test2", commit.getName().get(1));
         assertSame(2, commit.getName().size());
     }
 
     @Test
     public void testIndicatorName() {
-        assertSame(1, commit.getNameIndicator().get(0) );
-        assertSame(0, commit.getNameIndicator().get(1) );
+        assertSame(1, commit.getNameIndicator().get(0));
+        assertSame(0, commit.getNameIndicator().get(1));
         assertSame(2, commit.getNameIndicator().size());
     }
 
     @Test
     public void testDescription() {
-        assertEquals("", commit.getDescription().get(0) );
-        assertEquals("Test2", commit.getDescription().get(1) );
+        assertEquals("", commit.getDescription().get(0));
+        assertEquals("Test2", commit.getDescription().get(1));
         assertSame(2, commit.getDescription().size());
     }
 
     @Test
     public void testIndicatorDescription() {
-        assertSame(1, commit.getDescriptionIndicator().get(0) );
-        assertSame(0, commit.getDescriptionIndicator().get(1) );
+        assertSame(1, commit.getDescriptionIndicator().get(0));
+        assertSame(0, commit.getDescriptionIndicator().get(1));
         assertSame(2, commit.getDescriptionIndicator().size());
     }
+
     @Test
     public void testDate() {
-        assertEquals(date.toString()+ "T00:00:00.000+02:00", commit.getCreated().get(0).toString());
+        assertEquals(date.toString() + "T00:00:00.000+02:00", commit.getCreated().get(0).toString());
         assertSame(1, commit.getCreated().size());
     }
 

@@ -9,6 +9,7 @@ import java.util.List;
 
 /**
  * Třída zajišťující výběr dat artefaktů z databáze implementující
+ *
  * @author Vaclav Janoch
  */
 public class CategoryDAO {
@@ -18,20 +19,22 @@ public class CategoryDAO {
     /**
      * Konstruktor tridy
      * Zinicializuje globalni promenne tridy
+     *
      * @param verifyController
      */
     public CategoryDAO(VerifyController verifyController) {
-        this.pripojeni = Constans.CONNECTION;    
+        this.pripojeni = Constans.CONNECTION;
         this.verifyController = verifyController;
     }
 
-/**
-* Metoda pro vytvoreni SQL dotazu pro urcitou instanci Category
-* Metoda slozi jednotlive parametry pro SQL dotaz a zavola metodu ze tridy SQLAtributeCreator pro ziskani dat z databaze
-* @ projectVerifyId identifikator zvoleneho projektu
-* @ name seznam s atributy name
-* @ nameIndicator seznam s indexi ukazatelu rovnosti
-**/
+    /**
+     * Metoda pro vytvoreni SQL dotazu pro urcitou instanci Category
+     * Metoda slozi jednotlive parametry pro SQL dotaz a zavola metodu ze tridy SQLAtributeCreator pro ziskani dat z databaze
+     *
+     * @ projectVerifyId identifikator zvoleneho projektu
+     * @ name seznam s atributy name
+     * @ nameIndicator seznam s indexi ukazatelu rovnosti
+     **/
     public ArrayList<SQLVerifyObject> getCategoryyProjekt(int projectVerifyId, List<String> name, List<Integer> nameIndicator) {
 
         String atributeSection = "";

@@ -3,18 +3,17 @@ package model;
 import SPADEPAC.*;
 import interfaces.ISaveDataModel;
 
-import java.util.ArrayList;
-
 public class SaveDataModel implements ISaveDataModel {
 
     private DataModel dataModel;
     private ObjectFactory objF;
 
     /**
-     * Konstruktor tridy 
+     * Konstruktor tridy
      * Zinicializuje globalni promenne
+     *
      * @param dataModel instace tridy DataModel
-     * @param objF instance factory ObjectFactory
+     * @param objF      instance factory ObjectFactory
      */
     public SaveDataModel(DataModel dataModel, ObjectFactory objF) {
         this.dataModel = dataModel;
@@ -23,9 +22,10 @@ public class SaveDataModel implements ISaveDataModel {
 
     /**
      * Metoda pro vytvoreni relace mezi Commited Connfiguratio a Configuration v datovem Modelu
-     * @param linkId identifikator relace
+     *
+     * @param linkId  identifikator relace
      * @param startId Pocatecni identifikator
-     * @param endId Koncovy identifikator
+     * @param endId   Koncovy identifikator
      */
     public void createCommitedConfigurationToConfigurationRelation(int linkId, Integer startId, Integer endId) {
         createLink(linkId, startId, endId, LinkType.COMMITED_CONFIGURATION_CONFIGURATION);
@@ -37,10 +37,11 @@ public class SaveDataModel implements ISaveDataModel {
     }
 
     /**
-     * Pomocna metoda pro vytvoreni instace spojnice 
-     * @param linkId identifikator relace
-     * @param startId Pocatecni identifikator
-     * @param endId Koncovy identifikator
+     * Pomocna metoda pro vytvoreni instace spojnice
+     *
+     * @param linkId   identifikator relace
+     * @param startId  Pocatecni identifikator
+     * @param endId    Koncovy identifikator
      * @param linkType Type o jaky druh spojnice se jedna
      */
     private void createLink(int linkId, int startId, int endId, LinkType linkType) {
@@ -53,11 +54,13 @@ public class SaveDataModel implements ISaveDataModel {
 
         dataModel.getLinks().add(linkP);
     }
+
     /**
      * Metoda pro vytvoreni relace mezi Person a Artifact v datovem Modelu
-     * @param linkId identifikator relace
+     *
+     * @param linkId  identifikator relace
      * @param startId Pocatecni identifikator
-     * @param endId Koncovy identifikator
+     * @param endId   Koncovy identifikator
      */
     public void createNewPersonToArtifactRelation(int linkId, int startId, int endId) {
 
@@ -68,11 +71,13 @@ public class SaveDataModel implements ISaveDataModel {
         Artifact artifact = dataModel.getArtifact(endId);
         artifact.getAuthorIndex().add(startId);
     }
+
     /**
      * Metoda pro vytvoreni relace mezi Person a Commit v datovem Modelu
-     * @param linkId identifikator relace
+     *
+     * @param linkId  identifikator relace
      * @param startId Pocatecni identifikator
-     * @param endId Koncovy identifikator
+     * @param endId   Koncovy identifikator
      */
     public void createNewPersonToCommitRelation(int linkId, int startId, int endId) {
 
@@ -86,9 +91,10 @@ public class SaveDataModel implements ISaveDataModel {
 
     /**
      * Metoda pro vytvoreni relace mezi Committed Configuration a Configuration v datovem Modelu
-     * @param linkId identifikator relace
+     *
+     * @param linkId  identifikator relace
      * @param startId Pocatecni identifikator
-     * @param endId Koncovy identifikator
+     * @param endId   Koncovy identifikator
      */
     public void createNewPersonToCommittedConfigurationRelation(int linkId, int startId, int endId) {
 
@@ -102,9 +108,10 @@ public class SaveDataModel implements ISaveDataModel {
 
     /**
      * Metoda pro vytvoreni relace mezi Person a Configuration v datovem Modelu
-     * @param linkId identifikator relace
+     *
+     * @param linkId  identifikator relace
      * @param startId Pocatecni identifikator
-     * @param endId Koncovy identifikator
+     * @param endId   Koncovy identifikator
      */
     public void createNewPersonToConfigurationRelation(int linkId, int startId, int endId) {
         createLink(linkId, startId, endId, LinkType.PERSON_CONFIGURATION);
@@ -117,9 +124,10 @@ public class SaveDataModel implements ISaveDataModel {
 
     /**
      * Metoda pro vytvoreni relace mezi Artifact a Configuration v datovem Modelu
-     * @param linkId identifikator relace
+     *
+     * @param linkId  identifikator relace
      * @param startId Pocatecni identifikator
-     * @param endId Koncovy identifikator
+     * @param endId   Koncovy identifikator
      */
     public void createNewArtifacToConfigurationRelation(int linkId, int startId, int endId) {
         createLink(linkId, startId, endId, LinkType.ARTIFACT_CONFIGURATION);
@@ -133,9 +141,10 @@ public class SaveDataModel implements ISaveDataModel {
 
     /**
      * Metoda pro vytvoreni relace mezi Commited Connfiguration a Commit v datovem Modelu
-     * @param linkId identifikator relace
+     *
+     * @param linkId  identifikator relace
      * @param startId Pocatecni identifikator
-     * @param endId Koncovy identifikator
+     * @param endId   Koncovy identifikator
      */
     public void createCommitToCommitedConfigurationRelation(int linkId, int startId, int endId) {
 
@@ -149,7 +158,8 @@ public class SaveDataModel implements ISaveDataModel {
 
     /**
      * Metoda pro vytvoreni nove instace segmentu Phase
-     * Jsou nastaveny pocatecny hodnoty a instace je pridana do datoveho modelu 
+     * Jsou nastaveny pocatecny hodnoty a instace je pridana do datoveho modelu
+     *
      * @param id identifikator nove vytvarene instacne
      */
     public void createNewPhase(int id) {
@@ -159,10 +169,11 @@ public class SaveDataModel implements ISaveDataModel {
         phase.setAlias(String.valueOf(id));
         dataModel.getPhases().add(phase);
     }
-   
+
     /**
      * Metoda pro vytvoreni nove instace segmentu Iteration
-     * Jsou nastaveny pocatecny hodnoty a instace je pridana do datoveho modelu 
+     * Jsou nastaveny pocatecny hodnoty a instace je pridana do datoveho modelu
+     *
      * @param id identifikator nove vytvarene instacne
      */
     public void createNewIteration(int id) {
@@ -172,10 +183,11 @@ public class SaveDataModel implements ISaveDataModel {
         iteration.setAlias(String.valueOf(id));
         dataModel.getIterations().add(iteration);
     }
-   
+
     /**
      * Metoda pro vytvoreni nove instace segmentu Activity
-     * Jsou nastaveny pocatecny hodnoty a instace je pridana do datoveho modelu 
+     * Jsou nastaveny pocatecny hodnoty a instace je pridana do datoveho modelu
+     *
      * @param id identifikator nove vytvarene instacne
      */
     public void createNewActivity(int id) {
@@ -186,10 +198,11 @@ public class SaveDataModel implements ISaveDataModel {
         dataModel.getActivities().add(activity);
 
     }
-   
+
     /**
      * Metoda pro vytvoreni nove instace elementu Work Unit
-     * Jsou nastaveny pocatecny hodnoty a instace je pridana do datoveho modelu 
+     * Jsou nastaveny pocatecny hodnoty a instace je pridana do datoveho modelu
+     *
      * @param id identifikator nove vytvarene instacne
      */
     public void createNewWorkUnit(int id) {
@@ -202,7 +215,8 @@ public class SaveDataModel implements ISaveDataModel {
 
     /**
      * Metoda pro vytvoreni nove instace elementu Configuration
-     * Jsou nastaveny pocatecny hodnoty a instace je pridana do datoveho modelu 
+     * Jsou nastaveny pocatecny hodnoty a instace je pridana do datoveho modelu
+     *
      * @param id identifikator nove vytvarene instacne
      */
     public void createNewConfiguration(int id) {
@@ -221,7 +235,8 @@ public class SaveDataModel implements ISaveDataModel {
 
     /**
      * Metoda pro vytvoreni nove instace elementu Change
-     * Jsou nastaveny pocatecny hodnoty a instace je pridana do datoveho modelu 
+     * Jsou nastaveny pocatecny hodnoty a instace je pridana do datoveho modelu
+     *
      * @param id identifikator nove vytvarene instacne
      */
     public void createNewChange(int id) {
@@ -234,7 +249,8 @@ public class SaveDataModel implements ISaveDataModel {
 
     /**
      * Metoda pro vytvoreni nove instace elementu Artifact
-     * Jsou nastaveny pocatecny hodnoty a instace je pridana do datoveho modelu 
+     * Jsou nastaveny pocatecny hodnoty a instace je pridana do datoveho modelu
+     *
      * @param id identifikator nove vytvarene instacne
      */
     public void createNewArtifact(int id) {
@@ -253,7 +269,8 @@ public class SaveDataModel implements ISaveDataModel {
 
     /**
      * Metoda pro vytvoreni nove instace elementu Branch
-     * Jsou nastaveny pocatecny hodnoty a instace je pridana do datoveho modelu 
+     * Jsou nastaveny pocatecny hodnoty a instace je pridana do datoveho modelu
+     *
      * @param id identifikator nove vytvarene instacne
      */
     public void createNewBranch(int id) {
@@ -267,7 +284,8 @@ public class SaveDataModel implements ISaveDataModel {
 
     /**
      * Metoda pro vytvoreni nove instace elementu Configuration Person Relation
-     * Jsou nastaveny pocatecny hodnoty a instace je pridana do datoveho modelu 
+     * Jsou nastaveny pocatecny hodnoty a instace je pridana do datoveho modelu
+     *
      * @param id identifikator nove vytvarene instacne
      */
     public void createNewCPR(int id) {
@@ -281,7 +299,8 @@ public class SaveDataModel implements ISaveDataModel {
 
     /**
      * Metoda pro vytvoreni nove instace elementu Criterion
-     * Jsou nastaveny pocatecny hodnoty a instace je pridana do datoveho modelu 
+     * Jsou nastaveny pocatecny hodnoty a instace je pridana do datoveho modelu
+     *
      * @param id identifikator nove vytvarene instacne
      */
     public void createNewCriterion(int id) {
@@ -295,7 +314,8 @@ public class SaveDataModel implements ISaveDataModel {
 
     /**
      * Metoda pro vytvoreni nove instace elementu Priority
-     * Jsou nastaveny pocatecny hodnoty a instace je pridana do datoveho modelu 
+     * Jsou nastaveny pocatecny hodnoty a instace je pridana do datoveho modelu
+     *
      * @param id identifikator nove vytvarene instacne
      */
     public void createNewPriority(int id) {
@@ -309,7 +329,8 @@ public class SaveDataModel implements ISaveDataModel {
 
     /**
      * Metoda pro vytvoreni nove instace elementu Severity
-     * Jsou nastaveny pocatecny hodnoty a instace je pridana do datoveho modelu 
+     * Jsou nastaveny pocatecny hodnoty a instace je pridana do datoveho modelu
+     *
      * @param id identifikator nove vytvarene instacne
      */
     public void createNewSeverity(int id) {
@@ -323,7 +344,8 @@ public class SaveDataModel implements ISaveDataModel {
 
     /**
      * Metoda pro vytvoreni nove instace elementu Relation
-     * Jsou nastaveny pocatecny hodnoty a instace je pridana do datoveho modelu 
+     * Jsou nastaveny pocatecny hodnoty a instace je pridana do datoveho modelu
+     *
      * @param id identifikator nove vytvarene instacne
      */
     public void createNewRelation(int id) {
@@ -337,7 +359,8 @@ public class SaveDataModel implements ISaveDataModel {
 
     /**
      * Metoda pro vytvoreni nove instace elementu Resolution
-     * Jsou nastaveny pocatecny hodnoty a instace je pridana do datoveho modelu 
+     * Jsou nastaveny pocatecny hodnoty a instace je pridana do datoveho modelu
+     *
      * @param id identifikator nove vytvarene instacne
      */
     public void createNewResolution(int id) {
@@ -352,7 +375,8 @@ public class SaveDataModel implements ISaveDataModel {
 
     /**
      * Metoda pro vytvoreni nove instace elementu Person
-     * Jsou nastaveny pocatecny hodnoty a instace je pridana do datoveho modelu 
+     * Jsou nastaveny pocatecny hodnoty a instace je pridana do datoveho modelu
+     *
      * @param id identifikator nove vytvarene instacne
      */
     public void createNewPerson(int id) {
@@ -372,7 +396,8 @@ public class SaveDataModel implements ISaveDataModel {
 
     /**
      * Metoda pro vytvoreni nove instace elementu Milestone
-     * Jsou nastaveny pocatecny hodnoty a instace je pridana do datoveho modelu 
+     * Jsou nastaveny pocatecny hodnoty a instace je pridana do datoveho modelu
+     *
      * @param id identifikator nove vytvarene instacne
      */
     public void createNewMilestone(int id) {
@@ -386,7 +411,8 @@ public class SaveDataModel implements ISaveDataModel {
 
     /**
      * Metoda pro vytvoreni nove instace elementu Role Type
-     * Jsou nastaveny pocatecny hodnoty a instace je pridana do datoveho modelu 
+     * Jsou nastaveny pocatecny hodnoty a instace je pridana do datoveho modelu
+     *
      * @param id identifikator nove vytvarene instacne
      */
     public void createNewRoleType(int id) {
@@ -400,7 +426,8 @@ public class SaveDataModel implements ISaveDataModel {
 
     /**
      * Metoda pro vytvoreni nove instace elementu Status
-     * Jsou nastaveny pocatecny hodnoty a instace je pridana do datoveho modelu 
+     * Jsou nastaveny pocatecny hodnoty a instace je pridana do datoveho modelu
+     *
      * @param id identifikator nove vytvarene instacne
      */
     public void createNewStatus(int id) {
@@ -414,7 +441,8 @@ public class SaveDataModel implements ISaveDataModel {
 
     /**
      * Metoda pro vytvoreni nove instace elementu Type
-     * Jsou nastaveny pocatecny hodnoty a instace je pridana do datoveho modelu 
+     * Jsou nastaveny pocatecny hodnoty a instace je pridana do datoveho modelu
+     *
      * @param id identifikator nove vytvarene instacne
      */
     public void createNewType(int id) {
@@ -428,7 +456,8 @@ public class SaveDataModel implements ISaveDataModel {
 
     /**
      * Metoda pro vytvoreni nove instace elementu VCSTag
-     * Jsou nastaveny pocatecny hodnoty a instace je pridana do datoveho modelu 
+     * Jsou nastaveny pocatecny hodnoty a instace je pridana do datoveho modelu
+     *
      * @param id identifikator nove vytvarene instacne
      */
     @Override
@@ -442,7 +471,8 @@ public class SaveDataModel implements ISaveDataModel {
 
     /**
      * Metoda pro vytvoreni nove instace elementu Commit
-     * Jsou nastaveny pocatecny hodnoty a instace je pridana do datoveho modelu 
+     * Jsou nastaveny pocatecny hodnoty a instace je pridana do datoveho modelu
+     *
      * @param id identifikator nove vytvarene instacne
      */
     @Override
@@ -463,7 +493,8 @@ public class SaveDataModel implements ISaveDataModel {
 
     /**
      * Metoda pro vytvoreni nove instace elementu Committed Configuration
-     * Jsou nastaveny pocatecny hodnoty a instace je pridana do datoveho modelu 
+     * Jsou nastaveny pocatecny hodnoty a instace je pridana do datoveho modelu
+     *
      * @param id identifikator nove vytvarene instacne
      */
     @Override

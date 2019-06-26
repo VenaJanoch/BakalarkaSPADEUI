@@ -14,12 +14,12 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
 
 public class PhaseDeleteTest {
 
     LocalDate date;
     DataModel dataModel;
+
     @Before
     public void setUp() throws Exception {
 

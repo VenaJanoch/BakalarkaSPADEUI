@@ -12,12 +12,29 @@ import tables.PersonTable;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Trida predstavujici editacni panel pro element Person
+ *
+ * @author Vaclav Janoch
+ */
 public class PersonControlPanel extends NameControlPanel implements IControlPanel {
 
+    /**
+     * Globální proměnné třídy
+     */
     private int roleId;
     private PersonTable personTable;
     private int roleIndex;
 
+    /**
+     * Konstruktor tridy, zinicializuje globalni promenne tridy
+     * Je zde rozsiren seznam poznych typu panelu pro dany element
+     *
+     * @param buttonName         textovy retezec pro potvrzovaci tlacitko
+     * @param formDataController instace tridy FormDataController pro ziskani dat z datoveho modelu
+     * @param editFormController instace tridy EditDataController pro predani novych dat
+     * @param formController     instace tridy FormController
+     */
     public PersonControlPanel(String buttonName, IFormDataController formDataController, IEditFormController editFormController,
                               FormController formController, PersonTable personTable, int roleId, int roleIndex) {
         super(buttonName, formDataController, editFormController, formController);
@@ -29,6 +46,10 @@ public class PersonControlPanel extends NameControlPanel implements IControlPane
         this.addItemsToControlPanel();
     }
 
+    /**
+     * Metoda volajici kontroler ControlPanelController pro vygenerovani noveho radku
+     * Pripadne rozsireni o staticke objekty
+     */
     protected void addItemsToControlPanel() {
 
         controlPanelController.setCountLine(this, 1, new ControlPanelLine(lineList, this, controlPanelController, Constans.numberIndicatorList, controlPanelController.getLineCount()));
@@ -51,6 +72,11 @@ public class PersonControlPanel extends NameControlPanel implements IControlPane
 
     }
 
+    /**
+     * Metoda pro zobrazeni postraniho editacniho panelu
+     * Nejprve jsou ziskana data z datoveho modelu
+     * nasledne pomoci kontroleru ControlPanelController pridana do panelu
+     */
     @Override
     public void showEditControlPanel() {
 

@@ -1,12 +1,12 @@
 package services;
 
-import java.util.ArrayList;
-
 import graphics.canvas.ElementsLink;
 import graphics.canvas.NodeLink;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import tables.*;
+
+import java.util.ArrayList;
 
 /**
  * Třída uchovavajici prehledove seznamy urcene pro comboboxy
@@ -145,6 +145,7 @@ public class SegmentLists {
 
     /**
      * Metoda pro pridani spojnice do seznamu
+     *
      * @param caLink
      */
     public void addLinkToList(ElementsLink caLink) {
@@ -154,11 +155,12 @@ public class SegmentLists {
 
     /**
      * Metoda pro odstraneni spojnice ze seznamu
+     *
      * @param linkId
      */
     public void removeArrow(int linkId) {
 
-        for (int i = 0; i < arrows.size(); i++){
+        for (int i = 0; i < arrows.size(); i++) {
             NodeLink link = arrows.get(i);
             if (link != null && link.getLinkId() == linkId) {
                 getArrows().remove(i);
@@ -171,8 +173,9 @@ public class SegmentLists {
 
     /**
      * Metoda pro odstraneni prvku ze seznamu podle indexu v seznamu
+     *
      * @param segmentType typ seznamu
-     * @param indexList index v seznamu
+     * @param indexList   index v seznamu
      * @return identifikator mazaneho prvku
      */
     public int removeItemFromObservableList(SegmentType segmentType, int indexList) {
@@ -226,10 +229,12 @@ public class SegmentLists {
         }
         return -1;
     }
+
     /**
      * Pretizena metoda pro odstraneni prvku ze seznamu podle seznamu indexu v seznamu
+     *
      * @param segmentType typ seznamu
-     * @param indexList index v seznamu
+     * @param indexList   index v seznamu
      * @return identifikator mazaneho prvku
      */
     public ArrayList<Integer> removeItemFromObservableList(SegmentType segmentType, ArrayList indexList) {
@@ -287,9 +292,10 @@ public class SegmentLists {
 
     /**
      * Metoda pro upravu prvku v seznamu podle identifikatoru
+     *
      * @param segmentType typ seznamu
-     * @param id identifikator prvku
-     * @param table instace tridy BasicTable pro nahrazeni v seznamu
+     * @param id          identifikator prvku
+     * @param table       instace tridy BasicTable pro nahrazeni v seznamu
      */
     public void updateListItem(SegmentType segmentType, int id, BasicTable table) {
         int listIndex = removeItemFromObservableList(segmentType, id);
@@ -298,9 +304,10 @@ public class SegmentLists {
 
     /**
      * Metoda pro pridani prvku do seznamu
+     *
      * @param segmentType typ seznamu
-     * @param index poradi v seznamu
-     * @param basicTable nstace tridy BasicTable pro vlozeni do seznamu
+     * @param index       poradi v seznamu
+     * @param basicTable  nstace tridy BasicTable pro vlozeni do seznamu
      */
     public void addItemToObservableList(SegmentType segmentType, int index, BasicTable basicTable) {
 
@@ -355,8 +362,9 @@ public class SegmentLists {
 
     /**
      * Metoda pro smazani prvku ze seznamu v zavislosit na typu seznamu a seznamu indexu
+     *
      * @param observableList seznam BasicTable
-     * @param indexList seznam indexu v seznamu
+     * @param indexList      seznam indexu v seznamu
      * @return seznam identifikatoru pro smazani
      */
     private ArrayList<Integer> removeDataFromListTest(ObservableList<BasicTable> observableList, ArrayList<Integer> indexList) {
@@ -373,8 +381,9 @@ public class SegmentLists {
 
     /**
      * Pretizena metoda pro smazani prvku ze seznamu v zavislosit na typu seznamu a indexu
+     *
      * @param observableList seznam BasicTable
-     * @param id index v seznamu
+     * @param id             index v seznamu
      * @return seznam identifikatoru pro smazani
      */
     private int removeDataFromListTest(ObservableList<BasicTable> observableList, int id) {
@@ -531,9 +540,9 @@ public class SegmentLists {
     }
 
     public NodeLink getArrow(int linkId) {
-        for (int i =0; i < arrows.size(); i++ ){
+        for (int i = 0; i < arrows.size(); i++) {
             NodeLink link = arrows.get(i);
-            if (link != null && link.getLinkId() == linkId ){
+            if (link != null && link.getLinkId() == linkId) {
                 return link;
             }
         }

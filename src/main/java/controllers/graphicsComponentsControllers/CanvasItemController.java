@@ -1,14 +1,15 @@
 package controllers.graphicsComponentsControllers;
 
-import controllers.formControllers.FormController;
 import controllers.LinkControl;
+import controllers.formControllers.FormController;
 import controllers.formControllers.ManipulationController;
 import graphics.canvas.CanvasItem;
 import javafx.geometry.Point2D;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import services.*;
+import services.Constans;
+import services.SegmentType;
 
 /**
  * Trida predstavujici controller pro graficky prvek CanvasItem, prvek na platne
@@ -26,10 +27,11 @@ public class CanvasItemController {
     /**
      * Konstruktor tridy
      * Zinicializuje globalni promenne tridy
-     * @param linkControl instace tridy LinkContro l
-     * @param formController instace tridy FormController
+     *
+     * @param linkControl            instace tridy LinkContro l
+     * @param formController         instace tridy FormController
      * @param manipulationController instace tridy ManipulationController
-     * @param selectionController instace tridy SelectionController
+     * @param selectionController    instace tridy SelectionController
      */
     public CanvasItemController(LinkControl linkControl, FormController formController, ManipulationController manipulationController, SelectionController selectionController) {
 
@@ -43,9 +45,10 @@ public class CanvasItemController {
 
     /**
      * Metoda pro vytvoreni nove instace tridy CanvasItem
-     * @param type instace tridy SegmentType
+     *
+     * @param type                 instace tridy SegmentType
      * @param segmentIdentificator identificator prvku
-     * @param formIndex  identificator elemetnu
+     * @param formIndex            identificator elemetnu
      * @param name
      * @param instanceCount
      * @param countIndicator
@@ -76,7 +79,7 @@ public class CanvasItemController {
         double offsetX = t.getSceneX() - canvasItemORG.getOrgSceneX();
         double offsetY = t.getSceneY() - canvasItemORG.getOrgSceneY();
 
-        for (CanvasItem canvasItem : selectionController.getSelection()){
+        for (CanvasItem canvasItem : selectionController.getSelection()) {
             if (!canvasController.isArrow()) {
 
                 double newTranslateX = canvasItem.getOrgTranslateX() + offsetX;
@@ -90,9 +93,10 @@ public class CanvasItemController {
 
     /**
      * Metoda pro nastaveni potrebnych promennych pro vybrani pouze jednoho prvku
+     *
      * @param canvasItem instace tridy CanvasItem
      */
-    private void setOneItemOperations(CanvasItem canvasItem){
+    private void setOneItemOperations(CanvasItem canvasItem) {
         selectionController.clear();
         selectionController.add(canvasItem);
         manipulation.setChoosedItem(true);
@@ -109,12 +113,12 @@ public class CanvasItemController {
     public void setClicFromDragPoint(MouseEvent t, CanvasItem item, CanvasController canvasController, SegmentType segmentType) {
 
 
-        if (selectionController.getSelection().size() <=1){
-            if (!t.isControlDown() && !t.isShiftDown()){
-               setOneItemOperations(item);
+        if (selectionController.getSelection().size() <= 1) {
+            if (!t.isControlDown() && !t.isShiftDown()) {
+                setOneItemOperations(item);
             }
 
-        }else {
+        } else {
             manipulation.setChoosedItem(false);
         }
 
@@ -216,15 +220,16 @@ public class CanvasItemController {
 
     /**
      * Metoda pro nastaveni poctu instaci do prvku platna
-     * @param canvasItem konkretni CanvasItem
+     *
+     * @param canvasItem    konkretni CanvasItem
      * @param instanceCount pocet instaci
-     * @param indicator ukazatel nerovnosti
+     * @param indicator     ukazatel nerovnosti
      */
     public void setInstanceCount(CanvasItem canvasItem, int instanceCount, int indicator) {
-       String indicatorMark = "";
-        if (indicator != 0){
-           indicatorMark = Constans.NUMBER_INDICATORS[indicator];
-       }
+        String indicatorMark = "";
+        if (indicator != 0) {
+            indicatorMark = Constans.NUMBER_INDICATORS[indicator];
+        }
         canvasItem.getSegmentInfo().setInstanceCount(indicatorMark + Integer.toString(instanceCount));
 
 
@@ -239,7 +244,7 @@ public class CanvasItemController {
      * Metoda pro realci na ukonceni Drag and Drop
      */
     public void releasedItem() {
-        for (CanvasItem canvasItem : selectionController.getSelection()){
+        for (CanvasItem canvasItem : selectionController.getSelection()) {
             canvasItem.setPosition(canvasItemPositionControl(canvasItem));
         }
     }

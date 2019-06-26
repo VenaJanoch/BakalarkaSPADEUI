@@ -48,11 +48,11 @@ public class WorkUnitValueTest {
         FormDataController formDataController = warmUp.getFormDataController();
         formDataController.saveDataFromWorkUnit(null, true);
 
-        dataModel.getEditDataModel().editDataInWorkUnit("Test", progress, indicators, name,name, name, indicators, indicators, indicators, indicators, indicators, indicators,
-                indicators,estimate, indicators,  indicators, indicators, indicators, indicators,indicators, indicators,indicators, indicators,indicators, indicators,
+        dataModel.getEditDataModel().editDataInWorkUnit("Test", progress, indicators, name, name, name, indicators, indicators, indicators, indicators, indicators, indicators,
+                indicators, estimate, indicators, indicators, indicators, indicators, indicators, indicators, indicators, indicators, indicators, indicators, indicators,
                 dates, indicators, false, indicators, unit, 0);
-        dataModel.getEditDataModel().editDataInWorkUnit("Test", progress, indicators, name,name, name, indicators, indicators, indicators, indicators, indicators, indicators,
-                indicators,estimate, indicators,  indicators, indicators, indicators, indicators,indicators, indicators,indicators, indicators,indicators, indicators,
+        dataModel.getEditDataModel().editDataInWorkUnit("Test", progress, indicators, name, name, name, indicators, indicators, indicators, indicators, indicators, indicators,
+                indicators, estimate, indicators, indicators, indicators, indicators, indicators, indicators, indicators, indicators, indicators, indicators, indicators,
                 dates, indicators, false, indicators, unit, 0);
         FormFillController formFillController = warmUp.getFormFillController();
         formFillController.fillWorkUnitForm(null, 0);
@@ -61,40 +61,40 @@ public class WorkUnitValueTest {
 
     @Test
     public void testAlias() {
-        assertEquals("1", workUnit.getAlias() );
+        assertEquals("1", workUnit.getAlias());
     }
 
     @Test
     public void testName() {
-        assertEquals("", workUnit.getName().get(0) );
-        assertEquals("Test2", workUnit.getName().get(1) );
+        assertEquals("", workUnit.getName().get(0));
+        assertEquals("Test2", workUnit.getName().get(1));
         assertSame(2, workUnit.getName().size());
     }
 
     @Test
     public void testIndicatorName() {
-        assertSame(1, workUnit.getNameIndicator().get(0) );
-        assertSame(0, workUnit.getNameIndicator().get(1) );
+        assertSame(1, workUnit.getNameIndicator().get(0));
+        assertSame(0, workUnit.getNameIndicator().get(1));
         assertSame(2, workUnit.getNameIndicator().size());
     }
 
     @Test
     public void testDescription() {
-        assertEquals("", workUnit.getDescription().get(0) );
-        assertEquals("Test2", workUnit.getDescription().get(1) );
+        assertEquals("", workUnit.getDescription().get(0));
+        assertEquals("Test2", workUnit.getDescription().get(1));
         assertSame(2, workUnit.getDescription().size());
     }
 
     @Test
     public void testProgress() {
-        assertSame(23, workUnit.getProgress().get(1) );
+        assertSame(23, workUnit.getProgress().get(1));
         assertSame(2, workUnit.getProgress().size());
     }
 
     @Test
     public void testIndicatorDescription() {
-        assertSame(1, workUnit.getDescriptionIndicator().get(0) );
-        assertSame(0, workUnit.getDescriptionIndicator().get(1) );
+        assertSame(1, workUnit.getDescriptionIndicator().get(0));
+        assertSame(0, workUnit.getDescriptionIndicator().get(1));
         assertSame(2, workUnit.getDescriptionIndicator().size());
     }
 

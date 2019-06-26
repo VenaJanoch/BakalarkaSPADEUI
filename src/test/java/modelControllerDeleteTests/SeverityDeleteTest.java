@@ -1,19 +1,15 @@
 package modelControllerDeleteTests;
 
-import SPADEPAC.Severity;
 import SPADEPAC.WorkUnit;
 import controllers.formControllers.DeleteFormController;
-import controllers.formControllers.FormController;
 import controllers.formControllers.FormDataController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.control.TableView;
 import model.DataModel;
 import org.junit.Before;
 import org.junit.Test;
 import services.MapperTableToObject;
 import services.SegmentLists;
-import services.SegmentType;
 import tables.BasicTable;
 import tables.ClassTable;
 
@@ -22,7 +18,6 @@ import java.util.ArrayList;
 import java.util.Set;
 
 import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
 
 public class SeverityDeleteTest {
 
@@ -31,6 +26,7 @@ public class SeverityDeleteTest {
     LocalDate date;
     WorkUnit workUnit;
     MapperTableToObject mapperTableToObject;
+
     @Before
     public void setUp() throws Exception {
 
@@ -40,7 +36,7 @@ public class SeverityDeleteTest {
         lists = warmUp.getLists();
         FormDataController formDataController = warmUp.getFormDataController();
         DeleteFormController deleteFormController = warmUp.getDeleteFormController();
-        ClassTable table1 = new ClassTable("","","",true, 0);
+        ClassTable table1 = new ClassTable("", "", "", true, 0);
         formDataController.saveDataFromSeverity(null, true);
         formDataController.saveDataFromSeverity(null, true);
 
@@ -64,8 +60,8 @@ public class SeverityDeleteTest {
         progress.add(12);
         progress.add(23);
         dataModel.getSaveDataModel().createNewWorkUnit(2);
-        dataModel.getEditDataModel().editDataInWorkUnit("Test", progress, indicators, name,name, name, indicators, indicators, indicators, indicators, indicators, indicators,
-                indicators,estimate, indicators,  indicators, indicators, indicators, indicators,indicators, indicators,indicators, indicators,indicators, indicators,
+        dataModel.getEditDataModel().editDataInWorkUnit("Test", progress, indicators, name, name, name, indicators, indicators, indicators, indicators, indicators, indicators,
+                indicators, estimate, indicators, indicators, indicators, indicators, indicators, indicators, indicators, indicators, indicators, indicators, indicators,
                 dates, indicators, false, indicators, unit, 2);
 
         ObservableList list = FXCollections.observableArrayList();
@@ -75,17 +71,18 @@ public class SeverityDeleteTest {
         branchTables.add(table1);
         mapperTableToObject = warmUp.getMapperTableToObject();
         mapperTableToObject.mapTableToWU(indicators, indicators, indicators, indicators, indicators, indicators
-                ,indicators, 0,"Test");
+                , indicators, 0, "Test");
         deleteFormController.deleteSeverity(list, branchTables);
 
     }
 
     @Test
     public void testMapper() {
-        Set instacies =  mapperTableToObject.getWUToSeverityMapper().keySet();
+        Set instacies = mapperTableToObject.getWUToSeverityMapper().keySet();
         assertSame(1, instacies.size());
         assertSame(1, instacies.iterator().next());
     }
+
     @Test
     public void testListSize() {
         assertSame(1, dataModel.getSeverities().size());

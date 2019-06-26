@@ -27,10 +27,11 @@ public class DateItem extends ItemBox {
     /**
      * Konstruktor tridy,
      * Zinicializuje globalni promenne tridy
-     * @param controlPanelLine instance tridy ControlPanelLine
-     * @param controlPanel instance tridy ControlPanel
+     *
+     * @param controlPanelLine       instance tridy ControlPanelLine
+     * @param controlPanel           instance tridy ControlPanel
      * @param controlPanelController instace tridy ControlPanelController
-     * @param lineList seznam parametru na radku
+     * @param lineList               seznam parametru na radku
      */
     public DateItem(ControlPanelLine controlPanelLine, ControlPanel controlPanel, ControlPanelController controlPanelController,
                     ObservableList<ControlPanelLineObject> lineList) {
@@ -45,7 +46,7 @@ public class DateItem extends ItemBox {
     }
 
     public LocalDate getDateFromDatePicker() {
-            return itemDate.getValue();
+        return itemDate.getValue();
 
     }
 

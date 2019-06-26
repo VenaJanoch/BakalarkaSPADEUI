@@ -1,6 +1,7 @@
 package tables;
 
 import javafx.beans.property.StringProperty;
+
 /**
  * Trida predstavujici kontejner pro tabulku segmentu Activity
  *
@@ -15,9 +16,10 @@ public class ActivityTable extends BasicTable {
 
     /**
      * Konstruktor třídy Zinicializuje globální proměnnné třídy
-     * @param name alias prvku
+     *
+     * @param name  alias prvku
      * @param exist existence prvku
-     * @param id identifikator prvku
+     * @param id    identifikator prvku
      */
     public ActivityTable(String name, boolean exist, int id) {
         super(name, exist, id);

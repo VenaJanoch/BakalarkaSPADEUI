@@ -1,16 +1,15 @@
 package services;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
-import javafx.scene.paint.*;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.CycleMethod;
+import javafx.scene.paint.LinearGradient;
+import javafx.scene.paint.Stop;
 
-import java.io.File;
 import java.sql.Connection;
 import java.time.LocalDate;
-import java.util.ArrayList;
 
 public class Constans {
 
@@ -21,7 +20,7 @@ public class Constans {
     /**
      * Konstanty pro nastavení velikosti oken
      */
-    public static final int width = 1300;
+    public static final int width = 1200;
     public static final int height = 800;
     public static final int offset = 12;
 
@@ -231,8 +230,8 @@ public class Constans {
 
     public static final LocalDate nullDate = LocalDate.of(1900, 1, 1);
 
-    //  public static final String DATABASE_PATH = "jdbc:mysql://students.kiv.zcu.cz:3306/ppicha?allowMultiQueries=true"; //cesta k databázi
-    public static final String DATABASE_PATH = "jdbc:mysql://localhost:3306/opswi?allowMultiQueries=true&characterEncoding=UTF-8";
+    public static final String DATABASE_PATH = "jdbc:mysql://students.kiv.zcu.cz:3306/ppicha?allowMultiQueries=true&characterEncoding=UTF-8"; //cesta k databázi
+    //public static final String DATABASE_PATH = "jdbc:mysql://localhost:3306/opswi?allowMultiQueries=true&characterEncoding=UTF-8";
     public static final double PROJECT_CHOOSE_WINDOW_WIDTH = 400;
     public static final double PROJECT_CHOOSE_WINDOW_HEIGHT = 400;
     public static final double PROJECT_TABLE_WIDTH = 900;

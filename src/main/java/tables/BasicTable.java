@@ -2,6 +2,7 @@ package tables;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+
 /**
  * Trida predstavujici zakladni tridu pro tabulku
  *
@@ -20,9 +21,10 @@ public class BasicTable {
     /**
      * Konstruktor tridy,
      * Zinicializuje globalni promenne tridy
+     *
      * @param alias alias prvku
      * @param exist existence prvku
-     * @param id identifikator prvku
+     * @param id    identifikator prvku
      */
     public BasicTable(String alias, boolean exist, int id) {
         this.id = id;
@@ -34,6 +36,7 @@ public class BasicTable {
 
     /**
      * Metoda pro nastaveni stringu v zavisloti na hodnote promenne exist
+     *
      * @param exist existence prvku
      */
     public void setStringExist(boolean exist) {

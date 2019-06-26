@@ -9,7 +9,8 @@ import interfaces.IEditFormController;
 import interfaces.IFormDataController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.TableView;
 import services.*;
 import tables.ArtifactTable;
 import tables.BasicTable;
@@ -18,13 +19,17 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+
+/**
+ * Trida predstavujici editacni panel pro element Artifact
+ *
+ * @author Vaclav Janoch
+ */
 public class ArtifactControlPanel extends DateDescControlPanel implements IControlPanel {
 
     /**
      * Globální proměnné třídy
      */
-
-
     private SegmentLists segmentLists;
     private boolean exist;
     private ArtifactTable artifactTable;
@@ -33,6 +38,15 @@ public class ArtifactControlPanel extends DateDescControlPanel implements IContr
     private int artifactId;
     private int artifactFormIndex;
 
+    /**
+     * Konstruktor tridy, zinicializuje globalni promenne tridy
+     * Je zde rozsiren seznam poznych typu panelu pro dany element
+     *
+     * @param buttonName         textovy retezec pro potvrzovaci tlacitko
+     * @param formDataController instace tridy FormDataController pro ziskani dat z datoveho modelu
+     * @param editFormController instace tridy EditDataController pro predani novych dat
+     * @param formController     instace tridy FormController
+     */
     public ArtifactControlPanel(String buttonName, IFormDataController formDataController,
                                 IEditFormController editFormController, FormController formController, ArtifactTable artifactTable, int id, int formIndex) {
         super(buttonName, formDataController, editFormController, formController);
@@ -53,8 +67,11 @@ public class ArtifactControlPanel extends DateDescControlPanel implements IContr
         createControlPanel();
     }
 
+    /**
+     * Metoda volajici kontroler ControlPanelController pro vygenerovani noveho radku
+     * Pripadne rozsireni o staticke objekty
+     */
     public void createControlPanel() {
-
 
         controlPanelController.setCountLine(this, 2, new ControlPanelLine(lineList, this, controlPanelController, Constans.numberIndicatorList, controlPanelController.getLineCount()));
         controlPanelController.createNewLineWithExist(this, lineList);
@@ -62,6 +79,11 @@ public class ArtifactControlPanel extends DateDescControlPanel implements IContr
         button.setOnAction(event -> saveDataFromPanel());
     }
 
+    /**
+     * Metoda pro zobrazeni postraniho editacniho panelu
+     * Nejprve jsou ziskana data z datoveho modelu
+     * nasledne pomoci kontroleru ControlPanelController pridana do panelu
+     */
     @Override
     public void showEditControlPanel() {
 
@@ -85,9 +107,11 @@ public class ArtifactControlPanel extends DateDescControlPanel implements IContr
         controlPanelController.setAlias((String) boolList.get(3), this);
     }
 
+    /**
+     * Metoda pro ziskani dat z grafickych komponent a predani dat do editacniho kontroleru EditFormController
+     */
     public void saveDataFromPanel() {
         int id = artifactId;
-
 
         ArrayList<Integer> roleIndicators = new ArrayList<>();
         ArrayList<Integer> typeIndicators = new ArrayList<>();
@@ -111,11 +135,6 @@ public class ArtifactControlPanel extends DateDescControlPanel implements IContr
 
     public Button getButton() {
         return button;
-    }
-
-    public void clearPanelCB(TableView tableView) {
-        tableView.refresh();
-        tableView.getSelectionModel().clearSelection();
     }
 
     @Override

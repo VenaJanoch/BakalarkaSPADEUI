@@ -1,12 +1,9 @@
 package graphics.canvas;
 
 import controllers.graphicsComponentsControllers.CanvasController;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
@@ -16,10 +13,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import services.Constans;
 import services.DragContext;
-
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
 
 
 /**
@@ -67,7 +60,7 @@ public class DragAndDropCanvas extends ScrollPane {
 
         canvas.setOnMouseClicked(canvasController.getOnMousePressedHandler());
 
-        rect = new Rectangle( 0,0,0,0);
+        rect = new Rectangle(0, 0, 0, 0);
         rect.setStroke(Color.BLUE);
         rect.setStrokeWidth(1);
         rect.setFill(Color.LIGHTBLUE.deriveColor(0, 1.2, 1, 0.6));

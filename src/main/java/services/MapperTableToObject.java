@@ -3,10 +3,20 @@ package services;
 import javafx.collections.ObservableList;
 import tables.BasicTable;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
+/**
+ * Trida slouzici k mapovani zavislosti jednotlivych prvku
+ *
+ * @author Václav Janoch
+ */
 public class MapperTableToObject {
 
+    /**
+     * Globalni promenne tridy
+     */
     private SegmentLists lists;
 
     private Map<Integer, ArrayList<TableToObjectInstanc>> personToRoleTypeMapper; // Vazba mezi Role Type a Person, vychazejici z Person
@@ -52,6 +62,11 @@ public class MapperTableToObject {
     private ArrayList<Map<Integer, ArrayList<TableToObjectInstanc>>> artifactMaps;
     private ArrayList<Map<Integer, ArrayList<TableToObjectInstanc>>> workUnitMaps;
 
+    /**
+     * Konstruktor tridy, zinicializuje globalni promenne tridy
+     *
+     * @param lists instance tridy SegmentLists
+     */
     public MapperTableToObject(SegmentLists lists) {
         this.lists = lists;
         this.milestoneToCriterionMapper = new HashMap<>();
@@ -92,23 +107,35 @@ public class MapperTableToObject {
         initWorkUnitMapList();
     }
 
+    /**
+     * Metoda pro inicilizaci Work Unit mapy
+     */
     private void initWorkUnitMapList() {
         workUnitMaps.add(phaseToWUMapper);
         workUnitMaps.add(iterationToWUMapper);
         workUnitMaps.add(activityToWUMapper);
     }
 
+    /**
+     * Metoda pro inicilizaci Artifact mapy
+     */
     private void initArtifactMapList() {
         artifactMaps.add(changeToArtifactMapper);
         artifactMaps.add(configurationToArtifactMapper);
     }
 
 
+    /**
+     * Metoda pro inicilizaci Configuration mapy
+     */
     private void initConfigurationMapList() {
         configurationMaps.add(phaseToConfigurationMapper);
         configurationMaps.add(iterationToConfigurationMapper);
     }
 
+    /**
+     * Metoda pro inicilizaci Person mapy
+     */
     private void initRoleMapsList() {
         roleMaps.add(wuToRoleMapper);
         roleMaps.add(configurationToRoleMapper);
@@ -118,17 +145,14 @@ public class MapperTableToObject {
         roleMaps.add(committedConfigurationToRoleMapper);
     }
 
-    public void mapTableToObjects(SegmentType segmentType, ArrayList<ArrayList<Integer>> indexList, TableToObjectInstanc instanc) {
-
-        switch (segmentType) {
-            case Milestone:
-                addInstancesToMap(indexList, lists.getCriterionObservable(), instanc, milestoneToCriterionMapper);
-                break;
-            default:
-
-        }
-    }
-
+    /**
+     * Metoda pro rozhodnuti do ktere mapy bude index pridan
+     *
+     * @param segmentType        Type segmentu zekteroho vychazi zavislost
+     * @param destinationSegment Typ segmentu zavisly na kterem je zavisly
+     * @param indexList          identifikator
+     * @param instanc            instace TableToObjectInstanc pro uchovani vazeb
+     */
     public void mapTableToObjects(SegmentType segmentType, SegmentType destinationSegment, int indexList, TableToObjectInstanc instanc) {
 
         switch (segmentType) {
@@ -170,6 +194,13 @@ public class MapperTableToObject {
         }
     }
 
+    /**
+     * Pretizena metoda pro rozhodnuti do ktere mapy bude index pridan
+     *
+     * @param segmentType Type segmentu zekteroho vychazi zavislost
+     * @param index       seznam identifikatoru do mapy
+     * @param instanc     instace TableToObjectInstanc pro uchovani vazeb
+     */
     public void mapTableToObject(SegmentType segmentType, ArrayList<Integer> index, TableToObjectInstanc instanc) {
 
         switch (segmentType) {
@@ -197,6 +228,20 @@ public class MapperTableToObject {
         }
     }
 
+
+    /**
+     * Pomocna metoda pro namapovani Work unit na zavisle prvky
+     *
+     * @param assigneIndex    index assignee
+     * @param authorIndex     index autora
+     * @param priorityIndex   index priorit
+     * @param severityIndex   index severit
+     * @param typeIndex       index typ
+     * @param resolutionIndex index Resolution
+     * @param statusIndex     index status
+     * @param indexForm       identifikator Work Unit
+     * @param WUName          jmeno pro mapu
+     */
     public void mapTableToWU(ArrayList<Integer> assigneIndex, ArrayList<Integer> authorIndex, ArrayList<Integer> priorityIndex,
                              ArrayList<Integer> severityIndex, ArrayList<Integer> typeIndex, ArrayList<Integer> resolutionIndex,
                              ArrayList<Integer> statusIndex, int indexForm, String WUName) {
@@ -209,6 +254,16 @@ public class MapperTableToObject {
         addInstanceToMap(authorIndex, lists.getPersonObservable(), new TableToObjectInstanc(WUName, indexForm, SegmentType.Work_Unit), wuToRoleMapper);
     }
 
+    /**
+     * Pomocna metoda pro namapovani Configuration na zavisle prvky
+     *
+     * @param branchesIndicies indexi branch
+     * @param cprIndicies      indexi cpr
+     * @param changes          indexi change
+     * @param tag              indexi tagu
+     * @param configName       jmeno konfigurace
+     * @param configIndex      identifikator instace konfigurace
+     */
     public void mapTableToConfiguration(ArrayList<ArrayList<Integer>> branchesIndicies, ArrayList<ArrayList<Integer>> cprIndicies, ArrayList<ArrayList<Integer>> changes, ArrayList<Integer> tag,
                                         String configName, int configIndex) {
         addInstancesToMap(branchesIndicies, lists.getBranchObservable(), new TableToObjectInstanc(configName, configIndex, SegmentType.Configuration), configurationToBranchMapper);
@@ -217,17 +272,42 @@ public class MapperTableToObject {
         addInstanceToMap(tag, lists.getVCSTag(), new TableToObjectInstanc(configName, configIndex, SegmentType.Configuration), configurationToVCSTagMapper);
     }
 
+    /**
+     * Pomocna metoda pro namapovani Phase na zavisle prvky
+     *
+     * @param milestoneId     id milestone
+     * @param configurationId id configuration
+     * @param workUnitId      id work unit
+     * @param phaseName       phase name
+     * @param phaseId         phase identifikator
+     */
     public void mapTableToPhase(ArrayList<Integer> milestoneId, ArrayList<Integer> configurationId, ArrayList<Integer> workUnitId, String phaseName, int phaseId) {
         addInstanceToMap(milestoneId, lists.getMilestoneObservable(), new TableToObjectInstanc(phaseName, phaseId, SegmentType.Phase), phaseToMilestone);
         addInstanceToMap(configurationId, lists.getConfigObservable(), new TableToObjectInstanc(phaseName, phaseId, SegmentType.Phase), phaseToConfigurationMapper);
         addInstanceToMap(workUnitId, lists.getWorkUnitsObservable(), new TableToObjectInstanc(phaseName, phaseId, SegmentType.Phase), phaseToWUMapper);
     }
 
+    /**
+     * Pomocna metoda pro namapovani iteration na zavisle prvky
+     *
+     * @param configurationId id configuraci
+     * @param workUnitId      id workunitu
+     * @param iterationName   iteration name
+     * @param iterationId     iteration identifikator
+     */
     public void mapTableToIteration(ArrayList<Integer> configurationId, ArrayList<Integer> workUnitId, String iterationName, int iterationId) {
         addInstanceToMap(configurationId, lists.getConfigObservable(), new TableToObjectInstanc(iterationName, iterationId, SegmentType.Iteration), iterationToConfigurationMapper);
         addInstanceToMap(workUnitId, lists.getWorkUnitsObservable(), new TableToObjectInstanc(iterationName, iterationId, SegmentType.Iteration), iterationToWUMapper);
     }
 
+    /**
+     * Pretizena metoda pro pridani zavislosti do mapy
+     *
+     * @param criterionIndex identifikatoru kriterii
+     * @param list           seznam
+     * @param instanc        instance tridy TableToObjectInstance
+     * @param map            mapa pro upravu
+     */
     private void addInstanceToMap(ArrayList<Integer> criterionIndex, ObservableList<BasicTable> list, TableToObjectInstanc instanc,
                                   Map<Integer, ArrayList<TableToObjectInstanc>> map) {
         for (int index : criterionIndex) {
@@ -235,6 +315,14 @@ public class MapperTableToObject {
         }
     }
 
+    /**
+     * Pretizena metoda pro pridani zavislosti do mapy
+     *
+     * @param criterionIndex identifikatoru kriterii
+     * @param list           seznam
+     * @param instanc        instance tridy TableToObjectInstance
+     * @param map            mapa pro upravu
+     */
     private void addInstancesToMap(ArrayList<ArrayList<Integer>> criterionIndex, ObservableList<BasicTable> list, TableToObjectInstanc instanc,
                                    Map<Integer, ArrayList<TableToObjectInstanc>> map) {
         for (ArrayList<Integer> index : criterionIndex) {
@@ -243,6 +331,15 @@ public class MapperTableToObject {
     }
 
 
+    /**
+     * Pretizena metoda pro pridani zavislosti do mapy
+     * rozhoduje zda uz prvek v mape je ci nikoli a prida ho do ni
+     *
+     * @param key     klic v mape
+     * @param list    seznam indexu se zavislotmi
+     * @param instanc instance TableToObjectInstance
+     * @param map     mapa pro upravu
+     */
     private void addInstanceToMap(int key, ObservableList<BasicTable> list, TableToObjectInstanc instanc,
                                   Map<Integer, ArrayList<TableToObjectInstanc>> map) {
         if (key != -1) {
@@ -260,24 +357,13 @@ public class MapperTableToObject {
     }
 
 
-    public void updateValueList(ArrayList<Integer> criterionIndicies, Map<Integer, ArrayList<TableToObjectInstanc>> map, int id, String name) {
-        for (int i : criterionIndicies) {
-            updateValueList(i, map, i, name);
-        }
-
-    }
-
-    public void updateValueList(int key, Map<Integer, ArrayList<TableToObjectInstanc>> map, int id, String name) {
-        ArrayList<TableToObjectInstanc> objectList = map.get(key);
-        if (objectList != null) {
-            for (TableToObjectInstanc instanc : objectList) {
-                if (instanc.getId() == id) {
-                    instanc.setName(name);
-                }
-            }
-        }
-    }
-
+    /**
+     * Metoda pro smazani zavislosti na prvku
+     *
+     * @param key     identifikator prvku
+     * @param map     mapa pro upravu
+     * @param valueId hodnota pro smazani
+     */
     public void clearValueList(int key, Map<Integer, ArrayList<TableToObjectInstanc>> map, int valueId) {
         ArrayList<TableToObjectInstanc> objectList = map.get(key);
         if (objectList != null) {
@@ -289,6 +375,46 @@ public class MapperTableToObject {
         }
     }
 
+    /**
+     * Pretizena metoda pro upravu zavislosti
+     *
+     * @param criterionIndicies seznam indexu
+     * @param map               mapa pro upravu
+     * @param id                identifikator prvku
+     * @param name              jmeno prvku
+     */
+    public void updateValueList(ArrayList<Integer> criterionIndicies, Map<Integer, ArrayList<TableToObjectInstanc>> map, int id, String name) {
+        for (int i : criterionIndicies) {
+            updateValueList(i, map, i, name);
+        }
+
+    }
+
+    /**
+     * Pretizena metoda pro upravu zavislosti
+     *
+     * @param map  mapa pro upravu
+     * @param id   identifikator prvku
+     * @param name jmeno prvku
+     */
+    public void updateValueList(int key, Map<Integer, ArrayList<TableToObjectInstanc>> map, int id, String name) {
+        ArrayList<TableToObjectInstanc> objectList = map.get(key);
+        if (objectList != null) {
+            for (TableToObjectInstanc instanc : objectList) {
+                if (instanc.getId() == id) {
+                    instanc.setName(name);
+                }
+            }
+        }
+    }
+
+
+    /**
+     * Pretizena metoda pro upravu zavislosti
+     *
+     * @param map mapa pro upravu
+     * @param ids identifikator prvku
+     */
     public void updateValueList(Map<Integer, ArrayList<TableToObjectInstanc>> map, ArrayList<Integer> ids) {
         for (int i : map.keySet()) {
             ArrayList<TableToObjectInstanc> objectList = map.get(i);
@@ -307,6 +433,12 @@ public class MapperTableToObject {
         }
     }
 
+    /**
+     * Pretizena metoda pro upravu zavislosti
+     *
+     * @param map mapa pro upravu
+     * @param ids identifikator prvku
+     */
     public void updateValueList(Map<Integer, ArrayList<TableToObjectInstanc>> map, int ids) {
         for (int i : map.keySet()) {
             ArrayList<TableToObjectInstanc> objectList = map.get(i);
@@ -327,24 +459,34 @@ public class MapperTableToObject {
     }
 
 
+    /**
+     * Pretizena metoda pro odstraneni prvku z mapy
+     *
+     * @param map                mapa ze ktere se bude prvek odebirat
+     * @param dependencCriterion seznam zavislosti
+     */
     public void deleteFromMap(Map<Integer, ArrayList<TableToObjectInstanc>> map, ArrayList<Integer> dependencCriterion) {
         for (int i : dependencCriterion) {
             deleteFromMap(map, i);
         }
     }
 
+    /**
+     * Metoda pro odstraneni prvku z mapy
+     *
+     * @param map                mapa ze ktere bude prvek odebran
+     * @param dependencCriterion identifikator zavisloti
+     */
     public void deleteFromMap(Map<Integer, ArrayList<TableToObjectInstanc>> map, int dependencCriterion) {
         map.remove(dependencCriterion);
     }
 
-    public void deleteFromRoleMaps(ArrayList<Integer> dependencyRole) {
-        for (int i : dependencyRole) {
-            deleteFromRoleMaps(i);
-        }
-
-    }
-
-    public void deleteFromRoleMaps(int id) {
+    /**
+     * Aktualizace mapy pri odstraneni Person
+     *
+     * @param id identifikator Person
+     */
+    public void deleteFromPersonMaps(int id) {
         wuToRoleMapper.remove(id);
         CPRToRoleMapper.remove(id);
         configurationToRoleMapper.remove(id);
@@ -354,22 +496,14 @@ public class MapperTableToObject {
     }
 
 
-    public void deleteFromConfigurationMaps(ArrayList<Integer> dependencyConfiguration) {
-        for (int i : dependencyConfiguration) {
-            deleteFromConfigurationMaps(i);
-        }
-    }
-
+    /**
+     * Aktualizace mapy pri odstraneni Configuration
+     *
+     * @param id identifikator Configuration
+     */
     public void deleteFromConfigurationMaps(int id) {
         phaseToConfigurationMapper.remove(id);
         iterationToConfigurationMapper.remove(id);
-    }
-
-    public void updateRoleMaps(ArrayList<Integer> indexList) {
-        updateValueList(wuToRoleMapper, indexList);
-        updateValueList(CPRToRoleMapper, indexList);
-        updateValueList(configurationToRoleMapper, indexList);
-        updateValueList(artifactToRoleMapper, indexList);
     }
 
 

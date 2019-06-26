@@ -9,8 +9,8 @@ import services.SegmentLists;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-import static org.junit.Assert.*;
 import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
 
 public class ConfigurationValueTest {
 
@@ -18,6 +18,7 @@ public class ConfigurationValueTest {
     SegmentLists lists;
     LocalDate date;
     ArrayList itemSet;
+
     @Before
     public void setUp() throws Exception {
 
@@ -37,6 +38,7 @@ public class ConfigurationValueTest {
         configuration = dataModel.getConfiguration(2);
 
     }
+
     @Test
     public void testId() {
         assertSame(2, configuration.getId());

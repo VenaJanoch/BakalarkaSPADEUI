@@ -7,20 +7,20 @@ import interfaces.IEditFormController;
 import interfaces.IFormDataController;
 import interfaces.ISegmentTableForm;
 import javafx.event.EventHandler;
-import javafx.scene.Node;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.GridPane;
-import services.SegmentType;
-import tables.ClassTable;
 import javafx.geometry.Insets;
+import javafx.scene.Node;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
+import services.SegmentType;
+import tables.ClassTable;
 
 /**
  * Třída sloužící k vytvoření tabulkového formuláře výčtových typů. Odděděná od
@@ -40,6 +40,7 @@ public abstract class TableClassBasicForm extends TableBasicForm implements ISeg
 
     /**
      * Konstruktor tridy zavola konstruktor nadrazene tridy
+     *
      * @param formController
      * @param formDataController
      * @param editFormController

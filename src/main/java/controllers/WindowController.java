@@ -15,6 +15,7 @@ import model.DataModel;
 import model.FileManipulator;
 import model.IdentificatorCreater;
 import services.Alerts;
+import services.Constans;
 import services.SegmentLists;
 
 import java.io.File;
@@ -27,7 +28,9 @@ import java.io.File;
 public class WindowController {
 
 
-    /**Graficke prvky **/
+    /**
+     * Graficke prvky
+     **/
     private Stage primaryStage;
     private JFXDrawer leftDrawer;
     private JFXDrawer rightDrawer;
@@ -39,7 +42,9 @@ public class WindowController {
     private boolean isClose;
     private boolean logToDB;
 
-    /**Kontrolery**/
+    /**
+     * Kontrolery
+     **/
     private FileManipulator fileManipulator;
     private DataModel dataModel;
     private FormFillController formFillController;
@@ -50,10 +55,13 @@ public class WindowController {
     /**
      * Kontroler tridy
      * Zinicializuje globalni promenne tridy
+     *
      * @param primaryStage
      */
     public WindowController(Stage primaryStage) {
         this.primaryStage = primaryStage;
+        this.primaryStage.setMinWidth(Constans.width);
+        this.primaryStage.setMinHeight(Constans.height);
         initApplication();
         this.mainWindow = new MainWindow(this, drawersStack, drawerPanelController, selectItemController, applicationController);
         setSceneToPrimaryStage(mainWindow.getScene(), mainWindow.getTitle());
@@ -64,7 +72,7 @@ public class WindowController {
     /**
      * Metoda pro nastaveni klavesovych zkratek do okna
      */
-    private void setKeyActions(){
+    private void setKeyActions() {
         primaryStage.getScene().setOnKeyPressed(event -> mainWindow.getCanvasController().keyPressAction(event));
     }
 
@@ -96,6 +104,7 @@ public class WindowController {
 
     /**
      * Metoda pro nastaveni sceny do PrimaryStage
+     *
      * @param scene scena pro vlozeni
      * @param title titulek okna
      */

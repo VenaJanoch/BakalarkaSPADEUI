@@ -21,6 +21,7 @@ public class PhaseValueCopyTest {
     SegmentLists lists;
     ArrayList itemSet = new ArrayList();
     LocalDate date;
+
     @Before
     public void setUp() throws Exception {
 
@@ -58,34 +59,34 @@ public class PhaseValueCopyTest {
 
     @Test
     public void testAlias() {
-        assertEquals("1", phase.getAlias() );
+        assertEquals("1", phase.getAlias());
     }
 
     @Test
     public void testName() {
-        assertEquals("", phase.getName().get(0) );
-        assertEquals("Test2", phase.getName().get(1) );
+        assertEquals("", phase.getName().get(0));
+        assertEquals("Test2", phase.getName().get(1));
         assertSame(2, phase.getName().size());
     }
 
     @Test
     public void testIndicatorName() {
-        assertSame(1, phase.getNameIndicator().get(0) );
-        assertSame(0, phase.getNameIndicator().get(1) );
+        assertSame(1, phase.getNameIndicator().get(0));
+        assertSame(0, phase.getNameIndicator().get(1));
         assertSame(2, phase.getNameIndicator().size());
     }
 
     @Test
     public void testDescription() {
-        assertEquals("", phase.getDescription().get(0) );
-        assertEquals("Test2", phase.getDescription().get(1) );
+        assertEquals("", phase.getDescription().get(0));
+        assertEquals("Test2", phase.getDescription().get(1));
         assertSame(2, phase.getDescription().size());
     }
 
     @Test
     public void testIndicatorDescription() {
-        assertSame(1, phase.getDescriptionIndicator().get(0) );
-        assertSame(0, phase.getDescriptionIndicator().get(1) );
+        assertSame(1, phase.getDescriptionIndicator().get(0));
+        assertSame(0, phase.getDescriptionIndicator().get(1));
         assertSame(2, phase.getDescriptionIndicator().size());
     }
 

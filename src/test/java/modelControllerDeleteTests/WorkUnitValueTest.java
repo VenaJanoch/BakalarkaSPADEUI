@@ -3,13 +3,10 @@ package modelControllerDeleteTests;
 import SPADEPAC.Activity;
 import SPADEPAC.Iteration;
 import SPADEPAC.Phase;
-import SPADEPAC.WorkUnit;
 import controllers.formControllers.DeleteFormController;
-import controllers.formControllers.FormController;
 import controllers.formControllers.FormDataController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.control.TableView;
 import model.DataModel;
 import org.junit.Before;
 import org.junit.Test;
@@ -18,7 +15,6 @@ import services.SegmentLists;
 import services.SegmentType;
 import services.TableToObjectInstanc;
 import tables.BasicTable;
-import tables.MilestoneTable;
 import tables.WorkUnitTable;
 
 import java.time.LocalDate;
@@ -26,7 +22,6 @@ import java.util.ArrayList;
 import java.util.Set;
 
 import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
 
 public class WorkUnitValueTest {
 
@@ -40,16 +35,16 @@ public class WorkUnitValueTest {
 
     @Before
     public void setUp() throws Exception {
-        
+
         WarmUp warmUp = new WarmUp();
         dataModel = warmUp.getDataModel();
         lists = warmUp.getLists();
         DeleteFormController deleteFormController = warmUp.getDeleteFormController();
         FormDataController formDataController = warmUp.getFormDataController();
 
-        WorkUnitTable table1 = new WorkUnitTable("",true, 0);
-         formDataController.saveDataFromWorkUnit(null, true);
-        formDataController.saveDataFromWorkUnit(null,true);
+        WorkUnitTable table1 = new WorkUnitTable("", true, 0);
+        formDataController.saveDataFromWorkUnit(null, true);
+        formDataController.saveDataFromWorkUnit(null, true);
         date = LocalDate.of(2018, 10, 10);
         ArrayList<String> name = new ArrayList<>();
         name.add("");
@@ -66,12 +61,12 @@ public class WorkUnitValueTest {
 
         dataModel.getSaveDataModel().createNewIteration(2);
         dataModel.getEditDataModel().editDataInIteration("Test", name, dates, dates, name, indicators, unit, indicators, indicators, indicators, indicators, indicators,
-                indicators,false,2);
+                indicators, false, 2);
         dataModel.getSaveDataModel().createNewPhase(2);
         dataModel.getEditDataModel().editDataInPhase("Test", name, dates, name, indicators, indicators, unit, indicators,
                 indicators, indicators, indicators, indicators, indicators, false, 2);
         dataModel.getSaveDataModel().createNewActivity(2);
-        dataModel.getEditDataModel().editDataInActivity("Test", name, name, unit, indicators, indicators, indicators, dates, indicators, false,2  );
+        dataModel.getEditDataModel().editDataInActivity("Test", name, name, unit, indicators, indicators, indicators, dates, indicators, false, 2);
 
 
         ObservableList list = FXCollections.observableArrayList();
@@ -80,7 +75,7 @@ public class WorkUnitValueTest {
         branchTables.add(table1);
 
         mapperTableToObject = warmUp.getMapperTableToObject();
-        mapperTableToObject.mapTableToPhase(indicators, indicators, indicators , "Text", 2);
+        mapperTableToObject.mapTableToPhase(indicators, indicators, indicators, "Text", 2);
 
         mapperTableToObject = warmUp.getMapperTableToObject();
         mapperTableToObject.mapTableToIteration(indicators, indicators, "Text", 2);
@@ -96,13 +91,13 @@ public class WorkUnitValueTest {
 
     @Test
     public void testMapper() {
-        Set instacies =  mapperTableToObject.getPhaseToWUMapper().keySet();
+        Set instacies = mapperTableToObject.getPhaseToWUMapper().keySet();
         assertSame(1, instacies.size());
         assertSame(1, instacies.iterator().next());
-        instacies =  mapperTableToObject.getIterationToWUMapper().keySet();
+        instacies = mapperTableToObject.getIterationToWUMapper().keySet();
         assertSame(1, instacies.size());
         assertSame(1, instacies.iterator().next());
-        instacies =  mapperTableToObject.getActivityToWUMapper().keySet();
+        instacies = mapperTableToObject.getActivityToWUMapper().keySet();
         assertSame(1, instacies.size());
         assertSame(1, instacies.iterator().next());
     }

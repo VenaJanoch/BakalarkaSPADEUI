@@ -1,18 +1,19 @@
 package forms;
 
-import controllers.formControllers.FormController;
 import SPADEPAC.WorkUnitTypeClass;
 import SPADEPAC.WorkUnitTypeSuperClass;
 import abstractform.TableClassBasicForm;
 import controlPanels.ClassControlPanel;
+import controllers.formControllers.FormController;
 import interfaces.IDeleteFormController;
 import interfaces.IEditFormController;
 import interfaces.IFormDataController;
 import interfaces.ISegmentTableForm;
-;
 import services.SegmentType;
 
 import java.util.ArrayList;
+
+;
 
 /**
  * Třída představující tabulkový formulář pro výčtový typ Work Unit Type,
@@ -31,11 +32,12 @@ public class TypeForm extends TableClassBasicForm implements ISegmentTableForm {
     /**
      * Konstruktor Třídy Zinicializuje globální proměnné tříd Nastaví reakci
      * na klik do tabulky, naplni panel a nastavi akce tlacitkum
-     * @param formController instance tridy FormController
-     * @param formDataController instance tridy FormDataController
-     * @param editFormController instance tridy EditFormController
+     *
+     * @param formController       instance tridy FormController
+     * @param formDataController   instance tridy FormDataController
+     * @param editFormController   instance tridy EditFormController
      * @param deleteFormController instace tridy DeleteFormController
-     * @param type instace SegmentType pro urceni typu formulare
+     * @param type                 instace SegmentType pro urceni typu formulare
      */
     public TypeForm(FormController formController, IFormDataController formDataController, IEditFormController editFormController, IDeleteFormController deleteFormController, SegmentType type) {
         super(formController, formDataController, editFormController, deleteFormController, type);

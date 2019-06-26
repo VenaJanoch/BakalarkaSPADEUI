@@ -1,13 +1,8 @@
 package XML;
 
-import java.io.PrintWriter;
-import java.io.StringWriter;
-
 import org.xml.sax.ErrorHandler;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
-
-import services.Alerts;
 
 public class ValidatorErrors implements ErrorHandler {
 

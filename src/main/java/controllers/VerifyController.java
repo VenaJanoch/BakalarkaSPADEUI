@@ -5,7 +5,6 @@ import database.*;
 import graphics.windows.VerifyWindow;
 import model.DataModel;
 import services.Constans;
-import database.SQLAtributeCreator;
 import services.SegmentType;
 import tables.VerifyTable;
 
@@ -14,16 +13,23 @@ import java.util.List;
 
 public class VerifyController {
 
-    /**Identifikator zvoleneho projektu**/
+    /**
+     * Identifikator zvoleneho projektu
+     **/
     private int projectVerifyId;
-    /** Okno vysledky **/
+    /**
+     * Okno vysledky
+     **/
     private VerifyWindow verifyWindow;
-    /**Model pro overeni**/
+    /**
+     * Model pro overeni
+     **/
     private DataModel verifyDataModel;
 
     /**
      * Konstruktor tridy
      * Zinicializuje globalni promenne
+     *
      * @param dataModel
      */
     public VerifyController(DataModel dataModel) {
@@ -32,8 +38,9 @@ public class VerifyController {
     }
 
     /**
-     * Metoda pro zobrazeni okna 
+     * Metoda pro zobrazeni okna
      * Zavola metodu pro overeni prvku datoveho modelu
+     *
      * @param projectVerifyId identifikator projektu
      */
     public void verifyInstanceInProject(int projectVerifyId) {
@@ -45,6 +52,7 @@ public class VerifyController {
 
     /**
      * Metoda postupne vola metody pro overeni jednotlivych casti modelu
+     *
      * @return seznam instaci VerifyTable pro vysledkove okno
      */
     private ArrayList<VerifyTable> fillVerifyTables() {
@@ -52,10 +60,10 @@ public class VerifyController {
         ArrayList<VerifyTable> verifyTmp = new ArrayList<>();
         Project project = verifyDataModel.getProject();
 
-//        verifyTmp = addProjectTOVerifyTable(project);
-//        if (verifyTmp.size() != 0) {
-//            verifyTables.addAll(verifyTmp);
-//        }
+        verifyTmp = addProjectTOVerifyTable(project);
+        if (verifyTmp.size() != 0) {
+            verifyTables.addAll(verifyTmp);
+        }
 
         verifyTmp = addPhaseTOVerifyTable(verifyDataModel.getPhases());
         if (verifyTmp.size() != 0) {
@@ -172,15 +180,16 @@ public class VerifyController {
 
     /**
      * Metoda pro vyhodnoceni vysledku ziskanych z databaze
-     * @param type type elementu nebo segmentu
-     * @param alias alias prvku 
-     * @param modelCount pocet instaci v modelu
-     * @param countIndicator ukazatel rovnosti poctu instanci
-     * @param projectCount pocet instanci v projektu
-     * @param id identifikator prvku
-     * @param isExist existence prvku
+     *
+     * @param type             type elementu nebo segmentu
+     * @param alias            alias prvku
+     * @param modelCount       pocet instaci v modelu
+     * @param countIndicator   ukazatel rovnosti poctu instanci
+     * @param projectCount     pocet instanci v projektu
+     * @param id               identifikator prvku
+     * @param isExist          existence prvku
      * @param isExistInProject existence prvku v projektu
-     * @param sql SQL dotaz
+     * @param sql              SQL dotaz
      * @return
      */
     private VerifyTable createVerifyTable(SegmentType type, String alias, int modelCount, int countIndicator, int projectCount, int id, boolean isExist,
@@ -195,47 +204,47 @@ public class VerifyController {
         }
 
 
-        if (isExist){
-            if (!isExistInProject){
+        if (isExist) {
+            if (!isExistInProject) {
                 result = Constans.BAD_VERIFY_RESULT;
             }
 
-            if (countIndicator == 0){
-                if (modelCount < projectCount || modelCount > projectCount){
+            if (countIndicator == 0) {
+                if (modelCount < projectCount || modelCount > projectCount) {
                     result = Constans.BAD_VERIFY_RESULT;
                 }
-            }else if(countIndicator == 1){
-                if (modelCount == projectCount || modelCount > projectCount){
+            } else if (countIndicator == 1) {
+                if (modelCount == projectCount || modelCount > projectCount) {
                     result = Constans.BAD_VERIFY_RESULT;
-                    }
+                }
                 countIndicatorChar = ">";
-            }else if (countIndicator == 2){
-                if (modelCount == projectCount || modelCount < projectCount){
+            } else if (countIndicator == 2) {
+                if (modelCount == projectCount || modelCount < projectCount) {
                     result = Constans.BAD_VERIFY_RESULT;
                 }
                 countIndicatorChar = "<";
             }
-        }else {
-            if (isExistInProject){
+        } else {
+            if (isExistInProject) {
                 result = Constans.BAD_VERIFY_RESULT;
-                if (countIndicator == 0){
-                    if (modelCount < projectCount || modelCount > projectCount){
+                if (countIndicator == 0) {
+                    if (modelCount < projectCount || modelCount > projectCount) {
                         result = Constans.OK_VERIFY_RESULT;
                     }
-                }else if(countIndicator == 1){
-                    if (modelCount == projectCount || modelCount < projectCount){
+                } else if (countIndicator == 1) {
+                    if (modelCount == projectCount || modelCount < projectCount) {
                         result = Constans.OK_VERIFY_RESULT;
                     }
 
-                }else if(countIndicator == 2){
-                    if (modelCount == projectCount || modelCount > projectCount){
+                } else if (countIndicator == 2) {
+                    if (modelCount == projectCount || modelCount > projectCount) {
                         result = Constans.OK_VERIFY_RESULT;
-                        }
+                    }
                 }
             }
-            if (countIndicator == 1){
+            if (countIndicator == 1) {
                 countIndicatorChar = ">";
-            }else if (countIndicator == 2){
+            } else if (countIndicator == 2) {
                 countIndicatorChar = "<";
             }
 
@@ -248,6 +257,7 @@ public class VerifyController {
      * Metoda pro kontrolu elementu CommittedConfiguration v konkretnim projektu
      * Metoda nejprve zavola DAO objekty pro ziskani ID konkretnich zavislych elementu
      * Nasledne zavola DAO elementu pro ziskani dat z Databaze
+     *
      * @param commitedConfigurations seznam instaci CommittedConfiguration
      * @return seznam instaci VerifyTable s vysledky
      */
@@ -280,7 +290,7 @@ public class VerifyController {
 
 
         } catch (Exception e) {
-           
+
             e.printStackTrace();
         }
 
@@ -292,6 +302,7 @@ public class VerifyController {
      * Metoda pro kontrolu elementu Phase v konkretnim projektu
      * Metoda nejprve zavola DAO objekty pro ziskani ID konkretnich zavislych elementu
      * Nasledne zavola DAO elementu pro ziskani dat z Databaze
+     *
      * @param phases seznam instaci CommittedConfiguration
      * @return seznam instaci VerifyTable s vysledky
      */
@@ -333,16 +344,18 @@ public class VerifyController {
 
 
         } catch (Exception e) {
-           
+
             e.printStackTrace();
         }
 
         return verifyTables;
     }
+
     /**
      * Metoda pro kontrolu elementu Commit v konkretnim projektu
      * Metoda nejprve zavola DAO objekty pro ziskani ID konkretnich zavislych elementu
      * Nasledne zavola DAO elementu pro ziskani dat z Databaze
+     *
      * @param commits seznam instaci CommittedConfiguration
      * @return seznam instaci VerifyTable s vysledky
      */
@@ -366,7 +379,7 @@ public class VerifyController {
 
 
         } catch (Exception e) {
-           
+
             e.printStackTrace();
         }
         return verifyTables;
@@ -376,6 +389,7 @@ public class VerifyController {
      * Metoda pro kontrolu elementu Criterion v konkretnim projektu
      * Metoda nejprve zavola DAO objekty pro ziskani ID konkretnich zavislych elementu
      * Nasledne zavola DAO elementu pro ziskani dat z Databaze
+     *
      * @param criterions seznam instaci CommittedConfiguration
      * @return seznam instaci VerifyTable s vysledky
      */
@@ -398,7 +412,7 @@ public class VerifyController {
 
 
         } catch (Exception e) {
-           
+
             e.printStackTrace();
         }
         return verifyTables;
@@ -408,6 +422,7 @@ public class VerifyController {
      * Metoda pro kontrolu elementu Activity v konkretnim projektu
      * Metoda nejprve zavola DAO objekty pro ziskani ID konkretnich zavislych elementu
      * Nasledne zavola DAO elementu pro ziskani dat z Databaze
+     *
      * @param activitys seznam instaci CommittedConfiguration
      * @return seznam instaci VerifyTable s vysledky
      */
@@ -437,7 +452,7 @@ public class VerifyController {
 
 
         } catch (Exception e) {
-           
+
             e.printStackTrace();
         }
 
@@ -448,6 +463,7 @@ public class VerifyController {
      * Metoda pro kontrolu elementu Branch v konkretnim projektu
      * Metoda nejprve zavola DAO objekty pro ziskani ID konkretnich zavislych elementu
      * Nasledne zavola DAO elementu pro ziskani dat z Databaze
+     *
      * @param branchs seznam instaci CommittedConfiguration
      * @return seznam instaci VerifyTable s vysledky
      */
@@ -469,7 +485,7 @@ public class VerifyController {
 
 
         } catch (Exception e) {
-           
+
             e.printStackTrace();
         }
         return verifyTables;
@@ -479,6 +495,7 @@ public class VerifyController {
      * Metoda pro kontrolu elementu Severity v konkretnim projektu
      * Metoda nejprve zavola DAO objekty pro ziskani ID konkretnich zavislych elementu
      * Nasledne zavola DAO elementu pro ziskani dat z Databaze
+     *
      * @param severitys seznam instaci CommittedConfiguration
      * @return seznam instaci VerifyTable s vysledky
      */
@@ -501,7 +518,7 @@ public class VerifyController {
 
 
         } catch (Exception e) {
-           
+
             e.printStackTrace();
         }
 
@@ -512,6 +529,7 @@ public class VerifyController {
      * Metoda pro kontrolu elementu Role Type v konkretnim projektu
      * Metoda nejprve zavola DAO objekty pro ziskani ID konkretnich zavislych elementu
      * Nasledne zavola DAO elementu pro ziskani dat z Databaze
+     *
      * @param roleTypes seznam instaci CommittedConfiguration
      * @return seznam instaci VerifyTable s vysledky
      */
@@ -534,7 +552,7 @@ public class VerifyController {
 
 
         } catch (Exception e) {
-           
+
             e.printStackTrace();
         }
 
@@ -545,6 +563,7 @@ public class VerifyController {
      * Metoda pro kontrolu elementu Priority v konkretnim projektu
      * Metoda nejprve zavola DAO objekty pro ziskani ID konkretnich zavislych elementu
      * Nasledne zavola DAO elementu pro ziskani dat z Databaze
+     *
      * @param prioritys seznam instaci CommittedConfiguration
      * @return seznam instaci VerifyTable s vysledky
      */
@@ -567,7 +586,7 @@ public class VerifyController {
 
 
         } catch (Exception e) {
-           
+
             e.printStackTrace();
         }
         return verifyTables;
@@ -577,6 +596,7 @@ public class VerifyController {
      * Metoda pro kontrolu elementu Person v konkretnim projektu
      * Metoda nejprve zavola DAO objekty pro ziskani ID konkretnich zavislych elementu
      * Nasledne zavola DAO elementu pro ziskani dat z Databaze
+     *
      * @param persons seznam instaci CommittedConfiguration
      * @return seznam instaci VerifyTable s vysledky
      */
@@ -601,7 +621,7 @@ public class VerifyController {
 
 
         } catch (Exception e) {
-           
+
             e.printStackTrace();
         }
 
@@ -613,6 +633,7 @@ public class VerifyController {
      * Metoda pro kontrolu elementu Artifact v konkretnim projektu
      * Metoda nejprve zavola DAO objekty pro ziskani ID konkretnich zavislych elementu
      * Nasledne zavola DAO elementu pro ziskani dat z Databaze
+     *
      * @param artifacts seznam instaci CommittedConfiguration
      * @return seznam instaci VerifyTable s vysledky
      */
@@ -651,6 +672,7 @@ public class VerifyController {
      * Metoda pro kontrolu elementu Configuration Person v konkretnim projektu
      * Metoda nejprve zavola DAO objekty pro ziskani ID konkretnich zavislych elementu
      * Nasledne zavola DAO elementu pro ziskani dat z Databaze
+     *
      * @param cprs seznam instaci CommittedConfiguration
      * @return seznam instaci VerifyTable s vysledky
      */
@@ -678,7 +700,7 @@ public class VerifyController {
                 verifyTables.add(verifyTable);
             }
         } catch (Exception e) {
-           
+
             e.printStackTrace();
         }
         return verifyTables;
@@ -688,6 +710,7 @@ public class VerifyController {
      * Metoda pro kontrolu elementu Configuration v konkretnim projektu
      * Metoda nejprve zavola DAO objekty pro ziskani ID konkretnich zavislych elementu
      * Nasledne zavola DAO elementu pro ziskani dat z Databaze
+     *
      * @param configurations seznam instaci CommittedConfiguration
      * @return seznam instaci VerifyTable s vysledky
      */
@@ -728,7 +751,7 @@ public class VerifyController {
 
 
         } catch (Exception e) {
-           
+
             e.printStackTrace();
         }
         return verifyTables;
@@ -738,6 +761,7 @@ public class VerifyController {
      * Metoda pro kontrolu elementu Changes v konkretnim projektu
      * Metoda nejprve zavola DAO objekty pro ziskani ID konkretnich zavislych elementu
      * Nasledne zavola DAO elementu pro ziskani dat z Databaze
+     *
      * @param changes seznam instaci CommittedConfiguration
      * @return seznam instaci VerifyTable s vysledky
      */
@@ -765,7 +789,7 @@ public class VerifyController {
 
 
         } catch (Exception e) {
-           
+
             e.printStackTrace();
         }
 
@@ -777,6 +801,7 @@ public class VerifyController {
      * Metoda pro kontrolu elementu Iteration v konkretnim projektu
      * Metoda nejprve zavola DAO objekty pro ziskani ID konkretnich zavislych elementu
      * Nasledne zavola DAO elementu pro ziskani dat z Databaze
+     *
      * @param iterations seznam instaci CommittedConfiguration
      * @return seznam instaci VerifyTable s vysledky
      */
@@ -813,7 +838,7 @@ public class VerifyController {
 
 
         } catch (Exception e) {
-           
+
             e.printStackTrace();
         }
 
@@ -838,7 +863,7 @@ public class VerifyController {
             verifyTable = createVerifyTable(SegmentType.Project, "Project", -1, -1, -1, projectVerifyId, true, project.isExist(), project.getSqlCommand());
             verifyTables.add(verifyTable);
         } catch (Exception e) {
-           
+
             e.printStackTrace();
         }
 
@@ -850,6 +875,7 @@ public class VerifyController {
      * Metoda pro kontrolu elementu Status v konkretnim projektu
      * Metoda nejprve zavola DAO objekty pro ziskani ID konkretnich zavislych elementu
      * Nasledne zavola DAO elementu pro ziskani dat z Databaze
+     *
      * @param statuss seznam instaci CommittedConfiguration
      * @return seznam instaci VerifyTable s vysledky
      */
@@ -872,7 +898,7 @@ public class VerifyController {
 
 
         } catch (Exception e) {
-           
+
             e.printStackTrace();
         }
 
@@ -884,6 +910,7 @@ public class VerifyController {
      * Metoda pro kontrolu elementu Relation v konkretnim projektu
      * Metoda nejprve zavola DAO objekty pro ziskani ID konkretnich zavislych elementu
      * Nasledne zavola DAO elementu pro ziskani dat z Databaze
+     *
      * @param relations seznam instaci CommittedConfiguration
      * @return seznam instaci VerifyTable s vysledky
      */
@@ -906,17 +933,19 @@ public class VerifyController {
 
 
         } catch (Exception e) {
-           
+
             e.printStackTrace();
         }
 
 
         return verifyTables;
     }
+
     /**
      * Metoda pro kontrolu elementu Resolution v konkretnim projektu
      * Metoda nejprve zavola DAO objekty pro ziskani ID konkretnich zavislych elementu
      * Nasledne zavola DAO elementu pro ziskani dat z Databaze
+     *
      * @param resolutions seznam instaci CommittedConfiguration
      * @return seznam instaci VerifyTable s vysledky
      */
@@ -937,7 +966,7 @@ public class VerifyController {
                 verifyTables.add(verifyTable);
             }
         } catch (Exception e) {
-           
+
             e.printStackTrace();
         }
 
@@ -949,6 +978,7 @@ public class VerifyController {
      * Metoda pro kontrolu elementu Type v konkretnim projektu
      * Metoda nejprve zavola DAO objekty pro ziskani ID konkretnich zavislych elementu
      * Nasledne zavola DAO elementu pro ziskani dat z Databaze
+     *
      * @param types seznam instaci CommittedConfiguration
      * @return seznam instaci VerifyTable s vysledky
      */
@@ -971,17 +1001,19 @@ public class VerifyController {
 
 
         } catch (Exception e) {
-           
+
             e.printStackTrace();
         }
 
 
         return verifyTables;
     }
+
     /**
      * Metoda pro kontrolu elementu VCSTag v konkretnim projektu
      * Metoda nejprve zavola DAO objekty pro ziskani ID konkretnich zavislych elementu
      * Nasledne zavola DAO elementu pro ziskani dat z Databaze
+     *
      * @param tag seznam instaci CommittedConfiguration
      * @return seznam instaci VerifyTable s vysledky
      */
@@ -1004,7 +1036,7 @@ public class VerifyController {
             }
 
         } catch (Exception e) {
-           
+
             e.printStackTrace();
         }
 
@@ -1016,6 +1048,7 @@ public class VerifyController {
      * Metoda pro kontrolu elementu Work Unit v konkretnim projektu
      * Metoda nejprve zavola DAO objekty pro ziskani ID konkretnich zavislych elementu
      * Nasledne zavola DAO elementu pro ziskani dat z Databaze
+     *
      * @param workUnits seznam instaci CommittedConfiguration
      * @return seznam instaci VerifyTable s vysledky
      */
@@ -1052,7 +1085,7 @@ public class VerifyController {
 
 
         } catch (Exception e) {
-           
+
             e.printStackTrace();
         }
 
@@ -1064,6 +1097,7 @@ public class VerifyController {
      * Metoda pro kontrolu elementu Milestone v konkretnim projektu
      * Metoda nejprve zavola DAO objekty pro ziskani ID konkretnich zavislych elementu
      * Nasledne zavola DAO elementu pro ziskani dat z Databaze
+     *
      * @param milestones seznam instaci CommittedConfiguration
      * @return seznam instaci VerifyTable s vysledky
      */
@@ -1090,7 +1124,7 @@ public class VerifyController {
 
 
         } catch (Exception e) {
-           
+
             e.printStackTrace();
         }
 
@@ -1100,8 +1134,9 @@ public class VerifyController {
 
     /**
      * Metoda pro vytvoreni nove instace SQLVerifyObject
-     * @param id identifikator
-     * @param sql SQL dotaz
+     *
+     * @param id    identifikator
+     * @param sql   SQL dotaz
      * @param exist existence prvku
      * @return nova instace prvku
      */

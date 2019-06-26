@@ -9,7 +9,6 @@ import services.SegmentLists;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
@@ -19,11 +18,12 @@ public class IterationValueTest {
     SegmentLists lists;
     ArrayList itemSet = new ArrayList();
     LocalDate date;
+
     @Before
     public void setUp() throws Exception {
 
         this.lists = new SegmentLists();
-          itemSet.add(1);
+        itemSet.add(1);
         itemSet.add(2);
         itemSet.add(3);
         date = LocalDate.of(2018, 10, 10);
